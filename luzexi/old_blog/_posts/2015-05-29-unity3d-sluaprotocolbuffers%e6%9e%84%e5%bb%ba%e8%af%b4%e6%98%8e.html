@@ -1,0 +1,43 @@
+---
+layout: post
+status: publish
+published: true
+title: Unity3D-SLua+ProtocolBuffers构建说明
+author:
+  display_name: 陆泽西
+  login: luzexi
+  email: jesse_luzexi@163.com
+  url: http://www.luzexi.com
+author_login: luzexi
+author_email: jesse_luzexi@163.com
+author_url: http://www.luzexi.com
+wordpress_id: 585
+wordpress_url: http://www.luzexi.com/?p=585
+date: !binary |-
+  MjAxNS0wNS0yOSAyMjo1Mzo1MCArMDgwMA==
+date_gmt: !binary |-
+  MjAxNS0wNS0yOSAxNDo1Mzo1MCArMDgwMA==
+categories:
+- Unity3D
+- lua
+tags:
+- c#
+- Unity3D
+- 客户端架构
+- lua
+- protobuff
+---
+<p>Unity3D-SLua+ProtocolBuffers构建说明.因为项目使用lua与protocal buffer结构的架构。所以近来对lua与protocal buffer 进行了些深入的了解。对构建slua + protocal buffer的体会进行一些记录，以供大家参考。如何编译android v7a和x86平台以及ios arm64平台的lua库请看这里<a href="http:&#47;&#47;www.luzexi.com&#47;luajit-slua-protoc%E7%BC%96%E8%AF%91%E5%8A%A8%E6%80%81%E5%BA%93&#47;" target="_blank">《luajit-slua-protoc编译动态库》<&#47;a>。</p>
+<h2><span style="color: #000000;">1.lua51+slua+protobuf打动态库<&#47;span><&#47;h2><br />
+protocolbuf 地址&nbsp;https:&#47;&#47;github.com&#47;sean-lin&#47;protoc-gen-lua</p>
+<p>在mac下打bundle库用lua51简单点，直接把lua51的代码和slua.c+pb.c文件塞进xcode。<span style="color: #ff0000;">unity4.6.x需要设置architecture为Universal，unity5设置为standard&nbsp;architecture(64bit)，否则u3d加载动态库失败。<&#47;span></p>
+<h2>2.protobuf转换工具环境<&#47;h2><br />
+我使用python来使用protocal buff 所以，需要安装python的google.protobuf。</p>
+<p>具体安装步骤看这里：<a href="http:&#47;&#47;www.tuicool.com&#47;articles&#47;VfQfM3" target="_blank">http:&#47;&#47;www.tuicool.com&#47;articles&#47;VfQfM3<&#47;a></p>
+<p>还需要安装protoc-gen-lua部分的程序可以参考这里：<a href="http:&#47;&#47;blog.csdn.net&#47;sunshine7858&#47;article&#47;details&#47;9260671" target="_blank">http:&#47;&#47;blog.csdn.net&#47;sunshine7858&#47;article&#47;details&#47;9260671<&#47;a></p>
+<h2>3.protobuf序列化后的与c#通信<&#47;h2><br />
+lua向c#传递protobuf协议字符串。<span style="color: #ff0000;">由于c#字符串编码使用unicode，与lua的protoc-gen-lua序列化后的字符串编码格式不一样，我大概知道是因为protoc中c部分写入字符串时是直接使用char形式写入，没有进行任何编码导致的。所以当protoc-lua序列化后的字符串传入时slua里的Mashal.PtrToStringAnsi会报空，换成auto也无济于事。<&#47;span></p>
+<p>同样的问题也出现在了c#向lua传递协议字符串上。</p>
+<p>这需要对slua进行修改。修改的目的还是将字符串传入c#或者lua，但我们要换一种方式传，原先使用lua_pushstring传字符串，改用lua_pushlstring以byte[]形式传入。<span style="color: #ff0000;">如何修改才更完美呢。使用自定义类比如protobuff类，在slua里增加protobuff的重载方法，pushValue,checkType,typePushMap都需要增加，typePushMap主要是为了委托传参部分。这样当c#使用protobuff向lua传参时，以及lua使用调用带有protobuff类型c#方法时就能自动识别protobuff并得到正确的结果。<&#47;span></p>
+<p>&nbsp;</p>
+<p>转载请注明出处：http:&#47;&#47;www.luzexi.com</p>

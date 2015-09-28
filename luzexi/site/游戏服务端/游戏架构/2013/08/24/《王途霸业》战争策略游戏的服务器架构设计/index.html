@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      《王途霸业》战争策略游戏的服务器架构设计 &middot; Hyde
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Hyde
+        </a>
+      </h1>
+      <p class="lead">A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="https://github.com/poole/hyde/archive/v2.1.0.zip">Download</a>
+      <a class="sidebar-nav-item" href="https://github.com/poole/hyde">GitHub project</a>
+      <span class="sidebar-nav-item">Currently v2.1.0</span>
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">《王途霸业》战争策略游戏的服务器架构设计</h1>
+  <span class="post-date">24 Aug 2013</span>
+  <p>王途霸业的服务器架构设计从2012年11月份开始历时10个月从6月份的V1.0.0第一次于玩家见面，到现在V1.1.5版本，这10个月里《王途霸业》经历了很多次架构的调整，客户端和服务端都已经有成型的架构体系，特别是服务器的架构，似乎从一个无知的少年经过1年的时间成长为了一个成熟的白领，可以正式抗起整个家庭的重担。</p>
+
+<p>服务端：</p>
+
+<p>服务端整个架构由4个部分组成,分别是：数据缓冲服务器，逻辑服务器，认证服务器，中心服务器</p>
+
+<p>数据缓冲服务器：对MYSQL数据库从内存上的数据存储优化，将更大程度上优化数据读取和存储效率。</p>
+
+<p>逻辑服务器：不言而明，这是《王途霸业》的核心服务器，对《王途霸业》的游戏正常运行起到了关键性的作用</p>
+
+<p>认证服务器：《王途霸业》是一款面向多平台，多渠道的游戏。她的帐号系统面向《王途霸业》中的所有服务器。也就是说，你只要注册一个帐号，就可以登录任何一个服务器进行游戏。</p>
+
+<p>中心服务器：主要负责对《王途霸业》的服务器地址管理，版本更新和公告内容。她是整个游戏的入口点，就像个看门人，对所有进入游戏的手机终端，检查他们的版本是否最新，并给予当前的全服公告和现有服务器的状态。</p>
+
+<p>《王途霸业》中缓冲服务器有，DB缓冲服务器，日志缓冲服务器</p>
+
+<p>这两个服务器分别分则对游戏数据存储和游戏日志数据存储。</p>
+
+<p>《王途霸业》中逻辑服务器有，GAME游戏服务器，LOGIN登录服务器</p>
+
+<p>游戏服务器对负责游戏的逻辑，而LOGIN服务器负责对帐号验证分流一部分HTTP访问造成的延迟。</p>
+
+<p>《王途霸业》中认证服务器主要负责对所有平台的帐号进行验证，并提供帐号所对应的ID，这里启用HTTP连接，短连接的好处就是不必担心个服务器之间的长连接中断问题，并且能够承载更多的用户，统一所有服务器的帐号。</p>
+
+<p>《王途霸业》中的中心服务器是HTTP方式，也是因为这样能更好的承载客户端入口点，快速让客户端获得最新的更新内容和最新的服务器列表状态。将入口功能集成于一身。</p>
+
+<p><a href="http://www.luzexi.com/%e3%80%8a%e7%8e%8b%e9%80%94%e9%9c%b8%e4%b8%9a%e3%80%8b%e6%88%98%e4%ba%89%e7%ad%96%e7%95%a5%e6%b8%b8%e6%88%8f/ddd/" rel="attachment wp-att-56"><img alt="ddd" class="alignnone size-full wp-image-56" height="761" src="http://114.215.202.83/blog/wp-content/uploads/2013/08/ddd.png" width="1035" /></a></p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/lua/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">
+            Unity3D之slua集成第三方库
+            <small>26 Sep 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL/">
+            Unity3D-重新编译Mono加密DLL
+            <small>11 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/linux/2015/04/07/linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/">
+            linux环境变量简介
+            <small>07 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

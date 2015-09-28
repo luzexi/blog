@@ -1,0 +1,67 @@
+---
+layout: post
+status: publish
+published: true
+title: WEB游戏服务器架构(HTTP)
+author:
+  display_name: 陆泽西
+  login: luzexi
+  email: jesse_luzexi@163.com
+  url: http://www.luzexi.com
+author_login: luzexi
+author_email: jesse_luzexi@163.com
+author_url: http://www.luzexi.com
+wordpress_id: 299
+wordpress_url: http://www.luzexi.com/?p=299
+date: !binary |-
+  MjAxNC0wNC0xOCAxMToxMzozMyArMDgwMA==
+date_gmt: !binary |-
+  MjAxNC0wNC0xOCAwMzoxMzozMyArMDgwMA==
+categories:
+- 游戏服务端
+- 游戏架构
+tags:
+- Memcache
+- Mysql
+- PHP
+- 临兵斗者三国志
+- 剖析服务器
+- 游戏架构
+- 网络游戏架构
+---
+<p>WEB游戏服务器架构(HTTP)。在如今游戏中，越来越多使用WEB架构方式来做游戏，《临兵斗者三国志》也是其中一个。我使用了PHP来做WEB服务器主逻辑语言，原因为他的开发速度快，并且容易招人容易上手。</p>
+<p>接下来主要来介绍下WEB服务器游戏架构的方式。(本文以PHP+MYSQL+MEMCACHE+NGINX为例)</p>
+<p>PHP可以选用任何你熟悉的框架，能站在别人肩膀上的就站上去吧，自己写时间过长。我们选用的是Yii框架，特点不多没有刻意去挑选。Memcache主要存储数据表的内存，因为PHP没有内存可控制，所以结合Memchache是最好的选择，也可以用Redis，功能上都一样，不过Redis有排序而已。用NGINX主要用来做WEB端的负载平衡，也可以在测试时做IP过滤，以及维护时的IP封锁。</p>
+<p>WEB架构图：</p>
+<div class="dp-highlighter">
+<ol class="dp-j" start="1">
+<li class="alt"><span><span>----------------------------------------------------------&nbsp;&nbsp;<&#47;span><&#47;span><&#47;li>
+<li class=""><span>GAME_DB1(Mysql-master&amp;slave)---|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class="alt"><span>GAME_DB2(Mysql-master&amp;slave)&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class=""><span>GAME_DB3(Mysql-master&amp;slave)&nbsp;&nbsp;&nbsp;|---------------|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class="alt"><span>GAME_DB4(Mysql-master&amp;slave)---|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class=""><span>&#47;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class="alt"><span>Memcache1(master&amp;slave)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class=""><span>Memcache2(master&amp;slave)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class="alt"><span>Memcache3(master&amp;slave)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class=""><span>Memcache4(master&amp;slvae)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class="alt"><span>&#47;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class=""><span>GameServerPHP1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class="alt"><span>GameServerPHP2-------------------------------------|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class=""><span>GameServerPHP3&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class="alt"><span>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#47;&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class=""><span>Nginx&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class="alt"><span>------------------------------------------&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class=""><span>GB_DB(Mysql)&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class="alt"><span>|&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class=""><span>GM_ADMIN_PHP+(memcache)&nbsp;&nbsp;<&#47;span><&#47;li>
+<li class="alt"><span>------------------------------------------&nbsp;&nbsp;<&#47;span><&#47;li><&#47;ol><&#47;div></p>
+<p>&nbsp;</p>
+<p>描述：</p>
+<p>Ngix起负载均衡作用。</p>
+<p>Memcache起数据缓冲作用，当PHP从Memcache中读取数据发现Memcache没有，就从MYSQL里读并且存到Memcahe，查看Memcache玩家数据是否大于某个数(主要是限制内存，不能让Memcache内存无限增加最后导致奔溃)，当PHP需要更新和插入时，PHP先插入或更新到MYSQL，然后再插入或更新到Memcache，使得两边数据能够同步，抑或只插入或更新到MYSQL，在查询时再进行Memcache加载也可以。</p>
+<p>Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据库做的数据散列处理，就是将某块功能数据单独放在某个数据库上，抑或将主键以某种方式分段拆分，例如按每100万主键拆分Mysql,0-100万为1台Mysql,101-200万为另一台Mysql以此类推。</p>
+<p><strong>关于PHP框架的改造<&#47;strong>，我们需要遵循框架的接口，这样我们才能对底层的框架进行改造并且不影响上层的逻辑。例如上面提到的当查询时，先对Memcache进行操作，查看是否有数据，如没有再对Mysql操作，这种写法的基本条件就是接口必须使用框架固有的，而不是直接写sql语句来执行，但凡只用使用sql语句的都需要被改成框架接口，并且尽量不使用合并操作和查询嵌套。</p>
+<p><strong>关于数据统计<&#47;strong>，由于WEB没有逻辑线程，所以我使用Linux的任务或Windows的计划代替，每天执行一次某PHP脚本，每周执行一次某PHP脚本，以达到统计数据的要求。</p>
+<p>这个框架是一般游戏服务器的架构，在即时上线时，因为前期人数并不多，服务器的台数可以自由调整，随着人数上线的增多可以动态得进行扩充GameServerPhp服务器的数量，Memcache服务器的数量，最后实在抗不住，也可以增加DB的数量。</p>
+<p>转载请注明出处：http:&#47;&#47;www.luzexi.com</p>

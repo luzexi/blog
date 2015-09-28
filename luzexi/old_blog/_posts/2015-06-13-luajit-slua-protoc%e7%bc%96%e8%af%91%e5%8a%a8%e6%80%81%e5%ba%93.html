@@ -1,0 +1,154 @@
+---
+layout: post
+status: publish
+published: true
+title: luajit-slua-protoc编译动态库
+author:
+  display_name: 陆泽西
+  login: luzexi
+  email: jesse_luzexi@163.com
+  url: http://www.luzexi.com
+author_login: luzexi
+author_email: jesse_luzexi@163.com
+author_url: http://www.luzexi.com
+wordpress_id: 592
+wordpress_url: http://www.luzexi.com/?p=592
+date: !binary |-
+  MjAxNS0wNi0xMyAyMDoyMzo1MiArMDgwMA==
+date_gmt: !binary |-
+  MjAxNS0wNi0xMyAxMjoyMzo1MiArMDgwMA==
+categories:
+- Unity3D
+- 其他技术
+- lua
+- android
+tags:
+- Unity3D
+- 客户端架构
+- 游戏架构
+- lua
+- slua
+- luajit
+---
+<p>自从使用了slua做逻辑层语言，多平台的动态库问题一直困扰我，于是花点时间搞定编译部分，现在记录一下编译与寻找最终答案的过程，希望对各位有所帮助。</p>
+<p>前面有写一篇关于slua-protoc的mac 动态库bundle的构建，以及c#与protoc在slua下的数据通信。可以帮助你了解slua的bundle构建与protoc数据通信<a href="http:&#47;&#47;www.luzexi.com&#47;unity3d-sluaprotocolbuffers%E6%9E%84%E5%BB%BA%E8%AF%B4%E6%98%8E&#47;" target="_blank">《Unity3D-SLua+ProtocolBuffers构建说明》<&#47;a></p>
+<p>说明构建流程前我先说些寻找答案的过程，我如何找到解决方案。原本对make的编译原理不太了解的我在决定要重新编译slua后也抽时间专门恶补了make的编译规则。但恶补时间还是太短，很多知识都只是扫过而已，在没有实践的基础下很难深入掌握。但没关系这并不妨碍我解决问题。<span style="color: #ff0000;">我先是从xcode工具入手，把代码塞入，选几个选项就可以直接编译，但发现只能编lua51版本，luajit的编译过程没那么的简单。所以就有了前面那篇文章的内容用lua51+xcode编译mac bundle。<&#47;span>但其他平台怎么办呢，特别是ios64位下，lua51是不能用的，看来路只有一条只能用luajit来编译。git clone了一个luajit2.1版本，使用make编译了一下算是通过了，但如何编译android的so和ios的.a文件呢，而且android还分v7a和x86平台需要分开编译，这时候肯定头疼，在git上slua的文档指引下我找到了ios64的.a文件的编译方式，在调试修改少数几个路径参数后首次编译通过，在没有验证其.a文件是否可用的情况下假设认定正确，继续寻找android的编译方式。<span style="color: #ff0000;">在利用google和百度的搜索下我从别人的文章中被引到了luajit官网，并看到了luajit的交叉编译部分的内容&nbsp;<a style="color: #ff0000;" href="http:&#47;&#47;luajit.org&#47;install.html" target="_blank">Cross-compiling LuaJIT<&#47;a>&nbsp;里面写有关于android平台用ndk编译luajit的内容，并且下面还带有ios，armv7的编译说明，这个是关键点<&#47;span>，于是照着他的说明增加了几个编译脚本，专门对各个平台进行编译，当中修改几个路径参数了，并且将slua.c和pb.c文件加入到make文件中，最后加入了编译后复制so文件和.a文件到指定目录作为保存。<span style="color: #ff0000;">但是在编译x86平台时发生意外，编译器报lj_ir.c:64:1: error: 'log2' undeclared here (not in a function) 错误，查了半天还是无法解决问题，最后在slua群中文了相关问题，有人回答说需要改ji_arch.h文件第485行LJ_TAGET_X860RX64这个相关判断去除就可以<&#47;span>，具人原因并不清楚，我也没多问，先编译通过吧。修改后确实通过，而且在编译其他平台时也不需要改回来。最后编译所有平台完成后，进行测试，android和ios都通过，但是.a文件和原本slua编译的.a文件大小相差一倍，不知道为什么，原因还在查，但测试确实通过了，是否真的没问题，还要在今后一段日子继续验证。</p>
+<p>下面说明过程，<span style="color: #ff0000;">申明下我是mac系统，所有操作都是mac终端下进行。可能中间有疏漏，但是我将源码放在git上，即使疏漏也可以对照源码进行。<&#47;span></p>
+<p>源码地址：<a href="https:&#47;&#47;github.com&#47;luzexi&#47;luajit-slua-protoc" target="_blank">https:&#47;&#47;github.com&#47;luzexi&#47;luajit-slua-protoc<&#47;a></p>
+<p>1.git clone luajit的2.1版本。</p>
+<p>2.将slua.c和pb.c文件放入luajit下的src文件夹。</p>
+<p>3.在src下打开Makefile，在LJCORE_O=中加入slua.o pb.o</p>
+<p>4.在src下打开Makefile.dep，在最后加入2行，slua.o: slua.c和pb.o: pb.c</p>
+<p>5.在luajit根目录下 建立&nbsp;make_android_armeabi_v7a.sh文件，并写入</p>
+<div id="highlighter_504242" class="syntaxhighlighter nogutter  powershell">
+<div class="toolbar"><a class="toolbar_item command_help help" href="#">?<&#47;a><&#47;div></p>
+<table border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="code">
+<div class="container">
+<div class="line number1 index0 alt2"><code class="powershell plain">export&nbsp;NDK=&#47;Users&#47;luzexi&#47;Desktop&#47;work&#47;_Environment&#47;android<&#47;code><code class="powershell keyword">-ndk<&#47;code><code class="powershell plain">-r9<&#47;code><&#47;div></p>
+<div class="line number2 index1 alt1"><code class="powershell plain">export&nbsp;NDKABI=14<&#47;code><&#47;div></p>
+<div class="line number3 index2 alt2"><code class="powershell plain">export&nbsp;NDKVER=<&#47;code><code class="powershell value">$NDK<&#47;code><code class="powershell plain">&#47;toolchains&#47;arm<&#47;code><code class="powershell keyword">-linux<&#47;code><code class="powershell keyword">-androideabi<&#47;code><code class="powershell plain">-4.6<&#47;code><&#47;div></p>
+<div class="line number4 index3 alt1"><code class="powershell plain">export&nbsp;NDKP=<&#47;code><code class="powershell value">$NDKVER<&#47;code><code class="powershell plain">&#47;prebuilt&#47;darwin-x86_64&#47;bin&#47;arm<&#47;code><code class="powershell keyword">-linux<&#47;code><code class="powershell keyword">-androideabi<&#47;code><code class="powershell plain">-<&#47;code><&#47;div></p>
+<div class="line number5 index4 alt2"><code class="powershell plain">export&nbsp;NDKF=<&#47;code><code class="powershell string">"--sysroot&nbsp;$NDK&#47;platforms&#47;android-$NDKABI&#47;arch-arm"<&#47;code><&#47;div></p>
+<div class="line number6 index5 alt1"><code class="powershell plain">export&nbsp;NDKARCH=<&#47;code><code class="powershell string">"-march=armv7-a&nbsp;-mfloat-abi=softfp&nbsp;-Wl,--fix-cortex-a8"<&#47;code><&#47;div></p>
+<div class="line number7 index6 alt2"><code class="powershell plain">export&nbsp;NDK_MAKE=<&#47;code><code class="powershell value">$NDK<&#47;code><code class="powershell plain">&#47;prebuilt&#47;darwin-x86_64&#47;bin&#47;make.exe<&#47;code><&#47;div></p>
+<div class="line number8 index7 alt1"><&#47;div></p>
+<div class="line number9 index8 alt2"><code class="powershell plain">make&nbsp;clean<&#47;code><&#47;div></p>
+<div class="line number10 index9 alt1"><code class="powershell plain">make&nbsp;HOST_CC=<&#47;code><code class="powershell string">"gcc&nbsp;-m32"<&#47;code>&nbsp;<code class="powershell plain">CROSS=<&#47;code><code class="powershell value">$NDKP<&#47;code>&nbsp;<code class="powershell plain">TARGET_FLAGS=<&#47;code><code class="powershell string">"$NDKF&nbsp;$NDKARCH"<&#47;code>&nbsp;<code class="powershell plain">TARGET_SYS=<&#47;code><code class="powershell string">"Linux"<&#47;code>&nbsp;<code class="powershell plain">clean&nbsp;default<&#47;code><&#47;div><br />
+<&#47;div><&#47;td><br />
+<&#47;tr><br />
+<&#47;tbody><br />
+<&#47;table><br />
+<&#47;div><br />
+6.同样在luajit下建立make_android_x86.sh文件，并写入</p>
+<div id="highlighter_538565" class="syntaxhighlighter nogutter  powershell">
+<div class="toolbar"><a class="toolbar_item command_help help" href="#">?<&#47;a><&#47;div></p>
+<table border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="code">
+<div class="container">
+<div class="line number1 index0 alt2"><code class="powershell plain">export&nbsp;NDK=&#47;Users&#47;luzexi&#47;Desktop&#47;work&#47;_Environment&#47;android<&#47;code><code class="powershell keyword">-ndk<&#47;code><code class="powershell plain">-r9<&#47;code><&#47;div></p>
+<div class="line number2 index1 alt1"><code class="powershell plain">export&nbsp;NDKABI=14<&#47;code><&#47;div></p>
+<div class="line number3 index2 alt2"><code class="powershell plain">export&nbsp;NDKVER=<&#47;code><code class="powershell value">$NDK<&#47;code><code class="powershell plain">&#47;toolchains&#47;x86-4.6<&#47;code><&#47;div></p>
+<div class="line number4 index3 alt1"><code class="powershell plain">export&nbsp;NDKP=<&#47;code><code class="powershell value">$NDKVER<&#47;code><code class="powershell plain">&#47;prebuilt&#47;darwin-x86_64&#47;bin&#47;i686<&#47;code><code class="powershell keyword">-linux<&#47;code><code class="powershell keyword">-android<&#47;code><code class="powershell plain">-<&#47;code><&#47;div></p>
+<div class="line number5 index4 alt2"><code class="powershell plain">export&nbsp;NDKF=<&#47;code><code class="powershell string">"--sysroot&nbsp;$NDK&#47;platforms&#47;android-$NDKABI&#47;arch-x86"<&#47;code><&#47;div></p>
+<div class="line number6 index5 alt1"><&#47;div></p>
+<div class="line number7 index6 alt2"><code class="powershell plain">make&nbsp;clean<&#47;code><&#47;div></p>
+<div class="line number8 index7 alt1"><code class="powershell plain">make&nbsp;HOST_CC=<&#47;code><code class="powershell string">"gcc&nbsp;-m32"<&#47;code>&nbsp;<code class="powershell plain">CROSS=<&#47;code><code class="powershell value">$NDKP<&#47;code>&nbsp;<code class="powershell plain">TARGET_FLAGS=<&#47;code><code class="powershell string">"$NDKF"<&#47;code>&nbsp;<code class="powershell plain">TARGET_SYS=<&#47;code><code class="powershell string">"Linux"<&#47;code>&nbsp;<code class="powershell plain">clean&nbsp;default<&#47;code><&#47;div><br />
+<&#47;div><&#47;td><br />
+<&#47;tr><br />
+<&#47;tbody><br />
+<&#47;table><br />
+<&#47;div><br />
+7.再在luajit下建立make_ios.sh文件，并写入</p>
+<div id="highlighter_740537" class="syntaxhighlighter  powershell">
+<div class="toolbar"><a class="toolbar_item command_help help" href="#">?<&#47;a><&#47;div></p>
+<table border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="gutter">
+<div class="line number1 index0 alt2">1<&#47;div></p>
+<div class="line number2 index1 alt1">2<&#47;div></p>
+<div class="line number3 index2 alt2">3<&#47;div></p>
+<div class="line number4 index3 alt1">4<&#47;div></p>
+<div class="line number5 index4 alt2">5<&#47;div></p>
+<div class="line number6 index5 alt1">6<&#47;div></p>
+<div class="line number7 index6 alt2">7<&#47;div></p>
+<div class="line number8 index7 alt1">8<&#47;div></p>
+<div class="line number9 index8 alt2">9<&#47;div></p>
+<div class="line number10 index9 alt1">10<&#47;div></p>
+<div class="line number11 index10 alt2">11<&#47;div></p>
+<div class="line number12 index11 alt1">12<&#47;div></p>
+<div class="line number13 index12 alt2">13<&#47;div></p>
+<div class="line number14 index13 alt1">14<&#47;div></p>
+<div class="line number15 index14 alt2">15<&#47;div></p>
+<div class="line number16 index15 alt1">16<&#47;div></p>
+<div class="line number17 index16 alt2">17<&#47;div></p>
+<div class="line number18 index17 alt1">18<&#47;div></p>
+<div class="line number19 index18 alt2">19<&#47;div></p>
+<div class="line number20 index19 alt1">20<&#47;div></p>
+<div class="line number21 index20 alt2">21<&#47;div></p>
+<div class="line number22 index21 alt1">22<&#47;div></p>
+<div class="line number23 index22 alt2">23<&#47;div></p>
+<div class="line number24 index23 alt1">24<&#47;div></p>
+<div class="line number25 index24 alt2">25<&#47;div><&#47;td></p>
+<td class="code">
+<div class="container">
+<div class="line number1 index0 alt2"><code class="powershell comments">#!&#47;usr&#47;bin&#47;env&nbsp;bash<&#47;code><&#47;div></p>
+<div class="line number2 index1 alt1"><code class="powershell keyword">DIR<&#47;code><code class="powershell plain">=<&#47;code><code class="powershell string">"$(&nbsp;cd&nbsp;"<&#47;code><code class="powershell plain">$(&nbsp;dirname&nbsp;<&#47;code><code class="powershell string">"${BASH_SOURCE[0]}"<&#47;code>&nbsp;<code class="powershell plain">)<&#47;code><code class="powershell string">"&nbsp;&amp;amp;&amp;amp;&nbsp;pwd&nbsp;)"<&#47;code><&#47;div></p>
+<div class="line number3 index2 alt2"><code class="powershell plain">LIPO=<&#47;code><code class="powershell string">"xcrun&nbsp;-sdk&nbsp;iphoneos&nbsp;lipo"<&#47;code><&#47;div></p>
+<div class="line number4 index3 alt1"><code class="powershell plain">STRIP=<&#47;code><code class="powershell string">"xcrun&nbsp;-sdk&nbsp;iphoneos&nbsp;strip"<&#47;code><&#47;div></p>
+<div class="line number5 index4 alt2"><&#47;div></p>
+<div class="line number6 index5 alt1"><code class="powershell plain">IXCODE=`xcode<&#47;code><code class="powershell keyword">-select<&#47;code>&nbsp;<code class="powershell keyword">-print<&#47;code><code class="powershell keyword">-path<&#47;code><code class="powershell plain">`<&#47;code><&#47;div></p>
+<div class="line number7 index6 alt2"><code class="powershell plain">ISDK=<&#47;code><code class="powershell value">$IXCODE<&#47;code><code class="powershell plain">&#47;Platforms&#47;iPhoneOS.platform&#47;Developer<&#47;code><&#47;div></p>
+<div class="line number8 index7 alt1"><code class="powershell plain">ISDKVER=iPhoneOS8.3.sdk<&#47;code><&#47;div></p>
+<div class="line number9 index8 alt2"><code class="powershell plain">ISDKP=<&#47;code><code class="powershell value">$IXCODE<&#47;code><code class="powershell plain">&#47;usr&#47;bin&#47;<&#47;code><&#47;div></p>
+<div class="line number10 index9 alt1"><&#47;div></p>
+<div class="line number11 index10 alt2"><code class="powershell plain">if&nbsp;[&nbsp;!&nbsp;<&#47;code><code class="powershell keyword">-e<&#47;code>&nbsp;<code class="powershell value">$ISDKP<&#47;code><code class="powershell plain">&#47;ar&nbsp;];&nbsp;then<&#47;code><&#47;div></p>
+<div class="line number12 index11 alt1"><code class="powershell plain">sudo&nbsp;<&#47;code><code class="powershell keyword">cp<&#47;code>&nbsp;<code class="powershell value">$ISDK<&#47;code><code class="powershell plain">&#47;usr&#47;bin&#47;ar&nbsp;<&#47;code><code class="powershell value">$ISDKP<&#47;code><&#47;div></p>
+<div class="line number13 index12 alt2"><code class="powershell plain">fi<&#47;code><&#47;div></p>
+<div class="line number14 index13 alt1"><&#47;div></p>
+<div class="line number15 index14 alt2"><code class="powershell plain">if&nbsp;[&nbsp;!&nbsp;<&#47;code><code class="powershell keyword">-e<&#47;code>&nbsp;<code class="powershell value">$ISDKP<&#47;code><code class="powershell plain">&#47;ranlib&nbsp;];&nbsp;then<&#47;code><&#47;div></p>
+<div class="line number16 index15 alt1"><code class="powershell plain">sudo&nbsp;<&#47;code><code class="powershell keyword">cp<&#47;code>&nbsp;<code class="powershell value">$ISDK<&#47;code><code class="powershell plain">&#47;usr&#47;bin&#47;ranlib&nbsp;<&#47;code><code class="powershell value">$ISDKP<&#47;code><&#47;div></p>
+<div class="line number17 index16 alt2"><code class="powershell plain">fi<&#47;code><&#47;div></p>
+<div class="line number18 index17 alt1"><&#47;div></p>
+<div class="line number19 index18 alt2"><code class="powershell plain">if&nbsp;[&nbsp;!&nbsp;<&#47;code><code class="powershell keyword">-e<&#47;code>&nbsp;<code class="powershell value">$ISDKP<&#47;code><code class="powershell plain">&#47;strip&nbsp;];&nbsp;then<&#47;code><&#47;div></p>
+<div class="line number20 index19 alt1"><code class="powershell plain">sudo&nbsp;<&#47;code><code class="powershell keyword">cp<&#47;code>&nbsp;<code class="powershell value">$ISDK<&#47;code><code class="powershell plain">&#47;usr&#47;bin&#47;strip&nbsp;<&#47;code><code class="powershell value">$ISDKP<&#47;code><&#47;div></p>
+<div class="line number21 index20 alt2"><code class="powershell plain">fi<&#47;code><&#47;div></p>
+<div class="line number22 index21 alt1"><&#47;div></p>
+<div class="line number23 index22 alt2"><code class="powershell plain">make&nbsp;clean<&#47;code><&#47;div></p>
+<div class="line number24 index23 alt1"><code class="powershell plain">ISDKF=<&#47;code><code class="powershell string">"-arch&nbsp;arm64&nbsp;-isysroot&nbsp;$ISDK&#47;SDKs&#47;$ISDKVER"<&#47;code><&#47;div></p>
+<div class="line number25 index24 alt2"><code class="powershell plain">make&nbsp;HOST_CC=<&#47;code><code class="powershell string">"gcc&nbsp;"<&#47;code>&nbsp;<code class="powershell plain">CROSS=<&#47;code><code class="powershell string">"$ISDKP"<&#47;code>&nbsp;<code class="powershell plain">TARGET_FLAGS=<&#47;code><code class="powershell string">"$ISDKF"<&#47;code>&nbsp;<code class="powershell plain">TARGET=arm64&nbsp;TARGET_SYS=iOS<&#47;code><&#47;div><br />
+<&#47;div><&#47;td><br />
+<&#47;tr><br />
+<&#47;tbody><br />
+<&#47;table><br />
+<&#47;div><br />
+8.用chmod +x 文件名，将他们变成可执行文件。</p>
+<p>9.<span style="color: #ff0000;">最后对照一下你们的ndk和xcode路径，修改成你们电脑上的真实路径。然后执行。<&#47;span></p>
+<p>10.git上的项目里你在执行后的结果会放在build文件夹下。</p>
+<p>&nbsp;</p>
+<p>转载请注明出处：http:&#47;&#47;www.luzexi.com</p>

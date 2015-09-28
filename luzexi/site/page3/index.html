@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Hyde &middot; A Jekyll theme
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Hyde
+        </a>
+      </h1>
+      <p class="lead">A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="https://github.com/poole/hyde/archive/v2.1.0.zip">Download</a>
+      <a class="sidebar-nav-item" href="https://github.com/poole/hyde">GitHub project</a>
+      <span class="sidebar-nav-item">Currently v2.1.0</span>
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/10/25/Unity3D%E4%BA%BA%E7%89%A9%E8%A1%8C%E4%B8%BA%E7%8A%B6%E6%80%81%E6%9C%BA%E5%92%8C%E6%8C%87%E4%BB%A4%E7%8A%B6%E6%80%81%E6%9C%BA/">
+        Unity3D人物行为状态机和指令状态机
+      </a>
+    </h1>
+
+    <span class="post-date">25 Oct 2014</span>
+
+    <p>Unity3D人物行为状态机和指令状态机。状态机在各类游戏中都应用的比较平凡，不要以为只有角色扮演类游戏才用到状态机，但凡有物体有动作切换或者重复的指令切换都是状态机用到的地方。其实状态机到处都是，只有你想不到没有有他触及不到的地方，当然我这里主要讲有限状态机。这里省略一万字的状态机基础知识以及我的唠叨。</p>
+
+<p>状态机在游戏项目中的主要运用点：
+1.人物动作。一般的RPG人物最为明显，每个人物都有4-5个基本动作，比如 空闲动作，行走，攻击，受伤，施法等。把每个动作看成一个状态，就有了基本的状态，把每个状态用参数串联起来就算是状态机了。</p>
+
+<p>2.AI。这个在游戏AI里表现得最为明显，用状态机写AI是最快并且最有效的方式了。每个AI也都有几个基本状态，比如 追击状态，逃跑状态，疯狂状态，巡逻状态。有了这几个状态，就可以用参数串联起来成为状态机了。</p>
+
+<p>3.人物指令。这个可能很多没有写过状态机的童鞋比较难懂，他跟AI状态有点像，是为了辅助人物动作状态的。当我们把人物动作状态机定义完毕时，发现只有人物动作状态，如何去扩展除了动作以外的东西呢，比如移动，缩放。人物指令状态机就是做这事的，他相当于在动作状态机上套了又一层状态机。比如人物行走指令里，调用了动作行走状态，让人物一直保持行走动作，然后自己只要去处理人物位移就可以了，这样既有了动作也有了位移，整套移动指令就完整了。又比如攻击指令状态，发出指令后，攻击指令状态先调用行走动作状态并移动到目标点，再调用攻击动作状态，再处理攻击受伤逻辑。表现就是，一个人走到目标点攻击了另一个人。中间还可以加很多逻辑，比如判断是否处于封印状态，如果处在封印状态就不能攻击。</p>
+
+<p>状态机极大的简化了对人物行为变化的处理方式，也更加容易进行扩展。Unity3D里有一个动作的状态功能Animator，他的图形界面很清晰得解释了状态机的原理。但我自己并不喜欢使用，因为我认为这个Animator限制了程序员的思维，虽然达到了可视化状态机的目的但扩展性差，所以我一直不推崇使用，不过这只是个人看法。</p>
+
+<p><a href="http://www.luzexi.com/wp-content/uploads/2014/10/10039783.jpg"><img class="alignnone size-full wp-image-433" src="http://www.luzexi.com/wp-content/uploads/2014/10/10039783.jpg" alt="10039783" width="550" height="240" /></a></p>
+
+<p>运用状态机时需要注意的几个问题:</p>
+
+<p>1.传统网游里人物状态不太多，最多也就10个极限了，但是现在已经不是从前了，特别是单机游戏里，动不动就2，3十个状态，这个时候状态与状态之间切换逻辑就成了一个麻烦事。我们可以增加事件处理句柄来整理状态切换事件，其他方法也有很多种，运用时最好围绕让程序员容易找，容易改来，不要为了发挥设计模式而抛弃了代码清晰度。</p>
+
+<p>2.输入参数。当前游戏项目中，输入参数有很多种。一种输入参数已经满足不了状态机在游戏中得运用了。而且不同的状态对于输入的参数也不同，所以我们可以面向对象方式对状态机输入进行扩做。我们定义一个Input类，里面什么都没有，每个状态或者某几个状态另开出一个类xxInput继承Input，增加里面的参数，再在输入参数时，对参数进行辨别，如果是xxInput时就对相应状态进行判定和处理。</p>
+
+<p>总结：状态机没有固定框架，还得要大家自己亲自试验，最好能借鉴别人的项目或者在自己的项目里试着写入状态机。我能帮大家的也就分析解释下状态机在游戏里的运用情况，最后还得靠自己琢磨出来。</p>
+
+<p>转载请注明出处：http://www.luzexi.com</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/10/24/Unity3D%E8%A1%8C%E4%B8%BA%E6%A0%91%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0/">
+        Unity3D行为树系统编程实现
+      </a>
+    </h1>
+
+    <span class="post-date">24 Oct 2014</span>
+
+    <p>Unity3D行为树系统编程实现。行为树在AI领域使用十分广泛，行为树的架构非常通用和便捷，在扩展性方面表现得更是非常好。我这里只讲关于如何实现行为树，跳过了基础的行为树概念。关于行为树的介绍和行为树概念请看<a title="行为树" href="http://www.luzexi.com/%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E6%A0%91behavior-tree%E5%AE%9E%E7%8E%B0%E6%B8%B8%E6%88%8Fai/" target="_blank">《使用行为树behavior-tree实现游戏ai》</a>这是业界一个前辈写的文章我只是代为转载。</p>
+
+<p>很久没有写文章了，如果文笔弱请多见谅，随着工作的繁忙，写博客也是件奢侈的事情。在整理完代码后累得跟死猪一样，时间并不充裕，经历也有限，请各位期待更新的朋友多多见谅。行为树一直是我希望完善的一个系统框架，本身在2011年时就用在3DRPG里，但那是并不完善，只是个初级的产品。这次我彻彻底底把他完善成一个固定框架，可以直接拿来扩展使用。原本也这个行程也只是记在笔记本上，但最近有个英国的出版社发MAILL给我说有篇UNITY3D AI的书他们正在出版，要我做一下审阅和评论，于是看了几天审阅了段时间，里面大部分内容都是讲U3D里一个行为树插件RAIN如何使用，一项不喜欢使用插件的我看得我很不爽，因为文章大部分内容都是叙述使用过程没什么可看的。一念之下，一口气直接把行为树系统框架和行为树编辑器写了一遍。审阅和评论的事情没弄完，自己的行为树系统倒是写完了，罪过罪过。-----废话完毕。</p>
+
+<p>我先把源码地址贴上，让大家可以边对着代码，边看我的文章。这样可以像下酒菜一样，边喝着啤(wen)酒(zhang)，边吃着花(dai)生(ma)。
+源码放在github上: <a href="https://github.com/luzexi/Unity3DAIBehaviorTree">https://github.com/luzexi/Unity3DAIBehaviorTree</a> 如果你喜欢可以star或者follow下。</p>
+
+<p>行为树系统实现：</p>
+
+<p>1.我把行为树以BNode为基类节点。</p>
+
+<p>2.BNode的一层子类为BNodeAction(行动基类)，BNodeComposite(执行顺序基类)，BNodeCondition(条件基类)，BNodeDecorator(修饰基类)。</p>
+
+<p>3.BNode基类节点的基本方法：OnEnter--进入事件,OnExist--退出事件,Excute--执行事件。子类可以通过重写这三个方法以达到实现自我功能。</p>
+
+<p>4.节点的执行顺序是需要提前考虑的，我写了几个，比如顺序，选择，并行，随机，迭代。具体点：顺序--子节点中顺序执行直到结束如果遇到失败的节点就返回失败否则成功，选择--子节点中顺序执行直到遇到返回成功的节点，并行--顺序执行节点无论失败成功直到结束返回成功，随机--随机选择一个节点执行返回该节点的结果，迭代--顺序执行直到并连续成功N次就返回成功否则失败。</p>
+
+<p>5.输入参数BInput是行为树系统的必要类实例，因为在运行行为树时，每个节点的执行对象需要依赖输入参数，每个项目的输入参数都不一样，所以你可以继承BInput扩展成你希望的输入参数，比如：TestInput里加入了hp,mp两个元素用来保存AI的对象状态，你也可以加入更多更复杂的元素，比如角色信息类，伙伴信息类等。</p>
+
+<p>6.为了让行为树运用到项目里去，我们可以对BNodeAction，BNodeCondition，BNodeDecorator，进行扩展。继承书写的规则：继承子类必须在Game.AIBehaviorTree命名空间里，构造函数里最好对m_strName进行赋值，这样就能在行为树编辑器里看到你的扩展类和扩展命名，每个扩展的节点，如果有需要对变量进行编辑的，变量必须是public的，而且类型只限于int,float,bool,string四种。</p>
+
+<p>7.行为树编辑器是行为树系统可用性的关键。我把行为树用目录结构的方式来实现，这样对于节点的增加，删除，切换，拖拽，体验都非常便捷。对于每个节点的编辑状态在选择该节点后会在编辑器的右下脚现实。编辑器还承载了保存，加载，以及对行为树的增加和删除，重命名的功能。如下图：
+<a href="http://www.luzexi.com/wp-content/uploads/2014/10/img.png"><img class="alignnone size-full wp-image-429" src="http://www.luzexi.com/wp-content/uploads/2014/10/img.png" alt="img" width="985" height="492" /></a></p>
+
+<p>8.行为树数据存储。我用json格式来存储行为树，先前我用bytes来存，但发现因为扩展子类的变量经常性变化，所以用bytes来存常常会导致已编辑完成的数据无法重新编辑。所以我用了c#反射进行类与json变量的配对。</p>
+
+<p>9.最后请大家注意，行为树不只是用来做AI的，比如开宝箱，掉落，物品使用都可以用行为树来做。</p>
+
+<p>10.文档化数据，行为树有了编辑器似乎抛弃了xls,但我还是认为xls对于策划人员的数据编辑工作还是主流的，所以我接下来扩展的方向就是行为树编辑器xls化。</p>
+
+<p>转载请注明出处: http://www.luzexi.com</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/html5/cocos2dx/2014/09/28/html5%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91---cocos2dx-js/">
+        html5游戏开发---cocos2dx-js
+      </a>
+    </h1>
+
+    <span class="post-date">28 Sep 2014</span>
+
+    <p>html5游戏开发---cocos2dx-js。在神经猫发热后，我开始关注html5游戏。所以前段时间做了2个html5小游戏当试水，用的引擎是cocos2dx-js。在这里我想做回忆下，html5的制作过程和需要注意的地方，也阐述下当下html5游戏渠道的问题。</p>
+
+<p>我先接触了egret引擎，它是国内html5优秀的游戏引擎，采用typescripts做主语言。在我用了几天发现，它的主语言并非js所以html5底层的东西会被下意识的屏蔽掉，何不用js的引擎来写html5呢，即能快速开发又能随时接触html5底层。所以我使用了cocos2dx-js。</p>
+
+<p>关于cocos2dx-js的教程就不在这里写了，接口跟cocos2dx-c++的差不多。</p>
+
+<p>js写html5需要注意的几点：</p>
+
+<p>1.html5游戏最需要快速加载，js代码不能分成很多个一个个加载，减慢了加载速度也容易流失用户。所以在写玩html5时需要对所有js代码进行压缩合并。google的closure compiler解决了这个问题，cocos2dx-js也将这个功能融入进里面。下面是步骤：</p>
+
+<p>在cocos2dx-js-v3.0里使用cocos compile -p web -m release来对html5的js代码进行压缩。</p>
+
+<p>在cocos2dx-html5(与cocos2dx-js-v3.0是两个版本，cocos2dx-js-v3.0比较好用)里打包html5需要用到ant和build.xml。打包主要内容为将所有js文件打包成同一个文件，目的是减少加载文件数量，加快加载速度。打包命令：cd到项目文件夹下。敲入:ant或者ant -buildfile build.xml。build.xml中囊括了要打包的js文件。其中指定了js打包编译工具complie.jar是google closure compiler专门压缩js文件大小工具。</p>
+
+<p>关于微信分享:</p>
+
+<p>微信api已经在微信的浏览器里已经注入了它的api。</p>
+
+<p>微信api的机制其实就是事件机制，比如当你点击分享时，调用某个你制定的方法显示你想显示的文字和图片。</p>
+
+<p>微信api你可以参考 <a href="https://github.com/zxlie/WeixinApi">https://github.com/zxlie/WeixinApi</a></p>
+
+<p>主要用到的有分享朋友圈，分享给朋友，分享后回调。你可以首先看这几个重点。</p>
+
+<p>关于html5游戏渠道:</p>
+
+<p>1.现在html5游戏的渠道很少，而且现在html5游戏基本呈现在微信浏览器中，所以微信的公众平台是渠道之一，而且似乎占比比较大。</p>
+
+<p>2.在国外html5游戏在电视上的占比也开始大了，我不知道国内的情况，未来国内是否有可能在电视上呈现html5游戏。</p>
+
+<p>3.html5游戏的app形式，这个还是很有潜力的，因为渠道太少倒逼html5游戏发展成轻型app。也就是说html5的app就只是个连接地址，但在手机上呈现的是一个图标，打开后以浏览器形式访问。</p>
+
+<p>最后大家可以看看这个小游戏，请使用手机二维码扫描。</p>
+
+<p><a href="http://www.luzexi.com/wp-content/uploads/2014/09/qrcode.png"><img class="alignnone size-full wp-image-413" src="http://www.luzexi.com/wp-content/uploads/2014/09/qrcode.png" alt="qrcode" width="280" height="280" /></a></p>
+
+<p>源码地址：<a href="https://github.com/hangzhou-JIMI/MemoryFruits">https://github.com/hangzhou-JIMI/MemoryFruits</a></p>
+
+<p>转载请注明出处：http://www.luzexi.com</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2014/09/12/git-Git%E4%BD%BF%E7%94%A8%E5%AE%9E%E8%AE%B0/">
+        Git 使用实记
+      </a>
+    </h1>
+
+    <span class="post-date">12 Sep 2014</span>
+
+    <p>下面是我最近一直在使用的git命令。不知道能否为你提供点帮助。当然，我在github上做了很多好东西，全是开源的供你慢慢享用，如果觉得不错可以star(收藏),fllow(订阅)一下。等我空点了再把项目技术分享给你们哦。<a href="https://github.com/luzexi">https://github.com/luzexi</a></p>
+
+<p>clone:</p>
+
+<p>git clone path dir 或者 git clone path 名字可以省略默认使用该项目名</p>
+
+<p>branch:</p>
+
+<p>git branch -r 查看所有分支</p>
+
+<p>git branch 查看当前获取的分支信息，在没有获取分支信息前，只会显示在哪个提交点。</p>
+
+<p>checkout:</p>
+
+<p>git checkout branch_name 切换某个分支</p>
+
+<p>git checkout -b branch_name 以当前分支未基础建立新分支并且切换过去</p>
+
+<p>git checkout -f 强制替换与分支不一样的文件</p>
+
+<p>git checkout path 撤销某个未提交文件恢复原状</p>
+
+<p>git checkout . 撤销所有未提交文件恢复原状</p>
+
+<p>git checkout --ours path  冲突中以当前分支未基准</p>
+
+<p>git checkout --theirs path 冲突中以对方分支未基准</p>
+
+<p>add:</p>
+
+<p>git add path 告诉git这个文件或文件夹加入到提交队列</p>
+
+<p>git add . 告诉git目录下文件和文件夹都加入到提交队列</p>
+
+<p>rm:</p>
+
+<p>git rm path 告诉git这个文件或文件夹需要被删除</p>
+
+<p>git rm . 告诉git当前目录下所有文件和文件夹都需要被删除</p>
+
+<p>git rm <code>git status | grep delete | awk &#39;{print $2}&#39;</code> 删除所有被删除的文件</p>
+
+<p>commit:</p>
+
+<p>git commit -m &quot;write something&quot; 提交当前被git add 或者 git rm 的内容</p>
+
+<p>git commit -a -m &quot;write something&quot; 提交所有被git跟踪的文件，-a表示所有</p>
+
+<p>push:</p>
+
+<p>git push origin branch<em>name 推送branch</em>name分支</p>
+
+<p>git push origin branch<em>name1:branch</em>name2 把当branch<em>name1支推送到新建一个分支branch</em>name2中去</p>
+
+<p>git push 推送所有本地修改过的分支到服务器</p>
+
+<p>pull:</p>
+
+<p>git pull 下载当前分支内容</p>
+
+<p>git pull server branch<em>name 下载server服务器上的 branch</em>name分支，如果有冲突将自动合并</p>
+
+<p>show:</p>
+
+<p>git show commit_id 查看某次提交修改的内容</p>
+
+<p>whatchanged:</p>
+
+<p>git whatchanged filepath  查看某个文件的修改记录</p>
+
+<p>clean:</p>
+
+<p>git clean -f 清除所有未被git跟踪的文件</p>
+
+<p>git clean -df 清除所有未被git跟踪的文件和文件夹</p>
+
+<p>reset:</p>
+
+<p>git reset --hard commitID 回撤到某个提交点,文件也一同回到那个状态</p>
+
+<p>git reset --soft commitID  回撤到某个提交点，但文件仍然保持原来被修改后的状态。</p>
+
+<p>fetch:</p>
+
+<p>git fetch 这个我只知道抓取当前项目的所有信息主要实分支信息和提交记录，并不下载内容</p>
+
+<p>merge:</p>
+
+<p>git merge server branch<em>name 合并server项目上branch</em>name分支</p>
+
+<p>git merge branch<em>name 合并默认origin项目上的branch</em>name分支</p>
+
+<p>diff:</p>
+
+<p>git diff file_name 比较文件与前一个版本的不同之处</p>
+
+<p>remote:</p>
+
+<p>git remote add server<em>name git</em>path 将git<em>path以server</em>name命名，方便后面操作</p>
+
+<p>submodule:</p>
+
+<p>git submodule add <git address> <dir name>  加入其他模块仓库</p>
+
+<p>git submodule init  初始化模块仓库</p>
+
+<p>git submodule update  更新模块仓库</p>
+
+<p>log:</p>
+
+<p>-p：按补丁显示每个更新间的差异</p>
+
+<p>--stat：显示每次更新的修改文件的统计信息</p>
+
+<p>--shortstat：只显示--stat中最后的行数添加修改删除统计</p>
+
+<p>--name-only：尽在已修改的提交信息后显示文件清单</p>
+
+<p>--name-status：显示新增、修改和删除的文件清单</p>
+
+<p>--abbrev-commit：仅显示SHA-1的前几个字符，而非所有的40个字符</p>
+
+<p>--relative-date：使用较短的相对时间显示（例如：&quot;two weeks ago&quot;）</p>
+
+<p>--graph：显示ASCII图形表示的分支合并历史</p>
+
+<p>--pretty：使用其他格式显示历史提交信息</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2014/06/25/Unity3D%E4%B9%8B%E5%AF%B9pomelo%E6%A1%86%E6%9E%B6%E7%BD%91%E7%BB%9C%E5%B1%82%E6%94%B9%E8%A3%85/">
+        Unity3D之对pomelo框架网络层改装
+      </a>
+    </h1>
+
+    <span class="post-date">25 Jun 2014</span>
+
+    <p>Unity3D之对pomelo框架网络层改装。</p>
+
+<p>最近了解了下网易的开源服务器框架pomelo，github地址：<a href="https://github.com/NetEase/pomelo">https://github.com/NetEase/pomelo</a>发现其中它封装的u3d的网络层部分有线程安全问题，几乎不能直接u3d项目，所以对其进行了2次封装，让他可以真正用于u3d项目。</p>
+
+<p>封装后的源码也同样放在我的github上：<a href="https://github.com/luzexi">https://github.com/luzexi</a> 供大家参考。</p>
+
+<p>下面写下pomelo的u3d网络层源码问题和我对源码的封装过程：
+pomelo网络通信方式分:原始socket和websocket两种，这两种方式由项目需要而选择其中一种来使用。pomelo种对u3d网络通信封装的最主要问题是线程中逻辑句柄的调用，因为u3d对它本身主线程意外的线程调用本身api是非常排斥，当你在其他线程中运行u3d的api会直接被cut掉，所以我们需要将其调用游戏逻辑句柄的那部分放到u3d主线程中去。</p>
+
+<p>如何将线程通信后的游戏句柄调用部分放到u3d主线程中去：</p>
+
+<p>1.网络通信是由数据包为单位来驱动游戏逻辑句柄的，所以只要加入队列概念，在收到数据包时由原来的直接调用句柄，改为先推入到队列中，等待处理。</p>
+
+<h1>if LUZEXI</h1>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    private System.Object m_cLock = new System.Object();    //the lock object
+    private const int PROCESS_NUM = 5;  //the process handle num per fps
+    private Queue&lt;byte[]&gt; m_seqReceiveMsg = new Queue&lt;byte[]&gt;();    //the message queue
+    private TranspotUpdate m_cUpdater = null;   //The Updater of the message queue
+</code></pre></div>
+<h1>endif</h1>
+
+<p>2.在u3d主逻辑中增加一个专门处理网络通信逻辑句柄的类。这个类在通信开始时就加入到u3d主逻辑中去，当通信结束(无论是正常还是异常结束)时在u3d主逻辑中销毁。在主逻辑中不断的或者说每帧都去查看网络通信层队列中有没有等待处理的句柄，有就取出来处理。这样就由等待队列串联起来了几个线程的共同合作。ps:对队列做防死锁操作</p>
+
+<h1>if LUZEXI</h1>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    internal void Update()
+    {
+        for( int i = 0 ; i&lt;PROCESS_NUM &amp;&amp; i&lt; this.m_seqReceiveMsg.Count; i++)
+        {
+            lock(this.m_cLock)
+            {
+                byte[] data = this.m_seqReceiveMsg.Dequeue();
+                this.messageProcesser.Invoke(data);
+            }
+        }
+    }
+</code></pre></div>
+<h1>endif</h1>
+
+<p>3.拆分网络通信事件。将网络通信事件拆分为OnConnect , OnError , OnDisconnect , 这3个事件是最常见的通信事件。这3个事件也必须在主线程中调用，但这3个事件又不是以网络数据包为基础，所以需要在专门处理通信逻辑的类中加入3种状态start , error , disconnect.当网络通信层出现这三种事件时，将状态切过去（ps:而不是直接调用句柄）,然后再由专门处理通信逻辑的类在下一帧去调用对应的事件句柄。</p>
+
+<p>using UnityEngine;
+using System;
+using System.Collections.Generic;
+using SimpleJson;</p>
+
+<p>//  TranspotUpdate.cs
+//  Author: Lu Zexi
+//  2014-6-20</p>
+
+<p>namespace Pomelo.DotNetClient
+{
+    /// 
+<summary>
+    /// Transpot updater.
+    /// </summary>
+    public class TranspotUpdate : MonoBehaviour
+    {
+        private enum STATE
+        {
+            NONE = 0,
+            START = 1,
+            RUNING = 2,
+            CLOSE = 3,
+            DESTORY = 4,
+        }
+        private STATE m<em>eStat = STATE.NONE; //the state of the transpotUpdate
+        private Action m</em>cUpdate;   //update action
+        private List<Action<JsonObject>&gt; m_cOnDisconnect;   //on the disconnect</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    /// &lt;summary&gt;
+    /// Init this instance.
+    /// &lt;/summary&gt;
+    internal static TranspotUpdate Init()
+    {
+        GameObject obj = new GameObject(&lt;span class=&quot;string&quot;&gt;&quot;Socket&quot;);
+        TranspotUpdate trans = obj.AddComponent&lt;TranspotUpdate&gt;();
+        return trans;
+    }
+
+    /// &lt;summary&gt;
+    /// set the update of the process message action
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;update&quot;&gt;Update.&lt;/param&gt;
+    internal void SetUpdate( Action update )
+    {
+        this.m_cUpdate = update;
+    }
+
+    /// &lt;summary&gt;
+    /// set the disconnect evet.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;ondisconnect&quot;&gt;Ondisconnect.&lt;/param&gt;
+    internal void SetOndisconnect( List&lt;Action&lt;JsonObject&gt;&gt; ondisconnect )
+    {
+        this.m_cOnDisconnect = ondisconnect;
+    }
+
+    /// &lt;summary&gt;
+    /// close the updater
+    /// &lt;/summary&gt;
+    internal void Close()
+    {
+        this.m_eStat = STATE.CLOSE;
+    }
+
+    /// &lt;summary&gt;
+    /// Start this update.
+    /// &lt;/summary&gt;
+    internal void _Start()
+    {
+        this.m_eStat = STATE.START;
+    }
+
+    /// &lt;summary&gt;
+    /// destory the gameobject.
+    /// &lt;/summary&gt;
+    internal void _Destory()
+    {
+        if(this.m_eStat != STATE.CLOSE)
+            this.m_eStat = STATE.DESTORY;
+    }
+
+    /// &lt;summary&gt;
+    /// Fixeds the update.
+    /// &lt;/summary&gt;
+    void FixedUpdate()
+    {
+        switch(this.m_eStat)
+        {
+        case STATE.START:
+        case STATE.RUNING:
+            if(this.m_cUpdate != null )
+            {
+                this.m_cUpdate();
+            }
+            break;
+        case STATE.CLOSE:
+            if(this.m_cOnDisconnect != null )
+            {
+                foreach(Action&lt;JsonObject&gt; action in this.m_cOnDisconnect)
+                    action.Invoke(null);
+            }
+            this.m_cOnDisconnect = null;
+            this.m_eStat = STATE.DESTORY;
+            break;
+        case STATE.DESTORY:
+            this.m_eStat = STATE.NONE;
+            GameObject.Destroy(gameObject);
+            break;
+        }
+    }
+}
+</code></pre></div>
+<p>}</p>
+
+<p>转载请注明出处：http://www.luzexi.com</p>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page4">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page2">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

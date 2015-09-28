@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Unity3D之对pomelo框架网络层改装 &middot; Hyde
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Hyde
+        </a>
+      </h1>
+      <p class="lead">A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="https://github.com/poole/hyde/archive/v2.1.0.zip">Download</a>
+      <a class="sidebar-nav-item" href="https://github.com/poole/hyde">GitHub project</a>
+      <span class="sidebar-nav-item">Currently v2.1.0</span>
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Unity3D之对pomelo框架网络层改装</h1>
+  <span class="post-date">25 Jun 2014</span>
+  <p>Unity3D之对pomelo框架网络层改装。</p>
+
+<p>最近了解了下网易的开源服务器框架pomelo，github地址：<a href="https://github.com/NetEase/pomelo">https://github.com/NetEase/pomelo</a>发现其中它封装的u3d的网络层部分有线程安全问题，几乎不能直接u3d项目，所以对其进行了2次封装，让他可以真正用于u3d项目。</p>
+
+<p>封装后的源码也同样放在我的github上：<a href="https://github.com/luzexi">https://github.com/luzexi</a> 供大家参考。</p>
+
+<p>下面写下pomelo的u3d网络层源码问题和我对源码的封装过程：
+pomelo网络通信方式分:原始socket和websocket两种，这两种方式由项目需要而选择其中一种来使用。pomelo种对u3d网络通信封装的最主要问题是线程中逻辑句柄的调用，因为u3d对它本身主线程意外的线程调用本身api是非常排斥，当你在其他线程中运行u3d的api会直接被cut掉，所以我们需要将其调用游戏逻辑句柄的那部分放到u3d主线程中去。</p>
+
+<p>如何将线程通信后的游戏句柄调用部分放到u3d主线程中去：</p>
+
+<p>1.网络通信是由数据包为单位来驱动游戏逻辑句柄的，所以只要加入队列概念，在收到数据包时由原来的直接调用句柄，改为先推入到队列中，等待处理。</p>
+
+<h1>if LUZEXI</h1>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    private System.Object m_cLock = new System.Object();    //the lock object
+    private const int PROCESS_NUM = 5;  //the process handle num per fps
+    private Queue&lt;byte[]&gt; m_seqReceiveMsg = new Queue&lt;byte[]&gt;();    //the message queue
+    private TranspotUpdate m_cUpdater = null;   //The Updater of the message queue
+</code></pre></div>
+<h1>endif</h1>
+
+<p>2.在u3d主逻辑中增加一个专门处理网络通信逻辑句柄的类。这个类在通信开始时就加入到u3d主逻辑中去，当通信结束(无论是正常还是异常结束)时在u3d主逻辑中销毁。在主逻辑中不断的或者说每帧都去查看网络通信层队列中有没有等待处理的句柄，有就取出来处理。这样就由等待队列串联起来了几个线程的共同合作。ps:对队列做防死锁操作</p>
+
+<h1>if LUZEXI</h1>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    internal void Update()
+    {
+        for( int i = 0 ; i&lt;PROCESS_NUM &amp;&amp; i&lt; this.m_seqReceiveMsg.Count; i++)
+        {
+            lock(this.m_cLock)
+            {
+                byte[] data = this.m_seqReceiveMsg.Dequeue();
+                this.messageProcesser.Invoke(data);
+            }
+        }
+    }
+</code></pre></div>
+<h1>endif</h1>
+
+<p>3.拆分网络通信事件。将网络通信事件拆分为OnConnect , OnError , OnDisconnect , 这3个事件是最常见的通信事件。这3个事件也必须在主线程中调用，但这3个事件又不是以网络数据包为基础，所以需要在专门处理通信逻辑的类中加入3种状态start , error , disconnect.当网络通信层出现这三种事件时，将状态切过去（ps:而不是直接调用句柄）,然后再由专门处理通信逻辑的类在下一帧去调用对应的事件句柄。</p>
+
+<p>using UnityEngine;
+using System;
+using System.Collections.Generic;
+using SimpleJson;</p>
+
+<p>//  TranspotUpdate.cs
+//  Author: Lu Zexi
+//  2014-6-20</p>
+
+<p>namespace Pomelo.DotNetClient
+{
+    /// 
+<summary>
+    /// Transpot updater.
+    /// </summary>
+    public class TranspotUpdate : MonoBehaviour
+    {
+        private enum STATE
+        {
+            NONE = 0,
+            START = 1,
+            RUNING = 2,
+            CLOSE = 3,
+            DESTORY = 4,
+        }
+        private STATE m<em>eStat = STATE.NONE; //the state of the transpotUpdate
+        private Action m</em>cUpdate;   //update action
+        private List<Action<JsonObject>&gt; m_cOnDisconnect;   //on the disconnect</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    /// &lt;summary&gt;
+    /// Init this instance.
+    /// &lt;/summary&gt;
+    internal static TranspotUpdate Init()
+    {
+        GameObject obj = new GameObject(&lt;span class=&quot;string&quot;&gt;&quot;Socket&quot;);
+        TranspotUpdate trans = obj.AddComponent&lt;TranspotUpdate&gt;();
+        return trans;
+    }
+
+    /// &lt;summary&gt;
+    /// set the update of the process message action
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;update&quot;&gt;Update.&lt;/param&gt;
+    internal void SetUpdate( Action update )
+    {
+        this.m_cUpdate = update;
+    }
+
+    /// &lt;summary&gt;
+    /// set the disconnect evet.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;ondisconnect&quot;&gt;Ondisconnect.&lt;/param&gt;
+    internal void SetOndisconnect( List&lt;Action&lt;JsonObject&gt;&gt; ondisconnect )
+    {
+        this.m_cOnDisconnect = ondisconnect;
+    }
+
+    /// &lt;summary&gt;
+    /// close the updater
+    /// &lt;/summary&gt;
+    internal void Close()
+    {
+        this.m_eStat = STATE.CLOSE;
+    }
+
+    /// &lt;summary&gt;
+    /// Start this update.
+    /// &lt;/summary&gt;
+    internal void _Start()
+    {
+        this.m_eStat = STATE.START;
+    }
+
+    /// &lt;summary&gt;
+    /// destory the gameobject.
+    /// &lt;/summary&gt;
+    internal void _Destory()
+    {
+        if(this.m_eStat != STATE.CLOSE)
+            this.m_eStat = STATE.DESTORY;
+    }
+
+    /// &lt;summary&gt;
+    /// Fixeds the update.
+    /// &lt;/summary&gt;
+    void FixedUpdate()
+    {
+        switch(this.m_eStat)
+        {
+        case STATE.START:
+        case STATE.RUNING:
+            if(this.m_cUpdate != null )
+            {
+                this.m_cUpdate();
+            }
+            break;
+        case STATE.CLOSE:
+            if(this.m_cOnDisconnect != null )
+            {
+                foreach(Action&lt;JsonObject&gt; action in this.m_cOnDisconnect)
+                    action.Invoke(null);
+            }
+            this.m_cOnDisconnect = null;
+            this.m_eStat = STATE.DESTORY;
+            break;
+        case STATE.DESTORY:
+            this.m_eStat = STATE.NONE;
+            GameObject.Destroy(gameObject);
+            break;
+        }
+    }
+}
+</code></pre></div>
+<p>}</p>
+
+<p>转载请注明出处：http://www.luzexi.com</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/lua/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">
+            Unity3D之slua集成第三方库
+            <small>26 Sep 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL/">
+            Unity3D-重新编译Mono加密DLL
+            <small>11 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/linux/2015/04/07/linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/">
+            linux环境变量简介
+            <small>07 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

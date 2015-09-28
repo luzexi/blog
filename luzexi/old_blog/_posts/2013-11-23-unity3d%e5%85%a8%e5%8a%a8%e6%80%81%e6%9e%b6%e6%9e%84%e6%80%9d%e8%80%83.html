@@ -1,0 +1,80 @@
+---
+layout: post
+status: publish
+published: true
+title: Unity3D全动态架构思考
+author:
+  display_name: 陆泽西
+  login: luzexi
+  email: jesse_luzexi@163.com
+  url: http://www.luzexi.com
+author_login: luzexi
+author_email: jesse_luzexi@163.com
+author_url: http://www.luzexi.com
+wordpress_id: 173
+wordpress_url: http://www.luzexi.com/?p=173
+date: !binary |-
+  MjAxMy0xMS0yMyAxOTowMjoxOCArMDgwMA==
+date_gmt: !binary |-
+  MjAxMy0xMS0yMyAxMTowMjoxOCArMDgwMA==
+categories:
+- Unity3D
+- 游戏架构
+tags:
+- c#
+- Unity3D
+- 客户端架构
+- 游戏架构
+- 网络游戏架构
+---
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 优秀传统架构请见:<a href="http:&#47;&#47;www.luzexi.com&#47;unity3d%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84&#47;">http:&#47;&#47;www.luzexi.com&#47;unity3d游戏架构<&#47;a> Unity3D全动态架构思考<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 游戏程序可以实现资源的动态更换，但是能否实现代码的更换呢，这也是我最近思考的问题--Unity3D全动态架构。<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 其实这种更换游戏逻辑代码的方式有很多，比如使用WEB方式，XML做GUI，统一使用代码借口。但这种方式还是不能满足我对动态加载游戏的需求。针对Unity3d引擎，我打算试一把，如果这种架构成型并做成功做出一款全动态游戏，那将是我最大的成就。<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 程序架构的原则不能放弃：让各部门间合作没有障碍，让程序员们之间没有顾及，各顾各的却能成事。<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>第一步<&#47;strong>：为了让全动态加载达到我想要的效果，我拆分各类型资源为：首次必须加载的数据，需要加载的游戏美术资源（GUI数据，模型，贴图），需要加载的游戏数据表资源，需要加载的代码资源，必须包含在内的美术资源，必须包含在内的数据表资源，必须包含在内的代码。<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>第二步<&#47;strong>：拆分后，首先第一部就是如何让游戏资源只加载一次就不需要再加载，并且如何辨认资源被改动，需要重新加载部分资源。我把所有资源都进行MD5记录，放在首次必须加载的数据中，当客户端加载完成这个数据后比对MD5码，当不相同时就获取制定地址进行资源加载。<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>第三步<&#47;strong>：加入必要的程序代码，这些代码必须嵌在游戏内，而不进行动态加载，它的主要作用是，封装U3D渲染接口，加入GUI系统，加入2D动画系统，3D渲染物体，以及加入动态编译系统。<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; U3D主要封装的接口有：物体的位移，旋转，生成，销毁，和3D动画播放，停止，还有声音与视频的播放与停止，以及Mesh与骨骼的修改接口，等等大概就这些。<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GUI系统一般我都会用NGUI作为底层，再在上层做一些基础的封装，包括输入设备的事件封装，GUI展示&middot;隐藏&middot;销毁&middot;逻辑帧&middot;渲染帧以及统一管理封装。<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2D系统是我自己封装的一套基于NGUI的系统，比较简单的封装，只针对序列帧动画，并没有2D骨骼动画，暂时够用。<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3D渲染系统基本上就是封装一些动画物体角色的位移，旋转，动画，状态机等。<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 动态编译系统，我用Lua作为编译器，所有程序都用Lua来写，Lua程序调用以上封装的各个系统。<br />
+<&#47;p></p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>第四步<&#47;strong>：在游戏程序开始，先加载代码资源，加载完毕后编译，编译完成后，启动。这样就开始了整个游戏的程序运行。<br />
+<&#47;p></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	PS：以上文章纯属忽悠，如有雷同纯属天才。待我把思路变成一个成熟的商业游戏项目先。<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;www.luzexi.com&#47;unity3d%e5%85%a8%e5%8a%a8%e6%80%81%e6%9e%b6%e6%9e%84%e6%80%9d%e8%80%83&#47;jingya&#47;" rel="attachment wp-att-174"><img alt="jingya" class="alignnone size-full wp-image-174" height="121" src="http:&#47;&#47;114.215.202.83&#47;blog&#47;wp-content&#47;uploads&#47;2013&#47;11&#47;jingya.gif" width="100" &#47;><&#47;a><br />
+<&#47;p></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>

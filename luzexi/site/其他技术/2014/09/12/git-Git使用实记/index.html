@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Git 使用实记 &middot; Hyde
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Hyde
+        </a>
+      </h1>
+      <p class="lead">A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="https://github.com/poole/hyde/archive/v2.1.0.zip">Download</a>
+      <a class="sidebar-nav-item" href="https://github.com/poole/hyde">GitHub project</a>
+      <span class="sidebar-nav-item">Currently v2.1.0</span>
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Git 使用实记</h1>
+  <span class="post-date">12 Sep 2014</span>
+  <p>下面是我最近一直在使用的git命令。不知道能否为你提供点帮助。当然，我在github上做了很多好东西，全是开源的供你慢慢享用，如果觉得不错可以star(收藏),fllow(订阅)一下。等我空点了再把项目技术分享给你们哦。<a href="https://github.com/luzexi">https://github.com/luzexi</a></p>
+
+<p>clone:</p>
+
+<p>git clone path dir 或者 git clone path 名字可以省略默认使用该项目名</p>
+
+<p>branch:</p>
+
+<p>git branch -r 查看所有分支</p>
+
+<p>git branch 查看当前获取的分支信息，在没有获取分支信息前，只会显示在哪个提交点。</p>
+
+<p>checkout:</p>
+
+<p>git checkout branch_name 切换某个分支</p>
+
+<p>git checkout -b branch_name 以当前分支未基础建立新分支并且切换过去</p>
+
+<p>git checkout -f 强制替换与分支不一样的文件</p>
+
+<p>git checkout path 撤销某个未提交文件恢复原状</p>
+
+<p>git checkout . 撤销所有未提交文件恢复原状</p>
+
+<p>git checkout --ours path  冲突中以当前分支未基准</p>
+
+<p>git checkout --theirs path 冲突中以对方分支未基准</p>
+
+<p>add:</p>
+
+<p>git add path 告诉git这个文件或文件夹加入到提交队列</p>
+
+<p>git add . 告诉git目录下文件和文件夹都加入到提交队列</p>
+
+<p>rm:</p>
+
+<p>git rm path 告诉git这个文件或文件夹需要被删除</p>
+
+<p>git rm . 告诉git当前目录下所有文件和文件夹都需要被删除</p>
+
+<p>git rm <code>git status | grep delete | awk &#39;{print $2}&#39;</code> 删除所有被删除的文件</p>
+
+<p>commit:</p>
+
+<p>git commit -m &quot;write something&quot; 提交当前被git add 或者 git rm 的内容</p>
+
+<p>git commit -a -m &quot;write something&quot; 提交所有被git跟踪的文件，-a表示所有</p>
+
+<p>push:</p>
+
+<p>git push origin branch<em>name 推送branch</em>name分支</p>
+
+<p>git push origin branch<em>name1:branch</em>name2 把当branch<em>name1支推送到新建一个分支branch</em>name2中去</p>
+
+<p>git push 推送所有本地修改过的分支到服务器</p>
+
+<p>pull:</p>
+
+<p>git pull 下载当前分支内容</p>
+
+<p>git pull server branch<em>name 下载server服务器上的 branch</em>name分支，如果有冲突将自动合并</p>
+
+<p>show:</p>
+
+<p>git show commit_id 查看某次提交修改的内容</p>
+
+<p>whatchanged:</p>
+
+<p>git whatchanged filepath  查看某个文件的修改记录</p>
+
+<p>clean:</p>
+
+<p>git clean -f 清除所有未被git跟踪的文件</p>
+
+<p>git clean -df 清除所有未被git跟踪的文件和文件夹</p>
+
+<p>reset:</p>
+
+<p>git reset --hard commitID 回撤到某个提交点,文件也一同回到那个状态</p>
+
+<p>git reset --soft commitID  回撤到某个提交点，但文件仍然保持原来被修改后的状态。</p>
+
+<p>fetch:</p>
+
+<p>git fetch 这个我只知道抓取当前项目的所有信息主要实分支信息和提交记录，并不下载内容</p>
+
+<p>merge:</p>
+
+<p>git merge server branch<em>name 合并server项目上branch</em>name分支</p>
+
+<p>git merge branch<em>name 合并默认origin项目上的branch</em>name分支</p>
+
+<p>diff:</p>
+
+<p>git diff file_name 比较文件与前一个版本的不同之处</p>
+
+<p>remote:</p>
+
+<p>git remote add server<em>name git</em>path 将git<em>path以server</em>name命名，方便后面操作</p>
+
+<p>submodule:</p>
+
+<p>git submodule add <git address> <dir name>  加入其他模块仓库</p>
+
+<p>git submodule init  初始化模块仓库</p>
+
+<p>git submodule update  更新模块仓库</p>
+
+<p>log:</p>
+
+<p>-p：按补丁显示每个更新间的差异</p>
+
+<p>--stat：显示每次更新的修改文件的统计信息</p>
+
+<p>--shortstat：只显示--stat中最后的行数添加修改删除统计</p>
+
+<p>--name-only：尽在已修改的提交信息后显示文件清单</p>
+
+<p>--name-status：显示新增、修改和删除的文件清单</p>
+
+<p>--abbrev-commit：仅显示SHA-1的前几个字符，而非所有的40个字符</p>
+
+<p>--relative-date：使用较短的相对时间显示（例如：&quot;two weeks ago&quot;）</p>
+
+<p>--graph：显示ASCII图形表示的分支合并历史</p>
+
+<p>--pretty：使用其他格式显示历史提交信息</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/lua/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">
+            Unity3D之slua集成第三方库
+            <small>26 Sep 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL/">
+            Unity3D-重新编译Mono加密DLL
+            <small>11 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/linux/2015/04/07/linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/">
+            linux环境变量简介
+            <small>07 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

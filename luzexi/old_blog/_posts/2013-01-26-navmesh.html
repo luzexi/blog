@@ -1,0 +1,688 @@
+---
+layout: post
+status: publish
+published: true
+title: NavMesh
+author:
+  display_name: 陆泽西
+  login: luzexi
+  email: jesse_luzexi@163.com
+  url: http://www.luzexi.com
+author_login: luzexi
+author_email: jesse_luzexi@163.com
+author_url: http://www.luzexi.com
+wordpress_id: 257
+wordpress_url: http://42.121.122.71/blog/?p=4
+date: !binary |-
+  MjAxMy0wMS0yNiAxODoyODowNSArMDgwMA==
+date_gmt: !binary |-
+  MjAxMy0wMS0yNiAxMDoyODowNSArMDgwMA==
+categories:
+- 游戏通用模块
+tags:
+- a星
+- navmesh
+- 三角寻路
+- 寻路
+---
+<h3>
+	Fixing Pathfinding Once and For All<br />
+<&#47;h3></p>
+<p>
+	I normally do everything I can to avoid saying things that could be interpreted as a criticism of other games or developers in the industry.<br />
+<&#47;p></p>
+<p>
+	But in this case, I had to make a bit of an exception.<br />
+<&#47;p></p>
+<p>
+	I need to talk about some problems we face with pathfinding. In order to prove that these problems still exist, I felt the need to make this video ... which will hopefully be taken in the humorous and lighthearted spirit in which it was intended <a><img alt="" border="0" src="http:&#47;&#47;www.thechaosengine.com&#47;forum&#47;images&#47;smilies&#47;icon_wink.gif" &#47;><&#47;a><br />
+<&#47;p></p>
+<p>
+	All of these clips were recorded over the last week with the latest, most-recently-patched version of each game.<br />
+<&#47;p></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<h2>
+	As you can see, we&#39;re still a long way from having robust pathfinding across the board ... and it&#39;s even a problem in some million-unit-selling, AAA-quality titles.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	It&#39;s not necessarily a universal problem. Many modern games <em>do <&#47;em>have high-quality pathfinding, and pathfinding often works well in some of the games shown here.<br />
+<&#47;p></p>
+<p>
+	But there are still too many games that do pathfinding the same way that games did in the 1990s.<br />
+<&#47;p></p>
+<p>
+	(<em>Note: The only reason you see lots of PC role-playing games here just comes down to convenience. These are the games I had installed at the time. The problem isn&#39;t specific to any genre or platform by any stretch of the imagination; there are plenty of console games with similar issues.<&#47;em>)<br />
+<&#47;p></p>
+<p>
+	To the best of my knowledge, most of these games use <em>waypoint graphs <&#47;em>for pathfinding. I think that&#39;s the reason for several of the pathfinding issues you see in this video, and many of the pathfinding problems we face in the industry as a whole.<br />
+<&#47;p></p>
+<p>
+	I believe waypoint graphs are now obsolete. This article explains the limitations of the waypoint graph approach and lays out a five-point argument for a better approach.<br />
+<&#47;p></p>
+<p>
+	There was a time when it made sense to use waypoints for pathfinding. Back in the 1980s and 1990s, we were working under serious technical constraints and we had to cut a lot of corners.<br />
+<&#47;p></p>
+<p>
+	But we&#39;re a multi-billion-dollar industry now. Our target platforms have multiple cores and ever-increasing amounts of memory, and we can afford to do pathfinding correctly.<br />
+<&#47;p></p>
+<p>
+	There&#39;s a saying among AI developers in the industry: "pathfinding is solved." We have good approaches to every pathfinding problem modern games face. We just don&#39;t always <em>use <&#47;em>them.<br />
+<&#47;p></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<h2>
+	There&#39;s no reason not to have pathfinding that works in every game, every time.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Hit the jump for a detailed explanation.<br />
+<&#47;p></p>
+<h1>
+	Why Waypoints Aren&#39;t For Pathfinding<br />
+<&#47;h1></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Let me show you what a typical waypoint graph looks like. Here&#39;s a small piece of Stormwind City in World of WarCraft:<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Stormwind.png" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Stormwind.png" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 1. Part of Stormwind City in World of WarCraft<&#47;em><br />
+<&#47;p></p>
+<p>
+	Here&#39;s what a typical waypoint graph might look like in that area.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Stormwind_waypoints.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Stormwind_waypoints.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 2. The same area annotated with a waypoint graph<&#47;em><br />
+<&#47;p></p>
+<p>
+	There&#39;s another way to do it, and it involves using convex polygons to describe where AI characters can travel. This representation gives AIs a lot more information about the world around them and supports much more intelligent decision-making.<br />
+<&#47;p></p>
+<p>
+	Here&#39;s what a navigation mesh looks like:<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Stormwind-NavMesh.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Stormwind-NavMesh.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 3. The same area annotated with a navigation mesh<&#47;em><br />
+<&#47;p></p>
+<p>
+	Here, then are the five big reasons why waypoint networks fall short.<br />
+<&#47;p></p>
+<h2>
+	1. Some kinds of game worlds require a ridiculous number of waypoints.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Large, open areas usually require tons of waypoints sprinkled liberally throughout the game world to achieve adequate movement.<br />
+<&#47;p></p>
+<p>
+	A navigation mesh, on the other hand, usually only requires a couple of big polygons for these kinds of areas ... which you can pathfind through that much more quickly.<br />
+<&#47;p></p>
+<p>
+	Here&#39;s an example.<br />
+<&#47;p></p>
+<p>
+	The image below shows a town in World of WarCraft called "Halaa." This is a relatively large, mostly open area that NPCs need to be able to navigate through. I&#39;ve edited out a few details, such as the flag and the fountain in town, for the sake of this example.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Halaa.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Halaa.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 4. The town of Halaa in World of WarCraft, seen from above (slightly modified)<&#47;em><br />
+<&#47;p></p>
+<p>
+	With a waypoint-based system, we need to place a lot of waypoints to get full coverage. Even then, our NPCs will end up doing a lot of zigzags during movement unless we specify a lot more waypoints than I&#39;ve shown here.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Halaa_waypoints2.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Halaa_waypoints2.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 5. Halaa with a waypoint graph<&#47;em><br />
+<&#47;p></p>
+<p>
+	With a navigation mesh, on the other hand, we can describe the same area with a handful of convex polygons:<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Halaa_navmesh2.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Halaa_navmesh2.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 6. Halaa with a navigation mesh<&#47;em><br />
+<&#47;p></p>
+<p>
+	The simplicity of the navigation mesh means we don&#39;t have to search as many nodes when we call our pathfinding algorithm at runtime, and pathfinding will be faster as a result.<br />
+<&#47;p></p>
+<h2>
+	2. They make characters "zig-zag" as they move.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Waypoint graphs force your characters to stick to the graphs you create. This means that your characters are effectively on rails, and will almost never take the <em>optimal <&#47;em>path from A to B ... because the most direct path will almost never match the graph.<br />
+<&#47;p></p>
+<p>
+	That causes unnatural pathfinding artifacts -- in particular, characters artificially "zig-zagging" left and right as they walk.<br />
+<&#47;p></p>
+<p>
+	Here&#39;s an example. Let&#39;s say we want a character to walk from A to B:<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Halaa_ab.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Halaa_ab.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 7. Two points in Halaa<&#47;em><br />
+<&#47;p></p>
+<p>
+	Here&#39;s what the path would look like with the waypoint graph I showed you earlier.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Halaa_waypoints2_AB.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Halaa_waypoints2_AB.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 8. Navigating from A to B using the waypoint graph<&#47;em><br />
+<&#47;p></p>
+<p>
+	As you can see, our AIs will be turning a lot while they walk along the yellow path.<br />
+<&#47;p></p>
+<p>
+	Ideally, after we created the path, we could somehow adjust it to make it smoother ... perhaps by creating a <a href="http:&#47;&#47;en.wikipedia.org&#47;wiki&#47;Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline">Catmull-Rom spline<&#47;a> along the path points.<br />
+<&#47;p></p>
+<p>
+	The problem is, waypoint networks don&#39;t have any information about anything outside the network, and that makes it impossible to do path-smoothing and adjustment safely and reliably.<br />
+<&#47;p></p>
+<p>
+	How can you create a spline if the spline is outside of the waypoint graph, and actually following its curves might make you fall off a bridge?<br />
+<&#47;p></p>
+<p>
+	You might think there has to be some simpler way to make a path. Unfortunately, with waypoint graphs, there isn&#39;t. Again, if we deviate outside of the waypoint graph even a little bit, we could easily end up falling off a cliff or bumping into a wall. We just don&#39;t have any way of knowing, since the graph doesn&#39;t have any of that data.<br />
+<&#47;p></p>
+<p>
+	So in order to stay safe, we have to take the most pessimistic view possible, and stay on the graph at all times.<br />
+<&#47;p></p>
+<p>
+	The navigation mesh path, on the other hand, would look like this:<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Halaa_navmesh2_AB.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Halaa_navmesh2_AB.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 9. Navigating from A to B on the navigation mesh<&#47;em><br />
+<&#47;p></p>
+<p>
+	Since we know where a character can safely walk, we can smooth out the path in any way we like, so long as the smoothing keeps the path on the navigation mesh.<br />
+<&#47;p></p>
+<p>
+	(<em>"Oh," I hear you say, "but I can just add more links to my waypoint graph to smooth everything out! I&#39;ll connect all the nodes in the whole town if I know an NPC can walk between them in a straight line."<&#47;em><br />
+<&#47;p></p>
+<p>
+	"But that gives you exponential explosion," I reply ... "You&#39;re talking about 40 or 50 extra links in this example alone. The number of connections you&#39;ll need between all the nodes approaches O(N^2) as the size of the area increases."<br />
+<&#47;p></p>
+<p>
+	"OK," I hear you say, "In that case, I&#39;ll just mark each area between any set of 3 mutually adjacent waypoints as &#39;open&#39; so I know my AIs can walk anywhere in that area."<br />
+<&#47;p></p>
+<p>
+	<em>"That makes a polygon ... and you&#39;ve just created a navigation mesh," say I<&#47;em>).<br />
+<&#47;p></p>
+<p>
+	The fact that navigation meshes tell us exactly where our characters are allowed to travel means we can easily use splines to smooth our paths. All we need to do is make sure our splines stay inside the navigation mesh.<br />
+<&#47;p></p>
+<p>
+	Going back to our Stormwind City example, here&#39;s a waypoint path (red) and a smoothed path on a navigation mesh (blue).<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Stormwind-NavMesh-with_splines.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Stormwind-NavMesh-with_splines.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 10. A waypoint path (red) and a smoothed navigation mesh path (blue)<&#47;em><br />
+<&#47;p></p>
+<h2>
+	3. They don&#39;t allow path correction. That makes robust dynamic obstacle avoidance difficult, if not impossible.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Waypoint graphs don&#39;t have any data about anything outside the graph. They don&#39;t know which areas characters can legally walk on even one inch outside the graph.<br />
+<&#47;p></p>
+<p>
+	That makes it impossible for pathfinding systems to modify waypoint paths to deal with dynamic obstacles robustly.<br />
+<&#47;p></p>
+<p>
+	Let&#39;s imagine there&#39;s a large, heavy crate on the bridge in Stormwind City.<br />
+<&#47;p></p>
+<p>
+	With a waypoint graph, we&#39;re screwed -- if the crate overlaps the waypoint graph, we have no idea whether to go around it to the left or the right, or if our path is blocked completely and we need to take a major detour. We could always guess, but if we make the wrong guess, we&#39;ll fall off the bridge and end up in the water.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Stormwind_waypoints_and_crate.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Stormwind_waypoints_and_crate.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 11. A large, immovable crate on the bridge<&#47;em><br />
+<&#47;p></p>
+<p>
+	With a navigation mesh, though, it&#39;s a lot easier, since we know what areas we&#39;re allowed to walk in. We do a bit of raycasting against the barrel and adjust our path around it, keeping our path (and ourselves) safely on the navigation mesh.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Stormwind-NavMesh-avoidance-cropped.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Stormwind-NavMesh-avoidance-cropped.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 12. Navigating around the crate<&#47;em><br />
+<&#47;p></p>
+<p>
+	Sure, you can address this in a waypoint graph, too, by dropping down tons and tons of waypoints until your waypoint graph is as thick as grass (and your pathfinding as slow as molasses).<br />
+<&#47;p></p>
+<p>
+	I don&#39;t know about you, but I&#39;d rather run my <a href="http:&#47;&#47;en.wikipedia.org&#47;wiki&#47;A*_search_algorithm">A* search<&#47;a> over one big polygon than several hundred waypoints.<br />
+<&#47;p></p>
+<h2>
+	4. They don&#39;t work robustly for characters that move differently.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Waypoint graphs tend to work poorly for characters with different heights, widths, turn rates, and other pathfinding parameters. This means it&#39;s usually impossible to use a single, unified waypoint graph for all the different types of units in your game.<br />
+<&#47;p></p>
+<p>
+	When we think about AI pathfinding, we tend to think in terms of humans navigating around in a game world.<br />
+<&#47;p></p>
+<p>
+	But AI systems need to control lots of different kinds of units -- tanks, planes, ships, hovercraft, motorcycles, orcs, goblins, dragons, lumbering giants, flying and hovering creatures, and so on. In many cases, units need to do pathfinding differently depending on their size, shape, and movement capabilities. A good pathfinding representation should handle all of them.<br />
+<&#47;p></p>
+<p>
+	Here&#39;s an example. Let&#39;s say we have a concrete bunker out in the desert with a few sandbags around it.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=bf42_piece.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;bf42_piece.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 13. A bunker in the desert<&#47;em><br />
+<&#47;p></p>
+<p>
+	If we have a human soldier, he can run along right next to the sandbags (the red arrow in the image below).<br />
+<&#47;p></p>
+<p>
+	A Panzer tank, on the other hand, has to drive much farther away from the sandbags to avoid a collision (blue arrow).<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=bf42_piece_paths.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;bf42_piece_paths.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 14. The closest possible paths that a human soldier (red) and a tank (blue) can take around the sandbags<&#47;em><br />
+<&#47;p></p>
+<p>
+	With a waypoint approach, you can&#39;t handle this robustly with a single representation. You need to use totally separate waypoint networks for the tanks and the soldiers. Add a new "motorcycle" unit, and now you need a third network. And so on for every different type of unit that has different movement capabilities.<br />
+<&#47;p></p>
+<p>
+	With a navigation mesh, on the other hand, it becomes much easier.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=bf42_piece_mesh.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;bf42_piece_mesh.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 15. Part of a navigation mesh around the outside of the bunker<&#47;em><br />
+<&#47;p></p>
+<p>
+	Notice the two light green edges emanating from the corner of the sandbags in the image above. Since we know that a soldier has a collision radius of 1 meter, and a Panzer tank has a radius of 5 meters, it becomes trivial for us to build two different paths using the same mesh. We just compute the path along the sandbags, and then push it either 1 meter or 5 meters away from the corner, respectively, depending on whether we&#39;re doing pathfinding for a soldier or a tank.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=bf42_piece_mesh_with_extents.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;bf42_piece_mesh_with_extents.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 16. Part of a navigation mesh around the outside of the bunker<&#47;em><br />
+<&#47;p></p>
+<p>
+	Here&#39;s another example. Let&#39;s say we have a soldier on a motorcycle. Unlike human soldiers, motorcycles can&#39;t turn on a dime while they&#39;re moving.<br />
+<&#47;p></p>
+<p>
+	In the example below, it&#39;s obvious that the motorcycle rider can drive safely from his current position to the room at the top (red line), but cannot turn into the hallway on the right since the angle is too sharp (orange line). Whatever pathfinding representation we choose should be able to figure this out, too.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=motorcycle.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;motorcycle.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 17. A motorcyclist can go into the room at the top (red) but not the room on the right (orange)<&#47;em><br />
+<&#47;p></p>
+<p>
+	With a navigation mesh, this is relatively easy to do. We just test the turn angles and distances as we&#39;re doing the pathfinding and reject any paths that require steep turns over short distances.<br />
+<&#47;p></p>
+<p>
+	With a waypoint approach, on the other hand, it&#39;s essentially impossible. At a minimum, we&#39;d need a completely separate waypoint graph for soldiers on motorcycles, since we can&#39;t use the same graph that soldiers on foot are using. Adding an entirely new graph like that for every unit with different pathfinding capabilities gets very cumbersome.<br />
+<&#47;p></p>
+<h2>
+	5. They don&#39;t have enough data to support what your AI needs beyond pathfinding.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	AI search spaces aren&#39;t just for navigation. AIs need to be able to use the pathfinding data to tell them how to move in the world.<br />
+<&#47;p></p>
+<p>
+	A game character needs to constantly query the pathfinding system and ask: is it OK if I move here? How about over here?<br />
+<&#47;p></p>
+<p>
+	Games are increasingly moving to animation-driven movement systems that give animators control over the position of game characters. That means that in order to know what the results will be if we play animation X, we need to figure out where the character will be when X is finished, and whether that location is inside a wall, hanging over a cliff, or in some other location the level designers don&#39;t want him to be.<br />
+<&#47;p></p>
+<p>
+	Here&#39;s an example. The swordsman below has four moves: a left strafe, a right strafe, a backstep, and a big flying leap into the air that sends him up 20 feet and then has him land 8 feet in front of where he started.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=swordsman2.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;swordsman2.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 18. A swordsman with four animations that contain translation<&#47;em><br />
+<&#47;p></p>
+<p>
+	In order to make sure my swordsman doesn&#39;t end up slamming into a brick wall when he leaps or strafes or backsteps, I need to test the predicted end position of each of these animations against the navigation mesh.<br />
+<&#47;p></p>
+<p>
+	Yes, it&#39;s possible to use your collision system to do raycasting. That will often give you useful information, and for dynamic physics objects in the game world, it&#39;s usually the only way for AIs to find out about them.<br />
+<&#47;p></p>
+<p>
+	But raycasting can be expensive, and when you only care about the static game world and not the dynamic physics objects, it&#39;s faster and easier to query a navigation mesh.<br />
+<&#47;p></p>
+<p>
+	Although I can use raycasting to tell me if there&#39;s a wall between me and point (X,Y,Z), the collision system can&#39;t tell me if the swordsman will land in a position that the level designers actually <em>want<&#47;em> characters to walk in ... only a navigation mesh can tell me that.<br />
+<&#47;p></p>
+<hr &#47;>
+<p>
+	If you&#39;re still not convinced after all of that, let me try to address any remaining concerns you might have by answering common questions about waypoint graphs and navigation meshes.<br />
+<&#47;p></p>
+<h1>
+	Q &amp; A<br />
+<&#47;h1></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<h2>
+	But isn&#39;t it slower to do pathfinding on a navigation mesh?<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Not at all. A navigation mesh is a graph, just like a waypoint graph is, and the core pathfinding routines are very similar. The difference is that a navigation mesh has a polygon associated with each graph node.<br />
+<&#47;p></p>
+<p>
+	The image below shows the graph connecting the nav mesh polygons.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Stormwind-NavMesh-with_centers.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Stormwind-NavMesh-with_centers.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 19. An illustration of the graph (red) underlying a navigation mesh<&#47;em><br />
+<&#47;p></p>
+<p>
+	Whenever you run the A* algorithm for pathfinding, you&#39;re always running it on some kind of a graph, whether it&#39;s a square grid, a waypoint graph, a navigation mesh, or what have you.<br />
+<&#47;p></p>
+<p>
+	In most cases, navigation meshes have performance similar to waypoint graphs. In cases where they cover the same area with fewer nodes (such as Figure 6), a navigation mesh can actually be significantly faster.<br />
+<&#47;p></p>
+<h2>
+	But don&#39;t navigation meshes take a lot more memory than waypoints?<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	If done correctly, no.<br />
+<&#47;p></p>
+<p>
+	Navigation meshes are a very simple and compact representation. In general, a nav mesh will only require a tiny fraction of the memory required by the underlying rendering geometry for the static game world. A navigation mesh is much smaller than a collision mesh, since it cares about fewer surfaces (it ignores walls, ceilings, and other unwalkable surfaces) and uses a smaller number of much larger polygons to cover a given area.<br />
+<&#47;p></p>
+<p>
+	A navigation mesh tends to use a few more points for each graph node than a waypoint graph in the worst case. And in some cases, such as the town in Figure 6, a navigation mesh can actually be smaller because it&#39;s a simpler representation.<br />
+<&#47;p></p>
+<h2>
+	Most of the examples you showed were role-playing games. Why don&#39;t I see the same kinds of problems in first-person shooters?<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	The problems are still there in many first-person shooters, but they&#39;re harder to spot due to the nature of the gameplay.<br />
+<&#47;p></p>
+<p>
+	- Most AIs don&#39;t live long enough to let you spot the flaws in their pathfinding.<br &#47;><br />
+	- AIs will usually stop and shoot the moment they have line-of-sight to you, so their paths are a lot shorter.<br &#47;><br />
+	- In many single-player FPS games, AIs don&#39;t move very much, and will attempt to snipe you from a relatively fixed position.<br &#47;><br />
+	- A lot of modern FPS games provide AI sidekicks who will kill the enemy AIs so quickly they don&#39;t have time to move very far.<br />
+<&#47;p></p>
+<p>
+	Here&#39;s an example from Half-Life 2. With a little bit of experimentation, it&#39;s easy to see that the guard on the stairs is locked to a single, linear waypoint path that runs directly up and down the center of the stairs. The guard still ends up looking competent since he can shoot at you whenever he can see you.<br />
+<&#47;p></p>
+<p>
+	When you take away ranged weapons and force characters to use melee weapons -- as with some of the Covenant soldiers in Halo, the Icarus stealth assassins in F.E.A.R., or the Metroids in a Metroid Prime game -- waypoint graphs are suddenly a much less attractive option (which is part of the reason all three of those games used navigation meshes instead ...)<br />
+<&#47;p></p>
+<h2>
+	Look, I understand everything you said, but designers need to be able to put down cover points, patrol paths, and so on. That&#39;s just essential for creating the AI in our games.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Of course! You can still do that, even if you&#39;re using a navigation mesh.<br />
+<&#47;p></p>
+<p>
+	The key is to separate the two representations. You use one representation (a nav mesh) for the pathfinding and navigation, and another (designer-placed points) tell the AI how to use the world.<br />
+<&#47;p></p>
+<p>
+	A navigation mesh doesn&#39;t prevent you from doing any scripting. It simply provides extra information for your AIs for when they need to navigate more autonomously.<br />
+<&#47;p></p>
+<p>
+	Here&#39;s an example. We have a patrol path (purple) for some guards patrolling around town and a special marker for an old man who likes to fish in the moat a few times a day (red). The cover points (yellow) represent points where characters could take cover around corners in FPS-style magic duels between the mages and warlocks of Stormwind City.<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Stormwind-NavMesh-with_hints.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Stormwind-NavMesh-with_hints.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 20. Various terrain markers (AI hints) and a navigation mesh<&#47;em><br />
+<&#47;p></p>
+<h2>
+	OK, but isn&#39;t it a lot of work to place a navigation mesh?<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	In general, placing a navigation mesh by hand is not much more labor-intensive than placing a waypoint graph. In both techniques, the amount of time you spend creating the search space representation is a fraction of the time you spend testing it in-game.<br />
+<&#47;p></p>
+<p>
+	From my experience, it takes 1-3 hours to create a navigation mesh for a medium-sized level in an FPS game.<br />
+<&#47;p></p>
+<p>
+	Creating a navigation mesh editor is relatively simple. All you need is the ability to drop vertices into the game world, select them, and specify that they represent a polygon in the navigation mesh. You can determine the connectivity of the navigation mesh based on which vertices are shared between adjacent polygons.<br />
+<&#47;p></p>
+<p>
+	Also, there are some middleware solutions, such as <a href="http:&#47;&#47;www.xaitment.com&#47;english&#47;products-overview&#47;xaitmap.html">xaitment<&#47;a>, <a href="http:&#47;&#47;navpower.com&#47;&#47;">NavPower<&#47;a>, <a href="http:&#47;&#47;www.pathengine.com&#47;">PathEngine<&#47;a> and <a href="http:&#47;&#47;www.kynogon.com&#47;">Kynapse<&#47;a>, that can handle both the nav mesh construction and runtime pathfinding aspects for you. All of these are becoming increasingly robust and viable solutions.<br />
+<&#47;p></p>
+<h2>
+	What if I want to have AIs walk up and down stairs? My designers don&#39;t want to have to lay down a nav mesh polygon for every single step in the staircase.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	A navigation mesh just represents an area that an AI can walk in. It doesn&#39;t replace a collision mesh -- your NPCs will still use the underlying collision system for all their in-game collision.<br />
+<&#47;p></p>
+<p>
+	You should be able to safely cover the entire stairway in a single rectangular navigation mesh polygon.<br />
+<&#47;p></p>
+<h2>
+	Can&#39;t I just give each point in my waypoint graph a radius, so I have circles instead of points? That gives me a representation of what areas are walkable. That&#39;s how they do it in robotics, too ...<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	That approach can work in some cases, but most areas in videogames have a lot of human architecture, full of angular streets and buildings. Circles don&#39;t represent these kinds of spaces very well, and it&#39;s difficult to achieve the same level of coverage that you can get with polygons.<br />
+<&#47;p></p>
+<p>
+	Here&#39;s an example of the circle-based approach in Stormwind City:<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=Stormwind_circles.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;Stormwind_circles.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 21. Extending the waypoint approach with circles<&#47;em><br />
+<&#47;p></p>
+<p>
+	(Quick anecdote: When I worked on the <em>MechWarrior 4: Vengeance <&#47;em>team, we found out the hard way that the circle-based system that worked so well in outdoor areas really didn&#39;t work so well when we suddenly tried to put it to use in urban areas. The team eventually made it work, but a lesson was learned: circles and urban environments don&#39;t mix!)<br />
+<&#47;p></p>
+<p>
+	Also, having corners is important. In the case of the desert bunker Figure 16, we can use the corner of the navigation mesh to create different paths for units with different shapes, sizes, and movement capabilities, such as a soldier and a tank. Circle graphs don&#39;t have "corners," so it becomes much more difficult to create correct paths for different kinds of units.<br />
+<&#47;p></p>
+<h2>
+	My game already has a collision mesh. Can&#39;t I just use that for pathfinding?<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	You can try, but it&#39;s not a good idea.<br />
+<&#47;p></p>
+<p>
+	A collision mesh is optimized for collision, not for pathfinding. As a result, it&#39;s going to have a lot more polygons than you need for pathfinding, and your search function is going to be slower.<br />
+<&#47;p></p>
+<p>
+	For example, your collision mesh might have 1000 polygons on a cobblestone street that a navigation mesh would represent with 1 rectangle, and 50 polygons on the roof of a building that a navigation mesh might not include at all (since our characters would presumably never walk on the roof).<br />
+<&#47;p></p>
+<p>
+	Also, part of the advantage of a navigation mesh (as with any search space representation) is that it doesn&#39;t just tell you where your characters <em>can<&#47;em> travel; it also tells you where designers <em>want<&#47;em> them to travel.<br />
+<&#47;p></p>
+<p>
+	If you let your designers create navigation meshes by hand, you give them the ability to tell the game "don&#39;t ever send AIs here. I just don&#39;t want them to go there because it&#39;s not appropriate for this game." That&#39;s not the kind of information you can ever get from a collision mesh.<br />
+<&#47;p></p>
+<h2>
+	All the examples as presented show the nav mesh as a 2D projection onto the space. How would you handle a case like a bridge over a road, wherein you could go over or under. Or a building with multiple floors?<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Navigation meshes handle those cases very elegantly. Here&#39;s an example of what part of a nav mesh in Shattrath City in World of WarCraft might look like (for simplicity, I&#39;ve omitted the parts of the nav mesh on the far side of the bridge).<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;s252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;?action=view&amp;current=shattrath_navmesh.jpg" target="_blank"><img alt="Photobucket" border="0" src="http:&#47;&#47;i252.photobucket.com&#47;albums&#47;hh9&#47;PaulTozour&#47;shattrath_navmesh.jpg" &#47;><&#47;a><br &#47;><br />
+	<em>Figure 22. Part of a navigation mesh over and under a bridge in Shattrath City<&#47;em><br />
+<&#47;p></p>
+<p>
+	In a navigation mesh, each polygon also typically stores a "height" parameter indicating how much vertical clearance that is available for that polygon. So the polygon that you see passing under the bridge would know that it only has 7 feet of clearance, and units more than 7 feet tall would know that they cannot use those polygons.<br />
+<&#47;p></p>
+<p>
+	In the case of a multi-storey building, each floor can have its own navigation mesh polygons, connected with additional polygons in the stairwells (elevators are a bit trickier, of course).<br />
+<&#47;p></p>
+<h2>
+	I don&#39;t believe in a one-size-fits-all approach. Different games require different representations for pathfinding.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	If you&#39;re making a strategy game that&#39;s entirely 2D, then an approach based on a grid is usually better, since grids give you fast random access to any cell.<br />
+<&#47;p></p>
+<p>
+	Otherwise, the navigation mesh really is the best approach we&#39;ve found for robust pathfinding and terrain reasoning in truly 3D worlds.<br />
+<&#47;p></p>
+<h2>
+	Suppose I were interested in implementing navigation meshes in my game. Has anything been published to help me figure out how to build the meshes, do pathfinding on them, and optimize them for my game?<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Here are the ones I&#39;m aware of:<br />
+<&#47;p></p>
+<p>
+	"Simplified 3D Movement and Pathfinding Using Navigation Meshes" by Greg Snook (<a href="http:&#47;&#47;www.amazon.com&#47;Game-Programming-Gems&#47;dp&#47;1584500492&#47;">Game Programming Gems<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Polygon Soup for the Programmer&#39;s Soul: 3D Pathfinding" by Greg Hjelstrom and Patrick Smith (<a href="http:&#47;&#47;www.gamasutra.com&#47;features&#47;20020405&#47;smith_01.htm">GamaSutra.com<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Building a Near-Optimal Navigation Mesh" by Paul Tozour (<a href="http:&#47;&#47;www.amazon.com&#47;Game-Programming-Wisdom-CD-ROM-Development&#47;dp&#47;1584500778&#47;">AI Game Programming Wisdom<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Efficient Navigation Mesh Implementation" by John C. O&#39;Neill (<a href="http:&#47;&#47;www.jogd.com&#47;">Journal of Game Development, March 2004<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Search Space Representations" by Paul Tozour (<a href="http:&#47;&#47;www.amazon.com&#47;AI-Game-Programming-Wisdom-Development&#47;dp&#47;1584502894&#47;">AI Game Programming Wisdom 2<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"A Fast Approach To Navigation Meshes" by Stephen White and Christopher Christensen (<a href="http:&#47;&#47;www.amazon.com&#47;Game-Programming-Gems&#47;dp&#47;1584502339&#47;">Game Programming Gems 3<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Choosing a Relationship Between Path-Finding and Collision" by Thomas Young (<a href="http:&#47;&#47;www.amazon.com&#47;Game-Programming-Gems&#47;dp&#47;1584502339&#47;">Game Programming Gems 3<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Improving on Near-Optimality: More Techniques for Building Navigation Meshes" by Fredrik Farnstrom (<a href="http:&#47;&#47;www.amazon.com&#47;AI-Game-Programming-Wisdom-Development&#47;dp&#47;1584504579&#47;">AI Game Programming Wisdom 3<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Smoothing a Navigation Mesh Path" by Geraint Johnson (<a href="http:&#47;&#47;www.amazon.com&#47;AI-Game-Programming-Wisdom-Development&#47;dp&#47;1584504579&#47;">AI Game Programming Wisdom 3<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Dynamically Updating a Navigation Mesh via Efficient Polygon Subdivision" by Paul Marden and Forrest Smith (<a href="http:&#47;&#47;www.amazon.com&#47;AI-Game-Programming-Wisdom-CD&#47;dp&#47;1584505230&#47;">AI Game Programming Wisdom 4<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Intrinsic Detail in Navigation Mesh Generation" by Colt McAnlis and James Stewart (<a href="http:&#47;&#47;www.amazon.com&#47;AI-Game-Programming-Wisdom-CD&#47;dp&#47;1584505230&#47;">AI Game Programming Wisdom 4<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Navigation Mesh Generation: An Empirical Approach" by David Hamm (<a href="http:&#47;&#47;www.amazon.com&#47;AI-Game-Programming-Wisdom-CD&#47;dp&#47;1584505230&#47;">AI Game Programming Wisdom 4<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Navigation Mesh Generation in Highly Dynamic Worlds" by Ramon Axelrod (<a href="http:&#47;&#47;www.amazon.com&#47;AI-Game-Programming-Wisdom-CD&#47;dp&#47;1584505230&#47;">AI Game Programming Wisdom 4<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	"Crowds in a Polygon Soup: Next-Gen Path Planning" by David Miles (<a href="http:&#47;&#47;www.navpower.com&#47;gdc2006_miles_david_pathplanning.ppt">http:&#47;&#47;www.navpower.com&#47;gdc2006_miles_david_pathplanning.ppt<&#47;a>)<br />
+<&#47;p></p>
+<p>
+	<em>Note: Please <a href="mailto:paul.tozour@gmail.com">e-mail me<&#47;a> if you&#39;re aware of any other articles that should be on this list.<&#47;em><br />
+<&#47;p></p>
+<h2>
+	How many games have actually used navigation meshes successfully?<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Here&#39;s a short list:<br />
+<&#47;p></p>
+<p>
+	<a href="http:&#47;&#47;www.gamerankings.com&#47;htmlpages2&#47;562116.asp">Halo 2<&#47;a><br &#47;><br />
+	<a href="http:&#47;&#47;www.gamerankings.com&#47;htmlpages2&#47;926632.asp">Halo 3<&#47;a><br &#47;><br />
+	<a href="http:&#47;&#47;www.gamerankings.com&#47;htmlpages2&#47;920744.asp">First Encounter Assault Recon (F.E.A.R.)<&#47;a><br &#47;><br />
+	<a href="http:&#47;&#47;developer.valvesoftware.com&#47;wiki&#47;Navigation_Meshes">Counter-Strike: Source<&#47;a><br &#47;><br />
+	<a href="http:&#47;&#47;www.gamerankings.com&#47;htmlpages2&#47;447244.asp">Metroid Prime<&#47;a><br &#47;><br />
+	<a href="http:&#47;&#47;www.gamerankings.com&#47;htmlpages2&#47;589573.asp">Metroid Prime 2: Echoes<&#47;a><br &#47;><br />
+	<a href="http:&#47;&#47;www.gamerankings.com&#47;htmlpages2&#47;928517.asp">Metroid Prime 3: Corruption<&#47;a><br &#47;><br />
+	<a href="http:&#47;&#47;www.gamerankings.com&#47;htmlpages2&#47;516509.asp">Jak and Daxter: The Precursor Legacy<&#47;a><br &#47;><br />
+	<a href="http:&#47;&#47;www.gamerankings.com&#47;htmlpages2&#47;914535.asp">Jak II<&#47;a><br &#47;><br />
+	<a href="http:&#47;&#47;www.gamerankings.com&#47;htmlpages2&#47;919901.asp">Jak 3<&#47;a><br &#47;><br />
+	<a href="http:&#47;&#47;www.gamerankings.com&#47;htmlpages2&#47;932984.asp">Uncharted: Drake&#39;s Fortune<&#47;a><br &#47;><br />
+	<a href="http:&#47;&#47;www.gamerankings.com&#47;htmlpages2&#47;922228.asp">Scarface: The World is Yours<&#47;a><br />
+<&#47;p></p>
+<p>
+	... and many more.<br />
+<&#47;p></p>
+<p>
+	So there you have it: all the cool kids are doing it.<br />
+<&#47;p></p>
+<h2>
+	OK, maybe it works for you, but we used waypoints in all of our previous games, and they worked fine.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<h2>
+	Like they say, if it ain&#39;t broke, don&#39;t fix it ... and we haven&#39;t run into any of the problems you&#39;re talking about.<br />
+<&#47;h2></p>
+<p>
+	&nbsp;<br />
+<&#47;p></p>
+<p>
+	Look at the big picture. Think 10 or 20 years down the road.<br />
+<&#47;p></p>
+<p>
+	In that kind of time frame, do you think your games might have lots of different types of AI-controlled characters with different shapes, sizes, and movement capabilities?<br />
+<&#47;p></p>
+<p>
+	Will players have AI henchmen that they expect to be just as intelligent as themselves?<br />
+<&#47;p></p>
+<p>
+	Will your game worlds be significantly larger, more complex, and more dynamic than they are today?<br />
+<&#47;p></p>
+<p>
+	Will you have huge crowds of AI characters -- so many that just using simple steering and obstacle avoidance are no longer adequate to make them coordinate with each other effectively?<br />
+<&#47;p></p>
+<p>
+	Will your games have realistic physics and huge amounts of physically-simulated objects, and will players be able to use the physics to mess with the AI characters in every way imaginable?<br />
+<&#47;p></p>
+<p>
+	Will players be able to change the game world until it&#39;s virtually unrecognizable?<br />
+<&#47;p></p>
+<p>
+	Will there be AIs in multiplayer that are expected to pass for human players?<br />
+<&#47;p></p>
+<p>
+	There&#39;s no way to know what games will look like decades in the future, but it&#39;s clear that we&#39;re going to need much more advanced AI. Part of that will require us to give game characters the data they need to reason about their environment, find optimal paths, and deal robustly with complex, ever-changing game worlds.<br />
+<&#47;p></p>

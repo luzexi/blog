@@ -1,0 +1,38 @@
+---
+layout: post
+status: publish
+published: true
+title: Unity3D-游戏画面高低品质切换
+author:
+  display_name: 陆泽西
+  login: luzexi
+  email: jesse_luzexi@163.com
+  url: http://www.luzexi.com
+author_login: luzexi
+author_email: jesse_luzexi@163.com
+author_url: http://www.luzexi.com
+wordpress_id: 528
+wordpress_url: http://www.luzexi.com/?p=528
+date: !binary |-
+  MjAxNS0wNC0wMSAwMDozNjowNiArMDgwMA==
+date_gmt: !binary |-
+  MjAxNS0wMy0zMSAxNjozNjowNiArMDgwMA==
+categories:
+- Unity3D
+- 游戏架构
+tags:
+- Unity3D
+- Unity3D架构
+- 客户端架构
+---
+<p>Unity3D-游戏画面高低品质切换。最近想办法让游戏在高画质和低画质之间切换，在判定游戏帧数高低后，可以实时切换游戏品质让游戏更加流畅。这能给客户端在渠道发行后提高些许留存率。</p>
+<p>ngui和ugui切换方式有所不同，一个基于atlas一种基于Image，一种是之前的ngui的atlas，一种是Unity3D4.6.1后的sprite 2D(ugui)。</p>
+<p>两种方式都基于两套图和两套prefab。共同特点就是在开发期间prefab，用脚本工具去生成相应的sd prefab。细节如下：</p>
+<p>1.一套ui图分两套图，一套高清一套低清，ui prefab一套为指向高清图，一套指向低清图。</p>
+<p>2.基于两套图和两套prefab。开发期间，在修改其中一个prefab时，做个工具脚本，自动复制这个prefab到sd文件夹下，并将prefab里的所有图替换为sd。</p>
+<p>3.程序在选择sd还是hd时，只要关注prefab名就可以了。prefab名可以后缀不一样，load时可以区分开来。</p>
+<p><span style="color: #ff0000;">4.最后做到极致时，可以加强工具脚本，一键生成所有sd的prefab。<&#47;span></p>
+<p>ngui部分的prefab，编写脚本使用atlas指向切换。ugui部分的prefab，编写脚本使用更换Image。</p>
+<p><span style="color: #ff0000;">最后总结：两套图一高一低，需要维护两套，使用脚本工具根据hd的prefab生成sd的prefab。低清图在压缩时，如果使用unity3d自带的压缩机制太过于粗糙的话，可以美术手动压缩。<&#47;span></p>
+<p>特别感谢一起讨论的童鞋，结论是通过大家的智慧结合：<span style="color: #ff9900;">完美@yang，巨人@tangram，炽乐@宗树<&#47;span>。</p>
+<p>转载请注明出处：http:&#47;&#47;www.luzexi.com</p>

@@ -1,0 +1,251 @@
+---
+layout: post
+status: publish
+published: true
+title: Unity3D架构设计NavMesh寻路
+author:
+  display_name: 陆泽西
+  login: luzexi
+  email: jesse_luzexi@163.com
+  url: http://www.luzexi.com
+author_login: luzexi
+author_email: jesse_luzexi@163.com
+author_url: http://www.luzexi.com
+wordpress_id: 90
+wordpress_url: http://www.luzexi.com/?p=90
+date: !binary |-
+  MjAxMy0xMC0wNiAxODowNDoyOCArMDgwMA==
+date_gmt: !binary |-
+  MjAxMy0xMC0wNiAxMDowNDoyOCArMDgwMA==
+categories:
+- Unity3D
+tags:
+- a*
+- c#
+- navmesh
+- Unity3D
+- 自动寻路
+---
+<p>国庆闲来没事把NavMesh巩固一下。以Unity3D引擎为例写一个底层c# NavMesh寻路。因为Unity3D中本身自带的NavMesh寻路不能很好的融入到游戏项目当中，所以重写一个NavMesh寻路是个必经之路。NavMesh在很多游戏中应用广泛，不同种类的框架下NavMesh寻路发挥的淋漓尽致。与传统的A星寻路相比，NavMesh不仅减少了内存空间占有量，加快了寻路速度，还可以加入寻路角色的宽高限制，以及动态物体寻路等功能，基本上适应了大部分项目变化多端的需求。</p>
+<p>我把写NavMesh的过程分成好几个部分，一一进行描述：</p>
+<p>一.首先要理解NavMesh核心算法。NavMesh的核心算法就是用三角形代替传统寻路的方格，用计算拐点优化寻路路径来代替合并路径直线。</p>
+<p>如下图1NavMesh寻路:</p>
+<p><a href="http:&#47;&#47;www.luzexi.com&#47;wp-content&#47;uploads&#47;2013&#47;10&#47;2303121.jpg"><img class="alignnone wp-image-91 size-full" src="http:&#47;&#47;www.luzexi.com&#47;wp-content&#47;uploads&#47;2013&#47;10&#47;2303121.jpg" alt="" width="479" height="312" &#47;><&#47;a></p>
+<p>&nbsp;</p>
+<p>以及如下图2传统的方格寻路:</p>
+<p><a href="http:&#47;&#47;www.luzexi.com&#47;wp-content&#47;uploads&#47;2013&#47;10&#47;20131006173445.jpg" target="_blank"><img class="alignnone wp-image-94 size-full" src="http:&#47;&#47;www.luzexi.com&#47;wp-content&#47;uploads&#47;2013&#47;10&#47;20131006173445.jpg" alt="" width="621" height="568" &#47;><&#47;a></p>
+<p>&nbsp;</p>
+<p>看到两者的差别了吧，NavMesh已三角形为寻路块，而传统以方格为寻路块。其实两者都使用A*寻路，但就是其网格生成不一样，导致当有大范围寻路时，其效率和要求也不一样。</p>
+<p>二.NavMesh寻路中的路径优化之拐点计算。其实NavMesh中比较常用的是<strong>光照射线法，<&#47;strong>但这里不做详细介绍，光照射浅法详细内容地址:<a title="光照射浅法" href="http:&#47;&#47;www.cnblogs.com&#47;neoragex2002&#47;archive&#47;2007&#47;09&#47;09&#47;887556.html" target="_blank">http:&#47;&#47;www.cnblogs.com&#47;neoragex2002&#47;archive&#47;2007&#47;09&#47;09&#47;887556.html<&#47;a></p>
+<p>拐点计算优化路径就是到达目的地需要经过的一堆三角形中计算出最简洁的移动方式。其核心算法就是从当前点到另一个三角形中的点之间的线段，与这条线段相交的线段全部是路径所穿越的线段，就是拐点，把所有的拐点找出来，并得到一条最长的拐点，那个拐点就是最佳的拐点位置。</p>
+<p>&nbsp;</p>
+<p>三.NavMesh类设计详解(这里只设计2D的寻路，对于3D方向的寻路，其实是可以2D寻路代替的)：</p>
+<p>1.所有类都在同一的命名空间NavMesh内 namespace NavMesh</p>
+<p>Triangle 三角形基础类</p>
+<p>NavTriangle 寻路三角形类 (继承Triangle)</p>
+<p>Line2D 线段类</p>
+<p>Polygon 多边形类</p>
+<p>Seeker 寻路主算法类</p>
+<p>----------------------------------------- 让大家久等了 ------------------------------------</p>
+<p>在寻路前，我们需要建立MESH三角形网格，这是NAV_MESH的重点之一。</p>
+<p>1.首先我们先要画出一个范围来确定我们的可行走范围。</p>
+<p>2.再在可行走范围中去添加不可行走的范围。</p>
+<p>3.我们用多个多边形Polygon代替以上的范围，也就是说，一个大的可行走Polygon内包含了若干个小的不可行走的Polygon。</p>
+<p>这是生成MESH前我们需要知道的生成范围，然后再由这些多边形的各个顶点来生成三角形网格,三角形网格的生成算法如下：</p>
+<p>Step 1 :&nbsp; 用可行走Polygon的任意一条边作为起点，将其推入堆栈列表。到Step2.</p>
+<p>Step 2:&nbsp; 从堆栈中推出一条边，在所有三角形中<span class="c1">计算出边的DT点，构成约束Delaunay三角形，到Step3。如果没有DT点就重复做Step2，直到堆栈为空就结束整个程序。<&#47;span></p>
+<p>Step 3:&nbsp; 将所构成的三角形，另两边做如下处理：检查堆栈中是否已存在，如果存在就删除该边，如果不存在就加入到堆栈中。</p>
+<p>生成mesh后如图：（绿色的为多边形边框，蓝色的为寻路路径，红色的为编辑器选中的多边形）</p>
+<p><a href="http:&#47;&#47;www.luzexi.com&#47;wp-content&#47;uploads&#47;2013&#47;10&#47;OD04RIKAWEMUTM_3MSBQ.jpg"><img class="alignnone size-full wp-image-376" src="http:&#47;&#47;www.luzexi.com&#47;wp-content&#47;uploads&#47;2013&#47;10&#47;OD04RIKAWEMUTM_3MSBQ.jpg" alt="OD04[RIKAWEMUTM_3MS}B$Q" width="475" height="312" &#47;><&#47;a></p>
+<p>核心源码为：</p>
+<div class="dp-highlighter">
+<div class="bar"><&#47;div></p>
+<ol class="dp-c" start="1">
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&#47;&nbsp;<br />
+<summary><&#47;span><&#47;li></p>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&#47;&nbsp;创建导航网格<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&#47;&nbsp;<&#47;summary><&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&#47;&nbsp;
+<param&nbsp;name="polyAll">所有阻挡区域<&#47;param><&#47;span><&#47;li></p>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&#47;&nbsp;
+<param&nbsp;name="triAll">输出的导航网格<&#47;param><&#47;span><&#47;li></p>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&#47;&nbsp;<returns><&#47;returns><&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public<&#47;span>&nbsp;NavResCode&nbsp;CreateNavMesh(List<Polygon>&nbsp;polyAll&nbsp;,&nbsp;<span class="keyword">ref<&#47;span>&nbsp;<span class="keyword">int<&#47;span>&nbsp;id&nbsp;,&nbsp;<span class="keyword">int<&#47;span>&nbsp;groupid&nbsp;,&nbsp;<span class="keyword">ref<&#47;span>&nbsp;List<Triangle>&nbsp;triAll)<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;triAll.Clear();<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List<Line2D>&nbsp;allLines&nbsp;=&nbsp;<span class="keyword">new<&#47;span>&nbsp;List<Line2D>();&nbsp;<span class="comment">&#47;&#47;线段堆栈<&#47;span><&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;Step1&nbsp;保存顶点和边<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NavResCode&nbsp;initRes&nbsp;=&nbsp;InitData(polyAll);<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(initRes&nbsp;!=&nbsp;NavResCode.Success)<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return<&#47;span>&nbsp;initRes;<&#47;li>
+<li><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">int<&#47;span>&nbsp;lastNeighborId&nbsp;=&nbsp;-1;<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Triangle&nbsp;lastTri&nbsp;=&nbsp;<span class="keyword">null<&#47;span>;<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;Step2.遍历边界边作为起点<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li>Line2D&nbsp;sEdge&nbsp;=&nbsp;startEdge;<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allLines.Add(sEdge);<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Line2D&nbsp;edge&nbsp;=&nbsp;<span class="keyword">null<&#47;span>;<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">do<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;Step3.选出计算出边的DT点，构成约束Delaunay三角形<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edge&nbsp;=&nbsp;allLines[allLines.Count&nbsp;-&nbsp;1];<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allLines.Remove(edge);<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vector2&nbsp;dtPoint;<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">bool<&#47;span>&nbsp;isFindDt&nbsp;=&nbsp;FindDT(edge,&nbsp;<span class="keyword">out<&#47;span>&nbsp;dtPoint);<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(!isFindDt)<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">continue<&#47;span>;<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Line2D&nbsp;lAD&nbsp;=&nbsp;<span class="keyword">new<&#47;span>&nbsp;Line2D(edge.GetStartPoint(),&nbsp;dtPoint);<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Line2D&nbsp;lDB&nbsp;=&nbsp;<span class="keyword">new<&#47;span>&nbsp;Line2D(dtPoint,&nbsp;edge.GetEndPoint());<&#47;li>
+<li><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;创建三角形<&#47;span><&#47;li>
+<li>Triangle&nbsp;delaunayTri&nbsp;=&nbsp;<span class="keyword">new<&#47;span>&nbsp;Triangle(edge.GetStartPoint(),&nbsp;edge.GetEndPoint(),&nbsp;dtPoint,&nbsp;id++&nbsp;,&nbsp;groupid);<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&nbsp;保存邻居节点<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&nbsp;if&nbsp;(lastNeighborId&nbsp;!=&nbsp;-1)<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&nbsp;{<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&nbsp;delaunayTri.SetNeighbor(lastNeighborId);<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&nbsp;if(lastTri&nbsp;!=&nbsp;null)<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&nbsp;lastTri.SetNeighbor(delaunayTri.ID);<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&nbsp;}<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;save&nbsp;result&nbsp;triangle<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;triAll.Add(delaunayTri);<&#47;li>
+<li><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&nbsp;保存上一次的id和三角形<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lastNeighborId&nbsp;=&nbsp;delaunayTri.GetID();<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lastTri&nbsp;=&nbsp;delaunayTri;<&#47;li>
+<li><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">int<&#47;span>&nbsp;lineIndex;<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;Step4.检测刚创建的的线段ad,db；如果如果它们不是约束边<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;并且在线段堆栈中，则将其删除，如果不在其中，那么将其放入<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(!Line2D.CheckLineIn(allEdges,&nbsp;lAD,&nbsp;<span class="keyword">out<&#47;span>&nbsp;lineIndex))<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(!Line2D.CheckLineIn(allLines,&nbsp;lAD,&nbsp;<span class="keyword">out<&#47;span>&nbsp;lineIndex))<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allLines.Add(lAD);<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allLines.RemoveAt(lineIndex);<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(!Line2D.CheckLineIn(allEdges,&nbsp;lDB,&nbsp;<span class="keyword">out<&#47;span>&nbsp;lineIndex))<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(!Line2D.CheckLineIn(allLines,&nbsp;lDB,&nbsp;<span class="keyword">out<&#47;span>&nbsp;lineIndex))<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allLines.Add(lDB);<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allLines.RemoveAt(lineIndex);<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;Step5.如果堆栈不为空，则转到第Step3.否则结束循环<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">while<&#47;span>&nbsp;(allLines.Count&nbsp;>&nbsp;0);<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&nbsp;计算邻接边和每边中点距离<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for<&#47;span>&nbsp;(<span class="keyword">int<&#47;span>&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;<&nbsp;triAll.Count;&nbsp;i++)<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Triangle&nbsp;tri&nbsp;=&nbsp;triAll[i];<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&#47;&#47;&nbsp;计算每个三角形每边中点距离<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;tri.calcWallDistance();<&#47;span><&#47;li>
+<li><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&nbsp;计算邻居边<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for<&#47;span>&nbsp;(<span class="keyword">int<&#47;span>&nbsp;j&nbsp;=&nbsp;0;&nbsp;j&nbsp;<&nbsp;triAll.Count;&nbsp;j++)<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Triangle&nbsp;triNext&nbsp;=&nbsp;triAll[j];<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(tri.GetID()&nbsp;==&nbsp;triNext.GetID())<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">continue<&#47;span>;<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">int<&#47;span>&nbsp;result&nbsp;=&nbsp;tri.isNeighbor(triNext);<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(result&nbsp;!=&nbsp;-1)<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tri.SetNeighbor(result&nbsp;,&nbsp;triNext.GetID()&nbsp;);<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return<&#47;span>&nbsp;NavResCode.Success;<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<&#47;li><br />
+<&#47;ol><br />
+<&#47;div><br />
+&nbsp;</p>
+<p>这里对如何计算DT点进行一个说明：</p>
+<p><span class="c1">Step1. 构造三角形的外接圆，以及外接圆的包围盒<&#47;span><br />
+<span class="c1">Step2. 依次访问网格包围盒内的每个网格单元：<&#47;span><br />
+<span class="c1">若某个网格单元中存在可见点 p, 并且 &ang;p1pp2 > &ang;p1p3p2，则令 p3=p，转Step1；<&#47;span><br />
+<span class="c1">否则，转Step3.<&#47;span><br />
+<span class="c1">Step3. 若当前网格包围盒内所有网格单元都已被处理完,<&#47;span><span class="c1">也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点<&#47;span><br />
+核心源码为：</p>
+<div class="dp-highlighter">
+<div class="bar"><&#47;div></p>
+<ol class="dp-c" start="1">
+<li class="alt"><span class="comment">&#47;&#47;&#47;&nbsp;<br />
+<summary><&#47;span><&#47;li></p>
+<li><span class="comment">&#47;&#47;&#47;&nbsp;找到指定边的约束边DT<&#47;span><&#47;li>
+<li class="alt"><span class="comment">&#47;&#47;&#47;&nbsp;<&#47;summary><&#47;span><&#47;li>
+<li><span class="comment">&#47;&#47;&#47;&nbsp;
+<param&nbsp;name="line"><&#47;param><&#47;span><&#47;li></p>
+<li class="alt"><span class="comment">&#47;&#47;&#47;&nbsp;<returns><&#47;returns><&#47;span><&#47;li>
+<li><span class="keyword">private<&#47;span>&nbsp;<span class="keyword">bool<&#47;span>&nbsp;FindDT(Line2D&nbsp;line,&nbsp;<span class="keyword">out<&#47;span>&nbsp;Vector2&nbsp;dtPoint)<&#47;li>
+<li class="alt">{<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;dtPoint&nbsp;=&nbsp;<span class="keyword">new<&#47;span>&nbsp;Vector2();<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(line&nbsp;==&nbsp;<span class="keyword">null<&#47;span>)<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return<&#47;span>&nbsp;<span class="keyword">false<&#47;span>;<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;Vector2&nbsp;ptA&nbsp;=&nbsp;line.GetStartPoint();<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;Vector2&nbsp;ptB&nbsp;=&nbsp;line.GetEndPoint();<&#47;li>
+<li><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;List<Vector2>&nbsp;visiblePnts&nbsp;=&nbsp;<span class="keyword">new<&#47;span>&nbsp;List<Vector2>();<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">foreach<&#47;span>&nbsp;(Vector2&nbsp;point&nbsp;<span class="keyword">in<&#47;span>&nbsp;allPoints)<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(IsPointVisibleOfLine(line,&nbsp;point))<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visiblePnts.Add(point);<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;}<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(visiblePnts.Count&nbsp;==&nbsp;0)<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return<&#47;span>&nbsp;<span class="keyword">false<&#47;span>;<&#47;li>
+<li><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">bool<&#47;span>&nbsp;bContinue&nbsp;=&nbsp;<span class="keyword">false<&#47;span>;<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;dtPoint&nbsp;=&nbsp;visiblePnts[0];<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">do<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bContinue&nbsp;=&nbsp;<span class="keyword">false<&#47;span>;<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;Step1.构造三角形的外接圆，以及外接圆的包围盒<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Circle&nbsp;circle&nbsp;=&nbsp;NMath.CreateCircle(ptA,&nbsp;ptB,&nbsp;dtPoint);<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rect&nbsp;boundBox&nbsp;=&nbsp;NMath.GetCircleBoundBox(circle);<&#47;li>
+<li><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;Step2.&nbsp;依次访问网格包围盒内的每个网格单元：<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;若某个网格单元中存在可见点&nbsp;p,&nbsp;并且&nbsp;&ang;p1pp2&nbsp;>&nbsp;&ang;p1p3p2，则令&nbsp;p3=p，转Step1；<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;否则，转Step3.<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">float<&#47;span>&nbsp;angOld&nbsp;=&nbsp;(<span class="keyword">float<&#47;span>)Math.Abs(NMath.LineRadian(ptA,&nbsp;dtPoint,&nbsp;ptB));<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">foreach<&#47;span>&nbsp;(Vector2&nbsp;pnt&nbsp;<span class="keyword">in<&#47;span>&nbsp;visiblePnts)<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(pnt&nbsp;==&nbsp;ptA&nbsp;||&nbsp;pnt&nbsp;==&nbsp;ptB&nbsp;||&nbsp;pnt&nbsp;==&nbsp;dtPoint)<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">continue<&#47;span>;<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(!boundBox.Contains(pnt))<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">continue<&#47;span>;<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">float<&#47;span>&nbsp;angNew&nbsp;=&nbsp;(<span class="keyword">float<&#47;span>)Math.Abs(NMath.LineRadian(ptA,&nbsp;pnt,&nbsp;ptB));<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if<&#47;span>&nbsp;(angNew&nbsp;>&nbsp;angOld)<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dtPoint&nbsp;=&nbsp;pnt;<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bContinue&nbsp;=&nbsp;<span class="keyword">true<&#47;span>;<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">break<&#47;span>;<&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<&#47;li>
+<li><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;false&nbsp;转Step3<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">while<&#47;span>&nbsp;(bContinue);<&#47;li>
+<li class="alt"><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;Step3.&nbsp;若当前网格包围盒内所有网格单元都已被处理完，<&#47;span><&#47;li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&#47;&#47;&nbsp;也即C（p1，p2，p3）内无可见点，则&nbsp;p3&nbsp;为的&nbsp;p1p2&nbsp;的&nbsp;DT&nbsp;点<&#47;span><&#47;li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return<&#47;span>&nbsp;<span class="keyword">true<&#47;span>;<&#47;li>
+<li class="alt">}<&#47;li><br />
+<&#47;ol><br />
+<&#47;div><br />
+&nbsp;</p>
+<p>为了让各位能更容易读懂此文，此文仍会继续补充。现在我将所有源码都存放在了Github上，请各位跟随我到Github去取源码：<a title="navmesh" href="https:&#47;&#47;github.com&#47;luzexi&#47;Unity3DNavMesh" target="_blank">https:&#47;&#47;github.com&#47;luzexi&#47;Unity3DNavMesh<&#47;a></p>
+<p>&nbsp;</p>
+<p>转载请注明出处：http:&#47;&#47;www.luzexi.com</p>
+<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"><&#47;div></p>
+<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"><&#47;div></p>

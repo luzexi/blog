@@ -1,0 +1,2844 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Hyde</title>
+ <link href="http://hyde.getpoole.com/atom.xml" rel="self"/>
+ <link href="http://hyde.getpoole.com/"/>
+ <updated>2015-09-28T16:22:48+08:00</updated>
+ <id>http://hyde.getpoole.com</id>
+ <author>
+   <name>Mark Otto</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>Unity3D之slua集成第三方库</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/lua/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/"/>
+   <updated>2015-09-26T14:46:26+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/lua/2015/09/26/Unity3D之slua集成第三方库</id>
+   <content type="html">&lt;p&gt;Unity3D中使用lua最近越来越火，我比较中意slua的思路与代码质量。因为先前的项目对slua做了几个第三方库的封装，所有在空出来的时间就对slua做了fork加入了一些大家都比较常用的第三方库。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/luzexi/slua-3rd-lib&quot;&gt;源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;这面是源码的地址，如果喜欢可以star或watch，我会一直更新以方便大家。&lt;/p&gt;
+
+&lt;p&gt;至今集成的第三方库罗列一下:&lt;/p&gt;
+
+&lt;p&gt;1.pbc (&lt;a href=&quot;https://github.com/cloudwu/pbc&quot;&gt;https://github.com/cloudwu/pbc&lt;/a&gt;) 是云风用c写的google protocol buffers。&lt;/p&gt;
+
+&lt;p&gt;2.lpeg (&lt;a href=&quot;http://www.inf.puc-rio.br/%7Eroberto/lpeg/lpeg.html&quot;&gt;http://www.inf.puc-rio.br/~roberto/lpeg/lpeg.html&lt;/a&gt;) 是正则表达式的解析与匹配库.&lt;/p&gt;
+
+&lt;p&gt;3.lua-cjson (&lt;a href=&quot;http://www.kyne.com.au/%7Emark/software/lua-cjson.php&quot;&gt;http://www.kyne.com.au/~mark/software/lua-cjson.php&lt;/a&gt;) 是一个支持json的库，他的效率非常惊人。&lt;/p&gt;
+
+&lt;p&gt;4.lua-socket (&lt;a href=&quot;http://w3.impa.br/%7Ediego/software/luasocket/home.html&quot;&gt;http://w3.impa.br/~diego/software/luasocket/home.html&lt;/a&gt;) 是一个用c写的socket的库，里面封装了TCP和UDP。提供了网络连接与传输的API，你可以用它在lua里实现网络层。&lt;/p&gt;
+
+&lt;p&gt;5.sproto (&lt;a href=&quot;https://github.com/cloudwu/sproto&quot;&gt;https://github.com/cloudwu/sproto&lt;/a&gt;) 这也是云风写的一个关于网络协议，他类似与google protocol buffer，不同的是他在google protocol buffer基础上对协议的格式和内容做了修改，使得解析与构造的效率非常高。&lt;/p&gt;
+
+&lt;p&gt;6.sqlite (&lt;a href=&quot;https://github.com/LuaDist/lsqlite3&quot;&gt;https://github.com/LuaDist/lsqlite3&lt;/a&gt;) 是一个以文件形式存在的轻量级数据库，他被很多软件用来做本地数据存储。他的api轻便好用，广受程序员欢迎。&lt;/p&gt;
+
+&lt;p&gt;源码中已将所有第三方库构建进slua里，并完成了android(x86,armv7),ios,mac,windows(x86,x64)这几个平台的测试。&lt;/p&gt;
+
+&lt;p&gt;如果你需要加入自己的第三方库或者说你希望去除一些你用不到的第三方库，你可以在源码的build里修改我写的自动build的批处理程序。&lt;/p&gt;
+
+&lt;p&gt;1.make_ios.sh 构建ios平台的批处理程序。需要在mac下运行。&lt;/p&gt;
+
+&lt;p&gt;2.make_osx.sh 构建osx平台的批处理程序。需要在mac下运行。&lt;/p&gt;
+
+&lt;p&gt;3.make_android.sh 构建android平台的批处理程序。需要在mac或linux下运行。&lt;/p&gt;
+
+&lt;p&gt;4.make-windows-32.cmd 构建windows x86 dll。需要在windows下运行。&lt;/p&gt;
+
+&lt;p&gt;5.make-windows-64.cmd 构建windows x64 dll。需要在windows下运行。&lt;/p&gt;
+
+&lt;p&gt;这里说明一些构建时需要注意的事情。ios构建时需要注意脚本里的xcode地址。如果你不是xcode7.0。可能需要设置一下脚本里的路径。android的构建脚本也是一样，需要配置你机子上正确的ndk路径。windows下编译dll需要用的MingGw，我在源码中用git的submodule的方式安了一个，你需要运行一下submodule的更新命令git submodule update --init。MingGw很大300mb，你要做好心理准备，或者你直接去这个地址下载一个&lt;a href=&quot;https://github.com/luzexi/MinGW&quot;&gt;https://github.com/luzexi/MinGW&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D-重新编译Mono加密DLL</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL/"/>
+   <updated>2015-04-11T18:58:36+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2015/04/11/Unity3D-重新编译Mono加密DLL</id>
+   <content type="html">&lt;p&gt;Unity3D-重新编译Mono加密DLL。安卓应用总是让人头疼，游戏遭到破解与反编译是研发的人最不愿意看到的。自己的辛苦劳动成果被人随意窃取与利用，对这些咬牙切齿的痛恨。所以我们需要加强自身的反破解技术力量。不过这世上没有破解不了的东西，道高一尺魔高一丈，我们做的只是让破解更加困难而已。让那些破解的人付出点代价才能得到他们想要的，如果他们觉得代价太高，看不清前面的道路，他们就有可能放弃，然后我们的目的达到了。&lt;/p&gt;
+
+&lt;p&gt;游戏本身加密方式有很多，对apk加壳，防止apk二次打包等。对这些android的加密与破解技术看过比较好的文章参考：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/column/details/security-android.html&quot;&gt;《Android安全及病毒分析》&lt;/a&gt; ，其中&lt;a href=&quot;http://blog.csdn.net/androidsecurity/article/details/8809542&quot;&gt;《Android APK加壳技术方案【2】》&lt;/a&gt; 最为经典。而本篇文章我们主要来说说针对Unity3D的加密。&lt;/p&gt;
+
+&lt;p&gt;闲扯就到这里，我们开始说正事：&lt;/p&gt;
+
+&lt;p&gt;Unity3D所有客户端的代码都会以dll文件形式存下来，当游戏应用被开启时c#vm(也就是mono的虚拟机)会去加载所有dll，从而开始运行真正的程序画面了。而破解的很大一部分都是通过解压apk后拿到主逻辑dll，对dll进行反编译，然后修改后重新编译，再放入apk重新签名打包。所以我们需要针对dll进行加密，以防止他们反编译dll。&lt;/p&gt;
+
+&lt;p&gt;加密一个dll文件非常容易，无论你用什么算法都行，但是在哪解密呢？答案是libmono.so。libmono.so是mono的核心程序，它承载了加载解析dll和虚拟机运行的功能。所以说libmono.so是关键，我们需要修改mono内核程序并重新编译它。&lt;/p&gt;
+
+&lt;p&gt;下面将开始mono的编译过程，别看步骤写得简单明了，其实我花了起码一个多星期的思考，尝试，失败，再思考，再尝试，再失败.....总结其中原因一方面也是自己的愚钝的资质，另一方面是unity mono和mono并不一样，unity mono缺少编译文档并且还混合着原mono的编译文档，导致误判了很多：&lt;/p&gt;
+
+&lt;p&gt;1.首先不要认为unity mono 与 原生态mono一样。可以编译mono就可以同样步骤编译unity mono。我在这里尝试了很久，使用configure进行编译，尝试使用不同的编译参数，进行编译，最后发现unity mono使用的是ndk-9下的linux-4.8编译器，所有参数都是根据这个编译器所设定的。&lt;/p&gt;
+
+&lt;p&gt;2.unity mono 地址：&lt;a href=&quot;https://github.com/Unity-Technologies/mono&quot;&gt;https://github.com/Unity-Technologies/mono&lt;/a&gt; 你需要从这里下载unity mono。&lt;/p&gt;
+
+&lt;p&gt;3.mono需要autoconf automake libtool pkg-config这些工具。你最好还是去下载安装了。你可以用brew安装。brew install autoconf automake libtool pkg-config。&lt;/p&gt;
+
+&lt;p&gt;4.我一开始使用mac x86&lt;em&gt;64进行编译，折腾了很久然后建了个linux-x86&lt;/em&gt;64虚拟机来编译，然后又折腾了很久，又建了个linux-i386来重新编译mono，因为我一直认为交叉编译需要加些不同的编译参数和变量。在linux-i386首次编译成功后又开始转化到mac上，进行交叉编译也一样成功，最后发现其实是我没找对路子。这路子就是unity 的mono-build-tool：&lt;a href=&quot;https://github.com/Unity-Technologies/monobuildtools&quot;&gt;https://github.com/Unity-Technologies/monobuildtools&lt;/a&gt; 它已经在unity mono的项目里了，在mono的external/buildscripts下。&lt;/p&gt;
+
+&lt;p&gt;5.buildscripts下的build&lt;em&gt;runtime&lt;/em&gt;android.sh是编译安卓平台的关键。它是unity制作的一个自动编译 mono 流程的脚本。你需要将这个脚本copy到mono根目录下再执行。&lt;/p&gt;
+
+&lt;p&gt;6.脚本里写些内容，如果你懒得看，我帮你稍微解释下。它会去检查你当前的ANDROID&lt;em&gt;NDK&lt;/em&gt;ROOT环境变量是否是指向ndk-9，所以你需要去下ndk-9版本，放到机子上，然后编辑环境变量ANDROID&lt;em&gt;NDK&lt;/em&gt;ROOT指向它，如果你没有它会通过perl模块lwp-download去下载ndk-9，但是你必须要要有这个perl模块才行，我劝你还是老老实实自己去下吧。ndk版本下载地址参考这里：&lt;a href=&quot;http://www.luzexi.com/android-sdk-ndk-studio-%E4%B8%8B%E8%BD%BD%E5%88%97%E8%A1%A8%E5%92%8C%E6%9E%84%E5%BB%BA%E8%AF%B4%E6%98%8E/&quot; target=&quot;_blank&quot;&gt;《android-sdk-ndk-studio-下载列表和构建说明》&lt;/a&gt;。如果是linux下编译环境变量设定参考这里：&lt;a href=&quot;http://www.luzexi.com/linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/&quot; target=&quot;_blank&quot;&gt;《linux环境变量简介》&lt;/a&gt; 。然后呢，它会用git去clone一个编译时用到的库，这个也是unity自己改编过的一个库，地址为：&lt;a href=&quot;https://github.com/Unity-Technologies/krait-signal-handler&quot;&gt;https://github.com/Unity-Technologies/krait-signal-handler&lt;/a&gt; ，这个库有个坑说下：perl脚本build.pl头部有个命令是#!/usr/bin/env perl -w，这个在部分机子上并不兼容，如果你有错误停在这里这个文件上，你可以将env去除再尝试手动perl build.pl 运行构建一遍没问题再重新编译，原因参考：&lt;a href=&quot;http://abloz.com/2011/01/13/why-use-usr-bin-env.html&quot;&gt;http://abloz.com/2011/01/13/why-use-usr-bin-env.html&lt;/a&gt; 。最后就先make clean &amp;amp;&amp;amp; make distclean 清除前面编译的内容，然后进行预编译configure，参数都在脚本里设置好了，你不需要关心了。预编译后就开始make编译了。&lt;/p&gt;
+
+&lt;p&gt;7.执行build&lt;em&gt;runtime&lt;/em&gt;android.sh后terminal基本都是刷屏的节奏。刷刷刷的编译输出，你根本来不及看清到底做到哪了做了些什么内容。而config.log这个文件记录所有的编译输出，包括哪行错误了，哪行通过了。调试基本也考这个log文件，如果关键部位错误它会停止，然后你就可以针对性的查了。这里提醒一点，编译时它很多地方都是在检测编译器是否正常，因为它要确认编译器对错误的编译内容是否能够检测到，所以很多错误内容只是测试内容-你需要省略掉。&lt;/p&gt;
+
+&lt;p&gt;8.如果编译成功，那就恭喜你了。windows下我没有测试过，有可能会增加不少坑，我建议还是用linux或者mac编译吧，因为我搜集资料的时候不少人对windows下编译mono都抱怨不少。那么我们开始迈入下一个坑吧:)&lt;/p&gt;
+
+&lt;p&gt;下面介绍加解密DLL部分：&lt;/p&gt;
+
+&lt;p&gt;加密算法自己选我不多说了，但我这里要引用一篇同样介绍mono的dll加密的文章，我觉得也写得满不错的，但是文章描述不够详尽。我这篇文章弥补了他的不足，将细节补充得更加细致。你大可以两篇文章加起来参考。&lt;a href=&quot;http://www.unitymanual.com/home.php?mod=space&amp;amp;uid=7672&amp;amp;do=blog&amp;amp;id=1440&quot;&gt;http://www.unitymanual.com/home.php?mod=space&amp;amp;uid=7672&amp;amp;do=blog&amp;amp;id=1440&lt;/a&gt; 不知道地址是不是原作者的，如果不是我再更换吧。&lt;/p&gt;
+
+&lt;p&gt;1.首先找到dll解密入口。mono下/mono/metadata/image.c里mono&lt;em&gt;image&lt;/em&gt;open&lt;em&gt;from&lt;/em&gt;data&lt;em&gt;with&lt;/em&gt;name是关键方法，参数中的data是dll传入的数据。你要做的就是将它解密后传给datac，这个方法程序你必须看下，因为你要了解下解密程序放在哪才合适。&lt;/p&gt;
+
+&lt;p&gt;2.大部分dll都会通过mono&lt;em&gt;image&lt;/em&gt;open&lt;em&gt;from&lt;/em&gt;data&lt;em&gt;with&lt;/em&gt;name这个方法进行加载，但不是所有dll，例如mscorlib.dll和System.Core.dll就不会，可能还有其他dll，我并不确定还有哪些。所以你还是得辨别下哪些dll会通过这个方法，这样你才能确定哪个dll可以加密。如何判断data属于哪个dll呢，参数name就是data的路径名，name打印出来后就像:/data/app/com.xx.xx.apk/assets/bin/Data/Managed/xxx.dll 这样。&lt;/p&gt;
+
+&lt;p&gt;3.打印调试。你可以使用g&lt;em&gt;message例如：g&lt;/em&gt;warning(&amp;quot;dll name: %s \n&amp;quot;, name); 其他的打印调试你可以查看源码中的它写的代码。很容易找到，查关键字LOG吧。&lt;/p&gt;
+
+&lt;p&gt;4.改完后重新编译mono，找到libmono.so(find . -name libmono.so)，完成编译后libmono.so的平台有好几个，你可以根据自己的平台来选。有人拷贝这些mono重新编译过的文件去覆盖了unity编辑器的原来mono文件，这样也可行。但我选择在打包android时再从外部复制libmono.so，这样就可以绕过编译器重新编译后无法读取无加密dll的麻烦，可以少做一层无意义的编辑器状态下的加解密工作。&lt;/p&gt;
+
+&lt;p&gt;5.mono解密部分就到这里了。其他部分的关键就是你的加解密程序了，是否能够加密和解密都是ok的并且都是不改变size。你需要的参数有data和data&lt;em&gt;len，mono&lt;/em&gt;image&lt;em&gt;open&lt;/em&gt;from&lt;em&gt;data&lt;/em&gt;with_name方法里面都有。&lt;/p&gt;
+
+&lt;p&gt;6.为了安全起见我使用c来编写加密程序，因为我认为c#和c的编译器对于变量内存的存储机制不一样，怕引起不必要的麻烦。
+这里要非常感谢一个人，全程都在提供帮助：炽乐@宗树&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>linux环境变量简介</title>
+   <link href="http://hyde.getpoole.com/linux/2015/04/07/linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/"/>
+   <updated>2015-04-07T10:42:29+08:00</updated>
+   <id>http://hyde.getpoole.com/linux/2015/04/07/linux环境变量简介</id>
+   <content type="html">&lt;p&gt;linux环境变量简介。这个话题已经很老了,我只是重新温习一遍旧的知识而已。顺便熟悉下资料整理工具OmntOutliner。我们在使用android-sdk，android-ndk,jdk等众多软件时都会用到linux环境变量的配置。所以我觉得重点介绍下还是很有必要的。
+因为我使用的是iframe标签，所以有可能有部分浏览器并不支持。
+如果你查看时有问题可以直接点击:&lt;a href=&quot;http://www.luzexi.com/static-page/linux-env.html/index.html&quot;&gt;linux环境变量简介&lt;/a&gt;
+&lt;iframe src=&quot;/static-page/linux-env.html/index.html&quot; width=&quot;100%&quot; , height=&quot;1000&quot;&gt;
+&lt;/iframe&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Android-SDK-NDK-Studio-下载列表和构建说明</title>
+   <link href="http://hyde.getpoole.com/android/2015/04/06/Android-SDK-NDK-Studio-%E4%B8%8B%E8%BD%BD%E5%88%97%E8%A1%A8%E5%92%8C%E6%9E%84%E5%BB%BA%E8%AF%B4%E6%98%8E/"/>
+   <updated>2015-04-06T18:07:29+08:00</updated>
+   <id>http://hyde.getpoole.com/android/2015/04/06/Android-SDK-NDK-Studio-下载列表和构建说明</id>
+   <content type="html">&lt;p&gt;Android-SDK-NDK-Studio-下载列表和构建说明。是一个我整理的安卓的开发资料，无论是用安卓还是其他第三方平台都需要的工具。
+你可以通过这个地址直接访问我整理的资料，资料中的标题点击左边图标可以展开请耐心查看：&lt;a href=&quot;/static-page/android-list.html/index.html&quot;&gt;Android-SDK-NDK-Studio-Build_process&lt;/a&gt;
+展示内容：
+&amp;lt;!-- &lt;iframe src=&quot;/static-page/android-list.html/index.html&quot; width=&quot;100%&quot; height=&quot;2000&quot;&gt;&lt;/iframe&gt; --&amp;gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D-游戏画面高低品质切换</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2015/04/01/Unity3D-%E6%B8%B8%E6%88%8F%E7%94%BB%E9%9D%A2%E9%AB%98%E4%BD%8E%E5%93%81%E8%B4%A8%E5%88%87%E6%8D%A2/"/>
+   <updated>2015-04-01T00:36:06+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2015/04/01/Unity3D-游戏画面高低品质切换</id>
+   <content type="html">&lt;p&gt;Unity3D-游戏画面高低品质切换。最近想办法让游戏在高画质和低画质之间切换，在判定游戏帧数高低后，可以实时切换游戏品质让游戏更加流畅。这能给客户端在渠道发行后提高些许留存率。
+ngui和ugui切换方式有所不同，一个基于atlas一种基于Image，一种是之前的ngui的atlas，一种是Unity3D4.6.1后的sprite 2D(ugui)。&lt;/p&gt;
+
+&lt;p&gt;两种方式都基于两套图和两套prefab。共同特点就是在开发期间prefab，用脚本工具去生成相应的sd prefab。细节如下：&lt;/p&gt;
+
+&lt;p&gt;1.一套ui图分两套图，一套高清一套低清，ui prefab一套为指向高清图，一套指向低清图。&lt;/p&gt;
+
+&lt;p&gt;2.基于两套图和两套prefab。开发期间，在修改其中一个prefab时，做个工具脚本，自动复制这个prefab到sd文件夹下，并将prefab里的所有图替换为sd。&lt;/p&gt;
+
+&lt;p&gt;3.程序在选择sd还是hd时，只要关注prefab名就可以了。prefab名可以后缀不一样，load时可以区分开来。&lt;/p&gt;
+
+&lt;p&gt;4.最后做到极致时，可以加强工具脚本，一键生成所有sd的prefab。
+ngui部分的prefab，编写脚本使用atlas指向切换。ugui部分的prefab，编写脚本使用更换Image。&lt;/p&gt;
+
+&lt;p&gt;最后总结：两套图一高一低，需要维护两套，使用脚本工具根据hd的prefab生成sd的prefab。低清图在压缩时，如果使用unity3d自带的压缩机制太过于粗糙的话，可以美术手动压缩。&lt;/p&gt;
+
+&lt;p&gt;特别感谢一起讨论的童鞋，结论是通过大家的智慧结合：完美@yang，巨人@tangram，炽乐@宗树。&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3DLua-将xls转化为lua</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/lua/2015/03/26/Unity3DLua-%E5%B0%86xls%E8%BD%AC%E5%8C%96%E4%B8%BAlua/"/>
+   <updated>2015-03-26T13:29:02+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/lua/2015/03/26/Unity3DLua-将xls转化为lua</id>
+   <content type="html">&lt;p&gt;Unity3DLua-将xls转化为lua。使用lua写unity3d项目，由于加载数据一直觉得不方便，于是写个脚本将xls数据文件转化为lua文件，这样lua逻辑就可以直接读取数据。
+为什么要这样做呢？&lt;/p&gt;
+
+&lt;p&gt;首先转化为lua后就不再需要解析csv,json等数据了，可以直接使用。&lt;/p&gt;
+
+&lt;p&gt;其次，数据转乘lua后，在同步lua脚本时，可以一并同步数据。在同步环节省去了同步数据的麻烦。&lt;/p&gt;
+
+&lt;p&gt;再者，使用xls2lua脚本转化为lua数据文件，可以达到自动化校验的效果，省去一部分人为操作失误。&lt;/p&gt;
+
+&lt;p&gt;最后，我观察到很多游戏都使用这种方式，其中比较有名的是 《刀塔传奇》。其实这种方式早就很普遍了，只不过我沿着别人的足迹而已走到了这了里而已。&lt;/p&gt;
+
+&lt;p&gt;项目已经放在了github上，如果需要可以去拿。如果喜欢可以star(收藏)下。&lt;/p&gt;
+
+&lt;p&gt;Github address : &lt;a href=&quot;https://github.com/luzexi/xls2lua&quot;&gt;https://github.com/luzexi/xls2lua&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以下是github的readme部分的文字，描述有英文和中文两个版本。你可以忽略英文部分。&lt;/p&gt;
+
+&lt;h3&gt;Excute Example (举例执行命令)&lt;/h3&gt;
+
+&lt;p&gt;python ./xls2lua.py example_building.xls ./data/&lt;/p&gt;
+
+&lt;h3&gt;NOTICE:(注意点)&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The sheet name must start with &amp;quot;output&lt;em&gt;&amp;quot; , the lua file name will be the name behind &amp;quot;output&lt;/em&gt;&amp;quot;.
+The &lt;strong&gt;first row&lt;/strong&gt; must be &lt;strong&gt;title&lt;/strong&gt;. 
+The &lt;strong&gt;second row&lt;/strong&gt; must be &lt;strong&gt;type&lt;/strong&gt; 
+The &lt;strong&gt;type must be i , f , s , b , ai , af , as , ab.
+i mean int , f mean float , s mean string , b mean bool , ai mean array int , af mean array float , as mean array string , ab mean array bool.
+The **first column&lt;/strong&gt; must be int , so the type in first column must be i.
+The string type with char &lt;strong&gt;&amp;quot;&lt;/strong&gt; or &lt;strong&gt;&amp;#39;&lt;/strong&gt; will be replace by \&amp;quot; or \&amp;#39; 
+The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or {} 
+(sheet名以&amp;quot;output_&amp;quot;开头的才会被识别转换，否则将被忽略) 
+(第1行必须是关键字名) 
+(第2行必须为类型) 
+(类型有：i,f,s,b,ai,af,as,ab这几种) 
+(i表示int，f表示float,s表示string,b表示bool,ai表示int数组,af表示float数组,as表示string数组,ab表示bool数组) 
+(第1列必须为int类型的唯一关键字) 
+(string类型中&amp;quot;和&amp;#39;会自动用\&amp;quot;和\&amp;#39;替代)
+(空列将会被默认值代替，例如:0,&amp;quot;&amp;quot;,false,{})&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3&gt;Lua script (生成后的Lua文件示例)&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- this file is generated by program!&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;-- don&amp;#39;t change it manaully.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;-- source file: example_building.xls&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;-- created at: Thu Mar 26 02:53:52 2015&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;local&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;house&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_money&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_food&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.33&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;is_init&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;defense&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadddss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.23&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.23&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ddff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sdf&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;23e&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ffdd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;house2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_money&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;123&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_food&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;336.2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;is_init&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;defense&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadddss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.3445&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ddff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;你好&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;你在哪&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ffdd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_money&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;456&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_food&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;222.33665&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;is_init&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;defense&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;130&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadddss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ddff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;我在这里啊&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;你在那&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;呢&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ffdd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;farm&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_money&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_food&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;220.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;is_init&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;defense&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadddss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;200.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;234.23&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ddff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;df&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ssd&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dd&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dd&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ffdd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;house5&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_money&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_food&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;22.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;is_init&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;defense&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;234&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadddss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;6.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ddff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ss&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ffdd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;horse3&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_money&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;use_food&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;is_init&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;defense&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;333&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;aadddss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ddff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2e&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;w&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;e&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;we&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ffdd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;How to use lua with data. (如何使用生成的lua数据)&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span class=&quot;kd&quot;&gt;local&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;building&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;building&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;building&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The console will print &amp;quot;house&amp;quot;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D项目环境全部署</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2015/03/06/Unity3D%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E5%85%A8%E9%83%A8%E7%BD%B2/"/>
+   <updated>2015-03-06T18:18:08+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2015/03/06/Unity3D项目环境全部署</id>
+   <content type="html">&lt;p&gt;Unity3D项目环境全部署。这次我想总结下项目环境部署。可别小看了这个开发环境部署，这将直接导致项目的进程速度，以及成员们在这个开发行程中的疲劳积累速度。优秀的部署能省去成员们不必要的心理负担，卸下包袱专心去做自己的功能块。差劲的部署，会加重成员们的心理负担，并且有可能引起不必要的开发冲突。&lt;/p&gt;
+
+&lt;p&gt;首先我来罗列下Unity3D开发手游需要经历哪些节点。&lt;/p&gt;
+
+&lt;p&gt;1.Unity3D内编码。里面的内容自然主要是架构与编码，本篇不对其细说。&lt;/p&gt;
+
+&lt;p&gt;2.IOS,Android  SDK接口对接。不同的平台，不同的sdk对接。&lt;/p&gt;
+
+&lt;p&gt;3.项目进度监督与管理，所有策划案与修改案都会被记录在项目进度表中，每周都需要一个报告来支撑项目进度。项目的进度跟踪是对项目进度把控的最好体现。&lt;/p&gt;
+
+&lt;p&gt;4.测试部门的bug提交，与用户体验建议&amp;amp;修改。这将极大的完善游戏体验，让bug与差体验都尽可能得消失殆尽。&lt;/p&gt;
+
+&lt;p&gt;5.wiki面板。这将项目中的重大事件与注意事项进行记录，共所有人查阅，以方便在开发中查阅前面所经历的问题，缩短询问时间。&lt;/p&gt;
+
+&lt;p&gt;6.策划案数据自动生成。策划案的数据在开发过程中随时都会进行改变，一键生成数据并同步到程序，反应到客户端是加快项目速度的好方法，也同时消除了成员们手动操作的心理负担。&lt;/p&gt;
+
+&lt;p&gt;7.一键生成需要动态加载的资源与资源版本号，有些还需要对动态资源进行zip压缩打包。很多游戏都会在游戏的开头，或游戏中进行加载资源，开发中这些资源都会随时随地的被成员们改变，一键生成将加快项目进度，消除成员们手动操作的心理负担。&lt;/p&gt;
+
+&lt;p&gt;8.打包成不同平台的包。ios-&amp;gt;ipa , android-&amp;gt;apk (android这里还有不同的游戏平台游戏包，一个游戏至少会有20个平台需要接，每个平台1个包)，winphone也一样。&lt;/p&gt;
+
+&lt;p&gt;9.将包上传至内部服务器供，测试部门以及项目成员们测试&amp;amp;预览。ios可以用testFlight，也可以用协议在网页上自行下载安装。android和winphone不用说可以放内部网页直接下载安装。&lt;/p&gt;
+
+&lt;p&gt;以上是所有开发需要的步骤，包括了 主逻辑开发，平台对接，项目管理，测试管理，备忘录，数据同步，资源打包，客户端打包，以及客户端同步。&lt;/p&gt;
+
+&lt;p&gt;这些都只是称述而已，那么如何将这些部分连起来呢。看下图：
+&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2015/03/客户端环境布局.jpg&quot;&gt;&lt;img class=&quot;alignnone size-full wp-image-501&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2015/03/客户端环境布局.jpg&quot; alt=&quot;客户端环境布局&quot; width=&quot;711&quot; height=&quot;486&quot; /&gt;&lt;/a&gt;能看明白吗，容我解释下(其实上面也有一部分称述)：&lt;/p&gt;
+
+&lt;p&gt;点1和2=&amp;gt;使用git版本控制，建立主分支，各功能块拆分成不同分支并行开发，在主分支上建立ios,android,winphone平台分支，这里只写平台代码逻辑代码从主分支获取。&lt;/p&gt;
+
+&lt;p&gt;点3和4和5=&amp;gt;使用redmine(当然也可以用别的管理)，建立wiki写备忘录，提供测试与体验提交问题，并且使用office软件与email编写进度报表共成员们查阅。&lt;/p&gt;
+
+&lt;p&gt;点6=&amp;gt;用python(也可以ruby,php...等等自己选)解析xls生成数据并上传。&lt;/p&gt;
+
+&lt;p&gt;点7=&amp;gt;这里可以用python语言也可用jenkins来执行资源打包程序，并上传。&lt;/p&gt;
+
+&lt;p&gt;点8=&amp;gt;使用jenkins打包，建立&amp;amp;配置打包流程，随时随地可以一键打包，使得打包快速、准确、稳定。&lt;/p&gt;
+
+&lt;p&gt;点9=&amp;gt;ios可以用testFlight，也可以用协议在网页上自行下载安装。android和winphone不用说可以放内部网页直接下载安装。&lt;/p&gt;
+
+&lt;p&gt;总结：尽量将各部门的合作用自动化的形式融合在一起，维护好自动化程序与合作流程，让各个成员们都只关注自己的部分。最终目的就是加快开发速度，减少成员疲劳度积累(避免是不可能的)。&lt;/p&gt;
+
+&lt;p&gt;另外题外话----附上web服务器的项目布局，见下图。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2015/03/服务端开发环境布局.jpg&quot;&gt;&lt;img class=&quot;alignnone size-full wp-image-510&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2015/03/服务端开发环境布局.jpg&quot; alt=&quot;服务端开发环境布局&quot; width=&quot;686&quot; height=&quot;468&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D上海CTO&Leader讨论会</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E7%94%9F%E6%B4%BB/2015/02/11/Unity3D%E4%B8%8A%E6%B5%B7CTO&Leader%E8%AE%A8%E8%AE%BA%E4%BC%9A/"/>
+   <updated>2015-02-11T20:15:24+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E7%94%9F%E6%B4%BB/2015/02/11/Unity3D上海CTO&Leader讨论会</id>
+   <content type="html">&lt;p&gt;今天去了趟unity上海分部的CTO&amp;amp;Leader讨论会。记录下会议内容很多无聊的东西我都略过不写了，报告下我们比较关心的，或者将来会遇到的困难。
+1.现在unity3d 4.6.2 打包64位的ios app 不靠谱，bug有400多个，不建议升级。4月1号前说是会出个稳定版，但讨论中透露，稳定版中也会由许多未知因素。IL2P打成c++的方式有众多问题和困难。&lt;/p&gt;
+
+&lt;p&gt;2.他们说了个热更新的解决方案，但只限安卓。我听了下，原理就是把所有程序都打成一个dll，用加载资源的方式加载，然后再实时编译。这个要求代码不能附着在prefab上。然后我说了关于使用lua更新机制，虽然现在在u3d里仍不是非常成熟，但困难是永远都有的，各位可以值得一试，不要等到别人用熟了你才开始，那已经慢了好大一步了。&lt;/p&gt;
+
+&lt;p&gt;3.问了关于内存释放的问题，他们阐述说resources.unloadunusedassets并不是根据引用计数来释放内存，而是根据世界树中的实例检测，而System.GC.Collect()是根据引用计数销毁的，所以可以选择两个一起使用，也就是我们现在的方式。&lt;/p&gt;
+
+&lt;p&gt;4.关于内存，他们在阐述他们提供的一个性能测试服务中，提到由于ngui底层是mesh重构，而每次重构都会积累内存消耗，所以ngui的内存问题是比较严重，他们暗示项目使用unity自己的ugui。&lt;/p&gt;
+
+&lt;p&gt;5.关于混淆，他们只有一般的混淆方案。网上可以找到。没什么特别的自己方案。混淆的注意点是，混淆时安卓和ios等平台对接的接口不要进行混淆，在平台调用时会找不到相应接口。unity技术团队说他们可以提供混淆服务，但我觉得并不困难。&lt;/p&gt;
+
+&lt;p&gt;6.unity5 将与unity4完全不同，互不兼容，也就是像cocosx 2与cocosx 3一样，拆分两个版本维护。IL2P将会逐渐替代mono的打包方式。mono也很难升级，因为高版本的授权费用很高，一般的用户承受不了。&lt;/p&gt;
+
+&lt;p&gt;7.以下是一些unity5比较有用的改善。没兴趣关注的就不提了。&lt;/p&gt;
+
+&lt;p&gt;*场景中的shader可以自动合并成一个shader，减低drawcall。但我怎么觉得这里面有好多空噱头。
+*assetbundle打包可以进行增量更新，无变化的assetbundle会被自动识别，加快了批量打assebbundle的速度。
+*更多得采用多线程处理，加快unity应用的速度。
+*支持webGL平台的开发。在支持webGL浏览器里不需要unity插件。
+*unity5升级为64位，编辑器可使用更多内存。&lt;/p&gt;
+
+&lt;p&gt;8.最后他们提供说一个真机性能测试的服务，可以提供60页的性能测试报表，其实我觉得没什么用。性能卡点自己找起来比较准确点。
+&lt;p class=&quot;p1&quot;&gt;&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2015/02/IMG_0972.jpg&quot;&gt;&lt;img class=&quot;alignnone size-full wp-image-487&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2015/02/IMG_0972.jpg&quot; alt=&quot;IMG_0972&quot; width=&quot;1763&quot; height=&quot;885&quot; /&gt;&lt;/a&gt;
+&lt;p class=&quot;p1&quot;&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Lua使用实记</title>
+   <link href="http://hyde.getpoole.com/lua/2015/01/21/Lua%E4%BD%BF%E7%94%A8%E5%AE%9E%E8%AE%B0/"/>
+   <updated>2015-01-21T20:14:59+08:00</updated>
+   <id>http://hyde.getpoole.com/lua/2015/01/21/Lua使用实记</id>
+   <content type="html">&lt;p&gt;c调用lua堆栈常用操作-------
+===================初级========================
+void lua_gettop() : 用于返回栈中元素的个数，同时也是栈顶元素的索引，因为栈底是1，所以栈中有多少个元素，栈顶索引就是多少。&lt;/p&gt;
+
+&lt;p&gt;void lua&lt;em&gt;settop(int index) : 设置栈顶，也是设置栈的大小，多的去除，少的填nil。-- #define lua&lt;/em&gt;pop(L,n) lua_settop(L,-(n)-1)&lt;/p&gt;
+
+&lt;p&gt;void lua_pushvalue(int index) : 拷贝索引index元素并压入栈。&lt;/p&gt;
+
+&lt;p&gt;void lua_remove(int index) : 删除索引index。&lt;/p&gt;
+
+&lt;p&gt;void lua_replace(int index) : 弹出栈顶元素，并将其替换到索引index元素。&lt;/p&gt;
+
+&lt;p&gt;void lua_getglobal(const char *name) : 把全局变量name压入栈顶。&lt;/p&gt;
+
+&lt;p&gt;void lua_pop(int n) : 推出栈顶(移除)n个元素。&lt;/p&gt;
+
+&lt;p&gt;void lua_insert(int index) : 弹出栈顶，并将其插入索引index中。&lt;/p&gt;
+
+&lt;p&gt;void lua_remove(int index) : 移除索引index的元素。&lt;/p&gt;
+
+&lt;p&gt;lua_is***(int index) 检查变量是不是某个类型，index指示变量的顺序，栈顶为-1。&lt;/p&gt;
+
+&lt;p&gt;lua_to***(int index) 获取栈中的变量，然后转换为某个指定的类型，并返回。&lt;/p&gt;
+
+&lt;p&gt;lua_push***() 压入某类型元素。&lt;/p&gt;
+
+&lt;p&gt;int lua_type(int index) : 获得索引index的值的类型。&lt;/p&gt;
+
+&lt;p&gt;===================中级========================
+void lua_call(int nargs, int nresults) : 调用方法，其中nargs为参数数量，nresults为结果数量。栈中必须保持  ..... func , arg1 , arg2 ,art3 (&lt;em&gt;) ，&lt;/em&gt;表示栈顶，调用后func,arg都会消失，只留下结果，如果调用没有问题的话。&lt;/p&gt;
+
+&lt;p&gt;int lua_pcall(int nargs, int nresults, int errfunc) :  功能pcall与call一样，区别在最后多了个自定义错误处理，当调用出错后，会调用其栈中索引方法。pcall返回0为无错误，其他则表示调用有错。如果errfunc为0，则报错调用原始方法。&lt;/p&gt;
+
+&lt;p&gt;void lua_createtable(int narr, int nrec) : 创建一个narr行nrec列的table，将其压入栈。&lt;/p&gt;
+
+&lt;p&gt;void lua&lt;em&gt;newtable() : 创建一个空表，将其压入栈。与lua&lt;/em&gt;createtable(0,0)一个意思。&lt;/p&gt;
+
+&lt;p&gt;void lua&lt;em&gt;getfield(int index, const char *k) :  t[k]，获取表(索引为t的表)中的k值，并压入栈。这个会调用被修改的&lt;/em&gt;_index的方法，如果被修改过的话。&lt;/p&gt;
+
+&lt;p&gt;void lua_setfield(int index, const char *k) : 设置t[k] = v，t为索引index的表，k为参数k值，v为栈顶元素，并弹出栈顶元素。此调用会触发修改过的newindex方法。&lt;/p&gt;
+
+&lt;p&gt;void lua_getglobal(const char *name) : 获取全局变量name，并压入栈顶。&lt;/p&gt;
+
+&lt;p&gt;void lua_setglobal(const char *name) : 弹出栈顶，并将其设置为全局变量name的值。&lt;/p&gt;
+
+&lt;p&gt;void lua&lt;em&gt;gettable(int index) : 弹出栈顶，并压入t[k]值，t为索引index的表，k为栈顶值。此方法将调用被修改的&lt;/em&gt;_index的方法，如果被修改过的话。&lt;/p&gt;
+
+&lt;p&gt;void lua&lt;em&gt;settable(int index) : 设置表t[k]=v，t为索引index的表，v是栈顶元素，k为栈顶下面一个元素。例如 lua&lt;/em&gt;settable(-3)  ---- table , &amp;quot;key&amp;quot; , &amp;quot;value&amp;quot; (&lt;em&gt;) ，&lt;/em&gt;表示栈顶。并弹出v(栈顶)和k(栈顶下面)元素，此调用会触发修改过的newindex方法。&lt;/p&gt;
+
+&lt;p&gt;void lua_rawget(int index) : 与gettable一样，但调用的索引方法是原始的。&lt;/p&gt;
+
+&lt;p&gt;void lua_rawset(int index) :  与settable一样，但调用的索引方法是原始的。&lt;/p&gt;
+
+&lt;p&gt;void lua_rawgeti(int index, int n) : 压入t[n]值，t为索引index的表，n为参数n，调用的索引方法是原始的。&lt;/p&gt;
+
+&lt;p&gt;void lua_rawseti(int index, int n) : 设置t[n]=v，t为索引index的表，v为栈顶值，n为参数n，并弹出栈顶元素。调用的索引方法为原始的。&lt;/p&gt;
+
+&lt;p&gt;int lua_getmetatable(int index) : 压入索引index的值的metatable，如果索引index的值有metatable则返回非0，否则返回0并不压入任何元素。&lt;/p&gt;
+
+&lt;p&gt;int lua_setmetatable(int index) : 弹出栈顶，并将其设置为索引index值的metatable。&lt;/p&gt;
+
+&lt;p&gt;void lua&lt;em&gt;register(const char *name, lua&lt;/em&gt;CFunction f) :  向lua注册名字为name的f方法。这个方法相当于 #define lua&lt;em&gt;register(L,n,f) (lua&lt;/em&gt;pushcfunction(L, f), lua_setglobal(L, n))&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D手机中的网页调用与回调</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/11/23/Unity3D%E6%89%8B%E6%9C%BA%E4%B8%AD%E7%9A%84%E7%BD%91%E9%A1%B5%E8%B0%83%E7%94%A8%E4%B8%8E%E5%9B%9E%E8%B0%83/"/>
+   <updated>2014-11-23T23:04:46+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/11/23/Unity3D手机中的网页调用与回调</id>
+   <content type="html">&lt;p&gt;Unity3D手机中的网页调用与回调，其实就是我们口中常说的Webview，是手机项目里调用网页，来代替游戏画面展示的一种方法。因为其展示的是网页，所以展示画面是相对动态的，可以由服务器来控制。但是我们不只需要展示画面，还需要当点击网页按钮时产生回调以使U3D执行指定程序。&lt;/p&gt;
+
+&lt;p&gt;其实日本在webview这个模块上做的很不错，我也是借用日本Gree公司在github上公开的webview程序来作为底层代码的，只是我稍微改进了下，以适合自己的程序习惯和项目习惯。下面我主要介绍下这个webview的运作机制。&lt;/p&gt;
+
+&lt;p&gt;一、调用Webview打开网页。
+我在源码基础上加了个单例接口，使得接口调用更加简单。&lt;/p&gt;
+
+&lt;p&gt;初始化接口：WebViewObject.sInstance.Init((msg)=&amp;gt;{
+Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
+}); 初始化传入的是点击回调的消息接口。&lt;/p&gt;
+
+&lt;p&gt;设置窗体大小：WebViewObject.sInstance.SetMargins(5, 5, 5, 40); 窗体大小定义的十左边，上边，右边，下边的间隔像素。&lt;/p&gt;
+
+&lt;p&gt;展示OR关闭网页：WebViewObject.sInstance.SetVisibility(true);&lt;/p&gt;
+
+&lt;p&gt;通过地址加载某网页：WebViewObject.sInstance.LoadURL(path);&lt;/p&gt;
+
+&lt;p&gt;二、Webview在不同平台的插件载体和编译这些载体的方法。&lt;/p&gt;
+
+&lt;p&gt;这里主要是Android、IPHONE和MAC平台---因为它只做了这3个平台，所以Windows平台的同学就不能再编辑器里看到了，调试Webview时就用MAC吧。Android使用jar做插件体，iphone用.mm文件做插件体，mac用bundle做插件载体。&lt;/p&gt;
+
+&lt;p&gt;iphone是用.mm文件，所以不用编译载体，只有Android和Mac需要。在platform&lt;em&gt;src/Android和platfor&lt;/em&gt;src/iOS下分别有install.ssh文件可以执行，用来编译各自的载体。所以你只要执行就可以了。&lt;/p&gt;
+
+&lt;p&gt;三、Webview网页按钮回调。&lt;/p&gt;
+
+&lt;p&gt;Webview网页按钮回调的功能对我们来说非常有用，所以这里细致讲下它是如何辨认并回调的。
+所有的网页里的链接都可以想象成按钮，无论是图片超链接还是普通的链接地址，更或是form形式的submit提交按钮，都是以网页形式访问网页地址。当访问网页地址时，native程序中拦截了网页地址，并查看网页地址是否以&amp;#39;unity:&amp;#39;打头，如果是以&amp;#39;unity:&amp;#39;打头的认为是调用unity3d的按钮，将此地址直接发送(SendMessage)给U3D的Webview程序，让其判断根据接收到得地址判断需要调用哪段程序。比如，地址为unity:auth，U3D程序在init时传入的接口接收到的为auth的字符串。所以如果你想让网页链接调用U3D程序，你就把链接写成unity:开头的超链接。&lt;/p&gt;
+
+&lt;p&gt;最后，我们既然有了手机中得网页调用与回调，我们就可以充分运用其在游戏里的功能了，最最基础的就是公告了，其次就是攻略网页，还有游戏功能的说明和调用，甚至有时可以直接代替游戏画面，直接替换画面的灵活性就非常强大了。&lt;/p&gt;
+
+&lt;p&gt;现在，我连Webview的测试案例都写好，测试案例的项目在git clone 后切记使用 git submodule update --init 更新submodule。：）Good luck!&lt;/p&gt;
+
+&lt;p&gt;注：有人反馈显示网页后，点击奔溃的问题，这是U3D的Editor本身与MAC兼容的问题，U3D编辑器的调用MAC程序奔溃比较频繁，所以细致的测试还得在真机上进行比较合适。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2014/11/img.png&quot;&gt;&lt;img class=&quot;alignnone size-full wp-image-450&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2014/11/img.png&quot; alt=&quot;img&quot; width=&quot;1408&quot; height=&quot;960&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;源码地址：&lt;a href=&quot;https://github.com/luzexi/Unity3DWebView&quot;&gt;Unity3DWebview&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;测试案例地址：&lt;a href=&quot;https://github.com/luzexi/Unity3DWebView-Test&quot;&gt;Unity3dWebviewTest&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D人物行为状态机和指令状态机</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/10/25/Unity3D%E4%BA%BA%E7%89%A9%E8%A1%8C%E4%B8%BA%E7%8A%B6%E6%80%81%E6%9C%BA%E5%92%8C%E6%8C%87%E4%BB%A4%E7%8A%B6%E6%80%81%E6%9C%BA/"/>
+   <updated>2014-10-25T15:06:18+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/10/25/Unity3D人物行为状态机和指令状态机</id>
+   <content type="html">&lt;p&gt;Unity3D人物行为状态机和指令状态机。状态机在各类游戏中都应用的比较平凡，不要以为只有角色扮演类游戏才用到状态机，但凡有物体有动作切换或者重复的指令切换都是状态机用到的地方。其实状态机到处都是，只有你想不到没有有他触及不到的地方，当然我这里主要讲有限状态机。这里省略一万字的状态机基础知识以及我的唠叨。&lt;/p&gt;
+
+&lt;p&gt;状态机在游戏项目中的主要运用点：
+1.人物动作。一般的RPG人物最为明显，每个人物都有4-5个基本动作，比如 空闲动作，行走，攻击，受伤，施法等。把每个动作看成一个状态，就有了基本的状态，把每个状态用参数串联起来就算是状态机了。&lt;/p&gt;
+
+&lt;p&gt;2.AI。这个在游戏AI里表现得最为明显，用状态机写AI是最快并且最有效的方式了。每个AI也都有几个基本状态，比如 追击状态，逃跑状态，疯狂状态，巡逻状态。有了这几个状态，就可以用参数串联起来成为状态机了。&lt;/p&gt;
+
+&lt;p&gt;3.人物指令。这个可能很多没有写过状态机的童鞋比较难懂，他跟AI状态有点像，是为了辅助人物动作状态的。当我们把人物动作状态机定义完毕时，发现只有人物动作状态，如何去扩展除了动作以外的东西呢，比如移动，缩放。人物指令状态机就是做这事的，他相当于在动作状态机上套了又一层状态机。比如人物行走指令里，调用了动作行走状态，让人物一直保持行走动作，然后自己只要去处理人物位移就可以了，这样既有了动作也有了位移，整套移动指令就完整了。又比如攻击指令状态，发出指令后，攻击指令状态先调用行走动作状态并移动到目标点，再调用攻击动作状态，再处理攻击受伤逻辑。表现就是，一个人走到目标点攻击了另一个人。中间还可以加很多逻辑，比如判断是否处于封印状态，如果处在封印状态就不能攻击。&lt;/p&gt;
+
+&lt;p&gt;状态机极大的简化了对人物行为变化的处理方式，也更加容易进行扩展。Unity3D里有一个动作的状态功能Animator，他的图形界面很清晰得解释了状态机的原理。但我自己并不喜欢使用，因为我认为这个Animator限制了程序员的思维，虽然达到了可视化状态机的目的但扩展性差，所以我一直不推崇使用，不过这只是个人看法。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2014/10/10039783.jpg&quot;&gt;&lt;img class=&quot;alignnone size-full wp-image-433&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2014/10/10039783.jpg&quot; alt=&quot;10039783&quot; width=&quot;550&quot; height=&quot;240&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;运用状态机时需要注意的几个问题:&lt;/p&gt;
+
+&lt;p&gt;1.传统网游里人物状态不太多，最多也就10个极限了，但是现在已经不是从前了，特别是单机游戏里，动不动就2，3十个状态，这个时候状态与状态之间切换逻辑就成了一个麻烦事。我们可以增加事件处理句柄来整理状态切换事件，其他方法也有很多种，运用时最好围绕让程序员容易找，容易改来，不要为了发挥设计模式而抛弃了代码清晰度。&lt;/p&gt;
+
+&lt;p&gt;2.输入参数。当前游戏项目中，输入参数有很多种。一种输入参数已经满足不了状态机在游戏中得运用了。而且不同的状态对于输入的参数也不同，所以我们可以面向对象方式对状态机输入进行扩做。我们定义一个Input类，里面什么都没有，每个状态或者某几个状态另开出一个类xxInput继承Input，增加里面的参数，再在输入参数时，对参数进行辨别，如果是xxInput时就对相应状态进行判定和处理。&lt;/p&gt;
+
+&lt;p&gt;总结：状态机没有固定框架，还得要大家自己亲自试验，最好能借鉴别人的项目或者在自己的项目里试着写入状态机。我能帮大家的也就分析解释下状态机在游戏里的运用情况，最后还得靠自己琢磨出来。&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D行为树系统编程实现</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/10/24/Unity3D%E8%A1%8C%E4%B8%BA%E6%A0%91%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0/"/>
+   <updated>2014-10-24T11:16:11+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/10/24/Unity3D行为树系统编程实现</id>
+   <content type="html">&lt;p&gt;Unity3D行为树系统编程实现。行为树在AI领域使用十分广泛，行为树的架构非常通用和便捷，在扩展性方面表现得更是非常好。我这里只讲关于如何实现行为树，跳过了基础的行为树概念。关于行为树的介绍和行为树概念请看&lt;a title=&quot;行为树&quot; href=&quot;http://www.luzexi.com/%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E6%A0%91behavior-tree%E5%AE%9E%E7%8E%B0%E6%B8%B8%E6%88%8Fai/&quot; target=&quot;_blank&quot;&gt;《使用行为树behavior-tree实现游戏ai》&lt;/a&gt;这是业界一个前辈写的文章我只是代为转载。&lt;/p&gt;
+
+&lt;p&gt;很久没有写文章了，如果文笔弱请多见谅，随着工作的繁忙，写博客也是件奢侈的事情。在整理完代码后累得跟死猪一样，时间并不充裕，经历也有限，请各位期待更新的朋友多多见谅。行为树一直是我希望完善的一个系统框架，本身在2011年时就用在3DRPG里，但那是并不完善，只是个初级的产品。这次我彻彻底底把他完善成一个固定框架，可以直接拿来扩展使用。原本也这个行程也只是记在笔记本上，但最近有个英国的出版社发MAILL给我说有篇UNITY3D AI的书他们正在出版，要我做一下审阅和评论，于是看了几天审阅了段时间，里面大部分内容都是讲U3D里一个行为树插件RAIN如何使用，一项不喜欢使用插件的我看得我很不爽，因为文章大部分内容都是叙述使用过程没什么可看的。一念之下，一口气直接把行为树系统框架和行为树编辑器写了一遍。审阅和评论的事情没弄完，自己的行为树系统倒是写完了，罪过罪过。-----废话完毕。&lt;/p&gt;
+
+&lt;p&gt;我先把源码地址贴上，让大家可以边对着代码，边看我的文章。这样可以像下酒菜一样，边喝着啤(wen)酒(zhang)，边吃着花(dai)生(ma)。
+源码放在github上: &lt;a href=&quot;https://github.com/luzexi/Unity3DAIBehaviorTree&quot;&gt;https://github.com/luzexi/Unity3DAIBehaviorTree&lt;/a&gt; 如果你喜欢可以star或者follow下。&lt;/p&gt;
+
+&lt;p&gt;行为树系统实现：&lt;/p&gt;
+
+&lt;p&gt;1.我把行为树以BNode为基类节点。&lt;/p&gt;
+
+&lt;p&gt;2.BNode的一层子类为BNodeAction(行动基类)，BNodeComposite(执行顺序基类)，BNodeCondition(条件基类)，BNodeDecorator(修饰基类)。&lt;/p&gt;
+
+&lt;p&gt;3.BNode基类节点的基本方法：OnEnter--进入事件,OnExist--退出事件,Excute--执行事件。子类可以通过重写这三个方法以达到实现自我功能。&lt;/p&gt;
+
+&lt;p&gt;4.节点的执行顺序是需要提前考虑的，我写了几个，比如顺序，选择，并行，随机，迭代。具体点：顺序--子节点中顺序执行直到结束如果遇到失败的节点就返回失败否则成功，选择--子节点中顺序执行直到遇到返回成功的节点，并行--顺序执行节点无论失败成功直到结束返回成功，随机--随机选择一个节点执行返回该节点的结果，迭代--顺序执行直到并连续成功N次就返回成功否则失败。&lt;/p&gt;
+
+&lt;p&gt;5.输入参数BInput是行为树系统的必要类实例，因为在运行行为树时，每个节点的执行对象需要依赖输入参数，每个项目的输入参数都不一样，所以你可以继承BInput扩展成你希望的输入参数，比如：TestInput里加入了hp,mp两个元素用来保存AI的对象状态，你也可以加入更多更复杂的元素，比如角色信息类，伙伴信息类等。&lt;/p&gt;
+
+&lt;p&gt;6.为了让行为树运用到项目里去，我们可以对BNodeAction，BNodeCondition，BNodeDecorator，进行扩展。继承书写的规则：继承子类必须在Game.AIBehaviorTree命名空间里，构造函数里最好对m_strName进行赋值，这样就能在行为树编辑器里看到你的扩展类和扩展命名，每个扩展的节点，如果有需要对变量进行编辑的，变量必须是public的，而且类型只限于int,float,bool,string四种。&lt;/p&gt;
+
+&lt;p&gt;7.行为树编辑器是行为树系统可用性的关键。我把行为树用目录结构的方式来实现，这样对于节点的增加，删除，切换，拖拽，体验都非常便捷。对于每个节点的编辑状态在选择该节点后会在编辑器的右下脚现实。编辑器还承载了保存，加载，以及对行为树的增加和删除，重命名的功能。如下图：
+&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2014/10/img.png&quot;&gt;&lt;img class=&quot;alignnone size-full wp-image-429&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2014/10/img.png&quot; alt=&quot;img&quot; width=&quot;985&quot; height=&quot;492&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;8.行为树数据存储。我用json格式来存储行为树，先前我用bytes来存，但发现因为扩展子类的变量经常性变化，所以用bytes来存常常会导致已编辑完成的数据无法重新编辑。所以我用了c#反射进行类与json变量的配对。&lt;/p&gt;
+
+&lt;p&gt;9.最后请大家注意，行为树不只是用来做AI的，比如开宝箱，掉落，物品使用都可以用行为树来做。&lt;/p&gt;
+
+&lt;p&gt;10.文档化数据，行为树有了编辑器似乎抛弃了xls,但我还是认为xls对于策划人员的数据编辑工作还是主流的，所以我接下来扩展的方向就是行为树编辑器xls化。&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处: http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>html5游戏开发---cocos2dx-js</title>
+   <link href="http://hyde.getpoole.com/html5/cocos2dx/2014/09/28/html5%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91---cocos2dx-js/"/>
+   <updated>2014-09-28T12:05:23+08:00</updated>
+   <id>http://hyde.getpoole.com/html5/cocos2dx/2014/09/28/html5游戏开发---cocos2dx-js</id>
+   <content type="html">&lt;p&gt;html5游戏开发---cocos2dx-js。在神经猫发热后，我开始关注html5游戏。所以前段时间做了2个html5小游戏当试水，用的引擎是cocos2dx-js。在这里我想做回忆下，html5的制作过程和需要注意的地方，也阐述下当下html5游戏渠道的问题。&lt;/p&gt;
+
+&lt;p&gt;我先接触了egret引擎，它是国内html5优秀的游戏引擎，采用typescripts做主语言。在我用了几天发现，它的主语言并非js所以html5底层的东西会被下意识的屏蔽掉，何不用js的引擎来写html5呢，即能快速开发又能随时接触html5底层。所以我使用了cocos2dx-js。&lt;/p&gt;
+
+&lt;p&gt;关于cocos2dx-js的教程就不在这里写了，接口跟cocos2dx-c++的差不多。&lt;/p&gt;
+
+&lt;p&gt;js写html5需要注意的几点：&lt;/p&gt;
+
+&lt;p&gt;1.html5游戏最需要快速加载，js代码不能分成很多个一个个加载，减慢了加载速度也容易流失用户。所以在写玩html5时需要对所有js代码进行压缩合并。google的closure compiler解决了这个问题，cocos2dx-js也将这个功能融入进里面。下面是步骤：&lt;/p&gt;
+
+&lt;p&gt;在cocos2dx-js-v3.0里使用cocos compile -p web -m release来对html5的js代码进行压缩。&lt;/p&gt;
+
+&lt;p&gt;在cocos2dx-html5(与cocos2dx-js-v3.0是两个版本，cocos2dx-js-v3.0比较好用)里打包html5需要用到ant和build.xml。打包主要内容为将所有js文件打包成同一个文件，目的是减少加载文件数量，加快加载速度。打包命令：cd到项目文件夹下。敲入:ant或者ant -buildfile build.xml。build.xml中囊括了要打包的js文件。其中指定了js打包编译工具complie.jar是google closure compiler专门压缩js文件大小工具。&lt;/p&gt;
+
+&lt;p&gt;关于微信分享:&lt;/p&gt;
+
+&lt;p&gt;微信api已经在微信的浏览器里已经注入了它的api。&lt;/p&gt;
+
+&lt;p&gt;微信api的机制其实就是事件机制，比如当你点击分享时，调用某个你制定的方法显示你想显示的文字和图片。&lt;/p&gt;
+
+&lt;p&gt;微信api你可以参考 &lt;a href=&quot;https://github.com/zxlie/WeixinApi&quot;&gt;https://github.com/zxlie/WeixinApi&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;主要用到的有分享朋友圈，分享给朋友，分享后回调。你可以首先看这几个重点。&lt;/p&gt;
+
+&lt;p&gt;关于html5游戏渠道:&lt;/p&gt;
+
+&lt;p&gt;1.现在html5游戏的渠道很少，而且现在html5游戏基本呈现在微信浏览器中，所以微信的公众平台是渠道之一，而且似乎占比比较大。&lt;/p&gt;
+
+&lt;p&gt;2.在国外html5游戏在电视上的占比也开始大了，我不知道国内的情况，未来国内是否有可能在电视上呈现html5游戏。&lt;/p&gt;
+
+&lt;p&gt;3.html5游戏的app形式，这个还是很有潜力的，因为渠道太少倒逼html5游戏发展成轻型app。也就是说html5的app就只是个连接地址，但在手机上呈现的是一个图标，打开后以浏览器形式访问。&lt;/p&gt;
+
+&lt;p&gt;最后大家可以看看这个小游戏，请使用手机二维码扫描。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2014/09/qrcode.png&quot;&gt;&lt;img class=&quot;alignnone size-full wp-image-413&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2014/09/qrcode.png&quot; alt=&quot;qrcode&quot; width=&quot;280&quot; height=&quot;280&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;源码地址：&lt;a href=&quot;https://github.com/hangzhou-JIMI/MemoryFruits&quot;&gt;https://github.com/hangzhou-JIMI/MemoryFruits&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Git 使用实记</title>
+   <link href="http://hyde.getpoole.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2014/09/12/git-Git%E4%BD%BF%E7%94%A8%E5%AE%9E%E8%AE%B0/"/>
+   <updated>2014-09-12T18:54:22+08:00</updated>
+   <id>http://hyde.getpoole.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2014/09/12/git-Git使用实记</id>
+   <content type="html">&lt;p&gt;下面是我最近一直在使用的git命令。不知道能否为你提供点帮助。当然，我在github上做了很多好东西，全是开源的供你慢慢享用，如果觉得不错可以star(收藏),fllow(订阅)一下。等我空点了再把项目技术分享给你们哦。&lt;a href=&quot;https://github.com/luzexi&quot;&gt;https://github.com/luzexi&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;clone:&lt;/p&gt;
+
+&lt;p&gt;git clone path dir 或者 git clone path 名字可以省略默认使用该项目名&lt;/p&gt;
+
+&lt;p&gt;branch:&lt;/p&gt;
+
+&lt;p&gt;git branch -r 查看所有分支&lt;/p&gt;
+
+&lt;p&gt;git branch 查看当前获取的分支信息，在没有获取分支信息前，只会显示在哪个提交点。&lt;/p&gt;
+
+&lt;p&gt;checkout:&lt;/p&gt;
+
+&lt;p&gt;git checkout branch_name 切换某个分支&lt;/p&gt;
+
+&lt;p&gt;git checkout -b branch_name 以当前分支未基础建立新分支并且切换过去&lt;/p&gt;
+
+&lt;p&gt;git checkout -f 强制替换与分支不一样的文件&lt;/p&gt;
+
+&lt;p&gt;git checkout path 撤销某个未提交文件恢复原状&lt;/p&gt;
+
+&lt;p&gt;git checkout . 撤销所有未提交文件恢复原状&lt;/p&gt;
+
+&lt;p&gt;git checkout --ours path  冲突中以当前分支未基准&lt;/p&gt;
+
+&lt;p&gt;git checkout --theirs path 冲突中以对方分支未基准&lt;/p&gt;
+
+&lt;p&gt;add:&lt;/p&gt;
+
+&lt;p&gt;git add path 告诉git这个文件或文件夹加入到提交队列&lt;/p&gt;
+
+&lt;p&gt;git add . 告诉git目录下文件和文件夹都加入到提交队列&lt;/p&gt;
+
+&lt;p&gt;rm:&lt;/p&gt;
+
+&lt;p&gt;git rm path 告诉git这个文件或文件夹需要被删除&lt;/p&gt;
+
+&lt;p&gt;git rm . 告诉git当前目录下所有文件和文件夹都需要被删除&lt;/p&gt;
+
+&lt;p&gt;git rm &lt;code&gt;git status | grep delete | awk &amp;#39;{print $2}&amp;#39;&lt;/code&gt; 删除所有被删除的文件&lt;/p&gt;
+
+&lt;p&gt;commit:&lt;/p&gt;
+
+&lt;p&gt;git commit -m &amp;quot;write something&amp;quot; 提交当前被git add 或者 git rm 的内容&lt;/p&gt;
+
+&lt;p&gt;git commit -a -m &amp;quot;write something&amp;quot; 提交所有被git跟踪的文件，-a表示所有&lt;/p&gt;
+
+&lt;p&gt;push:&lt;/p&gt;
+
+&lt;p&gt;git push origin branch&lt;em&gt;name 推送branch&lt;/em&gt;name分支&lt;/p&gt;
+
+&lt;p&gt;git push origin branch&lt;em&gt;name1:branch&lt;/em&gt;name2 把当branch&lt;em&gt;name1支推送到新建一个分支branch&lt;/em&gt;name2中去&lt;/p&gt;
+
+&lt;p&gt;git push 推送所有本地修改过的分支到服务器&lt;/p&gt;
+
+&lt;p&gt;pull:&lt;/p&gt;
+
+&lt;p&gt;git pull 下载当前分支内容&lt;/p&gt;
+
+&lt;p&gt;git pull server branch&lt;em&gt;name 下载server服务器上的 branch&lt;/em&gt;name分支，如果有冲突将自动合并&lt;/p&gt;
+
+&lt;p&gt;show:&lt;/p&gt;
+
+&lt;p&gt;git show commit_id 查看某次提交修改的内容&lt;/p&gt;
+
+&lt;p&gt;whatchanged:&lt;/p&gt;
+
+&lt;p&gt;git whatchanged filepath  查看某个文件的修改记录&lt;/p&gt;
+
+&lt;p&gt;clean:&lt;/p&gt;
+
+&lt;p&gt;git clean -f 清除所有未被git跟踪的文件&lt;/p&gt;
+
+&lt;p&gt;git clean -df 清除所有未被git跟踪的文件和文件夹&lt;/p&gt;
+
+&lt;p&gt;reset:&lt;/p&gt;
+
+&lt;p&gt;git reset --hard commitID 回撤到某个提交点,文件也一同回到那个状态&lt;/p&gt;
+
+&lt;p&gt;git reset --soft commitID  回撤到某个提交点，但文件仍然保持原来被修改后的状态。&lt;/p&gt;
+
+&lt;p&gt;fetch:&lt;/p&gt;
+
+&lt;p&gt;git fetch 这个我只知道抓取当前项目的所有信息主要实分支信息和提交记录，并不下载内容&lt;/p&gt;
+
+&lt;p&gt;merge:&lt;/p&gt;
+
+&lt;p&gt;git merge server branch&lt;em&gt;name 合并server项目上branch&lt;/em&gt;name分支&lt;/p&gt;
+
+&lt;p&gt;git merge branch&lt;em&gt;name 合并默认origin项目上的branch&lt;/em&gt;name分支&lt;/p&gt;
+
+&lt;p&gt;diff:&lt;/p&gt;
+
+&lt;p&gt;git diff file_name 比较文件与前一个版本的不同之处&lt;/p&gt;
+
+&lt;p&gt;remote:&lt;/p&gt;
+
+&lt;p&gt;git remote add server&lt;em&gt;name git&lt;/em&gt;path 将git&lt;em&gt;path以server&lt;/em&gt;name命名，方便后面操作&lt;/p&gt;
+
+&lt;p&gt;submodule:&lt;/p&gt;
+
+&lt;p&gt;git submodule add &lt;git address&gt; &lt;dir name&gt;  加入其他模块仓库&lt;/p&gt;
+
+&lt;p&gt;git submodule init  初始化模块仓库&lt;/p&gt;
+
+&lt;p&gt;git submodule update  更新模块仓库&lt;/p&gt;
+
+&lt;p&gt;log:&lt;/p&gt;
+
+&lt;p&gt;-p：按补丁显示每个更新间的差异&lt;/p&gt;
+
+&lt;p&gt;--stat：显示每次更新的修改文件的统计信息&lt;/p&gt;
+
+&lt;p&gt;--shortstat：只显示--stat中最后的行数添加修改删除统计&lt;/p&gt;
+
+&lt;p&gt;--name-only：尽在已修改的提交信息后显示文件清单&lt;/p&gt;
+
+&lt;p&gt;--name-status：显示新增、修改和删除的文件清单&lt;/p&gt;
+
+&lt;p&gt;--abbrev-commit：仅显示SHA-1的前几个字符，而非所有的40个字符&lt;/p&gt;
+
+&lt;p&gt;--relative-date：使用较短的相对时间显示（例如：&amp;quot;two weeks ago&amp;quot;）&lt;/p&gt;
+
+&lt;p&gt;--graph：显示ASCII图形表示的分支合并历史&lt;/p&gt;
+
+&lt;p&gt;--pretty：使用其他格式显示历史提交信息&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D之对pomelo框架网络层改装</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2014/06/25/Unity3D%E4%B9%8B%E5%AF%B9pomelo%E6%A1%86%E6%9E%B6%E7%BD%91%E7%BB%9C%E5%B1%82%E6%94%B9%E8%A3%85/"/>
+   <updated>2014-06-25T14:27:25+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2014/06/25/Unity3D之对pomelo框架网络层改装</id>
+   <content type="html">&lt;p&gt;Unity3D之对pomelo框架网络层改装。&lt;/p&gt;
+
+&lt;p&gt;最近了解了下网易的开源服务器框架pomelo，github地址：&lt;a href=&quot;https://github.com/NetEase/pomelo&quot;&gt;https://github.com/NetEase/pomelo&lt;/a&gt;发现其中它封装的u3d的网络层部分有线程安全问题，几乎不能直接u3d项目，所以对其进行了2次封装，让他可以真正用于u3d项目。&lt;/p&gt;
+
+&lt;p&gt;封装后的源码也同样放在我的github上：&lt;a href=&quot;https://github.com/luzexi&quot;&gt;https://github.com/luzexi&lt;/a&gt; 供大家参考。&lt;/p&gt;
+
+&lt;p&gt;下面写下pomelo的u3d网络层源码问题和我对源码的封装过程：
+pomelo网络通信方式分:原始socket和websocket两种，这两种方式由项目需要而选择其中一种来使用。pomelo种对u3d网络通信封装的最主要问题是线程中逻辑句柄的调用，因为u3d对它本身主线程意外的线程调用本身api是非常排斥，当你在其他线程中运行u3d的api会直接被cut掉，所以我们需要将其调用游戏逻辑句柄的那部分放到u3d主线程中去。&lt;/p&gt;
+
+&lt;p&gt;如何将线程通信后的游戏句柄调用部分放到u3d主线程中去：&lt;/p&gt;
+
+&lt;p&gt;1.网络通信是由数据包为单位来驱动游戏逻辑句柄的，所以只要加入队列概念，在收到数据包时由原来的直接调用句柄，改为先推入到队列中，等待处理。&lt;/p&gt;
+
+&lt;h1&gt;if LUZEXI&lt;/h1&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;    private System.Object m_cLock = new System.Object();    //the lock object
+    private const int PROCESS_NUM = 5;  //the process handle num per fps
+    private Queue&amp;lt;byte[]&amp;gt; m_seqReceiveMsg = new Queue&amp;lt;byte[]&amp;gt;();    //the message queue
+    private TranspotUpdate m_cUpdater = null;   //The Updater of the message queue
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;endif&lt;/h1&gt;
+
+&lt;p&gt;2.在u3d主逻辑中增加一个专门处理网络通信逻辑句柄的类。这个类在通信开始时就加入到u3d主逻辑中去，当通信结束(无论是正常还是异常结束)时在u3d主逻辑中销毁。在主逻辑中不断的或者说每帧都去查看网络通信层队列中有没有等待处理的句柄，有就取出来处理。这样就由等待队列串联起来了几个线程的共同合作。ps:对队列做防死锁操作&lt;/p&gt;
+
+&lt;h1&gt;if LUZEXI&lt;/h1&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;    internal void Update()
+    {
+        for( int i = 0 ; i&amp;lt;PROCESS_NUM &amp;amp;&amp;amp; i&amp;lt; this.m_seqReceiveMsg.Count; i++)
+        {
+            lock(this.m_cLock)
+            {
+                byte[] data = this.m_seqReceiveMsg.Dequeue();
+                this.messageProcesser.Invoke(data);
+            }
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;endif&lt;/h1&gt;
+
+&lt;p&gt;3.拆分网络通信事件。将网络通信事件拆分为OnConnect , OnError , OnDisconnect , 这3个事件是最常见的通信事件。这3个事件也必须在主线程中调用，但这3个事件又不是以网络数据包为基础，所以需要在专门处理通信逻辑的类中加入3种状态start , error , disconnect.当网络通信层出现这三种事件时，将状态切过去（ps:而不是直接调用句柄）,然后再由专门处理通信逻辑的类在下一帧去调用对应的事件句柄。&lt;/p&gt;
+
+&lt;p&gt;using UnityEngine;
+using System;
+using System.Collections.Generic;
+using SimpleJson;&lt;/p&gt;
+
+&lt;p&gt;//  TranspotUpdate.cs
+//  Author: Lu Zexi
+//  2014-6-20&lt;/p&gt;
+
+&lt;p&gt;namespace Pomelo.DotNetClient
+{
+    /// 
+&lt;summary&gt;
+    /// Transpot updater.
+    /// &lt;/summary&gt;
+    public class TranspotUpdate : MonoBehaviour
+    {
+        private enum STATE
+        {
+            NONE = 0,
+            START = 1,
+            RUNING = 2,
+            CLOSE = 3,
+            DESTORY = 4,
+        }
+        private STATE m&lt;em&gt;eStat = STATE.NONE; //the state of the transpotUpdate
+        private Action m&lt;/em&gt;cUpdate;   //update action
+        private List&lt;Action&lt;JsonObject&gt;&amp;gt; m_cOnDisconnect;   //on the disconnect&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;    /// &amp;lt;summary&amp;gt;
+    /// Init this instance.
+    /// &amp;lt;/summary&amp;gt;
+    internal static TranspotUpdate Init()
+    {
+        GameObject obj = new GameObject(&amp;lt;span class=&amp;quot;string&amp;quot;&amp;gt;&amp;quot;Socket&amp;quot;);
+        TranspotUpdate trans = obj.AddComponent&amp;lt;TranspotUpdate&amp;gt;();
+        return trans;
+    }
+
+    /// &amp;lt;summary&amp;gt;
+    /// set the update of the process message action
+    /// &amp;lt;/summary&amp;gt;
+    /// &amp;lt;param name=&amp;quot;update&amp;quot;&amp;gt;Update.&amp;lt;/param&amp;gt;
+    internal void SetUpdate( Action update )
+    {
+        this.m_cUpdate = update;
+    }
+
+    /// &amp;lt;summary&amp;gt;
+    /// set the disconnect evet.
+    /// &amp;lt;/summary&amp;gt;
+    /// &amp;lt;param name=&amp;quot;ondisconnect&amp;quot;&amp;gt;Ondisconnect.&amp;lt;/param&amp;gt;
+    internal void SetOndisconnect( List&amp;lt;Action&amp;lt;JsonObject&amp;gt;&amp;gt; ondisconnect )
+    {
+        this.m_cOnDisconnect = ondisconnect;
+    }
+
+    /// &amp;lt;summary&amp;gt;
+    /// close the updater
+    /// &amp;lt;/summary&amp;gt;
+    internal void Close()
+    {
+        this.m_eStat = STATE.CLOSE;
+    }
+
+    /// &amp;lt;summary&amp;gt;
+    /// Start this update.
+    /// &amp;lt;/summary&amp;gt;
+    internal void _Start()
+    {
+        this.m_eStat = STATE.START;
+    }
+
+    /// &amp;lt;summary&amp;gt;
+    /// destory the gameobject.
+    /// &amp;lt;/summary&amp;gt;
+    internal void _Destory()
+    {
+        if(this.m_eStat != STATE.CLOSE)
+            this.m_eStat = STATE.DESTORY;
+    }
+
+    /// &amp;lt;summary&amp;gt;
+    /// Fixeds the update.
+    /// &amp;lt;/summary&amp;gt;
+    void FixedUpdate()
+    {
+        switch(this.m_eStat)
+        {
+        case STATE.START:
+        case STATE.RUNING:
+            if(this.m_cUpdate != null )
+            {
+                this.m_cUpdate();
+            }
+            break;
+        case STATE.CLOSE:
+            if(this.m_cOnDisconnect != null )
+            {
+                foreach(Action&amp;lt;JsonObject&amp;gt; action in this.m_cOnDisconnect)
+                    action.Invoke(null);
+            }
+            this.m_cOnDisconnect = null;
+            this.m_eStat = STATE.DESTORY;
+            break;
+        case STATE.DESTORY:
+            this.m_eStat = STATE.NONE;
+            GameObject.Destroy(gameObject);
+            break;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;}&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D之如何将包大小减少到极致</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4/"/>
+   <updated>2014-06-06T18:38:46+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/06/06/Unity3D之如何将包大小减少到极致</id>
+   <content type="html">&lt;p&gt;Unity3D之如何将包大小减少到极致,图片是游戏app里最最占空间的资源，所以请各位还没有理解u3d对图片文件存储方式理解的请看&lt;a href=&quot;http://www.luzexi.com/unity3d-texture图片空间和内存占用分析/&quot; target=&quot;_blank&quot;&gt;《unity3d-texture图片空间和内存占用分析》&lt;/a&gt;。因为u3d对资源的压缩并不阐述的十分详细，所以很多项目在遇到包大小瓶颈时非常头疼。我也不是神仙，也同样痛苦过，但经历几个项目的折腾，最终能梳理出一套能将u3d包大小减少到合理范围的方法。&lt;/p&gt;
+
+&lt;p&gt;首先来展示下，官方如何说的:（&lt;a href=&quot;http://docs.unity3d.com/Manual/ReducingFilesize.html&quot;&gt;http://docs.unity3d.com/Manual/ReducingFilesize.html&lt;/a&gt; 官方手册）&lt;/p&gt;
+
+&lt;p&gt;1.替换jpg，使用psd，减少重复资源&lt;/p&gt;
+
+&lt;p&gt;2.剔除不必要的资源&lt;/p&gt;
+
+&lt;p&gt;3.打包时查看log纪录，由此判断需要减少的文件类型&lt;/p&gt;
+
+&lt;p&gt;4.优化，压缩图片，减少图片大小&lt;/p&gt;
+
+&lt;p&gt;5.优化，压缩网格和动画，减少文件大小&lt;/p&gt;
+
+&lt;p&gt;6.剔除system.dll和system.xml.dll ,尽量不要依赖他们，或用其他组件来代替。&lt;/p&gt;
+
+&lt;p&gt;这些官方解释对我们帮助甚少。我把包分成三段：1.首包(里面包含了最最必要的资源)。2.首次进入包加载(加载游戏运行必要的资源)。3.游戏运行中资源加载(按每个游戏不同各自定义，以场景和单位个体为主要，在画面进入时加载资源，加载结束后再运行并显示)。&lt;/p&gt;
+
+&lt;p&gt;关于u3d的AssetBundle资源加载与打包封装，请查看&lt;a href=&quot;http://www.luzexi.com/unity3d%E4%B9%8Bassetbundle%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E5%B0%81%E8%A3%85/&quot; target=&quot;_blank&quot;&gt;《unity3d之assetbundle资源加载封装》&lt;/a&gt;这篇文章。&lt;/p&gt;
+
+&lt;p&gt;下面说说关于动态资源加载和资源导入内存的所有方式，这是优化资源的必要条件，因为只有你知道了所有的加载和导入途径你才能对项目资源优化进行全面的分析。知道了有哪几条路你才能选择一条最好的。如下：&lt;/p&gt;
+
+&lt;p&gt;利用动态资源加载有几种方式：&lt;/p&gt;
+
+&lt;p&gt;1.将资源放入assetstream文件夹随打包一起打入文件。&lt;/p&gt;
+
+&lt;p&gt;2.将部分资源放在服务器，游戏前或游戏中进行加载，并保存到本地。&lt;/p&gt;
+
+&lt;p&gt;3.将资源压缩成多个zip文件放在服务器，客户端下载这些zip文件合成一个zip文件进行解压。&lt;/p&gt;
+
+&lt;p&gt;其实www.LoadFromCacheOrDownload加载机制也可以算一种，但好像u3d4.5.2开始已经摒弃这个接口，不再开放，因为它也开始意识到这个接口容易给人造成误解，而且不好用。
+资源导入内存的方式有几种：&lt;/p&gt;
+
+&lt;p&gt;1.从Resources文件夹中导入。这是阻塞加载最常见的方式，接口Resources.Load();&lt;/p&gt;
+
+&lt;p&gt;2.从某地址加载资源www。这是异步加载最常见方式，接口new www(path);&lt;/p&gt;
+
+&lt;p&gt;3.直接从文件或者bytes[]生成AssetBundl，接口：AssetBundle.CreateFromFile阻塞方法, AssetBundle.CreateFromMemory异步方法，AssetBundle.CreateFromMemoryImmediate阻塞方法&lt;/p&gt;
+
+&lt;p&gt;4.使用File类加载文件，File.ReadAllBytes，File.ReadAllText。&lt;/p&gt;
+
+&lt;p&gt;有了资源加载和内存导入后，还需要配备资源验证方式，这样整个项目动态加载体制才完善。资源版本更新方式可以使用json格式并以文件形式查看。验证方式的理解，还需要大家使用在项目里才能体会到真正的用途，才能将原理牢记于心。&lt;/p&gt;
+
+&lt;p&gt;验证资源版本有几种：&lt;/p&gt;
+
+&lt;p&gt;1.资源整体验证。步骤：1.客户端向服务器发送资源版本。2.服务器匹配最近版本号，若版本号不同，比较两个版本号之间的内容差异，发送差异资源地址。3.客户端删除差异内容中需要删除的文件资源，加载需要下载的文件资源并保存文件。最后保存版本号。&lt;/p&gt;
+
+&lt;p&gt;2.单个资源文件的时间戳验证。步骤：1.客户端向服务器发送资源版本号。2.服务器匹配最新版本号，如果不同就重新发送一份资源版本列表，里面包含了资源文件的时间戳。3.保存版本列表。4.在客户端需要加载该资源时比较时间戳是否一致，如果不一样或这不存在就加载资源文件并保存固定时间戳。&lt;/p&gt;
+
+&lt;p&gt;3.单个资源文件md5验证。步骤：1.客户端向服务器发送资源版本号。2.服务器匹配最新版本号，如果不同重新发送一分资源版本列表，里面包含了资源文件的md5码。3.客户端比较新旧资源版本列表中的，删除需要删除的和更新的资源。4.在客户端需要加载该资源时查看文件是否存在，如果存在就说明资源是最新的。如果不存在则需要实时下载。&lt;/p&gt;
+
+&lt;p&gt;转发请注明出处:http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D--Texture图片空间和内存占用分析</title>
+   <link href="http://hyde.getpoole.com/unity3d/2014/05/21/Unity3D-Texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90/"/>
+   <updated>2014-05-21T11:05:21+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/2014/05/21/Unity3D-Texture图片空间和内存占用分析</id>
+   <content type="html">&lt;p&gt;Texture图片空间和内存占用分析。由于U3D并没有很好的诠释对于图片的处理方式，所以很多人一直对于图集的大小和内存的占用情况都不了解。在此对于U3D的图片问题做一个实际数据的分析。此前的项目都会存在这样或者那样的打包后包大小与内存占用情况的问题，所以这次所以彻彻底底得分析下U3D对于Texture的处理方式。程序里的内存优化请参考&lt;a href=&quot;http://www.luzexi.com/unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF/&quot; target=&quot;_blank&quot;&gt;《Unity3d优化之路》&lt;/a&gt;。减少U3D包大小请参考&lt;a href=&quot;http://www.luzexi.com/unity3d%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4/&quot; target=&quot;_blank&quot;&gt;《unity3d之如何将包大小减少到极致》&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;我打包多种类型的项目，空项目和10张放在Resources文件夹中的图为比较案例。以下是比较数据。&lt;/p&gt;
+
+&lt;p&gt;IPHONE：&lt;/p&gt;
+
+&lt;p&gt;1.空项目----空间占用量42.3MB----IPA大小10MB&lt;/p&gt;
+
+&lt;p&gt;2.10张1200*520无压缩Texure 单张图占用量2.8MB----空间占用量70.2MB----IPA大小22.9MB&lt;/p&gt;
+
+&lt;p&gt;3.10张1200&lt;em&gt;520压缩成1024&lt;/em&gt;1024PVRTC4 单张图占用量0.5MB----空间占用量47.3MB----IPA大小13.2MB&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;10张1024*1024无压缩Texture 单张图占用量4MB----空间占用量82.3MB----IPA大小14.6MB&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;5.10张1024*1024压缩为PVRTC4格式 单张图占用量0.5MB----空间占用量47.3MB----IPA大小11.6MB&lt;/p&gt;
+
+&lt;p&gt;宗上数据总结：&lt;/p&gt;
+
+&lt;p&gt;一、2的N次方大小的图片会得到引擎更大的支持，包括压缩比率，内存消耗，打包压缩大小，而且支持的力度非常大。&lt;/p&gt;
+
+&lt;p&gt;二、减小图片的占用大小和内存方式有:图片大小变化(Maxsize),色彩位数变化(16位，32位)，压缩(PVRC)。&lt;/p&gt;
+
+&lt;p&gt;三、U3D对于图片的格式是自己生成的，而并不是你给他什么格式，他就用什么格式，一张1024&lt;em&gt;1024图在无压缩格式下，它会被U3D以无压缩文件形式存放，也就是说U3D里的Texture Preview里显示的占用大小&lt;/em&gt;*MB不只是内存占用大小，还是空间占用大小。如下图所示：
+&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2014/05/QQ截图20140521102030.png&quot;&gt;&lt;img class=&quot;alignnone size-full wp-image-310&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2014/05/QQ截图20140521102030.png&quot; alt=&quot;QQ截图20140521102030&quot; width=&quot;626&quot; height=&quot;726&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;U3D的内部机制为自动生成图片类型来替换我们给的图片，在图片的压缩方式上需要进行谨慎的选择。&lt;/p&gt;
+
+&lt;p&gt;压缩格式在U3D的&lt;a href=&quot;http://docs.unity3d.com/Documentation/Components/class-Texture2D.html&quot;&gt;Component Reference&lt;/a&gt;里有介绍我就不再详细介绍，只介绍几个重点的:&lt;/p&gt;
+
+&lt;p&gt;RGBA32格式为无压缩最保真格式，但也是最浪费内存和空间的格式。Automatic Turecolor和它一个意思。&lt;/p&gt;
+
+&lt;p&gt;RGBA16格式为无压缩16位格式，比32位节省一半的空间和内存。Automatic 16bits和它一个意思。&lt;/p&gt;
+
+&lt;p&gt;RGBA Compressed PVRTC 4bits格式为PVRTC图片格式，它相当于把图片更改了压缩方式新生成了一个图片来替换原来的我们给的图片格式(比如我们给的是PNG格式)。&lt;/p&gt;
+
+&lt;p&gt;注意：U3D所有图片的压缩格式都会以另一种方式来存储，不会以你给的方式来存储，只有你指定了某种格式，它才会转成你要的格式。而且压缩格式在Android里并不一定有效，因为Android的机型多，GPU的渲染方式也不一样，有的是Nvidia，有的是PowerVR，最最好的在安卓机子上启用RGBA16方式，因为这个是适应所有机型的，并且比32位占用量少一半，但也需要因项目而异，只是推荐使用的格式，可以多用。&lt;/p&gt;
+
+&lt;p&gt;转载请注明出自：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>WEB游戏服务器架构(HTTP)</title>
+   <link href="http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/04/18/WEB%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E6%9E%84(HTTP)/"/>
+   <updated>2014-04-18T11:13:33+08:00</updated>
+   <id>http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/04/18/WEB游戏服务器架构(HTTP)</id>
+   <content type="html">&lt;p&gt;WEB游戏服务器架构(HTTP)。在如今游戏中，越来越多使用WEB架构方式来做游戏，《临兵斗者三国志》也是其中一个。我使用了PHP来做WEB服务器主逻辑语言，原因为他的开发速度快，并且容易招人容易上手。
+接下来主要来介绍下WEB服务器游戏架构的方式。(本文以PHP+MYSQL+MEMCACHE+NGINX为例)&lt;/p&gt;
+
+&lt;p&gt;PHP可以选用任何你熟悉的框架，能站在别人肩膀上的就站上去吧，自己写时间过长。我们选用的是Yii框架，特点不多没有刻意去挑选。Memcache主要存储数据表的内存，因为PHP没有内存可控制，所以结合Memchache是最好的选择，也可以用Redis，功能上都一样，不过Redis有排序而已。用NGINX主要用来做WEB端的负载平衡，也可以在测试时做IP过滤，以及维护时的IP封锁。&lt;/p&gt;
+
+&lt;p&gt;WEB架构图：&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;GAME&lt;em&gt;DB1(Mysql-master&amp;amp;slave)---|
+GAME&lt;/em&gt;DB2(Mysql-master&amp;amp;slave)   |&lt;br&gt;
+GAME&lt;em&gt;DB3(Mysql-master&amp;amp;slave)   |---------------|
+GAME&lt;/em&gt;DB4(Mysql-master&amp;amp;slave)---|               |
+                                               |
+Memcache1(master&amp;amp;slave)                        |
+Memcache2(master&amp;amp;slave)                        |
+Memcache3(master&amp;amp;slave)                        |
+Memcache4(master&amp;amp;slvae)                        |
+/       \                                      |
+GameServerPHP1                                 |
+GameServerPHP2---------------------------------|
+GameServerPHP3&lt;br&gt;
+|     /  &lt;/p&gt;
+
+&lt;h2&gt;Nginx  &lt;/h2&gt;
+
+&lt;p&gt;GB_DB(Mysql)&lt;br&gt;
+|  &lt;/p&gt;
+
+&lt;h2&gt;GM&lt;em&gt;ADMIN&lt;/em&gt;PHP+(memcache)  &lt;/h2&gt;
+
+&lt;p&gt;描述：&lt;/p&gt;
+
+&lt;p&gt;Ngix起负载均衡作用。&lt;/p&gt;
+
+&lt;p&gt;Memcache起数据缓冲作用，当PHP从Memcache中读取数据发现Memcache没有，就从MYSQL里读并且存到Memcahe，查看Memcache玩家数据是否大于某个数(主要是限制内存，不能让Memcache内存无限增加最后导致奔溃)，当PHP需要更新和插入时，PHP先插入或更新到MYSQL，然后再插入或更新到Memcache，使得两边数据能够同步，抑或只插入或更新到MYSQL，在查询时再进行Memcache加载也可以。
+Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据库做的数据散列处理，就是将某块功能数据单独放在某个数据库上，抑或将主键以某种方式分段拆分，例如按每100万主键拆分Mysql,0-100万为1台Mysql,101-200万为另一台Mysql以此类推。&lt;/p&gt;
+
+&lt;p&gt;关于PHP框架的改造，我们需要遵循框架的接口，这样我们才能对底层的框架进行改造并且不影响上层的逻辑。例如上面提到的当查询时，先对Memcache进行操作，查看是否有数据，如没有再对Mysql操作，这种写法的基本条件就是接口必须使用框架固有的，而不是直接写sql语句来执行，但凡只用使用sql语句的都需要被改成框架接口，并且尽量不使用合并操作和查询嵌套。&lt;/p&gt;
+
+&lt;p&gt;关于数据统计，由于WEB没有逻辑线程，所以我使用Linux的任务或Windows的计划代替，每天执行一次某PHP脚本，每周执行一次某PHP脚本，以达到统计数据的要求。
+这个框架是一般游戏服务器的架构，在即时上线时，因为前期人数并不多，服务器的台数可以自由调整，随着人数上线的增多可以动态得进行扩充GameServerPhp服务器的数量，Memcache服务器的数量，最后实在抗不住，也可以增加DB的数量。&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D之AssetBundle资源加载封装</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/04/16/Unity3D%E4%B9%8BAssetBundle%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E5%B0%81%E8%A3%85/"/>
+   <updated>2014-04-16T21:07:53+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/04/16/Unity3D之AssetBundle资源加载封装</id>
+   <content type="html">&lt;p&gt;Unity3D之AssetBundle资源加载封装。在《临兵斗者三国志》中我使用了U3D的AssetBundle资源动态加载机制，原因是某些画面资源太多，IO阻塞过慢会造成游戏奔溃。在开发过程中，遇到点问题:&lt;/p&gt;
+
+&lt;p&gt;1.当资源更改变化时，如何能快速得反应到开发中。&lt;/p&gt;
+
+&lt;p&gt;解决方案:&lt;/p&gt;
+
+&lt;p&gt;我使用宏定义UNITY_EDITOR来判断是否是开发编辑状态。当处于开发编辑状态时，自动读取指定目录下U3D本身资源，而不使用AssetBundle。这样就达到了当prefb变化时能快速反应到开发编辑中。而当不是处于编辑状态时，则正常使用异步加载读取AssetBundle。这个方式唯一的毛病就是，必须让所有U3D程序员都非常清除明白，如果写错，编辑模式下会没问题，发布后会出问题，所以需要检查。&lt;/p&gt;
+
+&lt;p&gt;2.当不同资源之间有重复的资源时如何将AssetBundle空间占有量最小化。&lt;/p&gt;
+
+&lt;p&gt;解决方案:&lt;/p&gt;
+
+&lt;p&gt;GUI资源之间有特别多的重复的问题，挑出几个重复得特别厉害的，比如ICON图集，公用图集。在打包期间把他们设为共享资源，并在加载时首先加载共享资源，这样既节省了AssetBundle空间占有量，也节省了内存。这个方式的毛病是当你将资源更改要打包某个资源时，需要将所有与共享有关的资源重新打包一遍。&lt;/p&gt;
+
+&lt;p&gt;3.如何应对自动释放资源问题。&lt;/p&gt;
+
+&lt;p&gt;解决方案:&lt;/p&gt;
+
+&lt;p&gt;在游戏中有指定资源释放和自动释放所有AssetBundle资源以销毁内存(这里不是指销毁U3D内存，而是AssetBundle内存，U3D内存管理分图片内存，AssetBundle内存，编译程序)。销毁指定资源就按正常来没有争议。销毁所有资源就要有点措施了，因为有些资源是不能被销毁的，因为它们是共享资源，需要全程跟着游戏走，所以当自动销毁所有资源时，将共享资源排除在外。并且在销毁后调用Resources.UnloadUnusedAssets();和GC.Collect();&lt;/p&gt;
+
+&lt;p&gt;4.打包AssetBundle方式。&lt;/p&gt;
+
+&lt;p&gt;解决方案:&lt;/p&gt;
+
+&lt;p&gt;打包AssetBundle方式有几种:1.单资源打包，也就是说一个.prefb或Texture打一个包。2.多个资源打包，将某些资源都打成一个AssetBundle，节省了几个资源包之间的共享资源也减小了多个AssetBundle引起的空间扩大问题。但并不是说所有项目都是多个资源打成一个AssetBundle是好的。《临兵斗者三国志》就是一大部分使用单一打包，而共享资源使用多个资源打成一个AssetBundle的方式。&lt;/p&gt;
+
+&lt;p&gt;最后奉上本人对AssetBundle封装的源码。&lt;a href=&quot;https://github.com/luzexi/Unity3DGameResource&quot;&gt;https://github.com/luzexi/Unity3DGameResource&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;你也可以去我的&lt;a href=&quot;https://github.com/luzexi&quot;&gt;github&lt;/a&gt;上查看找我做的一些源码插件，如果喜欢的话可以star或者fllow。&lt;/p&gt;
+
+&lt;p&gt;转发请注明出自：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3d优化之路</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/02/22/Unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF/"/>
+   <updated>2014-02-22T19:43:01+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/02/22/Unity3d优化之路</id>
+   <content type="html">&lt;p&gt;Unity3d优化之路.U3D的架构部分已经讲了很多了，这里我想讲讲对于U3D优化的亲身体验。&lt;/p&gt;
+
+&lt;p&gt;优化之路分三块：&lt;/p&gt;
+
+&lt;p&gt;一.渲染级别。&lt;/p&gt;
+
+&lt;p&gt;GUI部分：我使用的是NGUI，它对动态移动、旋转、缩放GUI支持的是比较差的，所以我尽量不要把过多的移动旋转缩放的部分写在GUI中，但很多情况下是避免不了的，比如：大量的伤害数字，物品掉落，图标的移动和旋转等，为了不让GUI去控制这些渲染物体，一小部分我使用3D面片代替，而大部分使用程序去生成面片渲染脱离了GUI的控制。另外在那些静态的GUI中，我使用了静态物体优化的属性，加上排除不必要的GUI设置，使得GUI部分效率足够高。&lt;/p&gt;
+
+&lt;p&gt;3D部分：特效是对画面效果最最有影响的部分，我尽量不使用粒子或者将粒子的数量减少到最小。尽量减少灯光的使用，而使用烘培后的图来代替。剔除那些不需要显示的模型。&lt;/p&gt;
+
+&lt;p&gt;2D部分：特效不放在GUI内，而是把特效放在非GUI的另一个摄像头内代替。所以，最终摄像头会有多各，总共叠层是这样的：top:gui&lt;em&gt;effect&lt;/em&gt;camera , middle:gui&lt;em&gt;camera , bottom:3d&lt;/em&gt;camera;&lt;/p&gt;
+
+&lt;p&gt;二.减少占用空间大小。&lt;/p&gt;
+
+&lt;p&gt;1.我使用的是动态资源的加载方式WWW方式。所以在导出资源时我使用BuildAssetBundleOptions.DisableWriteTypeTree 的打包方式，减少包的大小。&lt;/p&gt;
+
+&lt;p&gt;因为WWW缓存方式在下载后解压后还是会增大空间占用量，所以我使用StreamAssets这个在Unity3D里固定文件夹，把WWW资源放在那里，在游戏开始后进行缓冲读取，这样既减少了空间占用量，也可以进行异步的读取资源方式，唯一的缺点是但凡更改资源就需要玩家下载新的游戏包。对于两种方式的WWW资源加载，在具体项目当中可以共同使用，一部分使用网络加载，一部分使用本地StreamAssets加载。&lt;/p&gt;
+
+&lt;p&gt;2.对每张Texture，都设置对图片进行压缩。&lt;/p&gt;
+
+&lt;p&gt;3.让美术减少模型面片数，并在fbx模型设置中，设置对模型进行压缩&lt;/p&gt;
+
+&lt;p&gt;4.让美术减少动画帧数，并在动画设置中，设置对动画进行压缩&lt;/p&gt;
+
+&lt;p&gt;5.不使用System,System.Xml以及其他系统自带的DLL,他会多出几兆空间,而用开源的源码代替。&lt;/p&gt;
+
+&lt;p&gt;三.内存&lt;/p&gt;
+
+&lt;p&gt;1.最基本的就是对需要的资源进行加载，使用完毕后，释放。&lt;/p&gt;
+
+&lt;p&gt;2.GUI部分在GUIManager管理类中增加 对GUI进行定时检查的部分，对不展示的GUI资源进行释放。&lt;/p&gt;
+
+&lt;p&gt;3.因为有些时候一次性加载的资源过多，内存一下子会膨胀，IO过慢导致奔溃，所以我选择资源异步加载。使得加载这么多资源不那么可怕，并且平滑。&lt;/p&gt;
+
+&lt;p&gt;4.内存释放：这里有个重点，我重点测试了一下内存释放的忽视点。在我们利用ngui,或者2dtoolkit进行gui编程时，在释放其gui节点时通常会忘记将gui引用置为null，这就导致了内存泄漏。一些不再使用的贴图或者实例数据仍然继续存留在内存中。对于是否有需要将这些gui变量置为null的说法，我还做了一个实验。&lt;/p&gt;
+
+&lt;p&gt;首先将屏幕置空，没有任何多余内存，再将gui展示，接着隐藏gui销毁gameobject，先将所有引用变量置为null，然后再展示，再销毁，这次销毁，不将变量置为null。得出得内存结论就是，不将gui组件变量置为null的，贴图内存还会滞留。如下图：
+&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2014/02/48391BD3-BEAC-4E45-B6C4-17AA7B5B0428.png&quot;&gt;&lt;img class=&quot;alignnone size-full wp-image-355&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2014/02/48391BD3-BEAC-4E45-B6C4-17AA7B5B0428.png&quot; alt=&quot;48391BD3-BEAC-4E45-B6C4-17AA7B5B0428&quot; width=&quot;568&quot; height=&quot;211&quot; /&gt;&lt;/a&gt;
+测试代码如下：&lt;/p&gt;
+
+&lt;p&gt;using UnityEngine;
+using System.Collections;&lt;/p&gt;
+
+&lt;p&gt;public class testgui
+{
+    private tk2dSprite tex;
+    private GameObject root;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;private tk2dSprite tex1;
+private GameObject root1;
+
+private tk2dSprite tex2;
+private GameObject root2;
+
+public void show()
+{
+    root =  GameObject.Instantiate( Resources.Load(&amp;lt;span class=&amp;quot;string&amp;quot;&amp;gt;&amp;quot;GameObject&amp;quot;) ) as GameObject;
+    root.transform.parent = GameObject.Find(&amp;lt;span class=&amp;quot;string&amp;quot;&amp;gt;&amp;quot;ROOT/MIDDLE_CENTER&amp;quot;).transform;
+    tex = root.GetComponent&amp;lt;tk2dSprite&amp;gt;();
+
+    root1 =  GameObject.Instantiate( Resources.Load(&amp;lt;span class=&amp;quot;string&amp;quot;&amp;gt;&amp;quot;GameObject1&amp;quot;) ) as GameObject;
+    root1.transform.parent = GameObject.Find(&amp;lt;span class=&amp;quot;string&amp;quot;&amp;gt;&amp;quot;ROOT/MIDDLE_CENTER&amp;quot;).transform;
+    tex1 = root1.GetComponent&amp;lt;tk2dSprite&amp;gt;();
+
+    root2 =  GameObject.Instantiate( Resources.Load(&amp;lt;span class=&amp;quot;string&amp;quot;&amp;gt;&amp;quot;GameObject2&amp;quot;) ) as GameObject;
+    root2.transform.parent = GameObject.Find(&amp;lt;span class=&amp;quot;string&amp;quot;&amp;gt;&amp;quot;ROOT/MIDDLE_CENTER&amp;quot;).transform;
+    tex2 = root2.GetComponent&amp;lt;tk2dSprite&amp;gt;();
+}
+
+public void hiden1()
+{
+    GameObject.Destroy(root);
+    GameObject.Destroy(root1);
+    GameObject.Destroy(root2);
+    Resources.UnloadUnusedAssets();
+}
+
+public void hiden()
+{
+    GameObject.Destroy(root);
+    GameObject.Destroy(root1);
+    GameObject.Destroy(root2);
+    root = null;
+    root1 = null;
+    root2 = null;
+    tex = null;
+    tex1 = null;
+    tex2 = null;
+    Resources.UnloadUnusedAssets();
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;}&lt;/p&gt;
+
+&lt;p&gt;请看红框内绿色曲线，第一次是置空的情况，内存立刻销毁，而第二次是不置空的情况，内存仍然驻留。结论很明显了，所以，在你编程时，将引用置空是件非常重要的事，这会直接影响到你的内存使用量。这也事c#垃圾回收机制引起的，当实例没有引用数量时内存才会被回收，并且彻底销毁。&lt;/p&gt;
+
+&lt;p&gt;笔者最后提醒优化无极限，其实都在细节中，能省一点CPU是一点，能省一点内存是一点。你不打败99.5%的其他人，你就没有机会功成名就。&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处:http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D-HTTP网络层封装</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/02/15/Unity3D-HTTP%E7%BD%91%E7%BB%9C%E5%B1%82%E5%B0%81%E8%A3%85/"/>
+   <updated>2014-02-15T15:59:57+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/02/15/Unity3D-HTTP网络层封装</id>
+   <content type="html">&lt;p&gt;Unity3D-HTTP网络层封装。短连接的C#封装在这里做些分享。我把网络层封装成DLL在项目中使用，所以在设计时要将接口封装的很好。 我又对HTTP部分进行了改造不再使用DDL封装了（所以去除文章部分暂时用横线做标记），所有源码都以git的submodule形式作为项目的模块。源码会再文章的最后给出来。这次改装主要是针对程序员是否能快速理解，快速上手的方面来进行的。随着对HTTP网络层不断的理解加深，我将给出更加全面的HTTP源码模块，我还对本HTTP模块写了测试案例，你们可以看测试案例，进行使用。谢谢各位的关注，再次感谢不断得支持。&lt;/p&gt;
+
+&lt;p&gt;一.首先说下网络层需要的一些接口，在游戏里需要用到的网络层都具有大部分的共同点，无论是TCP长连接还是HTTP短连接有部分区别，HTTP的网络事件要相对少一点。&lt;/p&gt;
+
+&lt;p&gt;HTTP接口基本为：数据发送Send接口，网络错误事件，数据包回调执行句柄。HTTP网络层的数据包预发送接口被我去除，因为我回想，这个功能完全可以用模块外部的程序代替，而且可以针对每个界面来写，这样更加清晰，而且主要是这个功能障碍了程序员对程序的理解。&lt;/p&gt;
+
+&lt;p&gt;二.说明下网络层中几个类的用途和作用。 HTTPSession类，是整个网络层的主类，承载了发送，接受，事件相应的事务。&lt;/p&gt;
+
+&lt;p&gt;HTTPPacketRequest类，网络请求数据包基础类。每个请求数据包的最基础的数据，包含一个m_strAction地址变量，这个是因为每个HTTP请求的地址不同而设的变量，每个请求地址前缀都相同比如：http://luzexi.com/ ，而后缀有可能变化，比如author/regist/。所以这个变量要在你创建的时候在构建函数里进行设置。&lt;/p&gt;
+
+&lt;p&gt;HTTPPacketAck类，网络回调数据包基础类。每个回调数据包的基础数据，每个数据包都含有几个基础的变量，我现在写的是code错误码 和 desc错误描述，你也可以改成其他你想要的，如果你理解整这段程序。总之，继承这个回调数据类的类中可以放置本次回调的数据，有数据回调时，系统将自动解析成这个类。&lt;/p&gt;
+
+&lt;p&gt;HTTPSession类，会话类是网络层的主类，有发送接口和网络主地址，还有一个报错接口。是整个HTTP网络层的接入口。&lt;/p&gt;
+
+&lt;p&gt;HttpDummySession类，我还做了虚拟会话，主要是给HTTP和单机切换用，有些游戏想做网络和单机一起兼顾，可以用HTTP虚拟类来实现，不需要改原来写好的HTTP请求，只要你对加个请求句柄处理就可以了。不过一般人不会用到。&lt;/p&gt;
+
+&lt;p&gt;三.网络层最重要的是能够快速，方便使用，能够适应变化多端的需求改变。&lt;/p&gt;
+
+&lt;p&gt;每个请求类（HTTPPacketRequest子类）和回调类（HTTPPacketAck子类）都是自动生成参数和自动映射回调类实例的，但千万记住，回调过来的数据和HTTPPacketAck子类里的变量名必须一致。&lt;/p&gt;
+
+&lt;p&gt;四.关于HTTP的Head数据部分&lt;/p&gt;
+
+&lt;p&gt;HEAD部分我已经写好了，但是一个统一的HEAD变量，在session类中你可以找到。因为head部分都是统一的参数变量，动的比较少，所以才这么做。在游戏项目里，可以用HEAD部分的数据也可以不用，因为完全可以用数据包的形式代替。&lt;/p&gt;
+
+&lt;p&gt;最后奉上源码：&lt;a href=&quot;https://github.com/luzexi/Unity3DNetwork-http&quot;&gt;Unity3D-HTTP&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;测试案例：&lt;a href=&quot;https://github.com/luzexi/Unity3DNetwork-http-Test&quot;&gt;Unity3D-HTTP-Test&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处:http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D AssetBundle 资源加载注意事项</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/02/15/Unity3D%20AssetBundle%20%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
+   <updated>2014-02-15T14:47:57+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/02/15/Unity3D AssetBundle 资源加载注意事项</id>
+   <content type="html">&lt;p&gt;Unity3D AssetBundle 资源加载注意事项.U3d资源打包以及加载出过很多问题，在这里把所有该注意的东西列出来分享下。&lt;/p&gt;
+
+&lt;p&gt;1.由于Unity3D的自身的问题，在资源打包时会遗漏一些引用的资源，导致在游戏加载 AssetBundle 时没有问题，但在把资源实例化时出现资源找不到，或者资源缺少引用资源等问题。&lt;/p&gt;
+
+&lt;p&gt;解决办法： 在打包获取资源时，分3个步骤做：1.创建空的临时的预置体Prefab 2.把要打包的资源实例化进场景 3.把实例化后的物体装进刚创建的空的预置体Prefab 4.最后再用该预置体打包成AssetBundle（注意多资源打包最好用BuildAssetBundleExplicitAssetNames接口，没有为什么原先使用BuildAssetBundle出现过很多问题）&lt;/p&gt;
+
+&lt;p&gt;2.WWW资源url加载AssetBundle时会遇到版本资源更新的问题。U3D自4.0后就不再有删除某缓存资源的接口，所以资源更新时遇到麻烦。&lt;/p&gt;
+
+&lt;p&gt;解决办法： 1.客户端记录由服务器发过来的MD5码，倘若与本地存储的MD5码不同则增加自动增加一个版本号。这个办法方便但会积累很多的旧的无用的资源占用手机，导致用户有可能因为游戏占用太多硬盘资源而删除游戏。 2.客户端记录由服务器发过来的CRC校验码，用CRC校验码来判定当前资源是否需要重新加载，调用接口为static function LoadFromCacheOrDownload(url: string, version: int, crc: uint = 0): WWW; 这个办法可以解决旧资源删除问题，但最主要的问题是资源在打包后由于U3D的资源CRC校验码并不是普通的校验码，所以只能根据他的接口来判定，4.2以及4.2以前都没有获取CRC校验码的接口，所以每次打包资源后，都需要校对校验码。如何校对CRC校验码请自己去搜索资料。&lt;/p&gt;
+
+&lt;p&gt;3.如何知道哪些资源包需要加载以及加载地址和版本号。&lt;/p&gt;
+
+&lt;p&gt;解决办法： 1.使用XML，将所有需要加载的资源信息写入XML文件。每次游戏开始，先读取该文件。 2.由服务器的逻辑服务器提供需要加载的资源信息。&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>游戏物品系统通用架构</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/12/31/%E6%B8%B8%E6%88%8F%E7%89%A9%E5%93%81%E7%B3%BB%E7%BB%9F%E9%80%9A%E7%94%A8%E6%9E%B6%E6%9E%84/"/>
+   <updated>2013-12-31T23:24:47+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/12/31/游戏物品系统通用架构</id>
+   <content type="html">&lt;p&gt;游戏物品系统通用架构，物品系统是游戏中最最常用的功能之一，面对各种纷繁复杂的游戏物品系统，在具体项目中如何顺手拈来、驾驭自如？请容我一一到来。在内容前我有必要说明几点，所有内容都是基于我最大的架构思想之下，其中 客户端U3D架构思想的文章地址为 &lt;a href=&quot;http://www.luzexi.com/unity3d%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/comment-page-1/#comment-135&quot;&gt;Unity3D游戏架构&lt;/a&gt; ，以及服务器架构： &lt;a href=&quot;http://www.luzexi.com/%E3%80%8A%E7%8E%8B%E9%80%94%E9%9C%B8%E4%B8%9A%E3%80%8B%E6%88%98%E4%BA%89%E7%AD%96%E7%95%A5%E6%B8%B8%E6%88%8F%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/&quot;&gt;《王图霸业》战争策略游戏服务器架构&lt;/a&gt; 。&lt;/p&gt;
+
+&lt;p&gt;直入主题&lt;/p&gt;
+
+&lt;p&gt;首先，我们先归纳一下物品的基本属性。
+    物品基本属性：名字，描述，数量，最大可叠加数，图标
+    装备物品扩展属性：装备位置，攻击力，防御力，暴击率，魔力，血量，等等
+    消耗物品扩展属性：BUFF增加，HP增加，最大HP增加，等等&lt;/p&gt;
+
+&lt;p&gt;在游戏项目中，把这些物品的扩展属性，单个提取出来组合成各种游戏中需要的物品，如何做到？&lt;/p&gt;
+
+&lt;p&gt;1.把所有属性都写进物品数据配置表中？数据表过大，导致最终项目人员更改数据缓慢，错误不断，甚至连写此系统的程序员自己也吃不消。&lt;/p&gt;
+
+&lt;p&gt;2.把每个物品都按单各类进行特殊处理？假设物品有100种，那程序员就得写100各类实例，每增加一个写一个，浪费人力浪费时间。&lt;/p&gt;
+
+&lt;p&gt;3.以物品基类的继承的形式，将各种物品分类处理，归类，派生？繁琐，分类时间过长，效率过低，程序员最终会为物品该归到哪一类和策划人员而打起来。&lt;/p&gt;
+
+&lt;p&gt;如何才能做到物品系统适应不同的游戏需要，又能使得物品配置方便扩展性强？在这里我引入一个Action概念，Action以动作的概念来理解。当物品使用时，就调用不同的Action来达到不同的效果，例如：加血100加魔法200的物品，点击后，该物品执行加血100的Action实例，接着执行加魔200的实例，完毕后我们就能看到我们需要的效果了。所以物品只需要对应N各Action就可以完全做到你想做的，甚至可以做到你想不到的。&lt;/p&gt;
+
+&lt;p&gt;我们能发现，其实物品的很多功能是可以用不同单个功能组合起来的，比如加血,比如加魔，比如加BUFF状态，把这些相同功能的Action都做成一个，然后把不同的Action做成一个集合是多么完美的事，既达到了数据持续化存储和更新能力，又可使得物品功能完全由策划人员自行配置，发挥他们的无限想象力。&lt;/p&gt;
+
+&lt;p&gt;现在来看看实际中Action是如何编写的。把加血动作写成 类ActionAddHp，类中参数一个:HP，把加魔法动作写成 类ActionAddMP，类中参数一个：MP，这两个Action从数据表中读取相应的参数数据，变成众多Action实例里的一个，由ActionManager管理存储。到此回头看看，所有继承自Action类的扩展类拥有几个共同的属性：ID（唯一标识，用来区分所有Action），RunType（用来区分不同类型的Action），Read接口（用来读取数据），Excute接口（用来执行Action）。我在此之上加上一个Action类型，把所有Action拆分为条件类Action和执行类Action，条件类Action主要用来判断该物品的使用条件是否满足，执行类Action主要用来执行该动作的效果。因此Action基类就成了这样:&lt;/p&gt;
+
+&lt;p&gt;using System;&lt;br&gt;
+using System.Collections.Generic;&lt;br&gt;
+using System.Linq;&lt;br&gt;
+using System.Text;  &lt;/p&gt;
+
+&lt;p&gt;//  CAction.cs&lt;br&gt;
+//  Author: Lu Zexi&lt;br&gt;
+//  2013-12-24    &lt;/p&gt;
+
+&lt;p&gt;//base action&lt;br&gt;
+public abstract class CAction : IAction&lt;br&gt;
+{&lt;br&gt;
+    private int m_iID;  //id  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;// id (0-99999) , actionType(0-99) , runType(0-99)  
+public CAction(int id, int actionType, int runType)  
+{  
+    this.m_iID = actionType*10000000 + runType*100000 + id;  
+}  
+
+public abstract ActionError Excute(ActionInput input);  
+
+//roll back action  
+public virtual ActionError RollBack(ActionInput input)  
+{  
+    return ActionError.NoError;  
+}  
+
+//get id  
+public int ID  
+{  
+    get  
+    {  
+        return this.m_iID;  
+    }  
+}  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;}&lt;/p&gt;
+
+&lt;p&gt;有人会问，那如何让物品对应好几个Action呢？我再引入一个Action事件类，把它定义为类EventAction，他里面存储着16个Action ID，前8个ActionID是条件型动作，后8个ActionID为执行型动作。物品的数据中就有一个EventAction的ID，由这个EventAction来判断该执行那些Action，是否满足物品执行条件。当EventAction执行时，首先执行前8个Action，看看是否满足物品执行条件，如果不满足，则不执行后8个效果，如果满足再去执行后8个Action效果。因此EventAction也有很多各实例，由ID来区分不同的EventAction，由EventActionManager来管理所有事件Action。EventAction类结构：&lt;/p&gt;
+
+&lt;p&gt;using System;&lt;br&gt;
+using System.Collections.Generic;&lt;br&gt;
+using System.Linq;&lt;br&gt;
+using System.Text;  &lt;/p&gt;
+
+&lt;p&gt;//  EventAction.cs&lt;br&gt;
+//  Author: Lu zexi&lt;br&gt;
+//  2013-12-24  &lt;/p&gt;
+
+&lt;p&gt;/// &lt;summary&gt;&lt;br&gt;
+/// Action event&lt;br&gt;
+/// &lt;/summary&gt;&lt;br&gt;
+public class EventAction&lt;br&gt;
+{&lt;br&gt;
+    private int m&lt;em&gt;iID; //ID&lt;br&gt;
+    private int[] m&lt;/em&gt;vecActions; //Action ID list&lt;br&gt;
+    private int[] m_vecReqActions; //Require Action ID list  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;public EventAction()  
+{  
+    this.m_vecActions = new int[8];  
+    this.m_vecReqActions = new int[8];  
+}  
+
+// id (0-99999) , actionType(0-99) , runType(0-99)  
+public EventAction( int id , int eventType , int runType)  
+{  
+    this.m_iID = eventType * 10000000 + runType*100000 + id;  
+}  
+
+//get id  
+public int ID  
+{  
+    get  
+    {  
+        return this.m_iID;  
+    }  
+}  
+
+//set action  
+public void SetAction( int[] act )  
+{  
+    this.m_vecActions = act;  
+}  
+
+//set require  
+public void SetRequire( int[] req )  
+{  
+    this.m_vecReqActions = req;  
+}  
+
+//excute action  
+public ActionError Excute( ActionInput input  )  
+{  
+    for (int i = 0; i &amp;lt; this.m_vecActions.Length; i++)  
+    {  
+        CAction action = ActionManager.sInstance.GetAction(this.m_vecActions[i]);  
+        if (action != null)  
+        {  
+            ActionError error = action.Excute(input);  
+            if ( error != null &amp;amp;&amp;amp; error.code != ACTION_ERROR_CODE.NONE)  
+                return error;  
+        }  
+    }  
+    return ActionError.NoError;  
+}  
+
+//action require  
+public ActionError Require( ActionInput input)  
+{  
+    for (int i = 0; i &amp;lt; this.m_vecReqActions.Length; i++)  
+    {  
+        CAction action = ActionManager.sInstance.GetAction(this.m_vecReqActions[i]);  
+        if (action != null)  
+        {  
+            ActionError error = action.Excute(input);  
+            if ( error != null &amp;amp;&amp;amp; error.code != ACTION_ERROR_CODE.NONE)  
+                return error;  
+        }  
+    }  
+    return ActionError.NoError;  
+}  
+
+//action roll back  
+public ActionError RollBack(ActionInput input)  
+{  
+    for (int i = 0; i &amp;lt; this.m_vecActions.Length; i++)  
+    {  
+        CAction action = ActionManager.sInstance.GetAction(this.m_vecActions[i]);  
+        if (action != null)  
+        {  
+            ActionError error = action.RollBack(input);  
+            if (error != null &amp;amp;&amp;amp; error.code != ACTION_ERROR_CODE.NONE)  
+                return error;  
+        }  
+    }  
+    return ActionError.NoError;  
+}  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;}&lt;/p&gt;
+
+&lt;p&gt;以上描述解决了物品中消耗品的问题，物品素材本身就是没有功能的消耗品，在这里我就不介绍了。而下面，我们来看看如何解决物品装备。
+装备物品在消耗品上多了几样关于英雄角色的属性，这些属性有的明，有的暗，那我们就把那些明的属性提取出来，例如加增攻击力，增加防御力。而那些暗的属性，再拆分两种，一种是直接写进明的配置表中而不显示在界面上，另一个是直接写进动作Action里，当需要时执行相应EventAction实例。&lt;/p&gt;
+
+&lt;p&gt;最后，我们看看整个物品系统数据配置和系统源码。
+   物品类：名字，物品类型(消耗品，装备，素材)，描述，数量，最大叠加数量，使用等级,EventActionID,装备位置,攻击力，防御力，HP，MP
+   Action表: ID , 描述 , ActionType , RunType , 参数1，参数2...
+   EventAction表: ID,描述,
+ReqActionID1,ReqActionID2,...ReqActionID8,
+ActionID9,ActionID10,...ActionID16.&lt;/p&gt;
+
+&lt;p&gt;源码：&lt;a href=&quot;https://github.com/luzexi/Unity3DItemSystem&quot;&gt;https://github.com/luzexi/Unity3DItemSystem&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;测试案例：&lt;a href=&quot;https://github.com/luzexi/Unity3DItemSystem-Test&quot;&gt;https://github.com/luzexi/Unity3DItemSystem-Test&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Introducing Hyde</title>
+   <link href="http://hyde.getpoole.com/2013/12/28/introducing-hyde/"/>
+   <updated>2013-12-28T00:00:00+08:00</updated>
+   <id>http://hyde.getpoole.com/2013/12/28/introducing-hyde</id>
+   <content type="html">&lt;p&gt;Hyde is a brazen two-column &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt; theme that pairs a prominent sidebar with uncomplicated content. It&amp;#39;s based on &lt;a href=&quot;http://getpoole.com&quot;&gt;Poole&lt;/a&gt;, the Jekyll butler.&lt;/p&gt;
+
+&lt;h3&gt;Built on Poole&lt;/h3&gt;
+
+&lt;p&gt;Poole is the Jekyll Butler, serving as an upstanding and effective foundation for Jekyll themes by &lt;a href=&quot;https://twitter.com/mdo&quot;&gt;@mdo&lt;/a&gt;. Poole, and every theme built on it (like Hyde here) includes the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Complete Jekyll setup included (layouts, config, &lt;a href=&quot;/404&quot;&gt;404&lt;/a&gt;, &lt;a href=&quot;/atom.xml&quot;&gt;RSS feed&lt;/a&gt;, posts, and &lt;a href=&quot;/about&quot;&gt;example page&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Mobile friendly design and development&lt;/li&gt;
+&lt;li&gt;Easily scalable text and component sizing with &lt;code&gt;rem&lt;/code&gt; units in the CSS&lt;/li&gt;
+&lt;li&gt;Support for a wide gamut of HTML elements&lt;/li&gt;
+&lt;li&gt;Related posts (time-based, because Jekyll) below each post&lt;/li&gt;
+&lt;li&gt;Syntax highlighting, courtesy Pygments (the Python-based code snippet highlighter)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Hyde features&lt;/h3&gt;
+
+&lt;p&gt;In addition to the features of Poole, Hyde adds the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Sidebar includes support for textual modules and a dynamically generated navigation with active link support&lt;/li&gt;
+&lt;li&gt;Two orientations for content and sidebar, default (left sidebar) and &lt;a href=&quot;https://github.com/poole/lanyon#reverse-layout&quot;&gt;reverse&lt;/a&gt; (right sidebar), available via &lt;code&gt;&amp;lt;body&amp;gt;&lt;/code&gt; classes&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/poole/hyde#themes&quot;&gt;Eight optional color schemes&lt;/a&gt;, available via &lt;code&gt;&amp;lt;body&amp;gt;&lt;/code&gt; classes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/poole/hyde#readme&quot;&gt;Head to the readme&lt;/a&gt; to learn more.&lt;/p&gt;
+
+&lt;h3&gt;Browser support&lt;/h3&gt;
+
+&lt;p&gt;Hyde is by preference a forward-thinking project. In addition to the latest versions of Chrome, Safari (mobile and desktop), and Firefox, it is only compatible with Internet Explorer 9 and above.&lt;/p&gt;
+
+&lt;h3&gt;Download&lt;/h3&gt;
+
+&lt;p&gt;Hyde is developed on and hosted with GitHub. Head to the &lt;a href=&quot;https://github.com/poole/hyde&quot;&gt;GitHub repository&lt;/a&gt; for downloads, bug reports, and features requests.&lt;/p&gt;
+
+&lt;p&gt;Thanks!&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D-深入剖析NGUI的游戏UI架构</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/12/14/Unity3D-%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90NGUI%E7%9A%84%E6%B8%B8%E6%88%8FUI%E6%9E%B6%E6%9E%84/"/>
+   <updated>2013-12-14T13:00:54+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/12/14/Unity3D-深入剖析NGUI的游戏UI架构</id>
+   <content type="html">&lt;p&gt;Unity3D-NGUI分析，使用NGUI做UI需要注意的几个要点在此我想罗列一下，对我在U3D上做UI的一些总结，最后解剖一下NGUI的源代码，它是如果架构和运作的。&lt;/p&gt;
+
+&lt;p&gt;在此前我介绍了自己项目的架构方式，所以在NGUI的利用上也是同样的做法，UI逻辑的程序不被绑定在物体上。那么如何做到GUI输入消息的传递呢，答案是：我封装了一个关于NGUI输入消息的类，由于NGUI的输入消息传递方式是U3D中的SendMessage方式，所以在每个需要接入输入的物体上动态的绑定该封装脚本。在这个消息封装类中，加入消息传递的委托方法后，所有关于该物体的输入消息将通过封装类直接传递到方法上，再通过消息类型的识别就可以脱离传统脚本绑定的束缚了。&lt;/p&gt;
+
+&lt;p&gt;在用NGUI制作UI时需要注意的几点：&lt;/p&gt;
+
+&lt;p&gt;1.每个GUI以1各UIPanel为标准，过多的UIPanel首先会导致DrawCall的增多，其次是导致UI逻辑的混乱。&lt;/p&gt;
+
+&lt;p&gt;2.UITexture不能使用的过于平凡，因为每个UITexture都会增加1各DrawCall，所以一般会作为背景图出现在UI上，小背景，大背景都可以。&lt;/p&gt;
+
+&lt;p&gt;3.图集不宜过大，过大的图集，不要把很多个GUI都放在一个图集里，在UI显示时加载资源IO速度会非常慢。我尝试了各种方式来管理图集，例如每个GUI一个图集，大雨300*100宽度的图不做图集，抑或一个系统模块2个图集，甚至我有尝试过以整个游戏为单位划分公共图集，按钮图集，头像图集，问题图集，但这种方式最终以图集过大IO过慢而放弃，这些图集的管理方式都是应项目而适应的，并没有固定的方式，最主要是你怎么理解程序读取资源时的IO操作时间。&lt;/p&gt;
+
+&lt;p&gt;4.在开发中，尽量用Free分辨率来测试项目的适配效果，不要到上线才发现适配问题。&lt;/p&gt;
+
+&lt;p&gt;适配源码：&lt;/p&gt;
+
+&lt;p&gt;float defaultWHRate = 800f / 480f;
+float ScreenWHRate = (float)Screen.width / (float)Screen.height;
+bool isUseHResize = defaultWHRate &amp;gt;= ScreenWHRate ? false : true;
+UIRoot root = GameObject.Find(&amp;quot;ROOT&amp;quot;).GetComponent&lt;UIRoot&gt;();
+if (!isUseHResize)
+{
+    float curScreenH = (float)Screen.width / defaultWHRate;
+    float Hrate = curScreenH / Screen.height;
+    root.manualHeight =(int)(480f / Hrate);
+}
+else
+{
+    root.manualHeight = 480;
+}&lt;/p&gt;
+
+&lt;p&gt;5.拆分以及固定各个锚点，上，左上，右上，中，左中，右中，下，左下，右下&lt;/p&gt;
+
+&lt;p&gt;6.拆分GUI层级，层级越高，显示越靠前。层级的正确拆分能有效管理GUI的显示方式。
+/// &lt;summary&gt;
+/// GUI层级
+/// &lt;/summary&gt;
+public enum GUILAYER
+{
+    GUI&lt;em&gt;BACKGROUND = 0, //背景层
+    GUI&lt;/em&gt;MENU,           //菜单层0
+    GUI&lt;em&gt;MENU1,           //菜单层1
+    GUI&lt;/em&gt;PANEL,          //面板层
+    GUI&lt;em&gt;PANEL1,         //面板1层
+    GUI&lt;/em&gt;PANEL2,         //面板2层
+    GUI&lt;em&gt;PANEL3,         //面板3层
+    GUI&lt;/em&gt;FULL,           //满屏层
+    GUI&lt;em&gt;MESSAGE,        //消息层
+    GUI&lt;/em&gt;MESSAGE1,        //消息层
+    GUI&lt;em&gt;GUIDE,           //引导层
+    GUI&lt;/em&gt;LOADING,        //加载层
+}&lt;/p&gt;
+
+&lt;p&gt;8.要充分的管理GUI，不然过多的GUI会导致内存加速增长，而每次都销毁不用的GUI则会让IO过于频繁降低运行速度。我的方法是找到两者间的中间态，给予隐藏的GUI一个缓冲带,当每次某各GUI进行隐藏时判断是否有需要销毁的GUI。或者也可以这么做，每时每刻去监控隐藏的GUI，哪些GUI内存时间驻留过长就销毁。关于内存优化问题，可以参考&lt;a href=&quot;http://www.luzexi.com/unity3d-texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90/&quot; target=&quot;_blank&quot;&gt;《unity3d-texture图片空间和内存占用分析》&lt;/a&gt;和 &lt;a href=&quot;http://www.luzexi.com/unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF/&quot; target=&quot;_blank&quot;&gt;《unity3d优化之路》&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;9.另外关于图标，像头像，物品，数量过多的，可以用打成几个图集，按一定规则进行排列，减小文件大小减少一次性读取的IO时间。&lt;/p&gt;
+
+&lt;p&gt;10.尽量减少不必要的UI更改，NGUI一旦有UI进行更改，它就得重新绘制MESH和贴图，比起cocos2d耗得CPU大的多。&lt;/p&gt;
+
+&lt;p&gt;11.如果可以不用动态字体就不要用动态字体，因为动态字体每次都会做IO操作读取相应的图片，这个是NGUI一个问题，费cpu，费内存。&lt;/p&gt;
+
+&lt;p&gt;12.设置脚本执行次序，在U3D的Project setting-&amp;gt;Script Execution Order 中。由于NGUI以UIPanel为主要渲染入口，所以，所有关于游戏渲染处理的程序最好放在渲染之后，也就是UIPanel之后。UIPanel以LateUpdate为接口入口，所以关于渲染方面的程序还得斟酌是否方在LateUpdate里。&lt;/p&gt;
+
+&lt;p&gt;13.NGUI对于动态的移动旋转等的UI操作支持性很差，当有这种操作过多的时候，会使得屏幕很卡。解决办法就是，自己用程序生成面片，面片的渲染不再受到NGUI的控制。&lt;/p&gt;
+
+&lt;p&gt;以上是我能想起来的注意点，若有没想起来的，在以后的时间想到的也将补充进去。口无遮拦的说了这么多，不剖析一下源码怎么说的过去，之前对NGUI输入消息进行了封装，对2D动画序列帧进行了封装，却一直没能完整剖析它的底层源码，着实遗憾。&lt;/p&gt;
+
+&lt;p&gt;NGUI中UIPanel是渲染的关键，他承载了在他下面的子物体的所有渲染工作，每个渲染元素都是由UIWidget继承而来，每个UI物体的渲染都是由面片、材质球、UV点组成，每个种材质由一个UIDrawCall完成渲染工作，UIDrawCall中自己创建Mesh和MeshRender来进行统一的渲染工作。这些都是对NGUI底层的简单的介绍，下面将进行更加细致的分析。&lt;/p&gt;
+
+&lt;p&gt;首先我们来看UIWidget这个组件基类，从它拥有的类内部变量就能知道它承担得怎样的责任:&lt;/p&gt;
+
+&lt;p&gt;// Cached and saved values
+[HideInInspector][SerializeField] protected Material mMat;//材质
+[HideInInspector][SerializeField] protected Texture mTex;//贴图
+[HideInInspector][SerializeField] Color mColor = Color.white;//颜色
+[HideInInspector][SerializeField] Pivot mPivot = Pivot.Center;//对齐位置
+[HideInInspector][SerializeField] int mDepth = 0;//深度
+protected Transform mTrans;//坐标转换
+protected UIPanel mPanel;//相应的UIPanel&lt;/p&gt;
+
+&lt;p&gt;protected bool mChanged = true;//是否更改
+protected bool mPlayMode = true;//模式&lt;/p&gt;
+
+&lt;p&gt;Vector3 mDiffPos;//位置差异
+Quaternion mDiffRot;//旋转差异
+Vector3 mDiffScale;//缩放差异
+int mVisibleFlag = -1;//可见标志&lt;/p&gt;
+
+&lt;p&gt;// Widget&amp;#39;s generated geometry
+UIGeometry mGeom = new UIGeometry();//多变形实例&lt;/p&gt;
+
+&lt;p&gt;UIWidget承担了存储显示内容，颜色调配，显示深度，显示位置，显示大小，显示角度，显示的多边形形状，归属哪个UIPanel。这就是UIWidget所要承担的内容，在UIWidget的所有子类中都具有以上相同的属性和任务。UIWidget和UIPanel的关系非常密切，因为UIPanel承担了UIWidget的所有渲染工作，而UIWidget只是承担了存储需要渲染数据。所以，在UIWidget在更换贴图，材质球，甚至更换UIPanel父节点时它会及时通知UIPanel说：&amp;quot;我更变配置了，你得重新获取我的渲染数据&amp;quot;。&lt;/p&gt;
+
+&lt;p&gt;UIWidget中最重要的虚方法为 virtual public void OnFill(BetterList&lt;Vector3&gt; verts, BetterList&lt;Vector2&gt; uvs, BetterList&lt;Color32&gt; cols) { } 它是区分子类的显示内容的重要方法。它的工作就是填写如何显示，显示什么。&lt;/p&gt;
+
+&lt;p&gt;UIWidget中在使用OnFill方法的重要的方法是 更新渲染多边型方法：
+public bool UpdateGeometry (ref Matrix4x4 worldToPanel, bool parentMoved, bool generateNormals)
+{
+if (material == null) return false;&lt;/p&gt;
+
+&lt;p&gt;if (OnUpdate() || mChanged)
+{
+mChanged = false;
+mGeom.Clear();
+OnFill(mGeom.verts, mGeom.uvs, mGeom.cols);&lt;/p&gt;
+
+&lt;p&gt;if (mGeom.hasVertices)
+{
+Vector3 offset = pivotOffset;
+Vector2 scale = relativeSize;
+offset.x *= scale.x;
+offset.y *= scale.y;&lt;/p&gt;
+
+&lt;p&gt;mGeom.ApplyOffset(offset);
+mGeom.ApplyTransform(worldToPanel * cachedTransform.localToWorldMatrix, generateNormals);
+}
+return true;
+}
+else if (mGeom.hasVertices &amp;amp;&amp;amp; parentMoved)
+{
+mGeom.ApplyTransform(worldToPanel * cachedTransform.localToWorldMatrix, generateNormals);
+}
+return false;
+}&lt;/p&gt;
+
+&lt;p&gt;它的作用就是，当需要重新组织多边型展示内容时，进行多边型的重新规划。&lt;/p&gt;
+
+&lt;p&gt;接着，我们来看看UINode，这个类很容易被人忽视，而他的作用也很重要。它是在UIPanel被告知有新的UIWidget显示元素时被创建的，它的创建主要是为了监视被创建的UIWidget的位置，旋转，大小是否被更改，若被更改，将由UIPanel进行重新的渲染工作。
+HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel用来监视每个元素是否改变了进而进行重新渲染。&lt;/p&gt;
+
+&lt;p&gt;public bool HasChanged ()
+{&lt;/p&gt;
+
+&lt;h1&gt;if UNITY&lt;em&gt;3 || UNITY&lt;/em&gt;4_0&lt;/h1&gt;
+
+&lt;p&gt;bool isActive = NGUITools.GetActive(mGo) &amp;amp;&amp;amp; (widget == null || (widget.enabled &amp;amp;&amp;amp; widget.isVisible));&lt;/p&gt;
+
+&lt;p&gt;if (lastActive != isActive || (isActive &amp;amp;&amp;amp;
+(lastPos != trans.localPosition ||
+lastRot != trans.localRotation ||
+lastScale != trans.localScale)))
+{
+lastActive = isActive;
+lastPos = trans.localPosition;
+lastRot = trans.localRotation;
+lastScale = trans.localScale;
+return true;
+}&lt;/p&gt;
+
+&lt;h1&gt;else&lt;/h1&gt;
+
+&lt;p&gt;if (widget != null &amp;amp;&amp;amp; widget.finalAlpha != mLastAlpha)
+{
+mLastAlpha = widget.finalAlpha;
+trans.hasChanged = false;
+return true;
+}
+else if (trans.hasChanged)
+{
+trans.hasChanged = false;
+return true;
+}&lt;/p&gt;
+
+&lt;h1&gt;endif&lt;/h1&gt;
+
+&lt;p&gt;return false;
+}&lt;/p&gt;
+
+&lt;p&gt;接着，来看UIDrawCall，它是被NGUI隐藏起来的类。他的内部变量来看看：&lt;/p&gt;
+
+&lt;p&gt;Transform        mTrans;            //坐标转换类
+Material        mSharedMat;        // 渲染材质
+Mesh            mMesh0;            //首个MESH
+Mesh            mMesh1;            //用于更换的Mesh
+MeshFilter        mFilter;        //绘制的MeshFilter
+MeshRenderer    mRen;            //渲染MeshRender组件
+Clipping        mClipping;        //裁剪类型
+Vector4            mClipRange;        //裁剪范围
+Vector2            mClipSoft;        //裁剪缓冲方位
+Material        mMat;            //实例化材质
+int[]            mIndices;        //做为Mesh三角型索引点&lt;/p&gt;
+
+&lt;p&gt;由这些内部变量可知，UIDrawCall是负责NGUI的最重要的渲染类。他制造Mesh制造Material，设置裁剪范围，为NGUI提供渲染底层。
+他最重要的方法是：&lt;/p&gt;
+
+&lt;p&gt;public void Set (BetterList&lt;Vector3&gt; verts, BetterList&lt;Vector3&gt; norms, BetterList&lt;Vector4&gt; tans, BetterList&lt;Vector2&gt; uvs, BetterList&lt;Color32&gt; cols)
+{
+int count = verts.size;&lt;/p&gt;
+
+&lt;p&gt;// Safety check to ensure we get valid values
+if (count &amp;gt; 0 &amp;amp;&amp;amp; (count == uvs.size &amp;amp;&amp;amp; count == cols.size) &amp;amp;&amp;amp; (count % 4) == 0)
+{
+// Cache all components
+if (mFilter == null) mFilter = gameObject.GetComponent&lt;MeshFilter&gt;();
+if (mFilter == null) mFilter = gameObject.AddComponent&lt;MeshFilter&gt;();
+if (mRen == null) mRen = gameObject.GetComponent&lt;MeshRenderer&gt;();&lt;/p&gt;
+
+&lt;p&gt;if (mRen == null)
+{
+mRen = gameObject.AddComponent&lt;MeshRenderer&gt;();&lt;/p&gt;
+
+&lt;h1&gt;if UNITY_EDITOR&lt;/h1&gt;
+
+&lt;p&gt;mRen.enabled = isActive;&lt;/p&gt;
+
+&lt;h1&gt;endif&lt;/h1&gt;
+
+&lt;p&gt;UpdateMaterials();
+}
+else if (mMat != null &amp;amp;&amp;amp; mMat.mainTexture != mSharedMat.mainTexture)
+{
+UpdateMaterials();
+}&lt;/p&gt;
+
+&lt;p&gt;if (verts.size &amp;lt; 65000)
+{
+int indexCount = (count &amp;gt;&amp;gt; 1) * 3;
+bool rebuildIndices = (mIndices == null || mIndices.Length != indexCount);&lt;/p&gt;
+
+&lt;p&gt;// Populate the index buffer
+if (rebuildIndices)
+{
+// It takes 6 indices to draw a quad of 4 vertices
+mIndices = new int[indexCount];
+int index = 0;&lt;/p&gt;
+
+&lt;p&gt;for (int i = 0; i &amp;lt; count; i += 4)
+{
+mIndices[index++] = i;
+mIndices[index++] = i + 1;
+mIndices[index++] = i + 2;&lt;/p&gt;
+
+&lt;p&gt;mIndices[index++] = i + 2;
+mIndices[index++] = i + 3;
+mIndices[index++] = i;
+}
+}&lt;/p&gt;
+
+&lt;p&gt;// Set the mesh values
+Mesh mesh = GetMesh(ref rebuildIndices, verts.size);
+mesh.vertices = verts.ToArray();
+if (norms != null) mesh.normals = norms.ToArray();
+if (tans != null) mesh.tangents = tans.ToArray();
+mesh.uv = uvs.ToArray();
+mesh.colors32 = cols.ToArray();
+if (rebuildIndices) mesh.triangles = mIndices;
+mesh.RecalculateBounds();
+mFilter.mesh = mesh;
+}
+else
+{
+if (mFilter.mesh != null) mFilter.mesh.Clear();
+Debug.LogError(&amp;quot;Too many vertices on one panel: &amp;quot; + verts.size);
+}
+}
+else
+{
+if (mFilter.mesh != null) mFilter.mesh.Clear();
+Debug.LogError(&amp;quot;UIWidgets must fill the buffer with 4 vertices per quad. Found &amp;quot; + count);
+}
+}&lt;/p&gt;
+
+&lt;p&gt;在这个方法里，它制造Mesh,MeshFilter,MeshRender,Materials。&lt;/p&gt;
+
+&lt;p&gt;最后，我们来说说最重要的UI渲染入口UIPanel。
+    UIPanel的渲染步骤：
+    1.当有任何形式的UI组件启动渲染时加入UIPanel的渲染队列，当有新的渲染组件需要有新的UIDrawCall时，进行生成新的UIDrawCall.
+    2.对所有UIPanel的渲染队列进行检查，是否队列中渲染组件需要重新渲染，包括位移，缩放，更改图片，启用，关闭.
+    3.获取渲染组件对应的UIDrawCall，更新Mesh,贴图,UV，位置，大小
+    4.对需要更新的UIDrawCall进行重新渲染
+    5.最后标记已经渲染的渲染组件，告诉他们已经渲染，为下次判断更新做好准备。删除不再需要渲染的UIDrawCall，销毁渲染冗余。
+    注意：所有的渲染都是在LateUpdate下进行，也就是它是进行的延迟渲染。
+接口源码：
+void LateUpdate ()
+{
+// Only the very first panel should be doing the update logic
+if (list[0] != this) return;&lt;/p&gt;
+
+&lt;p&gt;// Update all panels
+for (int i = 0; i &amp;lt; list.size; ++i)
+{
+UIPanel panel = list[i];
+panel.mUpdateTime = RealTime.time;
+panel.UpdateTransformMatrix();
+panel.UpdateLayers();
+panel.UpdateWidgets();
+}&lt;/p&gt;
+
+&lt;p&gt;// Fill the draw calls for all of the changed materials
+if (mFullRebuild)
+{
+UIWidget.list.Sort(UIWidget.CompareFunc);
+Fill();
+}
+else
+{
+for (int i = 0; i &amp;lt; UIDrawCall.list.size; )
+{
+UIDrawCall dc = UIDrawCall.list[i];&lt;/p&gt;
+
+&lt;p&gt;if (dc.isDirty)
+{
+if (!Fill(dc))
+{
+DestroyDrawCall(dc, i);
+continue;
+}
+}
+++i;
+}
+}&lt;/p&gt;
+
+&lt;p&gt;// Update the clipping rects
+for (int i = 0; i &amp;lt; list.size; ++i)
+{
+UIPanel panel = list[i];
+panel.UpdateDrawcalls();
+}
+mFullRebuild = false;
+}&lt;/p&gt;
+
+&lt;p&gt;Fill()接口源码：
+/// &lt;summary&gt;
+/// Fill the geometry fully, processing all widgets and re-creating all draw calls.
+/// &lt;/summary&gt;&lt;/p&gt;
+
+&lt;p&gt;static void Fill ()
+{
+for (int i = UIDrawCall.list.size; i &amp;gt; 0; )
+DestroyDrawCall(UIDrawCall.list[--i], i);&lt;/p&gt;
+
+&lt;p&gt;int index = 0;
+UIPanel pan = null;
+Material mat = null;
+UIDrawCall dc = null;&lt;/p&gt;
+
+&lt;p&gt;for (int i = 0; i &amp;lt; UIWidget.list.size; )
+{
+UIWidget w = UIWidget.list[i];&lt;/p&gt;
+
+&lt;p&gt;if (w == null)
+{
+UIWidget.list.RemoveAt(i);
+continue;
+}&lt;/p&gt;
+
+&lt;p&gt;if (w.isVisible &amp;amp;&amp;amp; w.hasVertices)
+{
+if (pan != w.panel || mat != w.material)
+{
+if (pan != null &amp;amp;&amp;amp; mat != null &amp;amp;&amp;amp; mVerts.size != 0)
+{
+pan.SubmitDrawCall(dc);
+dc = null;
+}&lt;/p&gt;
+
+&lt;p&gt;pan = w.panel;
+mat = w.material;
+}&lt;/p&gt;
+
+&lt;p&gt;if (pan != null &amp;amp;&amp;amp; mat != null)
+{
+if (dc == null) dc = pan.GetDrawCall(index++, mat);
+w.drawCall = dc;
+if (pan.generateNormals) w.WriteToBuffers(mVerts, mUvs, mCols, mNorms, mTans);
+else w.WriteToBuffers(mVerts, mUvs, mCols, null, null);
+}
+}
+else w.drawCall = null;
+++i;
+}&lt;/p&gt;
+
+&lt;p&gt;if (mVerts.size != 0)
+pan.SubmitDrawCall(dc);
+}&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D游戏架构</title>
+   <link href="http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2013/10/29/Unity3D%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/"/>
+   <updated>2013-10-29T15:32:51+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2013/10/29/Unity3D游戏架构</id>
+   <content type="html">&lt;p&gt;Unity3D游戏架构.&lt;/p&gt;
+
+&lt;p&gt;Unity3D虽然是一款3D的引擎，但由于一部分开发者提供了GUI的插件，所以它也是可以用来开发2D游戏的，但我还需要改造一下。《王途霸业》就是完完全全在U3D上架构起来的2D游戏，在去年年底前完成这款游戏的架构底层后，开发速度直线上升，这也同样证明了我的这套架构的可行性。下面我将介绍如何用U3D和GUI插件架构一套2D游戏。&lt;/p&gt;
+
+&lt;p&gt;《王途霸业》U3D项目中有个最大的特点就是不再有纷繁复杂的脚本绑定，整个游戏逻辑不再依赖众多的 MonoBehaviour ，所有GUI不存在脚本绑定一说。我这样做最主要的原因是要将美术，策划，程序的工作完全拆分开来，美术看不到程序，程序不需要管美术，策划更是不需要去顾及那些纷繁复杂的美术和程序专业技术。这样做最直接提升了游戏项目开发效率，用一句话代表这种架构意图：各顾各的，却能成事。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;文章停在这里，我一时不知道如何表达这种架构，因为我想说的东西太多，介于我的书面表达能力，能清晰的表达清楚这种架构不太可能。那我就讲最最最重要的部分，我的心理想法和架构思路，最后提供部分源代码。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;一.&lt;strong&gt;架构必须符合安全性&lt;/strong&gt;。关于项目安全性，很多人第一时间都会跟我说&amp;#39;在项目还没成型前，安全性并不重要&amp;#39;。确实当项目没有可看到的东西的情况下，这些所谓的资源都是没有价值的。但当项目看到有价值的时候，你再去做安全性还来得及吗，我能非常确认的说，那时你根本来不及做安全性的问题，即使你确实非常想推动这事，也会极其缓慢，而且在所有人眼里吃力不讨好，因为程序架构本身就决定了安全性的问题。C++项目里这问题并不十分严重，因为他不属于脚本语言，而U3D不同的是它全篇都是脚本。&lt;/p&gt;
+
+&lt;p&gt;二.&lt;strong&gt;分离美术与程序的工作&lt;/strong&gt;。本架构的第一思想就是分离部门之间的工作。美术和程序之间有不可分割的交点，但项目必须保证程序不用去做美术的工作，不用去担心美术的问题，美术也不需要获得程序的工作内容，更不需要美术去学习程序。这最大限度保证了部门之间合作效率，也是我一直提倡的架构意图：各顾各的，却能成事。&lt;/p&gt;
+
+&lt;p&gt;三.&lt;strong&gt;消除程序员代码上的交点&lt;/strong&gt;。架构本身就是解决程序员与程序员之间的问题。&amp;quot;为什么要把解决程序员与程序员的事做为重点问题?&amp;quot;：游戏项目的进度，技术起了主导作用，程序员的工作效率直接决定了整个项目的速度，所以如何让程序员保持良好的效率也就成为了项目程序架构需要解决和考虑的范畴之一了。程序员之间在编写代码的时候，都会有这样那样的交点，有些交点是不应该被其他人修改的或删除的，这些错综复杂的交点会使得整个项目随着时间的推进越来越混乱的局面，致使项目后期进度缓慢效率低下，优秀的程序架构本身就提前考虑了交点问题，将交点以拆分，消除，或合并成组件等形式融入到整体设计当中。如果一个人就能搞定整套程序那也用不着这么多架构思想了，怎么写都是一个人在工作，他可以用无数种方式来编写自己的程序。但事实并非如此，毕竟人脑是有极限的，再牛的人也抗不住错综复杂的逻辑关系和单调的重复劳动。一个优秀的架构能够支撑整个程序团队快速高效并且持续地往前推进，每个人都心情舒畅，工作愉快，富有激情，何乐而不为呢。&lt;/p&gt;
+
+&lt;p&gt;四.&lt;strong&gt;分层结构设计全面可扩展&lt;/strong&gt;。架构最重要的部分之一就是能够适应变化不断的项目需求，优秀的架构能够尽量减少当需求变化而引起的程序上的修改或删除而引起的整体架构更改。项目的需求变化并不是由我们可以控制，在不断变化的情况下，甚至是当程序员已经适应当前架构的情况下，架构这块基石仍是稳如泰山。我在架构设计时最看重分层设计，每一层都有统一的意图，且只可被上一层调用，必要时以动态库形式存在。&lt;/p&gt;
+
+&lt;p&gt;架构思想就谈到这里，接下来讲如何将这些架构思想融入到实际的Uniyt3D项目当中去。&lt;/p&gt;
+
+&lt;p&gt;一.&lt;strong&gt;SVN与AssetServer结合控制版本&lt;/strong&gt;。这是分离美术与程序的第一步，也是保证安全性的重要手段。SVN更适合做代码版本控制，而AssetServer更适合做U3D的资源版本控制，两者相结合能够让项目管理更加出彩。&lt;/p&gt;
+
+&lt;p&gt;二.&lt;strong&gt;整个架构只有一个入口点&lt;/strong&gt;。《王途霸业》中用只有GameClient类继承了MonoBehaviour，它也不再被其他类继承。它就是唯一一个入口点。各大系统，各大模块的初始化，逻辑更新，销毁，调用，都需要它的直接或者间接的调用。这就是为什么其他需要用到MonoBehaviour特性的程序不需要继承MonoBehaviour的原因。这是分离美术与程序的第二步，程序员不需要再去管理纷繁复杂的物体绑定脚本。&lt;/p&gt;
+
+&lt;p&gt;三.&lt;strong&gt;动态资源生成与管理&lt;/strong&gt;。每个显示实例都由各系统独立承担生成，更新，销毁的管理，例如《王途霸业》中的GUI系统，每个GUI在展示时才进行资源生成，在隐藏时判断资源是否需要销毁，这不仅解决的动态资源控制问题也解决了内存控制问题。每个程序员只需要关注自己正在编写的GUI界面，而不需要估计其他GUI的资源问题。这是消除程序员交点的一个方式，也是分离美术与程序的工作。&lt;/p&gt;
+
+&lt;p&gt;四.&lt;strong&gt;独立模块以DLL形式存在&lt;/strong&gt;。《王途霸业》中以DLL形式存在的独立模块有，2D动画系统模块、人物运动控制模块、基础模块、网络通信模块，GUI通用层模块。将《王途霸业》游戏分割为，网络层，基础层，专业领域层，数据层，安卓第三方SDK接口层，渲染层，工具层。渲染层又分为GUI层，动画层。做这些的层级的划分主要是为了能够架构成MVC模式。以MVC形式呈现的分层架构是一种效率比较高的架构，我在架构时尽量向此种架构靠拢，所以在项目后期确保了项目的安全性，也保证了程序部工作效率，架构越是到后期，发挥的作用越大。正所谓&amp;quot;人不可貌相，架构不可斗量&amp;quot;，架构的威力就是体现在更加宏观的层面上。&lt;/p&gt;
+
+&lt;p&gt;五.&lt;strong&gt;尽量编写方便的工具&lt;/strong&gt;。游戏架构不仅需要游戏主逻辑本身的规范，还需要这些周边工具的支撑，有了这些工具能让项目进度快速提升，加上优秀的架构思想，项目完工指日可待。&lt;/p&gt;
+
+&lt;p&gt;文笔过烂，持续更新中----往各位见谅。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.luzexi.com/%e3%80%8a%e7%8e%8b%e9%80%94%e9%9c%b8%e4%b8%9a%e3%80%8b%e6%88%98%e4%ba%89%e7%ad%96%e7%95%a5%e6%b8%b8%e6%88%8f%e7%9a%84%e6%9c%8d%e5%8a%a1%e5%99%a8%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1/2013051412202849588237-gif/&quot; rel=&quot;attachment wp-att-48&quot;&gt;&lt;img alt=&quot;2013051412202849588237.gif&quot; class=&quot;alignnone size-full wp-image-48&quot; height=&quot;480&quot; src=&quot;http://114.215.202.83/blog/wp-content/uploads/2013/08/2013051412202849588237.gif.jpg&quot; width=&quot;800&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>游戏服务端优化</title>
+   <link href="http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2013/10/22/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BC%98%E5%8C%96/"/>
+   <updated>2013-10-22T13:42:14+08:00</updated>
+   <id>http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2013/10/22/游戏服务端优化</id>
+   <content type="html">&lt;p&gt;完成《王途霸业》后，慢慢地开始整理客户端，服务端的架构思路和优化思路。虽然1年来项目工作非常累，但我还是不想放弃这个整理资料，梳理知识的绝佳机会。&lt;/p&gt;
+
+&lt;p&gt;废话不多说，直接开始游戏服务端优化思路。&lt;/p&gt;
+
+&lt;p&gt;1.整体架构决定承载量。想要完全突破游戏用户承载量，你必须尽快即使调整自己服务器的架构，这个非常不容易，特别是在项目开发后期，在过多的代码积累的情况下，你很难对当前的架构进行调整。基本上，当时的情况都是，不动则已，一动一发不可收拾。架构调整主要是为了分担服务器的 游戏逻辑处理，数据存储，第三方接口处理。&lt;/p&gt;
+
+&lt;p&gt;2.用户集中短时间使用的优化。比如帐号登录，帐号修改，角色获取，角色选择，角色创建等，在一个相对比较短的时间里完成的东西，又有可能会借助第三放接口的，需要进行统一管理和拆分，在用户量扩大时可以使用扩充服务器来对承载量扩充。一句话来表明：对于这种时间较短，用户会集中冲击承载量的，把它做成能扩充服务器就可以达到效果的架构，这种架构只要花钱就能解决。但凡能走上只要花钱就能解决承载量的架构，一定没有问题。&lt;/p&gt;
+
+&lt;p&gt;3.大量用户集中使用同一功能的优化。《王途霸业》的挂机系统就遇到这样的情况，大部分玩家都会使用这个功能，而且这是机器与机器的交互，大部分玩家都会在长时间里使用这个功能。当大量用户时，这个挂机战斗功能，对数据存储服务器的SQL语句执行冲击很大，类似的情况还有很多。像这样的功能呢，就需要我们进一步优化，不但是优化逻辑处理，还要优化数据存储方式，不可以加大了逻辑服务器的承载，却忽视了数据服务器的承载。优化方法很多，比如当前功能不存储数据，只在玩家下线时操作数据存储更新，还有数据差异化存储，当数据有变化才进行储存更新，去除了很多不必要的存储SQL执行时间。&lt;/p&gt;
+
+&lt;p&gt;4.HTTP与TCP结合的优化。《王途霸业》一开始尝试过只使用TCP长连接的架构方式，但最终以不方便，不好用的试用结果落败。TCP与WEB的HTTP结合的方式优化架构是个非常好的方式。首先WEB的HTTP本身就是个大众化稳定的架构体系，它在帐号管理，数据记录，需求变化的适应力等方面都有非常好的表现。其实就是人们口中所有的短连接和长连接的结合。《王途霸业》使用HTTP方式做了帐号认证系统是为了所有服务器的帐号获取方式，又用HTTP方式做了服务器列表，全服公告，网关轮询等做为中心服务器，这个中心服务器还配备了后台管理界面，让运营人员非常舒服，最后还用HTTP方式为《王途霸业》的数据统计做了一个统计管理的WEB后台管理，让市场人员能清晰得看到整个游戏数据的起伏变化情况。&lt;/p&gt;
+
+&lt;p&gt;5.循环驱动更改为事件驱动。很多时候我们服务器里会有一些需要用逻辑帧循环来做的事情，《王途霸业》中就有很多，比如建筑时间完成判断，常胜峰战斗奖励判断，玩家当前资源量计算，盘丝洞挂机计算，这些程序逻辑倘若都用服务器的主逻辑帧来做，那将是个非常损耗CPU的事情，并且它还会影响到DB存储服务器的效率。这时候我们就要好好利用事件驱动，在玩家下线时，上线时，玩家获取信息时，更或者在玩家退出某个场景时，进行操作。这样不仅省去了主逻辑帧的循环CPU损耗，更让DB服务器有了更多的力量去处理更重要的事，大大提高了整个游戏服务器的承载量。&lt;/p&gt;
+
+&lt;p&gt;PS:一点点小分享，大神切莫嘲笑。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Unity3D架构设计NavMesh寻路</title>
+   <link href="http://hyde.getpoole.com/unity3d/2013/10/06/Unity3D%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1NavMesh%E5%AF%BB%E8%B7%AF/"/>
+   <updated>2013-10-06T18:04:28+08:00</updated>
+   <id>http://hyde.getpoole.com/unity3d/2013/10/06/Unity3D架构设计NavMesh寻路</id>
+   <content type="html">&lt;p&gt;国庆闲来没事把NavMesh巩固一下。以Unity3D引擎为例写一个底层c# NavMesh寻路。因为Unity3D中本身自带的NavMesh寻路不能很好的融入到游戏项目当中，所以重写一个NavMesh寻路是个必经之路。NavMesh在很多游戏中应用广泛，不同种类的框架下NavMesh寻路发挥的淋漓尽致。与传统的A星寻路相比，NavMesh不仅减少了内存空间占有量，加快了寻路速度，还可以加入寻路角色的宽高限制，以及动态物体寻路等功能，基本上适应了大部分项目变化多端的需求。&lt;/p&gt;
+
+&lt;p&gt;我把写NavMesh的过程分成好几个部分，一一进行描述：&lt;/p&gt;
+
+&lt;p&gt;一.首先要理解NavMesh核心算法。NavMesh的核心算法就是用三角形代替传统寻路的方格，用计算拐点优化寻路路径来代替合并路径直线。
+如下图1NavMesh寻路:
+&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2013/10/2303121.jpg&quot;&gt;&lt;img class=&quot;alignnone wp-image-91 size-full&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2013/10/2303121.jpg&quot; alt=&quot;&quot; width=&quot;479&quot; height=&quot;312&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以及如下图2传统的方格寻路:
+&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2013/10/20131006173445.jpg&quot; target=&quot;_blank&quot;&gt;&lt;img class=&quot;alignnone wp-image-94 size-full&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2013/10/20131006173445.jpg&quot; alt=&quot;&quot; width=&quot;621&quot; height=&quot;568&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;看到两者的差别了吧，NavMesh已三角形为寻路块，而传统以方格为寻路块。其实两者都使用A*寻路，但就是其网格生成不一样，导致当有大范围寻路时，其效率和要求也不一样。&lt;/p&gt;
+
+&lt;p&gt;二.NavMesh寻路中的路径优化之拐点计算。其实NavMesh中比较常用的是&lt;strong&gt;光照射线法，&lt;/strong&gt;但这里不做详细介绍，光照射浅法详细内容地址:&lt;a href=&quot;http://www.cnblogs.com/neoragex2002/archive/2007/09/09/887556.html&quot;&gt;http://www.cnblogs.com/neoragex2002/archive/2007/09/09/887556.html&lt;/a&gt;
+拐点计算优化路径就是到达目的地需要经过的一堆三角形中计算出最简洁的移动方式。其核心算法就是从当前点到另一个三角形中的点之间的线段，与这条线段相交的线段全部是路径所穿越的线段，就是拐点，把所有的拐点找出来，并得到一条最长的拐点，那个拐点就是最佳的拐点位置。&lt;/p&gt;
+
+&lt;p&gt;三.NavMesh类设计详解(这里只设计2D的寻路，对于3D方向的寻路，其实是可以2D寻路代替的)：&lt;/p&gt;
+
+&lt;p&gt;1.所有类都在同一的命名空间NavMesh内 namespace NavMesh
+Triangle 三角形基础类
+NavTriangle 寻路三角形类 (继承Triangle)
+Line2D 线段类
+Polygon 多边形类
+Seeker 寻路主算法类&lt;/p&gt;
+
+&lt;p&gt;----------------------------------------- 让大家久等了 ------------------------------------&lt;/p&gt;
+
+&lt;p&gt;在寻路前，我们需要建立MESH三角形网格，这是NAV_MESH的重点之一。&lt;/p&gt;
+
+&lt;p&gt;1.首先我们先要画出一个范围来确定我们的可行走范围。&lt;/p&gt;
+
+&lt;p&gt;2.再在可行走范围中去添加不可行走的范围。&lt;/p&gt;
+
+&lt;p&gt;3.我们用多个多边形Polygon代替以上的范围，也就是说，一个大的可行走Polygon内包含了若干个小的不可行走的Polygon。&lt;/p&gt;
+
+&lt;p&gt;这是生成MESH前我们需要知道的生成范围，然后再由这些多边形的各个顶点来生成三角形网格,三角形网格的生成算法如下：&lt;/p&gt;
+
+&lt;p&gt;Step 1 :  用可行走Polygon的任意一条边作为起点，将其推入堆栈列表。到Step2.&lt;/p&gt;
+
+&lt;p&gt;Step 2:  从堆栈中推出一条边，在所有三角形中计算出边的DT点，构成约束Delaunay三角形，到Step3。如果没有DT点就重复做Step2，直到堆栈为空就结束整个程序。&lt;/p&gt;
+
+&lt;p&gt;Step 3:  将所构成的三角形，另两边做如下处理：检查堆栈中是否已存在，如果存在就删除该边，如果不存在就加入到堆栈中。&lt;/p&gt;
+
+&lt;p&gt;生成mesh后如图：（绿色的为多边形边框，蓝色的为寻路路径，红色的为编辑器选中的多边形）
+&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2013/10/OD04RIKAWEMUTM_3MSBQ.jpg&quot;&gt;&lt;img class=&quot;alignnone size-full wp-image-376&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2013/10/OD04RIKAWEMUTM_3MSBQ.jpg&quot; alt=&quot;OD04[RIKAWEMUTM_3MS}B$Q&quot; width=&quot;475&quot; height=&quot;312&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;核心源码为：
+        /// &lt;summary&gt;
+        /// 创建导航网格
+        /// &lt;/summary&gt;
+        /// 所有阻挡区域&lt;/param&gt;
+        /// 输出的导航网格&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public NavResCode CreateNavMesh(List&lt;Polygon&gt; polyAll , ref int id , int groupid , ref List&lt;Triangle&gt; triAll)
+        {
+            triAll.Clear();
+            List&lt;Line2D&gt; allLines = new List&lt;Line2D&gt;(); //线段堆栈&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;        //Step1 保存顶点和边
+        NavResCode initRes = InitData(polyAll);
+        if (initRes != NavResCode.Success)
+            return initRes;
+
+        int lastNeighborId = -1;
+        Triangle lastTri = null;
+
+        //Step2.遍历边界边作为起点
+        {
+            Line2D sEdge = startEdge;
+            allLines.Add(sEdge);
+            Line2D edge = null;
+
+            do
+            {
+                //Step3.选出计算出边的DT点，构成约束Delaunay三角形
+                edge = allLines[allLines.Count - 1];
+                allLines.Remove(edge);
+
+                Vector2 dtPoint;
+                bool isFindDt = FindDT(edge, out dtPoint);
+                if (!isFindDt)
+                    continue;
+                Line2D lAD = new Line2D(edge.GetStartPoint(), dtPoint);
+                Line2D lDB = new Line2D(dtPoint, edge.GetEndPoint());
+
+                //创建三角形
+                Triangle delaunayTri = new Triangle(edge.GetStartPoint(), edge.GetEndPoint(), dtPoint, id++ , groupid);
+                // 保存邻居节点
+                // if (lastNeighborId != -1)
+                // {
+                // delaunayTri.SetNeighbor(lastNeighborId);
+                // if(lastTri != null)
+                // lastTri.SetNeighbor(delaunayTri.ID);
+                // }
+                //save result triangle
+                triAll.Add(delaunayTri);
+
+                // 保存上一次的id和三角形
+                lastNeighborId = delaunayTri.GetID();
+                lastTri = delaunayTri;
+
+                int lineIndex;
+                //Step4.检测刚创建的的线段ad,db；如果如果它们不是约束边
+                //并且在线段堆栈中，则将其删除，如果不在其中，那么将其放入
+                if (!Line2D.CheckLineIn(allEdges, lAD, out lineIndex))
+                {
+                    if (!Line2D.CheckLineIn(allLines, lAD, out lineIndex))
+                        allLines.Add(lAD);
+                    else
+                        allLines.RemoveAt(lineIndex);
+                }
+
+                if (!Line2D.CheckLineIn(allEdges, lDB, out lineIndex))
+                {
+                    if (!Line2D.CheckLineIn(allLines, lDB, out lineIndex))
+                        allLines.Add(lDB);
+                    else
+                        allLines.RemoveAt(lineIndex);
+                }
+
+                //Step5.如果堆栈不为空，则转到第Step3.否则结束循环
+            } while (allLines.Count &amp;gt; 0);
+        }
+
+        // 计算邻接边和每边中点距离
+        for (int i = 0; i &amp;lt; triAll.Count; i++)
+        {
+            Triangle tri = triAll[i];
+            //// 计算每个三角形每边中点距离
+            //tri.calcWallDistance();
+
+            // 计算邻居边
+            for (int j = 0; j &amp;lt; triAll.Count; j++)
+            {
+                Triangle triNext = triAll[j];
+                if (tri.GetID() == triNext.GetID())
+                    continue;
+
+                int result = tri.isNeighbor(triNext);
+                if (result != -1)
+                {
+                    tri.SetNeighbor(result , triNext.GetID() );
+                }
+            }
+        }
+
+        return NavResCode.Success;
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这里对如何计算DT点进行一个说明：
+Step1. 构造三角形的外接圆，以及外接圆的包围盒
+Step2. 依次访问网格包围盒内的每个网格单元：
+若某个网格单元中存在可见点 p, 并且 &amp;ang;p1pp2 &amp;gt; &amp;ang;p1p3p2，则令 p3=p，转Step1；
+否则，转Step3.
+Step3. 若当前网格包围盒内所有网格单元都已被处理完,也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点
+核心源码为：
+/// &lt;summary&gt;
+/// 找到指定边的约束边DT
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;line&quot;&gt;&lt;/param&gt;
+/// &lt;returns&gt;&lt;/returns&gt;
+private bool FindDT(Line2D line, out Vector2 dtPoint)
+{
+    dtPoint = new Vector2();
+    if (line == null)
+        return false;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Vector2 ptA = line.GetStartPoint();
+Vector2 ptB = line.GetEndPoint();
+
+List&amp;lt;Vector2&amp;gt; visiblePnts = new List&amp;lt;Vector2&amp;gt;();
+foreach (Vector2 point in allPoints)
+{
+    if (IsPointVisibleOfLine(line, point))
+        visiblePnts.Add(point);
+}
+
+if (visiblePnts.Count == 0)
+    return false;
+
+bool bContinue = false;
+dtPoint = visiblePnts[0];
+
+do
+{
+    bContinue = false;
+    //Step1.构造三角形的外接圆，以及外接圆的包围盒
+    Circle circle = NMath.CreateCircle(ptA, ptB, dtPoint);
+    Rect boundBox = NMath.GetCircleBoundBox(circle);
+
+    //Step2. 依次访问网格包围盒内的每个网格单元：
+    //若某个网格单元中存在可见点 p, 并且 &amp;amp;ang;p1pp2 &amp;gt; &amp;amp;ang;p1p3p2，则令 p3=p，转Step1；
+    //否则，转Step3.
+    float angOld = (float)Math.Abs(NMath.LineRadian(ptA, dtPoint, ptB));
+    foreach (Vector2 pnt in visiblePnts)
+    {
+        if (pnt == ptA || pnt == ptB || pnt == dtPoint)
+            continue;
+        if (!boundBox.Contains(pnt))
+            continue;
+
+        float angNew = (float)Math.Abs(NMath.LineRadian(ptA, pnt, ptB));
+        if (angNew &amp;gt; angOld)
+        {
+            dtPoint = pnt;
+            bContinue = true;
+            break;
+        }
+    }
+
+    //false 转Step3
+} while (bContinue);
+
+//Step3. 若当前网格包围盒内所有网格单元都已被处理完，
+// 也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点
+return true;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;}&lt;/p&gt;
+
+&lt;p&gt;为了让各位能更容易读懂此文，此文仍会继续补充。&lt;/p&gt;
+
+&lt;p&gt;现在我将所有源码都存放在了Github上，请各位跟随我到Github去取源码：&lt;a href=&quot;https://github.com/luzexi/Unity3DNavMesh&quot;&gt;https://github.com/luzexi/Unity3DNavMesh&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>赌博游戏程序设计中如何运用数学概率论</title>
+   <link href="http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/09/04/%E8%B5%8C%E5%8D%9A%E6%B8%B8%E6%88%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%90%E7%94%A8%E6%95%B0%E5%AD%A6%E6%A6%82%E7%8E%87%E8%AE%BA/"/>
+   <updated>2013-09-04T21:07:10+08:00</updated>
+   <id>http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/09/04/赌博游戏程序设计中如何运用数学概率论</id>
+   <content type="html">&lt;p&gt;我们在《王途霸业》中加入了一个非常有特色的系统，叫做&amp;quot;通吃谷&amp;quot;，它是一个类似于街机中的水果机那样的游戏系统。每盘玩家可以押注8个元素中任意个数，按开始后，轮盘开始转动，一旦停下来，停在某个元素上，该元素就算中奖，奖励的倍数由所在的元素显示的倍数决定。&lt;/p&gt;
+
+&lt;p&gt;这种类似的押宝游戏我一直想做，但一直没有机会，所以这个押宝系统一直对我笼罩着一层神秘感。随着研究的深入，这层神秘感渐渐消除。&lt;/p&gt;
+
+&lt;p&gt;首先说说，如何将概率的准确性达到最高。内容在最下面的转载内容部分。请细细品尝。&lt;/p&gt;
+
+&lt;p&gt;再着，先把大部分人认定的那些误区给去除，水果机并不是由算法支撑核心的，那是数学概率论的一部分。每个元素都有一个概率，准确定义这个概率，再加上一定的算法技巧，就会有一个可玩性，体验好，庄家必赢的赌博系统。&lt;/p&gt;
+
+&lt;p&gt;首先给8个元素定义一个赔率，5倍，10倍，15倍，20倍，30倍，40倍，50倍，100倍。漫无目的的调整中奖概率是件很痛苦的事情，那我就用一个方法去定义，提取这些倍率的公倍数，在将他们各自的倍率去除以这个公倍数，得到一个基础的中奖概率。这样就得到一个总和加起来并不是百分之一百的概率体系。为什么要是总和不是100%的概率体系呢？我把剩余的未中奖的概率设定为吞吃比率，也就是在这些中奖概率后，有一个一定吞吃所有的概率，当这个吞吃概率被命中时，我们就需要用一定的算法来获得一个不一定不让玩家赢的中奖位置，这个中奖位置也可能是玩家选择的位置，也可以是玩家没有选择的赔率，为了让游戏体验更加的有趣，这个算法非常重要。&lt;/p&gt;
+
+&lt;p&gt;其实整个游戏所用到的知识非常简单，而如何让玩家能有一个非常良好的体验，是从吞吃算法和概率调整上下手。我并没有去细致的调整概率，而是做了一个整体概率调整的方案，也就是一个浮点数调整所有概率，当浮点数为1时，是基础的概率，浮点数越大，各元素的中奖概率越大，玩家中奖机会也越大，再加上吞吃算法，整个游戏体验将会是非常切合人的本性。这样，既实现了游戏了娱乐性，也实现了庄家必赢的局面，最重要的是，整个游戏调整起来非常便捷，无需了解很多知识，这也是对项目灵活性的一个很大帮助。&lt;/p&gt;
+
+&lt;p&gt;以下内容转载网络，由于页面不复存在，所以只能贴出来：
+计算机随机模拟方法，是一种基于&amp;quot;随机数&amp;quot;的计算方法。这一方法源于美国在第二次世界大战中研制原子弹的&amp;quot;曼哈顿计划&amp;quot;。该计划的主持人之一、数学家冯诺伊曼用驰名世界的赌城-摩纳哥的Monte Carlo-来命名这种方法，为它蒙上了一层神秘色彩。Monte Carlo方法的基本思想很早以前就被人们所发现和利用。早在17世纪，人们就知道用事件发生的&amp;quot;频率&amp;quot;来决定事件的&amp;quot;概率&amp;quot;。19世纪人们用投针试验的方法来决定圆周率pi。本世纪40年代电子计算机的出现，特别是近年来高速电子计算机的出现，使得用数学方法在计算机上大量、快速地模拟这样的试验成为可能。考虑平面上的一个边长为1的正方形及其内部的一个形状不规则的&amp;quot;图形&amp;quot;，如何求出这个&amp;quot;图形&amp;quot;的面积呢？Monte Carlo方法是这样一种&amp;quot;随机化&amp;quot;的方法：向该正方形&amp;quot;随机地&amp;quot;投掷N个点,其中有M个点落于&amp;quot;图形&amp;quot;内，则该&amp;quot;图形&amp;quot;的面积近似为M/N。可用民意测验来作一个不严格的比喻。民意测验的人不是征询每一个登记选民的意见，而是通过对选民进行小规模的抽样调查来确定可能的优胜者。其基本思想是一样的。科技计算中的问题比这要复杂得多。比如金融衍生产品（期权、期货、掉期等）的定价及交易风险估算，问题的维数（即变量的个数）可能高达数百甚至数千。对这类问题，难度随维数的增加呈指数增长，这就是所谓的&amp;quot;维数的灾难&amp;quot;(Course Dimensionality)，传统的数值方法难以对付（即使使用速度最快的计算机）。Monte Carlo方法能很好地用来对付维数的灾难，因为该方法的计算复杂性不再依赖于维数。以前那些本来是无法计算的问题现在也能够计算量。为提高方法的效率，科学家们提出了许多所谓的&amp;quot;方差缩减&amp;quot;技巧。另一类形式与Monte Carlo方法相似，但理论基础不同的方法-&amp;quot;拟蒙特卡罗方法&amp;quot;(Quasi-Monte Carlo方法)-近年来也获得迅速发展。我国数学家华罗庚、王元提出的&amp;quot;华-王&amp;quot;方法即是其中的一例。这种方法的基本思想是&amp;quot;用确定性的超均匀分布序列(数学上称为Low Discrepancy Sequences)
+代替Monte Carlo方法中的随机数序列。对某些问题该方法的实际速度一般可比Monte Carlo方法提出高数百倍，并可计算精确度。&lt;/p&gt;
+
+&lt;p&gt;高精度概率事件，程序实现如下：&lt;/p&gt;
+
+&lt;p&gt;设P(i)，其中i=1..n，为n个个体被选择的概率，在轮盘上表示为所占扇区的面积百分比，这里显然sum(P)=1。select用来保存n次选择的结果。
+1） 第一种实现办法：可以想象一个转动的轮盘，注意这里轮盘最多只转一圈。每次转轮盘前，把色子随机放到轮盘外缘的某处，即色子不随轮盘转动，以一个随机数sel代表它所处的位置。轮盘转动后，色子所指示的轮盘扇区号不断变化，轮盘停止时色子所指示的轮盘上扇区号，即为本次轮盘赌所选中的个体号。
+%for i = 1:n   %第i次掷色子
+%    sel = rand; %产生一个0、1之间的随机数，代表色子在轮盘外缘所指示的位置
+%    sumPs = 0;   %轮盘初始转动的位置，从0变化到1
+%    j = 1;   %轮盘初始指示的位置
+%    while sumPs&lt;sel   %终止条件为轮盘转动的位置超过色子位置
+%        sumPs = sumPs + P(j)   %轮盘转动
+%        j = j + 1；   %轮盘指示位置
+%    end
+%    select(i) = j-1;   %轮盘停止时色子停留位置所指示的个体
+%end   %循环终了，会对轮盘上由P所划分出来的n个区间产生n次随机选择，扇区越大，该扇区被选中的几率也越大
+还需要注意的是：上面的程序中，我们当然可以把n改成2*n或者10*n，产生的结果都是&amp;ldquo;个体概率所表示扇区越大，该个体被选中的几率也越大&amp;rdquo;，并且随着实验次数的增大，这一结果越精确。
+2）这种方法可以想象成往划分好扇区的轮盘里扔色子，事先生成一组满足均匀分布的随机数，代表n次掷色子或者n个色子一起扔，轮盘不动，色子所在区域为选择结果。
+r = rand(1,n)   %预先产生n个色子的位置，注意这里r服从0、1之间均匀分布
+%for i = 1:n   %第i次轮盘赌
+%    select(i) = n;   %本次轮盘赌的结果初始化为n
+%    for j = 1:n   %轮盘开始转动
+%        if r(j) &lt;=P(i)   %若色子停在轮盘第j扇区
+%        select(i) = j; %则第i次轮盘赌的结果为j
+%        break;   %第i次轮盘赌结束
+%    end %~第i次轮盘赌结束
+%end %~第i次轮盘赌结束
+%end %n次轮盘赌结束
+%%%%%%%%%%%%%下面为完整的matlab程序实现%%%%%%%%%%%%%%%
+function Select=Roulette(P,num)
+%:按轮盘赌策略选择下一点,返回num次轮盘赌结果
+%:第一种轮盘赌方法,精度很低,
+% m = length(P);
+% Select = zeros(1,num);
+% for i=1:num
+%     Select(i) = m;% 初始化为最后一个
+%     for j=1:m %:按概率选择
+%       if P(j)&gt;rand()
+%          Select(i)=j;
+%          break;
+%       end
+%     end
+% end
+%:第二种轮盘赌方法,精度较高
+%m = length(P);
+%Select = zeros(1,num);
+%r = rand(1,num);
+%for i=1:num
+%    sumP = 0;
+%    j = ceil(m*rand); %产生1~m之间的随机整数
+%    while sumP &amp;lt; r(i)
+%        sumP = sumP + P(mod(j-1,m)+1);
+%        j = j+1;
+%    end&lt;/p&gt;
+
+&lt;h1&gt;%Select(i) = mod(j-1,m)+1-1;&lt;/h1&gt;
+
+&lt;p&gt;%Select(i) = mod(j-2,m)+1;
+%end
+% 本程序中轮盘赌方法的准确程度可由如下程序验证
+% P=rand(10,1);
+% P=P./sum(P);
+% Select=Roulette(P,1e6);
+% for i=1:10
+%     Ps(i)=(sum(Select==i)/1e6);
+% end
+%:最后验证该轮盘赌方法准确程度
+%:比较P和Ps差异大小，例&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>《王途霸业》战争策略游戏的服务器架构设计</title>
+   <link href="http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2013/08/24/%E3%80%8A%E7%8E%8B%E9%80%94%E9%9C%B8%E4%B8%9A%E3%80%8B%E6%88%98%E4%BA%89%E7%AD%96%E7%95%A5%E6%B8%B8%E6%88%8F%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/"/>
+   <updated>2013-08-24T15:54:22+08:00</updated>
+   <id>http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2013/08/24/《王途霸业》战争策略游戏的服务器架构设计</id>
+   <content type="html">&lt;p&gt;王途霸业的服务器架构设计从2012年11月份开始历时10个月从6月份的V1.0.0第一次于玩家见面，到现在V1.1.5版本，这10个月里《王途霸业》经历了很多次架构的调整，客户端和服务端都已经有成型的架构体系，特别是服务器的架构，似乎从一个无知的少年经过1年的时间成长为了一个成熟的白领，可以正式抗起整个家庭的重担。&lt;/p&gt;
+
+&lt;p&gt;服务端：&lt;/p&gt;
+
+&lt;p&gt;服务端整个架构由4个部分组成,分别是：数据缓冲服务器，逻辑服务器，认证服务器，中心服务器&lt;/p&gt;
+
+&lt;p&gt;数据缓冲服务器：对MYSQL数据库从内存上的数据存储优化，将更大程度上优化数据读取和存储效率。&lt;/p&gt;
+
+&lt;p&gt;逻辑服务器：不言而明，这是《王途霸业》的核心服务器，对《王途霸业》的游戏正常运行起到了关键性的作用&lt;/p&gt;
+
+&lt;p&gt;认证服务器：《王途霸业》是一款面向多平台，多渠道的游戏。她的帐号系统面向《王途霸业》中的所有服务器。也就是说，你只要注册一个帐号，就可以登录任何一个服务器进行游戏。&lt;/p&gt;
+
+&lt;p&gt;中心服务器：主要负责对《王途霸业》的服务器地址管理，版本更新和公告内容。她是整个游戏的入口点，就像个看门人，对所有进入游戏的手机终端，检查他们的版本是否最新，并给予当前的全服公告和现有服务器的状态。&lt;/p&gt;
+
+&lt;p&gt;《王途霸业》中缓冲服务器有，DB缓冲服务器，日志缓冲服务器&lt;/p&gt;
+
+&lt;p&gt;这两个服务器分别分则对游戏数据存储和游戏日志数据存储。&lt;/p&gt;
+
+&lt;p&gt;《王途霸业》中逻辑服务器有，GAME游戏服务器，LOGIN登录服务器&lt;/p&gt;
+
+&lt;p&gt;游戏服务器对负责游戏的逻辑，而LOGIN服务器负责对帐号验证分流一部分HTTP访问造成的延迟。&lt;/p&gt;
+
+&lt;p&gt;《王途霸业》中认证服务器主要负责对所有平台的帐号进行验证，并提供帐号所对应的ID，这里启用HTTP连接，短连接的好处就是不必担心个服务器之间的长连接中断问题，并且能够承载更多的用户，统一所有服务器的帐号。&lt;/p&gt;
+
+&lt;p&gt;《王途霸业》中的中心服务器是HTTP方式，也是因为这样能更好的承载客户端入口点，快速让客户端获得最新的更新内容和最新的服务器列表状态。将入口功能集成于一身。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.luzexi.com/%e3%80%8a%e7%8e%8b%e9%80%94%e9%9c%b8%e4%b8%9a%e3%80%8b%e6%88%98%e4%ba%89%e7%ad%96%e7%95%a5%e6%b8%b8%e6%88%8f/ddd/&quot; rel=&quot;attachment wp-att-56&quot;&gt;&lt;img alt=&quot;ddd&quot; class=&quot;alignnone size-full wp-image-56&quot; height=&quot;761&quot; src=&quot;http://114.215.202.83/blog/wp-content/uploads/2013/08/ddd.png&quot; width=&quot;1035&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>使用行为树(Behavior Tree)实现游戏AI</title>
+   <link href="http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/01/26/%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E6%A0%91(Behavior%20Tree)%E5%AE%9E%E7%8E%B0%E6%B8%B8%E6%88%8FAI/"/>
+   <updated>2013-01-26T19:09:33+08:00</updated>
+   <id>http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/01/26/使用行为树(Behavior Tree)实现游戏AI</id>
+   <content type="html">&lt;p&gt;使用行为树(Behavior Tree)实现游戏AI&lt;/p&gt;
+
+&lt;h2&gt;by AKara 2010-12-09 @ http://blog.csdn.net/akara @ akaras@163.com&lt;/h2&gt;
+
+&lt;p&gt;谈到游戏AI，很明显智能体拥有的知识条目越多，便显得更智能，但维护庞大数量的知识条目是个噩梦：使用有限状态机(FSM)，分层有限状态机(HFSM)，
+决策树(Decision Tree)来实现游戏AI总有那么些不顺意。试试Next-Gen AI的行为树(Behavior Tree)吧。虽说Next-Gen AI，但距其原型提出已有约10年时间，而微软Halo系列估计已用了超过8年了，Spore和一些著名游戏也早已使用行为树作为它们的AI结构。如从未接触，那wikipedia(http://en.wikipedia.org/wiki/Behavior_Trees) 绝对是入门好资料。&lt;/p&gt;
+
+&lt;p&gt;先贴本文最具价值图(配色可花了不少时间)
+&lt;a href=&quot;http://www.luzexi.com/wp-content/uploads/2013/01/213345_1292157838h3CY.jpg&quot;&gt;&lt;img class=&quot;alignnone size-full wp-image-20&quot; src=&quot;http://www.luzexi.com/wp-content/uploads/2013/01/213345_1292157838h3CY.jpg&quot; alt=&quot;213345_1292157838h3CY&quot; width=&quot;444&quot; height=&quot;768&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;为显美观：BT被横放，Node层次被刻意减少，Dec被刻意安插，Cond被刻意捏造。&lt;/p&gt;
+
+&lt;p&gt;PS：其实真正的高效的Node Group剔除应多加一层Sequence Node。&lt;/p&gt;
+
+&lt;p&gt;行为树(Behavior Tree)具有如下的特性：
+* 它只有4大类型的Node：
+* Composite Node
+* Decorator Node
+* Condition Node
+* Action Node&lt;/p&gt;
+
+&lt;p&gt;任何Node被执行后，必须向其Parent Node报告执行结果：成功 / 失败.&lt;/p&gt;
+
+&lt;p&gt;这简单的成功 / 失败汇报原则被很巧妙地用于控制整棵树的决策方向。&lt;/p&gt;
+
+&lt;p&gt;先看Composite Node，其实它按复合性质还可以细分为3种：
+* Selector Node
+当执行本类型Node时，它将从begin到end迭代执行自己的Child Node：
+如遇到一个Child Node执行后返回True，那停止迭代，
+本Node向自己的Parent Node也返回True；否则所有Child Node都返回False，
+那本Node向自己的Parent Node返回False。
+* Sequence Node
+当执行本类型Node时，它将从begin到end迭代执行自己的Child Node：
+如遇到一个Child Node执行后返回False，那停止迭代，
+本Node向自己的Parent Node也返回False；否则所有Child Node都返回True，
+那本Node向自己的Parent Node返回True。
+* Parallel Node
+并发执行它的所有Child Node。
+而向Parent Node返回的值和Parallel Node所采取的具体策略相关：
+Parallel Selector Node: 一False则返回False，全True才返回True。
+Parallel Sequence Node: 一True则返回True，全False才返回False。
+Parallel Hybird Node: 指定数量的Child Node返回True或False后才决定结果。
+Parallel Node提供了并发，提高性能。
+不需要像Selector/Sequence那样预判哪个Child Node应摆前，哪个应摆后，
+常见情况是：
+(1)用于并行多棵Action子树。
+(2)在Parallel Node下挂一棵子树，并挂上多个Condition Node，
+以提供实时性和性能。
+Parallel Node增加性能和方便性的同时，也增加实现和维护复杂度。
+PS：上面的Selector/Sequence准确来说是Liner Selector/Liner Sequence。
+AI术语中称为strictly-order：按既定先后顺序迭代。
+Selector和Sequence可以进一步提供非线性迭代的加权随机变种。
+Weight Random Selector提供每次执行不同的First True Child Node的可能。
+Weight Random Sequence则提供每次不同的迭代顺序。&lt;/p&gt;
+
+&lt;h2&gt;AI术语中称为partial-order，能使AI避免总出现可预期的结果。&lt;/h2&gt;
+
+&lt;p&gt;再看Decorator Node，它的功能正如它的字面意思：它将它的Child Node执行
+后返回的结果值做额外处理后，再返回给它的Parent Node。很有些AOP的味道。
+比如Decorator Not/Decorator FailUtil/Decorator Counter/Decorator Time...&lt;/p&gt;
+
+&lt;h2&gt;更geek的有Decorator Log/Decorator Ani/Decorator Nothing...&lt;/h2&gt;
+
+&lt;h2&gt;然后是很直白的Condition Node，它仅当满足Condition时返回True。&lt;/h2&gt;
+
+&lt;p&gt;最后看Action Node，它完成具体的一次(或一个step)的行为，视需求返回值。&lt;/p&gt;
+
+&lt;h2&gt;而当行为需要分step/Node间进行时，可引入Blackboard进行简单数据交互。&lt;/h2&gt;
+
+&lt;p&gt;整棵行为树中，只有Condition Node和Action Node才能成为Leaf Node，而也
+只有Leaf Node才是需要特别定制的Node；Composite Node和Decorator Node均
+用于控制行为树中的决策走向。(所以有些资料中也统称Condition Node和Action
+Node为Behavior Node，而Composite Node和Decorator Node为Decider Node。)
+更强大的是可以加入Stimulus和Impulse，通过Precondition来判断masks开关。
+通过上述的各种Nodes几乎可以实现所有的决策控制：if, while, and, or,&lt;/p&gt;
+
+&lt;h2&gt;not, counter, time, random, weight random, util...&lt;/h2&gt;
+
+&lt;p&gt;总的来说，行为树具有如下几种优点，确实是实现AI框架的利器，甚至是一种
+通用的可维护的复杂流程管理利器：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;静态性
+越复杂的功能越需要简单的基础，否则最后连自己都玩不过来。
+静态是使用行为树需要非常着重的一个要点：即使系统需要某些&amp;quot;动态&amp;quot;性。
+其实诸如Stimulus这类动态安插的Node看似强大，
+但却破坏了本来易于理解的静态性，弊大于利。
+Halo3相对于Halo2对BT AI的一个改进就是去除Stimulus的动态性。
+取而代之的做法是使用Behavior Masks，Encounter Attitude，Inhibitions。
+原则就是保持全部Node静态，只是根据事件和环境来检查是否启用Node。
+静态性直接带来的好处就是整棵树的规划无需再运行时动态调整，为很多优化
+和预编辑都带来方便。
+直观性
+行为树可以方便地把复杂的AI知识条目组织得非常直观。
+默认的Composite Node的从begin往end的Child Node迭代方式就像是处理一个
+预设优先策略队列，也非常符合人类的正常思考模式：先最优再次优。
+行为树编辑器对优秀的程序员来说也是唾手可得。
+复用性
+各种Node，包括Leaf Node，可复用性都极高。
+实现NPC AI的个性区别甚至可以通过在一棵共用的行为树上不同的位置来
+安插Impulse来达到目的。
+当然，当NPC需要一个完全不同的大脑，比如70级大BOSS，
+与其绞尽脑汁在一棵公用BT安插Impulse，不如重头设计一棵专属BT。
+扩展性
+虽然上述Node之间的组合和搭配使用几乎覆盖所有AI需求。
+但也可以容易地为项目量身定做新的Composite Node或Decorator Node。
+还可以积累一个项目相关的Node Lib，长远来说非常有价值。&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>游戏服务端架构</title>
+   <link href="http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2013/01/26/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%9E%B6%E6%9E%84/"/>
+   <updated>2013-01-26T18:47:21+08:00</updated>
+   <id>http://hyde.getpoole.com/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2013/01/26/游戏服务端架构</id>
+   <content type="html">&lt;p&gt;本文引用自网络.&lt;/p&gt;
+
+&lt;p&gt;这里讨论的游戏服务器架构大概是目前国内乃至世界上的网游通用的一种架构了：&lt;/p&gt;
+
+&lt;p&gt;有段时间没有研究技术了，这次正好看到了新版的mangos，较之以前我看的版本有了比较大的完善，于是再次浏览了下他的代码，也借此机会整理下我在游戏服务器开发方面的一些心得，与大家探讨。
+另外由于为避免与公司引起一些不必要的纠纷，我所描述的全都是通过google能够找到的资料，所以也可以认为我下面的内容都是网上所找资料的整理合 集。在平时的开发中我也搜索过相关的中文网页，很少有讲游戏服务器相关技术的，大家的讨论主要还是集中在3D相关技术，所以也希望我将开始的这几篇文章能 够起到抛砖引玉的作用，潜水的兄弟们也都上来透透气。&lt;/p&gt;
+
+&lt;p&gt;要描述一项技术或是一个行业，一般都会从其最古老的历史开始说起，我本也想按着这个套路走，无奈本人乃一八零后小辈，没有经历过那些苦涩的却令人羡慕的 单机游戏开发，也没有响当当的拿的出手的优秀作品，所以也就只能就我所了解的一些技术做些简单的描述。一来算是敦促自己对知识做个梳理，二来与大家探讨的 过程也能够找到我之前学习的不足和理解上的错误，最后呢，有可能的话也跟业内的同行们混个脸熟，哪天要是想换个工作了也好有个人帮忙介绍下。最后的理由有 些俗了。&lt;/p&gt;
+
+&lt;p&gt;关于游戏开发，正如云风在其blog上 所说，游戏项目始终只是个小工程，另外开发时间还是个很重要的问题，所以软件工程的思想及方法在大部分的游戏公司中并不怎么受欢迎。当然这也只是从我个人 一些肤浅的了解所得，可能不够充分。从游戏开发的程序团队的人员构成上也可看出来，基本只能算作是小开发团队。有些工作室性质的开发团队，那就更简单了。&lt;/p&gt;
+
+&lt;p&gt;我所了解的早些的开发团队，其成员间没有什么严格的分工，大家凭兴趣自由选择一些模块来负责，完成了再去负责另一模块，有其他同事的工作需要接手或协助 的也会立即转入。所以游戏开发人员基本都是多面手，从网络到数据库，从游戏逻辑到图形图象，每一项都有所了解，并能实际应用。或者说都具有非常强的学习能 力，在接手一项新的任务后能在很短的时间内对该领域的技术迅速掌握并消化，而且还能现炒现卖。当然，这也与早期2D游戏的技术要求相对比较简单，游戏逻辑 也没有现在这般复杂有关。而更重要的可能是，都是被逼出来的吧！:)&lt;/p&gt;
+
+&lt;p&gt;好了，闲话少说，下一篇，也就是第一篇了，主题为，服务器结构探讨。&lt;/p&gt;
+
+&lt;p&gt;服务器结构探讨 -- 最简单的结构&lt;/p&gt;
+
+&lt;p&gt;所谓服务器结构，也就是如何将服务器各部分合理地安排，以实现最初的功能需求。所以，结构本无所谓正确与错误；当然，优秀的结构更有助于系统的搭建，对系统的可扩展性及可维护性也有更大的帮助。&lt;/p&gt;
+
+&lt;p&gt;好的结构不是一蹴而就的，而且每个设计者心中的那把尺都不相同，所以这个优秀结构的定义也就没有定论。在这里，我们不打算对现有游戏结构做评价，而是试着从头开始搭建一个我们需要的MMOG结构。&lt;/p&gt;
+
+&lt;p&gt;对于一个最简单的游戏服务器来说，它只需要能够接受来自客户端的连接请求，然后处理客户端在游戏世界中的移动及交互，也即游戏逻辑处理即可。如果我们把这两项功能集成到一个服务进程中，则最终的结构很简单：&lt;/p&gt;
+
+&lt;p&gt;client ----- server&lt;/p&gt;
+
+&lt;p&gt;嗯，太简单了点，这样也敢叫服务器结构？好吧，现在我们来往里面稍稍加点东西，让它看起来更像是服务器结构一些。&lt;/p&gt;
+
+&lt;p&gt;一般来说，我们在接入游戏服务器的时候都会要提供一个帐号和密码，验证通过后才能进入。关于为什么要提供用户名和密码才能进入的问题我们这里不打算做过 多讨论，云风曾对此也提出过类似的疑问，并给出了只用一个标识串就能进入的设想，有兴趣的可以去看看他们的讨论。但不管是采用何种方式进入，照目前看来我 们的服务器起码得提供一个帐号验证的功能。&lt;/p&gt;
+
+&lt;p&gt;我们 把观察点先集中在一个大区内。在大多数情况下，一个大区内都会有多组游戏服，也就是多个游戏世界可供选择。简单点来实现，我们完全可以抛弃这个大区的概 念，认为一个大区也就是放在同一个机房的多台服务器组，各服务器组间没有什么关系。这样，我们可为每组服务器单独配备一台登录服。最后的结构图应该像这 样：&lt;/p&gt;
+
+&lt;p&gt;loginServer   gameServer
+|           /
+|         /
+client&lt;/p&gt;
+
+&lt;p&gt;该结构下的玩家操作流程为，先选择大区，再选择大区下的某台服务器，即某个游戏世界，点击进入后开始帐号验证过程，验证成功则进入了该游戏世界。但是，如果玩家想要切换游戏世界，他只能先退出当前游戏世界，然后进入新的游戏世界重新进行帐号验证。&lt;/p&gt;
+
+&lt;p&gt;早期的游戏大都采用的是这种结构，有些游戏在实现时采用了一些技术手段使得在切换游戏服时不需要再次验证帐号，但整体结构还是未做改变。&lt;/p&gt;
+
+&lt;p&gt;该结构存在一个服务器资源配置的问题。因为登录服处理的逻辑相对来说比较简单，就是将玩家提交的帐号和密码送到数据库进行验证，和生成会话密钥发送给游 戏服和客户端，操作完成后连接就会立即断开，而且玩家在以后的游戏过程中不会再与登录服打任何交道。这样处理短连接的过程使得系统在大多数情况下都是比较 空闲的，但是在某些时候，由于请求比较密集，比如开新服的时候，登录服的负载又会比较大，甚至会处理不过来。&lt;/p&gt;
+
+&lt;p&gt;另外在实际的游戏运营中，有些游戏世界很火爆，而有些游戏世界却非常冷清，甚至没有多少人玩的情况也是很常见的。所以，我们能否更合理地配置登录服资源，使得整个大区内的登录服可以共享就成了下一步改进的目标。&lt;/p&gt;
+
+&lt;p&gt;服务器结构探讨 -- 登录服的负载均衡&lt;/p&gt;
+
+&lt;p&gt;回想一下我们在玩wow时的操作流程：运行wow.exe进入游戏后，首先就会要求我们输入用户名和密码进行验证，验证成功后才会出来游戏世界列表，之后是排队进入游戏世界，开始游戏...&lt;/p&gt;
+
+&lt;p&gt;可以看到跟前面的描述有个很明显的不同，那就是要先验证帐号再选择游戏世界。这种结构也就使得登录服不是固定配备给个游戏世界，而是全区共有的。&lt;/p&gt;
+
+&lt;p&gt;我们可以试着从实际需求的角度来考虑一下这个问题。正如我们之前所描述过的那样，登录服在大多数情况下都是比较空闲的，也许我们的一个拥有20个游戏世 界的大区仅仅使用10台或更少的登录服即可满足需求。而当在开新区的时候，或许要配备40台登录服才能应付那如潮水般涌入的玩家登录请求。所以，登录服在 设计上应该能满足这种动态增删的需求，我们可以在任何时候为大区增加或减少登录服的部署。&lt;/p&gt;
+
+&lt;p&gt;当然，在这里也不会存在要求添加太多登录服的情况。还是拿开新区的情况来说，即使新增加登录服满足了玩家登录的请求，游戏世界服的承载能力依然有限，玩家一样只能在排队系统中等待，或者是进入到游戏世界中导致大家都卡。&lt;/p&gt;
+
+&lt;p&gt;另外，当我们在增加或移除登录服的时候不应该需要对游戏世界服有所改动，也不会要求重启世界服，当然也不应该要求客户端有什么更新或者修改，一切都是在背后自动完成。&lt;/p&gt;
+
+&lt;p&gt;最后，有关数据持久化的问题也在这里考虑一下。一般来说，使用现有的商业数据库系统比自己手工技术先进要明智得多。我们需要持久化的数据有玩家的帐号及密码，玩家创建的角色相关信息，另外还有一些游戏世界全局共有数据也需要持久化。&lt;/p&gt;
+
+&lt;p&gt;好了，需求已经提出来了，现在来考虑如何将其实现。&lt;/p&gt;
+
+&lt;p&gt;对于负载均衡来说，已有了成熟的解决方案。一般最常用，也最简单部署的应该是基于DNS的负载均衡系统了，其通过在DNS中为一个域名配置多个IP地址 来实现。最新的DNS服务已实现了根据服务器系统状态来实现的动态负载均衡，也就是实现了真正意义上的负载均衡，这样也就有效地解决了当某台登录服当机 后，DNS服务器不能立即做出反应的问题。当然，如果找不到这样的解决方案，自己从头打造一个也并不难。而且，通过DNS来实现的负载均衡已经包含了所做 的修改对登录服及客户端的透明。&lt;/p&gt;
+
+&lt;p&gt;而对于数据库的应用，在这种结构下，登录服及游戏世界服都会需要连接数据库。从数据库服务器的部署上来说，可以将帐号和角色数据都放在一个中心数据库中，也可分为两个不同的库分别来处理，基到从物理上分到两台不同的服务器上去也行。&lt;/p&gt;
+
+&lt;p&gt;但是对于不同的游戏世界来说，其角色及游戏内数据都是互相独立的，所以一般情况下也就为每个游戏世界单独配备一台数据库服务器，以减轻数据库的压力。所 以，整体的服务器结构应该是一个大区有一台帐号数据库服务器，所有的登录服都连接到这里。而每个游戏世界都有自己的游戏数据库服务器，只允许本游戏世界内 的服务器连接。&lt;/p&gt;
+
+&lt;p&gt;最后，我们的服务器结构就像这样：&lt;/p&gt;
+
+&lt;p&gt;大区服务器
+/   　 |&lt;br&gt;
+/       |       　
+登录服1   登录服2   世界服1   世界服2
+     　   |       　 |     　 |
+   　   |       　 |         |
+帐号数据库         DBS     DBS&lt;/p&gt;
+
+&lt;p&gt;这里既然讨论到了大区及帐号数据库，所以顺带也说一下关于激活大区的概念。wow中一共有八个大区，我们想要进入某个大区游戏之前，必须到官网上激活这个区，这是为什么呢？&lt;/p&gt;
+
+&lt;p&gt;一般来说，在各个大区帐号数据库之上还有一个总的帐号数据库，我们可以称它为中心数据库。比如我们在官网上注册了一个帐号，这时帐号数据是只保存在中心 数据库上的。而当我们要到一区去创建角色开始游戏的时候，在一区的帐号数据库中并没有我们的帐号数据，所以，我们必须先到官网上做一次激活操作。这个激活 的过程也就是从中心库上把我们的帐号数据拷贝到所要到的大区帐号数据库中。&lt;/p&gt;
+
+&lt;p&gt;服务器结构探讨 -- 简单的世界服实现&lt;/p&gt;
+
+&lt;p&gt;讨论了这么久我们一直都还没有进入游戏世界服务器内部，现在就让我们来窥探一下里面的结构吧。&lt;/p&gt;
+
+&lt;p&gt;对于现在大多数MMORPG来说，游戏服务器要处理的基本逻辑有移动、聊天、技能、物品、任务和生物等，另外还有地图管理与消息广播来对其他高级功能做支撑。如纵队、好友、公会、战场和副本等，这些都是通过基本逻辑功能组合或扩展而成。&lt;/p&gt;
+
+&lt;p&gt;在所有这些基础逻辑中，与我们要讨论的服务器结构关系最紧密的当属地图管理方式。决定了地图的管理方式也就决定了我们的服务器结构，我们仍然先从最简单的实现方式开始说起。&lt;/p&gt;
+
+&lt;p&gt;回想一下我们曾战斗过无数个夜晚的暗黑破坏神，整个暗黑的世界被分为了若干个独立的小地图，当我们在地图间穿越时，一般都要经过一个叫做传送门的装置。 世界中有些地图间虽然在地理上是直接相连的，但我们发现其游戏内部的逻辑却是完全隔离的。可以这样认为，一块地图就是一个独立的数据处理单元。&lt;/p&gt;
+
+&lt;p&gt;既然如此，我们就把每块地图都当作是一台独立的服务器，他提供了在这块地图上游戏时的所有逻辑功能，至于内部结构如何划分我们暂不理会，先把他当作一个黑盒子吧。&lt;/p&gt;
+
+&lt;p&gt;当两个人合作做一件事时，我们可以以对等的关系相互协商着来做，而且一般也都不会有什么问题。当人数增加到三个时，我们对等的合作关系可能会有些复杂， 因为我们每个人都同时要与另两个人合作协商。正如俗语所说的那样，三个和尚可能会碰到没水喝的情况。当人数继续增加，情况就变得不那么简单了，我们得需要 一个管理者来对我们的工作进行分工、协调。游戏的地图服务器之间也是这么回事。&lt;/p&gt;
+
+&lt;p&gt;一般来说，我们的游戏世界不可能会只有一块或者两块小地图，那顺理成章的，也就需要一个地图管理者。先称它为游戏世界的中心服务器吧，毕竟是管理者嘛，大家都以它为中心。&lt;/p&gt;
+
+&lt;p&gt;中心服务器主要维护一张地图ID到地图服务器地址的映射表。当我们要进入某张地图时，会从中心服上取得该地图的IP和port告诉客户端，客户端主动去 连接，这样进入他想要去的游戏地图。在整个游戏过程中，客户端始终只会与一台地图服务器保持连接，当要切换地图的时候，在获取到新地图的地址后，会先与当 前地图断开连接，再进入新的地图，这样保证玩家数据在服务器上只有一份。&lt;/p&gt;
+
+&lt;p&gt;我们来看看结构图是怎样的：&lt;/p&gt;
+
+&lt;p&gt;中心服务器
+/&lt;br&gt;
+/&lt;br&gt;
+登录服     地图1     地图2   地图n
+         |         /       /
+       |         /       /
+客户端&lt;/p&gt;
+
+&lt;p&gt;很简单，不是吗。但是简单并不表示功能上会有什么损失，简单也更不能表示游戏不能赚钱。早期不少游戏也确实采用的就是这种简单结构。&lt;/p&gt;
+
+&lt;p&gt;服务器结构探讨 -- 继续世界服&lt;/p&gt;
+
+&lt;p&gt;都已经看出来了，这种每切换一次地图就要重新连接服务器的方式实在是不够优雅，而且在实际游戏运营中也发现，地图切换导致的卡号，复制装备等问题非常多，这里完全就是一个事故多发地段，如何避免这种频繁的连接操作呢？&lt;/p&gt;
+
+&lt;p&gt;最直接的方法就是把那个图倒转过来就行了。客户端只需要连接到中心服上，所有到地图服务器的数据都由中心服来转发。很完美的解决方案，不是吗？&lt;/p&gt;
+
+&lt;p&gt;这种结构在实际的部署中也遇到了一些挑战。对于一般的MMORPG服务器来说，单台服务器的承载量平均在2000左右，如果你的服务器很不幸地只能带 1000人，没关系，不少游戏都是如此；如果你的服务器上跑了3000多玩家依然比较流畅，那你可以自豪地告诉你的策划，多设计些大量消耗服务器资源的玩 法吧，比如大型国战、公会战争等。&lt;/p&gt;
+
+&lt;p&gt;2000人，似乎我们的策划朋友们不大愿意接受这个数字。我们将地图服务器分开来原来也是想将负载分开，以多带些客户端，现在要所有的连接都从中心服上转发，那连接数又遇到单台服务器的可最大承载量的瓶颈了。&lt;/p&gt;
+
+&lt;p&gt;这里有必要再解释下这个数字。我知道，有人一定会说，才带2000人，那是你水平不行，我随便写个TCP服务器都可带个五六千连接。问题恰恰在于你是随 便写的，而MMORPG的服务器是复杂设计的。如果一个演示socket API用的echo服务器就能满足MMOG服务器的需求，那写服务器该是件多么惬意的事啊。&lt;/p&gt;
+
+&lt;p&gt;但我们所遇到的事实是，服务器收到一个移动包后，要向周围所有人广播，而不是echo服务器那样简单的回应；服务器在收到一个连接断开通知时要向很多人 通知玩家退出事件，并将该玩家的资料写入数据库，而不是echo服务器那样什么都不需要做；服务器在收到一个物品使用请求包后要做一系列的逻辑判断以检查 玩家有没有作弊；服务器上还启动着很多定时器用来更新游戏世界的各种状态......&lt;/p&gt;
+
+&lt;p&gt;其实这么一比较，我们也看出资源消耗的所在了：服务器上大量的复杂的逻辑处理。再回过头来看看我们想要实现的结构，我们既想要有一个唯一的入口，使得客户端不用频繁改变连接，又希望这个唯一入口的负载不会太大，以致于接受不了多少连接。&lt;/p&gt;
+
+&lt;p&gt;仔细看一看这个需求，我们想要的仅仅只是一台管理连接的服务器，并不打算让他承担太多的游戏逻辑。既然如此，那五六千个连接也还有满足我们的要求。至少 在现在来说，一个游戏世界内，也就是一组服务器内同时有五六千个在线的玩家还是件让人很兴奋的事。事实上，在大多数游戏的大部分时间里，这个数字也是很让 人眼红的。&lt;/p&gt;
+
+&lt;p&gt;什么？你说梦幻、魔兽还有史先生的那个什么征途远不止这么点人了！噢，我说的是大多数，是大多数，不包括那些明星。你知道大陆现在有多少游戏在运营吗？或许你又该说，我们不该在一开始就把自己的目标定的太低！好吧，我们还是先不谈这个。&lt;/p&gt;
+
+&lt;p&gt;继续我们的结构讨论。一般来说，我们把这台负责连接管理的服务器称为网关服务器，因为内部的数据都要通过这个网关才能出去，不过从这台服务器提供的功能来看，称其为反向代理服务器可能更合适。我们也不在这个名字上纠缠了，就按大家通用的叫法，还是称他为网关服务器吧。&lt;/p&gt;
+
+&lt;p&gt;网关之后的结构我们依然可以采用之前描述的方案，只是，似乎并没有必要为每一个地图都开一个独立的监听端口了。我们可以试着对地图进行一些划分，由一个 Master Server来管理一些更小的Zone Server，玩家通过网关连接到Master Server上，而实际与地图有关的逻辑是分派给更小的Zone Server去处理。&lt;/p&gt;
+
+&lt;p&gt;最后的结构看起来大概是这样的：&lt;/p&gt;
+
+&lt;p&gt;Zone Server         Zone Server
+             /
+           /
+Master Server           Master Server
+/                          /
+/                          /
+Gateway Server                        /
+|                               /
+|                             /
+|               Center Server
+|
+|
+Client&lt;/p&gt;
+
+&lt;p&gt;服务器结构探讨 -- 最终的结构&lt;/p&gt;
+
+&lt;p&gt;如果我们就此打住，可能马上就会有人要嗤之以鼻了，就这点古董级的技术也敢出来现。好吧，我们还是把之前留下的问题拿出来解决掉吧。&lt;/p&gt;
+
+&lt;p&gt;一般来说，当某一部分能力达不到我们的要求时，最简单的解决方法就是在此多投入一点资源。既然想要更多的连接数，那就再加一台网关服务器吧。新增加了网 关服后需要在大区服上做相应的支持，或者再简单点，有一台主要的网关服，当其负载较高时，主动将新到达的连接重定向到其他网关服上。&lt;/p&gt;
+
+&lt;p&gt;而对于游戏服来说，有一台还是多台网关服是没有什么区别的。每个代表客户端玩家的对象内部都保留一个代表其连接的对象，消息广播时要求每个玩家对象使用 自己的连接对象发送数据即可，至于连接是在什么地方，那是完全透明的。当然，这只是一种简单的实现，也是普通使用的一种方案，如果后期想对消息广播做一些 优化的话，那可能才需要多考虑一下。&lt;/p&gt;
+
+&lt;p&gt;既然说到了优化，我们也稍稍考虑一下现在结构下可能采用的优化方案。&lt;/p&gt;
+
+&lt;p&gt;首先是当前的Zone Server要做的事情太多了，以至于他都处理不了多少连接。这其中最消耗系统资源的当属生物的AI处理了，尤其是那些复杂的寻路算法，所以我们可以考虑把这部分AI逻辑独立出来，由一台单独的AI服务器来承担。&lt;/p&gt;
+
+&lt;p&gt;然后，我们可以试着把一些与地图数据无关的公共逻辑放到Master Server上去实现，这样Zone Server上只保留了与地图数据紧密相关的逻辑，如生物管理，玩家移动和状态更新等。&lt;/p&gt;
+
+&lt;p&gt;还有聊天处理逻辑，这部分与游戏逻辑没有任何关联，我们也完全可以将其独立出来，放到一台单独的聊天服务器上去实现。&lt;/p&gt;
+
+&lt;p&gt;最后是数据库了，为了减轻数据库的压力，提高数据请求的响应速度，我们可以在数据库之前建立一个数据库缓存服务器，将一些常用数据缓存在此，服务器与数据库的通信都要通过这台服务器进行代理。缓存的数据会定时的写入到后台数据库中。&lt;/p&gt;
+
+&lt;p&gt;好了，做完这些优化我们的服务器结构大体也就定的差不多了，暂且也不再继续深入，更细化的内容等到各个部分实现的时候再探讨。&lt;/p&gt;
+
+&lt;p&gt;好比我们去看一场晚会，舞台上演员们按着预定的节目单有序地上演着，但这就是整场晚会的全部吗？显然不止，在幕后还有太多太多的人在忙碌着，甚至在晚会前和晚会后都有。我们的游戏服务器也如此。&lt;/p&gt;
+
+&lt;p&gt;在之前描述的部分就如同舞台上的演员，是我们能直接看到的，幕后的工作人员我们也来认识一下。&lt;/p&gt;
+
+&lt;p&gt;现实中有警察来维护秩序，游戏中也如此，这就是我们常说的GM。GM可以采用跟普通玩家一样的拉入方式来进入游戏，当然权限会比普通玩家高一些，也可以提供一台GM服务器专门用来处理GM命令，这样可以有更高的安全性，GM服一般接在中心服务器上。&lt;/p&gt;
+
+&lt;p&gt;在以时间收费的游戏中，我们还需要一台计费的服务器，这台服务器一般接在网关服务器上，注册玩家登录和退出事件以记录玩家的游戏时间。&lt;/p&gt;
+
+&lt;p&gt;任何为用户提供服务的地方都会有日志记录，游戏服务器当然也不例外。从记录玩家登录的时间，地址，机器信息到游戏过程中的每一项操作都可以作为日志记录下来，以备查错及数据挖掘用。至于搜集玩家机器资料所涉及到的法律问题不是我们该考虑的。&lt;/p&gt;
+
+&lt;p&gt;差不多就这么多了吧，接下来我们会按照这个大致的结构来详细讨论各部分的实现。&lt;/p&gt;
+
+&lt;p&gt;服务器结构探讨 -- 一点杂谈&lt;/p&gt;
+
+&lt;p&gt;再强调一下，服务器结构本无所谓好坏，只有是否适合自己。我们在前面探讨了一些在现在的游戏中见到过的结构，并尽我所知地分析了各自存在的一些问题和可以做的一些改进，希望其中没有谬误，如果能给大家也带来些启发那自然更好。&lt;/p&gt;
+
+&lt;p&gt;突然发现自己一旦罗嗦起来还真是没完没了。接下来先说说我在开发中遇到过的一些困惑和一基础问题探讨吧，这些问题可能有人与我一样，也曾遇到过，或者正在被困扰中，而所要探讨的这些基础问题向来也是争论比较多的，我们也不评价其中的好与坏，只做简单的描述。&lt;/p&gt;
+
+&lt;p&gt;首先是服务器操作系统，linux与windows之争随处可见，其实在大多数情况下这不是我们所能决定的，似乎各大公司也基本都有了自己的传统，如网易的freebsd，腾讯的linux等。如果真有权利去选择的话，选自己最熟悉的吧。&lt;/p&gt;
+
+&lt;p&gt;决定了OS也就基本上确定了网络IO模型，windows上的IOCP和linux下的epool，或者直接使用现有的网络框架，如ACE和asio等，其他还有些商业的网络库在国内的使用好像没有见到，不符合中国国情嘛。:)&lt;/p&gt;
+
+&lt;p&gt;然后是网络协议的选择，以前的选择大多倾向于UDP，为了可靠传输一般自己都会在上面实现一层封装，而现在更普通的是直接采用本身就很可靠的TCP，或 者TCP与UDP的混用。早期选择UDP的主要原因还是带宽限制，现在宽带普通的情况下TCP比UDP多出来的一点点开销与开发的便利性相比已经不算什么 了。当然，如果已有了成熟的可靠UDP库，那也可以继续使用着。&lt;/p&gt;
+
+&lt;p&gt;还有消息包格式的定义，这个曾在云风的blog上展开过激烈的争论。消息包格式定义包括三段，包长、消息码和包体，争论的焦点在于应该是消息码在前还是包长在前，我们也把这个当作是信仰问题吧，有兴趣的去云风的blog上看看，论论。&lt;/p&gt;
+
+&lt;p&gt;另外早期有些游戏的包格式定义是以特殊字符作分隔的，这样一个好处是其中某个包出现错误后我们的游戏还能继续。但实际上，我觉得这是完全没有必要的，真 要出现这样的错误，直接断开这个客户端的连接可能更安全。而且，以特殊字符做分隔的消息包定义还加大了一点点网络数据量。&lt;/p&gt;
+
+&lt;p&gt;最后是一个纯技术问题，有关socket连接数的最大限制。开始学习网络编程的时候我犯过这样的错误，以为port的定义为unsigned short，所以想当然的认为服务器的最大连接数为65535，这会是一个硬性的限制。而实际上，一个socket描述符在windows上的定义是 unsigned int，因此要有限制那也是四十多亿，放心好了。&lt;/p&gt;
+
+&lt;p&gt;在服务器上port是监听用的，想象这样一种情况，web server在80端口上监听，当一个连接到来时，系统会为这个连接分配一个socket句柄，同时与其在80端口上进行通讯；当另一个连接到来时，服务 器仍然在80端口与之通信，只是分配的socket句柄不一样。这个socket句柄才是描述每个连接的唯一标识。按windows网络编程第二版上的说 法，这个上限值配置影响。&lt;/p&gt;
+
+&lt;p&gt;好了，废话说完了，下一篇，我们开始进入登录服的设计吧。&lt;/p&gt;
+
+&lt;p&gt;登录服的设计 -- 功能需求&lt;/p&gt;
+
+&lt;p&gt;正如我们在前面曾讨论过的，登录服要实现的功能相当简单，就是帐号验证。为了便于描述，我们暂不引入那些讨论过的优化手段，先以最简单的方式实现，另外也将基本以mangos的代码作为参考来进行描述。&lt;/p&gt;
+
+&lt;p&gt;想象一下帐号验证的实现方法，最容易的那就是把用户输入的明文用帐号和密码直接发给登录服，服务器根据帐号从数据库中取出密码，与用户输入的密码相比较。&lt;/p&gt;
+
+&lt;p&gt;这个方法存在的安全隐患实在太大，明文的密码传输太容易被截获了。那我们试着在传输之前先加一下密，为了服务器能进行密码比较，我们应该采用一个可逆的 加密算法，在服务器端把这个加密后的字串还原为原始的明文密码，然后与数据库密码进行比较。既然是一个可逆的过程，那外挂制作者总有办法知道我们的加密过 程，所以，这个方法仍不够安全。&lt;/p&gt;
+
+&lt;p&gt;哦，如果我们只 是希望密码不可能被还原出来，那还不容易吗，使用一个不可逆的散列算法就行了。用户在登录时发送给服务器的是明文的帐号和经散列后的不可逆密码串，服务器 取出密码后也用同样的算法进行散列后再进行比较。比如，我们就用使用最广泛的md5算法吧。噢，不要管那个王小云的什么论文，如果我真有那么好的运气，早 中500w了，还用在这考虑该死的服务器设计吗？&lt;/p&gt;
+
+&lt;p&gt;似乎是一个很完美的方案，外挂制作者再也偷不到我们的密码了。慢着，外挂偷密码的目的是什么？是为了能用我们的帐号进游戏！如果我们总是用一种固定的算法来对密码做散列，那外挂只需要记住这个散列后的字串就行了，用这个做密码就可以成功登录。&lt;/p&gt;
+
+&lt;p&gt;嗯，这个问题好解决，我们不要用固定的算法进行散列就是了。只是，问题在于服务器与客户端采用的散列算法得出的字串必须是相同的，或者是可验证其是否匹 配的。很幸运的是，伟大的数学字们早就为我们准备好了很多优秀的这类算法，而且经理论和实践都证明他们也确实是足够安全的。&lt;/p&gt;
+
+&lt;p&gt;这其中之一是一个叫做SRP的算法，全称叫做Secure Remote Password，即安全远程密码。wow使用的是第6版，也就是SRP6算法。有关其中的数学证明，如果有人能向我解释清楚，并能让我真正弄明白的话， 我将非常感激。不过其代码实现步骤倒是并不复杂，mangos中的代码也还算清晰，我们也不再赘述。&lt;/p&gt;
+
+&lt;p&gt;登录服除了帐号验证外还得提供另一项功能，就是在玩家的帐号验证成功后返回给他一个服务器列表让他去选择。这个列表的状态要定时刷新，可能有新的游戏世 界开放了，也可能有些游戏世界非常不幸地停止运转了，这些状态的变化都要尽可能及时地让玩家知道。不管发生了什么事，用户都有权利知道，特别是对于付过费 的用户来说，我们不该藏着掖着，不是吗？&lt;/p&gt;
+
+&lt;p&gt;这个游戏世界列表的功能将由大区服来提供，具体的结构我们在之前也描述过，这里暂不做讨论。登录服将从大区服上获取到的游戏世界列表发给已验证通过的客户端即可。好了，登录服要实现的功能就这些，很简单，是吧。&lt;/p&gt;
+
+&lt;p&gt;确实是太简单了，不过简单的结构正好更适合我们来看一看游戏服务器内部的模块结构，以及一些服务器共有组件的实现方法。这就留作下一篇吧。&lt;/p&gt;
+
+&lt;p&gt;服务器公共组件实现 -- mangos的游戏主循环&lt;/p&gt;
+
+&lt;p&gt;当阅读一项工程的源码时，我们大概会选择从main函数开始，而当开始一项新的工程时，第一个写下的函数大多也是main。那我们就先来看看，游戏服务器代码实现中，main函数都做了些什么。&lt;/p&gt;
+
+&lt;p&gt;由于我在读技术文章时最不喜看到的就是大段大段的代码，特别是那些直接Ctrl+C再Ctrl+V后未做任何修改的代码，用句时髦的话说，一点技术含量 都没有！所以在我们今后所要讨论的内容中，尽量会避免出现直接的代码，在有些地方确实需要代码来表述时，也将会选择使用伪码。&lt;/p&gt;
+
+&lt;p&gt;先从mangos的登录服代码开始。mangos的登录服是一个单线程的结构，虽然在数据库连接中可以开启一个独立的线程，但这个线程也只是对无返回结果的执行类SQL做缓冲，而对需要有返回结果的查询类SQL还是在主逻辑线程中阻塞调用的。&lt;/p&gt;
+
+&lt;p&gt;登录服中唯一的这一个线程，也就是主循环线程对监听的socket做select操作，为每个连接进来的客户端读取其上的数据并立即进行处理，直到服务器收到SIGABRT或SIGBREAK信号时结束。&lt;/p&gt;
+
+&lt;p&gt;所以，mangos登录服主循环的逻辑，也包括后面游戏服的逻辑，主循环的关键代码其实是在SocketHandler中，也就是那个Select函数 中。检查所有的连接，对新到来的连接调用OnAccept方法，有数据到来的连接则调用OnRead方法，然后socket处理器自己定义对接收到的数据 如何处理。&lt;/p&gt;
+
+&lt;p&gt;很简单的结构，也比较容易理解。&lt;/p&gt;
+
+&lt;p&gt;只是，在对性能要求比较高的服务器上，select一般不会是最好的选择。如果我们使用windows平台，那IOCP将是首选；如果是 linux，epool将是不二选择。我们也不打算讨论基于IOCP或是基于epool的服务器实现，如果仅仅只是要实现服务器功能，很简单的几个API 调用即可，而且网上已有很多好的教程；如果是要做一个成熟的网络服务器产品，不是我几篇简单的技术介绍文章所能达到。&lt;/p&gt;
+
+&lt;p&gt;另外，在服务器实现上，网络IO与逻辑处理一般会放在不同的线程中，以免耗时较长的IO过程阻塞住了需要立即反应的游戏逻辑。&lt;/p&gt;
+
+&lt;p&gt;数据库的处理也类似，会使用异步的方式，也是避免耗时的查询过程将游戏服务器主循环阻塞住。想象一下，因某个玩家上线而发起的一次数据库查询操作导致服务器内所有在线玩家都卡住不动将是多么恐怖的一件事！&lt;/p&gt;
+
+&lt;p&gt;另外还有一些如事件、脚本、消息队列、状态机、日志和异常处理等公共组件，我们也会在接下来的时间里进行探讨。&lt;/p&gt;
+
+&lt;p&gt;服务器公共组件实现 -- 继续来说主循环&lt;/p&gt;
+
+&lt;p&gt;前面我们只简单了解了下mangos登录服的程序结构，也发现了一些不足之处，现在我们就来看看如何提供一个更好的方案。&lt;/p&gt;
+
+&lt;p&gt;正如我们曾讨论过的，为了游戏主逻辑循环的流畅运行，所有比较耗时的IO操作都会分享到单独的线程中去做，如网络IO，数据库IO和日志IO等。当然，也有把这些分享到单独的进程中去做的。&lt;/p&gt;
+
+&lt;p&gt;另外对于大多数服务器程序来说，在运行时都是作为精灵进程或服务进程的，所以我们并不需要服务器能够处理控制台用户输入，我们所要处理的数据来源都来自网络。&lt;/p&gt;
+
+&lt;p&gt;这样，主逻辑循环所要做的就是不停要取消息包来处理，当然这些消息包不仅有来自客户端的玩家操作数据包，也有来自GM服务器的管理命令，还包括来自数据库查询线程的返回结果消息包。这个循环将一直持续，直到收到一个通知服务器关闭的消息包。&lt;/p&gt;
+
+&lt;p&gt;主逻辑循环的结构还是很简单的，复杂的部分都在如何处理这些消息包的逻辑上。我们可以用一段简单的伪码来描述这个循环过程：&lt;/p&gt;
+
+&lt;p&gt;while (Message* msg = getMessage())
+{
+if (msg为服务器关闭消息)
+break;
+处理msg消息;
+}&lt;/p&gt;
+
+&lt;p&gt;这里就有一个问题需要探讨了，在getMessage()的时候，我们应该去哪里取消息？前面我们考虑过，至少会有三个消息来源，而我们还讨论过，这些消息源的IO操作都是在独立的线程中进行的，我们这里的主线程不应该直接去那几处消息源进行阻塞式的IO操作。&lt;/p&gt;
+
+&lt;p&gt;很简单，让那些独立的IO线程在接收完数据后自己送过来就是了。好比是，我这里提供了一个仓库，有很多的供货商，他们有货要给我的时候只需要交到仓库， 然后我再到仓库去取就是了，这个仓库也就是消息队列。消息队列是一个普通的队列实现，当然必须要提供多线程互斥访问的安全性支持，其基本的接口定义大概类 似这样：&lt;/p&gt;
+
+&lt;p&gt;IMessageQueue
+{
+void putMessage(Message&lt;em&gt;);
+Message&lt;/em&gt; getMessage();
+}&lt;/p&gt;
+
+&lt;p&gt;网络IO，数据库IO线程把整理好的消息包都加入到主逻辑循环线程的这个消息队列中便返回。有关消息队列的实现和线程间消息的传递在ACE中有比较完全的代码实现及描述，还有一些使用示例，是个很好的参考。&lt;/p&gt;
+
+&lt;p&gt;这样的话，我们的主循环就很清晰了，从主线程的消息队列中取消息，处理消息，再取下一条消息......&lt;/p&gt;
+
+&lt;p&gt;服务器公共组件实现 -- 消息队列&lt;/p&gt;
+
+&lt;p&gt;既然说到了消息队列，那我们继续来稍微多聊一点吧。&lt;/p&gt;
+
+&lt;p&gt;我们所能想到的最简单的消息队列可能就是使用stl的list来实现了，即消息队列内部维护一个list和一个互斥锁，putMessage时将 message加入到队列尾，getMessage时从队列头取一个message返回，同时在getMessage和putMessage之前都要求先 获取锁资源。&lt;/p&gt;
+
+&lt;p&gt;实现虽然简单，但功能是绝对满足需求的，只是性能上可能稍稍有些不尽如人意。其最大的问题在频繁的锁竞争上。&lt;/p&gt;
+
+&lt;p&gt;对于如何减少锁竞争次数的优化方案，Ghost Cheng提出了一种。提供一个队列容器，里面有多个队列，每个队列都可固定存放一定数量的消息。网络IO线程要给逻辑线程投递消息时，会从队列容器中取 一个空队列来使用，直到将该队列填满后再放回容器中换另一个空队列。而逻辑线程取消息时是从队列容器中取一个有消息的队列来读取，处理完后清空队列再放回 到容器中。&lt;/p&gt;
+
+&lt;p&gt;这样便使得只有在对队列容器进行操作时才需要加锁，而IO线程和逻辑线程在操作自己当前使用的队列时都不需要加锁，所以锁竞争的机会大大减少了。&lt;/p&gt;
+
+&lt;p&gt;这里为每个队列设了个最大消息数，看来好像是打算只有当IO线程写满队列时才会将其放回到容器中换另一个队列。那这样有时也会出现IO线程未写满一个队 列，而逻辑线程又没有数据可处理的情况，特别是当数据量很少时可能会很容易出现。Ghost Cheng在他的描述中没有讲到如何解决这种问题，但我们可以先来看看另一个方案。&lt;/p&gt;
+
+&lt;p&gt;这个方案与上一个方案基本类似，只是不再提供队列容器，因为在这个方案中只使用了两个队列，arthur在他的一封邮件中描述了这个方案的实现及部分代 码。两个队列，一个给逻辑线程读，一个给IO线程用来写，当逻辑线程读完队列后会将自己的队列与IO线程的队列相调换。所以，这种方案下加锁的次数会比较 多一些，IO线程每次写队列时都要加锁，逻辑线程在调换队列时也需要加锁，但逻辑线程在读队列时是不需要加锁的。&lt;/p&gt;
+
+&lt;p&gt;虽然看起来锁的调用次数是比前一种方案要多很多，但实际上大部分锁调用都是不会引起阻塞的，只有在逻辑线程调换队列的那一瞬间可能会使得某个线程阻塞一下。另外对于锁调用过程本身来说，其开销是完全可以忽略的，我们所不能忍受的仅仅是因为锁调用而引起的阻塞而已。&lt;/p&gt;
+
+&lt;p&gt;两种方案都是很优秀的优化方案，但也都是有其适用范围的。Ghost Cheng的方案因为提供了多个队列，可以使得多个IO线程可以总工程师的，互不干扰的使用自己的队列，只是还有一个遗留问题我们还不了解其解决方法。 arthur的方案很好的解决了上一个方案遗留的问题，但因为只有一个写队列，所以当想要提供多个IO线程时，线程间互斥地写入数据可能会增大竞争的机 会，当然，如果只有一个IO线程那将是非常完美的&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Example content</title>
+   <link href="http://hyde.getpoole.com/2012/02/07/example-content/"/>
+   <updated>2012-02-07T00:00:00+08:00</updated>
+   <id>http://hyde.getpoole.com/2012/02/07/example-content</id>
+   <content type="html">&lt;div class=&quot;message&quot;&gt;
+  Howdy! This is an example blog post that shows several types of HTML content supported in this theme.
+&lt;/div&gt;
+
+&lt;p&gt;Cum sociis natoque penatibus et magnis &lt;a href=&quot;#&quot;&gt;dis parturient montes&lt;/a&gt;, nascetur ridiculus mus. &lt;em&gt;Aenean eu leo quam.&lt;/em&gt; Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Etiam porta &lt;strong&gt;sem malesuada magna&lt;/strong&gt; mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.&lt;/p&gt;
+
+&lt;h2&gt;Inline HTML elements&lt;/h2&gt;
+
+&lt;p&gt;HTML defines a long list of available inline tags, a complete list of which can be found on the &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/HTML/Element&quot;&gt;Mozilla Developer Network&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;To bold text&lt;/strong&gt;, use &lt;code&gt;&amp;lt;strong&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;To italicize text&lt;/em&gt;, use &lt;code&gt;&amp;lt;em&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Abbreviations, like &lt;abbr title=&quot;HyperText Markup Langage&quot;&gt;HTML&lt;/abbr&gt; should use &lt;code&gt;&amp;lt;abbr&amp;gt;&lt;/code&gt;, with an optional &lt;code&gt;title&lt;/code&gt; attribute for the full phrase.&lt;/li&gt;
+&lt;li&gt;Citations, like &lt;cite&gt;&amp;mdash; Mark otto&lt;/cite&gt;, should use &lt;code&gt;&amp;lt;cite&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;del&gt;Deleted&lt;/del&gt; text should use &lt;code&gt;&amp;lt;del&amp;gt;&lt;/code&gt; and &lt;ins&gt;inserted&lt;/ins&gt; text should use &lt;code&gt;&amp;lt;ins&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Superscript &lt;sup&gt;text&lt;/sup&gt; uses &lt;code&gt;&amp;lt;sup&amp;gt;&lt;/code&gt; and subscript &lt;sub&gt;text&lt;/sub&gt; uses &lt;code&gt;&amp;lt;sub&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Most of these elements are styled by browsers with few modifications on our part.&lt;/p&gt;
+
+&lt;h2&gt;Heading&lt;/h2&gt;
+
+&lt;p&gt;Vivamus sagittis lacus vel augue rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.&lt;/p&gt;
+
+&lt;h3&gt;Code&lt;/h3&gt;
+
+&lt;p&gt;Cum sociis natoque penatibus et magnis dis &lt;code&gt;code element&lt;/code&gt; montes, nascetur ridiculus mus.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Example can be run directly in your JavaScript console&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Create a function that takes two arguments and returns the sum of those arguments&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;a&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;b&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;return a + b&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Call the function&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// &amp;gt; 8&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.&lt;/p&gt;
+
+&lt;h3&gt;Gists via GitHub Pages&lt;/h3&gt;
+
+&lt;p&gt;Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui.&lt;/p&gt;
+
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5555251.js?file=gist.md&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sed odio dui. Vestibulum id ligula porta felis euismod semper.&lt;/p&gt;
+
+&lt;h3&gt;Lists&lt;/h3&gt;
+
+&lt;p&gt;Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Praesent commodo cursus magna, vel scelerisque nisl consectetur et.&lt;/li&gt;
+&lt;li&gt;Donec id elit non mi porta gravida at eget metus.&lt;/li&gt;
+&lt;li&gt;Nulla vitae elit libero, a pharetra augue.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Vestibulum id ligula porta felis euismod semper.&lt;/li&gt;
+&lt;li&gt;Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.&lt;/li&gt;
+&lt;li&gt;Maecenas sed diam eget risus varius blandit sit amet non magna.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.&lt;/p&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;HyperText Markup Language (HTML)&lt;/dt&gt;
+  &lt;dd&gt;The language used to describe and define the content of a Web page&lt;/dd&gt;
+
+  &lt;dt&gt;Cascading Style Sheets (CSS)&lt;/dt&gt;
+  &lt;dd&gt;Used to describe the appearance of Web content&lt;/dd&gt;
+
+  &lt;dt&gt;JavaScript (JS)&lt;/dt&gt;
+  &lt;dd&gt;The programming language used to build advanced Web sites and applications&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;p&gt;Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam quis risus eget urna mollis ornare vel eu leo.&lt;/p&gt;
+
+&lt;h3&gt;Images&lt;/h3&gt;
+
+&lt;p&gt;Quisque consequat sapien eget quam rhoncus, sit amet laoreet diam tempus. Aliquam aliquam metus erat, a pulvinar turpis suscipit at.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://placehold.it/800x400&quot; alt=&quot;placeholder&quot; title=&quot;Large example image&quot;&gt;
+&lt;img src=&quot;http://placehold.it/400x200&quot; alt=&quot;placeholder&quot; title=&quot;Medium example image&quot;&gt;
+&lt;img src=&quot;http://placehold.it/200x200&quot; alt=&quot;placeholder&quot; title=&quot;Small example image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;Tables&lt;/h3&gt;
+
+&lt;p&gt;Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Upvotes&lt;/th&gt;
+      &lt;th&gt;Downvotes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Totals&lt;/td&gt;
+      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;23&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Alice&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;11&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bob&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Charlie&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Nullam id dolor id nibh ultricies vehicula ut id elit. Sed posuere consectetur est at lobortis. Nullam quis risus eget urna mollis ornare vel eu leo.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Want to see something else added? &lt;a href=&quot;https://github.com/poole/poole/issues/new&quot;&gt;Open an issue.&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>What's Jekyll?</title>
+   <link href="http://hyde.getpoole.com/2012/02/06/whats-jekyll/"/>
+   <updated>2012-02-06T00:00:00+08:00</updated>
+   <id>http://hyde.getpoole.com/2012/02/06/whats-jekyll</id>
+   <content type="html">&lt;p&gt;&lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt; is a static site generator, an open-source tool for creating simple yet powerful websites of all shapes and sizes. From &lt;a href=&quot;https://github.com/mojombo/jekyll/blob/master/README.markdown&quot;&gt;the project&amp;#39;s readme&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Jekyll is a simple, blog aware, static site generator. It takes a template directory [...] and spits out a complete, static website suitable for serving with Apache or your favorite web server. This is also the engine behind GitHub Pages, which you can use to host your project’s page or blog right here from GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;It&amp;#39;s an immensely useful tool and one we encourage you to use here with Hyde.&lt;/p&gt;
+
+&lt;p&gt;Find out more by &lt;a href=&quot;https://github.com/mojombo/jekyll&quot;&gt;visiting the project on GitHub&lt;/a&gt;.&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>
