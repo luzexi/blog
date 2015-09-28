@@ -64,3 +64,6 @@ Unity3D中使用lua最近越来越火，我比较中意slua的思路与代码质
 5.make-windows-64.cmd 构建windows x64 dll。需要在windows下运行。
 
 这里说明一些构建时需要注意的事情。ios构建时需要注意脚本里的xcode地址。如果你不是xcode7.0。可能需要设置一下脚本里的路径。android的构建脚本也是一样，需要配置你机子上正确的ndk路径。windows下编译dll需要用的MingGw，我在源码中用git的submodule的方式安了一个，你需要运行一下submodule的更新命令git submodule update --init。MingGw很大300mb，你要做好心理准备，或者你直接去这个地址下载一个[https://github.com/luzexi/MinGW](https://github.com/luzexi/MinGW)
+
+
+转载注明出处 http://www.luzexi.com

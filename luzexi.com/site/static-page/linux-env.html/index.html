@@ -1,0 +1,431 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+<script type="text/javascript" src="outliner.js"></script><style type="text/css">
+			
+                        img.status {
+                        margin-left: 2px; margin-right: 2px; margin-top: 2px; height: 11px; width: 11px;
+                        }
+                        
+                        img.checkbox-column {
+                        height: 11px; width: 11px; vertical-align: top; margin-top: 3px;
+                        }
+                        
+                        img.leaf {
+                        margin-left: 3px; margin-right:3px; margin-top: 2px; margin-bottom: 3px; height: 6px; width 6px;
+                        }
+                        
+                        img.parent {
+                        margin-left: 3px; margin-right:3px; margin-top: 2px; height: 10px; width: 10px;
+                        }
+			
+			th {
+			vertical-align: bottom;
+			
+			}
+			
+			td {
+			vertical-align: top;
+			}
+			
+			td,th {
+			
+			empty-cells: show;
+			}
+			
+			.top-right-border {
+			
+			}
+			
+			.no-border {
+			border-bottom: 0px;
+			border-left: 0px;
+			}
+			
+			
+			
+			
+			table {
+			
+			font-family: Helvetica, sans-serif;
+			font-size: 12px;
+			font-family: "Hoefler Text", sans-serif;  font-size: 14px;			
+			
+			}
+
+			
+			
+			.wholeDocument {
+			font-family: "Hoefler Text", sans-serif;  font-size: 14px;background-color:rgb(244,238,225) ;  
+	
+			}
+		
+			
+			td.subcell {
+			border: none;
+			}
+			
+			td.content {
+			padding-left: 4px;
+			padding-bottom: 2px;
+			padding-top: 1px;
+			padding-right: 3px;
+			}
+			
+			.full {
+			height: 100%;
+			}
+			
+			.heighthack {
+                        
+                            height: 25px;
+                            
+			}
+			
+			div.titlepadding { 
+			padding-right:3px;
+			padding-left:6px;
+			padding-bottom:3px;
+			padding-top: 2px;
+			}
+			
+			
+					.summary_node {
+						background: rgba(0,0,0,.12);
+						margin-bottom: 1px;
+					}
+				
+			
+			div.column {   
+			padding-right: 3px;
+			padding-left: 4px;
+			padding-top: 0px;
+			padding-bottom: 0px;
+			margin-right: 1px;
+			}
+			
+			.labelpadding {
+			padding-right: 3px;
+			padding-top: 1px;
+			padding-left: 2px;
+			}
+			
+			.indicator {
+			white-space: nowrap;
+			text-align:right;
+			margin-right: 0px;
+			vertical-align: top;
+			padding-top: 1px;
+			padding-left: 0px;
+			}
+			
+			.wholedocgutter {
+			
+			}
+			
+			div.row {
+			}
+			
+			div.headerRow {
+			}
+			
+			.expanded {
+			display: inline;
+			}
+			.collapsed {
+			display: none;
+			}
+			
+            div.palette-hit-zone {
+                position: fixed;
+                bottom: 0px;
+				height: 33%;
+                left:50%;
+                width: 66%;
+                margin-left: -33%;
+            }
+
+			div.floating-palette {
+                -webkit-border-radius: 5px;
+                -webkit-transition: opacity is fade-in-out;
+                -webkit-transition-duration: 1s;
+				background-color: rgb(64, 64, 64);
+                opacity:0.7;
+				width: 88px;
+				height: 44px;
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                margin-left: -44px;
+			}
+            
+            div.palette-cell {
+                opacity:1;
+                margin-top: 6px;
+                margin-bottom: 6px;
+                position: absolute;
+                height: 32px;
+                width: 32px;
+            }
+            
+            div.cell-divider {
+                position: absolute;
+                margin-top: 6px;
+                margin-bottom: 6px;
+                margin-left: 44px;
+                height: 32px;
+                width:0px;
+                position:absolute;
+                left:0px;
+                border-right:rgb(207, 207, 207) 2px solid;
+            }
+			
+			
+			
+			
+			.note { 
+			padding-left: 5px;
+			padding-right: 3px; 
+			border: none; 
+			color:rgb(102,102,102) ;  font-style: italic;font-style: italic;
+			}
+			
+			/* Total table width is 1233
+			Adjusted table width is 1306 */
+			
+			.wholething {
+				width: auto;
+			}
+			
+			
+			table.row {
+				
+						width: 1233px;
+						
+			
+			}
+			
+			
+    .col_width1 { 
+        width: 1233px;  /* Actual width is 1233 */
+    }
+
+    .col1 { 
+        
+    }
+
+    .colbackground1 { 
+        
+    }
+
+			
+			/* Level Styles */
+			
+			
+    .columntitle { 
+        
+    }
+
+    .level1 { 
+        font-size: 28px;
+    }
+
+    .levelcolor1 { 
+        
+    }
+
+    .levelguttercolor1 { 
+        
+    }
+
+    .level2 { 
+        font-size: 20px;
+    }
+
+    .levelcolor2 { 
+        
+    }
+
+    .levelguttercolor2 { 
+        
+    }
+
+    .level3 { 
+        font-style: italic;font-weight: 600;  
+    }
+
+    .levelcolor3 { 
+        
+    }
+
+    .levelguttercolor3 { 
+        
+    }
+
+    .ns-Highlight:-Yellow { 
+        }
+
+    .ns-Highlight:-Red { 
+        }
+
+    .ns-Highlight:-Green { 
+        }
+
+    .ns-Purple { 
+        color:rgb(121,0,255) ;  }
+
+    .ns-Blue { 
+        color:rgb(0,119,255) ;  }
+
+    .ns-Bondi { 
+        color:rgb(19,189,190) ;  }
+
+    .ns-Green { 
+        color:rgb(71,192,0) ;  }
+
+    .ns-Yellow { 
+        color:rgb(203,148,0) ;  }
+
+    .ns-Orange { 
+        color:rgb(255,97,0) ;  }
+
+    .ns-Red { 
+        color:rgb(229,0,36) ;  }
+
+    .ns-Graphite { 
+        color:rgb(90,104,139) ;  }
+
+    .ns-bg-Highlight:-Yellow { 
+        background-color:rgba(255,187,0,0.25) ;  }
+
+    .ns-bg-Highlight:-Red { 
+        background-color:rgba(242,96,119,0.25) ;  }
+
+    .ns-bg-Highlight:-Green { 
+        background-color:rgba(103,187,53,0.25) ;  }
+
+    .ns-bg-Purple { 
+        }
+
+    .ns-bg-Blue { 
+        }
+
+    .ns-bg-Bondi { 
+        }
+
+    .ns-bg-Green { 
+        }
+
+    .ns-bg-Yellow { 
+        }
+
+    .ns-bg-Orange { 
+        }
+
+    .ns-bg-Red { 
+        }
+
+    .ns-bg-Graphite { 
+        }
+
+    .ns-gutter-Highlight:-Yellow { 
+        }
+
+    .ns-gutter-Highlight:-Red { 
+        }
+
+    .ns-gutter-Highlight:-Green { 
+        }
+
+    .ns-gutter-Purple { 
+        }
+
+    .ns-gutter-Blue { 
+        }
+
+    .ns-gutter-Bondi { 
+        }
+
+    .ns-gutter-Green { 
+        }
+
+    .ns-gutter-Yellow { 
+        }
+
+    .ns-gutter-Orange { 
+        }
+
+    .ns-gutter-Red { 
+        }
+
+    .ns-gutter-Graphite { 
+        }
+</style>
+</head>
+<body class="wholeDocument"><table cellspacing="0" cellpadding="0" class="top-right-border"><tr><td class="wholething no-border">
+<!--Column Titles--><table cellspacing="0" border="0" cellpadding="0" class="headerRow heighthack"><tr><td class=" col_width1"><div class="columntitle titlepadding">Topic<br>
+</div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor1"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level1 levelguttercolor1" style="width: 9px;"></td>
+<td class=" subcell wholedocgutter indicator level1 levelguttercolor1" style="width: 15px;"><img onmousedown="ioSwitch('poH_yt0FVDuw', event.shiftKey)" id="ioH_yt0FVDuw" border="0" alt="V" class="parent" src="Expanded.png" title="collapse"></td>
+<td class=" subcell wholedocgutter labelpadding level1 levelguttercolor1" style=" width: 1px; font-size: 14px;"></td>
+<td class=" content level1 subcell" style="font-size: 14px;">
+<span class="" style='color:rgb(38,38,38) ;  font-family: "Microsoft YaHei", sans-serif;  font-size: 16px;background-color:rgba(0,0,0,0) ;  '>linux环境变量简介</span><br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="poH_yt0FVDuw" class="expanded">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2" style="width: 15px;"><img onmousedown="ioSwitch('pmdMrNcFUS1s', event.shiftKey)" id="imdMrNcFUS1s" border="0" alt="V" class="parent" src="Expanded.png" title="collapse"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2" style=" width: 1px; "></td>
+<td class=" content level2 subcell">按变量的生存周期来划分，Linux变量可分为两类，它们的修改方法如下：<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="pmdMrNcFUS1s" class="expanded">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img onmousedown="ioSwitch('poL9HlkAiv7o', event.shiftKey)" id="ioL9HlkAiv7o" border="0" alt="V" class="parent" src="Expanded.png" title="collapse"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">永久的：需要修改配置文件，变量永久生效。<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="poL9HlkAiv7o" class="expanded"><table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor4 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level4 levelguttercolor4 ns-Blue ns-gutter-Blue" style="width: 57px;"></td>
+<td class=" subcell wholedocgutter indicator level4 levelguttercolor4 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level4 levelguttercolor4 ns-Blue ns-gutter-Blue" style=' width: 1px; color:rgb(0,119,255) ;  font-family: "FangSong", sans-serif;  '></td>
+<td class=" content level4 ns-Blue subcell" style='color:rgb(0,119,255) ;  font-family: "FangSong", sans-serif;  '>（1-1）/etc/profile：对所有用户生效；此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行；并从/etc/profile.d目录的配置文件中搜集shell的设置<br>    例如：编辑/etc/profile文件，添加CLASSPATH变量<br>    # vi /etc/profile<br>    添加一行：<br>export CLASSPATH=./JAVA_HOME/lib;$JAVA_HOME/jre/lib<br>修改后需要执行重新登录才能生效，也可以执行命令source /etc/profile来生效<br><br>（1-2）/etc/bashrc：对所有用户生效；为每一个运行bash shell的用户执行此文件.当bash shell被打开时,该文件被读取<br>    编辑方法如上，不再赘述<br><br>（1-3）~/.bash_profile：仅会对当前用户有效；每个用户都可使用该文件输入专用于自己使用的shell信息,当用户登录时,该文件仅仅执行一次<br>    例如：编辑guok用户目录(/home/guok)下的.bash_profile<br>    $ vi /home/guok/.bash.profile<br>    添加如下内容：<br>    export CLASSPATH=./JAVA_HOME/lib;$JAVA_HOME/jre/lib<br>修改后需要执行重新登录才能生效，也可以执行命令source /etc/profile来生效<br><br>（1-4）~/.bashrc：仅会对当前用户有效；该文件包含专用于你的bash shell的bash信息,当登录时以及每次打开新的shell时,该该文件被读取<br>    编辑方法如上，不再赘述<br><br>    另外，~/.bashrc等中设定的变量(局部)只能继承/etc/profile中的变量,他们是"父子"关系<br><br>综述，对上述文件修改，添加你需要的变量，在启动一个shell（终端，terminal）时，你所定义的变量均会生效的。<br>
+</td>
+</tr></table></div></td></tr></table></div>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img onmousedown="ioSwitch('pifO7G5rRKkG', event.shiftKey)" id="iifO7G5rRKkG" border="0" alt="V" class="parent" src="Expanded.png" title="collapse"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">临时的：使用export命令声明即可，变量只在当前的shell(BASH)或其子shell(BASH)下是有效的,在关闭shell后失效，再打开新shell时就没有这个变量，需要使用的话还需要重新定义<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="pifO7G5rRKkG" class="expanded"><table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor4"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level4 levelguttercolor4" style="width: 57px;"></td>
+<td class=" subcell wholedocgutter indicator level4 levelguttercolor4" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level4 levelguttercolor4" style=' width: 1px; font-family: "FangSong", sans-serif;  '></td>
+<td class=" content level4 subcell" style='font-family: "FangSong", sans-serif;  '>
+<span class=" ns-Blue ns-bg-Blue" style="color:rgb(0,119,255) ;  ">在shell的命令行下直接使用[export 变量名=变量值] 定义变量</span><br>
+</td>
+</tr></table></div></td></tr></table></div>
+</div>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=' width: 1px; color:rgb(0,119,255) ;  font-family: "FangSong", sans-serif;  font-size: 14px;'></td>
+<td class=" content level2 ns-Blue subcell" style='color:rgb(0,119,255) ;  font-family: "FangSong", sans-serif;  font-size: 14px;'>环境变量的查看<br>（1）使用echo命令查看单个环境变量。例如：<br>echo $PATH<br>（2）使用env查看所有环境变量。例如：<br>env<br>（3）使用set查看所有本地定义的环境变量。例如：<br>set<br>另外，unset可以删除指定的环境变量。<br><br>常用的环境变量<br>PATH 决定了shell将到哪些目录中寻找命令或程序<br>HOME 当前用户主目录<br>HISTSIZE　历史记录数<br>LOGNAME 当前用户的登录名<br>HOSTNAME　指主机的名称<br>SHELL 当前用户Shell类型<br>LANGUGE 　语言相关的环境变量，多语言可以修改此环境变量<br>MAIL　当前用户的邮件存放目录<br>PS1　基本提示符，对于root用户是#，对于普通用户是$<br>
+</td>
+</tr></table></div></td></tr></table>
+</div>
+</td></tr></table>
+</body>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff3d58556a7396e715b3602ef6754cd91' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</html>

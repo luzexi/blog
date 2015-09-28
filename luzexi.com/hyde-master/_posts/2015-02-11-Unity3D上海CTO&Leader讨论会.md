@@ -45,6 +45,6 @@ tags:
 *unity5升级为64位，编辑器可使用更多内存。
 
 8.最后他们提供说一个真机性能测试的服务，可以提供60页的性能测试报表，其实我觉得没什么用。性能卡点自己找起来比较准确点。
-<p class="p1"><a href="http://www.luzexi.com/wp-content/uploads/2015/02/IMG_0972.jpg"><img class="alignnone size-full wp-image-487" src="http://www.luzexi.com/wp-content/uploads/2015/02/IMG_0972.jpg" alt="IMG_0972" width="1763" height="885" /></a>
-<p class="p1">
+<img class="alignnone size-full wp-image-487" src="/assets/uploads/2015/02/IMG_0972.jpg" alt="IMG_0972" width="1763" height="885" />
 
+转载注明出处 http://www.luzexi.com

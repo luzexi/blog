@@ -11,7 +11,7 @@
 
   <title>
     
-      游戏物品系统通用架构 &middot; Hyde
+      游戏物品系统通用架构 &middot; 技术人生
     
   </title>
 
@@ -37,10 +37,10 @@
     <div class="sidebar-about">
       <h1>
         <a href="/">
-          Hyde
+          技术人生
         </a>
       </h1>
-      <p class="lead">A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+      <p class="lead">我将在这里写下我毕生所学---分享是我的一直以来坚持的事,不仅仅是为别人更是为了自己</p>
     </div>
 
     <nav class="sidebar-nav">
@@ -91,9 +91,9 @@
         
       
 
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde/archive/v2.1.0.zip">Download</a>
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde">GitHub project</a>
-      <span class="sidebar-nav-item">Currently v2.1.0</span>
+      <!-- <a class="sidebar-nav-item" href="https://github.com/luzexi/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
     <p>&copy; 2015. All rights reserved.</p>
@@ -127,157 +127,157 @@
 <p>我们能发现，其实物品的很多功能是可以用不同单个功能组合起来的，比如加血,比如加魔，比如加BUFF状态，把这些相同功能的Action都做成一个，然后把不同的Action做成一个集合是多么完美的事，既达到了数据持续化存储和更新能力，又可使得物品功能完全由策划人员自行配置，发挥他们的无限想象力。</p>
 
 <p>现在来看看实际中Action是如何编写的。把加血动作写成 类ActionAddHp，类中参数一个:HP，把加魔法动作写成 类ActionAddMP，类中参数一个：MP，这两个Action从数据表中读取相应的参数数据，变成众多Action实例里的一个，由ActionManager管理存储。到此回头看看，所有继承自Action类的扩展类拥有几个共同的属性：ID（唯一标识，用来区分所有Action），RunType（用来区分不同类型的Action），Read接口（用来读取数据），Excute接口（用来执行Action）。我在此之上加上一个Action类型，把所有Action拆分为条件类Action和执行类Action，条件类Action主要用来判断该物品的使用条件是否满足，执行类Action主要用来执行该动作的效果。因此Action基类就成了这样:</p>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>  
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>  
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>  
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>  
 
-<p>using System;<br>
-using System.Collections.Generic;<br>
-using System.Linq;<br>
-using System.Text;  </p>
+<span class="c1">//  CAction.cs  </span>
+<span class="c1">//  Author: Lu Zexi  </span>
+<span class="c1">//  2013-12-24    </span>
 
-<p>//  CAction.cs<br>
-//  Author: Lu Zexi<br>
-//  2013-12-24    </p>
+<span class="c1">//base action  </span>
+<span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">CAction</span> <span class="p">:</span> <span class="n">IAction</span>  
+<span class="p">{</span>  
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">m_iID</span><span class="p">;</span>  <span class="c1">//id  </span>
 
-<p>//base action<br>
-public abstract class CAction : IAction<br>
-{<br>
-    private int m_iID;  //id  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">// id (0-99999) , actionType(0-99) , runType(0-99)  
-public CAction(int id, int actionType, int runType)  
-{  
-    this.m_iID = actionType*10000000 + runType*100000 + id;  
-}  
+    <span class="c1">// id (0-99999) , actionType(0-99) , runType(0-99)  </span>
+    <span class="k">public</span> <span class="nf">CAction</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="kt">int</span> <span class="n">actionType</span><span class="p">,</span> <span class="kt">int</span> <span class="n">runType</span><span class="p">)</span>  
+    <span class="p">{</span>  
+        <span class="k">this</span><span class="p">.</span><span class="n">m_iID</span> <span class="p">=</span> <span class="n">actionType</span><span class="p">*</span><span class="m">10000000</span> <span class="p">+</span> <span class="n">runType</span><span class="p">*</span><span class="m">100000</span> <span class="p">+</span> <span class="n">id</span><span class="p">;</span>  
+    <span class="p">}</span>  
 
-public abstract ActionError Excute(ActionInput input);  
+    <span class="k">public</span> <span class="k">abstract</span> <span class="n">ActionError</span> <span class="nf">Excute</span><span class="p">(</span><span class="n">ActionInput</span> <span class="n">input</span><span class="p">);</span>  
 
-//roll back action  
-public virtual ActionError RollBack(ActionInput input)  
-{  
-    return ActionError.NoError;  
-}  
+    <span class="c1">//roll back action  </span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">ActionError</span> <span class="nf">RollBack</span><span class="p">(</span><span class="n">ActionInput</span> <span class="n">input</span><span class="p">)</span>  
+    <span class="p">{</span>  
+        <span class="k">return</span> <span class="n">ActionError</span><span class="p">.</span><span class="n">NoError</span><span class="p">;</span>  
+    <span class="p">}</span>  
 
-//get id  
-public int ID  
-{  
-    get  
-    {  
-        return this.m_iID;  
-    }  
-}  
+    <span class="c1">//get id  </span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">ID</span>  
+    <span class="p">{</span>  
+        <span class="k">get</span>  
+        <span class="p">{</span>  
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="n">m_iID</span><span class="p">;</span>  
+        <span class="p">}</span>  
+    <span class="p">}</span>  
+<span class="p">}</span>
 </code></pre></div>
-<p>}</p>
-
 <p>有人会问，那如何让物品对应好几个Action呢？我再引入一个Action事件类，把它定义为类EventAction，他里面存储着16个Action ID，前8个ActionID是条件型动作，后8个ActionID为执行型动作。物品的数据中就有一个EventAction的ID，由这个EventAction来判断该执行那些Action，是否满足物品执行条件。当EventAction执行时，首先执行前8个Action，看看是否满足物品执行条件，如果不满足，则不执行后8个效果，如果满足再去执行后8个Action效果。因此EventAction也有很多各实例，由ID来区分不同的EventAction，由EventActionManager来管理所有事件Action。EventAction类结构：</p>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>  
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>  
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>  
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>  
 
-<p>using System;<br>
-using System.Collections.Generic;<br>
-using System.Linq;<br>
-using System.Text;  </p>
 
-<p>//  EventAction.cs<br>
-//  Author: Lu zexi<br>
-//  2013-12-24  </p>
+<span class="c1">//  EventAction.cs  </span>
+<span class="c1">//  Author: Lu zexi  </span>
+<span class="c1">//  2013-12-24  </span>
 
-<p>/// <summary><br>
-/// Action event<br>
-/// </summary><br>
-public class EventAction<br>
-{<br>
-    private int m<em>iID; //ID<br>
-    private int[] m</em>vecActions; //Action ID list<br>
-    private int[] m_vecReqActions; //Require Action ID list  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">public EventAction()  
-{  
-    this.m_vecActions = new int[8];  
-    this.m_vecReqActions = new int[8];  
-}  
 
-// id (0-99999) , actionType(0-99) , runType(0-99)  
-public EventAction( int id , int eventType , int runType)  
-{  
-    this.m_iID = eventType * 10000000 + runType*100000 + id;  
-}  
 
-//get id  
-public int ID  
-{  
-    get  
-    {  
-        return this.m_iID;  
-    }  
-}  
+<span class="c1">/// &lt;summary&gt;  </span>
+<span class="c1">/// Action event  </span>
+<span class="c1">/// &lt;/summary&gt;  </span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">EventAction</span>  
+<span class="p">{</span>  
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">m_iID</span><span class="p">;</span> <span class="c1">//ID  </span>
+    <span class="k">private</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">m_vecActions</span><span class="p">;</span> <span class="c1">//Action ID list  </span>
+    <span class="k">private</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">m_vecReqActions</span><span class="p">;</span> <span class="c1">//Require Action ID list  </span>
 
-//set action  
-public void SetAction( int[] act )  
-{  
-    this.m_vecActions = act;  
-}  
+    <span class="k">public</span> <span class="nf">EventAction</span><span class="p">()</span>  
+    <span class="p">{</span>  
+        <span class="k">this</span><span class="p">.</span><span class="n">m_vecActions</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="m">8</span><span class="p">];</span>  
+        <span class="k">this</span><span class="p">.</span><span class="n">m_vecReqActions</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="m">8</span><span class="p">];</span>  
+    <span class="p">}</span>  
 
-//set require  
-public void SetRequire( int[] req )  
-{  
-    this.m_vecReqActions = req;  
-}  
+    <span class="c1">// id (0-99999) , actionType(0-99) , runType(0-99)  </span>
+    <span class="k">public</span> <span class="nf">EventAction</span><span class="p">(</span> <span class="kt">int</span> <span class="n">id</span> <span class="p">,</span> <span class="kt">int</span> <span class="n">eventType</span> <span class="p">,</span> <span class="kt">int</span> <span class="n">runType</span><span class="p">)</span>  
+    <span class="p">{</span>  
+        <span class="k">this</span><span class="p">.</span><span class="n">m_iID</span> <span class="p">=</span> <span class="n">eventType</span> <span class="p">*</span> <span class="m">10000000</span> <span class="p">+</span> <span class="n">runType</span><span class="p">*</span><span class="m">100000</span> <span class="p">+</span> <span class="n">id</span><span class="p">;</span>  
+    <span class="p">}</span>  
 
-//excute action  
-public ActionError Excute( ActionInput input  )  
-{  
-    for (int i = 0; i &lt; this.m_vecActions.Length; i++)  
-    {  
-        CAction action = ActionManager.sInstance.GetAction(this.m_vecActions[i]);  
-        if (action != null)  
-        {  
-            ActionError error = action.Excute(input);  
-            if ( error != null &amp;&amp; error.code != ACTION_ERROR_CODE.NONE)  
-                return error;  
-        }  
-    }  
-    return ActionError.NoError;  
-}  
+    <span class="c1">//get id  </span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">ID</span>  
+    <span class="p">{</span>  
+        <span class="k">get</span>  
+        <span class="p">{</span>  
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="n">m_iID</span><span class="p">;</span>  
+        <span class="p">}</span>  
+    <span class="p">}</span>  
 
-//action require  
-public ActionError Require( ActionInput input)  
-{  
-    for (int i = 0; i &lt; this.m_vecReqActions.Length; i++)  
-    {  
-        CAction action = ActionManager.sInstance.GetAction(this.m_vecReqActions[i]);  
-        if (action != null)  
-        {  
-            ActionError error = action.Excute(input);  
-            if ( error != null &amp;&amp; error.code != ACTION_ERROR_CODE.NONE)  
-                return error;  
-        }  
-    }  
-    return ActionError.NoError;  
-}  
+    <span class="c1">//set action  </span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">SetAction</span><span class="p">(</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">act</span> <span class="p">)</span>  
+    <span class="p">{</span>  
+        <span class="k">this</span><span class="p">.</span><span class="n">m_vecActions</span> <span class="p">=</span> <span class="n">act</span><span class="p">;</span>  
+    <span class="p">}</span>  
 
-//action roll back  
-public ActionError RollBack(ActionInput input)  
-{  
-    for (int i = 0; i &lt; this.m_vecActions.Length; i++)  
-    {  
-        CAction action = ActionManager.sInstance.GetAction(this.m_vecActions[i]);  
-        if (action != null)  
-        {  
-            ActionError error = action.RollBack(input);  
-            if (error != null &amp;&amp; error.code != ACTION_ERROR_CODE.NONE)  
-                return error;  
-        }  
-    }  
-    return ActionError.NoError;  
-}  
+    <span class="c1">//set require  </span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">SetRequire</span><span class="p">(</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">req</span> <span class="p">)</span>  
+    <span class="p">{</span>  
+        <span class="k">this</span><span class="p">.</span><span class="n">m_vecReqActions</span> <span class="p">=</span> <span class="n">req</span><span class="p">;</span>  
+    <span class="p">}</span>  
+
+    <span class="c1">//excute action  </span>
+    <span class="k">public</span> <span class="n">ActionError</span> <span class="nf">Excute</span><span class="p">(</span> <span class="n">ActionInput</span> <span class="n">input</span>  <span class="p">)</span>  
+    <span class="p">{</span>  
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="n">m_vecActions</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>  
+        <span class="p">{</span>  
+            <span class="n">CAction</span> <span class="n">action</span> <span class="p">=</span> <span class="n">ActionManager</span><span class="p">.</span><span class="n">sInstance</span><span class="p">.</span><span class="n">GetAction</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_vecActions</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>  
+            <span class="k">if</span> <span class="p">(</span><span class="n">action</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>  
+            <span class="p">{</span>  
+                <span class="n">ActionError</span> <span class="n">error</span> <span class="p">=</span> <span class="n">action</span><span class="p">.</span><span class="n">Excute</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>  
+                <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">error</span><span class="p">.</span><span class="n">code</span> <span class="p">!=</span> <span class="n">ACTION_ERROR_CODE</span><span class="p">.</span><span class="n">NONE</span><span class="p">)</span>  
+                    <span class="k">return</span> <span class="n">error</span><span class="p">;</span>  
+            <span class="p">}</span>  
+        <span class="p">}</span>  
+        <span class="k">return</span> <span class="n">ActionError</span><span class="p">.</span><span class="n">NoError</span><span class="p">;</span>  
+    <span class="p">}</span>  
+
+    <span class="c1">//action require  </span>
+    <span class="k">public</span> <span class="n">ActionError</span> <span class="nf">Require</span><span class="p">(</span> <span class="n">ActionInput</span> <span class="n">input</span><span class="p">)</span>  
+    <span class="p">{</span>  
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="n">m_vecReqActions</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>  
+        <span class="p">{</span>  
+            <span class="n">CAction</span> <span class="n">action</span> <span class="p">=</span> <span class="n">ActionManager</span><span class="p">.</span><span class="n">sInstance</span><span class="p">.</span><span class="n">GetAction</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_vecReqActions</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>  
+            <span class="k">if</span> <span class="p">(</span><span class="n">action</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>  
+            <span class="p">{</span>  
+                <span class="n">ActionError</span> <span class="n">error</span> <span class="p">=</span> <span class="n">action</span><span class="p">.</span><span class="n">Excute</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>  
+                <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">error</span><span class="p">.</span><span class="n">code</span> <span class="p">!=</span> <span class="n">ACTION_ERROR_CODE</span><span class="p">.</span><span class="n">NONE</span><span class="p">)</span>  
+                    <span class="k">return</span> <span class="n">error</span><span class="p">;</span>  
+            <span class="p">}</span>  
+        <span class="p">}</span>  
+        <span class="k">return</span> <span class="n">ActionError</span><span class="p">.</span><span class="n">NoError</span><span class="p">;</span>  
+    <span class="p">}</span>  
+
+    <span class="c1">//action roll back  </span>
+    <span class="k">public</span> <span class="n">ActionError</span> <span class="nf">RollBack</span><span class="p">(</span><span class="n">ActionInput</span> <span class="n">input</span><span class="p">)</span>  
+    <span class="p">{</span>  
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="n">m_vecActions</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>  
+        <span class="p">{</span>  
+            <span class="n">CAction</span> <span class="n">action</span> <span class="p">=</span> <span class="n">ActionManager</span><span class="p">.</span><span class="n">sInstance</span><span class="p">.</span><span class="n">GetAction</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_vecActions</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>  
+            <span class="k">if</span> <span class="p">(</span><span class="n">action</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>  
+            <span class="p">{</span>  
+                <span class="n">ActionError</span> <span class="n">error</span> <span class="p">=</span> <span class="n">action</span><span class="p">.</span><span class="n">RollBack</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>  
+                <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">error</span><span class="p">.</span><span class="n">code</span> <span class="p">!=</span> <span class="n">ACTION_ERROR_CODE</span><span class="p">.</span><span class="n">NONE</span><span class="p">)</span>  
+                    <span class="k">return</span> <span class="n">error</span><span class="p">;</span>  
+            <span class="p">}</span>  
+        <span class="p">}</span>  
+        <span class="k">return</span> <span class="n">ActionError</span><span class="p">.</span><span class="n">NoError</span><span class="p">;</span>  
+    <span class="p">}</span>  
+<span class="p">}</span>
 </code></pre></div>
-<p>}</p>
-
 <p>以上描述解决了物品中消耗品的问题，物品素材本身就是没有功能的消耗品，在这里我就不介绍了。而下面，我们来看看如何解决物品装备。
 装备物品在消耗品上多了几样关于英雄角色的属性，这些属性有的明，有的暗，那我们就把那些明的属性提取出来，例如加增攻击力，增加防御力。而那些暗的属性，再拆分两种，一种是直接写进明的配置表中而不显示在界面上，另一个是直接写进动作Action里，当需要时执行相应EventAction实例。</p>
-
-<p>最后，我们看看整个物品系统数据配置和系统源码。
-   物品类：名字，物品类型(消耗品，装备，素材)，描述，数量，最大叠加数量，使用等级,EventActionID,装备位置,攻击力，防御力，HP，MP
-   Action表: ID , 描述 , ActionType , RunType , 参数1，参数2...
-   EventAction表: ID,描述,
+<div class="highlight"><pre><code class="language-text" data-lang="text">最后，我们看看整个物品系统数据配置和系统源码。
+物品类：名字，物品类型(消耗品，装备，素材)，描述，数量，最大叠加数量，使用等级,EventActionID,装备位置,攻击力，防御力，HP，MP
+Action表: ID , 描述 , ActionType , RunType , 参数1，参数2...
+EventAction表: ID,描述,
 ReqActionID1,ReqActionID2,...ReqActionID8,
-ActionID9,ActionID10,...ActionID16.</p>
-
+ActionID9,ActionID10,...ActionID16.
+</code></pre></div>
 <p>源码：<a href="https://github.com/luzexi/Unity3DItemSystem">https://github.com/luzexi/Unity3DItemSystem</a></p>
 
 <p>测试案例：<a href="https://github.com/luzexi/Unity3DItemSystem-Test">https://github.com/luzexi/Unity3DItemSystem-Test</a></p>

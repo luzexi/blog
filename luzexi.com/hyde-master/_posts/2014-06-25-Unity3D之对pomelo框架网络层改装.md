@@ -36,14 +36,19 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 如何将线程通信后的游戏句柄调用部分放到u3d主线程中去：
 
 1.网络通信是由数据包为单位来驱动游戏逻辑句柄的，所以只要加入队列概念，在收到数据包时由原来的直接调用句柄，改为先推入到队列中，等待处理。
+
+``` c#
 #if LUZEXI
         private System.Object m_cLock = new System.Object();    //the lock object
         private const int PROCESS_NUM = 5;  //the process handle num per fps
         private Queue<byte[]> m_seqReceiveMsg = new Queue<byte[]>();    //the message queue
         private TranspotUpdate m_cUpdater = null;   //The Updater of the message queue
 #endif
+```
 
 2.在u3d主逻辑中增加一个专门处理网络通信逻辑句柄的类。这个类在通信开始时就加入到u3d主逻辑中去，当通信结束(无论是正常还是异常结束)时在u3d主逻辑中销毁。在主逻辑中不断的或者说每帧都去查看网络通信层队列中有没有等待处理的句柄，有就取出来处理。这样就由等待队列串联起来了几个线程的共同合作。ps:对队列做防死锁操作
+
+``` c#
 #if LUZEXI
         internal void Update()
         {
@@ -57,9 +62,11 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
             }
         }
 #endif
+```
 
 3.拆分网络通信事件。将网络通信事件拆分为OnConnect , OnError , OnDisconnect , 这3个事件是最常见的通信事件。这3个事件也必须在主线程中调用，但这3个事件又不是以网络数据包为基础，所以需要在专门处理通信逻辑的类中加入3种状态start , error , disconnect.当网络通信层出现这三种事件时，将状态切过去（ps:而不是直接调用句柄）,然后再由专门处理通信逻辑的类在下一帧去调用对应的事件句柄。
 
+``` c#
 using UnityEngine;
 using System;
 using System.Collections.Generic;
@@ -68,13 +75,9 @@ using SimpleJson;
 //  TranspotUpdate.cs
 //  Author: Lu Zexi
 //  2014-6-20
-
-
-
 namespace Pomelo.DotNetClient
 {
-    /// 
-<summary>
+    /// <summary>
     /// Transpot updater.
     /// </summary>
     public class TranspotUpdate : MonoBehaviour
@@ -175,5 +178,6 @@ namespace Pomelo.DotNetClient
         }
     }
 }
+```
 
 转载请注明出处：http://www.luzexi.com

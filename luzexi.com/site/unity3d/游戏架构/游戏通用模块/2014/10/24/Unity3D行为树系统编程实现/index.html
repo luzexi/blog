@@ -11,7 +11,7 @@
 
   <title>
     
-      Unity3D行为树系统编程实现 &middot; Hyde
+      Unity3D行为树系统编程实现 &middot; 技术人生
     
   </title>
 
@@ -37,10 +37,10 @@
     <div class="sidebar-about">
       <h1>
         <a href="/">
-          Hyde
+          技术人生
         </a>
       </h1>
-      <p class="lead">A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+      <p class="lead">我将在这里写下我毕生所学---分享是我的一直以来坚持的事,不仅仅是为别人更是为了自己</p>
     </div>
 
     <nav class="sidebar-nav">
@@ -91,9 +91,9 @@
         
       
 
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde/archive/v2.1.0.zip">Download</a>
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde">GitHub project</a>
-      <span class="sidebar-nav-item">Currently v2.1.0</span>
+      <!-- <a class="sidebar-nav-item" href="https://github.com/luzexi/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
     <p>&copy; 2015. All rights reserved.</p>
@@ -126,8 +126,9 @@
 
 <p>6.为了让行为树运用到项目里去，我们可以对BNodeAction，BNodeCondition，BNodeDecorator，进行扩展。继承书写的规则：继承子类必须在Game.AIBehaviorTree命名空间里，构造函数里最好对m_strName进行赋值，这样就能在行为树编辑器里看到你的扩展类和扩展命名，每个扩展的节点，如果有需要对变量进行编辑的，变量必须是public的，而且类型只限于int,float,bool,string四种。</p>
 
-<p>7.行为树编辑器是行为树系统可用性的关键。我把行为树用目录结构的方式来实现，这样对于节点的增加，删除，切换，拖拽，体验都非常便捷。对于每个节点的编辑状态在选择该节点后会在编辑器的右下脚现实。编辑器还承载了保存，加载，以及对行为树的增加和删除，重命名的功能。如下图：
-<a href="http://www.luzexi.com/wp-content/uploads/2014/10/img.png"><img class="alignnone size-full wp-image-429" src="http://www.luzexi.com/wp-content/uploads/2014/10/img.png" alt="img" width="985" height="492" /></a></p>
+<p>7.行为树编辑器是行为树系统可用性的关键。我把行为树用目录结构的方式来实现，这样对于节点的增加，删除，切换，拖拽，体验都非常便捷。对于每个节点的编辑状态在选择该节点后会在编辑器的右下脚现实。编辑器还承载了保存，加载，以及对行为树的增加和删除，重命名的功能。如下图：</p>
+
+<p><img class="alignnone size-full wp-image-429" src="/assets/uploads/2014/10/img.png" alt="img" width="985" height="492" /></p>
 
 <p>8.行为树数据存储。我用json格式来存储行为树，先前我用bytes来存，但发现因为扩展子类的变量经常性变化，所以用bytes来存常常会导致已编辑完成的数据无法重新编辑。所以我用了c#反射进行类与json变量的配对。</p>
 

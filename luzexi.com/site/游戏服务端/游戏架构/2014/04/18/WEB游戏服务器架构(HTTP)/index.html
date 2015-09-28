@@ -11,7 +11,7 @@
 
   <title>
     
-      WEB游戏服务器架构(HTTP) &middot; Hyde
+      WEB游戏服务器架构(HTTP) &middot; 技术人生
     
   </title>
 
@@ -37,10 +37,10 @@
     <div class="sidebar-about">
       <h1>
         <a href="/">
-          Hyde
+          技术人生
         </a>
       </h1>
-      <p class="lead">A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+      <p class="lead">我将在这里写下我毕生所学---分享是我的一直以来坚持的事,不仅仅是为别人更是为了自己</p>
     </div>
 
     <nav class="sidebar-nav">
@@ -91,9 +91,9 @@
         
       
 
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde/archive/v2.1.0.zip">Download</a>
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde">GitHub project</a>
-      <span class="sidebar-nav-item">Currently v2.1.0</span>
+      <!-- <a class="sidebar-nav-item" href="https://github.com/luzexi/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
     <p>&copy; 2015. All rights reserved.</p>
@@ -111,13 +111,11 @@
 <p>PHP可以选用任何你熟悉的框架，能站在别人肩膀上的就站上去吧，自己写时间过长。我们选用的是Yii框架，特点不多没有刻意去挑选。Memcache主要存储数据表的内存，因为PHP没有内存可控制，所以结合Memchache是最好的选择，也可以用Redis，功能上都一样，不过Redis有排序而已。用NGINX主要用来做WEB端的负载平衡，也可以在测试时做IP过滤，以及维护时的IP封锁。</p>
 
 <p>WEB架构图：</p>
-
-<hr>
-
-<p>GAME<em>DB1(Mysql-master&amp;slave)---|
-GAME</em>DB2(Mysql-master&amp;slave)   |<br>
-GAME<em>DB3(Mysql-master&amp;slave)   |---------------|
-GAME</em>DB4(Mysql-master&amp;slave)---|               |
+<div class="highlight"><pre><code class="language-text" data-lang="text">----------------------------------------------------------
+GAME_DB1(Mysql-master&amp;slave)---|
+GAME_DB2(Mysql-master&amp;slave)   |  
+GAME_DB3(Mysql-master&amp;slave)   |---------------|
+GAME_DB4(Mysql-master&amp;slave)---|               |
                                                |
 Memcache1(master&amp;slave)                        |
 Memcache2(master&amp;slave)                        |
@@ -126,16 +124,15 @@ Memcache4(master&amp;slvae)                        |
 /       \                                      |
 GameServerPHP1                                 |
 GameServerPHP2---------------------------------|
-GameServerPHP3<br>
-|     /  </p>
-
-<h2>Nginx  </h2>
-
-<p>GB_DB(Mysql)<br>
-|  </p>
-
-<h2>GM<em>ADMIN</em>PHP+(memcache)  </h2>
-
+GameServerPHP3  
+|     /  
+Nginx  
+------------------------------------------  
+GB_DB(Mysql)  
+|  
+GM_ADMIN_PHP+(memcache)  
+------------------------------------------
+</code></pre></div>
 <p>描述：</p>
 
 <p>Ngix起负载均衡作用。</p>

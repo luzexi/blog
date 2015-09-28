@@ -58,7 +58,7 @@ js写html5需要注意的几点：
 
 最后大家可以看看这个小游戏，请使用手机二维码扫描。
 
-<a href="http://www.luzexi.com/wp-content/uploads/2014/09/qrcode.png"><img class="alignnone size-full wp-image-413" src="http://www.luzexi.com/wp-content/uploads/2014/09/qrcode.png" alt="qrcode" width="280" height="280" /></a>
+<img class="alignnone size-full wp-image-413" src="/assets/uploads/2014/09/qrcode.png" alt="qrcode" width="280" height="280" />
 
 源码地址：[https://github.com/hangzhou-JIMI/MemoryFruits](https://github.com/hangzhou-JIMI/MemoryFruits)
 

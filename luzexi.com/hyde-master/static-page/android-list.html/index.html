@@ -1,0 +1,983 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+<script type="text/javascript" src="outliner.js"></script><style type="text/css">
+			
+                        img.status {
+                        margin-left: 2px; margin-right: 2px; margin-top: 2px; height: 11px; width: 11px;
+                        }
+                        
+                        img.checkbox-column {
+                        height: 11px; width: 11px; vertical-align: top; margin-top: 3px;
+                        }
+                        
+                        img.leaf {
+                        margin-left: 3px; margin-right:3px; margin-top: 2px; margin-bottom: 3px; height: 6px; width 6px;
+                        }
+                        
+                        img.parent {
+                        margin-left: 3px; margin-right:3px; margin-top: 2px; height: 10px; width: 10px;
+                        }
+			
+			th {
+			vertical-align: bottom;
+			
+			}
+			
+			td {
+			vertical-align: top;
+			}
+			
+			td,th {
+			
+			empty-cells: show;
+			}
+			
+			.top-right-border {
+			
+			}
+			
+			.no-border {
+			border-bottom: 0px;
+			border-left: 0px;
+			}
+			
+			
+			
+			
+			table {
+			
+			font-family: Helvetica, sans-serif;
+			font-size: 12px;
+			font-family: "Helvetica Neue", sans-serif;  font-size: 13px;			
+			
+			}
+
+			
+			
+			.wholeDocument {
+			font-family: "Helvetica Neue", sans-serif;  font-size: 13px;background-color:rgb(255,255,255) ;  
+	
+			}
+		
+			
+			td.subcell {
+			border: none;
+			}
+			
+			td.content {
+			padding-left: 4px;
+			padding-bottom: 2px;
+			padding-top: 1px;
+			padding-right: 3px;
+			}
+			
+			.full {
+			height: 100%;
+			}
+			
+			.heighthack {
+                        
+                            height: 25px;
+                            
+			}
+			
+			div.titlepadding { 
+			padding-right:3px;
+			padding-left:6px;
+			padding-bottom:3px;
+			padding-top: 2px;
+			}
+			
+			
+					.summary_node {
+						background: rgba(0,0,0,.12);
+						margin-bottom: 1px;
+					}
+				
+			
+			div.column {   
+			padding-right: 3px;
+			padding-left: 4px;
+			padding-top: 0px;
+			padding-bottom: 0px;
+			margin-right: 1px;
+			}
+			
+			.labelpadding {
+			padding-right: 3px;
+			padding-top: 1px;
+			padding-left: 2px;
+			}
+			
+			.indicator {
+			white-space: nowrap;
+			text-align:right;
+			margin-right: 0px;
+			vertical-align: top;
+			padding-top: 1px;
+			padding-left: 0px;
+			}
+			
+			.wholedocgutter {
+			
+			}
+			
+			div.row {
+			}
+			
+			div.headerRow {
+			}
+			
+			.expanded {
+			display: inline;
+			}
+			.collapsed {
+			display: none;
+			}
+			
+            div.palette-hit-zone {
+                position: fixed;
+                bottom: 0px;
+				height: 33%;
+                left:50%;
+                width: 66%;
+                margin-left: -33%;
+            }
+
+			div.floating-palette {
+                -webkit-border-radius: 5px;
+                -webkit-transition: opacity is fade-in-out;
+                -webkit-transition-duration: 1s;
+				background-color: rgb(64, 64, 64);
+                opacity:0.7;
+				width: 88px;
+				height: 44px;
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                margin-left: -44px;
+			}
+            
+            div.palette-cell {
+                opacity:1;
+                margin-top: 6px;
+                margin-bottom: 6px;
+                position: absolute;
+                height: 32px;
+                width: 32px;
+            }
+            
+            div.cell-divider {
+                position: absolute;
+                margin-top: 6px;
+                margin-bottom: 6px;
+                margin-left: 44px;
+                height: 32px;
+                width:0px;
+                position:absolute;
+                left:0px;
+                border-right:rgb(207, 207, 207) 2px solid;
+            }
+			
+			
+			
+			
+			.note { 
+			padding-left: 5px;
+			padding-right: 3px; 
+			border: none; 
+			color:rgb(103,103,103) ;  
+			}
+			
+			/* Total table width is 1264
+			Adjusted table width is 1339 */
+			
+			.wholething {
+				width: auto;
+			}
+			
+			
+			table.row {
+				
+						width: 1264px;
+						
+			
+			}
+			
+			
+    .col_width1 { 
+        width: 1264px;  /* Actual width is 1264 */
+    }
+
+    .col1 { 
+        
+    }
+
+    .colbackground1 { 
+        
+    }
+
+			
+			/* Level Styles */
+			
+			
+    .columntitle { 
+        font-weight: 600;  
+    }
+
+    .level1 { 
+        color:rgb(50,50,50) ;  font-weight: 300;  font-size: 30px;
+    }
+
+    .levelcolor1 { 
+        
+    }
+
+    .levelguttercolor1 { 
+        
+    }
+
+    .level2 { 
+        color:rgb(50,50,50) ;  font-size: 18px;
+    }
+
+    .levelcolor2 { 
+        
+    }
+
+    .levelguttercolor2 { 
+        
+    }
+
+    .level3 { 
+        font-weight: 600;  
+    }
+
+    .levelcolor3 { 
+        
+    }
+
+    .levelguttercolor3 { 
+        
+    }
+
+    .ns-Heading-1 { 
+        color:rgb(50,50,50) ;  font-family: "Helvetica Neue", sans-serif;  font-weight: 300;  font-size: 30px;}
+
+    .ns-Heading-2 { 
+        color:rgb(50,50,50) ;  font-family: "Helvetica Neue", sans-serif;  font-size: 18px;}
+
+    .ns-Heading-3 { 
+        font-family: "Helvetica Neue", sans-serif;  font-weight: 600;  font-size: 13px;}
+
+    .ns-Highlight:-Yellow { 
+        }
+
+    .ns-Highlight:-Red { 
+        }
+
+    .ns-Highlight:-Green { 
+        }
+
+    .ns-Purple { 
+        color:rgb(150,97,207) ;  }
+
+    .ns-Blue { 
+        color:rgb(58,142,237) ;  }
+
+    .ns-Bondi { 
+        color:rgb(0,191,192) ;  }
+
+    .ns-Green { 
+        color:rgb(103,187,53) ;  }
+
+    .ns-Yellow { 
+        color:rgb(255,187,0) ;  }
+
+    .ns-Orange { 
+        color:rgb(255,144,77) ;  }
+
+    .ns-Red { 
+        color:rgb(242,96,119) ;  }
+
+    .ns-Graphite { 
+        color:rgb(107,124,165) ;  }
+
+    .ns-bg-Heading-1 { 
+        }
+
+    .ns-bg-Heading-2 { 
+        }
+
+    .ns-bg-Heading-3 { 
+        }
+
+    .ns-bg-Highlight:-Yellow { 
+        background-color:rgba(255,187,0,0.25) ;  }
+
+    .ns-bg-Highlight:-Red { 
+        background-color:rgba(242,96,119,0.25) ;  }
+
+    .ns-bg-Highlight:-Green { 
+        background-color:rgba(103,187,53,0.25) ;  }
+
+    .ns-bg-Purple { 
+        }
+
+    .ns-bg-Blue { 
+        }
+
+    .ns-bg-Bondi { 
+        }
+
+    .ns-bg-Green { 
+        }
+
+    .ns-bg-Yellow { 
+        }
+
+    .ns-bg-Orange { 
+        }
+
+    .ns-bg-Red { 
+        }
+
+    .ns-bg-Graphite { 
+        }
+
+    .ns-gutter-Heading-1 { 
+        }
+
+    .ns-gutter-Heading-2 { 
+        }
+
+    .ns-gutter-Heading-3 { 
+        }
+
+    .ns-gutter-Highlight:-Yellow { 
+        }
+
+    .ns-gutter-Highlight:-Red { 
+        }
+
+    .ns-gutter-Highlight:-Green { 
+        }
+
+    .ns-gutter-Purple { 
+        }
+
+    .ns-gutter-Blue { 
+        }
+
+    .ns-gutter-Bondi { 
+        }
+
+    .ns-gutter-Green { 
+        }
+
+    .ns-gutter-Yellow { 
+        }
+
+    .ns-gutter-Orange { 
+        }
+
+    .ns-gutter-Red { 
+        }
+
+    .ns-gutter-Graphite { 
+        }
+</style>
+</head>
+<body class="wholeDocument"><table cellspacing="0" cellpadding="0" class="top-right-border"><tr><td class="wholething no-border">
+<!--Column Titles--><table cellspacing="0" border="0" cellpadding="0" class="headerRow heighthack"><tr><td class=" col_width1"><div class="columntitle titlepadding">Topic<br>
+</div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor1 ns-bg-Red"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level1 levelguttercolor1 ns-Red ns-gutter-Red" style="width: 9px;"></td>
+<td class=" subcell wholedocgutter indicator level1 levelguttercolor1 ns-Red ns-gutter-Red" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level1 levelguttercolor1 ns-Red ns-gutter-Red" style=" width: 1px; color:rgb(242,96,119) ;  "></td>
+<td class=" content level1 ns-Red subcell" style="color:rgb(242,96,119) ;  ">转载请注明出处  <span><a href="http://www.luzexi.com/">http://www.luzexi.com</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor1 ns-bg-Red"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level1 levelguttercolor1 ns-Red ns-gutter-Red" style="width: 9px;"></td>
+<td class=" subcell wholedocgutter indicator level1 levelguttercolor1 ns-Red ns-gutter-Red" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level1 levelguttercolor1 ns-Red ns-gutter-Red" style=" width: 1px; color:rgb(242,96,119) ;  "></td>
+<td class=" content level1 ns-Red subcell" style="color:rgb(242,96,119) ;  ">所有资料整理均为网络资源信息搜索所得<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor1"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level1 levelguttercolor1" style="width: 9px;"></td>
+<td class=" subcell wholedocgutter indicator level1 levelguttercolor1" style="width: 15px;"><img onmousedown="ioSwitch('poH_yt0FVDuw', event.shiftKey)" id="ioH_yt0FVDuw" border="0" alt="&gt;" class="parent" src="Collapsed.png" title="expand"></td>
+<td class=" subcell wholedocgutter labelpadding level1 levelguttercolor1" style=" width: 1px; "></td>
+<td class=" content level1 subcell">Android-NDK 下载地址列表<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="poH_yt0FVDuw" class="collapsed">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">下载列表中有windows,linux,和darwin，其中mac是darwin系列的。<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">可以键入命令uname -s来查看系统属于什么系统。<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">列表中有32位和64位，请对应当前系统版本下载。<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">说明文档地址：<span class="" style="color:rgb(0,0,0) ;  font-size: 13px;"> <span><a href="https://developer.android.com/tools/sdk/ndk/index.html">https://developer.android.com/tools/sdk/ndk/index.html</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2" style="width: 15px;"><img onmousedown="ioSwitch('poL9HlkAiv7o', event.shiftKey)" id="ioL9HlkAiv7o" border="0" alt="&gt;" class="parent" src="Collapsed.png" title="expand"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2" style=" width: 1px; "></td>
+<td class=" content level2 subcell">NDK-r10<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="poL9HlkAiv7o" class="collapsed">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk32-r10-windows-x86.zip">http://dl.google.com/android/ndk/android-ndk32-r10-windows-x86.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk32-r10-windows-x86_64.zip">http://dl.google.com/android/ndk/android-ndk32-r10-windows-x86_64.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk32-r10-darwin-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk32-r10-darwin-x86.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk32-r10-darwin-x86_64.tar.bz2">http://dl.google.com/android/ndk/android-ndk32-r10-darwin-x86_64.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk32-r10-linux-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk32-r10-linux-x86.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk32-r10-linux-x86_64.tar.bz2">http://dl.google.com/android/ndk/android-ndk32-r10-linux-x86_64.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r10-cxx-stl-libs-with-debug-info.zip">http://dl.google.com/android/ndk/android-ndk-r10-cxx-stl-libs-with-debug-info.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+</div>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2" style="width: 15px;"><img onmousedown="ioSwitch('pifO7G5rRKkG', event.shiftKey)" id="iifO7G5rRKkG" border="0" alt="&gt;" class="parent" src="Collapsed.png" title="expand"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2" style=" width: 1px; "></td>
+<td class=" content level2 subcell">NDK-r9<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="pifO7G5rRKkG" class="collapsed">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r9-windows-x86.zip">http://dl.google.com/android/ndk/android-ndk-r9-windows-x86.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r9-windows-x86_64.zip">http://dl.google.com/android/ndk/android-ndk-r9-windows-x86_64.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r9-darwin-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r9-darwin-x86.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r9-linux-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r9-linux-x86.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r9-linux-x86_64.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r9-linux-x86_64.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+</div>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2" style="width: 15px;"><img onmousedown="ioSwitch('pivrdprf4MtY', event.shiftKey)" id="iivrdprf4MtY" border="0" alt="&gt;" class="parent" src="Collapsed.png" title="expand"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2" style=" width: 1px; "></td>
+<td class=" content level2 subcell">NDK-r8<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="pivrdprf4MtY" class="collapsed">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r8-windows-x86.zip">http://dl.google.com/android/ndk/android-ndk-r8-windows-x86.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r8-windows-x86_64.zip">http://dl.google.com/android/ndk/android-ndk-r8-windows-x86_64.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r8-darwin-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r8-darwin-x86.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r8-linux-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r8-linux-x86.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r8-linux-x86_64.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r8-linux-x86_64.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+</div>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2" style="width: 15px;"><img onmousedown="ioSwitch('pjYaTKOUvTdn', event.shiftKey)" id="ijYaTKOUvTdn" border="0" alt="&gt;" class="parent" src="Collapsed.png" title="expand"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2" style=" width: 1px; "></td>
+<td class=" content level2 subcell">NDK-r7<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="pjYaTKOUvTdn" class="collapsed">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r7-windows-x86.zip">http://dl.google.com/android/ndk/android-ndk-r7-windows-x86.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r7-windows-x86_64.zip">http://dl.google.com/android/ndk/android-ndk-r7-windows-x86_64.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r7-darwin-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r7-darwin-x86.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r7-linux-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r7-linux-x86.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell"> <span><a href="http://dl.google.com/android/ndk/android-ndk-r7-linux-x86_64.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r7-linux-x86_64.tar.bz2</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+</div>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2" style="width: 15px;"><img onmousedown="ioSwitch('phJgW09zAY8E', event.shiftKey)" id="ihJgW09zAY8E" border="0" alt="&gt;" class="parent" src="Collapsed.png" title="expand"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2" style=" width: 1px; "></td>
+<td class=" content level2 subcell">NDK-r6<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="phJgW09zAY8E" class="collapsed">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">
+<span class="" style="font-weight: 500;  "> <span><a href="http://dl.google.com/android/ndk/android-ndk-r8-darwin-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r6-windows-x86.zip</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">
+<span class="" style="font-weight: 500;  "> <span><a href="http://dl.google.com/android/ndk/android-ndk-r8-darwin-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r6-windows-x86_64.zip</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">
+<span class="" style="font-weight: 500;  "> <span><a href="http://dl.google.com/android/ndk/android-ndk-r8-darwin-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r6-darwin-x86.tar.bz2</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">
+<span class="" style="font-weight: 500;  "> <span><a href="http://dl.google.com/android/ndk/android-ndk-r8-darwin-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r6-linux-x86.tar.bz2</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">
+<span class="" style="font-weight: 500;  "> <span><a href="http://dl.google.com/android/ndk/android-ndk-r8-darwin-x86.tar.bz2">http://dl.google.com/android/ndk/android-ndk-r6-linux-x86_64.tar.bz2</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+</div>
+</div>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor1"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level1 levelguttercolor1" style="width: 9px;"></td>
+<td class=" subcell wholedocgutter indicator level1 levelguttercolor1" style="width: 15px;"><img onmousedown="ioSwitch('poUKs-x0hl19', event.shiftKey)" id="ioUKs-x0hl19" border="0" alt="&gt;" class="parent" src="Collapsed.png" title="expand"></td>
+<td class=" subcell wholedocgutter labelpadding level1 levelguttercolor1" style=" width: 1px; "></td>
+<td class=" content level1 subcell">Android-SDK-Tools only<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="poUKs-x0hl19" class="collapsed">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">说明文档地址：<span class="" style="color:rgb(0,0,0) ;  font-size: 13px;"> <span><a href="https://developer.android.com/tools/sdk/tools-notes.html">https://developer.android.com/tools/sdk/tools-notes.html</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">SDK tool只是包含了sdk-tools的初级部分，里面没有platform，也没有platform tool，都要自己重新下载<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">我提供一个我私人使用的2015年的sdk包，里面含有sdk的最新platform，不过是系统平台是mac-x86_64，如果你是其他平台就无能为力了。<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">如果你也是mac_x86_64可以使用它： <span><a href="http://pan.baidu.com/s/1i3KjbGp">http://pan.baidu.com/s/1i3KjbGp</a></span> 密码：s99u<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2" style="width: 15px;"><img onmousedown="ioSwitch('pnegnelHCdO_', event.shiftKey)" id="inegnelHCdO_" border="0" alt="V" class="parent" src="Expanded.png" title="collapse"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2" style=" width: 1px; "></td>
+<td class=" content level2 subcell">r24.1.12<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="pnegnelHCdO_" class="expanded">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">linux  <span><a href="http://dl.google.com/android/android-sdk_r24.1.2-linux.tgz">http://dl.google.com/android/android-sdk_r24.1.2-linux.tgz</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">mac  <span><a href="http://dl.google.com/android/android-sdk_r24.1.2-macosx.zip">http://dl.google.com/android/android-sdk_r24.1.2-macosx.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">windows exe  <span><a href="http://dl.google.com/android/installer_r24.1.2-windows.exe">http://dl.google.com/android/installer_r24.1.2-windows.exe</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">windows zip  <span><a href="http://dl.google.com/android/android-sdk_r24.1.2-windows.zip">http://dl.google.com/android/android-sdk_r24.1.2-windows.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+</div>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2" style="width: 15px;"><img onmousedown="ioSwitch('peD6nfsjH3cU', event.shiftKey)" id="ieD6nfsjH3cU" border="0" alt="V" class="parent" src="Expanded.png" title="collapse"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2" style=" width: 1px; "></td>
+<td class=" content level2 subcell">r23.0.2<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="peD6nfsjH3cU" class="expanded">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">windows zip  <span><a href="http://dl.google.com/android/android-sdk_r23.0.2-windows.zip">http://dl.google.com/android/android-sdk_r23.0.2-windows.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">windows exe  <span><a href="http://dl.google.com/android/installer_r23.0.2-windows.exe">http://dl.google.com/android/installer_r23.0.2-windows.exe</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">max  <span><a href="http://dl.google.com/android/android-sdk_r23.0.2-macosx.zip">http://dl.google.com/android/android-sdk_r23.0.2-macosx.zip</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">linux  <span><a href="http://dl.google.com/android/android-sdk_r23.0.2-linux.tgz">http://dl.google.com/android/android-sdk_r23.0.2-linux.tgz</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+</div>
+</div>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor1"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level1 levelguttercolor1" style="width: 9px;"></td>
+<td class=" subcell wholedocgutter indicator level1 levelguttercolor1" style="width: 15px;"><img onmousedown="ioSwitch('pp4bPA9MEog5', event.shiftKey)" id="ip4bPA9MEog5" border="0" alt="V" class="parent" src="Expanded.png" title="collapse"></td>
+<td class=" subcell wholedocgutter labelpadding level1 levelguttercolor1" style=" width: 1px; "></td>
+<td class=" content level1 subcell">Android-Studio<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="pp4bPA9MEog5" class="expanded">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">说明文档地址：<span class="" style="color:rgb(0,0,0) ;  font-size: 13px;"> <span><a href="https://developer.android.com/tools/studio/index.html">https://developer.android.com/tools/studio/index.html</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">studio是google推出的专门用来开发android的工具。你也可以认为它是一个android-IDE。<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">里面包含了所有你需要的android开发包除了ndk：sdk和platform-tool，和一个当前版本最新的platform。<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">所以我建议你下一个最新的Android-Studio来代替Android-SDK。<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2" style="width: 15px;"><img onmousedown="ioSwitch('pdNGRqUYfomV', event.shiftKey)" id="idNGRqUYfomV" border="0" alt="V" class="parent" src="Expanded.png" title="collapse"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2" style=" width: 1px; "></td>
+<td class=" content level2 subcell">v1.1.0<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="pdNGRqUYfomV" class="expanded">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">
+<span class="" style="font-weight: 500;  ">linux </span><span class="" style="font-weight: 500;  "> <span><a href="https://dl.google.com/dl/android/studio/ide-zips/1.1.0/android-studio-ide-135.1740770-linux.zip">https://dl.google.com/dl/android/studio/ide-zips/1.1.0/android-studio-ide-135.1740770-linux.zip</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">max  <span><a href="https://dl.google.com/dl/android/studio/install/1.1.0/android-studio-ide-135.1740770-mac.dmg">https://dl.google.com/dl/android/studio/install/1.1.0/android-studio-ide-135.1740770-mac.dmg</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">windows  <span><a href="https://dl.google.com/dl/android/studio/ide-zips/1.1.0/android-studio-ide-135.1740770-windows.zip">https://dl.google.com/dl/android/studio/install/1.1.0/android-studio-bundle-135.1740770-windows.exe</a></span><br>
+</td>
+</tr></table></div></td></tr></table>
+</div>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2" style="width: 15px;"><img onmousedown="ioSwitch('pcU259Svhjxp', event.shiftKey)" id="icU259Svhjxp" border="0" alt="V" class="parent" src="Expanded.png" title="collapse"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2" style=" width: 1px; "></td>
+<td class=" content level2 subcell">v1.0.1<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="pcU259Svhjxp" class="expanded">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">
+<span class="" style="font-weight: 500;  ">linux </span><span class="" style="font-weight: 500;  "> <span><a href="https://dl.google.com/dl/android/studio/ide-zips/1.1.0/android-studio-ide-135.1740770-linux.zip">https://dl.google.com/dl/android/studio/ide-zips/1.0.1/android-studio-ide-135.1740770-linux.zip</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">
+<span class="" style="font-weight: 500;  ">mac </span><span class="" style="font-weight: 500;  "> <span><a href="https://dl.google.com/dl/android/studio/install/1.1.0/android-studio-ide-135.1740770-mac.dmg">https://dl.google.com/dl/android/studio/install/1.0.1/android-studio-ide-135.1740770-mac.dmg</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor3"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level3 levelguttercolor3" style="width: 41px;"></td>
+<td class=" subcell wholedocgutter indicator level3 levelguttercolor3" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level3 levelguttercolor3" style=" width: 1px; "></td>
+<td class=" content level3 subcell">
+<span class="" style="font-weight: 500;  ">windows </span><span class="" style="font-weight: 500;  "> <span><a href="https://dl.google.com/dl/android/studio/ide-zips/1.1.0/android-studio-ide-135.1740770-windows.zip">https://dl.google.com/dl/android/studio/install/1.0.1/android-studio-bundle-135.1740770-windows.exe</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+</div>
+</div>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor1"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level1 levelguttercolor1" style="width: 9px;"></td>
+<td class=" subcell wholedocgutter indicator level1 levelguttercolor1" style="width: 15px;"><img onmousedown="ioSwitch('pbgQVnEkLdmA', event.shiftKey)" id="ibgQVnEkLdmA" border="0" alt="V" class="parent" src="Expanded.png" title="collapse"></td>
+<td class=" subcell wholedocgutter labelpadding level1 levelguttercolor1" style=" width: 1px; "></td>
+<td class=" content level1 subcell">Android-构建过程描述<br>
+</td>
+</tr></table></div></td></tr></table>
+<div id="pbgQVnEkLdmA" class="expanded">
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">android-构建过程说明-地址：<span class="" style="color:rgb(0,0,0) ;  font-size: 13px;"> <span><a href="https://developer.android.com/sdk/installing/studio-build.html">https://developer.android.com/sdk/installing/studio-build.html</a></span></span><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  "> <img height="882" width="536" style="vertical-align: middle;" src="build.png" alt="build"><br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">    The general process for a typical build is outlined below. The build system merges all the resources from the configured product flavors, build types, and dependencies. If different folders contain resources with the same name or setting, the following override priority order is: dependencies override build types, which override product flavors, which override the main source directory.<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">    The Android Asset Packaging Tool (aapt) takes your application resource files, such as the AndroidManifest.xml file and the XML files for your Activities, and compiles them. An R.java is also produced so you can reference your resources from your Java code.<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">    The aidl tool converts any .aidl interfaces that you have into Java interfaces.<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">All of your Java code, including the R.java and .aidl files, are compiled by the Java compiler and .class files are output.<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">    The dex tool converts the .class files to Dalvik byte code. Any 3rd party libraries and .class files that you have included in your module build are also converted into .dex files so that they can be packaged into the final .apk file.<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">    All non-compiled resources (such as images), compiled resources, and the .dex files are sent to the apkbuilder tool to be packaged into an .apk file.<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">    Once the .apk is built, it must be signed with either a debug or release key before it can be installed to a device.<br>
+</td>
+</tr></table></div></td></tr></table>
+<table cellspacing="0" border="0" cellpadding="0" class="row heighthack"><tr><td class=" col1 colbackground1 col_width1" style=""><div class=" full levelcolor2 ns-bg-Blue"><table border="0" cellspacing="0" cellpadding="0" style="height:100%" class=" col_width1 col1"><tr>
+<td class=" subcell wholedocgutter level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 25px;"></td>
+<td class=" subcell wholedocgutter indicator level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style="width: 15px;"><img border="0" alt="*" class="leaf" src="LeafRowHandle.png"></td>
+<td class=" subcell wholedocgutter labelpadding level2 levelguttercolor2 ns-Blue ns-gutter-Blue" style=" width: 1px; color:rgb(58,142,237) ;  "></td>
+<td class=" content level2 ns-Blue subcell" style="color:rgb(58,142,237) ;  ">    Finally, if the application is being signed in release mode, you must align the .apk with the zipalign tool. Aligning the final .apk decreases memory usage when the application is -running on a device.<br>
+</td>
+</tr></table></div></td></tr></table>
+</div>
+</td></tr></table></body>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff3d58556a7396e715b3602ef6754cd91' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</html>

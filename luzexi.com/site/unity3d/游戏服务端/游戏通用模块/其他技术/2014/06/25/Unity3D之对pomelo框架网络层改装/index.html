@@ -11,7 +11,7 @@
 
   <title>
     
-      Unity3D之对pomelo框架网络层改装 &middot; Hyde
+      Unity3D之对pomelo框架网络层改装 &middot; 技术人生
     
   </title>
 
@@ -37,10 +37,10 @@
     <div class="sidebar-about">
       <h1>
         <a href="/">
-          Hyde
+          技术人生
         </a>
       </h1>
-      <p class="lead">A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+      <p class="lead">我将在这里写下我毕生所学---分享是我的一直以来坚持的事,不仅仅是为别人更是为了自己</p>
     </div>
 
     <nav class="sidebar-nav">
@@ -91,9 +91,9 @@
         
       
 
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde/archive/v2.1.0.zip">Download</a>
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde">GitHub project</a>
-      <span class="sidebar-nav-item">Currently v2.1.0</span>
+      <!-- <a class="sidebar-nav-item" href="https://github.com/luzexi/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
     <p>&copy; 2015. All rights reserved.</p>
@@ -117,148 +117,141 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 <p>如何将线程通信后的游戏句柄调用部分放到u3d主线程中去：</p>
 
 <p>1.网络通信是由数据包为单位来驱动游戏逻辑句柄的，所以只要加入队列概念，在收到数据包时由原来的直接调用句柄，改为先推入到队列中，等待处理。</p>
-
-<h1>if LUZEXI</h1>
-<div class="highlight"><pre><code class="language-text" data-lang="text">    private System.Object m_cLock = new System.Object();    //the lock object
-    private const int PROCESS_NUM = 5;  //the process handle num per fps
-    private Queue&lt;byte[]&gt; m_seqReceiveMsg = new Queue&lt;byte[]&gt;();    //the message queue
-    private TranspotUpdate m_cUpdater = null;   //The Updater of the message queue
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="cp">#if LUZEXI</span>
+        <span class="k">private</span> <span class="n">System</span><span class="p">.</span><span class="n">Object</span> <span class="n">m_cLock</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Object</span><span class="p">();</span>    <span class="c1">//the lock object</span>
+        <span class="k">private</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_NUM</span> <span class="p">=</span> <span class="m">5</span><span class="p">;</span>  <span class="c1">//the process handle num per fps</span>
+        <span class="k">private</span> <span class="n">Queue</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;</span> <span class="n">m_seqReceiveMsg</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;();</span>    <span class="c1">//the message queue</span>
+        <span class="k">private</span> <span class="n">TranspotUpdate</span> <span class="n">m_cUpdater</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>   <span class="c1">//The Updater of the message queue</span>
+<span class="cp">#endif</span>
 </code></pre></div>
-<h1>endif</h1>
-
 <p>2.在u3d主逻辑中增加一个专门处理网络通信逻辑句柄的类。这个类在通信开始时就加入到u3d主逻辑中去，当通信结束(无论是正常还是异常结束)时在u3d主逻辑中销毁。在主逻辑中不断的或者说每帧都去查看网络通信层队列中有没有等待处理的句柄，有就取出来处理。这样就由等待队列串联起来了几个线程的共同合作。ps:对队列做防死锁操作</p>
-
-<h1>if LUZEXI</h1>
-<div class="highlight"><pre><code class="language-text" data-lang="text">    internal void Update()
-    {
-        for( int i = 0 ; i&lt;PROCESS_NUM &amp;&amp; i&lt; this.m_seqReceiveMsg.Count; i++)
-        {
-            lock(this.m_cLock)
-            {
-                byte[] data = this.m_seqReceiveMsg.Dequeue();
-                this.messageProcesser.Invoke(data);
-            }
-        }
-    }
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="cp">#if LUZEXI</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span> <span class="p">;</span> <span class="n">i</span><span class="p">&lt;</span><span class="n">PROCESS_NUM</span> <span class="p">&amp;&amp;</span> <span class="n">i</span><span class="p">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="n">m_seqReceiveMsg</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="k">lock</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_cLock</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="kt">byte</span><span class="p">[]</span> <span class="n">data</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="n">m_seqReceiveMsg</span><span class="p">.</span><span class="n">Dequeue</span><span class="p">();</span>
+                    <span class="k">this</span><span class="p">.</span><span class="n">messageProcesser</span><span class="p">.</span><span class="n">Invoke</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+<span class="cp">#endif</span>
 </code></pre></div>
-<h1>endif</h1>
-
 <p>3.拆分网络通信事件。将网络通信事件拆分为OnConnect , OnError , OnDisconnect , 这3个事件是最常见的通信事件。这3个事件也必须在主线程中调用，但这3个事件又不是以网络数据包为基础，所以需要在专门处理通信逻辑的类中加入3种状态start , error , disconnect.当网络通信层出现这三种事件时，将状态切过去（ps:而不是直接调用句柄）,然后再由专门处理通信逻辑的类在下一帧去调用对应的事件句柄。</p>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">SimpleJson</span><span class="p">;</span>
 
-<p>using UnityEngine;
-using System;
-using System.Collections.Generic;
-using SimpleJson;</p>
+<span class="c1">//  TranspotUpdate.cs</span>
+<span class="c1">//  Author: Lu Zexi</span>
+<span class="c1">//  2014-6-20</span>
+<span class="k">namespace</span> <span class="nn">Pomelo.DotNetClient</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Transpot updater.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">TranspotUpdate</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">enum</span> <span class="n">STATE</span>
+        <span class="p">{</span>
+            <span class="n">NONE</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span>
+            <span class="n">START</span> <span class="p">=</span> <span class="m">1</span><span class="p">,</span>
+            <span class="n">RUNING</span> <span class="p">=</span> <span class="m">2</span><span class="p">,</span>
+            <span class="n">CLOSE</span> <span class="p">=</span> <span class="m">3</span><span class="p">,</span>
+            <span class="n">DESTORY</span> <span class="p">=</span> <span class="m">4</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">private</span> <span class="n">STATE</span> <span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">NONE</span><span class="p">;</span> <span class="c1">//the state of the transpotUpdate</span>
+        <span class="k">private</span> <span class="n">Action</span> <span class="n">m_cUpdate</span><span class="p">;</span>   <span class="c1">//update action</span>
+        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Action</span><span class="p">&lt;</span><span class="n">JsonObject</span><span class="p">&gt;&gt;</span> <span class="n">m_cOnDisconnect</span><span class="p">;</span>   <span class="c1">//on the disconnect</span>
 
-<p>//  TranspotUpdate.cs
-//  Author: Lu Zexi
-//  2014-6-20</p>
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Init this instance.</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">internal</span> <span class="k">static</span> <span class="n">TranspotUpdate</span> <span class="nf">Init</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">GameObject</span> <span class="n">obj</span> <span class="p">=</span> <span class="k">new</span> <span class="n">GameObject</span><span class="p">(&lt;</span><span class="n">span</span> <span class="n">class</span><span class="p">=</span><span class="s">&quot;string&quot;</span><span class="p">&gt;</span><span class="s">&quot;Socket&quot;</span><span class="p">);</span>
+            <span class="n">TranspotUpdate</span> <span class="n">trans</span> <span class="p">=</span> <span class="n">obj</span><span class="p">.</span><span class="n">AddComponent</span><span class="p">&lt;</span><span class="n">TranspotUpdate</span><span class="p">&gt;();</span>
+            <span class="k">return</span> <span class="n">trans</span><span class="p">;</span>
+        <span class="p">}</span>
 
-<p>namespace Pomelo.DotNetClient
-{
-    /// 
-<summary>
-    /// Transpot updater.
-    /// </summary>
-    public class TranspotUpdate : MonoBehaviour
-    {
-        private enum STATE
-        {
-            NONE = 0,
-            START = 1,
-            RUNING = 2,
-            CLOSE = 3,
-            DESTORY = 4,
-        }
-        private STATE m<em>eStat = STATE.NONE; //the state of the transpotUpdate
-        private Action m</em>cUpdate;   //update action
-        private List<Action<JsonObject>&gt; m_cOnDisconnect;   //on the disconnect</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">    /// &lt;summary&gt;
-    /// Init this instance.
-    /// &lt;/summary&gt;
-    internal static TranspotUpdate Init()
-    {
-        GameObject obj = new GameObject(&lt;span class=&quot;string&quot;&gt;&quot;Socket&quot;);
-        TranspotUpdate trans = obj.AddComponent&lt;TranspotUpdate&gt;();
-        return trans;
-    }
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// set the update of the process message action</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;param name=&quot;update&quot;&gt;Update.&lt;/param&gt;</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">SetUpdate</span><span class="p">(</span> <span class="n">Action</span> <span class="n">update</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">m_cUpdate</span> <span class="p">=</span> <span class="n">update</span><span class="p">;</span>
+        <span class="p">}</span>
 
-    /// &lt;summary&gt;
-    /// set the update of the process message action
-    /// &lt;/summary&gt;
-    /// &lt;param name=&quot;update&quot;&gt;Update.&lt;/param&gt;
-    internal void SetUpdate( Action update )
-    {
-        this.m_cUpdate = update;
-    }
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// set the disconnect evet.</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;param name=&quot;ondisconnect&quot;&gt;Ondisconnect.&lt;/param&gt;</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">SetOndisconnect</span><span class="p">(</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Action</span><span class="p">&lt;</span><span class="n">JsonObject</span><span class="p">&gt;&gt;</span> <span class="n">ondisconnect</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">m_cOnDisconnect</span> <span class="p">=</span> <span class="n">ondisconnect</span><span class="p">;</span>
+        <span class="p">}</span>
 
-    /// &lt;summary&gt;
-    /// set the disconnect evet.
-    /// &lt;/summary&gt;
-    /// &lt;param name=&quot;ondisconnect&quot;&gt;Ondisconnect.&lt;/param&gt;
-    internal void SetOndisconnect( List&lt;Action&lt;JsonObject&gt;&gt; ondisconnect )
-    {
-        this.m_cOnDisconnect = ondisconnect;
-    }
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// close the updater</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">Close</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">CLOSE</span><span class="p">;</span>
+        <span class="p">}</span>
 
-    /// &lt;summary&gt;
-    /// close the updater
-    /// &lt;/summary&gt;
-    internal void Close()
-    {
-        this.m_eStat = STATE.CLOSE;
-    }
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Start this update.</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">_Start</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">START</span><span class="p">;</span>
+        <span class="p">}</span>
 
-    /// &lt;summary&gt;
-    /// Start this update.
-    /// &lt;/summary&gt;
-    internal void _Start()
-    {
-        this.m_eStat = STATE.START;
-    }
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// destory the gameobject.</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">_Destory</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">!=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">CLOSE</span><span class="p">)</span>
+                <span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">DESTORY</span><span class="p">;</span>
+        <span class="p">}</span>
 
-    /// &lt;summary&gt;
-    /// destory the gameobject.
-    /// &lt;/summary&gt;
-    internal void _Destory()
-    {
-        if(this.m_eStat != STATE.CLOSE)
-            this.m_eStat = STATE.DESTORY;
-    }
-
-    /// &lt;summary&gt;
-    /// Fixeds the update.
-    /// &lt;/summary&gt;
-    void FixedUpdate()
-    {
-        switch(this.m_eStat)
-        {
-        case STATE.START:
-        case STATE.RUNING:
-            if(this.m_cUpdate != null )
-            {
-                this.m_cUpdate();
-            }
-            break;
-        case STATE.CLOSE:
-            if(this.m_cOnDisconnect != null )
-            {
-                foreach(Action&lt;JsonObject&gt; action in this.m_cOnDisconnect)
-                    action.Invoke(null);
-            }
-            this.m_cOnDisconnect = null;
-            this.m_eStat = STATE.DESTORY;
-            break;
-        case STATE.DESTORY:
-            this.m_eStat = STATE.NONE;
-            GameObject.Destroy(gameObject);
-            break;
-        }
-    }
-}
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Fixeds the update.</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">void</span> <span class="nf">FixedUpdate</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">switch</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span><span class="p">)</span>
+            <span class="p">{</span>
+            <span class="k">case</span> <span class="n">STATE</span><span class="p">.</span><span class="n">START</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">STATE</span><span class="p">.</span><span class="n">RUNING</span><span class="p">:</span>
+                <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_cUpdate</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="n">m_cUpdate</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="n">STATE</span><span class="p">.</span><span class="n">CLOSE</span><span class="p">:</span>
+                <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_cOnDisconnect</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">foreach</span><span class="p">(</span><span class="n">Action</span><span class="p">&lt;</span><span class="n">JsonObject</span><span class="p">&gt;</span> <span class="n">action</span> <span class="k">in</span> <span class="k">this</span><span class="p">.</span><span class="n">m_cOnDisconnect</span><span class="p">)</span>
+                        <span class="n">action</span><span class="p">.</span><span class="n">Invoke</span><span class="p">(</span><span class="k">null</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">this</span><span class="p">.</span><span class="n">m_cOnDisconnect</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+                <span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">DESTORY</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="n">STATE</span><span class="p">.</span><span class="n">DESTORY</span><span class="p">:</span>
+                <span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">NONE</span><span class="p">;</span>
+                <span class="n">GameObject</span><span class="p">.</span><span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
-<p>}</p>
-
 <p>转载请注明出处：http://www.luzexi.com</p>
 
 </div>

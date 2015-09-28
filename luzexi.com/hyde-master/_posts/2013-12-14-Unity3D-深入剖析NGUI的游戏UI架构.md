@@ -44,6 +44,7 @@ Unity3D-NGUI分析，使用NGUI做UI需要注意的几个要点在此我想罗�
 
 适配源码：
 
+``` c#
 float defaultWHRate = 800f / 480f;
 float ScreenWHRate = (float)Screen.width / (float)Screen.height;
 bool isUseHResize = defaultWHRate >= ScreenWHRate ? false : true;
@@ -58,10 +59,13 @@ else
 {
     root.manualHeight = 480;
 }
+```
 
 5.拆分以及固定各个锚点，上，左上，右上，中，左中，右中，下，左下，右下
 
 6.拆分GUI层级，层级越高，显示越靠前。层级的正确拆分能有效管理GUI的显示方式。
+
+``` c#
 /// <summary>
 /// GUI层级
 /// </summary>
@@ -80,6 +84,7 @@ public enum GUILAYER
     GUI_GUIDE,           //引导层
     GUI_LOADING,        //加载层
 }
+```
 
 8.要充分的管理GUI，不然过多的GUI会导致内存加速增长，而每次都销毁不用的GUI则会让IO过于频繁降低运行速度。我的方法是找到两者间的中间态，给予隐藏的GUI一个缓冲带,当每次某各GUI进行隐藏时判断是否有需要销毁的GUI。或者也可以这么做，每时每刻去监控隐藏的GUI，哪些GUI内存时间驻留过长就销毁。关于内存优化问题，可以参考<a href="http://www.luzexi.com/unity3d-texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90/" target="_blank">《unity3d-texture图片空间和内存占用分析》</a>和 <a href="http://www.luzexi.com/unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF/" target="_blank">《unity3d优化之路》</a>
 
@@ -99,6 +104,7 @@ NGUI中UIPanel是渲染的关键，他承载了在他下面的子物体的所有
 
 首先我们来看UIWidget这个组件基类，从它拥有的类内部变量就能知道它承担得怎样的责任:
 
+``` c#
 // Cached and saved values
 [HideInInspector][SerializeField] protected Material mMat;//材质
 [HideInInspector][SerializeField] protected Texture mTex;//贴图
@@ -118,167 +124,185 @@ int mVisibleFlag = -1;//可见标志
 
 // Widget's generated geometry
 UIGeometry mGeom = new UIGeometry();//多变形实例
+```
 
 UIWidget承担了存储显示内容，颜色调配，显示深度，显示位置，显示大小，显示角度，显示的多边形形状，归属哪个UIPanel。这就是UIWidget所要承担的内容，在UIWidget的所有子类中都具有以上相同的属性和任务。UIWidget和UIPanel的关系非常密切，因为UIPanel承担了UIWidget的所有渲染工作，而UIWidget只是承担了存储需要渲染数据。所以，在UIWidget在更换贴图，材质球，甚至更换UIPanel父节点时它会及时通知UIPanel说："我更变配置了，你得重新获取我的渲染数据"。
 
 UIWidget中最重要的虚方法为 virtual public void OnFill(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols) { } 它是区分子类的显示内容的重要方法。它的工作就是填写如何显示，显示什么。
 
 UIWidget中在使用OnFill方法的重要的方法是 更新渲染多边型方法：
+
+``` c#
 public bool UpdateGeometry (ref Matrix4x4 worldToPanel, bool parentMoved, bool generateNormals)
 {
-if (material == null) return false;
+  if (material == null) return false;
 
-if (OnUpdate() || mChanged)
-{
-mChanged = false;
-mGeom.Clear();
-OnFill(mGeom.verts, mGeom.uvs, mGeom.cols);
+  if (OnUpdate() || mChanged)
+  {
+    mChanged = false;
+    mGeom.Clear();
+    OnFill(mGeom.verts, mGeom.uvs, mGeom.cols);
 
-if (mGeom.hasVertices)
-{
-Vector3 offset = pivotOffset;
-Vector2 scale = relativeSize;
-offset.x *= scale.x;
-offset.y *= scale.y;
+    if (mGeom.hasVertices)
+    {
+      Vector3 offset = pivotOffset;
+      Vector2 scale = relativeSize;
+      offset.x *= scale.x;
+      offset.y *= scale.y;
 
-mGeom.ApplyOffset(offset);
-mGeom.ApplyTransform(worldToPanel * cachedTransform.localToWorldMatrix, generateNormals);
+      mGeom.ApplyOffset(offset);
+      mGeom.ApplyTransform(worldToPanel * cachedTransform.localToWorldMatrix, generateNormals);
+    }
+    return true;
+  }
+  else if (mGeom.hasVertices && parentMoved)
+  {
+    mGeom.ApplyTransform(worldToPanel * cachedTransform.localToWorldMatrix, generateNormals);
+  }
+  return false;
 }
-return true;
-}
-else if (mGeom.hasVertices && parentMoved)
-{
-mGeom.ApplyTransform(worldToPanel * cachedTransform.localToWorldMatrix, generateNormals);
-}
-return false;
-}
+```
 
 它的作用就是，当需要重新组织多边型展示内容时，进行多边型的重新规划。
  
 接着，我们来看看UINode，这个类很容易被人忽视，而他的作用也很重要。它是在UIPanel被告知有新的UIWidget显示元素时被创建的，它的创建主要是为了监视被创建的UIWidget的位置，旋转，大小是否被更改，若被更改，将由UIPanel进行重新的渲染工作。
 HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel用来监视每个元素是否改变了进而进行重新渲染。
 
+``` c#
 public bool HasChanged ()
 {
 #if UNITY_3 || UNITY_4_0
-bool isActive = NGUITools.GetActive(mGo) && (widget == null || (widget.enabled && widget.isVisible));
+  bool isActive = NGUITools.GetActive(mGo) && (widget == null || (widget.enabled && widget.isVisible));
 
-if (lastActive != isActive || (isActive &&
-(lastPos != trans.localPosition ||
-lastRot != trans.localRotation ||
-lastScale != trans.localScale)))
-{
-lastActive = isActive;
-lastPos = trans.localPosition;
-lastRot = trans.localRotation;
-lastScale = trans.localScale;
-return true;
-}
+  if (lastActive != isActive || (isActive &&
+  (lastPos != trans.localPosition ||
+  lastRot != trans.localRotation ||
+  lastScale != trans.localScale)))
+  {
+    lastActive = isActive;
+    lastPos = trans.localPosition;
+    lastRot = trans.localRotation;
+    lastScale = trans.localScale;
+    return true;
+  }
 #else
-if (widget != null && widget.finalAlpha != mLastAlpha)
-{
-mLastAlpha = widget.finalAlpha;
-trans.hasChanged = false;
-return true;
-}
-else if (trans.hasChanged)
-{
-trans.hasChanged = false;
-return true;
-}
+  if (widget != null && widget.finalAlpha != mLastAlpha)
+  {
+    mLastAlpha = widget.finalAlpha;
+    trans.hasChanged = false;
+    return true;
+  }
+  else if (trans.hasChanged)
+  {
+    trans.hasChanged = false;
+    return true;
+  }
 #endif
-return false;
+  return false;
 }
+```
 
 接着，来看UIDrawCall，它是被NGUI隐藏起来的类。他的内部变量来看看：
 
 Transform        mTrans;            //坐标转换类
+
 Material        mSharedMat;        // 渲染材质
+
 Mesh            mMesh0;            //首个MESH
+
 Mesh            mMesh1;            //用于更换的Mesh
+
 MeshFilter        mFilter;        //绘制的MeshFilter
+
 MeshRenderer    mRen;            //渲染MeshRender组件
+
 Clipping        mClipping;        //裁剪类型
+
 Vector4            mClipRange;        //裁剪范围
+
 Vector2            mClipSoft;        //裁剪缓冲方位
+
 Material        mMat;            //实例化材质
+
 int[]            mIndices;        //做为Mesh三角型索引点
 
 由这些内部变量可知，UIDrawCall是负责NGUI的最重要的渲染类。他制造Mesh制造Material，设置裁剪范围，为NGUI提供渲染底层。
 他最重要的方法是：
 
+``` c#
 public void Set (BetterList<Vector3> verts, BetterList<Vector3> norms, BetterList<Vector4> tans, BetterList<Vector2> uvs, BetterList<Color32> cols)
 {
-int count = verts.size;
+  int count = verts.size;
 
-// Safety check to ensure we get valid values
-if (count > 0 && (count == uvs.size && count == cols.size) && (count % 4) == 0)
-{
-// Cache all components
-if (mFilter == null) mFilter = gameObject.GetComponent<MeshFilter>();
-if (mFilter == null) mFilter = gameObject.AddComponent<MeshFilter>();
-if (mRen == null) mRen = gameObject.GetComponent<MeshRenderer>();
+  // Safety check to ensure we get valid values
+  if (count > 0 && (count == uvs.size && count == cols.size) && (count % 4) == 0)
+  {
+    // Cache all components
+    if (mFilter == null) mFilter = gameObject.GetComponent<MeshFilter>();
+    if (mFilter == null) mFilter = gameObject.AddComponent<MeshFilter>();
+    if (mRen == null) mRen = gameObject.GetComponent<MeshRenderer>();
 
-if (mRen == null)
-{
-mRen = gameObject.AddComponent<MeshRenderer>();
-#if UNITY_EDITOR
-mRen.enabled = isActive;
-#endif
-UpdateMaterials();
-}
-else if (mMat != null && mMat.mainTexture != mSharedMat.mainTexture)
-{
-UpdateMaterials();
-}
+    if (mRen == null)
+    {
+      mRen = gameObject.AddComponent<MeshRenderer>();
+      #if UNITY_EDITOR
+      mRen.enabled = isActive;
+      #endif
+      UpdateMaterials();
+    }
+    else if (mMat != null && mMat.mainTexture != mSharedMat.mainTexture)
+    {
+      UpdateMaterials();
+    }
 
-if (verts.size < 65000)
-{
-int indexCount = (count >> 1) * 3;
-bool rebuildIndices = (mIndices == null || mIndices.Length != indexCount);
+    if (verts.size < 65000)
+    {
+      int indexCount = (count >> 1) * 3;
+      bool rebuildIndices = (mIndices == null || mIndices.Length != indexCount);
 
-// Populate the index buffer
-if (rebuildIndices)
-{
-// It takes 6 indices to draw a quad of 4 vertices
-mIndices = new int[indexCount];
-int index = 0;
+      // Populate the index buffer
+      if (rebuildIndices)
+      {
+        // It takes 6 indices to draw a quad of 4 vertices
+        mIndices = new int[indexCount];
+        int index = 0;
 
-for (int i = 0; i < count; i += 4)
-{
-mIndices[index++] = i;
-mIndices[index++] = i + 1;
-mIndices[index++] = i + 2;
+        for (int i = 0; i < count; i += 4)
+        {
+          mIndices[index++] = i;
+          mIndices[index++] = i + 1;
+          mIndices[index++] = i + 2;
 
-mIndices[index++] = i + 2;
-mIndices[index++] = i + 3;
-mIndices[index++] = i;
-}
-}
+          mIndices[index++] = i + 2;
+          mIndices[index++] = i + 3;
+          mIndices[index++] = i;
+        }
+      }
 
-// Set the mesh values
-Mesh mesh = GetMesh(ref rebuildIndices, verts.size);
-mesh.vertices = verts.ToArray();
-if (norms != null) mesh.normals = norms.ToArray();
-if (tans != null) mesh.tangents = tans.ToArray();
-mesh.uv = uvs.ToArray();
-mesh.colors32 = cols.ToArray();
-if (rebuildIndices) mesh.triangles = mIndices;
-mesh.RecalculateBounds();
-mFilter.mesh = mesh;
+      // Set the mesh values
+      Mesh mesh = GetMesh(ref rebuildIndices, verts.size);
+      mesh.vertices = verts.ToArray();
+      if (norms != null) mesh.normals = norms.ToArray();
+      if (tans != null) mesh.tangents = tans.ToArray();
+      mesh.uv = uvs.ToArray();
+      mesh.colors32 = cols.ToArray();
+      if (rebuildIndices) mesh.triangles = mIndices;
+      mesh.RecalculateBounds();
+      mFilter.mesh = mesh;
+    }
+    else
+    {
+      if (mFilter.mesh != null) mFilter.mesh.Clear();
+      Debug.LogError("Too many vertices on one panel: " + verts.size);
+    }
+  }
+  else
+  {
+    if (mFilter.mesh != null) mFilter.mesh.Clear();
+    Debug.LogError("UIWidgets must fill the buffer with 4 vertices per quad. Found " + count);
+  }
 }
-else
-{
-if (mFilter.mesh != null) mFilter.mesh.Clear();
-Debug.LogError("Too many vertices on one panel: " + verts.size);
-}
-}
-else
-{
-if (mFilter.mesh != null) mFilter.mesh.Clear();
-Debug.LogError("UIWidgets must fill the buffer with 4 vertices per quad. Found " + count);
-}
-}
+```
 
 在这个方法里，它制造Mesh,MeshFilter,MeshRender,Materials。
  
@@ -290,108 +314,114 @@ Debug.LogError("UIWidgets must fill the buffer with 4 vertices per quad. Found "
     4.对需要更新的UIDrawCall进行重新渲染
     5.最后标记已经渲染的渲染组件，告诉他们已经渲染，为下次判断更新做好准备。删除不再需要渲染的UIDrawCall，销毁渲染冗余。
     注意：所有的渲染都是在LateUpdate下进行，也就是它是进行的延迟渲染。
+
 接口源码：
+
+``` c#
 void LateUpdate ()
 {
-// Only the very first panel should be doing the update logic
-if (list[0] != this) return;
+  // Only the very first panel should be doing the update logic
+  if (list[0] != this) return;
 
-// Update all panels
-for (int i = 0; i < list.size; ++i)
-{
-UIPanel panel = list[i];
-panel.mUpdateTime = RealTime.time;
-panel.UpdateTransformMatrix();
-panel.UpdateLayers();
-panel.UpdateWidgets();
+  // Update all panels
+  for (int i = 0; i < list.size; ++i)
+  {
+  UIPanel panel = list[i];
+  panel.mUpdateTime = RealTime.time;
+  panel.UpdateTransformMatrix();
+  panel.UpdateLayers();
+  panel.UpdateWidgets();
 }
 
 // Fill the draw calls for all of the changed materials
 if (mFullRebuild)
 {
-UIWidget.list.Sort(UIWidget.CompareFunc);
-Fill();
+  UIWidget.list.Sort(UIWidget.CompareFunc);
+  Fill();
 }
 else
 {
-for (int i = 0; i < UIDrawCall.list.size; )
-{
-UIDrawCall dc = UIDrawCall.list[i];
+  for (int i = 0; i < UIDrawCall.list.size; )
+  {
+    UIDrawCall dc = UIDrawCall.list[i];
 
-if (dc.isDirty)
-{
-if (!Fill(dc))
-{
-DestroyDrawCall(dc, i);
-continue;
-}
-}
-++i;
-}
+    if (dc.isDirty)
+    {
+      if (!Fill(dc))
+      {
+        DestroyDrawCall(dc, i);
+        continue;
+      }
+    }
+    ++i;
+  }
 }
 
-// Update the clipping rects
-for (int i = 0; i < list.size; ++i)
-{
-UIPanel panel = list[i];
-panel.UpdateDrawcalls();
+  // Update the clipping rects
+  for (int i = 0; i < list.size; ++i)
+  {
+    UIPanel panel = list[i];
+    panel.UpdateDrawcalls();
+  }
+  mFullRebuild = false;
 }
-mFullRebuild = false;
-}
+```
 
 Fill()接口源码：
+
+``` c#
 /// <summary>
 /// Fill the geometry fully, processing all widgets and re-creating all draw calls.
 /// </summary>
-
 static void Fill ()
 {
-for (int i = UIDrawCall.list.size; i > 0; )
-DestroyDrawCall(UIDrawCall.list[--i], i);
+  for (int i = UIDrawCall.list.size; i > 0; )
+  DestroyDrawCall(UIDrawCall.list[--i], i);
 
-int index = 0;
-UIPanel pan = null;
-Material mat = null;
-UIDrawCall dc = null;
+  int index = 0;
+  UIPanel pan = null;
+  Material mat = null;
+  UIDrawCall dc = null;
 
-for (int i = 0; i < UIWidget.list.size; )
-{
-UIWidget w = UIWidget.list[i];
+  for (int i = 0; i < UIWidget.list.size; )
+  {
+    UIWidget w = UIWidget.list[i];
 
-if (w == null)
-{
-UIWidget.list.RemoveAt(i);
-continue;
-}
+    if (w == null)
+    {
+      UIWidget.list.RemoveAt(i);
+      continue;
+    }
 
-if (w.isVisible && w.hasVertices)
-{
-if (pan != w.panel || mat != w.material)
-{
-if (pan != null && mat != null && mVerts.size != 0)
-{
-pan.SubmitDrawCall(dc);
-dc = null;
-}
+    if (w.isVisible && w.hasVertices)
+    {
+      if (pan != w.panel || mat != w.material)
+      {
+        if (pan != null && mat != null && mVerts.size != 0)
+        {
+          pan.SubmitDrawCall(dc);
+          dc = null;
+        }
 
-pan = w.panel;
-mat = w.material;
-}
+        pan = w.panel;
+        mat = w.material;
+      }
 
-if (pan != null && mat != null)
-{
-if (dc == null) dc = pan.GetDrawCall(index++, mat);
-w.drawCall = dc;
-if (pan.generateNormals) w.WriteToBuffers(mVerts, mUvs, mCols, mNorms, mTans);
-else w.WriteToBuffers(mVerts, mUvs, mCols, null, null);
-}
-}
-else w.drawCall = null;
-++i;
-}
+      if (pan != null && mat != null)
+      {
+        if (dc == null) dc = pan.GetDrawCall(index++, mat);
+        w.drawCall = dc;
+        if (pan.generateNormals) w.WriteToBuffers(mVerts, mUvs, mCols, mNorms, mTans);
+        else w.WriteToBuffers(mVerts, mUvs, mCols, null, null);
+      }
+    }
+    else w.drawCall = null;
+    ++i;
+  }
 
-if (mVerts.size != 0)
-pan.SubmitDrawCall(dc);
+  if (mVerts.size != 0)
+  pan.SubmitDrawCall(dc);
 }
+```
 
 转载请注明出处：http://www.luzexi.com

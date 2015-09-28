@@ -2,29 +2,38 @@
 layout: page
 title: About
 ---
+姓名：陆泽西 (Jesse Lu)
 
-<p class="message">
-  Hey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
-</p>
+行业：游戏行业
 
-In the novel, *The Strange Case of Dr. Jeykll and Mr. Hyde*, Mr. Poole is Dr. Jekyll's virtuous and loyal butler. Similarly, Poole is an upstanding and effective butler that helps you build Jekyll themes. It's made by [@mdo](https://twitter.com/mdo).
+位置：上海
 
-There are currently two themes built on Poole:
+研发项目：
 
-* [Hyde](http://hyde.getpoole.com)
-* [Lanyon](http://lanyon.getpoole.com)
+《白猫计划》 3D ARPG 2014 – 2015
 
-Learn more and contribute on [GitHub](https://github.com/poole).
+《临兵斗者三国志》3D 回合制RPG游戏  2013 – 2014
 
-## Setup
+《王途霸业》2D 战争策略游戏  2012 – 2013
 
-Some fun facts about the setup of this project include:
+《凡人修仙》3D PC 单机游戏  2011 – 2012
 
-* Built for [Jekyll](http://jekyllrb.com)
-* Developed on GitHub and hosted for free on [GitHub Pages](https://pages.github.com)
-* Coded with [Sublime Text 2](http://sublimetext.com), an amazing code editor
-* Designed and developed while listening to music like [Blood Bros Trilogy](https://soundcloud.com/maddecent/sets/blood-bros-series)
+《公元》3D ARPG游戏  2010 – 2011
 
-Have questions or suggestions? Feel free to [open an issue on GitHub](https://github.com/poole/issues/new) or [ask me on Twitter](https://twitter.com/mdo).
+《星月精灵》3D 角色扮演类游戏  2010
 
-Thanks for reading!
+《汽车使命》3D 赛车竞技游戏  2009
+
+对于行业来说，我只是一个坚守在游戏行业技术领域的程序员。我的技术还不能改变世界，于是我每天都在拼命追赶前面的人。用自己的技术改变世界是所有程序员的梦想，也是我的。面临30岁的挑战，我并不从容，每天都活在惶惶恐恐中，生怕今天少学了点什么，明天就再没机会赶上这个时代的步伐。但是无论多少恐惧在我心中，我仍然每天一个脚印继续着我的道路，我知道我改变不了世界，于是我改变自己。
+
+这个年龄段的我，是个最容易满足和最容易膨胀的年龄，我何尝不想把我这几年经历过的事情像说书那样，分九章三十六节，一一写下来。这样的故事里，肯定将我这些年的经历描述的精彩万分，极具体现我的英雄气概，成熟稳重。但事实并非如此，在这个世界上，每个人都在为自己争取着更好的方向，没有谁能随随便便成功。从2008年到现在，从一名稚嫩的孩子渐渐成长为一名能够扛得起压力的男人，10年开始主程之路，12年踏上Manager层，14年经历CTO肩膀上的重担，15年落魄的躲在外企当个小小主程修身养性。从一名程序员到部门经理再到技术总监，在这条迈向成功路上艰难的前行，步步都是坑，个个都是陷阱。生活这条道路并不平坦，每条岔道的选择都是崎岖难行，我同样也是个被生活轮番**的劳苦大众。
+
+有人问我为什么对技术关注这么严重，我这样回答：30岁前我必须盯紧我脚下的路，30岁后才有可能抬头看看我头上这片天空。
+
+我本着”不开口没有人知道你想要什么;不去做任何想法都只在脑海里游泳;不迈出脚步，永远找不到你前进的方向;”的宗旨写下此文。望各位切莫嘲笑
+
+开源地址: https://github.com/luzexi
+
+EMAIL：jesse_luzexi@163.com
+
+QQ:16008977 (请标注为什么要加)

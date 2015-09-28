@@ -11,7 +11,7 @@
 
   <title>
     
-      游戏服务端架构 &middot; Hyde
+      游戏服务端架构 &middot; 技术人生
     
   </title>
 
@@ -37,10 +37,10 @@
     <div class="sidebar-about">
       <h1>
         <a href="/">
-          Hyde
+          技术人生
         </a>
       </h1>
-      <p class="lead">A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+      <p class="lead">我将在这里写下我毕生所学---分享是我的一直以来坚持的事,不仅仅是为别人更是为了自己</p>
     </div>
 
     <nav class="sidebar-nav">
@@ -91,9 +91,9 @@
         
       
 
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde/archive/v2.1.0.zip">Download</a>
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde">GitHub project</a>
-      <span class="sidebar-nav-item">Currently v2.1.0</span>
+      <!-- <a class="sidebar-nav-item" href="https://github.com/luzexi/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
     <p>&copy; 2015. All rights reserved.</p>
@@ -135,12 +135,11 @@
 <p>一般来说，我们在接入游戏服务器的时候都会要提供一个帐号和密码，验证通过后才能进入。关于为什么要提供用户名和密码才能进入的问题我们这里不打算做过 多讨论，云风曾对此也提出过类似的疑问，并给出了只用一个标识串就能进入的设想，有兴趣的可以去看看他们的讨论。但不管是采用何种方式进入，照目前看来我 们的服务器起码得提供一个帐号验证的功能。</p>
 
 <p>我们 把观察点先集中在一个大区内。在大多数情况下，一个大区内都会有多组游戏服，也就是多个游戏世界可供选择。简单点来实现，我们完全可以抛弃这个大区的概 念，认为一个大区也就是放在同一个机房的多台服务器组，各服务器组间没有什么关系。这样，我们可为每组服务器单独配备一台登录服。最后的结构图应该像这 样：</p>
-
-<p>loginServer   gameServer
+<div class="highlight"><pre><code class="language-text" data-lang="text">loginServer   gameServer
 |           /
 |         /
-client</p>
-
+client
+</code></pre></div>
 <p>该结构下的玩家操作流程为，先选择大区，再选择大区下的某台服务器，即某个游戏世界，点击进入后开始帐号验证过程，验证成功则进入了该游戏世界。但是，如果玩家想要切换游戏世界，他只能先退出当前游戏世界，然后进入新的游戏世界重新进行帐号验证。</p>
 
 <p>早期的游戏大都采用的是这种结构，有些游戏在实现时采用了一些技术手段使得在切换游戏服时不需要再次验证帐号，但整体结构还是未做改变。</p>
@@ -172,15 +171,14 @@ client</p>
 <p>但是对于不同的游戏世界来说，其角色及游戏内数据都是互相独立的，所以一般情况下也就为每个游戏世界单独配备一台数据库服务器，以减轻数据库的压力。所 以，整体的服务器结构应该是一个大区有一台帐号数据库服务器，所有的登录服都连接到这里。而每个游戏世界都有自己的游戏数据库服务器，只允许本游戏世界内 的服务器连接。</p>
 
 <p>最后，我们的服务器结构就像这样：</p>
-
-<p>大区服务器
-/   　 |<br>
+<div class="highlight"><pre><code class="language-text" data-lang="text">大区服务器
+/   　 |       
 /       |       　
 登录服1   登录服2   世界服1   世界服2
      　   |       　 |     　 |
    　   |       　 |         |
-帐号数据库         DBS     DBS</p>
-
+帐号数据库         DBS     DBS
+</code></pre></div>
 <p>这里既然讨论到了大区及帐号数据库，所以顺带也说一下关于激活大区的概念。wow中一共有八个大区，我们想要进入某个大区游戏之前，必须到官网上激活这个区，这是为什么呢？</p>
 
 <p>一般来说，在各个大区帐号数据库之上还有一个总的帐号数据库，我们可以称它为中心数据库。比如我们在官网上注册了一个帐号，这时帐号数据是只保存在中心 数据库上的。而当我们要到一区去创建角色开始游戏的时候，在一区的帐号数据库中并没有我们的帐号数据，所以，我们必须先到官网上做一次激活操作。这个激活 的过程也就是从中心库上把我们的帐号数据拷贝到所要到的大区帐号数据库中。</p>
@@ -204,15 +202,14 @@ client</p>
 <p>中心服务器主要维护一张地图ID到地图服务器地址的映射表。当我们要进入某张地图时，会从中心服上取得该地图的IP和port告诉客户端，客户端主动去 连接，这样进入他想要去的游戏地图。在整个游戏过程中，客户端始终只会与一台地图服务器保持连接，当要切换地图的时候，在获取到新地图的地址后，会先与当 前地图断开连接，再进入新的地图，这样保证玩家数据在服务器上只有一份。</p>
 
 <p>我们来看看结构图是怎样的：</p>
-
-<p>中心服务器
-/<br>
-/<br>
+<div class="highlight"><pre><code class="language-text" data-lang="text">中心服务器
+/                
+/                  
 登录服     地图1     地图2   地图n
          |         /       /
        |         /       /
-客户端</p>
-
+客户端
+</code></pre></div>
 <p>很简单，不是吗。但是简单并不表示功能上会有什么损失，简单也更不能表示游戏不能赚钱。早期不少游戏也确实采用的就是这种简单结构。</p>
 
 <p>服务器结构探讨 -- 继续世界服</p>
@@ -240,8 +237,7 @@ client</p>
 <p>网关之后的结构我们依然可以采用之前描述的方案，只是，似乎并没有必要为每一个地图都开一个独立的监听端口了。我们可以试着对地图进行一些划分，由一个 Master Server来管理一些更小的Zone Server，玩家通过网关连接到Master Server上，而实际与地图有关的逻辑是分派给更小的Zone Server去处理。</p>
 
 <p>最后的结构看起来大概是这样的：</p>
-
-<p>Zone Server         Zone Server
+<div class="highlight"><pre><code class="language-text" data-lang="text">Zone Server         Zone Server
              /
            /
 Master Server           Master Server
@@ -253,8 +249,8 @@ Gateway Server                        /
 |               Center Server
 |
 |
-Client</p>
-
+Client
+</code></pre></div>
 <p>服务器结构探讨 -- 最终的结构</p>
 
 <p>如果我们就此打住，可能马上就会有人要嗤之以鼻了，就这点古董级的技术也敢出来现。好吧，我们还是把之前留下的问题拿出来解决掉吧。</p>
@@ -364,24 +360,22 @@ Client</p>
 <p>这样，主逻辑循环所要做的就是不停要取消息包来处理，当然这些消息包不仅有来自客户端的玩家操作数据包，也有来自GM服务器的管理命令，还包括来自数据库查询线程的返回结果消息包。这个循环将一直持续，直到收到一个通知服务器关闭的消息包。</p>
 
 <p>主逻辑循环的结构还是很简单的，复杂的部分都在如何处理这些消息包的逻辑上。我们可以用一段简单的伪码来描述这个循环过程：</p>
-
-<p>while (Message* msg = getMessage())
+<div class="highlight"><pre><code class="language-text" data-lang="text">while (Message* msg = getMessage())
 {
 if (msg为服务器关闭消息)
 break;
 处理msg消息;
-}</p>
-
+}
+</code></pre></div>
 <p>这里就有一个问题需要探讨了，在getMessage()的时候，我们应该去哪里取消息？前面我们考虑过，至少会有三个消息来源，而我们还讨论过，这些消息源的IO操作都是在独立的线程中进行的，我们这里的主线程不应该直接去那几处消息源进行阻塞式的IO操作。</p>
 
 <p>很简单，让那些独立的IO线程在接收完数据后自己送过来就是了。好比是，我这里提供了一个仓库，有很多的供货商，他们有货要给我的时候只需要交到仓库， 然后我再到仓库去取就是了，这个仓库也就是消息队列。消息队列是一个普通的队列实现，当然必须要提供多线程互斥访问的安全性支持，其基本的接口定义大概类 似这样：</p>
-
-<p>IMessageQueue
+<div class="highlight"><pre><code class="language-text" data-lang="text">IMessageQueue
 {
-void putMessage(Message<em>);
-Message</em> getMessage();
-}</p>
-
+void putMessage(Message*);
+Message* getMessage();
+}
+</code></pre></div>
 <p>网络IO，数据库IO线程把整理好的消息包都加入到主逻辑循环线程的这个消息队列中便返回。有关消息队列的实现和线程间消息的传递在ACE中有比较完全的代码实现及描述，还有一些使用示例，是个很好的参考。</p>
 
 <p>这样的话，我们的主循环就很清晰了，从主线程的消息队列中取消息，处理消息，再取下一条消息......</p>

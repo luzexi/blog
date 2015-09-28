@@ -11,7 +11,7 @@
 
   <title>
     
-      Hyde &middot; A Jekyll theme
+      技术人生 &middot; luzexi.com
     
   </title>
 
@@ -37,10 +37,10 @@
     <div class="sidebar-about">
       <h1>
         <a href="/">
-          Hyde
+          技术人生
         </a>
       </h1>
-      <p class="lead">A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+      <p class="lead">我将在这里写下我毕生所学---分享是我的一直以来坚持的事,不仅仅是为别人更是为了自己</p>
     </div>
 
     <nav class="sidebar-nav">
@@ -91,9 +91,9 @@
         
       
 
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde/archive/v2.1.0.zip">Download</a>
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde">GitHub project</a>
-      <span class="sidebar-nav-item">Currently v2.1.0</span>
+      <!-- <a class="sidebar-nav-item" href="https://github.com/luzexi/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
     <p>&copy; 2015. All rights reserved.</p>
@@ -103,48 +103,6 @@
 
     <div class="content container">
       <div class="posts">
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2013/10/29/Unity3D%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/">
-        Unity3D游戏架构
-      </a>
-    </h1>
-
-    <span class="post-date">29 Oct 2013</span>
-
-    <p>Unity3D游戏架构.</p>
-
-<p>Unity3D虽然是一款3D的引擎，但由于一部分开发者提供了GUI的插件，所以它也是可以用来开发2D游戏的，但我还需要改造一下。《王途霸业》就是完完全全在U3D上架构起来的2D游戏，在去年年底前完成这款游戏的架构底层后，开发速度直线上升，这也同样证明了我的这套架构的可行性。下面我将介绍如何用U3D和GUI插件架构一套2D游戏。</p>
-
-<p>《王途霸业》U3D项目中有个最大的特点就是不再有纷繁复杂的脚本绑定，整个游戏逻辑不再依赖众多的 MonoBehaviour ，所有GUI不存在脚本绑定一说。我这样做最主要的原因是要将美术，策划，程序的工作完全拆分开来，美术看不到程序，程序不需要管美术，策划更是不需要去顾及那些纷繁复杂的美术和程序专业技术。这样做最直接提升了游戏项目开发效率，用一句话代表这种架构意图：各顾各的，却能成事。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">文章停在这里，我一时不知道如何表达这种架构，因为我想说的东西太多，介于我的书面表达能力，能清晰的表达清楚这种架构不太可能。那我就讲最最最重要的部分，我的心理想法和架构思路，最后提供部分源代码。
-</code></pre></div>
-<p>一.<strong>架构必须符合安全性</strong>。关于项目安全性，很多人第一时间都会跟我说&#39;在项目还没成型前，安全性并不重要&#39;。确实当项目没有可看到的东西的情况下，这些所谓的资源都是没有价值的。但当项目看到有价值的时候，你再去做安全性还来得及吗，我能非常确认的说，那时你根本来不及做安全性的问题，即使你确实非常想推动这事，也会极其缓慢，而且在所有人眼里吃力不讨好，因为程序架构本身就决定了安全性的问题。C++项目里这问题并不十分严重，因为他不属于脚本语言，而U3D不同的是它全篇都是脚本。</p>
-
-<p>二.<strong>分离美术与程序的工作</strong>。本架构的第一思想就是分离部门之间的工作。美术和程序之间有不可分割的交点，但项目必须保证程序不用去做美术的工作，不用去担心美术的问题，美术也不需要获得程序的工作内容，更不需要美术去学习程序。这最大限度保证了部门之间合作效率，也是我一直提倡的架构意图：各顾各的，却能成事。</p>
-
-<p>三.<strong>消除程序员代码上的交点</strong>。架构本身就是解决程序员与程序员之间的问题。&quot;为什么要把解决程序员与程序员的事做为重点问题?&quot;：游戏项目的进度，技术起了主导作用，程序员的工作效率直接决定了整个项目的速度，所以如何让程序员保持良好的效率也就成为了项目程序架构需要解决和考虑的范畴之一了。程序员之间在编写代码的时候，都会有这样那样的交点，有些交点是不应该被其他人修改的或删除的，这些错综复杂的交点会使得整个项目随着时间的推进越来越混乱的局面，致使项目后期进度缓慢效率低下，优秀的程序架构本身就提前考虑了交点问题，将交点以拆分，消除，或合并成组件等形式融入到整体设计当中。如果一个人就能搞定整套程序那也用不着这么多架构思想了，怎么写都是一个人在工作，他可以用无数种方式来编写自己的程序。但事实并非如此，毕竟人脑是有极限的，再牛的人也抗不住错综复杂的逻辑关系和单调的重复劳动。一个优秀的架构能够支撑整个程序团队快速高效并且持续地往前推进，每个人都心情舒畅，工作愉快，富有激情，何乐而不为呢。</p>
-
-<p>四.<strong>分层结构设计全面可扩展</strong>。架构最重要的部分之一就是能够适应变化不断的项目需求，优秀的架构能够尽量减少当需求变化而引起的程序上的修改或删除而引起的整体架构更改。项目的需求变化并不是由我们可以控制，在不断变化的情况下，甚至是当程序员已经适应当前架构的情况下，架构这块基石仍是稳如泰山。我在架构设计时最看重分层设计，每一层都有统一的意图，且只可被上一层调用，必要时以动态库形式存在。</p>
-
-<p>架构思想就谈到这里，接下来讲如何将这些架构思想融入到实际的Uniyt3D项目当中去。</p>
-
-<p>一.<strong>SVN与AssetServer结合控制版本</strong>。这是分离美术与程序的第一步，也是保证安全性的重要手段。SVN更适合做代码版本控制，而AssetServer更适合做U3D的资源版本控制，两者相结合能够让项目管理更加出彩。</p>
-
-<p>二.<strong>整个架构只有一个入口点</strong>。《王途霸业》中用只有GameClient类继承了MonoBehaviour，它也不再被其他类继承。它就是唯一一个入口点。各大系统，各大模块的初始化，逻辑更新，销毁，调用，都需要它的直接或者间接的调用。这就是为什么其他需要用到MonoBehaviour特性的程序不需要继承MonoBehaviour的原因。这是分离美术与程序的第二步，程序员不需要再去管理纷繁复杂的物体绑定脚本。</p>
-
-<p>三.<strong>动态资源生成与管理</strong>。每个显示实例都由各系统独立承担生成，更新，销毁的管理，例如《王途霸业》中的GUI系统，每个GUI在展示时才进行资源生成，在隐藏时判断资源是否需要销毁，这不仅解决的动态资源控制问题也解决了内存控制问题。每个程序员只需要关注自己正在编写的GUI界面，而不需要估计其他GUI的资源问题。这是消除程序员交点的一个方式，也是分离美术与程序的工作。</p>
-
-<p>四.<strong>独立模块以DLL形式存在</strong>。《王途霸业》中以DLL形式存在的独立模块有，2D动画系统模块、人物运动控制模块、基础模块、网络通信模块，GUI通用层模块。将《王途霸业》游戏分割为，网络层，基础层，专业领域层，数据层，安卓第三方SDK接口层，渲染层，工具层。渲染层又分为GUI层，动画层。做这些的层级的划分主要是为了能够架构成MVC模式。以MVC形式呈现的分层架构是一种效率比较高的架构，我在架构时尽量向此种架构靠拢，所以在项目后期确保了项目的安全性，也保证了程序部工作效率，架构越是到后期，发挥的作用越大。正所谓&quot;人不可貌相，架构不可斗量&quot;，架构的威力就是体现在更加宏观的层面上。</p>
-
-<p>五.<strong>尽量编写方便的工具</strong>。游戏架构不仅需要游戏主逻辑本身的规范，还需要这些周边工具的支撑，有了这些工具能让项目进度快速提升，加上优秀的架构思想，项目完工指日可待。</p>
-
-<p>文笔过烂，持续更新中----往各位见谅。</p>
-
-<p><a href="http://www.luzexi.com/%e3%80%8a%e7%8e%8b%e9%80%94%e9%9c%b8%e4%b8%9a%e3%80%8b%e6%88%98%e4%ba%89%e7%ad%96%e7%95%a5%e6%b8%b8%e6%88%8f%e7%9a%84%e6%9c%8d%e5%8a%a1%e5%99%a8%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1/2013051412202849588237-gif/" rel="attachment wp-att-48"><img alt="2013051412202849588237.gif" class="alignnone size-full wp-image-48" height="480" src="http://114.215.202.83/blog/wp-content/uploads/2013/08/2013051412202849588237.gif.jpg" width="800" /></a></p>
-
-  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -188,10 +146,10 @@
 
 <p>一.首先要理解NavMesh核心算法。NavMesh的核心算法就是用三角形代替传统寻路的方格，用计算拐点优化寻路路径来代替合并路径直线。
 如下图1NavMesh寻路:
-<a href="http://www.luzexi.com/wp-content/uploads/2013/10/2303121.jpg"><img class="alignnone wp-image-91 size-full" src="http://www.luzexi.com/wp-content/uploads/2013/10/2303121.jpg" alt="" width="479" height="312" /></a></p>
+<img class="alignnone wp-image-91 size-full" src="/assets/uploads/2013/10/2303121.jpg" alt="" width="479" height="312" /></p>
 
 <p>以及如下图2传统的方格寻路:
-<a href="http://www.luzexi.com/wp-content/uploads/2013/10/20131006173445.jpg" target="_blank"><img class="alignnone wp-image-94 size-full" src="http://www.luzexi.com/wp-content/uploads/2013/10/20131006173445.jpg" alt="" width="621" height="568" /></a></p>
+<img class="alignnone wp-image-94 size-full" src="/assets/uploads/2013/10/20131006173445.jpg" alt="" width="621" height="568" /></p>
 
 <p>看到两者的差别了吧，NavMesh已三角形为寻路块，而传统以方格为寻路块。其实两者都使用A*寻路，但就是其网格生成不一样，导致当有大范围寻路时，其效率和要求也不一样。</p>
 
@@ -226,179 +184,186 @@ Seeker 寻路主算法类</p>
 <p>Step 3:  将所构成的三角形，另两边做如下处理：检查堆栈中是否已存在，如果存在就删除该边，如果不存在就加入到堆栈中。</p>
 
 <p>生成mesh后如图：（绿色的为多边形边框，蓝色的为寻路路径，红色的为编辑器选中的多边形）
-<a href="http://www.luzexi.com/wp-content/uploads/2013/10/OD04RIKAWEMUTM_3MSBQ.jpg"><img class="alignnone size-full wp-image-376" src="http://www.luzexi.com/wp-content/uploads/2013/10/OD04RIKAWEMUTM_3MSBQ.jpg" alt="OD04[RIKAWEMUTM_3MS}B$Q" width="475" height="312" /></a></p>
+<img class="alignnone size-full wp-image-376" src="/assets/uploads/2013/10/OD04RIKAWEMUTM_3MSBQ.jpg" alt="OD04[RIKAWEMUTM_3MS}B$Q" width="475" height="312" /></p>
 
-<p>核心源码为：
-        /// <summary>
-        /// 创建导航网格
-        /// </summary>
-        /// 所有阻挡区域</param>
-        /// 输出的导航网格</param>
-        /// <returns></returns>
-        public NavResCode CreateNavMesh(List<Polygon> polyAll , ref int id , int groupid , ref List<Triangle> triAll)
-        {
-            triAll.Clear();
-            List<Line2D> allLines = new List<Line2D>(); //线段堆栈</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">        //Step1 保存顶点和边
-        NavResCode initRes = InitData(polyAll);
-        if (initRes != NavResCode.Success)
-            return initRes;
+<p>核心源码为：</p>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#">        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// 创建导航网格</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// 所有阻挡区域&lt;/param&gt;</span>
+        <span class="c1">/// 输出的导航网格&lt;/param&gt;</span>
+        <span class="c1">/// &lt;returns&gt;&lt;/returns&gt;</span>
+        <span class="k">public</span> <span class="n">NavResCode</span> <span class="nf">CreateNavMesh</span><span class="p">(</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Polygon</span><span class="p">&gt;</span> <span class="n">polyAll</span> <span class="p">,</span> <span class="k">ref</span> <span class="kt">int</span> <span class="n">id</span> <span class="p">,</span> <span class="kt">int</span> <span class="n">groupid</span> <span class="p">,</span> <span class="k">ref</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Triangle</span><span class="p">&gt;</span> <span class="n">triAll</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">triAll</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Line2D</span><span class="p">&gt;</span> <span class="n">allLines</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Line2D</span><span class="p">&gt;();</span> <span class="c1">//线段堆栈</span>
 
-        int lastNeighborId = -1;
-        Triangle lastTri = null;
+            <span class="c1">//Step1 保存顶点和边</span>
+            <span class="n">NavResCode</span> <span class="n">initRes</span> <span class="p">=</span> <span class="n">InitData</span><span class="p">(</span><span class="n">polyAll</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">initRes</span> <span class="p">!=</span> <span class="n">NavResCode</span><span class="p">.</span><span class="n">Success</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">initRes</span><span class="p">;</span>
 
-        //Step2.遍历边界边作为起点
-        {
-            Line2D sEdge = startEdge;
-            allLines.Add(sEdge);
-            Line2D edge = null;
+            <span class="kt">int</span> <span class="n">lastNeighborId</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+            <span class="n">Triangle</span> <span class="n">lastTri</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
 
-            do
-            {
-                //Step3.选出计算出边的DT点，构成约束Delaunay三角形
-                edge = allLines[allLines.Count - 1];
-                allLines.Remove(edge);
+            <span class="c1">//Step2.遍历边界边作为起点</span>
+            <span class="p">{</span>
+                <span class="n">Line2D</span> <span class="n">sEdge</span> <span class="p">=</span> <span class="n">startEdge</span><span class="p">;</span>
+                <span class="n">allLines</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">sEdge</span><span class="p">);</span>
+                <span class="n">Line2D</span> <span class="n">edge</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
 
-                Vector2 dtPoint;
-                bool isFindDt = FindDT(edge, out dtPoint);
-                if (!isFindDt)
-                    continue;
-                Line2D lAD = new Line2D(edge.GetStartPoint(), dtPoint);
-                Line2D lDB = new Line2D(dtPoint, edge.GetEndPoint());
+                <span class="k">do</span>
+                <span class="p">{</span>
+                    <span class="c1">//Step3.选出计算出边的DT点，构成约束Delaunay三角形</span>
+                    <span class="n">edge</span> <span class="p">=</span> <span class="n">allLines</span><span class="p">[</span><span class="n">allLines</span><span class="p">.</span><span class="n">Count</span> <span class="p">-</span> <span class="m">1</span><span class="p">];</span>
+                    <span class="n">allLines</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">edge</span><span class="p">);</span>
 
-                //创建三角形
-                Triangle delaunayTri = new Triangle(edge.GetStartPoint(), edge.GetEndPoint(), dtPoint, id++ , groupid);
-                // 保存邻居节点
-                // if (lastNeighborId != -1)
-                // {
-                // delaunayTri.SetNeighbor(lastNeighborId);
-                // if(lastTri != null)
-                // lastTri.SetNeighbor(delaunayTri.ID);
-                // }
-                //save result triangle
-                triAll.Add(delaunayTri);
+                    <span class="n">Vector2</span> <span class="n">dtPoint</span><span class="p">;</span>
+                    <span class="kt">bool</span> <span class="n">isFindDt</span> <span class="p">=</span> <span class="n">FindDT</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="k">out</span> <span class="n">dtPoint</span><span class="p">);</span>
+                    <span class="k">if</span> <span class="p">(!</span><span class="n">isFindDt</span><span class="p">)</span>
+                        <span class="k">continue</span><span class="p">;</span>
+                    <span class="n">Line2D</span> <span class="n">lAD</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Line2D</span><span class="p">(</span><span class="n">edge</span><span class="p">.</span><span class="n">GetStartPoint</span><span class="p">(),</span> <span class="n">dtPoint</span><span class="p">);</span>
+                    <span class="n">Line2D</span> <span class="n">lDB</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Line2D</span><span class="p">(</span><span class="n">dtPoint</span><span class="p">,</span> <span class="n">edge</span><span class="p">.</span><span class="n">GetEndPoint</span><span class="p">());</span>
 
-                // 保存上一次的id和三角形
-                lastNeighborId = delaunayTri.GetID();
-                lastTri = delaunayTri;
+                    <span class="c1">//创建三角形</span>
+                    <span class="n">Triangle</span> <span class="n">delaunayTri</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Triangle</span><span class="p">(</span><span class="n">edge</span><span class="p">.</span><span class="n">GetStartPoint</span><span class="p">(),</span> <span class="n">edge</span><span class="p">.</span><span class="n">GetEndPoint</span><span class="p">(),</span> <span class="n">dtPoint</span><span class="p">,</span> <span class="n">id</span><span class="p">++</span> <span class="p">,</span> <span class="n">groupid</span><span class="p">);</span>
+                    <span class="c1">// 保存邻居节点</span>
+                    <span class="c1">// if (lastNeighborId != -1)</span>
+                    <span class="c1">// {</span>
+                    <span class="c1">// delaunayTri.SetNeighbor(lastNeighborId);</span>
+                    <span class="c1">// if(lastTri != null)</span>
+                    <span class="c1">// lastTri.SetNeighbor(delaunayTri.ID);</span>
+                    <span class="c1">// }</span>
+                    <span class="c1">//save result triangle</span>
+                    <span class="n">triAll</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">delaunayTri</span><span class="p">);</span>
 
-                int lineIndex;
-                //Step4.检测刚创建的的线段ad,db；如果如果它们不是约束边
-                //并且在线段堆栈中，则将其删除，如果不在其中，那么将其放入
-                if (!Line2D.CheckLineIn(allEdges, lAD, out lineIndex))
-                {
-                    if (!Line2D.CheckLineIn(allLines, lAD, out lineIndex))
-                        allLines.Add(lAD);
-                    else
-                        allLines.RemoveAt(lineIndex);
-                }
+                    <span class="c1">// 保存上一次的id和三角形</span>
+                    <span class="n">lastNeighborId</span> <span class="p">=</span> <span class="n">delaunayTri</span><span class="p">.</span><span class="n">GetID</span><span class="p">();</span>
+                    <span class="n">lastTri</span> <span class="p">=</span> <span class="n">delaunayTri</span><span class="p">;</span>
 
-                if (!Line2D.CheckLineIn(allEdges, lDB, out lineIndex))
-                {
-                    if (!Line2D.CheckLineIn(allLines, lDB, out lineIndex))
-                        allLines.Add(lDB);
-                    else
-                        allLines.RemoveAt(lineIndex);
-                }
+                    <span class="kt">int</span> <span class="n">lineIndex</span><span class="p">;</span>
+                    <span class="c1">//Step4.检测刚创建的的线段ad,db；如果如果它们不是约束边</span>
+                    <span class="c1">//并且在线段堆栈中，则将其删除，如果不在其中，那么将其放入</span>
+                    <span class="k">if</span> <span class="p">(!</span><span class="n">Line2D</span><span class="p">.</span><span class="n">CheckLineIn</span><span class="p">(</span><span class="n">allEdges</span><span class="p">,</span> <span class="n">lAD</span><span class="p">,</span> <span class="k">out</span> <span class="n">lineIndex</span><span class="p">))</span>
+                    <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(!</span><span class="n">Line2D</span><span class="p">.</span><span class="n">CheckLineIn</span><span class="p">(</span><span class="n">allLines</span><span class="p">,</span> <span class="n">lAD</span><span class="p">,</span> <span class="k">out</span> <span class="n">lineIndex</span><span class="p">))</span>
+                            <span class="n">allLines</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">lAD</span><span class="p">);</span>
+                        <span class="k">else</span>
+                            <span class="n">allLines</span><span class="p">.</span><span class="n">RemoveAt</span><span class="p">(</span><span class="n">lineIndex</span><span class="p">);</span>
+                    <span class="p">}</span>
 
-                //Step5.如果堆栈不为空，则转到第Step3.否则结束循环
-            } while (allLines.Count &gt; 0);
-        }
+                    <span class="k">if</span> <span class="p">(!</span><span class="n">Line2D</span><span class="p">.</span><span class="n">CheckLineIn</span><span class="p">(</span><span class="n">allEdges</span><span class="p">,</span> <span class="n">lDB</span><span class="p">,</span> <span class="k">out</span> <span class="n">lineIndex</span><span class="p">))</span>
+                    <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(!</span><span class="n">Line2D</span><span class="p">.</span><span class="n">CheckLineIn</span><span class="p">(</span><span class="n">allLines</span><span class="p">,</span> <span class="n">lDB</span><span class="p">,</span> <span class="k">out</span> <span class="n">lineIndex</span><span class="p">))</span>
+                            <span class="n">allLines</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">lDB</span><span class="p">);</span>
+                        <span class="k">else</span>
+                            <span class="n">allLines</span><span class="p">.</span><span class="n">RemoveAt</span><span class="p">(</span><span class="n">lineIndex</span><span class="p">);</span>
+                    <span class="p">}</span>
 
-        // 计算邻接边和每边中点距离
-        for (int i = 0; i &lt; triAll.Count; i++)
-        {
-            Triangle tri = triAll[i];
-            //// 计算每个三角形每边中点距离
-            //tri.calcWallDistance();
+                    <span class="c1">//Step5.如果堆栈不为空，则转到第Step3.否则结束循环</span>
+                <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">allLines</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">);</span>
+            <span class="p">}</span>
 
-            // 计算邻居边
-            for (int j = 0; j &lt; triAll.Count; j++)
-            {
-                Triangle triNext = triAll[j];
-                if (tri.GetID() == triNext.GetID())
-                    continue;
+            <span class="c1">// 计算邻接边和每边中点距离</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">triAll</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">Triangle</span> <span class="n">tri</span> <span class="p">=</span> <span class="n">triAll</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="c1">//// 计算每个三角形每边中点距离</span>
+                <span class="c1">//tri.calcWallDistance();</span>
 
-                int result = tri.isNeighbor(triNext);
-                if (result != -1)
-                {
-                    tri.SetNeighbor(result , triNext.GetID() );
-                }
-            }
-        }
+                <span class="c1">// 计算邻居边</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">triAll</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">j</span><span class="p">++)</span>
+                <span class="p">{</span>
+                    <span class="n">Triangle</span> <span class="n">triNext</span> <span class="p">=</span> <span class="n">triAll</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">tri</span><span class="p">.</span><span class="n">GetID</span><span class="p">()</span> <span class="p">==</span> <span class="n">triNext</span><span class="p">.</span><span class="n">GetID</span><span class="p">())</span>
+                        <span class="k">continue</span><span class="p">;</span>
 
-        return NavResCode.Success;
-    }
+                    <span class="kt">int</span> <span class="n">result</span> <span class="p">=</span> <span class="n">tri</span><span class="p">.</span><span class="n">isNeighbor</span><span class="p">(</span><span class="n">triNext</span><span class="p">);</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="p">!=</span> <span class="p">-</span><span class="m">1</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="n">tri</span><span class="p">.</span><span class="n">SetNeighbor</span><span class="p">(</span><span class="n">result</span> <span class="p">,</span> <span class="n">triNext</span><span class="p">.</span><span class="n">GetID</span><span class="p">()</span> <span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">NavResCode</span><span class="p">.</span><span class="n">Success</span><span class="p">;</span>
+        <span class="p">}</span>
 </code></pre></div>
-<p>这里对如何计算DT点进行一个说明：
-Step1. 构造三角形的外接圆，以及外接圆的包围盒
-Step2. 依次访问网格包围盒内的每个网格单元：
-若某个网格单元中存在可见点 p, 并且 &ang;p1pp2 &gt; &ang;p1p3p2，则令 p3=p，转Step1；
-否则，转Step3.
-Step3. 若当前网格包围盒内所有网格单元都已被处理完,也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点
-核心源码为：
-/// <summary>
-/// 找到指定边的约束边DT
-/// </summary>
-/// <param name="line"></param>
-/// <returns></returns>
-private bool FindDT(Line2D line, out Vector2 dtPoint)
-{
-    dtPoint = new Vector2();
-    if (line == null)
-        return false;</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Vector2 ptA = line.GetStartPoint();
-Vector2 ptB = line.GetEndPoint();
+<p>这里对如何计算DT点进行一个说明：</p>
 
-List&lt;Vector2&gt; visiblePnts = new List&lt;Vector2&gt;();
-foreach (Vector2 point in allPoints)
-{
-    if (IsPointVisibleOfLine(line, point))
-        visiblePnts.Add(point);
-}
+<p>Step1. 构造三角形的外接圆，以及外接圆的包围盒</p>
 
-if (visiblePnts.Count == 0)
-    return false;
+<p>Step2. 依次访问网格包围盒内的每个网格单元：</p>
 
-bool bContinue = false;
-dtPoint = visiblePnts[0];
+<p>若某个网格单元中存在可见点 p, 并且 &ang;p1pp2 &gt; &ang;p1p3p2，则令 p3=p，转Step1；</p>
 
-do
-{
-    bContinue = false;
-    //Step1.构造三角形的外接圆，以及外接圆的包围盒
-    Circle circle = NMath.CreateCircle(ptA, ptB, dtPoint);
-    Rect boundBox = NMath.GetCircleBoundBox(circle);
+<p>否则，转Step3.</p>
 
-    //Step2. 依次访问网格包围盒内的每个网格单元：
-    //若某个网格单元中存在可见点 p, 并且 &amp;ang;p1pp2 &gt; &amp;ang;p1p3p2，则令 p3=p，转Step1；
-    //否则，转Step3.
-    float angOld = (float)Math.Abs(NMath.LineRadian(ptA, dtPoint, ptB));
-    foreach (Vector2 pnt in visiblePnts)
-    {
-        if (pnt == ptA || pnt == ptB || pnt == dtPoint)
-            continue;
-        if (!boundBox.Contains(pnt))
-            continue;
+<p>Step3. 若当前网格包围盒内所有网格单元都已被处理完,也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点.</p>
 
-        float angNew = (float)Math.Abs(NMath.LineRadian(ptA, pnt, ptB));
-        if (angNew &gt; angOld)
-        {
-            dtPoint = pnt;
-            bContinue = true;
-            break;
-        }
-    }
+<p>核心源码为：</p>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// 找到指定边的约束边DT</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;param name=&quot;line&quot;&gt;&lt;/param&gt;</span>
+<span class="c1">/// &lt;returns&gt;&lt;/returns&gt;</span>
+<span class="k">private</span> <span class="kt">bool</span> <span class="nf">FindDT</span><span class="p">(</span><span class="n">Line2D</span> <span class="n">line</span><span class="p">,</span> <span class="k">out</span> <span class="n">Vector2</span> <span class="n">dtPoint</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">dtPoint</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">line</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
 
-    //false 转Step3
-} while (bContinue);
+    <span class="n">Vector2</span> <span class="n">ptA</span> <span class="p">=</span> <span class="n">line</span><span class="p">.</span><span class="n">GetStartPoint</span><span class="p">();</span>
+    <span class="n">Vector2</span> <span class="n">ptB</span> <span class="p">=</span> <span class="n">line</span><span class="p">.</span><span class="n">GetEndPoint</span><span class="p">();</span>
 
-//Step3. 若当前网格包围盒内所有网格单元都已被处理完，
-// 也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点
-return true;
+    <span class="n">List</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;</span> <span class="n">visiblePnts</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;();</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="n">Vector2</span> <span class="n">point</span> <span class="k">in</span> <span class="n">allPoints</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">IsPointVisibleOfLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">point</span><span class="p">))</span>
+            <span class="n">visiblePnts</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">point</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">visiblePnts</span><span class="p">.</span><span class="n">Count</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="n">bContinue</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="n">dtPoint</span> <span class="p">=</span> <span class="n">visiblePnts</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
+
+    <span class="k">do</span>
+    <span class="p">{</span>
+        <span class="n">bContinue</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="c1">//Step1.构造三角形的外接圆，以及外接圆的包围盒</span>
+        <span class="n">Circle</span> <span class="n">circle</span> <span class="p">=</span> <span class="n">NMath</span><span class="p">.</span><span class="n">CreateCircle</span><span class="p">(</span><span class="n">ptA</span><span class="p">,</span> <span class="n">ptB</span><span class="p">,</span> <span class="n">dtPoint</span><span class="p">);</span>
+        <span class="n">Rect</span> <span class="n">boundBox</span> <span class="p">=</span> <span class="n">NMath</span><span class="p">.</span><span class="n">GetCircleBoundBox</span><span class="p">(</span><span class="n">circle</span><span class="p">);</span>
+
+        <span class="c1">//Step2. 依次访问网格包围盒内的每个网格单元：</span>
+        <span class="c1">//若某个网格单元中存在可见点 p, 并且 &amp;ang;p1pp2 &gt; &amp;ang;p1p3p2，则令 p3=p，转Step1；</span>
+        <span class="c1">//否则，转Step3.</span>
+        <span class="kt">float</span> <span class="n">angOld</span> <span class="p">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">Math</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">NMath</span><span class="p">.</span><span class="n">LineRadian</span><span class="p">(</span><span class="n">ptA</span><span class="p">,</span> <span class="n">dtPoint</span><span class="p">,</span> <span class="n">ptB</span><span class="p">));</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="n">Vector2</span> <span class="n">pnt</span> <span class="k">in</span> <span class="n">visiblePnts</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">pnt</span> <span class="p">==</span> <span class="n">ptA</span> <span class="p">||</span> <span class="n">pnt</span> <span class="p">==</span> <span class="n">ptB</span> <span class="p">||</span> <span class="n">pnt</span> <span class="p">==</span> <span class="n">dtPoint</span><span class="p">)</span>
+                <span class="k">continue</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(!</span><span class="n">boundBox</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="n">pnt</span><span class="p">))</span>
+                <span class="k">continue</span><span class="p">;</span>
+
+            <span class="kt">float</span> <span class="n">angNew</span> <span class="p">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">Math</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">NMath</span><span class="p">.</span><span class="n">LineRadian</span><span class="p">(</span><span class="n">ptA</span><span class="p">,</span> <span class="n">pnt</span><span class="p">,</span> <span class="n">ptB</span><span class="p">));</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">angNew</span> <span class="p">&gt;</span> <span class="n">angOld</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">dtPoint</span> <span class="p">=</span> <span class="n">pnt</span><span class="p">;</span>
+                <span class="n">bContinue</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">//false 转Step3</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">bContinue</span><span class="p">);</span>
+
+    <span class="c1">//Step3. 若当前网格包围盒内所有网格单元都已被处理完，</span>
+    <span class="c1">// 也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点</span>
+    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
-<p>}</p>
-
 <p>为了让各位能更容易读懂此文，此文仍会继续补充。</p>
 
 <p>现在我将所有源码都存放在了Github上，请各位跟随我到Github去取源码：<a href="https://github.com/luzexi/Unity3DNavMesh">https://github.com/luzexi/Unity3DNavMesh</a></p>
@@ -434,71 +399,71 @@ return true;
 
 <p>高精度概率事件，程序实现如下：</p>
 
-<p>设P(i)，其中i=1..n，为n个个体被选择的概率，在轮盘上表示为所占扇区的面积百分比，这里显然sum(P)=1。select用来保存n次选择的结果。
-1） 第一种实现办法：可以想象一个转动的轮盘，注意这里轮盘最多只转一圈。每次转轮盘前，把色子随机放到轮盘外缘的某处，即色子不随轮盘转动，以一个随机数sel代表它所处的位置。轮盘转动后，色子所指示的轮盘扇区号不断变化，轮盘停止时色子所指示的轮盘上扇区号，即为本次轮盘赌所选中的个体号。
-%for i = 1:n   %第i次掷色子
-%    sel = rand; %产生一个0、1之间的随机数，代表色子在轮盘外缘所指示的位置
-%    sumPs = 0;   %轮盘初始转动的位置，从0变化到1
-%    j = 1;   %轮盘初始指示的位置
-%    while sumPs<sel   %终止条件为轮盘转动的位置超过色子位置
-%        sumPs = sumPs + P(j)   %轮盘转动
-%        j = j + 1；   %轮盘指示位置
-%    end
-%    select(i) = j-1;   %轮盘停止时色子停留位置所指示的个体
-%end   %循环终了，会对轮盘上由P所划分出来的n个区间产生n次随机选择，扇区越大，该扇区被选中的几率也越大
-还需要注意的是：上面的程序中，我们当然可以把n改成2*n或者10*n，产生的结果都是&ldquo;个体概率所表示扇区越大，该个体被选中的几率也越大&rdquo;，并且随着实验次数的增大，这一结果越精确。
-2）这种方法可以想象成往划分好扇区的轮盘里扔色子，事先生成一组满足均匀分布的随机数，代表n次掷色子或者n个色子一起扔，轮盘不动，色子所在区域为选择结果。
-r = rand(1,n)   %预先产生n个色子的位置，注意这里r服从0、1之间均匀分布
-%for i = 1:n   %第i次轮盘赌
-%    select(i) = n;   %本次轮盘赌的结果初始化为n
-%    for j = 1:n   %轮盘开始转动
-%        if r(j) <=P(i)   %若色子停在轮盘第j扇区
-%        select(i) = j; %则第i次轮盘赌的结果为j
-%        break;   %第i次轮盘赌结束
-%    end %~第i次轮盘赌结束
-%end %~第i次轮盘赌结束
-%end %n次轮盘赌结束
-%%%%%%%%%%%%%下面为完整的matlab程序实现%%%%%%%%%%%%%%%
-function Select=Roulette(P,num)
-%:按轮盘赌策略选择下一点,返回num次轮盘赌结果
-%:第一种轮盘赌方法,精度很低,
-% m = length(P);
-% Select = zeros(1,num);
-% for i=1:num
-%     Select(i) = m;% 初始化为最后一个
-%     for j=1:m %:按概率选择
-%       if P(j)>rand()
-%          Select(i)=j;
-%          break;
-%       end
-%     end
-% end
-%:第二种轮盘赌方法,精度较高
-%m = length(P);
-%Select = zeros(1,num);
-%r = rand(1,num);
-%for i=1:num
-%    sumP = 0;
-%    j = ceil(m*rand); %产生1~m之间的随机整数
-%    while sumP &lt; r(i)
-%        sumP = sumP + P(mod(j-1,m)+1);
-%        j = j+1;
-%    end</p>
+<p>设P(i)，其中i=1..n，为n个个体被选择的概率，在轮盘上表示为所占扇区的面积百分比，这里显然sum(P)=1。select用来保存n次选择的结果。</p>
 
-<h1>%Select(i) = mod(j-1,m)+1-1;</h1>
+<p>1） 第一种实现办法：可以想象一个转动的轮盘，注意这里轮盘最多只转一圈。每次转轮盘前，把色子随机放到轮盘外缘的某处，即色子不随轮盘转动，以一个随机数sel代表它所处的位置。轮盘转动后，色子所指示的轮盘扇区号不断变化，轮盘停止时色子所指示的轮盘上扇区号，即为本次轮盘赌所选中的个体号。</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">n</span>   <span class="o">%</span><span class="n">第i次掷色子</span>
+    <span class="n">sel</span> <span class="o">=</span> <span class="n">rand</span><span class="o">;</span> <span class="o">%</span><span class="n">产生一个0</span><span class="err">、</span><span class="mi">1</span><span class="n">之间的随机数</span><span class="err">，</span><span class="n">代表色子在轮盘外缘所指示的位置</span>
+    <span class="n">sumPs</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>   <span class="o">%</span><span class="n">轮盘初始转动的位置</span><span class="err">，</span><span class="n">从0变化到1</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>   <span class="o">%</span><span class="n">轮盘初始指示的位置</span>
+    <span class="k">while</span> <span class="n">sumPs</span><span class="o">&lt;</span><span class="n">sel</span>   <span class="o">%</span><span class="n">终止条件为轮盘转动的位置超过色子位置</span>
+        <span class="n">sumPs</span> <span class="o">=</span> <span class="n">sumPs</span> <span class="o">+</span> <span class="n">P</span><span class="o">(</span><span class="n">j</span><span class="o">)</span>   <span class="o">%</span><span class="n">轮盘转动</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="err">；</span>   <span class="o">%</span><span class="n">轮盘指示位置</span>
+    <span class="n">end</span>
+    <span class="nf">select</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">=</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span>   <span class="o">%</span><span class="n">轮盘停止时色子停留位置所指示的个体</span>
+<span class="n">end</span>   <span class="o">%</span><span class="n">循环终了</span><span class="err">，</span><span class="n">会对轮盘上由P所划分出来的n个区间产生n次随机选择</span><span class="err">，</span><span class="n">扇区越大</span><span class="err">，</span><span class="n">该扇区被选中的几率也越大</span>
+</code></pre></div>
+<p>还需要注意的是：上面的程序中，我们当然可以把n改成2<em>n或者10</em>n，产生的结果都是&#39;个体概率所表示扇区越大，该个体被选中的几率也越大&#39;，并且随着实验次数的增大，这一结果越精确。</p>
 
-<p>%Select(i) = mod(j-2,m)+1;
-%end
-% 本程序中轮盘赌方法的准确程度可由如下程序验证
-% P=rand(10,1);
-% P=P./sum(P);
-% Select=Roulette(P,1e6);
-% for i=1:10
-%     Ps(i)=(sum(Select==i)/1e6);
-% end
-%:最后验证该轮盘赌方法准确程度
-%:比较P和Ps差异大小，例</p>
-
+<p>2）这种方法可以想象成往划分好扇区的轮盘里扔色子，事先生成一组满足均匀分布的随机数，代表n次掷色子或者n个色子一起扔，轮盘不动，色子所在区域为选择结果。</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">r</span> <span class="o">=</span> <span class="n">rand</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="n">n</span><span class="o">)</span>   <span class="o">%</span><span class="n">预先产生n个色子的位置</span><span class="err">，</span><span class="n">注意这里r服从0</span><span class="err">、</span><span class="mi">1</span><span class="n">之间均匀分布</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">n</span>   <span class="o">%</span><span class="n">第i次轮盘赌</span>
+    <span class="nf">select</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>   <span class="o">%</span><span class="n">本次轮盘赌的结果初始化为n</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">n</span>   <span class="o">%</span><span class="n">轮盘开始转动</span>
+        <span class="k">if</span> <span class="nf">r</span><span class="o">(</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;=</span><span class="n">P</span><span class="o">(</span><span class="n">i</span><span class="o">)</span>   <span class="o">%</span><span class="n">若色子停在轮盘第j扇区</span>
+        <span class="nf">select</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span> <span class="o">%</span><span class="n">则第i次轮盘赌的结果为j</span>
+        <span class="k">break</span><span class="o">;</span>   <span class="o">%</span><span class="n">第i次轮盘赌结束</span>
+    <span class="n">end</span> <span class="o">%~</span><span class="n">第i次轮盘赌结束</span>
+<span class="n">end</span> <span class="o">%~</span><span class="n">第i次轮盘赌结束</span>
+<span class="n">end</span> <span class="o">%</span><span class="n">n次轮盘赌结束</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">%%%%%%%%%%%%%</span><span class="n">下面为完整的matlab程序实现</span><span class="o">%%%%%%%%%%%%%%%</span>
+<span class="n">function</span> <span class="n">Select</span><span class="o">=</span><span class="n">Roulette</span><span class="o">(</span><span class="n">P</span><span class="o">,</span><span class="n">num</span><span class="o">)</span>
+<span class="n">按轮盘赌策略选择下一点</span><span class="o">,</span><span class="n">返回num次轮盘赌结果</span>
+<span class="n">第一种轮盘赌方法</span><span class="o">,</span><span class="n">精度很低</span><span class="o">,</span>
+ <span class="n">m</span> <span class="o">=</span> <span class="n">length</span><span class="o">(</span><span class="n">P</span><span class="o">);</span>
+ <span class="n">Select</span> <span class="o">=</span> <span class="n">zeros</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="n">num</span><span class="o">);</span>
+ <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">num</span>
+     <span class="nf">Select</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">=</span> <span class="n">m</span><span class="o">;%</span> <span class="n">初始化为最后一个</span>
+     <span class="k">for</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">m</span> <span class="o">%:</span><span class="n">按概率选择</span>
+       <span class="k">if</span> <span class="nf">P</span><span class="o">(</span><span class="n">j</span><span class="o">)&gt;</span><span class="n">rand</span><span class="o">()</span>
+          <span class="n">Select</span><span class="o">(</span><span class="n">i</span><span class="o">)=</span><span class="n">j</span><span class="o">;</span>
+          <span class="k">break</span><span class="o">;</span>
+       <span class="n">end</span>
+     <span class="n">end</span>
+ <span class="n">end</span>
+<span class="n">第二种轮盘赌方法</span><span class="o">,</span><span class="n">精度较高</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">length</span><span class="o">(</span><span class="n">P</span><span class="o">);</span>
+<span class="n">Select</span> <span class="o">=</span> <span class="n">zeros</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="n">num</span><span class="o">);</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">rand</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="n">num</span><span class="o">);</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">num</span>
+    <span class="n">sumP</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">ceil</span><span class="o">(</span><span class="n">m</span><span class="o">*</span><span class="n">rand</span><span class="o">);</span> <span class="o">%</span><span class="n">产生1</span><span class="o">~</span><span class="n">m之间的随机整数</span>
+    <span class="k">while</span> <span class="n">sumP</span> <span class="o">&lt;</span> <span class="n">r</span><span class="o">(</span><span class="n">i</span><span class="o">)</span>
+        <span class="n">sumP</span> <span class="o">=</span> <span class="n">sumP</span> <span class="o">+</span> <span class="n">P</span><span class="o">(</span><span class="n">mod</span><span class="o">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span><span class="n">m</span><span class="o">)+</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+    <span class="n">end</span>
+<span class="nf">Select</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">=</span> <span class="n">mod</span><span class="o">(</span><span class="n">j</span><span class="o">-</span><span class="mi">2</span><span class="o">,</span><span class="n">m</span><span class="o">)+</span><span class="mi">1</span><span class="o">;</span>
+<span class="n">end</span>
+ <span class="n">本程序中轮盘赌方法的准确程度可由如下程序验证</span>
+ <span class="n">P</span><span class="o">=</span><span class="n">rand</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span><span class="mi">1</span><span class="o">);</span>
+ <span class="n">P</span><span class="o">=</span><span class="n">P</span><span class="o">./</span><span class="n">sum</span><span class="o">(</span><span class="n">P</span><span class="o">);</span>
+ <span class="n">Select</span><span class="o">=</span><span class="n">Roulette</span><span class="o">(</span><span class="n">P</span><span class="o">,</span><span class="mi">1</span><span class="n">e6</span><span class="o">);</span>
+ <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="mi">10</span>
+     <span class="n">Ps</span><span class="o">(</span><span class="n">i</span><span class="o">)=(</span><span class="n">sum</span><span class="o">(</span><span class="n">Select</span><span class="o">==</span><span class="n">i</span><span class="o">)/</span><span class="mi">1</span><span class="n">e6</span><span class="o">);</span>
+ <span class="n">end</span>
+<span class="n">最后验证该轮盘赌方法准确程度</span>
+<span class="n">比较P和Ps差异大小</span><span class="err">，</span><span class="n">例</span>
+</code></pre></div>
   </div>
   
   <div class="post">
@@ -536,7 +501,210 @@ function Select=Roulette(P,num)
 
 <p>《王途霸业》中的中心服务器是HTTP方式，也是因为这样能更好的承载客户端入口点，快速让客户端获得最新的更新内容和最新的服务器列表状态。将入口功能集成于一身。</p>
 
-<p><a href="http://www.luzexi.com/%e3%80%8a%e7%8e%8b%e9%80%94%e9%9c%b8%e4%b8%9a%e3%80%8b%e6%88%98%e4%ba%89%e7%ad%96%e7%95%a5%e6%b8%b8%e6%88%8f/ddd/" rel="attachment wp-att-56"><img alt="ddd" class="alignnone size-full wp-image-56" height="761" src="http://114.215.202.83/blog/wp-content/uploads/2013/08/ddd.png" width="1035" /></a></p>
+<p><img alt="ddd" class="alignnone size-full wp-image-56" height="761" src="/assets/uploads/2013/08/ddd.png" width="1035" /></p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/01/26/%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E6%A0%91(Behavior%20Tree)%E5%AE%9E%E7%8E%B0%E6%B8%B8%E6%88%8FAI/">
+        使用行为树(Behavior Tree)实现游戏AI
+      </a>
+    </h1>
+
+    <span class="post-date">26 Jan 2013</span>
+
+    <p>使用行为树(Behavior Tree)实现游戏AI</p>
+
+<h1>by AKara 2010-12-09 @ http://blog.csdn.net/akara @ akaras@163.com</h1>
+
+<p>谈到游戏AI，很明显智能体拥有的知识条目越多，便显得更智能，但维护庞大数量的知识条目是个噩梦：使用有限状态机(FSM)，分层有限状态机(HFSM)，
+决策树(Decision Tree)来实现游戏AI总有那么些不顺意。试试Next-Gen AI的行为树(Behavior Tree)吧。虽说Next-Gen AI，但距其原型提出已有约10年时间，而微软Halo系列估计已用了超过8年了，Spore和一些著名游戏也早已使用行为树作为它们的AI结构。如从未接触，那wikipedia(http://en.wikipedia.org/wiki/Behavior_Trees) 绝对是入门好资料。</p>
+
+<p>先贴本文最具价值图(配色可花了不少时间)</p>
+
+<p><img class="alignnone size-full wp-image-20" src="/assets/uploads/2013/01/213345_1292157838h3CY.jpg" alt="213345_1292157838h3CY" width="444" height="768" /></p>
+
+<p>为显美观：BT被横放，Node层次被刻意减少，Dec被刻意安插，Cond被刻意捏造。</p>
+
+<p>PS：其实真正的高效的Node Group剔除应多加一层Sequence Node。</p>
+
+<p>行为树(Behavior Tree)具有如下的特性：
+* 它只有4大类型的Node：
+* Composite Node
+* Decorator Node
+* Condition Node
+* Action Node</p>
+
+<p>任何Node被执行后，必须向其Parent Node报告执行结果：成功 / 失败.</p>
+
+<p>这简单的成功 / 失败汇报原则被很巧妙地用于控制整棵树的决策方向。</p>
+
+<p>先看Composite Node，其实它按复合性质还可以细分为3种：</p>
+
+<ul>
+<li>Selector Node</li>
+</ul>
+
+<p>当执行本类型Node时，它将从begin到end迭代执行自己的Child Node：</p>
+
+<p>如遇到一个Child Node执行后返回True，那停止迭代，</p>
+
+<p>本Node向自己的Parent Node也返回True；否则所有Child Node都返回False，</p>
+
+<p>那本Node向自己的Parent Node返回False。</p>
+
+<ul>
+<li>Sequence Node</li>
+</ul>
+
+<p>当执行本类型Node时，它将从begin到end迭代执行自己的Child Node：</p>
+
+<p>如遇到一个Child Node执行后返回False，那停止迭代，</p>
+
+<p>本Node向自己的Parent Node也返回False；否则所有Child Node都返回True，</p>
+
+<p>那本Node向自己的Parent Node返回True。</p>
+
+<ul>
+<li>Parallel Node</li>
+</ul>
+
+<p>并发执行它的所有Child Node。</p>
+
+<p>而向Parent Node返回的值和Parallel Node所采取的具体策略相关：</p>
+
+<p>Parallel Selector Node: 一False则返回False，全True才返回True。</p>
+
+<p>Parallel Sequence Node: 一True则返回True，全False才返回False。</p>
+
+<p>Parallel Hybird Node: 指定数量的Child Node返回True或False后才决定结果。</p>
+
+<p>Parallel Node提供了并发，提高性能。</p>
+
+<p>不需要像Selector/Sequence那样预判哪个Child Node应摆前，哪个应摆后，</p>
+
+<p>常见情况是：</p>
+
+<p>(1)用于并行多棵Action子树。</p>
+
+<p>(2)在Parallel Node下挂一棵子树，并挂上多个Condition Node，</p>
+
+<p>以提供实时性和性能。</p>
+
+<p>Parallel Node增加性能和方便性的同时，也增加实现和维护复杂度。</p>
+
+<p>PS：上面的Selector/Sequence准确来说是Liner Selector/Liner Sequence。</p>
+
+<p>AI术语中称为strictly-order：按既定先后顺序迭代。</p>
+
+<p>Selector和Sequence可以进一步提供非线性迭代的加权随机变种。</p>
+
+<p>Weight Random Selector提供每次执行不同的First True Child Node的可能。</p>
+
+<p>Weight Random Sequence则提供每次不同的迭代顺序。</p>
+
+<p>AI术语中称为partial-order，能使AI避免总出现可预期的结果。</p>
+
+<p>=============================================================</p>
+
+<p>再看Decorator Node，它的功能正如它的字面意思：它将它的Child Node执行</p>
+
+<p>后返回的结果值做额外处理后，再返回给它的Parent Node。很有些AOP的味道。</p>
+
+<p>比如Decorator Not/Decorator FailUtil/Decorator Counter/Decorator Time...</p>
+
+<p>更geek的有Decorator Log/Decorator Ani/Decorator Nothing...</p>
+
+<p>====================================================================</p>
+
+<p>然后是很直白的Condition Node，它仅当满足Condition时返回True。</p>
+
+<p>====================================================================</p>
+
+<p>最后看Action Node，它完成具体的一次(或一个step)的行为，视需求返回值。</p>
+
+<p>而当行为需要分step/Node间进行时，可引入Blackboard进行简单数据交互。</p>
+
+<p>====================================================================</p>
+
+<p>整棵行为树中，只有Condition Node和Action Node才能成为Leaf Node，而也</p>
+
+<p>只有Leaf Node才是需要特别定制的Node；Composite Node和Decorator Node均</p>
+
+<p>用于控制行为树中的决策走向。(所以有些资料中也统称Condition Node和Action</p>
+
+<p>Node为Behavior Node，而Composite Node和Decorator Node为Decider Node。)</p>
+
+<p>更强大的是可以加入Stimulus和Impulse，通过Precondition来判断masks开关。</p>
+
+<p>通过上述的各种Nodes几乎可以实现所有的决策控制：if, while, and, or,</p>
+
+<p>not, counter, time, random, weight random, util...</p>
+
+<p>====================================================================</p>
+
+<p>总的来说，行为树具有如下几种优点，确实是实现AI框架的利器，甚至是一种</p>
+
+<p>通用的可维护的复杂流程管理利器：</p>
+
+<blockquote>
+<p>静态性</p>
+</blockquote>
+
+<p>越复杂的功能越需要简单的基础，否则最后连自己都玩不过来。</p>
+
+<p>静态是使用行为树需要非常着重的一个要点：即使系统需要某些&quot;动态&quot;性。</p>
+
+<p>其实诸如Stimulus这类动态安插的Node看似强大，</p>
+
+<p>但却破坏了本来易于理解的静态性，弊大于利。</p>
+
+<p>Halo3相对于Halo2对BT AI的一个改进就是去除Stimulus的动态性。</p>
+
+<p>取而代之的做法是使用Behavior Masks，Encounter Attitude，Inhibitions。</p>
+
+<p>原则就是保持全部Node静态，只是根据事件和环境来检查是否启用Node。</p>
+
+<p>静态性直接带来的好处就是整棵树的规划无需再运行时动态调整，为很多优化</p>
+
+<p>和预编辑都带来方便。</p>
+
+<blockquote>
+<p>直观性</p>
+</blockquote>
+
+<p>行为树可以方便地把复杂的AI知识条目组织得非常直观。</p>
+
+<p>默认的Composite Node的从begin往end的Child Node迭代方式就像是处理一个</p>
+
+<p>预设优先策略队列，也非常符合人类的正常思考模式：先最优再次优。</p>
+
+<p>行为树编辑器对优秀的程序员来说也是唾手可得。</p>
+
+<blockquote>
+<p>复用性</p>
+</blockquote>
+
+<p>各种Node，包括Leaf Node，可复用性都极高。</p>
+
+<p>实现NPC AI的个性区别甚至可以通过在一棵共用的行为树上不同的位置来</p>
+
+<p>安插Impulse来达到目的。</p>
+
+<p>当然，当NPC需要一个完全不同的大脑，比如70级大BOSS，</p>
+
+<p>与其绞尽脑汁在一棵公用BT安插Impulse，不如重头设计一棵专属BT。</p>
+
+<blockquote>
+<p>扩展性</p>
+</blockquote>
+
+<p>虽然上述Node之间的组合和搭配使用几乎覆盖所有AI需求。</p>
+
+<p>但也可以容易地为项目量身定做新的Composite Node或Decorator Node。</p>
+
+<p>还可以积累一个项目相关的Node Lib，长远来说非常有价值。</p>
 
   </div>
   

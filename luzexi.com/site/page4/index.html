@@ -11,7 +11,7 @@
 
   <title>
     
-      Hyde &middot; A Jekyll theme
+      技术人生 &middot; luzexi.com
     
   </title>
 
@@ -37,10 +37,10 @@
     <div class="sidebar-about">
       <h1>
         <a href="/">
-          Hyde
+          技术人生
         </a>
       </h1>
-      <p class="lead">A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+      <p class="lead">我将在这里写下我毕生所学---分享是我的一直以来坚持的事,不仅仅是为别人更是为了自己</p>
     </div>
 
     <nav class="sidebar-nav">
@@ -91,9 +91,9 @@
         
       
 
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde/archive/v2.1.0.zip">Download</a>
-      <a class="sidebar-nav-item" href="https://github.com/poole/hyde">GitHub project</a>
-      <span class="sidebar-nav-item">Currently v2.1.0</span>
+      <!-- <a class="sidebar-nav-item" href="https://github.com/luzexi/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
     <p>&copy; 2015. All rights reserved.</p>
@@ -202,7 +202,7 @@
 <p>二、减小图片的占用大小和内存方式有:图片大小变化(Maxsize),色彩位数变化(16位，32位)，压缩(PVRC)。</p>
 
 <p>三、U3D对于图片的格式是自己生成的，而并不是你给他什么格式，他就用什么格式，一张1024<em>1024图在无压缩格式下，它会被U3D以无压缩文件形式存放，也就是说U3D里的Texture Preview里显示的占用大小</em>*MB不只是内存占用大小，还是空间占用大小。如下图所示：
-<a href="http://www.luzexi.com/wp-content/uploads/2014/05/QQ截图20140521102030.png"><img class="alignnone size-full wp-image-310" src="http://www.luzexi.com/wp-content/uploads/2014/05/QQ截图20140521102030.png" alt="QQ截图20140521102030" width="626" height="726" /></a></p>
+<img class="alignnone size-full wp-image-310" src="/assets/uploads/2014/05/QQ截图20140521102030.png" alt="QQ截图20140521102030" width="626" height="726" /></p>
 
 <p>U3D的内部机制为自动生成图片类型来替换我们给的图片，在图片的压缩方式上需要进行谨慎的选择。</p>
 
@@ -235,13 +235,11 @@
 <p>PHP可以选用任何你熟悉的框架，能站在别人肩膀上的就站上去吧，自己写时间过长。我们选用的是Yii框架，特点不多没有刻意去挑选。Memcache主要存储数据表的内存，因为PHP没有内存可控制，所以结合Memchache是最好的选择，也可以用Redis，功能上都一样，不过Redis有排序而已。用NGINX主要用来做WEB端的负载平衡，也可以在测试时做IP过滤，以及维护时的IP封锁。</p>
 
 <p>WEB架构图：</p>
-
-<hr>
-
-<p>GAME<em>DB1(Mysql-master&amp;slave)---|
-GAME</em>DB2(Mysql-master&amp;slave)   |<br>
-GAME<em>DB3(Mysql-master&amp;slave)   |---------------|
-GAME</em>DB4(Mysql-master&amp;slave)---|               |
+<div class="highlight"><pre><code class="language-text" data-lang="text">----------------------------------------------------------
+GAME_DB1(Mysql-master&amp;slave)---|
+GAME_DB2(Mysql-master&amp;slave)   |  
+GAME_DB3(Mysql-master&amp;slave)   |---------------|
+GAME_DB4(Mysql-master&amp;slave)---|               |
                                                |
 Memcache1(master&amp;slave)                        |
 Memcache2(master&amp;slave)                        |
@@ -250,16 +248,15 @@ Memcache4(master&amp;slvae)                        |
 /       \                                      |
 GameServerPHP1                                 |
 GameServerPHP2---------------------------------|
-GameServerPHP3<br>
-|     /  </p>
-
-<h2>Nginx  </h2>
-
-<p>GB_DB(Mysql)<br>
-|  </p>
-
-<h2>GM<em>ADMIN</em>PHP+(memcache)  </h2>
-
+GameServerPHP3  
+|     /  
+Nginx  
+------------------------------------------  
+GB_DB(Mysql)  
+|  
+GM_ADMIN_PHP+(memcache)  
+------------------------------------------
+</code></pre></div>
 <p>描述：</p>
 
 <p>Ngix起负载均衡作用。</p>
@@ -364,62 +361,63 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 
 <p>4.内存释放：这里有个重点，我重点测试了一下内存释放的忽视点。在我们利用ngui,或者2dtoolkit进行gui编程时，在释放其gui节点时通常会忘记将gui引用置为null，这就导致了内存泄漏。一些不再使用的贴图或者实例数据仍然继续存留在内存中。对于是否有需要将这些gui变量置为null的说法，我还做了一个实验。</p>
 
-<p>首先将屏幕置空，没有任何多余内存，再将gui展示，接着隐藏gui销毁gameobject，先将所有引用变量置为null，然后再展示，再销毁，这次销毁，不将变量置为null。得出得内存结论就是，不将gui组件变量置为null的，贴图内存还会滞留。如下图：
-<a href="http://www.luzexi.com/wp-content/uploads/2014/02/48391BD3-BEAC-4E45-B6C4-17AA7B5B0428.png"><img class="alignnone size-full wp-image-355" src="http://www.luzexi.com/wp-content/uploads/2014/02/48391BD3-BEAC-4E45-B6C4-17AA7B5B0428.png" alt="48391BD3-BEAC-4E45-B6C4-17AA7B5B0428" width="568" height="211" /></a>
-测试代码如下：</p>
+<p>首先将屏幕置空，没有任何多余内存，再将gui展示，接着隐藏gui销毁gameobject，先将所有引用变量置为null，然后再展示，再销毁，这次销毁，不将变量置为null。得出得内存结论就是，不将gui组件变量置为null的，贴图内存还会滞留。如下图：</p>
 
-<p>using UnityEngine;
-using System.Collections;</p>
+<p><img class="alignnone size-full wp-image-355" src="/assets/uploads/2014/02/48391BD3-BEAC-4E45-B6C4-17AA7B5B0428.png" alt="48391BD3-BEAC-4E45-B6C4-17AA7B5B0428" width="568" height="211" /></p>
 
-<p>public class testgui
-{
-    private tk2dSprite tex;
-    private GameObject root;</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">private tk2dSprite tex1;
-private GameObject root1;
+<p>测试代码如下：</p>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
 
-private tk2dSprite tex2;
-private GameObject root2;
+<span class="k">public</span> <span class="k">class</span> <span class="nc">testgui</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="n">tk2dSprite</span> <span class="n">tex</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">GameObject</span> <span class="n">root</span><span class="p">;</span>
 
-public void show()
-{
-    root =  GameObject.Instantiate( Resources.Load(&lt;span class=&quot;string&quot;&gt;&quot;GameObject&quot;) ) as GameObject;
-    root.transform.parent = GameObject.Find(&lt;span class=&quot;string&quot;&gt;&quot;ROOT/MIDDLE_CENTER&quot;).transform;
-    tex = root.GetComponent&lt;tk2dSprite&gt;();
+    <span class="k">private</span> <span class="n">tk2dSprite</span> <span class="n">tex1</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">GameObject</span> <span class="n">root1</span><span class="p">;</span>
 
-    root1 =  GameObject.Instantiate( Resources.Load(&lt;span class=&quot;string&quot;&gt;&quot;GameObject1&quot;) ) as GameObject;
-    root1.transform.parent = GameObject.Find(&lt;span class=&quot;string&quot;&gt;&quot;ROOT/MIDDLE_CENTER&quot;).transform;
-    tex1 = root1.GetComponent&lt;tk2dSprite&gt;();
+    <span class="k">private</span> <span class="n">tk2dSprite</span> <span class="n">tex2</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">GameObject</span> <span class="n">root2</span><span class="p">;</span>
 
-    root2 =  GameObject.Instantiate( Resources.Load(&lt;span class=&quot;string&quot;&gt;&quot;GameObject2&quot;) ) as GameObject;
-    root2.transform.parent = GameObject.Find(&lt;span class=&quot;string&quot;&gt;&quot;ROOT/MIDDLE_CENTER&quot;).transform;
-    tex2 = root2.GetComponent&lt;tk2dSprite&gt;();
-}
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">show</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">root</span> <span class="p">=</span>  <span class="n">GameObject</span><span class="p">.</span><span class="n">Instantiate</span><span class="p">(</span> <span class="n">Resources</span><span class="p">.</span><span class="n">Load</span><span class="p">(&lt;</span><span class="n">span</span> <span class="n">class</span><span class="p">=</span><span class="s">&quot;string&quot;</span><span class="p">&gt;</span><span class="s">&quot;GameObject&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="k">as</span> <span class="n">GameObject</span><span class="p">;</span>
+        <span class="n">root</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">parent</span> <span class="p">=</span> <span class="n">GameObject</span><span class="p">.</span><span class="n">Find</span><span class="p">(&lt;</span><span class="n">span</span> <span class="n">class</span><span class="p">=</span><span class="s">&quot;string&quot;</span><span class="p">&gt;</span><span class="s">&quot;ROOT/MIDDLE_CENTER&quot;</span><span class="p">).</span><span class="n">transform</span><span class="p">;</span>
+        <span class="n">tex</span> <span class="p">=</span> <span class="n">root</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">tk2dSprite</span><span class="p">&gt;();</span>
 
-public void hiden1()
-{
-    GameObject.Destroy(root);
-    GameObject.Destroy(root1);
-    GameObject.Destroy(root2);
-    Resources.UnloadUnusedAssets();
-}
+        <span class="n">root1</span> <span class="p">=</span>  <span class="n">GameObject</span><span class="p">.</span><span class="n">Instantiate</span><span class="p">(</span> <span class="n">Resources</span><span class="p">.</span><span class="n">Load</span><span class="p">(&lt;</span><span class="n">span</span> <span class="n">class</span><span class="p">=</span><span class="s">&quot;string&quot;</span><span class="p">&gt;</span><span class="s">&quot;GameObject1&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="k">as</span> <span class="n">GameObject</span><span class="p">;</span>
+        <span class="n">root1</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">parent</span> <span class="p">=</span> <span class="n">GameObject</span><span class="p">.</span><span class="n">Find</span><span class="p">(&lt;</span><span class="n">span</span> <span class="n">class</span><span class="p">=</span><span class="s">&quot;string&quot;</span><span class="p">&gt;</span><span class="s">&quot;ROOT/MIDDLE_CENTER&quot;</span><span class="p">).</span><span class="n">transform</span><span class="p">;</span>
+        <span class="n">tex1</span> <span class="p">=</span> <span class="n">root1</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">tk2dSprite</span><span class="p">&gt;();</span>
 
-public void hiden()
-{
-    GameObject.Destroy(root);
-    GameObject.Destroy(root1);
-    GameObject.Destroy(root2);
-    root = null;
-    root1 = null;
-    root2 = null;
-    tex = null;
-    tex1 = null;
-    tex2 = null;
-    Resources.UnloadUnusedAssets();
-}
+        <span class="n">root2</span> <span class="p">=</span>  <span class="n">GameObject</span><span class="p">.</span><span class="n">Instantiate</span><span class="p">(</span> <span class="n">Resources</span><span class="p">.</span><span class="n">Load</span><span class="p">(&lt;</span><span class="n">span</span> <span class="n">class</span><span class="p">=</span><span class="s">&quot;string&quot;</span><span class="p">&gt;</span><span class="s">&quot;GameObject2&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="k">as</span> <span class="n">GameObject</span><span class="p">;</span>
+        <span class="n">root2</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">parent</span> <span class="p">=</span> <span class="n">GameObject</span><span class="p">.</span><span class="n">Find</span><span class="p">(&lt;</span><span class="n">span</span> <span class="n">class</span><span class="p">=</span><span class="s">&quot;string&quot;</span><span class="p">&gt;</span><span class="s">&quot;ROOT/MIDDLE_CENTER&quot;</span><span class="p">).</span><span class="n">transform</span><span class="p">;</span>
+        <span class="n">tex2</span> <span class="p">=</span> <span class="n">root2</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">tk2dSprite</span><span class="p">&gt;();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">hiden1</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">GameObject</span><span class="p">.</span><span class="n">Destroy</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+        <span class="n">GameObject</span><span class="p">.</span><span class="n">Destroy</span><span class="p">(</span><span class="n">root1</span><span class="p">);</span>
+        <span class="n">GameObject</span><span class="p">.</span><span class="n">Destroy</span><span class="p">(</span><span class="n">root2</span><span class="p">);</span>
+        <span class="n">Resources</span><span class="p">.</span><span class="n">UnloadUnusedAssets</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">hiden</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">GameObject</span><span class="p">.</span><span class="n">Destroy</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+        <span class="n">GameObject</span><span class="p">.</span><span class="n">Destroy</span><span class="p">(</span><span class="n">root1</span><span class="p">);</span>
+        <span class="n">GameObject</span><span class="p">.</span><span class="n">Destroy</span><span class="p">(</span><span class="n">root2</span><span class="p">);</span>
+        <span class="n">root</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="n">root1</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="n">root2</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="n">tex</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="n">tex1</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="n">tex2</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="n">Resources</span><span class="p">.</span><span class="n">UnloadUnusedAssets</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
-<p>}</p>
-
 <p>请看红框内绿色曲线，第一次是置空的情况，内存立刻销毁，而第二次是不置空的情况，内存仍然驻留。结论很明显了，所以，在你编程时，将引用置空是件非常重要的事，这会直接影响到你的内存使用量。这也事c#垃圾回收机制引起的，当实例没有引用数量时内存才会被回收，并且彻底销毁。</p>
 
 <p>笔者最后提醒优化无极限，其实都在细节中，能省一点CPU是一点，能省一点内存是一点。你不打败99.5%的其他人，你就没有机会功成名就。</p>

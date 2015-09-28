@@ -32,10 +32,10 @@ tags:
 
 一.首先要理解NavMesh核心算法。NavMesh的核心算法就是用三角形代替传统寻路的方格，用计算拐点优化寻路路径来代替合并路径直线。
 如下图1NavMesh寻路:
-<a href="http://www.luzexi.com/wp-content/uploads/2013/10/2303121.jpg"><img class="alignnone wp-image-91 size-full" src="http://www.luzexi.com/wp-content/uploads/2013/10/2303121.jpg" alt="" width="479" height="312" /></a>
+<img class="alignnone wp-image-91 size-full" src="/assets/uploads/2013/10/2303121.jpg" alt="" width="479" height="312" />
  
 以及如下图2传统的方格寻路:
-<a href="http://www.luzexi.com/wp-content/uploads/2013/10/20131006173445.jpg" target="_blank"><img class="alignnone wp-image-94 size-full" src="http://www.luzexi.com/wp-content/uploads/2013/10/20131006173445.jpg" alt="" width="621" height="568" /></a>
+<img class="alignnone wp-image-94 size-full" src="/assets/uploads/2013/10/20131006173445.jpg" alt="" width="621" height="568" />
  
 看到两者的差别了吧，NavMesh已三角形为寻路块，而传统以方格为寻路块。其实两者都使用A*寻路，但就是其网格生成不一样，导致当有大范围寻路时，其效率和要求也不一样。
 
@@ -70,9 +70,11 @@ Step 2:  从堆栈中推出一条边，在所有三角形中计算出边的DT点
 Step 3:  将所构成的三角形，另两边做如下处理：检查堆栈中是否已存在，如果存在就删除该边，如果不存在就加入到堆栈中。
 
 生成mesh后如图：（绿色的为多边形边框，蓝色的为寻路路径，红色的为编辑器选中的多边形）
-<a href="http://www.luzexi.com/wp-content/uploads/2013/10/OD04RIKAWEMUTM_3MSBQ.jpg"><img class="alignnone size-full wp-image-376" src="http://www.luzexi.com/wp-content/uploads/2013/10/OD04RIKAWEMUTM_3MSBQ.jpg" alt="OD04[RIKAWEMUTM_3MS}B$Q" width="475" height="312" /></a>
+<img class="alignnone size-full wp-image-376" src="/assets/uploads/2013/10/OD04RIKAWEMUTM_3MSBQ.jpg" alt="OD04[RIKAWEMUTM_3MS}B$Q" width="475" height="312" />
 
 核心源码为：
+
+``` c#
         /// <summary>
         /// 创建导航网格
         /// </summary>
@@ -174,15 +176,23 @@ Step 3:  将所构成的三角形，另两边做如下处理：检查堆栈中�
 
             return NavResCode.Success;
         }
-
+```
  
 这里对如何计算DT点进行一个说明：
+
 Step1. 构造三角形的外接圆，以及外接圆的包围盒
+
 Step2. 依次访问网格包围盒内的每个网格单元：
+
 若某个网格单元中存在可见点 p, 并且 &ang;p1pp2 > &ang;p1p3p2，则令 p3=p，转Step1；
+
 否则，转Step3.
-Step3. 若当前网格包围盒内所有网格单元都已被处理完,也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点
+
+Step3. 若当前网格包围盒内所有网格单元都已被处理完,也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点.
+
 核心源码为：
+
+``` c#
 /// <summary>
 /// 找到指定边的约束边DT
 /// </summary>
@@ -244,6 +254,7 @@ private bool FindDT(Line2D line, out Vector2 dtPoint)
     // 也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点
     return true;
 }
+```
 
 为了让各位能更容易读懂此文，此文仍会继续补充。
 

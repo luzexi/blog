@@ -49,7 +49,7 @@ IPHONE：
 二、减小图片的占用大小和内存方式有:图片大小变化(Maxsize),色彩位数变化(16位，32位)，压缩(PVRC)。
 
 三、U3D对于图片的格式是自己生成的，而并不是你给他什么格式，他就用什么格式，一张1024*1024图在无压缩格式下，它会被U3D以无压缩文件形式存放，也就是说U3D里的Texture Preview里显示的占用大小**MB不只是内存占用大小，还是空间占用大小。如下图所示：
-<a href="http://www.luzexi.com/wp-content/uploads/2014/05/QQ截图20140521102030.png"><img class="alignnone size-full wp-image-310" src="http://www.luzexi.com/wp-content/uploads/2014/05/QQ截图20140521102030.png" alt="QQ截图20140521102030" width="626" height="726" /></a>
+<img class="alignnone size-full wp-image-310" src="/assets/uploads/2014/05/QQ截图20140521102030.png" alt="QQ截图20140521102030" width="626" height="726" />
 
 U3D的内部机制为自动生成图片类型来替换我们给的图片，在图片的压缩方式上需要进行谨慎的选择。
 
