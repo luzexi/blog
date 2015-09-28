@@ -1,3 +1,7 @@
+#Analytics
+analytics :
+    provider : custom
+
 # Dependencies
 markdown:         redcarpet
 highlighter:      pygments
