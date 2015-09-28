@@ -51,10 +51,9 @@ GUI资源之间有特别多的重复的问题，挑出几个重复得特别厉�
 解决方案:
 
 打包AssetBundle方式有几种:1.单资源打包，也就是说一个.prefb或Texture打一个包。2.多个资源打包，将某些资源都打成一个AssetBundle，节省了几个资源包之间的共享资源也减小了多个AssetBundle引起的空间扩大问题。但并不是说所有项目都是多个资源打成一个AssetBundle是好的。《临兵斗者三国志》就是一大部分使用单一打包，而共享资源使用多个资源打成一个AssetBundle的方式。
- 
+
 最后奉上本人对AssetBundle封装的源码。[https://github.com/luzexi/Unity3DGameResource](https://github.com/luzexi/Unity3DGameResource)
 
 你也可以去我的[github](https://github.com/luzexi)上查看找我做的一些源码插件，如果喜欢的话可以star或者fllow。
  
 转发请注明出自：http://www.luzexi.com
- 
