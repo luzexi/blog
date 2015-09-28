@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title: About Me
 ---
 姓名：陆泽西 (Jesse Lu)
 
