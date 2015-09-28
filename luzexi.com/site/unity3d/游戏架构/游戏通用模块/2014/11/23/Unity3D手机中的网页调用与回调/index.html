@@ -111,11 +111,10 @@
 
 <p>一、调用Webview打开网页。
 我在源码基础上加了个单例接口，使得接口调用更加简单。</p>
-
-<p>初始化接口：WebViewObject.sInstance.Init((msg)=&gt;{
+<div class="highlight"><pre><code class="language-text" data-lang="text">初始化接口：WebViewObject.sInstance.Init((msg)=&gt;{
 Debug.Log(string.Format(&quot;CallFromJS[{0}]&quot;, msg));
-}); 初始化传入的是点击回调的消息接口。</p>
-
+}); 初始化传入的是点击回调的消息接口。
+</code></pre></div>
 <p>设置窗体大小：WebViewObject.sInstance.SetMargins(5, 5, 5, 40); 窗体大小定义的十左边，上边，右边，下边的间隔像素。</p>
 
 <p>展示OR关闭网页：WebViewObject.sInstance.SetVisibility(true);</p>

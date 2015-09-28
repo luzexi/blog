@@ -246,8 +246,9 @@ The empty col will be a default value like 0 or &quot;&quot; or false or {}
 
     <span class="post-date">11 Feb 2015</span>
 
-    <p>今天去了趟unity上海分部的CTO&amp;Leader讨论会。记录下会议内容很多无聊的东西我都略过不写了，报告下我们比较关心的，或者将来会遇到的困难。
-1.现在unity3d 4.6.2 打包64位的ios app 不靠谱，bug有400多个，不建议升级。4月1号前说是会出个稳定版，但讨论中透露，稳定版中也会由许多未知因素。IL2P打成c++的方式有众多问题和困难。</p>
+    <p>今天去了趟unity上海分部的CTO&amp;Leader讨论会。记录下会议内容很多无聊的东西我都略过不写了，报告下我们比较关心的，或者将来会遇到的困难。</p>
+
+<p>1.现在unity3d 4.6.2 打包64位的ios app 不靠谱，bug有400多个，不建议升级。4月1号前说是会出个稳定版，但讨论中透露，稳定版中也会由许多未知因素。IL2P打成c++的方式有众多问题和困难。</p>
 
 <p>2.他们说了个热更新的解决方案，但只限安卓。我听了下，原理就是把所有程序都打成一个dll，用加载资源的方式加载，然后再实时编译。这个要求代码不能附着在prefab上。然后我说了关于使用lua更新机制，虽然现在在u3d里仍不是非常成熟，但困难是永远都有的，各位可以值得一试，不要等到别人用熟了你才开始，那已经慢了好大一步了。</p>
 
@@ -283,9 +284,11 @@ The empty col will be a default value like 0 or &quot;&quot; or false or {}
 
     <span class="post-date">21 Jan 2015</span>
 
-    <p>c调用lua堆栈常用操作-------
-===================初级========================
-void lua_gettop() : 用于返回栈中元素的个数，同时也是栈顶元素的索引，因为栈底是1，所以栈中有多少个元素，栈顶索引就是多少。</p>
+    <p>c调用lua堆栈常用操作-------</p>
+
+<p>===================初级========================</p>
+
+<p>void lua_gettop() : 用于返回栈中元素的个数，同时也是栈顶元素的索引，因为栈底是1，所以栈中有多少个元素，栈顶索引就是多少。</p>
 
 <p>void lua<em>settop(int index) : 设置栈顶，也是设置栈的大小，多的去除，少的填nil。-- #define lua</em>pop(L,n) lua_settop(L,-(n)-1)</p>
 
@@ -311,8 +314,9 @@ void lua_gettop() : 用于返回栈中元素的个数，同时也是栈顶元素
 
 <p>int lua_type(int index) : 获得索引index的值的类型。</p>
 
-<p>===================中级========================
-void lua_call(int nargs, int nresults) : 调用方法，其中nargs为参数数量，nresults为结果数量。栈中必须保持  ..... func , arg1 , arg2 ,art3 (<em>) ，</em>表示栈顶，调用后func,arg都会消失，只留下结果，如果调用没有问题的话。</p>
+<p>===================中级========================</p>
+
+<p>void lua_call(int nargs, int nresults) : 调用方法，其中nargs为参数数量，nresults为结果数量。栈中必须保持  ..... func , arg1 , arg2 ,art3 (<em>) ，</em>表示栈顶，调用后func,arg都会消失，只留下结果，如果调用没有问题的话。</p>
 
 <p>int lua_pcall(int nargs, int nresults, int errfunc) :  功能pcall与call一样，区别在最后多了个自定义错误处理，当调用出错后，会调用其栈中索引方法。pcall返回0为无错误，其他则表示调用有错。如果errfunc为0，则报错调用原始方法。</p>
 
@@ -365,11 +369,10 @@ void lua_call(int nargs, int nresults) : 调用方法，其中nargs为参数数�
 
 <p>一、调用Webview打开网页。
 我在源码基础上加了个单例接口，使得接口调用更加简单。</p>
-
-<p>初始化接口：WebViewObject.sInstance.Init((msg)=&gt;{
+<div class="highlight"><pre><code class="language-text" data-lang="text">初始化接口：WebViewObject.sInstance.Init((msg)=&gt;{
 Debug.Log(string.Format(&quot;CallFromJS[{0}]&quot;, msg));
-}); 初始化传入的是点击回调的消息接口。</p>
-
+}); 初始化传入的是点击回调的消息接口。
+</code></pre></div>
 <p>设置窗体大小：WebViewObject.sInstance.SetMargins(5, 5, 5, 40); 窗体大小定义的十左边，上边，右边，下边的间隔像素。</p>
 
 <p>展示OR关闭网页：WebViewObject.sInstance.SetVisibility(true);</p>

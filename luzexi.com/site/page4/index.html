@@ -113,7 +113,7 @@
 
     <span class="post-date">06 Jun 2014</span>
 
-    <p>Unity3D之如何将包大小减少到极致,图片是游戏app里最最占空间的资源，所以请各位还没有理解u3d对图片文件存储方式理解的请看<a href="http://www.luzexi.com/unity3d-texture图片空间和内存占用分析/" target="_blank">《unity3d-texture图片空间和内存占用分析》</a>。因为u3d对资源的压缩并不阐述的十分详细，所以很多项目在遇到包大小瓶颈时非常头疼。我也不是神仙，也同样痛苦过，但经历几个项目的折腾，最终能梳理出一套能将u3d包大小减少到合理范围的方法。</p>
+    <p>Unity3D之如何将包大小减少到极致,图片是游戏app里最最占空间的资源，所以请各位还没有理解u3d对图片文件存储方式理解的请看<a href="/unity3d/2014/05/21/Unity3D-Texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90/">《unity3d-texture图片空间和内存占用分析》</a>。因为u3d对资源的压缩并不阐述的十分详细，所以很多项目在遇到包大小瓶颈时非常头疼。我也不是神仙，也同样痛苦过，但经历几个项目的折腾，最终能梳理出一套能将u3d包大小减少到合理范围的方法。</p>
 
 <p>首先来展示下，官方如何说的:（<a href="http://docs.unity3d.com/Manual/ReducingFilesize.html">http://docs.unity3d.com/Manual/ReducingFilesize.html</a> 官方手册）</p>
 
@@ -131,7 +131,7 @@
 
 <p>这些官方解释对我们帮助甚少。我把包分成三段：1.首包(里面包含了最最必要的资源)。2.首次进入包加载(加载游戏运行必要的资源)。3.游戏运行中资源加载(按每个游戏不同各自定义，以场景和单位个体为主要，在画面进入时加载资源，加载结束后再运行并显示)。</p>
 
-<p>关于u3d的AssetBundle资源加载与打包封装，请查看<a href="http://www.luzexi.com/unity3d%E4%B9%8Bassetbundle%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E5%B0%81%E8%A3%85/" target="_blank">《unity3d之assetbundle资源加载封装》</a>这篇文章。</p>
+<p>关于u3d的AssetBundle资源加载与打包封装，请查看<a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/04/16/Unity3D%E4%B9%8BAssetBundle%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E5%B0%81%E8%A3%85/">《unity3d之assetbundle资源加载封装》</a>这篇文章。</p>
 
 <p>下面说说关于动态资源加载和资源导入内存的所有方式，这是优化资源的必要条件，因为只有你知道了所有的加载和导入途径你才能对项目资源优化进行全面的分析。知道了有哪几条路你才能选择一条最好的。如下：</p>
 
@@ -177,7 +177,7 @@
 
     <span class="post-date">21 May 2014</span>
 
-    <p>Texture图片空间和内存占用分析。由于U3D并没有很好的诠释对于图片的处理方式，所以很多人一直对于图集的大小和内存的占用情况都不了解。在此对于U3D的图片问题做一个实际数据的分析。此前的项目都会存在这样或者那样的打包后包大小与内存占用情况的问题，所以这次所以彻彻底底得分析下U3D对于Texture的处理方式。程序里的内存优化请参考<a href="http://www.luzexi.com/unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF/" target="_blank">《Unity3d优化之路》</a>。减少U3D包大小请参考<a href="http://www.luzexi.com/unity3d%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4/" target="_blank">《unity3d之如何将包大小减少到极致》</a>。</p>
+    <p>Texture图片空间和内存占用分析。由于U3D并没有很好的诠释对于图片的处理方式，所以很多人一直对于图集的大小和内存的占用情况都不了解。在此对于U3D的图片问题做一个实际数据的分析。此前的项目都会存在这样或者那样的打包后包大小与内存占用情况的问题，所以这次所以彻彻底底得分析下U3D对于Texture的处理方式。程序里的内存优化请参考<a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/02/22/Unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF/">《unity3d优化之路》</a>。减少U3D包大小请参考<a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4/">《unity3d之如何将包大小减少到极致》</a>。</p>
 
 <p>我打包多种类型的项目，空项目和10张放在Resources文件夹中的图为比较案例。以下是比较数据。</p>
 

@@ -86,7 +86,7 @@ public enum GUILAYER
 }
 ```
 
-8.要充分的管理GUI，不然过多的GUI会导致内存加速增长，而每次都销毁不用的GUI则会让IO过于频繁降低运行速度。我的方法是找到两者间的中间态，给予隐藏的GUI一个缓冲带,当每次某各GUI进行隐藏时判断是否有需要销毁的GUI。或者也可以这么做，每时每刻去监控隐藏的GUI，哪些GUI内存时间驻留过长就销毁。关于内存优化问题，可以参考<a href="http://www.luzexi.com/unity3d-texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90/" target="_blank">《unity3d-texture图片空间和内存占用分析》</a>和 <a href="http://www.luzexi.com/unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF/" target="_blank">《unity3d优化之路》</a>
+8.要充分的管理GUI，不然过多的GUI会导致内存加速增长，而每次都销毁不用的GUI则会让IO过于频繁降低运行速度。我的方法是找到两者间的中间态，给予隐藏的GUI一个缓冲带,当每次某各GUI进行隐藏时判断是否有需要销毁的GUI。或者也可以这么做，每时每刻去监控隐藏的GUI，哪些GUI内存时间驻留过长就销毁。关于内存优化问题，可以参考[《unity3d-texture图片空间和内存占用分析》](/unity3d/2014/05/21/Unity3D-Texture图片空间和内存占用分析/)和 [《unity3d优化之路》](/unity3d/游戏架构/2014/02/22/Unity3d优化之路/)
 
 9.另外关于图标，像头像，物品，数量过多的，可以用打成几个图集，按一定规则进行排列，减小文件大小减少一次性读取的IO时间。
 
