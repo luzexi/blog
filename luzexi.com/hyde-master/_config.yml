@@ -1,6 +1,5 @@
 #Analytics
-analytics :
-    provider : custom
+analytics : 	  true
 
 # Dependencies
 markdown:         redcarpet
@@ -22,6 +21,9 @@ author:
   url:            https://www.luzexi.com
 
 paginate:         5
+
+# Comments
+comments: 		  true
 
 # Custom vars
 version:          2.1.0
