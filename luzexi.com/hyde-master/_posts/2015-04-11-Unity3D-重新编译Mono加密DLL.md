@@ -20,6 +20,7 @@ date_gmt: !binary |-
 categories:
 - Unity3D
 - 游戏架构
+- 前端技术
 tags:
 - Unity3D
 - 加密

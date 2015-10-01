@@ -19,11 +19,11 @@ date_gmt: !binary |-
   MjAxNS0wMi0xMSAxMjoxNToyNCArMDgwMA==
 categories:
 - Unity3D
-- 生活
+- 前端技术
 tags:
 - Unity3D
 ---
-今天去了趟unity上海分部的CTO&Leader讨论会。记录下会议内容很多无聊的东西我都略过不写了，报告下我们比较关心的，或者将来会遇到的困难。
+2015-02-11 今天去了趟unity上海分部的CTO&Leader讨论会。记录下会议内容很多无聊的东西我都略过不写了，报告下我们比较关心的，或者将来会遇到的困难。
 
 1.现在unity3d 4.6.2 打包64位的ios app 不靠谱，bug有400多个，不建议升级。4月1号前说是会出个稳定版，但讨论中透露，稳定版中也会由许多未知因素。IL2P打成c++的方式有众多问题和困难。
 

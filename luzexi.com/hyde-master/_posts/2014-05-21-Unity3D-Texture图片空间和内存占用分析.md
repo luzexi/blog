@@ -19,6 +19,7 @@ date_gmt: !binary |-
   MjAxNC0wNS0yMSAwMzowNToyMSArMDgwMA==
 categories:
 - Unity3D
+- 前端技术
 tags:
 - Unity3D
 - 优化

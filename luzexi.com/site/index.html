@@ -106,46 +106,14 @@
           
         
       
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
 
-      <a class="sidebar-nav-item" href="/lua/index.html">Lua</a>
       <a class="sidebar-nav-item" href="/unity3d/index.html">Unity3D</a>
-      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
       <a class="sidebar-nav-item" href="/游戏服务端/index.html">游戏服务端</a>
       <a class="sidebar-nav-item" href="/游戏架构/index.html">游戏架构</a>
       <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
-      <a class="sidebar-nav-item" href="/android/index.html">Android</a>
-      <a class="sidebar-nav-item" href="/cocos2dx/index.html">Cocos2dx</a>
-      <a class="sidebar-nav-item" href="/html5/index.html">Html5</a>
-      <a class="sidebar-nav-item" href="/linux/index.html">Linux</a>
-      <a class="sidebar-nav-item" href="/生活/index.html">生活</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
       <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
       <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
@@ -160,7 +128,7 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/lua/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">
+      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">
         Unity3D之slua集成第三方库
       </a>
     </h1>
@@ -169,47 +137,11 @@
 
     <p>Unity3D中使用lua最近越来越火，我比较中意slua的思路与代码质量。因为先前的项目对slua做了几个第三方库的封装，所有在空出来的时间就对slua做了fork加入了一些大家都比较常用的第三方库。</p>
 
-<p><a href="https://github.com/luzexi/slua-3rd-lib">源码</a></p>
-
-<p>这面是源码的地址，如果喜欢可以star或watch，我会一直更新以方便大家。</p>
-
-<p>至今集成的第三方库罗列一下:</p>
-
-<p>1.pbc (<a href="https://github.com/cloudwu/pbc">https://github.com/cloudwu/pbc</a>) 是云风用c写的google protocol buffers。</p>
-
-<p>2.lpeg (<a href="http://www.inf.puc-rio.br/%7Eroberto/lpeg/lpeg.html">http://www.inf.puc-rio.br/~roberto/lpeg/lpeg.html</a>) 是正则表达式的解析与匹配库.</p>
-
-<p>3.lua-cjson (<a href="http://www.kyne.com.au/%7Emark/software/lua-cjson.php">http://www.kyne.com.au/~mark/software/lua-cjson.php</a>) 是一个支持json的库，他的效率非常惊人。</p>
-
-<p>4.lua-socket (<a href="http://w3.impa.br/%7Ediego/software/luasocket/home.html">http://w3.impa.br/~diego/software/luasocket/home.html</a>) 是一个用c写的socket的库，里面封装了TCP和UDP。提供了网络连接与传输的API，你可以用它在lua里实现网络层。</p>
-
-<p>5.sproto (<a href="https://github.com/cloudwu/sproto">https://github.com/cloudwu/sproto</a>) 这也是云风写的一个关于网络协议，他类似与google protocol buffer，不同的是他在google protocol buffer基础上对协议的格式和内容做了修改，使得解析与构造的效率非常高。</p>
-
-<p>6.sqlite (<a href="https://github.com/LuaDist/lsqlite3">https://github.com/LuaDist/lsqlite3</a>) 是一个以文件形式存在的轻量级数据库，他被很多软件用来做本地数据存储。他的api轻便好用，广受程序员欢迎。</p>
-
-<p>源码中已将所有第三方库构建进slua里，并完成了android(x86,armv7),ios,mac,windows(x86,x64)这几个平台的测试。</p>
-
-<p>如果你需要加入自己的第三方库或者说你希望去除一些你用不到的第三方库，你可以在源码的build里修改我写的自动build的批处理程序。</p>
-
-<p>1.make_ios.sh 构建ios平台的批处理程序。需要在mac下运行。</p>
-
-<p>2.make_osx.sh 构建osx平台的批处理程序。需要在mac下运行。</p>
-
-<p>3.make_android.sh 构建android平台的批处理程序。需要在mac或linux下运行。</p>
-
-<p>4.make-windows-32.cmd 构建windows x86 dll。需要在windows下运行。</p>
-
-<p>5.make-windows-64.cmd 构建windows x64 dll。需要在windows下运行。</p>
-
-<p>这里说明一些构建时需要注意的事情。ios构建时需要注意脚本里的xcode地址。如果你不是xcode7.0。可能需要设置一下脚本里的路径。android的构建脚本也是一样，需要配置你机子上正确的ndk路径。windows下编译dll需要用的MingGw，我在源码中用git的submodule的方式安了一个，你需要运行一下submodule的更新命令git submodule update --init。MingGw很大300mb，你要做好心理准备，或者你直接去这个地址下载一个<a href="https://github.com/luzexi/MinGW">https://github.com/luzexi/MinGW</a></p>
-
-<p>转载注明出处 http://www.luzexi.com</p>
-
   </div>
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL/">
+      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL/">
         Unity3D-重新编译Mono加密DLL
       </a>
     </h1>
@@ -218,58 +150,11 @@
 
     <p>Unity3D-重新编译Mono加密DLL。安卓应用总是让人头疼，游戏遭到破解与反编译是研发的人最不愿意看到的。自己的辛苦劳动成果被人随意窃取与利用，对这些咬牙切齿的痛恨。所以我们需要加强自身的反破解技术力量。不过这世上没有破解不了的东西，道高一尺魔高一丈，我们做的只是让破解更加困难而已。让那些破解的人付出点代价才能得到他们想要的，如果他们觉得代价太高，看不清前面的道路，他们就有可能放弃，然后我们的目的达到了。</p>
 
-<p>游戏本身加密方式有很多，对apk加壳，防止apk二次打包等。对这些android的加密与破解技术看过比较好的文章参考：</p>
-
-<p><a href="http://blog.csdn.net/column/details/security-android.html">《Android安全及病毒分析》</a> ，其中<a href="http://blog.csdn.net/androidsecurity/article/details/8809542">《Android APK加壳技术方案【2】》</a> 最为经典。而本篇文章我们主要来说说针对Unity3D的加密。</p>
-
-<p>闲扯就到这里，我们开始说正事：</p>
-
-<p>Unity3D所有客户端的代码都会以dll文件形式存下来，当游戏应用被开启时c#vm(也就是mono的虚拟机)会去加载所有dll，从而开始运行真正的程序画面了。而破解的很大一部分都是通过解压apk后拿到主逻辑dll，对dll进行反编译，然后修改后重新编译，再放入apk重新签名打包。所以我们需要针对dll进行加密，以防止他们反编译dll。</p>
-
-<p>加密一个dll文件非常容易，无论你用什么算法都行，但是在哪解密呢？答案是libmono.so。libmono.so是mono的核心程序，它承载了加载解析dll和虚拟机运行的功能。所以说libmono.so是关键，我们需要修改mono内核程序并重新编译它。</p>
-
-<p>下面将开始mono的编译过程，别看步骤写得简单明了，其实我花了起码一个多星期的思考，尝试，失败，再思考，再尝试，再失败.....总结其中原因一方面也是自己的愚钝的资质，另一方面是unity mono和mono并不一样，unity mono缺少编译文档并且还混合着原mono的编译文档，导致误判了很多：</p>
-
-<p>1.首先不要认为unity mono 与 原生态mono一样。可以编译mono就可以同样步骤编译unity mono。我在这里尝试了很久，使用configure进行编译，尝试使用不同的编译参数，进行编译，最后发现unity mono使用的是ndk-9下的linux-4.8编译器，所有参数都是根据这个编译器所设定的。</p>
-
-<p>2.unity mono 地址：<a href="https://github.com/Unity-Technologies/mono">https://github.com/Unity-Technologies/mono</a> 你需要从这里下载unity mono。</p>
-
-<p>3.mono需要autoconf automake libtool pkg-config这些工具。你最好还是去下载安装了。你可以用brew安装。brew install autoconf automake libtool pkg-config。</p>
-
-<p>4.我一开始使用mac x86<em>64进行编译，折腾了很久然后建了个linux-x86</em>64虚拟机来编译，然后又折腾了很久，又建了个linux-i386来重新编译mono，因为我一直认为交叉编译需要加些不同的编译参数和变量。在linux-i386首次编译成功后又开始转化到mac上，进行交叉编译也一样成功，最后发现其实是我没找对路子。这路子就是unity 的mono-build-tool：<a href="https://github.com/Unity-Technologies/monobuildtools">https://github.com/Unity-Technologies/monobuildtools</a> 它已经在unity mono的项目里了，在mono的external/buildscripts下。</p>
-
-<p>5.buildscripts下的build<em>runtime</em>android.sh是编译安卓平台的关键。它是unity制作的一个自动编译 mono 流程的脚本。你需要将这个脚本copy到mono根目录下再执行。</p>
-
-<p>6.脚本里写些内容，如果你懒得看，我帮你稍微解释下。它会去检查你当前的ANDROID<em>NDK</em>ROOT环境变量是否是指向ndk-9，所以你需要去下ndk-9版本，放到机子上，然后编辑环境变量ANDROID<em>NDK</em>ROOT指向它，如果你没有它会通过perl模块lwp-download去下载ndk-9，但是你必须要要有这个perl模块才行，我劝你还是老老实实自己去下吧。ndk版本下载地址参考这里：<a href="/android/2015/04/06/Android-SDK-NDK-Studio-%E4%B8%8B%E8%BD%BD%E5%88%97%E8%A1%A8%E5%92%8C%E6%9E%84%E5%BB%BA%E8%AF%B4%E6%98%8E/">《android-sdk-ndk-studio-下载列表和构建说明》</a>。如果是linux下编译环境变量设定参考这里：<a href="/linux/2015/04/07/linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/">《linux环境变量简介》</a>。然后呢，它会用git去clone一个编译时用到的库，这个也是unity自己改编过的一个库，地址为：<a href="https://github.com/Unity-Technologies/krait-signal-handler">https://github.com/Unity-Technologies/krait-signal-handler</a> ，这个库有个坑说下：perl脚本build.pl头部有个命令是#!/usr/bin/env perl -w，这个在部分机子上并不兼容，如果你有错误停在这里这个文件上，你可以将env去除再尝试手动perl build.pl 运行构建一遍没问题再重新编译，原因参考：<a href="http://abloz.com/2011/01/13/why-use-usr-bin-env.html">http://abloz.com/2011/01/13/why-use-usr-bin-env.html</a> 。最后就先make clean &amp;&amp; make distclean 清除前面编译的内容，然后进行预编译configure，参数都在脚本里设置好了，你不需要关心了。预编译后就开始make编译了。</p>
-
-<p>7.执行build<em>runtime</em>android.sh后terminal基本都是刷屏的节奏。刷刷刷的编译输出，你根本来不及看清到底做到哪了做了些什么内容。而config.log这个文件记录所有的编译输出，包括哪行错误了，哪行通过了。调试基本也考这个log文件，如果关键部位错误它会停止，然后你就可以针对性的查了。这里提醒一点，编译时它很多地方都是在检测编译器是否正常，因为它要确认编译器对错误的编译内容是否能够检测到，所以很多错误内容只是测试内容-你需要省略掉。</p>
-
-<p>8.如果编译成功，那就恭喜你了。windows下我没有测试过，有可能会增加不少坑，我建议还是用linux或者mac编译吧，因为我搜集资料的时候不少人对windows下编译mono都抱怨不少。那么我们开始迈入下一个坑吧:)</p>
-
-<p>下面介绍加解密DLL部分：</p>
-
-<p>加密算法自己选我不多说了，但我这里要引用一篇同样介绍mono的dll加密的文章，我觉得也写得满不错的，但是文章描述不够详尽。我这篇文章弥补了他的不足，将细节补充得更加细致。你大可以两篇文章加起来参考。<a href="http://www.unitymanual.com/home.php?mod=space&amp;uid=7672&amp;do=blog&amp;id=1440">http://www.unitymanual.com/home.php?mod=space&amp;uid=7672&amp;do=blog&amp;id=1440</a> 不知道地址是不是原作者的，如果不是我再更换吧。</p>
-
-<p>1.首先找到dll解密入口。mono下/mono/metadata/image.c里mono<em>image</em>open<em>from</em>data<em>with</em>name是关键方法，参数中的data是dll传入的数据。你要做的就是将它解密后传给datac，这个方法程序你必须看下，因为你要了解下解密程序放在哪才合适。</p>
-
-<p>2.大部分dll都会通过mono<em>image</em>open<em>from</em>data<em>with</em>name这个方法进行加载，但不是所有dll，例如mscorlib.dll和System.Core.dll就不会，可能还有其他dll，我并不确定还有哪些。所以你还是得辨别下哪些dll会通过这个方法，这样你才能确定哪个dll可以加密。如何判断data属于哪个dll呢，参数name就是data的路径名，name打印出来后就像:/data/app/com.xx.xx.apk/assets/bin/Data/Managed/xxx.dll 这样。</p>
-
-<p>3.打印调试。你可以使用g<em>message例如：g</em>warning(&quot;dll name: %s \n&quot;, name); 其他的打印调试你可以查看源码中的它写的代码。很容易找到，查关键字LOG吧。</p>
-
-<p>4.改完后重新编译mono，找到libmono.so(find . -name libmono.so)，完成编译后libmono.so的平台有好几个，你可以根据自己的平台来选。有人拷贝这些mono重新编译过的文件去覆盖了unity编辑器的原来mono文件，这样也可行。但我选择在打包android时再从外部复制libmono.so，这样就可以绕过编译器重新编译后无法读取无加密dll的麻烦，可以少做一层无意义的编辑器状态下的加解密工作。</p>
-
-<p>5.mono解密部分就到这里了。其他部分的关键就是你的加解密程序了，是否能够加密和解密都是ok的并且都是不改变size。你需要的参数有data和data<em>len，mono</em>image<em>open</em>from<em>data</em>with_name方法里面都有。</p>
-
-<p>6.为了安全起见我使用c来编写加密程序，因为我认为c#和c的编译器对于变量内存的存储机制不一样，怕引起不必要的麻烦。
-这里要非常感谢一个人，全程都在提供帮助：炽乐@宗树</p>
-
-<p>转载请注明出处：http://www.luzexi.com</p>
-
   </div>
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/linux/2015/04/07/linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/">
+      <a href="/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/07/linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/">
         linux环境变量简介
       </a>
     </h1>
@@ -278,17 +163,13 @@
 
     <p>linux环境变量简介。这个话题已经很老了,我只是重新温习一遍旧的知识而已。顺便熟悉下资料整理工具OmntOutliner。我们在使用android-sdk，android-ndk,jdk等众多软件时都会用到linux环境变量的配置。所以我觉得重点介绍下还是很有必要的。
 因为我使用的是iframe标签，所以有可能有部分浏览器并不支持。
-如果你查看时有问题可以直接点击:<a href="/static-page/linux-env.html/index.html">linux环境变量简介</a>
-<iframe src="/static-page/linux-env.html/index.html" width="100%" , height="1000">
-</iframe></p>
-
-<p>转载注明出处 http://www.luzexi.com</p>
+如果你查看时有问题可以直接点击:<a href="/static-page/linux-env.html/index.html">linux环境变量简介</a></p>
 
   </div>
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/android/2015/04/06/Android-SDK-NDK-Studio-%E4%B8%8B%E8%BD%BD%E5%88%97%E8%A1%A8%E5%92%8C%E6%9E%84%E5%BB%BA%E8%AF%B4%E6%98%8E/">
+      <a href="/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/06/Android-SDK-NDK-Studio-%E4%B8%8B%E8%BD%BD%E5%88%97%E8%A1%A8%E5%92%8C%E6%9E%84%E5%BB%BA%E8%AF%B4%E6%98%8E/">
         Android-SDK-NDK-Studio-下载列表和构建说明
       </a>
     </h1>
@@ -296,17 +177,13 @@
     <span class="post-date">06 Apr 2015</span>
 
     <p>Android-SDK-NDK-Studio-下载列表和构建说明。是一个我整理的安卓的开发资料，无论是用安卓还是其他第三方平台都需要的工具。
-你可以通过这个地址直接访问我整理的资料，资料中的标题点击左边图标可以展开请耐心查看：<a href="/static-page/android-list.html/index.html">Android-SDK-NDK-Studio-Build_process</a>
-展示内容：
-<iframe src="/static-page/android-list.html/index.html" width="100%" height="2000"></iframe></p>
-
-<p>转载注明出处 http://www.luzexi.com</p>
+你可以通过这个地址直接访问我整理的资料，资料中的标题点击左边图标可以展开请耐心查看：<a href="/static-page/android-list.html/index.html">Android-SDK-NDK-Studio-Build_process</a></p>
 
   </div>
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2015/04/01/Unity3D-%E6%B8%B8%E6%88%8F%E7%94%BB%E9%9D%A2%E9%AB%98%E4%BD%8E%E5%93%81%E8%B4%A8%E5%88%87%E6%8D%A2/">
+      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/01/Unity3D-%E6%B8%B8%E6%88%8F%E7%94%BB%E9%9D%A2%E9%AB%98%E4%BD%8E%E5%93%81%E8%B4%A8%E5%88%87%E6%8D%A2/">
         Unity3D-游戏画面高低品质切换
       </a>
     </h1>
@@ -316,22 +193,71 @@
     <p>Unity3D-游戏画面高低品质切换。最近想办法让游戏在高画质和低画质之间切换，在判定游戏帧数高低后，可以实时切换游戏品质让游戏更加流畅。这能给客户端在渠道发行后提高些许留存率。
 ngui和ugui切换方式有所不同，一个基于atlas一种基于Image，一种是之前的ngui的atlas，一种是Unity3D4.6.1后的sprite 2D(ugui)。</p>
 
-<p>两种方式都基于两套图和两套prefab。共同特点就是在开发期间prefab，用脚本工具去生成相应的sd prefab。细节如下：</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/03/26/Unity3DLua-%E5%B0%86xls%E8%BD%AC%E5%8C%96%E4%B8%BAlua/">
+        Unity3DLua-将xls转化为lua
+      </a>
+    </h1>
 
-<p>1.一套ui图分两套图，一套高清一套低清，ui prefab一套为指向高清图，一套指向低清图。</p>
+    <span class="post-date">26 Mar 2015</span>
 
-<p>2.基于两套图和两套prefab。开发期间，在修改其中一个prefab时，做个工具脚本，自动复制这个prefab到sd文件夹下，并将prefab里的所有图替换为sd。</p>
+    <p>Unity3DLua-将xls转化为lua。使用lua写unity3d项目，由于加载数据一直觉得不方便，于是写个脚本将xls数据文件转化为lua文件，这样lua逻辑就可以直接读取数据。
+为什么要这样做呢？</p>
 
-<p>3.程序在选择sd还是hd时，只要关注prefab名就可以了。prefab名可以后缀不一样，load时可以区分开来。</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/03/06/Unity3D%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E5%85%A8%E9%83%A8%E7%BD%B2/">
+        Unity3D项目环境全部署
+      </a>
+    </h1>
 
-<p>4.最后做到极致时，可以加强工具脚本，一键生成所有sd的prefab。
-ngui部分的prefab，编写脚本使用atlas指向切换。ugui部分的prefab，编写脚本使用更换Image。</p>
+    <span class="post-date">06 Mar 2015</span>
 
-<p>最后总结：两套图一高一低，需要维护两套，使用脚本工具根据hd的prefab生成sd的prefab。低清图在压缩时，如果使用unity3d自带的压缩机制太过于粗糙的话，可以美术手动压缩。</p>
+    <p>Unity3D项目环境全部署。这次我想总结下项目环境部署。可别小看了这个开发环境部署，这将直接导致项目的进程速度，以及成员们在这个开发行程中的疲劳积累速度。优秀的部署能省去成员们不必要的心理负担，卸下包袱专心去做自己的功能块。差劲的部署，会加重成员们的心理负担，并且有可能引起不必要的开发冲突。</p>
 
-<p>特别感谢一起讨论的童鞋，结论是通过大家的智慧结合：完美@yang，巨人@tangram，炽乐@宗树。</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/02/11/Unity3D%E4%B8%8A%E6%B5%B7CTO&Leader%E8%AE%A8%E8%AE%BA%E4%BC%9A/">
+        Unity3D上海CTO&Leader讨论会
+      </a>
+    </h1>
 
-<p>转载请注明出处：http://www.luzexi.com</p>
+    <span class="post-date">11 Feb 2015</span>
+
+    <p>2015-02-11 今天去了趟unity上海分部的CTO&amp;Leader讨论会。记录下会议内容很多无聊的东西我都略过不写了，报告下我们比较关心的，或者将来会遇到的困难。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2015/01/21/Lua%E4%BD%BF%E7%94%A8%E5%AE%9E%E8%AE%B0/">
+        Lua使用实记
+      </a>
+    </h1>
+
+    <span class="post-date">21 Jan 2015</span>
+
+    <p>c调用lua堆栈常用操作-------</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/11/23/Unity3D%E6%89%8B%E6%9C%BA%E4%B8%AD%E7%9A%84%E7%BD%91%E9%A1%B5%E8%B0%83%E7%94%A8%E4%B8%8E%E5%9B%9E%E8%B0%83/">
+        Unity3D手机中的网页调用与回调
+      </a>
+    </h1>
+
+    <span class="post-date">23 Nov 2014</span>
+
+    <p>Unity3D手机中的网页调用与回调，其实就是我们口中常说的Webview，是手机项目里调用网页，来代替游戏画面展示的一种方法。因为其展示的是网页，所以展示画面是相对动态的，可以由服务器来控制。但是我们不只需要展示画面，还需要当点击网页按钮时产生回调以使U3D执行指定程序。</p>
 
   </div>
   
@@ -339,10 +265,10 @@ ngui部分的prefab，编写脚本使用atlas指向切换。ugui部分的prefab�
 
 <div class="pagination">
   
-    <a class="pagination-item older" href="/page2">Older</a>
+    <a class="pagination-item older" href="/page2">下一页</a>
   
   
-    <span class="pagination-item newer">Newer</span>
+    <span class="pagination-item newer">上一页</span>
   
 </div>
     </div>

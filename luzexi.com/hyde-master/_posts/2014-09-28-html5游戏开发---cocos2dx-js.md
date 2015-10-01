@@ -18,8 +18,8 @@ date: !binary |-
 date_gmt: !binary |-
   MjAxNC0wOS0yOCAwNDowNToyMyArMDgwMA==
 categories:
-- html5
-- cocos2dx
+- 前端技术
+- 后端技术
 tags:
 - cocos2d
 - html5

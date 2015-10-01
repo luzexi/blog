@@ -20,7 +20,9 @@ author:
   name:           'Jesse Lu'
   url:            https://www.luzexi.com
 
-paginate:         5
+paginate:         10
+
+excerpt_separator: "\n\n"
 
 # Comments
 comments: 		  true

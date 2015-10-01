@@ -20,6 +20,7 @@ date_gmt: !binary |-
 categories:
 - Unity3D
 - 游戏通用模块
+- 前端技术
 tags:
 - AssetBundle
 - Unity3D

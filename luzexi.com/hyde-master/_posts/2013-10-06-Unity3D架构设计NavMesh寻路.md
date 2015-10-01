@@ -19,6 +19,7 @@ date_gmt: !binary |-
   MjAxMy0xMC0wNiAxMDowNDoyOCArMDgwMA==
 categories:
 - Unity3D
+- 前端技术
 tags:
 - a*
 - c#

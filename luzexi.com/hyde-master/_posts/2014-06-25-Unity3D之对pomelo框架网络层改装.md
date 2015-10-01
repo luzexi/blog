@@ -19,13 +19,9 @@ date_gmt: !binary |-
   MjAxNC0wNi0yNSAwNjoyNzoyNSArMDgwMA==
 categories:
 - Unity3D
-- 游戏服务端
-- 游戏通用模块
-- 其他技术
+- 前端技术
 tags: []
 ---
-Unity3D之对pomelo框架网络层改装。
-
 最近了解了下网易的开源服务器框架pomelo，github地址：[https://github.com/NetEase/pomelo](https://github.com/NetEase/pomelo)发现其中它封装的u3d的网络层部分有线程安全问题，几乎不能直接u3d项目，所以对其进行了2次封装，让他可以真正用于u3d项目。
 
 封装后的源码也同样放在我的github上：[https://github.com/luzexi](https://github.com/luzexi) 供大家参考。

@@ -20,7 +20,7 @@ date_gmt: !binary |-
 categories:
 - Unity3D
 - 游戏通用模块
-- lua
+- 前端技术
 tags:
 - Unity3D
 - Unity3D架构
@@ -28,7 +28,6 @@ tags:
 - 游戏架构
 - lua
 ---
-
 Unity3D中使用lua最近越来越火，我比较中意slua的思路与代码质量。因为先前的项目对slua做了几个第三方库的封装，所有在空出来的时间就对slua做了fork加入了一些大家都比较常用的第三方库。
 
 [源码](https://github.com/luzexi/slua-3rd-lib)

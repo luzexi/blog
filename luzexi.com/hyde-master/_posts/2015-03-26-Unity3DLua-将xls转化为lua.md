@@ -20,7 +20,7 @@ date_gmt: !binary |-
 categories:
 - Unity3D
 - 游戏通用模块
-- lua
+- 前端技术
 tags:
 - Unity3D
 - lua
