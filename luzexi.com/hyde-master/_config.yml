@@ -1,6 +1,3 @@
-#Analytics
-analytics : 	  true
-
 # Dependencies
 markdown:         redcarpet
 highlighter:      pygments
@@ -24,8 +21,9 @@ paginate:         10
 
 excerpt_separator: "\n\n"
 
-# Comments
+# plugins
 comments: 		  true
+analytics : 	  true
 
 # Custom vars
 version:          2.1.0
