@@ -1,0 +1,2 @@
+cd site
+jekyll serve
