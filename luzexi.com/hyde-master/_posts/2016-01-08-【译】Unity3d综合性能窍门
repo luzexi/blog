@@ -1,0 +1,163 @@
+---
+layout: post
+status: publish
+published: true
+title: Unity3d 综合性能窍门
+author:
+  display_name: 陆泽西
+  login: luzexi
+  email: jesse_luzexi@163.com
+  url: http://www.luzexi.com
+author_login: luzexi
+author_email: jesse_luzexi@163.com
+author_url: http://www.luzexi.com
+categories:
+- Unity3D
+- 游戏通用模块
+- 前端技术
+tags:
+- Unity3D
+- Unity3D架构
+- 客户端架构
+- 游戏架构
+- lua
+---
+Unity3d 综合性能窍门
+
+下面的内容并不一定很详细，但能够引导unity3d开发者如何制作性能流畅的游戏应用
+
+内容：
+1.官方提示文档
+2.性能优化概述
+3.模型网格
+4.灯光
+5.贴图
+6.音频
+7.物理碰撞
+8.Shader
+9.脚本
+
+官方提示文档
+
+图形性能优(http://docs.unity3d.com/Documentation/Manual/OptimizingGraphicsPerformance.html)
+如何减少包大小(http://docs.unity3d.com/Documentation/Manual/ReducingFilesize.html)
+角色动画(技巧比较零散) ( http://unity3d.com/Documentation/Manual/Character-Animation.html)
+
+优化技巧概述
+
+分析第一步，不要试图花时间去优化一些模糊不清的程序或者降低图片的大小除非你确实知道他们是瓶颈。首要的是去一直分析你的游戏找到瓶颈在哪里。Apple的Shark是一个分析OpenGL基础应用不错的工具。
+分析第二步，不要忘了在优化后对游戏再分析一次以便查看他们是否有效，同时你也有可能会发现另一些瓶颈。
+
+开发工作第一 – 性能优化第二。尽可能花时间使你的游戏更加平滑顺畅。能够使得更改和更新游戏变得更快也将让减轻以后的性能转变。 在观察屏中测试场景，他将告诉你性能是被在场景中的物体拖慢速度还是被绑定在物体上的脚本拖慢速度。如果是观察屏中迟钝缓慢，你可能需要优化一下模型或者贴图，如果不是，瓶颈可能在程序中或者物理碰撞上。关闭个别的游戏物体，在编辑器里，试图关掉一些个别的物体，这样通常能排查到拖慢游戏的物体。
+
+模型网格
+
+尽可能的将邻近的模型合并为单个模型单个材质球。例如，如果你的场景里的桌子上堆叠有很多个物体，合并这些物体将会很有意义(有可能会需要将一些贴图合并一张大的贴图图集)。减少Unity渲染的物体的数量能显著促进性能。
+一个材质球一个模型，每个材质球都会被视为分开的模型渲染。
+使用极致低模的模型(500个多边形以下)会使得性能增加。大多数的显卡都有转换和照明功能，这意味他们每秒都处理一些奇怪的多边形。加之通常会提交一个网格让显卡渲染，所以太过于减少模型的多边形可能使你的游戏模型看起来像块状。
+开始吧，用大约1500-2000的三角形做角色，这个数字可以变化大些，但是作为一个首发的美术人员应该在一个细节层级上对质量和性能有一个比较好的妥协。注意，如果你有模型使用四边形，(四边形)Unity将会把每个四边形都转换成2个三角形再导入。
+
+光照
+
+每个像素光渲染都会生效另外的渲染管道。像素光会使你的游戏看起来更好但不要太过于热衷于他们。然而，使用Quality Manager去调整像素光的渲染在每个质量等级上是一个很好的方式，这在你发布的游戏里提供了性能与质量的平衡性。
+ 聚光灯比点光源和方向光更加费性能。光照一个场景最好的方式是先确定你想要的效果，然后去看所有的灯光中哪个是重要的哪个可以削减掉使得场景效果与你想要的相似。
+点光源和聚光灯值影响在他们范围内的模型网格。如果模型在点光源和聚光灯范围以外，光的影响将被削弱，模型将不会被灯光影响从而节省性能消耗。这个方式可以在理论上解释拥有很多小的点光源却任然拥有好的性能表现，因为他们只影响一小部分的物体。记住，一个模型最多只能被8个光源所影响。
+
+贴图
+
+在看起来可以接受的情况下尽量缩小贴图的大小。如果你的显卡没有拥有足够的内存来存放这些贴图时，他们将被放置在系统内存里，当他们需要被渲染时再被上传。这在新的电脑上没什么问题因为他们有很多可以使用的空间。但如果你执着于完全能在低端显存设备上运行你的游戏的话，不需要在图片工具上改变贴图的大小，你可以使用Unity导入图片并对其设置大小。
+不要使用低品质的图片文件，试图使用jpeg的低品质文件或者低色彩png或者gif文件也不会降低游戏中的大小。Unity会在打包发布时自动压缩所有图片，所以请保持原始的高品质贴图文件。这是由于多种压缩和解压缩对品质最小化变得很轻便。
+
+音频
+
+使用.ogg对音频压缩，其他的音频格式在发布打包时将被作为非压缩的PCM音频格式存储在包内。
+对小的音效使用非压缩音频，Unity(从1.6开始)导入时会解压缩所有ogg文件。它让短音效播放时使用非压缩的wav或者aiff文件，这样可以不消耗CPU在解压音频文件上。例如那些急速开枪、脚步等类似的声音。
+
+物理
+
+每个rigidbody都消耗计算，所以越少越理想。已有的Rigidbody物体同样最好关闭起来当他们的旋转速度和移动速度到减少到一定程度的时候。当这个发生的时候，大量计算被显著去除并保持比较低的量，直到他们受到手动受力或者碰撞其他的碰撞体如果存在的话。
+复杂的碰撞比普通的消耗更多的计算量，大量堆叠在一起的球形rigidbody碰撞体在地形上会比相隔较远的消耗更多的复杂计算过程。
+
+着色器
+
+很多复杂的着色器比简单的可能消耗性能。VertexLit Diffuse 着色器应该是带贴图和光照最快的着色器了。然而，如果没有像素灯光在场景里或者所有像素光都被Quality Manager关掉了，那么大多数着色器将回退到更加简单的顶点渲染版本。
+
+脚本
+
+1.你是否使用了好的算法？选择一个好的算法对工作收益来说比其他的调整会有更好的优化效果如果可能的话。
+注意最好的算法不总是那个最低平均复杂度的算法。对于小数据量来说，通常使用一个简单的低速算法比智能却带高初始化的算法要来的好。(例如可以用hash表或二叉树作为以名字存取的大型数据，但你可以使用一个简单链表和线性算法如果你存取小型数据的话。虽然dotnet的哈希表类在这种情况下已经选择了最佳的方式根据你的数据量大小。)
+2.FixedUpdate方法里尽可能保持少的逻辑。这些逻辑可以被调用大约50-100次每秒在每个有效脚本的每个物体里，所以他们是优化的重要目标。如果某些逻辑确实需要在渲染更新后执行再把这些代码放进update方法里去。
+尽可能把一些物体上的脚本关掉当不再需要他们的时候。如果你的游戏有一个大型的场景，里面的怪物在几公里远的地方，你可以关掉他的AI脚本直到摄像头靠近他们时再开启。这里有个好方法去开关它们，就是使用gameObject.SetActiveRecursively(false)并且设置球形和方形碰撞体为触发器(trigger)。
+3.小心空的Update方法。当使用资源菜单创建新的脚本时他们包含了空的Update方法。去掉它如果你不需要它的话，因为它会带来一些(少量的)性能消耗。这个性能消耗点应用所有在MonoBehaviour脚本里的重载方法，以Update和FixedUpdate为主要的目标。
+4.关于一个GameObject中最合逻辑的组件，某人可以理论上这样写: someGameObject.transform.gameObject.rigidbody.transform.gameObject.rigidbody.transform，但这个有大部分都是不需要的。如果你需要去处理一个物体的Transform，可以映射它到你的脚本里的开头部分。
+5.协程是你的好朋友。协程只有很少的开销并更适合被选择，而一个update方法在他们不需要的时候也总是被调用。例如，你有一个脚本去实现一个命令触发的渐进渐出的灯光效果，你可以用协程去实现渐进渐出替换Update。这样做在大部分时候当灯光不进行渐进渐出时，脚本是最低的性能消耗。如果渐进渐出在Update方法里实现，你将低效的轮询去查看是否渐进渐出结束了。
+6.在没有必要的情况下不要用方法去搜索物体，这包括方法GameObject.FindByTag() 和 GameObject.GetComponent()，与所有便利的属性(transform,light,等)一样，这些方法可以被优化的运行起来地尽可能的快，但他们仍然必须去通过搜索关联的物体去找到你想要的那个。最重要的事是避免调用搜索方法在Update和FixedUpdate方法里，于之替换的是调用某方法一次并存储它在你的类成员变量里，然后在你下次需要它时从这个成员变量里取得。
+7.不要使用SendMessage(或类似的方法)当你不是必要的时候，SendMessage比直接调用方法慢至少100倍，并且这个倍数还会增加当很多脚本和方法在物体上生效时。如果你能得到你的脚本你最好尽早去找，同样的直接调用这个方法。
+8.JavaScripts(和Boos)的duck类型会消耗已少量的计算量。在性能零界区域和在使用javascript时，请直接尝试声明你使用的变量类型。(尽管这个通常计算机会自动识别那个有效的你所指定的类型，所以你的程序可以多样化)
+
+翻译自：http://wiki.unity3d.com/index.php?title=General_Performance_Tips
+
+原文：
+
+General Performance Tips
+The following tips are not meant to be absolutes but rather guidelines for Unity users that want to learn how to make a well performing game.
+Contents [hide] 
+1 Official Tips from OverTheEdge
+2 General Tips on Optimization
+3 Meshes
+4 Lighting
+5 Textures
+6 Audio
+7 Physics
+8 Shaders
+9 Scripting
+Official Tips from OverTheEdge
+
+Optimizing Graphics Performance
+Reducing File Size
+Character Animation (Tips are interspersed.)
+General Tips on Optimization
+
+Profile first. Don't spend time trying to optimize some obscure code or reducing the size of a texture unless you know it is a bottleneck. Always profile your game first to find out where the bottlenecks are. Apple's Shark is a good tool for profiling OpenGL based applications.
+Profile again. Don't forget to profile the game again after applying your optimizations to see if they had the intended effect. Also this might uncover more bottlenecks.
+Work-flow first -- performance second. Spend time making the creation of your game as smooth as possible. Being able to change and update the game faster will also ease performance tuning later on.
+Test the scene in the Scene View. This will tell you if the performance is being slowed down by the objects in the scene or scripts attached to obejcts in the scene. If the Scene View is slugish, you might want to optimize the geometry or textures, if not, the bottleneck is probably in the scripting or physics.
+Disable individual game objects. While in play mode, try disabling and enabling individual game objects. This can be used to narrow down where slowdowns are coming from.
+Meshes
+
+When possible, combine the nearby objects into a single object that has a single material. For example, if your level contains a table with dozens of objects on it, it makes sense to combine it in your 3D application (this might require combining textures into one big texture atlas as well). Reducing the number of objects that Unity needs to render can boost the performance dramatically.
+Do not have needless meshes. If you have a character in your game, it should probably be only 1 mesh. If you have a ship, it should probably only be one mesh. There is a significant overhead for each mesh Unity renders due to realities of hardware and drivers.
+One material per mesh. Each material that is rendered is treated like a separate mesh getting rendered.
+The performance gained from using extremely low-poly meshes (like under 500 polygons) is minimal if at all there. The majority of graphics cards have hardware transform and lighting, which means they can process ridiculous amounts of polygons per second. Additionally there is overhead for submitting a mesh to the graphics card to render, so being really thrifty on polygons is probably only making your game look blocky.
+Starting out, make characters with about 1500-2000 triangles. This number can vary wildly, but for starting artists this should provide a good compromise between quality and performance for one level of detail. Note that if your model has quadrilaterals, (quads) Unity will convert each quad into two triangles on import.
+Lighting
+
+Each pixel light rendered is effectively another rendering pass. Pixel lights can make your game look great but don't go too nuts with them. However, using the Quality Manager to adjust the number of pixel lights rendered for each quality level is a great way to provide ample performance/quality tradeoffs in your built game.
+Spot lights are more expensive than point lights which are more expensive than directional lights. A good way to light a scene is to first get the effect you want correct. Then look at all the lights you have and see which ones are important and see if you can reduce the lights while keeping the effect similar enough.
+Point and spot lights only affect meshes within their range. If a mesh is out of range of a point or spotlight and the light is set to attenuate, the mesh will not be affected by the light thus saving performance. This way one could theoretically have many small point lights and still have good performance because they only affect a few objects. Remember, though, a mesh will only respond to the eight brightest lights affecting that mesh.
+Textures
+
+Keep the size of textures as small as possible while still looking nice. If your graphics card does not have enough memory to keep all the textures in memory at once, they will get placed into regular system memory and uploaded to the card during rendering. This can be okay as there is a lot of bandwidth available on newer computers; however, if you go too nuts your game will completely choke on computers with low amounts of graphics memory. There is no need to edit the size of textures in your image editor. You can edit the size that Unity imports the image on in each image's Settings.
+Don't use low quality image files. Trying to use jpeg files with low quality or low-color png or gif files will not result in a smaller player size. Unity compresses all textures when publishing the game automatically, so keep the source texture files as original high-resolution files. This will minimize quality degradation due to multiple compression and decompression.
+Audio
+
+Use .ogg for compressed audio. Any other audio format will be stored as uncompressed PCM audio in the published player.
+Use uncompressed audio for small sound effects. Unity (as of 1.6) decompresses all ogg files on the fly. It pays to have short sound effects played often stored as uncompressed wav or aiff files in order not to spend CPU cycles on uncompressing the audio. Examples of where this matters are rapid gunshots, footsteps and similar.
+Physics
+
+Each rigidbody takes computation, so less are of course ideal. Rigidbodies also have the ability to sleep when their angular and translational velocity drop below a certain threshold. When this happens, the amount of computation they require drops significantly and remains low until they have a force manually applied to them or a collider touches their collider if it exists.
+Complicated collisions take more computation than simpler ones. A large pile of rigidbodies with sphere colliders should be more complicated to process than if those spheres were laying far from each other on a terrain.
+Shaders
+
+More complicated looking shaders probably cost performance compared to simpler ones. The VertexLit Diffuse shader should be the fastest shader that still takes a texture and responds to lighting. However, if there are no pixel lights in the scene or if all pixel lights are off in the Quality Manager, most shaders will fall back to a more simple vertex version.
+Scripting
+
+Are you using the right algorithm? Selecting the right algorithm for a task yields much better optimization than any other code tweaking you might do. Note that the best algorithm is not always the one with the lowest average complexity. For small datasets, it is often better to use a slow algorithm with a small setup cost than a smart one with high initialization cost. (Eg. one would use hashtables or binary search trees for large list of data accessed by name, but a simple list and linear search if you are only accessing a few elements. -- although .Net's HashTable class already chooses the most optimal method depending on your data in this case.)
+Keep your FixedUpdate functions as lean as possible. These functions can get called around 50-100 times a second per applicable script per object, so they are a good target to optimize. If there are things that need to be only done when the display is updated, put that code inside the Update function.
+If possible, disable scripts on objects when they are not needed. If you have a large level in your game and there is an enemy kilometers away, you can probably switch off its AI script until the camera gets closer. A good way to switch on and off objects is by using gameObject.SetActiveRecursively(false) and sphere or box colliders set as triggers.
+Beware the empty Update functions. When creating new scripts with the Assets menu, they include an empty Update() function. Remove it if you don't need it as it comes at a (rather light) performance cost. This performance cost applies to all overridable functions in MonoBehaviour scripts, with Update and FixedUpdate being the main targets.
+Refer to a GameObject by the most logical component. One could theoretically write: someGameObject.transform.gameObject.rigidbody.transform.gameObject.rigidbody.transform, but there is a whole lot of needless work done there. If you want to deal with an object's Transform, refer to it in your script as such in the first place.
+Coroutines are your friends. Coroutines have only a tiny overhead and can be preferrable to an Update method that is called all the time needlessly. For example, if you had a script to fade in and out a light on command, you could do the fading in a coroutine instead of in Update. That way, most of the time when the light is not fading, the script takes a minimum amount of performance. If the fading was done in the Update function, you would be inefficiently polling to see if there is fading to be done.
+Don't use methods which search for objects any more than is necessary. This includes methods such as GameObject.FindByTag() and GameObject.GetComponent(), as well as all the component convenience properties (transform, light, etc.). These methods are optimised to operate as quickly as possible, but they still have to search through all the relevant objects to find the one you want. The most important thing is to avoid calling search methods repeatedly in Update() or FixedUpdate(). Instead, call the method once, store its result in a member variable of your class, and then use the member variable to access it the next time you need it.
+Don't use SendMessage() (or similar functions) if you don't have to. SendMessage() is at least 100 times slower than calling a function directly, and this number increases as more scripts and functions are available on the object. If you can find the script you need ahead of time, do so and then call the function directly.
+JavaScript's (and Boo's) duck typing takes a small amount of computation. In performance critical areas and when using JavaScript, try to explicitly say what types of variables you are using when declaring them. (Although this is often done automatically by the compiler through type inference, which is just as effective as specifying the type yourself, so your milage may vary)
