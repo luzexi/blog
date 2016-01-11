@@ -3,7 +3,7 @@ markdown:         redcarpet
 highlighter:      pygments
 
 # Permalinks
-permalink:        pretty
+# permalink:        pretty
 # relative_permalinks: true
 
 # Setup
@@ -17,6 +17,7 @@ author:
   name:           'Jesse Lu'
   url:            https://www.luzexi.com
 
+gems: [jekyll-paginate]
 paginate:         10
 
 excerpt_separator: "\n\n"
