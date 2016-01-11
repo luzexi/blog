@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Unity3D人物行为状态机和指令状态机 &middot; 技术人生
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          技术人生
+        </a>
+      </h1>
+      <p class="lead">漫漫人生,记录点滴,始于2013</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About Me</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="/unity3d/index.html">Unity3D</a>
+      <a class="sidebar-nav-item" href="/游戏服务端/index.html">游戏服务端</a>
+      <a class="sidebar-nav-item" href="/游戏架构/index.html">游戏架构</a>
+      <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+    </nav>
+
+    <p>&copy; 2016. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Unity3D人物行为状态机和指令状态机</h1>
+  <span class="post-date">25 Oct 2014</span>
+  <p>Unity3D人物行为状态机和指令状态机。状态机在各类游戏中都应用的比较平凡，不要以为只有角色扮演类游戏才用到状态机，但凡有物体有动作切换或者重复的指令切换都是状态机用到的地方。其实状态机到处都是，只有你想不到没有有他触及不到的地方，当然我这里主要讲有限状态机。这里省略一万字的状态机基础知识以及我的唠叨。</p>
+
+<p>状态机在游戏项目中的主要运用点：</p>
+
+<p>1.人物动作。一般的RPG人物最为明显，每个人物都有4-5个基本动作，比如 空闲动作，行走，攻击，受伤，施法等。把每个动作看成一个状态，就有了基本的状态，把每个状态用参数串联起来就算是状态机了。</p>
+
+<p>2.AI。这个在游戏AI里表现得最为明显，用状态机写AI是最快并且最有效的方式了。每个AI也都有几个基本状态，比如 追击状态，逃跑状态，疯狂状态，巡逻状态。有了这几个状态，就可以用参数串联起来成为状态机了。</p>
+
+<p>3.人物指令。这个可能很多没有写过状态机的童鞋比较难懂，他跟AI状态有点像，是为了辅助人物动作状态的。当我们把人物动作状态机定义完毕时，发现只有人物动作状态，如何去扩展除了动作以外的东西呢，比如移动，缩放。人物指令状态机就是做这事的，他相当于在动作状态机上套了又一层状态机。比如人物行走指令里，调用了动作行走状态，让人物一直保持行走动作，然后自己只要去处理人物位移就可以了，这样既有了动作也有了位移，整套移动指令就完整了。又比如攻击指令状态，发出指令后，攻击指令状态先调用行走动作状态并移动到目标点，再调用攻击动作状态，再处理攻击受伤逻辑。表现就是，一个人走到目标点攻击了另一个人。中间还可以加很多逻辑，比如判断是否处于封印状态，如果处在封印状态就不能攻击。</p>
+
+<p>状态机极大的简化了对人物行为变化的处理方式，也更加容易进行扩展。Unity3D里有一个动作的状态功能Animator，他的图形界面很清晰得解释了状态机的原理。但我自己并不喜欢使用，因为我认为这个Animator限制了程序员的思维，虽然达到了可视化状态机的目的但扩展性差，所以我一直不推崇使用，不过这只是个人看法。</p>
+
+<p><img class="alignnone size-full wp-image-433" src="/assets/uploads/2014/10/10039783.jpg" alt="10039783" width="550" height="240" /></p>
+
+<p>运用状态机时需要注意的几个问题:</p>
+
+<p>1.传统网游里人物状态不太多，最多也就10个极限了，但是现在已经不是从前了，特别是单机游戏里，动不动就2，3十个状态，这个时候状态与状态之间切换逻辑就成了一个麻烦事。我们可以增加事件处理句柄来整理状态切换事件，其他方法也有很多种，运用时最好围绕让程序员容易找，容易改来，不要为了发挥设计模式而抛弃了代码清晰度。</p>
+
+<p>2.输入参数。当前游戏项目中，输入参数有很多种。一种输入参数已经满足不了状态机在游戏中得运用了。而且不同的状态对于输入的参数也不同，所以我们可以面向对象方式对状态机输入进行扩做。我们定义一个Input类，里面什么都没有，每个状态或者某几个状态另开出一个类xxInput继承Input，增加里面的参数，再在输入参数时，对参数进行辨别，如果是xxInput时就对相应状态进行判定和处理。</p>
+
+<p>总结：状态机没有固定框架，还得要大家自己亲自试验，最好能借鉴别人的项目或者在自己的项目里试着写入状态机。我能帮大家的也就分析解释下状态机在游戏里的运用情况，最后还得靠自己琢磨出来。</p>
+
+<p>转载请注明出处：http://www.luzexi.com</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/01/08/%E8%AF%91Unity3d%E7%BB%BC%E5%90%88%E6%80%A7%E8%83%BD%E7%AA%8D%E9%97%A8.html">
+            译Unity3d 综合性能窍门
+            <small>08 Jan 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93.html">
+            Unity3D之slua集成第三方库
+            <small>26 Sep 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL.html">
+            Unity3D-重新编译Mono加密DLL
+            <small>11 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2062193"></script>
+<!-- UY END -->
+
+
+    </div>
+
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>

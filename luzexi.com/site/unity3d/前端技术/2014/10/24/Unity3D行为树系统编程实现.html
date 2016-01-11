@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Unity3D行为树系统编程实现 &middot; 技术人生
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          技术人生
+        </a>
+      </h1>
+      <p class="lead">漫漫人生,记录点滴,始于2013</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About Me</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="/unity3d/index.html">Unity3D</a>
+      <a class="sidebar-nav-item" href="/游戏服务端/index.html">游戏服务端</a>
+      <a class="sidebar-nav-item" href="/游戏架构/index.html">游戏架构</a>
+      <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+    </nav>
+
+    <p>&copy; 2016. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Unity3D行为树系统编程实现</h1>
+  <span class="post-date">24 Oct 2014</span>
+  <p>Unity3D行为树系统编程实现。行为树在AI领域使用十分广泛，行为树的架构非常通用和便捷，在扩展性方面表现得更是非常好。我这里只讲关于如何实现行为树，跳过了基础的行为树概念。关于行为树的介绍和行为树概念请看<a href="/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/01/26/%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E6%A0%91(Behavior%20Tree)%E5%AE%9E%E7%8E%B0%E6%B8%B8%E6%88%8FAI/">《使用行为树behavior-tree实现游戏ai》</a>这是业界一个前辈写的文章我只是代为转载。</p>
+
+<p>很久没有写文章了，如果文笔弱请多见谅，随着工作的繁忙，写博客也是件奢侈的事情。在整理完代码后累得跟死猪一样，时间并不充裕，经历也有限，请各位期待更新的朋友多多见谅。行为树一直是我希望完善的一个系统框架，本身在2011年时就用在3DRPG里，但那是并不完善，只是个初级的产品。这次我彻彻底底把他完善成一个固定框架，可以直接拿来扩展使用。原本也这个行程也只是记在笔记本上，但最近有个英国的出版社发MAILL给我说有篇UNITY3D AI的书他们正在出版，要我做一下审阅和评论，于是看了几天审阅了段时间，里面大部分内容都是讲U3D里一个行为树插件RAIN如何使用，一项不喜欢使用插件的我看得我很不爽，因为文章大部分内容都是叙述使用过程没什么可看的。一念之下，一口气直接把行为树系统框架和行为树编辑器写了一遍。审阅和评论的事情没弄完，自己的行为树系统倒是写完了，罪过罪过。-----废话完毕。</p>
+
+<p>我先把源码地址贴上，让大家可以边对着代码，边看我的文章。这样可以像下酒菜一样，边喝着啤(wen)酒(zhang)，边吃着花(dai)生(ma)。
+源码放在github上: <a href="https://github.com/luzexi/Unity3DAIBehaviorTree">https://github.com/luzexi/Unity3DAIBehaviorTree</a> 如果你喜欢可以star或者follow下。</p>
+
+<p>行为树系统实现：</p>
+
+<p>1.我把行为树以BNode为基类节点。</p>
+
+<p>2.BNode的一层子类为BNodeAction(行动基类)，BNodeComposite(执行顺序基类)，BNodeCondition(条件基类)，BNodeDecorator(修饰基类)。</p>
+
+<p>3.BNode基类节点的基本方法：OnEnter--进入事件,OnExist--退出事件,Excute--执行事件。子类可以通过重写这三个方法以达到实现自我功能。</p>
+
+<p>4.节点的执行顺序是需要提前考虑的，我写了几个，比如顺序，选择，并行，随机，迭代。具体点：顺序--子节点中顺序执行直到结束如果遇到失败的节点就返回失败否则成功，选择--子节点中顺序执行直到遇到返回成功的节点，并行--顺序执行节点无论失败成功直到结束返回成功，随机--随机选择一个节点执行返回该节点的结果，迭代--顺序执行直到并连续成功N次就返回成功否则失败。</p>
+
+<p>5.输入参数BInput是行为树系统的必要类实例，因为在运行行为树时，每个节点的执行对象需要依赖输入参数，每个项目的输入参数都不一样，所以你可以继承BInput扩展成你希望的输入参数，比如：TestInput里加入了hp,mp两个元素用来保存AI的对象状态，你也可以加入更多更复杂的元素，比如角色信息类，伙伴信息类等。</p>
+
+<p>6.为了让行为树运用到项目里去，我们可以对BNodeAction，BNodeCondition，BNodeDecorator，进行扩展。继承书写的规则：继承子类必须在Game.AIBehaviorTree命名空间里，构造函数里最好对m_strName进行赋值，这样就能在行为树编辑器里看到你的扩展类和扩展命名，每个扩展的节点，如果有需要对变量进行编辑的，变量必须是public的，而且类型只限于int,float,bool,string四种。</p>
+
+<p>7.行为树编辑器是行为树系统可用性的关键。我把行为树用目录结构的方式来实现，这样对于节点的增加，删除，切换，拖拽，体验都非常便捷。对于每个节点的编辑状态在选择该节点后会在编辑器的右下脚现实。编辑器还承载了保存，加载，以及对行为树的增加和删除，重命名的功能。如下图：</p>
+
+<p><img class="alignnone size-full wp-image-429" src="/assets/uploads/2014/10/img.png" alt="img" width="985" height="492" /></p>
+
+<p>8.行为树数据存储。我用json格式来存储行为树，先前我用bytes来存，但发现因为扩展子类的变量经常性变化，所以用bytes来存常常会导致已编辑完成的数据无法重新编辑。所以我用了c#反射进行类与json变量的配对。</p>
+
+<p>9.最后请大家注意，行为树不只是用来做AI的，比如开宝箱，掉落，物品使用都可以用行为树来做。</p>
+
+<p>10.文档化数据，行为树有了编辑器似乎抛弃了xls,但我还是认为xls对于策划人员的数据编辑工作还是主流的，所以我接下来扩展的方向就是行为树编辑器xls化。</p>
+
+<p>转载请注明出处: http://www.luzexi.com</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/01/08/%E8%AF%91Unity3d%E7%BB%BC%E5%90%88%E6%80%A7%E8%83%BD%E7%AA%8D%E9%97%A8.html">
+            译Unity3d 综合性能窍门
+            <small>08 Jan 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93.html">
+            Unity3D之slua集成第三方库
+            <small>26 Sep 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL.html">
+            Unity3D-重新编译Mono加密DLL
+            <small>11 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2062193"></script>
+<!-- UY END -->
+
+
+    </div>
+
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
