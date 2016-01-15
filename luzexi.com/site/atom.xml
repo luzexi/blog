@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2016-01-15T10:55:31+08:00</updated>
+ <updated>2016-01-15T11:41:37+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -334,7 +334,7 @@ MVP为基础的架构&lt;/p&gt;
 
 &lt;p&gt;5.buildscripts下的build&lt;em&gt;runtime&lt;/em&gt;android.sh是编译安卓平台的关键。它是unity制作的一个自动编译 mono 流程的脚本。你需要将这个脚本copy到mono根目录下再执行。&lt;/p&gt;
 
-&lt;p&gt;6.脚本里写些内容，如果你懒得看，我帮你稍微解释下。它会去检查你当前的ANDROID&lt;em&gt;NDK&lt;/em&gt;ROOT环境变量是否是指向ndk-9，所以你需要去下ndk-9版本，放到机子上，然后编辑环境变量ANDROID&lt;em&gt;NDK&lt;/em&gt;ROOT指向它，如果你没有它会通过perl模块lwp-download去下载ndk-9，但是你必须要要有这个perl模块才行，我劝你还是老老实实自己去下吧。ndk版本下载地址参考这里：&lt;a href=&quot;/android/2015/04/06/Android-SDK-NDK-Studio-%E4%B8%8B%E8%BD%BD%E5%88%97%E8%A1%A8%E5%92%8C%E6%9E%84%E5%BB%BA%E8%AF%B4%E6%98%8E/&quot;&gt;《android-sdk-ndk-studio-下载列表和构建说明》&lt;/a&gt;。如果是linux下编译环境变量设定参考这里：&lt;a href=&quot;/linux/2015/04/07/linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/&quot;&gt;《linux环境变量简介》&lt;/a&gt;。然后呢，它会用git去clone一个编译时用到的库，这个也是unity自己改编过的一个库，地址为：&lt;a href=&quot;https://github.com/Unity-Technologies/krait-signal-handler&quot;&gt;https://github.com/Unity-Technologies/krait-signal-handler&lt;/a&gt; ，这个库有个坑说下：perl脚本build.pl头部有个命令是#!/usr/bin/env perl -w，这个在部分机子上并不兼容，如果你有错误停在这里这个文件上，你可以将env去除再尝试手动perl build.pl 运行构建一遍没问题再重新编译，原因参考：&lt;a href=&quot;http://abloz.com/2011/01/13/why-use-usr-bin-env.html&quot;&gt;http://abloz.com/2011/01/13/why-use-usr-bin-env.html&lt;/a&gt; 。最后就先make clean &amp;amp;&amp;amp; make distclean 清除前面编译的内容，然后进行预编译configure，参数都在脚本里设置好了，你不需要关心了。预编译后就开始make编译了。&lt;/p&gt;
+&lt;p&gt;6.脚本里写些内容，如果你懒得看，我帮你稍微解释下。它会去检查你当前的ANDROID&lt;em&gt;NDK&lt;/em&gt;ROOT环境变量是否是指向ndk-9，所以你需要去下ndk-9版本，放到机子上，然后编辑环境变量ANDROID&lt;em&gt;NDK&lt;/em&gt;ROOT指向它，如果你没有它会通过perl模块lwp-download去下载ndk-9，但是你必须要要有这个perl模块才行，我劝你还是老老实实自己去下吧。ndk版本下载地址参考这里：&lt;a href=&quot;/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/06/Android-SDK-NDK-Studio-%E4%B8%8B%E8%BD%BD%E5%88%97%E8%A1%A8%E5%92%8C%E6%9E%84%E5%BB%BA%E8%AF%B4%E6%98%8E.html&quot;&gt;《android-sdk-ndk-studio-下载列表和构建说明》&lt;/a&gt;。如果是linux下编译环境变量设定参考这里：&lt;a href=&quot;/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/07/linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B.html&quot;&gt;《linux环境变量简介》&lt;/a&gt;。然后呢，它会用git去clone一个编译时用到的库，这个也是unity自己改编过的一个库，地址为：&lt;a href=&quot;https://github.com/Unity-Technologies/krait-signal-handler&quot;&gt;https://github.com/Unity-Technologies/krait-signal-handler&lt;/a&gt; ，这个库有个坑说下：perl脚本build.pl头部有个命令是#!/usr/bin/env perl -w，这个在部分机子上并不兼容，如果你有错误停在这里这个文件上，你可以将env去除再尝试手动perl build.pl 运行构建一遍没问题再重新编译，原因参考：&lt;a href=&quot;http://abloz.com/2011/01/13/why-use-usr-bin-env.html&quot;&gt;http://abloz.com/2011/01/13/why-use-usr-bin-env.html&lt;/a&gt; 。最后就先make clean &amp;amp;&amp;amp; make distclean 清除前面编译的内容，然后进行预编译configure，参数都在脚本里设置好了，你不需要关心了。预编译后就开始make编译了。&lt;/p&gt;
 
 &lt;p&gt;7.执行build&lt;em&gt;runtime&lt;/em&gt;android.sh后terminal基本都是刷屏的节奏。刷刷刷的编译输出，你根本来不及看清到底做到哪了做了些什么内容。而config.log这个文件记录所有的编译输出，包括哪行错误了，哪行通过了。调试基本也考这个log文件，如果关键部位错误它会停止，然后你就可以针对性的查了。这里提醒一点，编译时它很多地方都是在检测编译器是否正常，因为它要确认编译器对错误的编译内容是否能够检测到，所以很多错误内容只是测试内容-你需要省略掉。&lt;/p&gt;
 
@@ -1114,7 +1114,7 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
    <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4.html"/>
    <updated>2014-06-06T18:38:46+08:00</updated>
    <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/06/Unity3D之如何将包大小减少到极致</id>
-   <content type="html">&lt;p&gt;Unity3D之如何将包大小减少到极致,图片是游戏app里最最占空间的资源，所以请各位还没有理解u3d对图片文件存储方式理解的请看&lt;a href=&quot;/unity3d/2014/05/21/Unity3D-Texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90/&quot;&gt;《unity3d-texture图片空间和内存占用分析》&lt;/a&gt;。因为u3d对资源的压缩并不阐述的十分详细，所以很多项目在遇到包大小瓶颈时非常头疼。我也不是神仙，也同样痛苦过，但经历几个项目的折腾，最终能梳理出一套能将u3d包大小减少到合理范围的方法。&lt;/p&gt;
+   <content type="html">&lt;p&gt;Unity3D之如何将包大小减少到极致,图片是游戏app里最最占空间的资源，所以请各位还没有理解u3d对图片文件存储方式理解的请看&lt;a href=&quot;/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/05/21/Unity3D-Texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html&quot;&gt;《unity3d-texture图片空间和内存占用分析》&lt;/a&gt;。因为u3d对资源的压缩并不阐述的十分详细，所以很多项目在遇到包大小瓶颈时非常头疼。我也不是神仙，也同样痛苦过，但经历几个项目的折腾，最终能梳理出一套能将u3d包大小减少到合理范围的方法。&lt;/p&gt;
 
 &lt;p&gt;首先来展示下，官方如何说的:（&lt;a href=&quot;http://docs.unity3d.com/Manual/ReducingFilesize.html&quot;&gt;http://docs.unity3d.com/Manual/ReducingFilesize.html&lt;/a&gt; 官方手册）&lt;/p&gt;
 
@@ -1152,7 +1152,7 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 
 &lt;p&gt;至于如何使用AssetBundle的这些接口，我对Assetbundle api做了一个封装。所有assetbundle的api都封装在里面。你自可以尽情使用。请看:&lt;a href=&quot;https://github.com/luzexi/Unity3DGameResource&quot;&gt;Unity3DGameResource&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;关于u3d的AssetBundle资源加载与打包封装，请查看&lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2014/04/16/Unity3D%E4%B9%8BAssetBundle%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E5%B0%81%E8%A3%85/&quot;&gt;《unity3d之assetbundle资源加载封装》&lt;/a&gt;这篇文章。&lt;/p&gt;
+&lt;p&gt;关于u3d的AssetBundle资源加载与打包封装，请查看&lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/04/16/Unity3D%E4%B9%8BAssetBundle%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E5%B0%81%E8%A3%85.html&quot;&gt;《unity3d之assetbundle资源加载封装》&lt;/a&gt;这篇文章。&lt;/p&gt;
 
 &lt;p&gt;下面说说关于动态资源加载和资源导入内存的所有方式，这是优化资源的必要条件，只有你知道了所有的加载和导入途径你才能对项目资源优化进行全面的分析。知道了有哪几条路你才能选择一条最好的。如下：&lt;/p&gt;
 
@@ -1197,7 +1197,7 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
    <link href="http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/05/21/Unity3D-Texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html"/>
    <updated>2014-05-21T11:05:21+08:00</updated>
    <id>http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/05/21/Unity3D-Texture图片空间和内存占用分析</id>
-   <content type="html">&lt;p&gt;Texture图片空间和内存占用分析。由于U3D并没有很好的诠释对于图片的处理方式，所以很多人一直对于图集的大小和内存的占用情况都不了解。在此对于U3D的图片问题做一个实际数据的分析。此前的项目都会存在这样或者那样的打包后包大小与内存占用情况的问题，所以这次所以彻彻底底得分析下U3D对于Texture的处理方式。程序里的内存优化请参考&lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/02/22/Unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF/&quot;&gt;《unity3d优化之路》&lt;/a&gt;。减少U3D包大小请参考&lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4/&quot;&gt;《unity3d之如何将包大小减少到极致》&lt;/a&gt;。&lt;/p&gt;
+   <content type="html">&lt;p&gt;Texture图片空间和内存占用分析。由于U3D并没有很好的诠释对于图片的处理方式，所以很多人一直对于图集的大小和内存的占用情况都不了解。在此对于U3D的图片问题做一个实际数据的分析。此前的项目都会存在这样或者那样的打包后包大小与内存占用情况的问题，所以这次所以彻彻底底得分析下U3D对于Texture的处理方式。程序里的内存优化请参考&lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/02/22/Unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF.html&quot;&gt;《unity3d优化之路》&lt;/a&gt;。减少U3D包大小请参考&lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4.html&quot;&gt;《unity3d之如何将包大小减少到极致》&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;我打包多种类型的项目，空项目和10张放在Resources文件夹中的图为比较案例。以下是比较数据。&lt;/p&gt;
 
@@ -1365,7 +1365,7 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 
 &lt;p&gt;二.减少占用空间大小。&lt;/p&gt;
 
-&lt;p&gt;你可以参考这篇文章 &lt;a href=&quot;http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4/&quot;&gt;《Unity3D之如何将包大小减少到极致》&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;你可以参考这篇文章 &lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4.html&quot;&gt;《Unity3D之如何将包大小减少到极致》&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;1.我使用的是动态资源的加载方式WWW方式。所以在导出资源时我使用BuildAssetBundleOptions.DisableWriteTypeTree 的打包方式，减少包的大小。&lt;/p&gt;
 
@@ -1504,7 +1504,7 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 
 &lt;del&gt;1.客户端记录由服务器发过来的MD5码，倘若与本地存储的MD5码不同则增加自动增加一个版本号。这个办法方便但会积累很多的旧的无用的资源占用手机，导致用户有可能因为游戏占用太多硬盘资源而删除游戏。 2.客户端记录由服务器发过来的CRC校验码，用CRC校验码来判定当前资源是否需要重新加载，调用接口为static function LoadFromCacheOrDownload(url: string, version: int, crc: uint = 0): WWW; 这个办法可以解决旧资源删除问题，但最主要的问题是资源在打包后由于U3D的资源CRC校验码并不是普通的校验码，所以只能根据他的接口来判定，4.2以及4.2以前都没有获取CRC校验码的接口，所以每次打包资源后，都需要校对校验码。如何校对CRC校验码请自己去搜索资料。&lt;/del&gt;
 
-&lt;p&gt;2015-09-28: 我这里做一下修正，其实这个问题就是assetbundle版本更新解决方案。答案可以在这里找到&lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4/&quot;&gt;Unity3D之如何将包大小减少到极致&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;2015-09-28: 我这里做一下修正，其实这个问题就是assetbundle版本更新解决方案。答案可以在这里找到&lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4.html&quot;&gt;Unity3D之如何将包大小减少到极致&lt;/a&gt; &lt;/p&gt;
 
 &lt;p&gt;3.如何知道哪些资源包需要加载以及加载地址和版本号。&lt;/p&gt;
 
@@ -1521,7 +1521,7 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
    <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/12/31/%E6%B8%B8%E6%88%8F%E7%89%A9%E5%93%81%E7%B3%BB%E7%BB%9F%E9%80%9A%E7%94%A8%E6%9E%B6%E6%9E%84.html"/>
    <updated>2013-12-31T23:24:47+08:00</updated>
    <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/12/31/游戏物品系统通用架构</id>
-   <content type="html">&lt;p&gt;游戏物品系统通用架构，物品系统是游戏中最最常用的功能之一，面对各种纷繁复杂的游戏物品系统，在具体项目中如何顺手拈来、驾驭自如？请容我一一到来。在内容前我有必要说明几点，所有内容都是基于我最大的架构思想之下，其中 客户端U3D架构思想的文章地址为 &lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2013/10/29/Unity3D%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/&quot;&gt;Unity3D游戏架构&lt;/a&gt; ，以及服务器架构：&lt;a href=&quot;/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2013/08/24/%E3%80%8A%E7%8E%8B%E9%80%94%E9%9C%B8%E4%B8%9A%E3%80%8B%E6%88%98%E4%BA%89%E7%AD%96%E7%95%A5%E6%B8%B8%E6%88%8F%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/&quot;&gt;《王图霸业》战争策略游戏服务器架构&lt;/a&gt;。&lt;/p&gt;
+   <content type="html">&lt;p&gt;游戏物品系统通用架构，物品系统是游戏中最最常用的功能之一，面对各种纷繁复杂的游戏物品系统，在具体项目中如何顺手拈来、驾驭自如？请容我一一到来。在内容前我有必要说明几点，所有内容都是基于我最大的架构思想之下，其中 客户端U3D架构思想的文章地址为 &lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF//2013/10/29/Unity3D%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84.html&quot;&gt;Unity3D游戏架构&lt;/a&gt; ，以及服务器架构：&lt;a href=&quot;%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/08/24/%E7%8E%8B%E9%80%94%E9%9C%B8%E4%B8%9A-%E6%88%98%E4%BA%89%E7%AD%96%E7%95%A5%E6%B8%B8%E6%88%8F%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1.html&quot;&gt;《王图霸业》战争策略游戏服务器架构&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;直入主题&lt;/p&gt;
 
@@ -1759,7 +1759,7 @@ ActionID9,ActionID10,...ActionID16.
     &lt;span class=&quot;n&quot;&gt;GUI_LOADING&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;        &lt;span class=&quot;c1&quot;&gt;//加载层&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;8.要充分的管理GUI，不然过多的GUI会导致内存加速增长，而每次都销毁不用的GUI则会让IO过于频繁降低运行速度。我的方法是找到两者间的中间态，给予隐藏的GUI一个缓冲带,当每次某各GUI进行隐藏时判断是否有需要销毁的GUI。或者也可以这么做，每时每刻去监控隐藏的GUI，哪些GUI内存时间驻留过长就销毁。关于内存优化问题，可以参考&lt;a href=&quot;/unity3d/2014/05/21/Unity3D-Texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90/&quot;&gt;《unity3d-texture图片空间和内存占用分析》&lt;/a&gt;和 &lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/2014/02/22/Unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF/&quot;&gt;《unity3d优化之路》&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;8.要充分的管理GUI，不然过多的GUI会导致内存加速增长，而每次都销毁不用的GUI则会让IO过于频繁降低运行速度。我的方法是找到两者间的中间态，给予隐藏的GUI一个缓冲带,当每次某各GUI进行隐藏时判断是否有需要销毁的GUI。或者也可以这么做，每时每刻去监控隐藏的GUI，哪些GUI内存时间驻留过长就销毁。关于内存优化问题，可以参考&lt;a href=&quot;/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/05/21/Unity3D-Texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html&quot;&gt;《unity3d-texture图片空间和内存占用分析》&lt;/a&gt;和 &lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/02/22/Unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF.html&quot;&gt;《unity3d优化之路》&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;9.另外关于图标，像头像，物品，数量过多的，可以用打成几个图集，按一定规则进行排列，减小文件大小减少一次性读取的IO时间。&lt;/p&gt;
 
