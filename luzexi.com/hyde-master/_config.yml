@@ -26,10 +26,7 @@ excerpt_separator: "\n\n"
 comments: 		  true
 analytics : 	  true
 advertisement_image: true
-advertisement_right: true
-advertisement_left: true
-advertisement_top: true
-advertisement_bottom: true
+advertisement_category: true
 
 # Custom vars
 version:          2.1.0
