@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2016-02-03T10:50:21+08:00</updated>
+ <updated>2016-02-03T10:56:16+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -164,6 +164,10 @@ MVP为基础的架构&lt;/p&gt;
 
 &lt;p&gt;作者授权邮件：
 &lt;img class=&quot;alignnone size-full wp-image-355&quot; src=&quot;/assets/译安卓应用架构体系/5.png&quot; alt=&quot;48391BD3-BEAC-4E45-B6C4-17AA7B5B0428&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;申明此篇文章为本人参加GAD翻译比赛文章&lt;/p&gt;
+
+&lt;p&gt;转载请注明出处: http://www.luzexi.com&lt;/p&gt;
 </content>
  </entry>
  
@@ -255,6 +259,8 @@ MVP为基础的架构&lt;/p&gt;
 8.JavaScripts(和Boos)的duck类型会消耗已少量的计算量。在性能零界区域和在使用javascript时，请直接尝试声明你使用的变量类型。(尽管这个通常计算机会自动识别那个有效的你所指定的类型，所以你的程序可以多样化)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;翻译自：http://wiki.unity3d.com/index.php?title=General&lt;em&gt;Performance&lt;/em&gt;Tips&lt;/p&gt;
+
+&lt;p&gt;申明此篇文章为本人参加GAD翻译比赛文章&lt;/p&gt;
 
 &lt;p&gt;转载请注明出处: http://www.luzexi.com&lt;/p&gt;
 </content>
