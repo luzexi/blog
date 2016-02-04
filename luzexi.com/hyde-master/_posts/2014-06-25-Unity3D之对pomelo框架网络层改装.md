@@ -60,6 +60,8 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 #endif
 ```
 
+{% include advertisement_content.html %}
+
 3.拆分网络通信事件。将网络通信事件拆分为OnConnect , OnError , OnDisconnect , 这3个事件是最常见的通信事件。这3个事件也必须在主线程中调用，但这3个事件又不是以网络数据包为基础，所以需要在专门处理通信逻辑的类中加入3种状态start , error , disconnect.当网络通信层出现这三种事件时，将状态切过去（ps:而不是直接调用句柄）,然后再由专门处理通信逻辑的类在下一帧去调用对应的事件句柄。
 
 ``` c#

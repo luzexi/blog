@@ -45,6 +45,8 @@ HTTPSession类，会话类是网络层的主类，有发送接口和网络主地
 
 HttpDummySession类，我还做了虚拟会话，主要是给HTTP和单机切换用，有些游戏想做网络和单机一起兼顾，可以用HTTP虚拟类来实现，不需要改原来写好的HTTP请求，只要你对加个请求句柄处理就可以了。不过一般人不会用到。
 
+{% include advertisement_content.html %}
+
 三.网络层最重要的是能够快速，方便使用，能够适应变化多端的需求改变。
 
 每个请求类（HTTPPacketRequest子类）和回调类（HTTPPacketAck子类）都是自动生成参数和自动映射回调类实例的，但千万记住，回调过来的数据和HTTPPacketAck子类里的变量名必须一致。

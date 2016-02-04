@@ -64,6 +64,8 @@ Github address : [https://github.com/luzexi/xls2lua](https://github.com/luzexi/x
 	(string类型中"和'会自动用\"和\'替代)
 	(空列将会被默认值代替，例如:0,"",false,{})
 
+{% include advertisement_content.html %}
+
 ### Lua script (生成后的Lua文件示例)
 
 ```lua

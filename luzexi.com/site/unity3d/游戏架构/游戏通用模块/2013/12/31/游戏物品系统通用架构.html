@@ -150,6 +150,13 @@
 <p>我们能发现，其实物品的很多功能是可以用不同单个功能组合起来的，比如加血,比如加魔，比如加BUFF状态，把这些相同功能的Action都做成一个，然后把不同的Action做成一个集合是多么完美的事，既达到了数据持续化存储和更新能力，又可使得物品功能完全由策划人员自行配置，发挥他们的无限想象力。</p>
 
 <p>现在来看看实际中Action是如何编写的。把加血动作写成 类ActionAddHp，类中参数一个:HP，把加魔法动作写成 类ActionAddMP，类中参数一个：MP，这两个Action从数据表中读取相应的参数数据，变成众多Action实例里的一个，由ActionManager管理存储。到此回头看看，所有继承自Action类的扩展类拥有几个共同的属性：ID（唯一标识，用来区分所有Action），RunType（用来区分不同类型的Action），Read接口（用来读取数据），Excute接口（用来执行Action）。我在此之上加上一个Action类型，把所有Action拆分为条件类Action和执行类Action，条件类Action主要用来判断该物品的使用条件是否满足，执行类Action主要用来执行该动作的效果。因此Action基类就成了这样:</p>
+
+<script type="text/javascript">
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = "u2514412";
+</script>
+
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>  
@@ -189,6 +196,13 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>有人会问，那如何让物品对应好几个Action呢？我再引入一个Action事件类，把它定义为类EventAction，他里面存储着16个Action ID，前8个ActionID是条件型动作，后8个ActionID为执行型动作。物品的数据中就有一个EventAction的ID，由这个EventAction来判断该执行那些Action，是否满足物品执行条件。当EventAction执行时，首先执行前8个Action，看看是否满足物品执行条件，如果不满足，则不执行后8个效果，如果满足再去执行后8个Action效果。因此EventAction也有很多各实例，由ID来区分不同的EventAction，由EventActionManager来管理所有事件Action。EventAction类结构：</p>
+
+<script type="text/javascript">
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = "u2514412";
+</script>
+
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>  

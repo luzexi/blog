@@ -54,6 +54,8 @@ IPHONE：
 
 U3D的内部机制为自动生成图片类型来替换我们给的图片，在图片的压缩方式上需要进行谨慎的选择。
 
+{% include advertisement_content.html %}
+
 压缩格式在U3D的[Component Reference](http://docs.unity3d.com/Documentation/Components/class-Texture2D.html)里有介绍我就不再详细介绍，只介绍几个重点的:
 
 RGBA32格式为无压缩最保真格式，但也是最浪费内存和空间的格式。Automatic Turecolor和它一个意思。

@@ -158,6 +158,13 @@
     <span class="n">root</span><span class="p">.</span><span class="n">manualHeight</span> <span class="p">=</span> <span class="m">480</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
+<script type="text/javascript">
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = "u2514412";
+</script>
+
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
 <p>5.拆分以及固定各个锚点，上，左上，右上，中，左中，右中，下，左下，右下</p>
 
 <p>6.拆分GUI层级，层级越高，显示越靠前。层级的正确拆分能有效管理GUI的显示方式。</p>
@@ -194,6 +201,13 @@
 
 <p>以上是我能想起来的注意点，若有没想起来的，在以后的时间想到的也将补充进去。口无遮拦的说了这么多，不剖析一下源码怎么说的过去，之前对NGUI输入消息进行了封装，对2D动画序列帧进行了封装，却一直没能完整剖析它的底层源码，着实遗憾。</p>
 
+<script type="text/javascript">
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = "u2514412";
+</script>
+
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
 <p>NGUI中UIPanel是渲染的关键，他承载了在他下面的子物体的所有渲染工作，每个渲染元素都是由UIWidget继承而来，每个UI物体的渲染都是由面片、材质球、UV点组成，每个种材质由一个UIDrawCall完成渲染工作，UIDrawCall中自己创建Mesh和MeshRender来进行统一的渲染工作。这些都是对NGUI底层的简单的介绍，下面将进行更加细致的分析。</p>
 
 <p>首先我们来看UIWidget这个组件基类，从它拥有的类内部变量就能知道它承担得怎样的责任:</p>
@@ -222,6 +236,13 @@
 <p>UIWidget中最重要的虚方法为 virtual public void OnFill(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols) { } 它是区分子类的显示内容的重要方法。它的工作就是填写如何显示，显示什么。</p>
 
 <p>UIWidget中在使用OnFill方法的重要的方法是 更新渲染多边型方法：</p>
+
+<script type="text/javascript">
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = "u2514412";
+</script>
+
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="kt">bool</span> <span class="nf">UpdateGeometry</span> <span class="p">(</span><span class="k">ref</span> <span class="n">Matrix4x4</span> <span class="n">worldToPanel</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">parentMoved</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">generateNormals</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">material</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
@@ -252,6 +273,13 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>它的作用就是，当需要重新组织多边型展示内容时，进行多边型的重新规划。</p>
+
+<script type="text/javascript">
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = "u2514412";
+</script>
+
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 
 <p>接着，我们来看看UINode，这个类很容易被人忽视，而他的作用也很重要。它是在UIPanel被告知有新的UIWidget显示元素时被创建的，它的创建主要是为了监视被创建的UIWidget的位置，旋转，大小是否被更改，若被更改，将由UIPanel进行重新的渲染工作。
 HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel用来监视每个元素是否改变了进而进行重新渲染。</p>
@@ -313,6 +341,13 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 
 <p>由这些内部变量可知，UIDrawCall是负责NGUI的最重要的渲染类。他制造Mesh制造Material，设置裁剪范围，为NGUI提供渲染底层。
 他最重要的方法是：</p>
+
+<script type="text/javascript">
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = "u2514412";
+</script>
+
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="k">void</span> <span class="nf">Set</span> <span class="p">(</span><span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;</span> <span class="n">verts</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;</span> <span class="n">norms</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector4</span><span class="p">&gt;</span> <span class="n">tans</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;</span> <span class="n">uvs</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Color32</span><span class="p">&gt;</span> <span class="n">cols</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="kt">int</span> <span class="n">count</span> <span class="p">=</span> <span class="n">verts</span><span class="p">.</span><span class="n">size</span><span class="p">;</span>
@@ -398,6 +433,13 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
     注意：所有的渲染都是在LateUpdate下进行，也就是它是进行的延迟渲染。</p>
 
 <p>接口源码：</p>
+
+<script type="text/javascript">
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = "u2514412";
+</script>
+
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">void</span> <span class="nf">LateUpdate</span> <span class="p">()</span>
 <span class="p">{</span>
   <span class="c1">// Only the very first panel should be doing the update logic</span>

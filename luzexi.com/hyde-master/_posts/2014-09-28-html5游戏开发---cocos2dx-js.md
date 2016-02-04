@@ -38,6 +38,8 @@ js写html5需要注意的几点：
 
 在cocos2dx-html5(与cocos2dx-js-v3.0是两个版本，cocos2dx-js-v3.0比较好用)里打包html5需要用到ant和build.xml。打包主要内容为将所有js文件打包成同一个文件，目的是减少加载文件数量，加快加载速度。打包命令：cd到项目文件夹下。敲入:ant或者ant -buildfile build.xml。build.xml中囊括了要打包的js文件。其中指定了js打包编译工具complie.jar是google closure compiler专门压缩js文件大小工具。
 
+{% include advertisement_content.html %}
+
 关于微信分享:
 
 微信api已经在微信的浏览器里已经注入了它的api。

@@ -63,6 +63,8 @@ else
 }
 ```
 
+{% include advertisement_content.html %}
+
 5.拆分以及固定各个锚点，上，左上，右上，中，左中，右中，下，左下，右下
 
 6.拆分GUI层级，层级越高，显示越靠前。层级的正确拆分能有效管理GUI的显示方式。
@@ -102,6 +104,8 @@ public enum GUILAYER
  
 以上是我能想起来的注意点，若有没想起来的，在以后的时间想到的也将补充进去。口无遮拦的说了这么多，不剖析一下源码怎么说的过去，之前对NGUI输入消息进行了封装，对2D动画序列帧进行了封装，却一直没能完整剖析它的底层源码，着实遗憾。
 
+{% include advertisement_content.html %}
+
 NGUI中UIPanel是渲染的关键，他承载了在他下面的子物体的所有渲染工作，每个渲染元素都是由UIWidget继承而来，每个UI物体的渲染都是由面片、材质球、UV点组成，每个种材质由一个UIDrawCall完成渲染工作，UIDrawCall中自己创建Mesh和MeshRender来进行统一的渲染工作。这些都是对NGUI底层的简单的介绍，下面将进行更加细致的分析。
 
 首先我们来看UIWidget这个组件基类，从它拥有的类内部变量就能知道它承担得怎样的责任:
@@ -133,6 +137,8 @@ UIWidget承担了存储显示内容，颜色调配，显示深度，显示位置
 UIWidget中最重要的虚方法为 virtual public void OnFill(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols) { } 它是区分子类的显示内容的重要方法。它的工作就是填写如何显示，显示什么。
 
 UIWidget中在使用OnFill方法的重要的方法是 更新渲染多边型方法：
+
+{% include advertisement_content.html %}
 
 ``` c#
 public bool UpdateGeometry (ref Matrix4x4 worldToPanel, bool parentMoved, bool generateNormals)
@@ -167,6 +173,8 @@ public bool UpdateGeometry (ref Matrix4x4 worldToPanel, bool parentMoved, bool g
 
 它的作用就是，当需要重新组织多边型展示内容时，进行多边型的重新规划。
  
+{% include advertisement_content.html %}
+
 接着，我们来看看UINode，这个类很容易被人忽视，而他的作用也很重要。它是在UIPanel被告知有新的UIWidget显示元素时被创建的，它的创建主要是为了监视被创建的UIWidget的位置，旋转，大小是否被更改，若被更改，将由UIPanel进行重新的渲染工作。
 HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel用来监视每个元素是否改变了进而进行重新渲染。
 
@@ -230,6 +238,8 @@ int[]            mIndices;        //做为Mesh三角型索引点
 
 由这些内部变量可知，UIDrawCall是负责NGUI的最重要的渲染类。他制造Mesh制造Material，设置裁剪范围，为NGUI提供渲染底层。
 他最重要的方法是：
+
+{% include advertisement_content.html %}
 
 ``` c#
 public void Set (BetterList<Vector3> verts, BetterList<Vector3> norms, BetterList<Vector4> tans, BetterList<Vector2> uvs, BetterList<Color32> cols)
@@ -318,6 +328,8 @@ public void Set (BetterList<Vector3> verts, BetterList<Vector3> norms, BetterLis
     注意：所有的渲染都是在LateUpdate下进行，也就是它是进行的延迟渲染。
 
 接口源码：
+
+{% include advertisement_content.html %}
 
 ``` c#
 void LateUpdate ()

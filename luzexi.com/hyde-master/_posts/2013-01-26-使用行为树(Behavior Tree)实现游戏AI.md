@@ -87,6 +87,8 @@ Parallel Node提供了并发，提高性能。
 
 不需要像Selector/Sequence那样预判哪个Child Node应摆前，哪个应摆后，
 
+{% include advertisement_content.html %}
+
 常见情况是：
 
 (1)用于并行多棵Action子树。
@@ -146,6 +148,8 @@ Node为Behavior Node，而Composite Node和Decorator Node为Decider Node。)
 not, counter, time, random, weight random, util...
 
 ====================================================================
+
+{% include advertisement_content.html %}
 
 总的来说，行为树具有如下几种优点，确实是实现AI框架的利器，甚至是一种
 

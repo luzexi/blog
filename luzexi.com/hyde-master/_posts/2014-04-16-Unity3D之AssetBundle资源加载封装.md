@@ -43,6 +43,8 @@ GUI资源之间有特别多的重复的问题，挑出几个重复得特别厉�
 
 3.如何应对自动释放资源问题。
 
+{% include advertisement_content.html %}
+
 解决方案:
 
 在游戏中有指定资源释放和自动释放所有AssetBundle资源以销毁内存(这里不是指销毁U3D内存，而是AssetBundle内存，U3D内存管理分图片内存，AssetBundle内存，编译程序)。销毁指定资源就按正常来没有争议。销毁所有资源就要有点措施了，因为有些资源是不能被销毁的，因为它们是共享资源，需要全程跟着游戏走，所以当自动销毁所有资源时，将共享资源排除在外。并且在销毁后调用Resources.UnloadUnusedAssets();和GC.Collect();

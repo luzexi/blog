@@ -37,6 +37,8 @@ tags:
 
 6.unity5 将与unity4完全不同，互不兼容，也就是像cocosx 2与cocosx 3一样，拆分两个版本维护。IL2P将会逐渐替代mono的打包方式。mono也很难升级，因为高版本的授权费用很高，一般的用户承受不了。
 
+{% include advertisement_content.html %}
+
 7.以下是一些unity5比较有用的改善。没兴趣关注的就不提了。
 
 *场景中的shader可以自动合并成一个shader，减低drawcall。

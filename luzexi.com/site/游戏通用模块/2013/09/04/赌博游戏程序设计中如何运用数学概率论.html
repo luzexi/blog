@@ -138,6 +138,13 @@
 
 <p>其实整个游戏所用到的知识非常简单，而如何让玩家能有一个非常良好的体验，是从吞吃算法和概率调整上下手。我并没有去细致的调整概率，而是做了一个整体概率调整的方案，也就是一个浮点数调整所有概率，当浮点数为1时，是基础的概率，浮点数越大，各元素的中奖概率越大，玩家中奖机会也越大，再加上吞吃算法，整个游戏体验将会是非常切合人的本性。这样，既实现了游戏了娱乐性，也实现了庄家必赢的局面，最重要的是，整个游戏调整起来非常便捷，无需了解很多知识，这也是对项目灵活性的一个很大帮助。</p>
 
+<script type="text/javascript">
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = "u2514412";
+</script>
+
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
 <p>以下内容转载网络，由于页面不复存在，所以只能贴出来：
 计算机随机模拟方法，是一种基于&quot;随机数&quot;的计算方法。这一方法源于美国在第二次世界大战中研制原子弹的&quot;曼哈顿计划&quot;。该计划的主持人之一、数学家冯诺伊曼用驰名世界的赌城-摩纳哥的Monte Carlo-来命名这种方法，为它蒙上了一层神秘色彩。Monte Carlo方法的基本思想很早以前就被人们所发现和利用。早在17世纪，人们就知道用事件发生的&quot;频率&quot;来决定事件的&quot;概率&quot;。19世纪人们用投针试验的方法来决定圆周率pi。本世纪40年代电子计算机的出现，特别是近年来高速电子计算机的出现，使得用数学方法在计算机上大量、快速地模拟这样的试验成为可能。考虑平面上的一个边长为1的正方形及其内部的一个形状不规则的&quot;图形&quot;，如何求出这个&quot;图形&quot;的面积呢？Monte Carlo方法是这样一种&quot;随机化&quot;的方法：向该正方形&quot;随机地&quot;投掷N个点,其中有M个点落于&quot;图形&quot;内，则该&quot;图形&quot;的面积近似为M/N。可用民意测验来作一个不严格的比喻。民意测验的人不是征询每一个登记选民的意见，而是通过对选民进行小规模的抽样调查来确定可能的优胜者。其基本思想是一样的。科技计算中的问题比这要复杂得多。比如金融衍生产品（期权、期货、掉期等）的定价及交易风险估算，问题的维数（即变量的个数）可能高达数百甚至数千。对这类问题，难度随维数的增加呈指数增长，这就是所谓的&quot;维数的灾难&quot;(Course Dimensionality)，传统的数值方法难以对付（即使使用速度最快的计算机）。Monte Carlo方法能很好地用来对付维数的灾难，因为该方法的计算复杂性不再依赖于维数。以前那些本来是无法计算的问题现在也能够计算量。为提高方法的效率，科学家们提出了许多所谓的&quot;方差缩减&quot;技巧。另一类形式与Monte Carlo方法相似，但理论基础不同的方法-&quot;拟蒙特卡罗方法&quot;(Quasi-Monte Carlo方法)-近年来也获得迅速发展。我国数学家华罗庚、王元提出的&quot;华-王&quot;方法即是其中的一例。这种方法的基本思想是&quot;用确定性的超均匀分布序列(数学上称为Low Discrepancy Sequences)
 代替Monte Carlo方法中的随机数序列。对某些问题该方法的实际速度一般可比Monte Carlo方法提出高数百倍，并可计算精确度。</p>
@@ -159,6 +166,13 @@
 <span class="n">end</span>   <span class="o">%</span><span class="n">循环终了</span><span class="err">，</span><span class="n">会对轮盘上由P所划分出来的n个区间产生n次随机选择</span><span class="err">，</span><span class="n">扇区越大</span><span class="err">，</span><span class="n">该扇区被选中的几率也越大</span>
 </code></pre></div>
 <p>还需要注意的是：上面的程序中，我们当然可以把n改成2<em>n或者10</em>n，产生的结果都是&#39;个体概率所表示扇区越大，该个体被选中的几率也越大&#39;，并且随着实验次数的增大，这一结果越精确。</p>
+
+<script type="text/javascript">
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = "u2514412";
+</script>
+
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 
 <p>2）这种方法可以想象成往划分好扇区的轮盘里扔色子，事先生成一组满足均匀分布的随机数，代表n次掷色子或者n个色子一起扔，轮盘不动，色子所在区域为选择结果。</p>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">r</span> <span class="o">=</span> <span class="n">rand</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="n">n</span><span class="o">)</span>   <span class="o">%</span><span class="n">预先产生n个色子的位置</span><span class="err">，</span><span class="n">注意这里r服从0</span><span class="err">、</span><span class="mi">1</span><span class="n">之间均匀分布</span>

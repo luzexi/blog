@@ -48,6 +48,8 @@ Unity3D中使用lua最近越来越火，我比较中意slua的思路与代码质
 
 6.sqlite ([https://github.com/LuaDist/lsqlite3](https://github.com/LuaDist/lsqlite3)) 是一个以文件形式存在的轻量级数据库，他被很多软件用来做本地数据存储。他的api轻便好用，广受程序员欢迎。
 
+{% include advertisement_content.html %}
+
 源码中已将所有第三方库构建进slua里，并完成了android(x86,armv7),ios,mac,windows(x86,x64)这几个平台的测试。
 
 如果你需要加入自己的第三方库或者说你希望去除一些你用不到的第三方库，你可以在源码的build里修改我写的自动build的批处理程序。

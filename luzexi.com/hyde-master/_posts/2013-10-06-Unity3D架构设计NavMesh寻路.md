@@ -54,6 +54,8 @@ Seeker 寻路主算法类
 
 ----------------------------------------- 让大家久等了 ------------------------------------
 
+{% include advertisement_content.html %}
+
 在寻路前，我们需要建立MESH三角形网格，这是NAV_MESH的重点之一。
 
 1.首先我们先要画出一个范围来确定我们的可行走范围。
@@ -178,7 +180,9 @@ Step 3:  将所构成的三角形，另两边做如下处理：检查堆栈中�
             return NavResCode.Success;
         }
 ```
- 
+
+{% include advertisement_content.html %}
+
 这里对如何计算DT点进行一个说明：
 
 Step1. 构造三角形的外接圆，以及外接圆的包围盒
