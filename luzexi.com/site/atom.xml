@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2016-02-04T12:16:22+08:00</updated>
+ <updated>2016-02-04T12:25:45+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -39,13 +39,6 @@
 &lt;p&gt;程序使用两层结构：数据层负责使用REST API检索和保存数据并持久化数据存储。视图层负责调用句柄和在UI上显示数据。
 APIProvider 提供方法使得Activity和Fragment容易用REST API相互通信。这些方法使用URLConnection和AsyncTask执行网络调用在分开的线程里并经由回调返回结果给Activity。
 同样的，CacheProvider包含了些方法用SharedPreference或者SQLite数据库，检索和存储数据。它也通过回调把结果返回给Activity。&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = &quot;u2514412&quot;;
-&lt;/script&gt;
-
-&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
 
 &lt;h3&gt;问题集&lt;/h3&gt;
 
