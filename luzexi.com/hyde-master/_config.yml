@@ -27,6 +27,8 @@ comments: 		  true
 analytics : 	  true
 advertisement_image: true
 advertisement_category: true
+advertisement_bottom: true
+advertisement_content: true
 
 # Custom vars
 version:          2.1.0

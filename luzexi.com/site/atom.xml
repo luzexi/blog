@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2016-02-03T10:56:16+08:00</updated>
+ <updated>2016-02-04T11:56:48+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -105,6 +105,13 @@ DataManager是架构的大脑。它广泛使用RxJava操作去合并过滤转换
                 });
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = &quot;u2514412&quot;;
+&lt;/script&gt;
+
+&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
 &lt;p&gt;视图中的组件像Activity或Fragment会简单调用这个方法并订阅返回的Observable。一旦订阅结束，用Observable得到的不同的文章能直接加入到适配器去展示在RecyclerView或者类似地方。&lt;/p&gt;
 
 &lt;p&gt;文章最后一个元素是事件总线。事件总线允许我们广播那些发生在数据层上的事件，所以在视图层里的多种组件可以订阅这些事件。例如，在DataManager里的asignOut()方法可以推出一个事件当Observable完成时，然后在这个事件里被订阅的多种Activity就可以更换他们的UI来展示一个不在线的信号。&lt;/p&gt;
@@ -142,6 +149,13 @@ MVP为基础的架构&lt;/p&gt;
 如以前的架构，视图层包含标准框架组件例如ViewGroup，Fragment或Activity。主要的区别是这些组件不直接订阅Observable。他们用实现MvpView接口替代并提供一串简洁的方法例如showError()或者showProgressIndicator()。这视图的组件同样负责处理用户交互例如点击事件和行为通过在发言者里调用指定的方法。例如，我们有一个按钮加载一串文章，我们的Activity会从onClick监听者中调用presenter.loadTodayPosts()。&lt;/p&gt;
 
 &lt;p&gt;如果你想了解一整个MVP为基础架构的工作样例，你可以渐出我们的Android Boilerplatex(https://github.com/ribot/android-boilerplate)项目在Github上，你也可以在ribot的指南(https://github.com/ribot/android-guidelines/blob/master/architecture&lt;em&gt;guidelines/android&lt;/em&gt;architecture.md)上了解更多。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = &quot;u2514412&quot;;
+&lt;/script&gt;
+
+&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
 
 &lt;h3&gt;为什么这个方法更好？&lt;/h3&gt;
 
@@ -220,6 +234,13 @@ MVP为基础的架构&lt;/p&gt;
  聚光灯比点光源和方向光更加费性能。光照一个场景最好的方式是先确定你想要的效果，然后去看所有的灯光中哪个是重要的哪个可以削减掉使得场景效果与你想要的相似。
 点光源和聚光灯值影响在他们范围内的模型网格。如果模型在点光源和聚光灯范围以外，光的影响将被削弱，模型将不会被灯光影响从而节省性能消耗。这个方式可以在理论上解释拥有很多小的点光源却任然拥有好的性能表现，因为他们只影响一小部分的物体。记住，一个模型最多只能被8个光源所影响。&lt;/p&gt;
 
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = &quot;u2514412&quot;;
+&lt;/script&gt;
+
+&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
 &lt;h3&gt;贴图&lt;/h3&gt;
 
 &lt;p&gt;在看起来可以接受的情况下尽量缩小贴图的大小。如果你的显卡没有拥有足够的内存来存放这些贴图时，他们将被放置在系统内存里，当他们需要被渲染时再被上传。这在新的电脑上没什么问题因为他们有很多可以使用的空间。但如果你执着于完全能在低端显存设备上运行你的游戏的话，不需要在图片工具上改变贴图的大小，你可以使用Unity导入图片并对其设置大小。
@@ -238,6 +259,13 @@ MVP为基础的架构&lt;/p&gt;
 &lt;h3&gt;着色器&lt;/h3&gt;
 
 &lt;p&gt;很多复杂的着色器比简单的可能消耗性能。VertexLit Diffuse 着色器应该是带贴图和光照最快的着色器了。然而，如果没有像素灯光在场景里或者所有像素光都被Quality Manager关掉了，那么大多数着色器将回退到更加简单的顶点渲染版本。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = &quot;u2514412&quot;;
+&lt;/script&gt;
+
+&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
 
 &lt;h3&gt;脚本&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;1.你是否使用了好的算法？选择一个好的算法对工作收益来说比其他的调整会有更好的优化效果如果可能的话。
@@ -619,6 +647,13 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
 &lt;p&gt;lua_push***() 压入某类型元素。&lt;/p&gt;
 
 &lt;p&gt;int lua_type(int index) : 获得索引index的值的类型。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*760*90 创建于 2016-02-02*/
+    var cpro_id = &quot;u2514412&quot;;
+&lt;/script&gt;
+
+&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
 
 &lt;p&gt;===================中级========================&lt;/p&gt;
 
