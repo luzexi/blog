@@ -30,6 +30,9 @@ advertisement_category: true
 advertisement_bottom: true
 advertisement_content: true
 
+#donation
+paypal_donation: true
+
 # Custom vars
 version:          2.1.0
 

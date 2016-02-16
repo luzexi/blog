@@ -39,3 +39,5 @@ EMAIL：jesse_luzexi@163.com
 QQ:16008977 (请标注为什么要加)
 
 主程群: 334097846 (只有主程++才会被审核通过)
+
+{% include paypal_donation.html %}
