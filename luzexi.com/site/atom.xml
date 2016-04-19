@@ -4,13 +4,55 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2016-02-16T12:24:12+08:00</updated>
+ <updated>2016-04-19T16:17:26+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Gitlab removal</title>
+   <link href="http://www.luzexi.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2016/04/19/Gitlab-removal.html"/>
+   <updated>2016-04-19T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2016/04/19/Gitlab-removal</id>
+   <content type="html">&lt;h1&gt;Gitlab removal&lt;/h1&gt;
+
+&lt;p&gt;Hi guys, long time no see. these day i have much work and much things to learn so i didnot write any thing in the blog, sorry about that. its really busy in my probject. u know people always have their own reason not to do something lol. one day i saw my server which i bought in aliyun is almost time over, so i think about whether i should change the region of the server to hongkong. finally i make a decision to move my blog, gitlab and some other things to hongkong server.&lt;/p&gt;
+
+&lt;p&gt;at the begion of the preparation, i try to buy a hongkong server for a month to test the network and server&amp;#39;s perform. actually it is really good. so im start to move blog, gitlab and svn etc. to my new server.&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;h1&gt;Prolbem&lt;/h1&gt;
+
+&lt;p&gt;1.the first problem i have is which folder or data i have to move.&lt;/p&gt;
+
+&lt;p&gt;i move the whole git folder to new server include gitlab, gitlab-satellites, gitlab-shell, https-ca, repositories.&lt;/p&gt;
+
+&lt;p&gt;2.the second problem i have is mysql data.&lt;/p&gt;
+
+&lt;p&gt;i have lots of data in gitlab and the gitlab save the data in mysql, so i have to move them as the same.&lt;/p&gt;
+
+&lt;p&gt;actually its easy to move mysql. i just install mysql in new server and dump the data of mysql then import them into new server.&lt;/p&gt;
+
+&lt;p&gt;ok, all of the data is already be move to new server.&lt;/p&gt;
+
+&lt;p&gt;3.the hardest things i have is install ruby, lib of mysql and some of the dependent stuff.&lt;/p&gt;
+
+&lt;p&gt;its really hard for me to install lib of mysql for ruby because i dont know which source of apt-get i should use. i installed
+5.5.47 mysql version but it tells me the lib of mysql is 5.5.37 and it is the newest version in source of apt-get which the installed is failed. i change some of them but still cant be install. i even download the mysql of source and make them and try to pick the lib to install but failed. finally i choose the nature source of aliyun to install the lib of mysql, its success. i think its my bad, because i dont believe the nature source of aliyun so i change it.&lt;/p&gt;
+
+&lt;p&gt;4.now i finished setup the lib of all i need. and then i have to set the config to let the gitlab run.&lt;/p&gt;
+
+&lt;p&gt;i set the gitlab config, gitlab-shell config and the nginx vhost, its much easy because i set them before in the old server.&lt;/p&gt;
+
+&lt;p&gt;ok i should check all of the setting by using: sudo -u git -H bundle exec rake gitlab:env:info RAILS_ENV=production&lt;/p&gt;
+
+&lt;h1&gt;all of thing is ok now, so lets run the gitlab.&lt;/h1&gt;
+</content>
+ </entry>
  
  <entry>
    <title>译安卓应用架构体系</title>

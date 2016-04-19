@@ -11,7 +11,7 @@
 
   <title>
     
-      Unity3D之AssetBundle资源加载封装 &middot; 技术人生
+      Gitlab removal &middot; 技术人生
     
   </title>
 
@@ -126,61 +126,48 @@
 
     <div class="content container">
       <div class="post">
-  <h1 class="post-title">Unity3D之AssetBundle资源加载封装</h1>
-  <span class="post-date">16 Apr 2014</span>
-  <p>Unity3D之AssetBundle资源加载封装。在《临兵斗者三国志》中我使用了U3D的AssetBundle资源动态加载机制，原因是某些画面资源太多，IO阻塞过慢会造成游戏奔溃。在开发过程中，遇到点问题:</p>
+  <h1 class="post-title">Gitlab removal</h1>
+  <span class="post-date">19 Apr 2016</span>
+  <h1>Gitlab removal</h1>
 
-<p>1.当资源更改变化时，如何能快速得反应到开发中。</p>
+<p>Hi guys, long time no see. these day i have much work and much things to learn so i didnot write any thing in the blog, sorry about that. its really busy in my probject. u know people always have their own reason not to do something lol. one day i saw my server which i bought in aliyun is almost time over, so i think about whether i should change the region of the server to hongkong. finally i make a decision to move my blog, gitlab and some other things to hongkong server.</p>
 
-<p>解决方案:</p>
+<p>at the begion of the preparation, i try to buy a hongkong server for a month to test the network and server&#39;s perform. actually it is really good. so im start to move blog, gitlab and svn etc. to my new server.</p>
 
-<p>我使用宏定义UNITY_EDITOR来判断是否是开发编辑状态。当处于开发编辑状态时，自动读取指定目录下U3D本身资源，而不使用AssetBundle。这样就达到了当prefb变化时能快速反应到开发编辑中。而当不是处于编辑状态时，则正常使用异步加载读取AssetBundle。这个方式唯一的毛病就是，必须让所有U3D程序员都非常清除明白，如果写错，编辑模式下会没问题，发布后会出问题，所以需要检查。</p>
+<p>===</p>
 
-<p>2.当不同资源之间有重复的资源时如何将AssetBundle空间占有量最小化。</p>
+<h1>Prolbem</h1>
 
-<p>解决方案:</p>
+<p>1.the first problem i have is which folder or data i have to move.</p>
 
-<p>GUI资源之间有特别多的重复的问题，挑出几个重复得特别厉害的，比如ICON图集，公用图集。在打包期间把他们设为共享资源，并在加载时首先加载共享资源，这样既节省了AssetBundle空间占有量，也节省了内存。这个方式的毛病是当你将资源更改要打包某个资源时，需要将所有与共享有关的资源重新打包一遍。</p>
+<p>i move the whole git folder to new server include gitlab, gitlab-satellites, gitlab-shell, https-ca, repositories.</p>
 
-<p>3.如何应对自动释放资源问题。</p>
+<p>2.the second problem i have is mysql data.</p>
 
-<script type="text/javascript">
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = "u2514412";
-</script>
+<p>i have lots of data in gitlab and the gitlab save the data in mysql, so i have to move them as the same.</p>
 
-<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+<p>actually its easy to move mysql. i just install mysql in new server and dump the data of mysql then import them into new server.</p>
 
-<p>解决方案:</p>
+<p>ok, all of the data is already be move to new server.</p>
 
-<p>在游戏中有指定资源释放和自动释放所有AssetBundle资源以销毁内存(这里不是指销毁U3D内存，而是AssetBundle内存，U3D内存管理分图片内存，AssetBundle内存，编译程序)。销毁指定资源就按正常来没有争议。销毁所有资源就要有点措施了，因为有些资源是不能被销毁的，因为它们是共享资源，需要全程跟着游戏走，所以当自动销毁所有资源时，将共享资源排除在外。并且在销毁后调用Resources.UnloadUnusedAssets();和GC.Collect();</p>
+<p>3.the hardest things i have is install ruby, lib of mysql and some of the dependent stuff.</p>
 
-<p>4.打包AssetBundle方式。</p>
+<p>its really hard for me to install lib of mysql for ruby because i dont know which source of apt-get i should use. i installed
+5.5.47 mysql version but it tells me the lib of mysql is 5.5.37 and it is the newest version in source of apt-get which the installed is failed. i change some of them but still cant be install. i even download the mysql of source and make them and try to pick the lib to install but failed. finally i choose the nature source of aliyun to install the lib of mysql, its success. i think its my bad, because i dont believe the nature source of aliyun so i change it.</p>
 
-<p>解决方案:</p>
+<p>4.now i finished setup the lib of all i need. and then i have to set the config to let the gitlab run.</p>
 
-<p>打包AssetBundle方式有几种:1.单资源打包，也就是说一个.prefb或Texture打一个包。2.多个资源打包，将某些资源都打成一个AssetBundle，节省了几个资源包之间的共享资源也减小了多个AssetBundle引起的空间扩大问题。但并不是说所有项目都是多个资源打成一个AssetBundle是好的。《临兵斗者三国志》就是一大部分使用单一打包，而共享资源使用多个资源打成一个AssetBundle的方式。</p>
+<p>i set the gitlab config, gitlab-shell config and the nginx vhost, its much easy because i set them before in the old server.</p>
 
-<p>最后奉上本人对AssetBundle封装的源码。<a href="https://github.com/luzexi/Unity3DGameResource">https://github.com/luzexi/Unity3DGameResource</a></p>
+<p>ok i should check all of the setting by using: sudo -u git -H bundle exec rake gitlab:env:info RAILS_ENV=production</p>
 
-<p>你也可以去我的<a href="https://github.com/luzexi">github</a>上查看找我做的一些源码插件，如果喜欢的话可以star或者fllow。</p>
-
-<p>转发请注明出自：http://www.luzexi.com</p>
+<h1>all of thing is ok now, so lets run the gitlab.</h1>
 
 </div>
 
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
-    
-      <li>
-        <h3>
-          <a href="/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2016/04/19/Gitlab-removal.html">
-            Gitlab removal
-            <small>19 Apr 2016</small>
-          </a>
-        </h3>
-      </li>
     
       <li>
         <h3>
@@ -196,6 +183,15 @@
           <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/01/08/%E8%AF%91Unity3d%E7%BB%BC%E5%90%88%E6%80%A7%E8%83%BD%E7%AA%8D%E9%97%A8.html">
             译Unity3d 综合性能窍门
             <small>08 Jan 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93.html">
+            Unity3D之slua集成第三方库
+            <small>26 Sep 2015</small>
           </a>
         </h3>
       </li>
