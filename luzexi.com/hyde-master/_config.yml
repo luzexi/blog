@@ -25,6 +25,7 @@ excerpt_separator: "\n\n"
 # plugins
 comments: 		  true
 analytics : 	  true
+share: true
 advertisement_image: true
 advertisement_category: true
 advertisement_bottom: true
