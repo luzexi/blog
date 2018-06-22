@@ -121,7 +121,7 @@
       <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
-    <p>&copy; 2016. All rights reserved.</p>
+    <p>&copy; 2018. All rights reserved.</p>
     <p>浙ICP备13028172号-4</p>
   </div>
 </div>
@@ -157,7 +157,7 @@
 <p>设P(i)，其中i=1..n，为n个个体被选择的概率，在轮盘上表示为所占扇区的面积百分比，这里显然sum(P)=1。select用来保存n次选择的结果。</p>
 
 <p>1） 第一种实现办法：可以想象一个转动的轮盘，注意这里轮盘最多只转一圈。每次转轮盘前，把色子随机放到轮盘外缘的某处，即色子不随轮盘转动，以一个随机数sel代表它所处的位置。轮盘转动后，色子所指示的轮盘扇区号不断变化，轮盘停止时色子所指示的轮盘上扇区号，即为本次轮盘赌所选中的个体号。</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">n</span>   <span class="o">%</span><span class="n">第i次掷色子</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">n</span>   <span class="o">%</span><span class="n">第i次掷色子</span>
     <span class="n">sel</span> <span class="o">=</span> <span class="n">rand</span><span class="o">;</span> <span class="o">%</span><span class="n">产生一个0</span><span class="err">、</span><span class="mi">1</span><span class="n">之间的随机数</span><span class="err">，</span><span class="n">代表色子在轮盘外缘所指示的位置</span>
     <span class="n">sumPs</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>   <span class="o">%</span><span class="n">轮盘初始转动的位置</span><span class="err">，</span><span class="n">从0变化到1</span>
     <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>   <span class="o">%</span><span class="n">轮盘初始指示的位置</span>
@@ -178,7 +178,7 @@
 <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 
 <p>2）这种方法可以想象成往划分好扇区的轮盘里扔色子，事先生成一组满足均匀分布的随机数，代表n次掷色子或者n个色子一起扔，轮盘不动，色子所在区域为选择结果。</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">r</span> <span class="o">=</span> <span class="n">rand</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="n">n</span><span class="o">)</span>   <span class="o">%</span><span class="n">预先产生n个色子的位置</span><span class="err">，</span><span class="n">注意这里r服从0</span><span class="err">、</span><span class="mi">1</span><span class="n">之间均匀分布</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">rand</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="n">n</span><span class="o">)</span>   <span class="o">%</span><span class="n">预先产生n个色子的位置</span><span class="err">，</span><span class="n">注意这里r服从0</span><span class="err">、</span><span class="mi">1</span><span class="n">之间均匀分布</span>
 <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">n</span>   <span class="o">%</span><span class="n">第i次轮盘赌</span>
     <span class="nf">select</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>   <span class="o">%</span><span class="n">本次轮盘赌的结果初始化为n</span>
     <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">n</span>   <span class="o">%</span><span class="n">轮盘开始转动</span>
@@ -188,7 +188,7 @@
     <span class="n">end</span> <span class="o">%~</span><span class="n">第i次轮盘赌结束</span>
 <span class="n">end</span> <span class="o">%~</span><span class="n">第i次轮盘赌结束</span>
 <span class="n">end</span> <span class="o">%</span><span class="n">n次轮盘赌结束</span>
-</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">%%%%%%%%%%%%%</span><span class="n">下面为完整的matlab程序实现</span><span class="o">%%%%%%%%%%%%%%%</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="o">%%%%%%%%%%%%%</span><span class="n">下面为完整的matlab程序实现</span><span class="o">%%%%%%%%%%%%%%%</span>
 <span class="n">function</span> <span class="n">Select</span><span class="o">=</span><span class="n">Roulette</span><span class="o">(</span><span class="n">P</span><span class="o">,</span><span class="n">num</span><span class="o">)</span>
 <span class="n">按轮盘赌策略选择下一点</span><span class="o">,</span><span class="n">返回num次轮盘赌结果</span>
 <span class="n">第一种轮盘赌方法</span><span class="o">,</span><span class="n">精度很低</span><span class="o">,</span>
@@ -219,9 +219,9 @@
  <span class="n">本程序中轮盘赌方法的准确程度可由如下程序验证</span>
  <span class="n">P</span><span class="o">=</span><span class="n">rand</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span><span class="mi">1</span><span class="o">);</span>
  <span class="n">P</span><span class="o">=</span><span class="n">P</span><span class="o">./</span><span class="n">sum</span><span class="o">(</span><span class="n">P</span><span class="o">);</span>
- <span class="n">Select</span><span class="o">=</span><span class="n">Roulette</span><span class="o">(</span><span class="n">P</span><span class="o">,</span><span class="mi">1</span><span class="n">e6</span><span class="o">);</span>
+ <span class="n">Select</span><span class="o">=</span><span class="n">Roulette</span><span class="o">(</span><span class="n">P</span><span class="o">,</span><span class="mf">1e6</span><span class="o">);</span>
  <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="mi">10</span>
-     <span class="n">Ps</span><span class="o">(</span><span class="n">i</span><span class="o">)=(</span><span class="n">sum</span><span class="o">(</span><span class="n">Select</span><span class="o">==</span><span class="n">i</span><span class="o">)/</span><span class="mi">1</span><span class="n">e6</span><span class="o">);</span>
+     <span class="n">Ps</span><span class="o">(</span><span class="n">i</span><span class="o">)=(</span><span class="n">sum</span><span class="o">(</span><span class="n">Select</span><span class="o">==</span><span class="n">i</span><span class="o">)/</span><span class="mf">1e6</span><span class="o">);</span>
  <span class="n">end</span>
 <span class="n">最后验证该轮盘赌方法准确程度</span>
 <span class="n">比较P和Ps差异大小</span><span class="err">，</span><span class="n">例</span>
@@ -253,6 +253,15 @@ var jiathis_config = {data_track_clickback:'true'};
     
       <li>
         <h3>
+          <a href="/life/2018/06/22/Back-to-Blog.html">
+            Back to blog
+            <small>22 Jun 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/life/2016/04/22/Swimclub.html">
             Swimming excercise
             <small>22 Apr 2016</small>
@@ -265,15 +274,6 @@ var jiathis_config = {data_track_clickback:'true'};
           <a href="/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2016/04/19/Gitlab-removal.html">
             Gitlab removal
             <small>19 Apr 2016</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/01/15/%E8%AF%91%E5%AE%89%E5%8D%93%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%BD%93%E7%B3%BB.html">
-            译安卓应用架构体系
-            <small>15 Jan 2016</small>
           </a>
         </h3>
       </li>

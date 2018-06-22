@@ -121,7 +121,7 @@
       <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
-    <p>&copy; 2016. All rights reserved.</p>
+    <p>&copy; 2018. All rights reserved.</p>
     <p>浙ICP备13028172号-4</p>
   </div>
 </div>
@@ -141,7 +141,7 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 <p>如何将线程通信后的游戏句柄调用部分放到u3d主线程中去：</p>
 
 <p>1.网络通信是由数据包为单位来驱动游戏逻辑句柄的，所以只要加入队列概念，在收到数据包时由原来的直接调用句柄，改为先推入到队列中，等待处理。</p>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="cp">#if LUZEXI</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="cp">#if LUZEXI</span>
         <span class="k">private</span> <span class="n">System</span><span class="p">.</span><span class="n">Object</span> <span class="n">m_cLock</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Object</span><span class="p">();</span>    <span class="c1">//the lock object</span>
         <span class="k">private</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_NUM</span> <span class="p">=</span> <span class="m">5</span><span class="p">;</span>  <span class="c1">//the process handle num per fps</span>
         <span class="k">private</span> <span class="n">Queue</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;</span> <span class="n">m_seqReceiveMsg</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;();</span>    <span class="c1">//the message queue</span>
@@ -149,7 +149,7 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 <span class="cp">#endif</span>
 </code></pre></div>
 <p>2.在u3d主逻辑中增加一个专门处理网络通信逻辑句柄的类。这个类在通信开始时就加入到u3d主逻辑中去，当通信结束(无论是正常还是异常结束)时在u3d主逻辑中销毁。在主逻辑中不断的或者说每帧都去查看网络通信层队列中有没有等待处理的句柄，有就取出来处理。这样就由等待队列串联起来了几个线程的共同合作。ps:对队列做防死锁操作</p>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="cp">#if LUZEXI</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="cp">#if LUZEXI</span>
         <span class="k">internal</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
         <span class="p">{</span>
             <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span> <span class="p">;</span> <span class="n">i</span><span class="p">&lt;</span><span class="n">PROCESS_NUM</span> <span class="p">&amp;&amp;</span> <span class="n">i</span><span class="p">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="n">m_seqReceiveMsg</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
@@ -171,7 +171,7 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 
 <p>3.拆分网络通信事件。将网络通信事件拆分为OnConnect , OnError , OnDisconnect , 这3个事件是最常见的通信事件。这3个事件也必须在主线程中调用，但这3个事件又不是以网络数据包为基础，所以需要在专门处理通信逻辑的类中加入3种状态start , error , disconnect.当网络通信层出现这三种事件时，将状态切过去（ps:而不是直接调用句柄）,然后再由专门处理通信逻辑的类在下一帧去调用对应的事件句柄。</p>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">SimpleJson</span><span class="p">;</span>
@@ -312,6 +312,15 @@ var jiathis_config = {data_track_clickback:'true'};
     
       <li>
         <h3>
+          <a href="/life/2018/06/22/Back-to-Blog.html">
+            Back to blog
+            <small>22 Jun 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/life/2016/04/22/Swimclub.html">
             Swimming excercise
             <small>22 Apr 2016</small>
@@ -324,15 +333,6 @@ var jiathis_config = {data_track_clickback:'true'};
           <a href="/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2016/04/19/Gitlab-removal.html">
             Gitlab removal
             <small>19 Apr 2016</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/01/15/%E8%AF%91%E5%AE%89%E5%8D%93%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%BD%93%E7%B3%BB.html">
-            译安卓应用架构体系
-            <small>15 Jan 2016</small>
           </a>
         </h3>
       </li>

@@ -121,7 +121,7 @@
       <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
-    <p>&copy; 2016. All rights reserved.</p>
+    <p>&copy; 2018. All rights reserved.</p>
     <p>浙ICP备13028172号-4</p>
   </div>
 </div>
@@ -146,7 +146,7 @@
 <p>4.在开发中，尽量用Free分辨率来测试项目的适配效果，不要到上线才发现适配问题。</p>
 
 <p>适配源码：</p>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">float</span> <span class="n">defaultWHRate</span> <span class="p">=</span> <span class="m">800f</span> <span class="p">/</span> <span class="m">480f</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="kt">float</span> <span class="n">defaultWHRate</span> <span class="p">=</span> <span class="m">800f</span> <span class="p">/</span> <span class="m">480f</span><span class="p">;</span>
 <span class="kt">float</span> <span class="n">ScreenWHRate</span> <span class="p">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">Screen</span><span class="p">.</span><span class="n">width</span> <span class="p">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">Screen</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
 <span class="kt">bool</span> <span class="n">isUseHResize</span> <span class="p">=</span> <span class="n">defaultWHRate</span> <span class="p">&gt;=</span> <span class="n">ScreenWHRate</span> <span class="p">?</span> <span class="k">false</span> <span class="p">:</span> <span class="k">true</span><span class="p">;</span>
 <span class="n">UIRoot</span> <span class="n">root</span> <span class="p">=</span> <span class="n">GameObject</span><span class="p">.</span><span class="n">Find</span><span class="p">(</span><span class="s">&quot;ROOT&quot;</span><span class="p">).</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">UIRoot</span><span class="p">&gt;();</span>
@@ -171,7 +171,7 @@
 <p>5.拆分以及固定各个锚点，上，左上，右上，中，左中，右中，下，左下，右下</p>
 
 <p>6.拆分GUI层级，层级越高，显示越靠前。层级的正确拆分能有效管理GUI的显示方式。</p>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="c1">/// &lt;summary&gt;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// GUI层级</span>
 <span class="c1">/// &lt;/summary&gt;</span>
 <span class="k">public</span> <span class="k">enum</span> <span class="n">GUILAYER</span>
@@ -214,7 +214,7 @@
 <p>NGUI中UIPanel是渲染的关键，他承载了在他下面的子物体的所有渲染工作，每个渲染元素都是由UIWidget继承而来，每个UI物体的渲染都是由面片、材质球、UV点组成，每个种材质由一个UIDrawCall完成渲染工作，UIDrawCall中自己创建Mesh和MeshRender来进行统一的渲染工作。这些都是对NGUI底层的简单的介绍，下面将进行更加细致的分析。</p>
 
 <p>首先我们来看UIWidget这个组件基类，从它拥有的类内部变量就能知道它承担得怎样的责任:</p>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="c1">// Cached and saved values</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Cached and saved values</span>
 <span class="na">[HideInInspector]</span><span class="p">[</span><span class="n">SerializeField</span><span class="p">]</span> <span class="k">protected</span> <span class="n">Material</span> <span class="n">mMat</span><span class="p">;</span><span class="c1">//材质</span>
 <span class="na">[HideInInspector]</span><span class="p">[</span><span class="n">SerializeField</span><span class="p">]</span> <span class="k">protected</span> <span class="n">Texture</span> <span class="n">mTex</span><span class="p">;</span><span class="c1">//贴图</span>
 <span class="na">[HideInInspector]</span><span class="p">[</span><span class="n">SerializeField</span><span class="p">]</span> <span class="n">Color</span> <span class="n">mColor</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">white</span><span class="p">;</span><span class="c1">//颜色</span>
@@ -246,7 +246,7 @@
 </script>
 
 <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="kt">bool</span> <span class="nf">UpdateGeometry</span> <span class="p">(</span><span class="k">ref</span> <span class="n">Matrix4x4</span> <span class="n">worldToPanel</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">parentMoved</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">generateNormals</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="kt">bool</span> <span class="nf">UpdateGeometry</span> <span class="p">(</span><span class="k">ref</span> <span class="n">Matrix4x4</span> <span class="n">worldToPanel</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">parentMoved</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">generateNormals</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">material</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
 
@@ -286,7 +286,7 @@
 
 <p>接着，我们来看看UINode，这个类很容易被人忽视，而他的作用也很重要。它是在UIPanel被告知有新的UIWidget显示元素时被创建的，它的创建主要是为了监视被创建的UIWidget的位置，旋转，大小是否被更改，若被更改，将由UIPanel进行重新的渲染工作。
 HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel用来监视每个元素是否改变了进而进行重新渲染。</p>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="kt">bool</span> <span class="nf">HasChanged</span> <span class="p">()</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="kt">bool</span> <span class="nf">HasChanged</span> <span class="p">()</span>
 <span class="p">{</span>
 <span class="cp">#if UNITY_3 || UNITY_4_0</span>
   <span class="kt">bool</span> <span class="n">isActive</span> <span class="p">=</span> <span class="n">NGUITools</span><span class="p">.</span><span class="n">GetActive</span><span class="p">(</span><span class="n">mGo</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="p">(</span><span class="n">widget</span> <span class="p">==</span> <span class="k">null</span> <span class="p">||</span> <span class="p">(</span><span class="n">widget</span><span class="p">.</span><span class="n">enabled</span> <span class="p">&amp;&amp;</span> <span class="n">widget</span><span class="p">.</span><span class="n">isVisible</span><span class="p">));</span>
@@ -351,7 +351,7 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 </script>
 
 <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="k">void</span> <span class="nf">Set</span> <span class="p">(</span><span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;</span> <span class="n">verts</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;</span> <span class="n">norms</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector4</span><span class="p">&gt;</span> <span class="n">tans</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;</span> <span class="n">uvs</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Color32</span><span class="p">&gt;</span> <span class="n">cols</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">void</span> <span class="nf">Set</span> <span class="p">(</span><span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;</span> <span class="n">verts</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;</span> <span class="n">norms</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector4</span><span class="p">&gt;</span> <span class="n">tans</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;</span> <span class="n">uvs</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Color32</span><span class="p">&gt;</span> <span class="n">cols</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="kt">int</span> <span class="n">count</span> <span class="p">=</span> <span class="n">verts</span><span class="p">.</span><span class="n">size</span><span class="p">;</span>
 
@@ -443,7 +443,7 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 </script>
 
 <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">void</span> <span class="nf">LateUpdate</span> <span class="p">()</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">void</span> <span class="nf">LateUpdate</span> <span class="p">()</span>
 <span class="p">{</span>
   <span class="c1">// Only the very first panel should be doing the update logic</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">list</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">!=</span> <span class="k">this</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
@@ -492,7 +492,7 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 <span class="p">}</span>
 </code></pre></div>
 <p>Fill()接口源码：</p>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="c1">/// &lt;summary&gt;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Fill the geometry fully, processing all widgets and re-creating all draw calls.</span>
 <span class="c1">/// &lt;/summary&gt;</span>
 <span class="k">static</span> <span class="k">void</span> <span class="nf">Fill</span> <span class="p">()</span>
@@ -574,6 +574,15 @@ var jiathis_config = {data_track_clickback:'true'};
     
       <li>
         <h3>
+          <a href="/life/2018/06/22/Back-to-Blog.html">
+            Back to blog
+            <small>22 Jun 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/life/2016/04/22/Swimclub.html">
             Swimming excercise
             <small>22 Apr 2016</small>
@@ -586,15 +595,6 @@ var jiathis_config = {data_track_clickback:'true'};
           <a href="/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2016/04/19/Gitlab-removal.html">
             Gitlab removal
             <small>19 Apr 2016</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/01/15/%E8%AF%91%E5%AE%89%E5%8D%93%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%BD%93%E7%B3%BB.html">
-            译安卓应用架构体系
-            <small>15 Jan 2016</small>
           </a>
         </h3>
       </li>

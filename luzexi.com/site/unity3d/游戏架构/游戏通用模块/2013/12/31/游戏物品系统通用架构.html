@@ -121,7 +121,7 @@
       <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
-    <p>&copy; 2016. All rights reserved.</p>
+    <p>&copy; 2018. All rights reserved.</p>
     <p>浙ICP备13028172号-4</p>
   </div>
 </div>
@@ -160,7 +160,7 @@
 </script>
 
 <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>  
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>  
@@ -206,7 +206,7 @@
 </script>
 
 <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>  
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>  
@@ -311,7 +311,7 @@
 </code></pre></div>
 <p>以上描述解决了物品中消耗品的问题，物品素材本身就是没有功能的消耗品，在这里我就不介绍了。而下面，我们来看看如何解决物品装备。
 装备物品在消耗品上多了几样关于英雄角色的属性，这些属性有的明，有的暗，那我们就把那些明的属性提取出来，例如加增攻击力，增加防御力。而那些暗的属性，再拆分两种，一种是直接写进明的配置表中而不显示在界面上，另一个是直接写进动作Action里，当需要时执行相应EventAction实例。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">最后，我们看看整个物品系统数据配置和系统源码。
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>最后，我们看看整个物品系统数据配置和系统源码。
 物品类：名字，物品类型(消耗品，装备，素材)，描述，数量，最大叠加数量，使用等级,EventActionID,装备位置,攻击力，防御力，HP，MP
 Action表: ID , 描述 , ActionType , RunType , 参数1，参数2...
 EventAction表: ID,描述,
@@ -351,6 +351,15 @@ var jiathis_config = {data_track_clickback:'true'};
     
       <li>
         <h3>
+          <a href="/life/2018/06/22/Back-to-Blog.html">
+            Back to blog
+            <small>22 Jun 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/life/2016/04/22/Swimclub.html">
             Swimming excercise
             <small>22 Apr 2016</small>
@@ -363,15 +372,6 @@ var jiathis_config = {data_track_clickback:'true'};
           <a href="/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2016/04/19/Gitlab-removal.html">
             Gitlab removal
             <small>19 Apr 2016</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/01/15/%E8%AF%91%E5%AE%89%E5%8D%93%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%BD%93%E7%B3%BB.html">
-            译安卓应用架构体系
-            <small>15 Jan 2016</small>
           </a>
         </h3>
       </li>

@@ -121,7 +121,7 @@
       <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
     </nav>
 
-    <p>&copy; 2016. All rights reserved.</p>
+    <p>&copy; 2018. All rights reserved.</p>
     <p>浙ICP备13028172号-4</p>
   </div>
 </div>
@@ -166,7 +166,7 @@
 <p>一般来说，我们在接入游戏服务器的时候都会要提供一个帐号和密码，验证通过后才能进入。关于为什么要提供用户名和密码才能进入的问题我们这里不打算做过 多讨论，云风曾对此也提出过类似的疑问，并给出了只用一个标识串就能进入的设想，有兴趣的可以去看看他们的讨论。但不管是采用何种方式进入，照目前看来我 们的服务器起码得提供一个帐号验证的功能。</p>
 
 <p>我们 把观察点先集中在一个大区内。在大多数情况下，一个大区内都会有多组游戏服，也就是多个游戏世界可供选择。简单点来实现，我们完全可以抛弃这个大区的概 念，认为一个大区也就是放在同一个机房的多台服务器组，各服务器组间没有什么关系。这样，我们可为每组服务器单独配备一台登录服。最后的结构图应该像这 样：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">loginServer   gameServer
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>loginServer   gameServer
 |           /
 |         /
 client
@@ -216,7 +216,7 @@ client
 <p>但是对于不同的游戏世界来说，其角色及游戏内数据都是互相独立的，所以一般情况下也就为每个游戏世界单独配备一台数据库服务器，以减轻数据库的压力。所 以，整体的服务器结构应该是一个大区有一台帐号数据库服务器，所有的登录服都连接到这里。而每个游戏世界都有自己的游戏数据库服务器，只允许本游戏世界内 的服务器连接。</p>
 
 <p>最后，我们的服务器结构就像这样：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">大区服务器
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>大区服务器
 /   　 |       
 /       |       　
 登录服1   登录服2   世界服1   世界服2
@@ -254,7 +254,7 @@ client
 <p>中心服务器主要维护一张地图ID到地图服务器地址的映射表。当我们要进入某张地图时，会从中心服上取得该地图的IP和port告诉客户端，客户端主动去 连接，这样进入他想要去的游戏地图。在整个游戏过程中，客户端始终只会与一台地图服务器保持连接，当要切换地图的时候，在获取到新地图的地址后，会先与当 前地图断开连接，再进入新的地图，这样保证玩家数据在服务器上只有一份。</p>
 
 <p>我们来看看结构图是怎样的：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">中心服务器
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>中心服务器
 /                
 /                  
 登录服     地图1     地图2   地图n
@@ -296,7 +296,7 @@ client
 <p>网关之后的结构我们依然可以采用之前描述的方案，只是，似乎并没有必要为每一个地图都开一个独立的监听端口了。我们可以试着对地图进行一些划分，由一个 Master Server来管理一些更小的Zone Server，玩家通过网关连接到Master Server上，而实际与地图有关的逻辑是分派给更小的Zone Server去处理。</p>
 
 <p>最后的结构看起来大概是这样的：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Zone Server         Zone Server
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>Zone Server         Zone Server
              /
            /
 Master Server           Master Server
@@ -454,7 +454,7 @@ Client
 <p>这样，主逻辑循环所要做的就是不停要取消息包来处理，当然这些消息包不仅有来自客户端的玩家操作数据包，也有来自GM服务器的管理命令，还包括来自数据库查询线程的返回结果消息包。这个循环将一直持续，直到收到一个通知服务器关闭的消息包。</p>
 
 <p>主逻辑循环的结构还是很简单的，复杂的部分都在如何处理这些消息包的逻辑上。我们可以用一段简单的伪码来描述这个循环过程：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">while (Message* msg = getMessage())
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>while (Message* msg = getMessage())
 {
 if (msg为服务器关闭消息)
 break;
@@ -464,7 +464,7 @@ break;
 <p>这里就有一个问题需要探讨了，在getMessage()的时候，我们应该去哪里取消息？前面我们考虑过，至少会有三个消息来源，而我们还讨论过，这些消息源的IO操作都是在独立的线程中进行的，我们这里的主线程不应该直接去那几处消息源进行阻塞式的IO操作。</p>
 
 <p>很简单，让那些独立的IO线程在接收完数据后自己送过来就是了。好比是，我这里提供了一个仓库，有很多的供货商，他们有货要给我的时候只需要交到仓库， 然后我再到仓库去取就是了，这个仓库也就是消息队列。消息队列是一个普通的队列实现，当然必须要提供多线程互斥访问的安全性支持，其基本的接口定义大概类 似这样：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">IMessageQueue
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>IMessageQueue
 {
 void putMessage(Message*);
 Message* getMessage();
@@ -528,6 +528,15 @@ var jiathis_config = {data_track_clickback:'true'};
     
       <li>
         <h3>
+          <a href="/life/2018/06/22/Back-to-Blog.html">
+            Back to blog
+            <small>22 Jun 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/life/2016/04/22/Swimclub.html">
             Swimming excercise
             <small>22 Apr 2016</small>
@@ -540,15 +549,6 @@ var jiathis_config = {data_track_clickback:'true'};
           <a href="/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2016/04/19/Gitlab-removal.html">
             Gitlab removal
             <small>19 Apr 2016</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/01/15/%E8%AF%91%E5%AE%89%E5%8D%93%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%BD%93%E7%B3%BB.html">
-            译安卓应用架构体系
-            <small>15 Jan 2016</small>
           </a>
         </h3>
       </li>
