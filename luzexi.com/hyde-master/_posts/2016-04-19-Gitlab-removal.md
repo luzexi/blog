@@ -34,6 +34,8 @@ ok, all of the data is already be move to new server.
 
 3.the hardest things i have is install ruby, lib of mysql and some of the dependent stuff.
 
+{% include advertisement_content.html %}
+
 its really hard for me to install lib of mysql for ruby because i dont know which source of apt-get i should use. i installed
 5.5.47 mysql version but it tells me the lib of mysql is 5.5.37 and it is the newest version in source of apt-get which the installed is failed. i change some of them but still cant be install. i even download the mysql of source and make them and try to pick the lib to install but failed. finally i choose the nature source of aliyun to install the lib of mysql, its success. i think its my bad, because i dont believe the nature source of aliyun so i change it.
 
