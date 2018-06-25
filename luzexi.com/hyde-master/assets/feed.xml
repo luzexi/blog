@@ -7,7 +7,7 @@ layout: none
     <channel>
         <title>{{ site.name }}</title>
         <description>{{ site.description }}</description>
-        <link>{{ site.baseurl}}{{ site.url }}</link>
+        <link>{{ site.url }}</link>
         <atom:link href="{{ site.url }}/assets/feed.xml" rel="self" type="application/rss+xml" />
         {% for post in site.posts limit:10 %}
             <item>
@@ -16,7 +16,7 @@ layout: none
                <pubDate>{{ post.date | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
                <link>{{ site.url }}{{ site.baseurl}}{{ post.url }}</link>
                <guid isPermaLink="true">{{ site.url }}{{ site.baseurl}}{{ post.url }}</guid>
-               </item>
+            </item>
         {% endfor %}
     </channel>
 </rss>
