@@ -9,13 +9,13 @@ highlighter:      pygments
 # Setup
 title:            技术人生
 tagline:          'luzexi.com'
-description:      '漫漫人生,记录点滴,始于2013'
+description:      '漫漫人生,记录点滴技术,始于2013'
 url:              http://www.luzexi.com
 baseurl:          /
 
 author:
   name:           'Jesse Lu'
-  url:            https://www.luzexi.com
+  url:            http://luzexi.com
 
 gems: [jekyll-paginate]
 paginate:         10
