@@ -509,6 +509,10 @@ Message* getMessage();
 
 <p>两种方案都是很优秀的优化方案，但也都是有其适用范围的。Ghost Cheng的方案因为提供了多个队列，可以使得多个IO线程可以总工程师的，互不干扰的使用自己的队列，只是还有一个遗留问题我们还不了解其解决方法。 arthur的方案很好的解决了上一个方案遗留的问题，但因为只有一个写队列，所以当想要提供多个IO线程时，线程间互斥地写入数据可能会增大竞争的机 会，当然，如果只有一个IO线程那将是非常完美的</p>
 
+  <li><p>版权说明</p>
+<p>copyright attention</p>
+<p>转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
+<p>If you would like to reprint this article please write auth's name and link in the page.</p></li>
   <li> 
 <script type="text/javascript">
     /*760*90 创建于 2016-02-02*/
