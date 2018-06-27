@@ -143,15 +143,18 @@
 
 <ol>
 <li><h3>=&gt; 箭头函数</h3>
-
-<p>两个箭头同时使用 arg1 =&gt; arg2 =&gt;{return xxx;}</p>
-
-<p>可以理解为 function( arg1 ){ return function(arg2){ return xxx; } }</p>
-
-<p>也就是可以是 (arg1,arg2)=&gt;{return xxx;}的简写</p>
-
-<p>也就是function( arg1, arg2 ){ return xxx; }的意思</p>
-
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>两个箭头同时使用 arg1 =&gt; arg2 =&gt;{return xxx;}
+可以理解为
+function( arg1 )
+{
+    return function(arg2)
+    {
+        return xxx;
+    }
+}
+也就是可以是 (arg1,arg2)=&gt;{return xxx;}的简写
+也就是function( arg1, arg2 ){ return xxx; }的意思
+</code></pre></div>
 <p>===</p></li>
 <li><h3>... 剩余数据</h3>
 

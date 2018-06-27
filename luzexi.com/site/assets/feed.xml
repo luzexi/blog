@@ -12,15 +12,18 @@
 
 &lt;ol&gt;
 &lt;li&gt;&lt;h3&gt;=&amp;gt; 箭头函数&lt;/h3&gt;
-
-&lt;p&gt;两个箭头同时使用 arg1 =&amp;gt; arg2 =&amp;gt;{return xxx;}&lt;/p&gt;
-
-&lt;p&gt;可以理解为 function( arg1 ){ return function(arg2){ return xxx; } }&lt;/p&gt;
-
-&lt;p&gt;也就是可以是 (arg1,arg2)=&amp;gt;{return xxx;}的简写&lt;/p&gt;
-
-&lt;p&gt;也就是function( arg1, arg2 ){ return xxx; }的意思&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;两个箭头同时使用 arg1 =&amp;gt; arg2 =&amp;gt;{return xxx;}
+可以理解为
+function( arg1 )
+{
+    return function(arg2)
+    {
+        return xxx;
+    }
+}
+也就是可以是 (arg1,arg2)=&amp;gt;{return xxx;}的简写
+也就是function( arg1, arg2 ){ return xxx; }的意思
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;===&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;h3&gt;... 剩余数据&lt;/h3&gt;
 
@@ -108,8 +111,8 @@ console.log(fizzBuzz); // &amp;quot;true&amp;quot;
 &lt;p&gt;Thanks for reading.&lt;/p&gt;
 </description>
                <pubDate>Tue, 26 Jun 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/06/26/JaveScript%E7%9A%84%E5%A5%87%E8%91%A9%E5%86%99%E6%B3%95%E8%A7%84%E5%88%99.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/06/26/JaveScript%E7%9A%84%E5%A5%87%E8%91%A9%E5%86%99%E6%B3%95%E8%A7%84%E5%88%99.html</guid>
+               <link>http://www.luzexi.com//%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/26/JaveScript%E7%9A%84%E5%A5%87%E8%91%A9%E5%86%99%E6%B3%95%E8%A7%84%E5%88%99.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/26/JaveScript%E7%9A%84%E5%A5%87%E8%91%A9%E5%86%99%E6%B3%95%E8%A7%84%E5%88%99.html</guid>
             </item>
         
             <item>

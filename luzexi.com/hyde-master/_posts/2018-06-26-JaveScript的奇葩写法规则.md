@@ -6,6 +6,7 @@ title: JaveScript的奇葩写法规则
 excerpt_separator: ===
 categories:
 - 前端技术
+- 其他技术
 tags:
 - js
 - 语法
@@ -15,13 +16,17 @@ tags:
 
 1. ###=> 箭头函数
 
-	两个箭头同时使用 arg1 => arg2 =>{return xxx;}
-
-	可以理解为 function( arg1 ){ return function(arg2){ return xxx; } }
-
-	也就是可以是 (arg1,arg2)=>{return xxx;}的简写
-
-	也就是function( arg1, arg2 ){ return xxx; }的意思
+		两个箭头同时使用 arg1 => arg2 =>{return xxx;}
+		可以理解为
+		function( arg1 )
+		{
+			return function(arg2)
+			{
+				return xxx;
+			}
+		}
+		也就是可以是 (arg1,arg2)=>{return xxx;}的简写
+		也就是function( arg1, arg2 ){ return xxx; }的意思
 
 	===
 
