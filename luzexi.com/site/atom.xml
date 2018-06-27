@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-06-27T09:47:20+08:00</updated>
+ <updated>2018-06-27T09:49:51+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -20,11 +20,16 @@
    <content type="html">&lt;h1&gt;JaveScript的奇葩写法规则&lt;/h1&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;=&amp;gt; 箭头函数
+&lt;li&gt;=&amp;gt; 箭头函数
 两个箭头同时使用 arg1 =&amp;gt; arg2 =&amp;gt;{return xxx;}
 可以理解为 function( arg1 ){ return function(arg2){ return xxx; } }
 也就是可以是 (arg1,arg2)=&amp;gt;{return xxx;}的简写
-也就是function( arg1, arg2 ){ return xxx; }的意思&lt;/p&gt;&lt;/li&gt;
+也就是function( arg1, arg2 ){ return xxx; }的意思&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;... 剩余数据
 数组中的剩余数据
 [a, b, ...rest] = [10, 20, 30, 40, 50];

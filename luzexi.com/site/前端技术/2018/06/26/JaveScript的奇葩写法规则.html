@@ -142,11 +142,16 @@
   <h1>JaveScript的奇葩写法规则</h1>
 
 <ol>
-<li><p>=&gt; 箭头函数
+<li>=&gt; 箭头函数
 两个箭头同时使用 arg1 =&gt; arg2 =&gt;{return xxx;}
 可以理解为 function( arg1 ){ return function(arg2){ return xxx; } }
 也就是可以是 (arg1,arg2)=&gt;{return xxx;}的简写
-也就是function( arg1, arg2 ){ return xxx; }的意思</p></li>
+也就是function( arg1, arg2 ){ return xxx; }的意思</li>
+</ol>
+
+<p>===</p>
+
+<ol>
 <li><p>... 剩余数据
 数组中的剩余数据
 [a, b, ...rest] = [10, 20, 30, 40, 50];

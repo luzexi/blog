@@ -150,89 +150,12 @@
     <h1>JaveScript的奇葩写法规则</h1>
 
 <ol>
-<li><p>=&gt; 箭头函数
+<li>=&gt; 箭头函数
 两个箭头同时使用 arg1 =&gt; arg2 =&gt;{return xxx;}
 可以理解为 function( arg1 ){ return function(arg2){ return xxx; } }
 也就是可以是 (arg1,arg2)=&gt;{return xxx;}的简写
-也就是function( arg1, arg2 ){ return xxx; }的意思</p></li>
-<li><p>... 剩余数据
-数组中的剩余数据
-[a, b, ...rest] = [10, 20, 30, 40, 50];
-console.log(a); // 10
-console.log(b); // 20
-console.log(rest); // [30, 40, 50]</p>
-
-<p>对象中的剩余数据
-({a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40});
-console.log(a); // 10
-console.log(b); // 20
-console.log(rest); // {c: 30, d: 40}</p></li>
-<li><p>[] 数组分配赋值用法
-数组分配1
-var x = [1, 2, 3, 4, 5];
-var [y, z] = x;
-console.log(y); // 1
-console.log(z); // 2</p>
-
-<p>数组分配2
-var foo = [&#39;one&#39;, &#39;two&#39;, &#39;three&#39;];
-var [one, two, three] = foo;
-console.log(one); // &quot;one&quot;
-console.log(two); // &quot;two&quot;
-console.log(three); // &quot;three&quot;</p>
-
-<p>数组赋值默认值用法
-var a, b;
-[a=5, b=7] = [1];
-console.log(a); // 1
-console.log(b); // 7</p>
-
-<p>用数组做变量置换
-var a = 1;
-var b = 3;
-[a, b] = [b, a];
-console.log(a); // 3
-console.log(b); // 1</p>
-
-<p>省略赋值用法
-var [a, ...b] = [1, 2, 3];
-console.log(a); // 1
-console.log(b); // [2, 3]</p></li>
-<li><p>{} 对象分配用法
-对象分配赋值
-var o = {p: 42, q: true};
-var {p, q} = o;
-console.log(p); // 42
-console.log(q); // true</p>
-
-<p>默认值用法
-var {a = 10, b = 5} = {a: 3};
-console.log(a); // 3
-console.log(b); // 5</p>
-
-<p>指定key赋值+默认值
-var {a:aa = 10, b:bb = 5} = {a: 3};
-console.log(aa); // 3
-console.log(bb); // 5</p>
-
-<p>指定属性key解析赋值
-let key = &#39;z&#39;;
-let {[key]: foo} = {z: &#39;bar&#39;};
-console.log(foo); // &quot;bar&quot;</p>
-
-<p>对象中剩余赋值法
-let {a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40}
-a; // 10 
-b; // 20 
-rest; // { c: 30, d: 40 }</p>
-
-<p>弱变量定义与赋值
-const foo = { &#39;fizz-buzz&#39;: true };
-const { &#39;fizz-buzz&#39;: fizzBuzz } = foo;
-console.log(fizzBuzz); // &quot;true&quot;</p></li>
+也就是function( arg1, arg2 ){ return xxx; }的意思</li>
 </ol>
-
-<p>Thanks for reading.</p>
 
   </div>
   

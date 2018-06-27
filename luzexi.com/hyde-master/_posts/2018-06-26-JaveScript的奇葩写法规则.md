@@ -19,6 +19,8 @@ tags:
 	也就是可以是 (arg1,arg2)=>{return xxx;}的简写
 	也就是function( arg1, arg2 ){ return xxx; }的意思
 
+===
+
 2. ... 剩余数据
 	数组中的剩余数据
 	[a, b, ...rest] = [10, 20, 30, 40, 50];
