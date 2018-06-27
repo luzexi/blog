@@ -3,6 +3,7 @@ layout: post
 status: publish
 published: true
 title: JaveScript的奇葩写法规则
+description: “JaveScript的奇葩写法规则 js语法 js奇怪语法”
 excerpt_separator: ===
 categories:
 - 前端技术

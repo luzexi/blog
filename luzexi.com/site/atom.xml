@@ -4,13 +4,250 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-06-27T10:28:44+08:00</updated>
+ <updated>2018-06-27T12:00:15+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Markdown(MD)的语法说明</title>
+   <link href="http://www.luzexi.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/27/Markdown-MD-%E7%9A%84%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html"/>
+   <updated>2018-06-27T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/27/Markdown-MD-的语法说明</id>
+   <content type="html">&lt;h1&gt;Markdown(MD)的语法说明&lt;/h1&gt;
+
+&lt;p&gt;针对中文,演示Markdown的各种语法&lt;/p&gt;
+
+&lt;p&gt;标题大小用多个#号表示大小，#越多字体越小&lt;/p&gt;
+
+&lt;p&gt;#&lt;/p&gt;
+
+&lt;h1&gt;这是 H1&lt;/h1&gt;
+
+&lt;p&gt;##&lt;/p&gt;
+
+&lt;h2&gt;这是 H2&lt;/h2&gt;
+
+&lt;p&gt;###&lt;/p&gt;
+
+&lt;h3&gt;这是 H3&lt;/h3&gt;
+
+&lt;p&gt;####&lt;/p&gt;
+
+&lt;h4&gt;这是 h4&lt;/h4&gt;
+
+&lt;p&gt;#####&lt;/p&gt;
+
+&lt;h5&gt;这是 h5&lt;/h5&gt;
+
+&lt;p&gt;######&lt;/p&gt;
+
+&lt;h6&gt;这是 h6&lt;/h6&gt;
+
+&lt;p&gt;????&lt;/p&gt;
+
+&lt;h3&gt;注意!!!下面所有语法的提示我都先用小标题提醒了!!!&lt;/h3&gt;
+
+&lt;h3&gt;单行文本框&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;这是一个单行的文本框,只要1个Tab再输入文字即可
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;多行文本框&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    这是一个有多行的文本框
+    你可以写入代码等,每行文字只要输入2个Tab再输入文字即可
+    这里你可以输入一段代码
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;比如我们可以在多行文本框里输入一段代码,来一个Java版本的HelloWorld吧&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    public class HelloWorld {
+      /**
+      * @param args
+        */
+        public static void main(String[] args) {
+            System.out.println(&amp;quot;HelloWorld!&amp;quot;);
+
+        }
+
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;链接&lt;/h3&gt;
+
+&lt;p&gt;链接内容定义的形式为：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;方括号（前面可以选择性地加上至多三个空格来缩进），里面输入链接文字
+接着一个冒号加空格或直接括号
+接着链接的网址
+选择性地接着 title 内容，可以用单引号、双引号或是括弧包着
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;例如:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    [点击这里你可以链接到www.baidu.com](http://www.baidu.com)&amp;lt;br /&amp;gt;
+    [点击这里我你可以链接到我的博客](http://luzexi.com)&amp;lt;br /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.baidu.com&quot;&gt;点击这里你可以链接到www.baidu.com&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://luzexi.com&quot;&gt;点击这里我你可以链接到我的博客&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;只是显示图片&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    ![icon](http://luzexi.com/public/apple-touch-icon-144-precomposed.png &amp;quot;icon&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://luzexi.com/public/apple-touch-icon-144-precomposed.png&quot; alt=&quot;icon&quot; title=&quot;icon&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;想点击某个图片进入一个网页,比如我想点击blog的icorn然后再进入www.luzexi.com&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    [![image](http://luzexi.com/public/favicon.ico &amp;quot;blog&amp;quot;)](http://www.luzexi.com/)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.luzexi.com/&quot;&gt;&lt;img src=&quot;http://luzexi.com/public/favicon.ico&quot; alt=&quot;image&quot; title=&quot;blog&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;文字被些字符包围&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;文字被些字符包围&lt;/p&gt;
+
+&lt;p&gt;只要再文字前面加上&amp;gt;空格即可&lt;/p&gt;
+
+&lt;p&gt;如果你要换行的话,新起一行,输入&amp;gt;空格即可,后面不接文字
+但&amp;gt; 只能放在行首才有效&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3&gt;文字被些字符包围,多重包围&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;文字被些字符包围开始&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;只要再文字前面加上&amp;gt;空格即可&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;如果你要换行的话,新起一行,输入&amp;gt;空格即可,后面不接文字&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;但&amp;gt; 只能放在行首才有效&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;h3&gt;特殊字符处理&lt;/h3&gt;
+
+&lt;p&gt;有一些特殊字符如&amp;lt;,#等,只要在特殊字符前面加上转义字符\即可&lt;br /&gt;
+你想换行的话其实可以直接用html标签&amp;lt;br /&amp;gt;&lt;/p&gt;
+
+&lt;h3&gt;列表&lt;/h3&gt;
+
+&lt;h5&gt;无序列表使用星号、加号或是减号作为列表标记：&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;*   Jesse
+*   Sharon
+*   Anne
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Jesse&lt;/li&gt;
+&lt;li&gt;  Sharon&lt;/li&gt;
+&lt;li&gt;  Anne&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;等同于：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+   Jesse
++   Sharon
++   Anne
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Jesse&lt;/li&gt;
+&lt;li&gt;  Sharon&lt;/li&gt;
+&lt;li&gt;  Anne&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;等同于：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;-   Jesse
+-   Sharon
+-   Anne
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Jesse&lt;/li&gt;
+&lt;li&gt;  Sharon&lt;/li&gt;
+&lt;li&gt;  Anne&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5&gt;有序列表则使用数字接着一个英文句点&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;1.  Jesse
+2.  Sharon
+3.  Anne
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt; Jesse&lt;/li&gt;
+&lt;li&gt; Sharon&lt;/li&gt;
+&lt;li&gt; Anne&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;等同于:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;1. Jesse
+1. Sharon
+1. Anne
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Jesse&lt;/li&gt;
+&lt;li&gt;Sharon&lt;/li&gt;
+&lt;li&gt;Anne&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;等同于:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;4. Jesse
+2. Sharon
+8. Anne
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Jesse&lt;/li&gt;
+&lt;li&gt;Sharon&lt;/li&gt;
+&lt;li&gt;Anne&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;分割线&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    * * *
+
+    ***
+
+    *****
+
+    - - -
+
+    ---------------------------------------
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果:&lt;/p&gt;
+
+&lt;p&gt;test1&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;test2&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;test3&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h2&gt;test4&lt;/h2&gt;
+
+&lt;p&gt;testend&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>JaveScript的奇葩写法规则</title>
