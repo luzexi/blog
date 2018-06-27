@@ -574,11 +574,11 @@ http://www.meetup.com/Shanghai-Swimming-Meetup/&lt;/p&gt;
 &lt;p&gt;3.the hardest things i have is install ruby, lib of mysql and some of the dependent stuff.&lt;/p&gt;
 
 &lt;script type=&quot;text/javascript&quot;&gt;
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = &quot;u2514412&quot;;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
 
-&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
 
 &lt;p&gt;its really hard for me to install lib of mysql for ruby because i dont know which source of apt-get i should use. i installed
 5.5.47 mysql version but it tells me the lib of mysql is 5.5.37 and it is the newest version in source of apt-get which the installed is failed. i change some of them but still cant be install. i even download the mysql of source and make them and try to pick the lib to install but failed. finally i choose the nature source of aliyun to install the lib of mysql, its success. i think its my bad, because i dont believe the nature source of aliyun so i change it.&lt;/p&gt;
@@ -695,11 +695,11 @@ DataManager是架构的大脑。它广泛使用RxJava操作去合并过滤转换
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = &quot;u2514412&quot;;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
 
-&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
 
 &lt;p&gt;视图中的组件像Activity或Fragment会简单调用这个方法并订阅返回的Observable。一旦订阅结束，用Observable得到的不同的文章能直接加入到适配器去展示在RecyclerView或者类似地方。&lt;/p&gt;
 
@@ -740,11 +740,11 @@ MVP为基础的架构&lt;/p&gt;
 &lt;p&gt;如果你想了解一整个MVP为基础架构的工作样例，你可以渐出我们的Android Boilerplatex(https://github.com/ribot/android-boilerplate)项目在Github上，你也可以在ribot的指南(https://github.com/ribot/android-guidelines/blob/master/architecture&lt;em&gt;guidelines/android&lt;/em&gt;architecture.md)上了解更多。&lt;/p&gt;
 
 &lt;script type=&quot;text/javascript&quot;&gt;
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = &quot;u2514412&quot;;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
 
-&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
 
 &lt;h3&gt;为什么这个方法更好？&lt;/h3&gt;
 
@@ -824,11 +824,11 @@ MVP为基础的架构&lt;/p&gt;
 点光源和聚光灯值影响在他们范围内的模型网格。如果模型在点光源和聚光灯范围以外，光的影响将被削弱，模型将不会被灯光影响从而节省性能消耗。这个方式可以在理论上解释拥有很多小的点光源却任然拥有好的性能表现，因为他们只影响一小部分的物体。记住，一个模型最多只能被8个光源所影响。&lt;/p&gt;
 
 &lt;script type=&quot;text/javascript&quot;&gt;
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = &quot;u2514412&quot;;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
 
-&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
 
 &lt;h3&gt;贴图&lt;/h3&gt;
 
@@ -850,11 +850,11 @@ MVP为基础的架构&lt;/p&gt;
 &lt;p&gt;很多复杂的着色器比简单的可能消耗性能。VertexLit Diffuse 着色器应该是带贴图和光照最快的着色器了。然而，如果没有像素灯光在场景里或者所有像素光都被Quality Manager关掉了，那么大多数着色器将回退到更加简单的顶点渲染版本。&lt;/p&gt;
 
 &lt;script type=&quot;text/javascript&quot;&gt;
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = &quot;u2514412&quot;;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
 
-&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
 
 &lt;h3&gt;脚本&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;1.你是否使用了好的算法？选择一个好的算法对工作收益来说比其他的调整会有更好的优化效果如果可能的话。
@@ -909,11 +909,11 @@ MVP为基础的架构&lt;/p&gt;
 &lt;p&gt;6.sqlite (&lt;a href=&quot;https://github.com/LuaDist/lsqlite3&quot;&gt;https://github.com/LuaDist/lsqlite3&lt;/a&gt;) 是一个以文件形式存在的轻量级数据库，他被很多软件用来做本地数据存储。他的api轻便好用，广受程序员欢迎。&lt;/p&gt;
 
 &lt;script type=&quot;text/javascript&quot;&gt;
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = &quot;u2514412&quot;;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
 
-&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
 
 &lt;p&gt;源码中已将所有第三方库构建进slua里，并完成了android(x86,armv7),ios,mac,windows(x86,x64)这几个平台的测试。&lt;/p&gt;
 
@@ -961,11 +961,11 @@ MVP为基础的架构&lt;/p&gt;
 &lt;p&gt;3.mono需要autoconf automake libtool pkg-config这些工具。你最好还是去下载安装了。你可以用brew安装。brew install autoconf automake libtool pkg-config。&lt;/p&gt;
 
 &lt;script type=&quot;text/javascript&quot;&gt;
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = &quot;u2514412&quot;;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
 
-&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
 
 &lt;p&gt;4.我一开始使用mac x86&lt;em&gt;64进行编译，折腾了很久然后建了个linux-x86&lt;/em&gt;64虚拟机来编译，然后又折腾了很久，又建了个linux-i386来重新编译mono，因为我一直认为交叉编译需要加些不同的编译参数和变量。在linux-i386首次编译成功后又开始转化到mac上，进行交叉编译也一样成功，最后发现其实是我没找对路子。这路子就是unity 的mono-build-tool：&lt;a href=&quot;https://github.com/Unity-Technologies/monobuildtools&quot;&gt;https://github.com/Unity-Technologies/monobuildtools&lt;/a&gt; 它已经在unity mono的项目里了，在mono的external/buildscripts下。&lt;/p&gt;
 
@@ -982,11 +982,11 @@ MVP为基础的架构&lt;/p&gt;
 &lt;p&gt;加密算法自己选我不多说了，但我这里要引用一篇同样介绍mono的dll加密的文章，我觉得也写得满不错的，但是文章描述不够详尽。我这篇文章弥补了他的不足，将细节补充得更加细致。你大可以两篇文章加起来参考。&lt;a href=&quot;http://www.unitymanual.com/home.php?mod=space&amp;uid=7672&amp;do=blog&amp;id=1440&quot;&gt;http://www.unitymanual.com/home.php?mod=space&amp;amp;uid=7672&amp;amp;do=blog&amp;amp;id=1440&lt;/a&gt; 不知道地址是不是原作者的，如果不是我再更换吧。&lt;/p&gt;
 
 &lt;script type=&quot;text/javascript&quot;&gt;
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = &quot;u2514412&quot;;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
 
-&lt;script src=&quot;http://cpro.baidustatic.com/cpro/ui/c.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
 
 &lt;p&gt;1.首先找到dll解密入口。mono下/mono/metadata/image.c里mono&lt;em&gt;image&lt;/em&gt;open&lt;em&gt;from&lt;/em&gt;data&lt;em&gt;with&lt;/em&gt;name是关键方法，参数中的data是dll传入的数据。你要做的就是将它解密后传给datac，这个方法程序你必须看下，因为你要了解下解密程序放在哪才合适。&lt;/p&gt;
 
