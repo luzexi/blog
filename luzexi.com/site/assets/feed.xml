@@ -295,8 +295,6 @@
 &lt;p&gt;&lt;strong&gt;double asterisks&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;double underscores&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;感谢您的耐心阅读&lt;/p&gt;
 </description>
                <pubDate>Wed, 27 Jun 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/27/Markdown-MD-%E7%9A%84%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html</link>
@@ -404,8 +402,6 @@ const { &amp;#39;fizz-buzz&amp;#39;: fizzBuzz } = foo;
 console.log(fizzBuzz); // &amp;quot;true&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;p&gt;Thanks for reading.&lt;/p&gt;
 </description>
                <pubDate>Tue, 26 Jun 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/26/JaveScript%E7%9A%84%E5%A5%87%E8%91%A9%E5%86%99%E6%B3%95%E8%A7%84%E5%88%99.html</link>

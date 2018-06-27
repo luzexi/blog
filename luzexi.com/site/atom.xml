@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-06-27T12:14:39+08:00</updated>
+ <updated>2018-06-27T12:17:38+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -304,8 +304,6 @@
 &lt;p&gt;&lt;strong&gt;double asterisks&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;double underscores&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;感谢您的耐心阅读&lt;/p&gt;
 </content>
  </entry>
  
@@ -413,8 +411,6 @@ const { &amp;#39;fizz-buzz&amp;#39;: fizzBuzz } = foo;
 console.log(fizzBuzz); // &amp;quot;true&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;p&gt;Thanks for reading.&lt;/p&gt;
 </content>
  </entry>
  
