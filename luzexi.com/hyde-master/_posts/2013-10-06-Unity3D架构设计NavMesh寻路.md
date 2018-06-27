@@ -3,6 +3,7 @@ layout: post
 status: publish
 published: true
 title: Unity3D架构设计NavMesh寻路
+description: "unity3d 寻路 navmesh 设计 架构"
 author:
   display_name: 陆泽西
   login: luzexi

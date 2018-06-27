@@ -3,6 +3,7 @@ layout: post
 status: publish
 published: true
 title: Unity3D之AssetBundle资源加载封装
+description: "unity3d assetbundle 加载封装"
 author:
   display_name: 陆泽西
   login: luzexi

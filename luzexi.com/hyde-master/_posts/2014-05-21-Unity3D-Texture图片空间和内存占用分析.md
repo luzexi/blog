@@ -3,6 +3,7 @@ layout: post
 status: publish
 published: true
 title: Unity3D--Texture图片空间和内存占用分析
+description: "unity3d texture 优化 分析"
 author:
   display_name: 陆泽西
   login: luzexi

@@ -3,6 +3,7 @@ layout: post
 status: publish
 published: true
 title: Unity3D AssetBundle 资源加载注意事项
+description: "unity3d assetbundle 加载 说明"
 author:
   display_name: 陆泽西
   login: luzexi

@@ -3,6 +3,7 @@ layout: post
 status: publish
 published: true
 title: html5游戏开发---cocos2dx-js
+description: "html5 游戏 开发 cocos2d"
 author:
   display_name: 陆泽西
   login: luzexi

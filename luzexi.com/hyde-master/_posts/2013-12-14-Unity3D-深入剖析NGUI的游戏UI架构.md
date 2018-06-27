@@ -3,6 +3,7 @@ layout: post
 status: publish
 published: true
 title: Unity3D-深入剖析NGUI的游戏UI架构
+description: "unity3d 深入剖析 ngui ui架构"
 author:
   display_name: 陆泽西
   login: luzexi

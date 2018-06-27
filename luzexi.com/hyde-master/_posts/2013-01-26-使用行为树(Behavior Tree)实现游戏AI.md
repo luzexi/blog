@@ -3,6 +3,7 @@ layout: post
 status: publish
 published: true
 title: 使用行为树(Behavior Tree)实现游戏AI
+description: "行为树 behavior tree 实现 ai"
 author:
   display_name: 陆泽西
   login: luzexi

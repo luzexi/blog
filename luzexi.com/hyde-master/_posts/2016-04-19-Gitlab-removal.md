@@ -3,6 +3,7 @@ layout: post
 status: publish
 published: true
 title: Gitlab removal
+description: "gitlab removal"
 excerpt_separator: ===
 categories:
 - 其他技术

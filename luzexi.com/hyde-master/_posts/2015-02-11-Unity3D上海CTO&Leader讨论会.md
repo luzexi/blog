@@ -3,6 +3,7 @@ layout: post
 status: publish
 published: true
 title: Unity3D上海CTO&Leader讨论会
+description: "unity3d cto 讨论会"
 author:
   display_name: 陆泽西
   login: luzexi
