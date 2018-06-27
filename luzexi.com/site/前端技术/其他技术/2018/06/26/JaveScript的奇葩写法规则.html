@@ -239,6 +239,76 @@ rest; // { c: 30, d: 40 }
 const { &#39;fizz-buzz&#39;: fizzBuzz } = foo;
 console.log(fizzBuzz); // &quot;true&quot;
 </code></pre></div></li>
+<li><h3>Object.assign() 合并对象</h3>
+
+<h6>将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）</h6>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var target = { a: 1 };
+var source1 = { b: 2 };
+var source2 = { c: 3 };
+Object.assign(target, source1, source2);
+target // {a:1, b:2, c:3}
+</code></pre></div>
+<h6>如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性</h6>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var target = { a: 1, b: 1 };
+var source1 = { b: 2, c: 2 };
+var source2 = { c: 3 };
+Object.assign(target, source1, source2);
+target // {a:1, b:2, c:3}
+</code></pre></div>
+<h6>Object.assign方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。</h6>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var obj1 = {a: {b: 1}};
+var obj2 = Object.assign({}, obj1);
+obj1.a.b = 2;
+obj2.a.b // 2
+</code></pre></div>
+<h6>对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。</h6>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var target = { a: { b: &#39;c&#39;, d: &#39;e&#39; } }
+var source = { a: { b: &#39;hello&#39; } }
+Object.assign(target, source)
+// { a: { b: &#39;hello&#39; } }
+</code></pre></div>
+<h6>Object.assign 常见用途</h6>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>为对象添加属性
+class Point {
+    constructor(x, y) {
+        Object.assign(this, {x, y});
+    }
+}
+
+为对象添加方法
+Object.assign(SomeClass.prototype, {
+    someMethod(arg1, arg2) {
+    ···
+    },
+    anotherMethod() {
+    ···
+    }
+});
+//  等同于下面的写法
+SomeClass.prototype.someMethod = function (arg1, arg2) {
+···
+};
+SomeClass.prototype.anotherMethod = function () {
+···
+};
+
+克隆对象
+function clone(origin) {
+    return Object.assign({}, origin);
+}
+
+合并多个对象
+const merge =(target, ...sources) =&gt; Object.assign(target, ...sources);
+
+为属性指定默认值
+const DEFAULTS = {
+    logLevel: 0,
+    outputFormat: &#39;html&#39;
+};
+function processContent(options) {
+    let options = Object.assign({}, DEFAULTS, options);
+}
+</code></pre></div></li>
 </ol>
 
   <p>感谢您的耐心阅读</p>

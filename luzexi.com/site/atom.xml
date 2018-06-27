@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-06-27T18:02:04+08:00</updated>
+ <updated>2018-06-27T23:16:31+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -409,6 +409,76 @@ rest; // { c: 30, d: 40 }
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;const foo = { &amp;#39;fizz-buzz&amp;#39;: true };
 const { &amp;#39;fizz-buzz&amp;#39;: fizzBuzz } = foo;
 console.log(fizzBuzz); // &amp;quot;true&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h3&gt;Object.assign() 合并对象&lt;/h3&gt;
+
+&lt;h6&gt;将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var target = { a: 1 };
+var source1 = { b: 2 };
+var source2 = { c: 3 };
+Object.assign(target, source1, source2);
+target // {a:1, b:2, c:3}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var target = { a: 1, b: 1 };
+var source1 = { b: 2, c: 2 };
+var source2 = { c: 3 };
+Object.assign(target, source1, source2);
+target // {a:1, b:2, c:3}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;Object.assign方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var obj1 = {a: {b: 1}};
+var obj2 = Object.assign({}, obj1);
+obj1.a.b = 2;
+obj2.a.b // 2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var target = { a: { b: &amp;#39;c&amp;#39;, d: &amp;#39;e&amp;#39; } }
+var source = { a: { b: &amp;#39;hello&amp;#39; } }
+Object.assign(target, source)
+// { a: { b: &amp;#39;hello&amp;#39; } }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;Object.assign 常见用途&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;为对象添加属性
+class Point {
+    constructor(x, y) {
+        Object.assign(this, {x, y});
+    }
+}
+
+为对象添加方法
+Object.assign(SomeClass.prototype, {
+    someMethod(arg1, arg2) {
+    ···
+    },
+    anotherMethod() {
+    ···
+    }
+});
+//  等同于下面的写法
+SomeClass.prototype.someMethod = function (arg1, arg2) {
+···
+};
+SomeClass.prototype.anotherMethod = function () {
+···
+};
+
+克隆对象
+function clone(origin) {
+    return Object.assign({}, origin);
+}
+
+合并多个对象
+const merge =(target, ...sources) =&amp;gt; Object.assign(target, ...sources);
+
+为属性指定默认值
+const DEFAULTS = {
+    logLevel: 0,
+    outputFormat: &amp;#39;html&amp;#39;
+};
+function processContent(options) {
+    let options = Object.assign({}, DEFAULTS, options);
+}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </content>
