@@ -61,6 +61,8 @@ tags:
 
 	    }
 
+- - -
+
 ### 链接
 
 链接内容定义的形式为：
@@ -80,7 +82,10 @@ tags:
 1. [点击这里你可以链接到www.baidu.com](http://www.baidu.com)<br />
 2. [点击这里我你可以链接到我的博客](http://luzexi.com)<br />
 
-### 只是显示图片
+- - -
+
+### 显示图片
+		[]前面加!就代表图片了，其他和普通的连接差不多
 		![icon](http://luzexi.com/public/apple-touch-icon-144-precomposed.png "icon")
 
 效果:
@@ -88,21 +93,49 @@ tags:
 ![icon](http://luzexi.com/public/apple-touch-icon-144-precomposed.png "icon")
 
 ###想点击某个图片进入一个网页,比如我想点击blog的icorn然后再进入www.luzexi.com
+		[]中加入图片显示，进行嵌套操作
 		[![image](http://luzexi.com/public/favicon.ico "blog")](http://www.luzexi.com/)
+		这个可以分解拆分为[![image](http://luzexi.com/public/favicon.ico "blog")] 和 (http://www.luzexi.com/) 两部分
 
 效果:
 
 [![image](http://luzexi.com/public/favicon.ico "blog")](http://www.luzexi.com/)
 
+- - -
+
 ### 文字被些字符包围
+
+\> 文字被些字符包围
+
+\> 只要再文字前面加上\>空格即可
+
+\> 如果你要换行的话,新起一行,输入\>空格即可,后面不接文字
+
+\> 但> 只能放在行首才有效
+
+效果:
+
 > 文字被些字符包围
 >
-> 只要再文字前面加上>空格即可
+> 只要再文字前面加上\>空格即可
 >
-> 如果你要换行的话,新起一行,输入>空格即可,后面不接文字
-> 但> 只能放在行首才有效
+> 如果你要换行的话,新起一行,输入\>空格即可,后面不接文字
+> 但\> 只能放在行首才有效
+
+- - -
 
 ### 文字被些字符包围,多重包围
+
+\> 文字被些字符包围开始
+
+\> \> 只要再文字前面加上\>空格即可
+
+\>  \> \> 如果你要换行的话,新起一行,输入\>空格即可,后面不接文字
+
+\> \> \> \> 但\> 只能放在行首才有效
+
+效果:
+
 > 文字被些字符包围开始
 >
 > > 只要再文字前面加上>空格即可
@@ -111,10 +144,13 @@ tags:
 >
 > > > > 但> 只能放在行首才有效
 
+- - -
+
 ### 特殊字符处理
 有一些特殊字符如<,#等,只要在特殊字符前面加上转义字符\即可<br />
 你想换行的话其实可以直接用html标签\<br /\>
 
+- - -
 
 ### 列表
 
@@ -154,6 +190,8 @@ tags:
 -   Sharon
 -   Anne
 
+- - -
+
 #####有序列表则使用数字接着一个英文句点
 
 	1.  Jesse
@@ -190,6 +228,7 @@ tags:
 2. Sharon
 8. Anne
 
+- - -
 
 ### 分割线
 		* * *
@@ -210,7 +249,29 @@ test2
 ***
 test3
 - - -
-test4
----------------------------------------
 testend
 
+- - -
+
+### 强调
+
+		*single asterisks*
+
+		_single underscores_
+
+		**double asterisks**
+
+		__double underscores__
+
+效果:
+
+*single asterisks*
+
+_single underscores_
+
+**double asterisks**
+
+__double underscores__
+
+
+感谢您的耐心阅读
