@@ -150,11 +150,24 @@
 <p>3.大量用户集中使用同一功能的优化。《王途霸业》的挂机系统就遇到这样的情况，大部分玩家都会使用这个功能，而且这是机器与机器的交互，大部分玩家都会在长时间里使用这个功能。当大量用户时，这个挂机战斗功能，对数据存储服务器的SQL语句执行冲击很大，类似的情况还有很多。像这样的功能呢，就需要我们进一步优化，不但是优化逻辑处理，还要优化数据存储方式，不可以加大了逻辑服务器的承载，却忽视了数据服务器的承载。优化方法很多，比如当前功能不存储数据，只在玩家下线时操作数据存储更新，还有数据差异化存储，当数据有变化才进行储存更新，去除了很多不必要的存储SQL执行时间。</p>
 
 <script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = "u3471606";
+        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = "u3469788";
+        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+    }
+</script>
+
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <!-- <script type="text/javascript">
     /*文内嵌入*/
@@ -182,10 +195,23 @@
 <p>If you would like to reprint this article please write auth's name and link in the page.</p></li>
   <li>
 <script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+    	var cpro_id = "u3471606";
+		document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+	    /*700*200信息流*/
+	    var cpro_id = "u3469788";
+		document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+	}
+</script>
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 <!-- <script type="text/javascript">
     /*文内嵌入*/
     var cpro_id = "u3471606";

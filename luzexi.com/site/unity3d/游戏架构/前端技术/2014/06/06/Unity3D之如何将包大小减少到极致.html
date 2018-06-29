@@ -162,11 +162,24 @@
 <p>为了将包大小减少到极致，我把包分成三段：1.首包(里面包含了最最必要的资源)。2.首次进入包加载(加载游戏运行必要的资源)。3.游戏运行中资源加载(按每个游戏不同各自定义，以场景和单位个体为主要，在画面进入时加载资源，加载结束后再运行并显示)。</p>
 
 <script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = "u3471606";
+        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = "u3469788";
+        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+    }
+</script>
+
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <!-- <script type="text/javascript">
     /*文内嵌入*/
@@ -207,11 +220,24 @@
 <p>其实www.LoadFromCacheOrDownload加载机制也可以算一种，但似乎u3d4.5.2开始已经摒弃这个接口，大部分人也不太建议使用这个接口，似乎是因为这个界面消耗内存太厉害。其实具体什么原因我也不太清楚。个人认为这个接口太过死板，操作余地太小，受限太大。</p>
 
 <script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = "u3471606";
+        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = "u3469788";
+        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+    }
+</script>
+
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <!-- <script type="text/javascript">
     /*文内嵌入*/
@@ -257,10 +283,23 @@
 <p>If you would like to reprint this article please write auth's name and link in the page.</p></li>
   <li>
 <script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+    	var cpro_id = "u3471606";
+		document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+	    /*700*200信息流*/
+	    var cpro_id = "u3469788";
+		document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+	}
+</script>
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 <!-- <script type="text/javascript">
     /*文内嵌入*/
     var cpro_id = "u3471606";

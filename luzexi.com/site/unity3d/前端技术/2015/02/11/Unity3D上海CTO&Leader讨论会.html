@@ -156,11 +156,24 @@
 <p>6.unity5 将与unity4完全不同，互不兼容，也就是像cocosx 2与cocosx 3一样，拆分两个版本维护。IL2P将会逐渐替代mono的打包方式。mono也很难升级，因为高版本的授权费用很高，一般的用户承受不了。</p>
 
 <script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = "u3471606";
+        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = "u3469788";
+        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+    }
+</script>
+
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <!-- <script type="text/javascript">
     /*文内嵌入*/
@@ -196,10 +209,23 @@
 <p>If you would like to reprint this article please write auth's name and link in the page.</p></li>
   <li>
 <script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+    	var cpro_id = "u3471606";
+		document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+	    /*700*200信息流*/
+	    var cpro_id = "u3469788";
+		document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+	}
+</script>
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 <!-- <script type="text/javascript">
     /*文内嵌入*/
     var cpro_id = "u3471606";
