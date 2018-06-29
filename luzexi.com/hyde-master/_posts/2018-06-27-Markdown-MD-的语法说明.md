@@ -63,6 +63,8 @@ tags:
 
 - - -
 
+{% include advertisement_content.html %}
+
 ### 链接
 
 链接内容定义的形式为：
@@ -123,6 +125,8 @@ tags:
 > 但\> 只能放在行首才有效
 
 - - -
+
+{% include advertisement_content.html %}
 
 ### 文字被些字符包围,多重包围
 
@@ -229,6 +233,8 @@ tags:
 8. Anne
 
 - - -
+
+{% include advertisement_content.html %}
 
 ### 分割线
 		* * *

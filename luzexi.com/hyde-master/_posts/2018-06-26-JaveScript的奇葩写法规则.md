@@ -47,6 +47,7 @@ tags:
 		console.log(b); // 20
 		console.log(rest); // {c: 30, d: 40}
 
+{% include advertisement_content.html %}
 
 3. ###[] 数组分配赋值用法
 
@@ -125,6 +126,8 @@ tags:
 		const foo = { 'fizz-buzz': true };
 		const { 'fizz-buzz': fizzBuzz } = foo;
 		console.log(fizzBuzz); // "true"
+
+{% include advertisement_content.html %}
 
 5. ### Object.assign() 合并对象
 
