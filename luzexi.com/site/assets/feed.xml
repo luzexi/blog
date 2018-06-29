@@ -64,18 +64,18 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;hr&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;链接&lt;/h3&gt;
 
@@ -140,18 +140,18 @@
 
 &lt;hr&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;文字被些字符包围,多重包围&lt;/h3&gt;
 
@@ -274,18 +274,18 @@
 
 &lt;hr&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;分割线&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    * * *
@@ -375,18 +375,18 @@ console.log(rest); // {c: 30, d: 40}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;h3&gt;[] 数组分配赋值用法&lt;/h3&gt;
@@ -458,18 +458,18 @@ console.log(fizzBuzz); // &amp;quot;true&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;h3&gt;Object.assign() 合并对象&lt;/h3&gt;
@@ -561,18 +561,18 @@ function processContent(options) {
 
 &lt;p&gt;有话说的好，要在别人恐惧的时候我贪婪，别人贪婪的时候我恐惧。这句话虽然没什么大问题，而且算是极其有道理的，但细化的内容大家都没有认识到，一味得执行别人恐惧我贪婪，别人贪婪我恐惧，就容易导致巨大的亏损。细化内容比如你如何判断大家是最后一次恐惧，而不会继续恐惧，又比如如何判断别人是最后一次绝望的，而不会有更绝望的事情发生，反过来也是一样，如何判断大家是贪婪的，并且不会有更贪婪的事情发生。除了上面说的几条外，还需要自身做到一些非常人的境界，比如自身必须不受恐惧影响，不害怕不犹豫的坚定买入，又比如买入时能否做到冷静克制而不贪婪，不可以一次性提升大量仓位而是在2个月或者半年内慢慢提升仓位，又比如当买入时再次遇到恐惧甚至踩踏，是否能够理性分析临危不乱。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;首先必须坚定的事实是，金融是动态的，并且反射到我们生活中来说，世界也是动态的。事件，事情，经济，人心，都是在动态的发生着变化，谁都无法准确预料明天，或者下一秒会发生什么事情。今天的底，有可能是明天的中继平台，今天的涨，也有可能是只是反弹后继续下跌的一个陷阱。但是为什么，从现在看历史，历史是却是清晰的，为什么？！因为金融是动态的，世界是动态的，人心是动态的，他随时随地的在变化，没有人能准确预料到下一秒会是什么。但是，这里重点强调，一旦发生就固定在了历史中了。这就是为什么，我们回顾看历史都是固定清晰的，而当前的状况或者说当前的情况，都是模糊不清，难以琢磨的。&lt;/p&gt;
 
@@ -580,18 +580,18 @@ function processContent(options) {
 
 &lt;p&gt;无法准确预测是件很恐怖的事，因为未知，或者说对未知的恐惧。庆幸的是，无法准确预测，却可以从一个比较长的时间中猜测到大概率会发生什么。我们可以根据大概率发生的事件而提前布局，比如中国股市大概率在未来10-20年内会全面开放给全球，全球投资者涌入的同时会带来一波巨大的牛市，冲破6000点不是梦。当然，这10-20年内中间的过程究竟会发生什么，谁都无法知道。就目前来看，是不会太顺利的。毕竟不经历风雨怎能见彩虹。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;从上面的分析来看，股市是不确定的，无法准确的预测，甚至有时模糊的预测都是错误的，只可以做一个5年或者10年或者20年后大概率发生的事，时间越久概率越大。人性恐惧导致了底部还有底。&lt;/p&gt;
 
@@ -738,18 +738,18 @@ http://www.meetup.com/Shanghai-Swimming-Meetup/&lt;/p&gt;
 
 &lt;p&gt;3.the hardest things i have is install ruby, lib of mysql and some of the dependent stuff.&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;its really hard for me to install lib of mysql for ruby because i dont know which source of apt-get i should use. i installed
 5.5.47 mysql version but it tells me the lib of mysql is 5.5.37 and it is the newest version in source of apt-get which the installed is failed. i change some of them but still cant be install. i even download the mysql of source and make them and try to pick the lib to install but failed. finally i choose the nature source of aliyun to install the lib of mysql, its success. i think its my bad, because i dont believe the nature source of aliyun so i change it.&lt;/p&gt;
@@ -865,18 +865,18 @@ DataManager是架构的大脑。它广泛使用RxJava操作去合并过滤转换
                 });
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;视图中的组件像Activity或Fragment会简单调用这个方法并订阅返回的Observable。一旦订阅结束，用Observable得到的不同的文章能直接加入到适配器去展示在RecyclerView或者类似地方。&lt;/p&gt;
 
@@ -916,18 +916,18 @@ MVP为基础的架构&lt;/p&gt;
 
 &lt;p&gt;如果你想了解一整个MVP为基础架构的工作样例，你可以渐出我们的Android Boilerplatex(https://github.com/ribot/android-boilerplate)项目在Github上，你也可以在ribot的指南(https://github.com/ribot/android-guidelines/blob/master/architecture&lt;em&gt;guidelines/android&lt;/em&gt;architecture.md)上了解更多。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;为什么这个方法更好？&lt;/h3&gt;
 
@@ -1006,18 +1006,18 @@ MVP为基础的架构&lt;/p&gt;
  聚光灯比点光源和方向光更加费性能。光照一个场景最好的方式是先确定你想要的效果，然后去看所有的灯光中哪个是重要的哪个可以削减掉使得场景效果与你想要的相似。
 点光源和聚光灯值影响在他们范围内的模型网格。如果模型在点光源和聚光灯范围以外，光的影响将被削弱，模型将不会被灯光影响从而节省性能消耗。这个方式可以在理论上解释拥有很多小的点光源却任然拥有好的性能表现，因为他们只影响一小部分的物体。记住，一个模型最多只能被8个光源所影响。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;贴图&lt;/h3&gt;
 
@@ -1038,18 +1038,18 @@ MVP为基础的架构&lt;/p&gt;
 
 &lt;p&gt;很多复杂的着色器比简单的可能消耗性能。VertexLit Diffuse 着色器应该是带贴图和光照最快的着色器了。然而，如果没有像素灯光在场景里或者所有像素光都被Quality Manager关掉了，那么大多数着色器将回退到更加简单的顶点渲染版本。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;脚本&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;1.你是否使用了好的算法？选择一个好的算法对工作收益来说比其他的调整会有更好的优化效果如果可能的话。
@@ -1103,18 +1103,18 @@ MVP为基础的架构&lt;/p&gt;
 
 &lt;p&gt;6.sqlite (&lt;a href=&quot;https://github.com/LuaDist/lsqlite3&quot;&gt;https://github.com/LuaDist/lsqlite3&lt;/a&gt;) 是一个以文件形式存在的轻量级数据库，他被很多软件用来做本地数据存储。他的api轻便好用，广受程序员欢迎。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;源码中已将所有第三方库构建进slua里，并完成了android(x86,armv7),ios,mac,windows(x86,x64)这几个平台的测试。&lt;/p&gt;
 
@@ -1161,18 +1161,18 @@ MVP为基础的架构&lt;/p&gt;
 
 &lt;p&gt;3.mono需要autoconf automake libtool pkg-config这些工具。你最好还是去下载安装了。你可以用brew安装。brew install autoconf automake libtool pkg-config。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;4.我一开始使用mac x86&lt;em&gt;64进行编译，折腾了很久然后建了个linux-x86&lt;/em&gt;64虚拟机来编译，然后又折腾了很久，又建了个linux-i386来重新编译mono，因为我一直认为交叉编译需要加些不同的编译参数和变量。在linux-i386首次编译成功后又开始转化到mac上，进行交叉编译也一样成功，最后发现其实是我没找对路子。这路子就是unity 的mono-build-tool：&lt;a href=&quot;https://github.com/Unity-Technologies/monobuildtools&quot;&gt;https://github.com/Unity-Technologies/monobuildtools&lt;/a&gt; 它已经在unity mono的项目里了，在mono的external/buildscripts下。&lt;/p&gt;
 
@@ -1188,18 +1188,18 @@ MVP为基础的架构&lt;/p&gt;
 
 &lt;p&gt;加密算法自己选我不多说了，但我这里要引用一篇同样介绍mono的dll加密的文章，我觉得也写得满不错的，但是文章描述不够详尽。我这篇文章弥补了他的不足，将细节补充得更加细致。你大可以两篇文章加起来参考。&lt;a href=&quot;http://www.unitymanual.com/home.php?mod=space&amp;uid=7672&amp;do=blog&amp;id=1440&quot;&gt;http://www.unitymanual.com/home.php?mod=space&amp;amp;uid=7672&amp;amp;do=blog&amp;amp;id=1440&lt;/a&gt; 不知道地址是不是原作者的，如果不是我再更换吧。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*文内嵌入*/
     var cpro_id = &quot;u3471606&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;1.首先找到dll解密入口。mono下/mono/metadata/image.c里mono&lt;em&gt;image&lt;/em&gt;open&lt;em&gt;from&lt;/em&gt;data&lt;em&gt;with&lt;/em&gt;name是关键方法，参数中的data是dll传入的数据。你要做的就是将它解密后传给datac，这个方法程序你必须看下，因为你要了解下解密程序放在哪才合适。&lt;/p&gt;
 
