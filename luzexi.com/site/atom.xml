@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-06-30T18:43:28+08:00</updated>
+ <updated>2018-06-30T20:10:10+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -2194,44 +2194,42 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
  </entry>
  
  <entry>
-   <title>Git 使用实记</title>
-   <link href="http://www.luzexi.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2014/09/12/git-Git%E4%BD%BF%E7%94%A8%E5%AE%9E%E8%AE%B0.html"/>
+   <title>Git命令使用集合</title>
+   <link href="http://www.luzexi.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2014/09/12/Git%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88.html"/>
    <updated>2014-09-12T18:54:22+08:00</updated>
-   <id>http://www.luzexi.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2014/09/12/git-Git使用实记</id>
+   <id>http://www.luzexi.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2014/09/12/Git命令使用集合</id>
    <content type="html">&lt;p&gt;下面是我最近一直在使用的git命令。不知道能否为你提供点帮助。当然，我在github上做了很多好东西，全是开源的供你慢慢享用，如果觉得不错可以star(收藏),fllow(订阅)一下。等我空点了再把项目技术分享给你们哦。&lt;a href=&quot;https://github.com/luzexi&quot;&gt;https://github.com/luzexi&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;clone:&lt;/p&gt;
+&lt;p&gt;===&lt;/p&gt;
 
-&lt;p&gt;git clone path dir 或者 git clone path 名字可以省略默认使用该项目名&lt;/p&gt;
+&lt;h4&gt;clone:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git clone path dir 或者 git clone path 名字可以省略默认使用该项目名
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;branch:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git branch -r 查看所有分支
 
-&lt;p&gt;branch:&lt;/p&gt;
+    git branch 查看当前获取的分支信息，在没有获取分支信息前，只会显示在哪个提交点。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;checkout:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git checkout branch_name 切换某个分支
 
-&lt;p&gt;git branch -r 查看所有分支&lt;/p&gt;
+    git checkout -b branch_name 以当前分支未基础建立新分支并且切换过去
 
-&lt;p&gt;git branch 查看当前获取的分支信息，在没有获取分支信息前，只会显示在哪个提交点。&lt;/p&gt;
+    git checkout -f 强制替换与分支不一样的文件
 
-&lt;p&gt;checkout:&lt;/p&gt;
+    git checkout path 撤销某个未提交文件恢复原状
 
-&lt;p&gt;git checkout branch_name 切换某个分支&lt;/p&gt;
+    git checkout . 撤销所有未提交文件恢复原状
 
-&lt;p&gt;git checkout -b branch_name 以当前分支未基础建立新分支并且切换过去&lt;/p&gt;
+    git checkout --ours path  冲突中以当前分支未基准
 
-&lt;p&gt;git checkout -f 强制替换与分支不一样的文件&lt;/p&gt;
+    git checkout --theirs path 冲突中以对方分支未基准
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;add:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git add path 告诉git这个文件或文件夹加入到提交队列
 
-&lt;p&gt;git checkout path 撤销某个未提交文件恢复原状&lt;/p&gt;
-
-&lt;p&gt;git checkout . 撤销所有未提交文件恢复原状&lt;/p&gt;
-
-&lt;p&gt;git checkout --ours path  冲突中以当前分支未基准&lt;/p&gt;
-
-&lt;p&gt;git checkout --theirs path 冲突中以对方分支未基准&lt;/p&gt;
-
-&lt;p&gt;add:&lt;/p&gt;
-
-&lt;p&gt;git add path 告诉git这个文件或文件夹加入到提交队列&lt;/p&gt;
-
-&lt;p&gt;git add . 告诉git目录下文件和文件夹都加入到提交队列&lt;/p&gt;
-
+    git add . 告诉git目录下文件和文件夹都加入到提交队列
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
@@ -2259,58 +2257,49 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 &lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;p&gt;rm:&lt;/p&gt;
+&lt;h4&gt;rm:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git rm path 告诉git这个文件或文件夹需要被删除
 
-&lt;p&gt;git rm path 告诉git这个文件或文件夹需要被删除&lt;/p&gt;
+    git rm . 告诉git当前目录下所有文件和文件夹都需要被删除
 
-&lt;p&gt;git rm . 告诉git当前目录下所有文件和文件夹都需要被删除&lt;/p&gt;
+    git rm `git status | grep delete | awk &amp;#39;{print $2}&amp;#39;` 删除所有被删除的文件
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;commit:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git commit -m &amp;quot;write something&amp;quot; 提交当前被git add 或者 git rm 的内容
 
-&lt;p&gt;git rm &lt;code&gt;git status | grep delete | awk &amp;#39;{print $2}&amp;#39;&lt;/code&gt; 删除所有被删除的文件&lt;/p&gt;
+    git commit -a -m &amp;quot;write something&amp;quot; 提交所有被git跟踪的文件，-a表示所有
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;push:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git push origin branch_name 推送branch_name分支
 
-&lt;p&gt;commit:&lt;/p&gt;
+    git push origin branch_name1:branch_name2 把当branch_name1支推送到新建一个分支branch_name2中去
 
-&lt;p&gt;git commit -m &amp;quot;write something&amp;quot; 提交当前被git add 或者 git rm 的内容&lt;/p&gt;
+    git push 推送所有本地修改过的分支到服务器
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;pull:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git pull 下载当前分支内容
 
-&lt;p&gt;git commit -a -m &amp;quot;write something&amp;quot; 提交所有被git跟踪的文件，-a表示所有&lt;/p&gt;
+    git pull server branch_name 下载server服务器上的 branch_name分支，如果有冲突将自动合并
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;show:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git show commit_id 查看某次提交修改的内容
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;whatchanged:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git whatchanged filepath  查看某个文件的修改记录
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;clean:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git clean -f 清除所有未被git跟踪的文件
 
-&lt;p&gt;push:&lt;/p&gt;
+    git clean -df 清除所有未被git跟踪的文件和文件夹
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;reset:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git reset --hard commitID 回撤到某个提交点,文件也一同回到那个状态
 
-&lt;p&gt;git push origin branch&lt;em&gt;name 推送branch&lt;/em&gt;name分支&lt;/p&gt;
-
-&lt;p&gt;git push origin branch&lt;em&gt;name1:branch&lt;/em&gt;name2 把当branch&lt;em&gt;name1支推送到新建一个分支branch&lt;/em&gt;name2中去&lt;/p&gt;
-
-&lt;p&gt;git push 推送所有本地修改过的分支到服务器&lt;/p&gt;
-
-&lt;p&gt;pull:&lt;/p&gt;
-
-&lt;p&gt;git pull 下载当前分支内容&lt;/p&gt;
-
-&lt;p&gt;git pull server branch&lt;em&gt;name 下载server服务器上的 branch&lt;/em&gt;name分支，如果有冲突将自动合并&lt;/p&gt;
-
-&lt;p&gt;show:&lt;/p&gt;
-
-&lt;p&gt;git show commit_id 查看某次提交修改的内容&lt;/p&gt;
-
-&lt;p&gt;whatchanged:&lt;/p&gt;
-
-&lt;p&gt;git whatchanged filepath  查看某个文件的修改记录&lt;/p&gt;
-
-&lt;p&gt;clean:&lt;/p&gt;
-
-&lt;p&gt;git clean -f 清除所有未被git跟踪的文件&lt;/p&gt;
-
-&lt;p&gt;git clean -df 清除所有未被git跟踪的文件和文件夹&lt;/p&gt;
-
-&lt;p&gt;reset:&lt;/p&gt;
-
-&lt;p&gt;git reset --hard commitID 回撤到某个提交点,文件也一同回到那个状态&lt;/p&gt;
-
-&lt;p&gt;git reset --soft commitID  回撤到某个提交点，但文件仍然保持原来被修改后的状态。&lt;/p&gt;
-
-&lt;p&gt;fetch:&lt;/p&gt;
-
-&lt;p&gt;git fetch 这个我只知道抓取当前项目的所有信息主要实分支信息和提交记录，并不下载内容&lt;/p&gt;
-
+    git reset --soft commitID  回撤到某个提交点，但文件仍然保持原来被修改后的状态。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;fetch:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git fetch 这个我只知道抓取当前项目的所有信息主要实分支信息和提交记录，并不下载内容
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
@@ -2338,48 +2327,43 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 &lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;p&gt;merge:&lt;/p&gt;
+&lt;h4&gt;merge:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git merge server branch_name 合并server项目上branch_name分支
 
-&lt;p&gt;git merge server branch&lt;em&gt;name 合并server项目上branch&lt;/em&gt;name分支&lt;/p&gt;
+    git merge branch_name 合并默认origin项目上的branch_name分支
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;diff:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git diff file_name 比较文件与前一个版本的不同之处
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;remote:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git remote add server_name git_path 将git_path以server_name命名，方便后面操作
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;submodule:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git submodule add git_address dir_name  加入其他模块仓库
 
-&lt;p&gt;git merge branch&lt;em&gt;name 合并默认origin项目上的branch&lt;/em&gt;name分支&lt;/p&gt;
+    git submodule init  初始化模块仓库
 
-&lt;p&gt;diff:&lt;/p&gt;
+    git submodule update  更新模块仓库
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;log:&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    -p：按补丁显示每个更新间的差异
 
-&lt;p&gt;git diff file_name 比较文件与前一个版本的不同之处&lt;/p&gt;
+    --stat：显示每次更新的修改文件的统计信息
 
-&lt;p&gt;remote:&lt;/p&gt;
+    --shortstat：只显示--stat中最后的行数添加修改删除统计
 
-&lt;p&gt;git remote add server&lt;em&gt;name git&lt;/em&gt;path 将git&lt;em&gt;path以server&lt;/em&gt;name命名，方便后面操作&lt;/p&gt;
+    --name-only：尽在已修改的提交信息后显示文件清单
 
-&lt;p&gt;submodule:&lt;/p&gt;
+    --name-status：显示新增、修改和删除的文件清单
 
-&lt;p&gt;git submodule add git&lt;em&gt;address dir&lt;/em&gt;name  加入其他模块仓库&lt;/p&gt;
+    --abbrev-commit：仅显示SHA-1的前几个字符，而非所有的40个字符
 
-&lt;p&gt;git submodule init  初始化模块仓库&lt;/p&gt;
+    --relative-date：使用较短的相对时间显示（例如：&amp;quot;two weeks ago&amp;quot;）
 
-&lt;p&gt;git submodule update  更新模块仓库&lt;/p&gt;
+    --graph：显示ASCII图形表示的分支合并历史
 
-&lt;p&gt;log:&lt;/p&gt;
-
-&lt;p&gt;-p：按补丁显示每个更新间的差异&lt;/p&gt;
-
-&lt;p&gt;--stat：显示每次更新的修改文件的统计信息&lt;/p&gt;
-
-&lt;p&gt;--shortstat：只显示--stat中最后的行数添加修改删除统计&lt;/p&gt;
-
-&lt;p&gt;--name-only：尽在已修改的提交信息后显示文件清单&lt;/p&gt;
-
-&lt;p&gt;--name-status：显示新增、修改和删除的文件清单&lt;/p&gt;
-
-&lt;p&gt;--abbrev-commit：仅显示SHA-1的前几个字符，而非所有的40个字符&lt;/p&gt;
-
-&lt;p&gt;--relative-date：使用较短的相对时间显示（例如：&amp;quot;two weeks ago&amp;quot;）&lt;/p&gt;
-
-&lt;p&gt;--graph：显示ASCII图形表示的分支合并历史&lt;/p&gt;
-
-&lt;p&gt;--pretty：使用其他格式显示历史提交信息&lt;/p&gt;
-</content>
+    --pretty：使用其他格式显示历史提交信息
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
  </entry>
  
  <entry>
