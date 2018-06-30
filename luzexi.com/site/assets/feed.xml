@@ -14,65 +14,59 @@
 
 &lt;h2&gt;入门命令之简单编辑&lt;/h2&gt;
 
-&lt;ol&gt;
-&lt;li&gt;&lt;h5&gt;光标移动&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;←↓↑→                h,j,k,l
-到下一行的第一个字符  +
-到上一行的第一个字符  -
-到单词的结尾          e或E(忽略符号，只识别空格，回车)
-往后一个单词          w或W(跟符号和空格和回车挂钩)
-往前一个单词          b或B(跟符号和空格和回车挂钩)
-到一行的结尾          $
-到一行的开头          0(零)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
+&lt;h5&gt;1.光标移动&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    ←↓↑→                h,j,k,l
+    到下一行的第一个字符  +
+    到上一行的第一个字符  -
+    到单词的结尾          e或E(忽略符号，只识别空格，回车)
+    往后一个单词          w或W(跟符号和空格和回车挂钩)
+    往前一个单词          b或B(跟符号和空格和回车挂钩)
+    到一行的结尾          $
+    到一行的开头          0(零)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;===&lt;/p&gt;
 
-&lt;ol&gt;
-&lt;li&gt;&lt;h5&gt;文本编辑操作&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;在光标位置插入文本         i
-在一行的开头插入文本      I(大写I)
-在光标所在位置附加文本       a
-在一行的最后附加文本      A(大写A)
-在光标下一行打开新行      o
-在光标上一行打开新行      O(大写O)
-删除一行并替换文本         S(大写S)
-用新文本覆盖现有的文本       R(大写R)
-合并当前这一行与下一行       J(大写J)
-切换当前字符的大小写      ~
-重复上一个动作           .
-撤销上一个动作           u
-将一整行恢复到原来的      U(大写U)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;h5&gt;对缓冲区的操作&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;粘贴内容                    p或P
-保存文件                    w
-保存并退出             wq
-强制退出不保存           q!
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;h5&gt;组合命令&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;更改一个单词      cw
-删除一个单词      dw
-赋值一个单词      yw
-更改一整行     cc
-删除一整行     dd
-复制一整行     yy
-更改到行尾     c$或C
-删除到行尾     d$或D
-复制到行尾     y$
-更改到行头     c0
-删除到行头     d0
-复制到行头     y0
-更改一个字     I
-删除一个字     x或X
-复制一个字     y1或yh
-更改5个字           5s
-删除5个字           5x
-复制5个字           5yl
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
+&lt;h5&gt;2.文本编辑操作&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    在光标位置插入文本         i
+    在一行的开头插入文本      I(大写I)
+    在光标所在位置附加文本       a
+    在一行的最后附加文本      A(大写A)
+    在光标下一行打开新行      o
+    在光标上一行打开新行      O(大写O)
+    删除一行并替换文本         S(大写S)
+    用新文本覆盖现有的文本       R(大写R)
+    合并当前这一行与下一行       J(大写J)
+    切换当前字符的大小写      ~
+    重复上一个动作           .
+    撤销上一个动作           u
+    将一整行恢复到原来的      U(大写U)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;3.对缓冲区的操作&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    粘贴内容                    p或P
+    保存文件                    w
+    保存并退出             wq
+    强制退出不保存           q!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;4.组合命令&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    更改一个单词      cw
+    删除一个单词      dw
+    赋值一个单词      yw
+    更改一整行     cc
+    删除一整行     dd
+    复制一整行     yy
+    更改到行尾     c$或C
+    删除到行尾     d$或D
+    复制到行尾     y$
+    更改到行头     c0
+    删除到行头     d0
+    复制到行头     y0
+    更改一个字     I
+    删除一个字     x或X
+    复制一个字     y1或yh
+    更改5个字           5s
+    删除5个字           5x
+    复制5个字           5yl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
@@ -256,69 +250,70 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 
 &lt;h2&gt;高级进阶之强化功能&lt;/h2&gt;
 
-&lt;ol&gt;
-&lt;li&gt;&lt;h5&gt;分割多窗口&lt;/h5&gt;
+&lt;h5&gt;1.分割多窗口&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;直接打开多窗口
 
-&lt;p&gt;直接打开多窗口&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;$ vim -o file1 file2 使用shell命令开启多窗口
+    $ vim -o file1 file2 使用shell命令开启多窗口
+
+分割窗口
+
+    :[n]split [++opt] [+cmd] [file] 横向分割窗口
+
+    : 前面必须以冒号开始命令
+
+    n 为新窗口中显示的行数
+
+    opt 为传递给新窗口的选项信息(必须前置两个+号)
+
+    cmd 为传入新窗口中执行的命令(必须前置一个+号)
+
+    file 指定打开的文件地址
+
+    例如： :15split ++fileformat-unix ./site/testfile.txt
+    新窗口有15行高，确保是unix文件格式，路径为./site/testfile.txt
+
+    另外还有，vsplit, new, vnew都是同理分割窗口，split和new只有细微差别。
+    :[n]vsplit [++opt] [+cmd] [file] 是垂直分割
+    :[n]new [++opt] [+cmd] [file] 是横向分割，并执行自动命令
+    :[n]vnew [++opt] [+cmd] [file] 为垂直分割，并执行自动命令
+
+    此外，还有sview filename 和 sfind filename作为辅助作用也很重要。
+    sview 以只读形式打分割一个窗口打开文件
+    sfind 为在path中寻找filename，如果未找到则不会分割窗口
+
+    vi命令
+    split       ctrl + w then s
+    vsplit      ctrl + w then v
+    new         ctrl + w then n
+
+窗口游走
+
+    光标游走到下边窗口 ctrl + w then j 或 ↓(down)
+    光标游走到上边窗口 ctrl + w then k 或 ↑(up)
+    光标游走到左边窗口 ctrl + w then h 或 ←(left)
+    光标游走到右边窗口 ctrl + w then l 或 →(right)
+
+    另外还有一些不太实用的游走命令比如左上，右上，左下，右下游走等这里不进行细致的说明了，用到的实在是很少。
+
+窗口移动
+
+    移动本窗口到最顶端     ctrl + w then K(大写)
+    移动本窗口到最底端     ctrl + w then J(大写)
+    移动本窗口到最左端     ctrl + w then H(大写)
+    移动本窗口到最右端     ctrl + w then L(大写)
+    移动本窗口向右或向下轮换        ctrl + w then r(小写)
+    移动本窗口向左或向上轮换        ctrl + w then R(大写)
+    移动本窗口与下一个窗口交换     ctrl + w then x
+
+    上下左右的窗口移动都是不太实用的操作，很少会有。本来窗口移动的频率就小，基本都是顶底左右，其他操作基本可以忽略。
+
+窗口大小调整
+
+    窗口高度减少一行    ctrl + w then -
+    窗口高度增加一行    ctrl + w then +
+    窗口宽度减少一行    ctrl + w then &amp;gt;
+    窗口宽度增加一行    ctrl + w then &amp;lt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;分割窗口&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;:[n]split [++opt] [+cmd] [file] 横向分割窗口
-
-: 前面必须以冒号开始命令
-
-n 为新窗口中显示的行数
-
-opt 为传递给新窗口的选项信息(必须前置两个+号)
-
-cmd 为传入新窗口中执行的命令(必须前置一个+号)
-
-file 指定打开的文件地址
-
-例如： :15split ++fileformat-unix ./site/testfile.txt
-新窗口有15行高，确保是unix文件格式，路径为./site/testfile.txt
-
-另外还有，vsplit, new, vnew都是同理分割窗口，split和new只有细微差别。
-:[n]vsplit [++opt] [+cmd] [file] 是垂直分割
-:[n]new [++opt] [+cmd] [file] 是横向分割，并执行自动命令
-:[n]vnew [++opt] [+cmd] [file] 为垂直分割，并执行自动命令
-
-此外，还有sview filename 和 sfind filename作为辅助作用也很重要。
-sview 以只读形式打分割一个窗口打开文件
-sfind 为在path中寻找filename，如果未找到则不会分割窗口
-
-vi命令
-split       ctrl + w then s
-vsplit      ctrl + w then v
-new         ctrl + w then n
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;窗口游走&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;光标游走到下边窗口 ctrl + w then j 或 ↓(down)
-光标游走到上边窗口 ctrl + w then k 或 ↑(up)
-光标游走到左边窗口 ctrl + w then h 或 ←(left)
-光标游走到右边窗口 ctrl + w then l 或 →(right)
-
-另外还有一些不太实用的游走命令比如左上，右上，左下，右下游走等这里不进行细致的说明了，用到的实在是很少。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;窗口移动&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;移动本窗口到最顶端     ctrl + w then K(大写)
-移动本窗口到最底端     ctrl + w then J(大写)
-移动本窗口到最左端     ctrl + w then H(大写)
-移动本窗口到最右端     ctrl + w then L(大写)
-移动本窗口向右或向下轮换        ctrl + w then r(小写)
-移动本窗口向左或向上轮换        ctrl + w then R(大写)
-移动本窗口与下一个窗口交换     ctrl + w then x
-
-上下左右的窗口移动都是不太实用的操作，很少会有。本来窗口移动的频率就小，基本都是顶底左右，其他操作基本可以忽略。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;窗口大小调整&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;窗口高度减少一行    ctrl + w then -
-窗口高度增加一行    ctrl + w then +
-窗口宽度减少一行    ctrl + w then &amp;gt;
-窗口宽度增加一行    ctrl + w then &amp;lt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
 &lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
@@ -346,49 +341,46 @@ new         ctrl + w then n
 &lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;ol&gt;
-&lt;li&gt;&lt;h5&gt;标签页多窗口&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;:tabe &amp;lt;文件名&amp;gt;  在新标签页中打开指定的文件。
-:tabnew &amp;lt;文件名&amp;gt;  在新标签页中编辑新的文件。
-:tab split  在新标签页中，打开当前缓冲区中的文件。
-:tabf 或 :tabfind  允许你在当前目录搜索文件，并在新标签页中打开。比如:tabf img.*。此命令只能打开一个文件.
+&lt;h5&gt;2.标签页多窗口&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    :tabe &amp;lt;文件名&amp;gt;  在新标签页中打开指定的文件。
+    :tabnew &amp;lt;文件名&amp;gt;  在新标签页中编辑新的文件。
+    :tab split  在新标签页中，打开当前缓冲区中的文件。
+    :tabf 或 :tabfind  允许你在当前目录搜索文件，并在新标签页中打开。比如:tabf img.*。此命令只能打开一个文件.
 
-Vim默认最多只能打开10个标签页。你可以用set tabpagemax=15改变这个限制。
+    Vim默认最多只能打开10个标签页。你可以用set tabpagemax=15改变这个限制。
 
-列示标签页
-:tabs  显示已打开标签页的列表，并用“&amp;gt;”标识出当前页面，用“+”标识出已更改的页面。
+    列示标签页
+    :tabs  显示已打开标签页的列表，并用“&amp;gt;”标识出当前页面，用“+”标识出已更改的页面。
 
-关闭标签页
-:tabc  关闭当前标签页。
-:tabo  关闭所有的标签页。
-:tabo :tabonly 关闭所有其他标签页
+    关闭标签页
+    :tabc  关闭当前标签页。
+    :tabo  关闭所有的标签页。
+    :tabo :tabonly 关闭所有其他标签页
 
-切换标签
-:tabn 或 gt  移动到下一个标签页。
-:tabp 或 gT  移动到上一个标签页。
-:tabfirst 或 :tabfir 或 :tabr  移动到第一个标签页。
-:tablast 或 :tabl  移动到最后一个标签页。
+    切换标签
+    :tabn 或 gt  移动到下一个标签页。
+    :tabp 或 gT  移动到上一个标签页。
+    :tabfirst 或 :tabfir 或 :tabr  移动到第一个标签页。
+    :tablast 或 :tabl  移动到最后一个标签页。
 
-移动标签页
-:tabm [次序]  移动当前文件的标签页次序。比如:tabm 1将把当前标签页移动到第2的位置。如:tabm不指定参数将被移动到最后。
+    移动标签页
+    :tabm [次序]  移动当前文件的标签页次序。比如:tabm 1将把当前标签页移动到第2的位置。如:tabm不指定参数将被移动到最后。
 
-配置标签页
-:set showtabline=[1,2,3]  标签页在窗口上方显示标签栏。=0完全不显示标签栏，=1只有用户新建时才显示，=2总是显示标签栏。
+    配置标签页
+    :set showtabline=[1,2,3]  标签页在窗口上方显示标签栏。=0完全不显示标签栏，=1只有用户新建时才显示，=2总是显示标签栏。
 
-多标签页命令
-:tabdo &amp;lt;命令&amp;gt;  同时在多个标签页中执行命令。比如:tabdo %s/food/drink/g 命令把当前多个标签页文件中的“food”都替换成“drink”。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;h5&gt;批量缩进&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;方法一
+    多标签页命令
+    :tabdo &amp;lt;命令&amp;gt;  同时在多个标签页中执行命令。比如:tabdo %s/food/drink/g 命令把当前多个标签页文件中的“food”都替换成“drink”。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;3.批量缩进&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    方法一
 
-按v进入visual状态，选择多行，然后用&amp;gt;缩进或&amp;lt;缩出 
+    按v进入visual状态，选择多行，然后用&amp;gt;缩进或&amp;lt;缩出 
 
-方法二
+    方法二
 
-&amp;gt;为缩进，&amp;lt;为缩出，前面加n，表示当前行起n行同时缩进或缩出，5&amp;gt; then 回车 或 5&amp;lt; then 回车
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+    &amp;gt;为缩进，&amp;lt;为缩出，前面加n，表示当前行起n行同时缩进或缩出，5&amp;gt; then 回车 或 5&amp;lt; then 回车
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
                <pubDate>Sat, 30 Jun 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/30/Vi%E5%92%8CVim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%9B%86.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/30/Vi%E5%92%8CVim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%9B%86.html</guid>
