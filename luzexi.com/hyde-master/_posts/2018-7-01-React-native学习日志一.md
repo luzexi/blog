@@ -6,11 +6,12 @@ title: React native学习日志(一)
 description: "React native redux thunk"
 excerpt_separator: ===
 categories:
-- 其他技术
+- 前端技术
 tags:
-- vi
-- vim
-- 常用命令
+- react
+- react native
+- redux
+- thunk
 ---
 
 #React native学习日志(一)
