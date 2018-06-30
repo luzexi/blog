@@ -30,6 +30,8 @@ advertisement_image: true
 advertisement_category: true
 advertisement_bottom: true
 advertisement_content: true
+copyright_info: true
+tip_info: true
 
 #donation
 paypal_donation: true
