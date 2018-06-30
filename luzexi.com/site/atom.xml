@@ -4,13 +4,395 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-06-30T20:12:25+08:00</updated>
+ <updated>2018-07-01T00:02:03+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Vi和Vim常用命令集</title>
+   <link href="http://www.luzexi.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/30/Vi%E5%92%8CVim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%9B%86.html"/>
+   <updated>2018-06-30T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/30/Vi和Vim常用命令集</id>
+   <content type="html">&lt;h1&gt;Vi和Vim常用命令集&lt;/h1&gt;
+
+&lt;p&gt;vi,vim命令是种神奇的存在，他似乎提高了编辑的效率但门槛又变的太高导致不能流行在程序员中。看起来有些复杂的vi命令编辑，在一些人眼里感觉很厉害，其实都是通过成千上百次的练习掌握的技巧。本文我就来试图分解这些命令块，让大家在练习时，能更加有针对性更加有序有逻辑。&lt;/p&gt;
+
+&lt;h2&gt;入门命令之简单编辑&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;光标移动&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;←↓↑→                h,j,k,l
+到下一行的第一个字符  +
+到上一行的第一个字符  -
+到单词的结尾          e或E(忽略符号，只识别空格，回车)
+往后一个单词          w或W(跟符号和空格和回车挂钩)
+往前一个单词          b或B(跟符号和空格和回车挂钩)
+到一行的结尾          $
+到一行的开头          0(零)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;文本编辑操作&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;在光标位置插入文本         i
+在一行的开头插入文本      I(大写I)
+在光标所在位置附加文本       a
+在一行的最后附加文本      A(大写A)
+在光标下一行打开新行      o
+在光标上一行打开新行      O(大写O)
+删除一行并替换文本         S(大写S)
+用新文本覆盖现有的文本       R(大写R)
+合并当前这一行与下一行       J(大写J)
+切换当前字符的大小写      ~
+重复上一个动作           .
+撤销上一个动作           u
+将一整行恢复到原来的      U(大写U)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;对缓冲区的操作&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;粘贴内容                    p或P
+保存文件                    w
+保存并退出             wq
+强制退出不保存           q!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;组合命令&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;更改一个单词      cw
+删除一个单词      dw
+赋值一个单词      yw
+更改一整行     cc
+删除一整行     dd
+复制一整行     yy
+更改到行尾     c$或C
+删除到行尾     d$或D
+复制到行尾     y$
+更改到行头     c0
+删除到行头     d0
+复制到行头     y0
+更改一个字     I
+删除一个字     x或X
+复制一个字     y1或yh
+更改5个字           5s
+删除5个字           5x
+复制5个字           5yl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;h2&gt;高级进阶之光标快速移动&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;快速翻屏&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;往后滚动一整屏       ctrl + f
+往前滚动一整屏       ctrl + b
+往后半屏                ctrl + d
+往前半屏                ctrl + u
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;同屏移动&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;移动到屏幕顶端       H
+移动到屏幕中间       M
+移动到屏幕底部       L
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;段落移动&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;移动到当前段落开头     {
+移动到下一段开头        }
+移动到这一节开头        [[
+移动到下一节开头        ]]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;搜索模式移动&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;往后搜索某个字符串     /搜索的字符串
+往前搜索某个字符串     ?搜索的字符串
+往同一个方向重复搜索  n
+往反方向重复搜索        N
+往后重复搜索          /
+往前重复搜索          ?
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;直接跳转到某个位置&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;跳转至第n行            nG
+跳转至文件末尾       ``
+显示当前的行号       ctrl + g
+光标往后n行            nj
+光标往前n行            nk
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;做标记(只在一个文件内有效)&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;将当前位置标记成x字符     mx
+将光标移动到第一个标记x      &amp;#39;x(单引号)
+将光标移动到以x标记的字符   `x(反引号)
+回到上一个标记位置         ``(两个反引号)
+回到上一个标记开头         &amp;#39;&amp;#39;(两个单引号)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;h2&gt;高级进阶之搜索与替换&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;搜索与替换的基本命令&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;s/old/new       搜索替换当前行，第一个找到的
+s/old/new/g     搜索替换当前行，所有找到的
+g/old/new/g     搜索替换当前文件中，所有找到的内容
+g/old/new/gc    搜索替换当前文件中，所有找到的内容，并且做yes or no 的替换确认
+g/pattern/s/old/new/gc 先搜索文件中所有含有pattern的行，在这些行中找到的所有old内容，并且做yes or no 的替换确认
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;搜索替换匹配规则&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;.(点号) 表示任意一个字符
+* 表示任意字符
+^ 是正则表达式的开头
+$ 正则表达式的结尾
+\ 特殊字符
+[] 匹配出方括号里的任何一个字符。
+\&amp;lt; 以某字符开头
+\&amp;gt; 以某字符结尾
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;查找替换多个文件内容&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;多文件查找内容
+grep
+    直接在vim中输入:grep abc * 这是直接调用unix下的grep命令 
+
+vimgrep 
+    基本用法就是
+    :vimgrep /匹配模式/[g][j] 要搜索的文件/范围 
+    :vim[grep][!] /{pattern}/[g][j] {file} ...
+    g 和 j 是两个可选的标志位，g表示是否把每一行的多个匹配结果都加入。j表示是否搜索完后定位到第一个匹配位置。
+    要搜索的文件 可以是具体的文件路径，也可以是带通配符的路径比如 *.as **/*.as ，**表示递归所有子目录。 要搜索的文件和或搜索范围都可 以写多个，用空格分开。
+
+例子：
+    :vimgrep /\&amp;lt;flash\&amp;gt;/ **/*.as 搜索当前目录以及所有子目录内as文件中的 &amp;quot;flash&amp;quot;
+    :vimgrep /an error/ *.c 就是在所有的.c文件中搜索an error。
+    :vimgrep/an error/* 意思是查找当前目录下的文件中的an error，不包括子目录
+
+定位 
+    输入上述的命令后，可以像输入:make命令，那样定位匹配到的文件位置 
+   :cnext (:cn)           下一个匹配位置
+   :cprevious (:cp)     上一个匹配位置
+   :cwindow (:cw)     quickfix窗口，可以选择匹配的文件位置
+   :cl(:clist)                查看所有匹配的位置
+
+多文件替换(arg) 
+a、加入要处理的文件  :args *.txt
+b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里将hate替换成love，update表示要写入到文件中，否则只作替换而不写入）
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;h2&gt;高级进阶之强化功能&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;分割多窗口&lt;/h5&gt;
+
+&lt;p&gt;直接打开多窗口&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;$ vim -o file1 file2 使用shell命令开启多窗口
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;分割窗口&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;:[n]split [++opt] [+cmd] [file] 横向分割窗口
+
+: 前面必须以冒号开始命令
+
+n 为新窗口中显示的行数
+
+opt 为传递给新窗口的选项信息(必须前置两个+号)
+
+cmd 为传入新窗口中执行的命令(必须前置一个+号)
+
+file 指定打开的文件地址
+
+例如： :15split ++fileformat-unix ./site/testfile.txt
+新窗口有15行高，确保是unix文件格式，路径为./site/testfile.txt
+
+另外还有，vsplit, new, vnew都是同理分割窗口，split和new只有细微差别。
+:[n]vsplit [++opt] [+cmd] [file] 是垂直分割
+:[n]new [++opt] [+cmd] [file] 是横向分割，并执行自动命令
+:[n]vnew [++opt] [+cmd] [file] 为垂直分割，并执行自动命令
+
+此外，还有sview filename 和 sfind filename作为辅助作用也很重要。
+sview 以只读形式打分割一个窗口打开文件
+sfind 为在path中寻找filename，如果未找到则不会分割窗口
+
+vi命令
+split       ctrl + w then s
+vsplit      ctrl + w then v
+new         ctrl + w then n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;窗口游走&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;光标游走到下边窗口 ctrl + w then j 或 ↓(down)
+光标游走到上边窗口 ctrl + w then k 或 ↑(up)
+光标游走到左边窗口 ctrl + w then h 或 ←(left)
+光标游走到右边窗口 ctrl + w then l 或 →(right)
+
+另外还有一些不太实用的游走命令比如左上，右上，左下，右下游走等这里不进行细致的说明了，用到的实在是很少。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;窗口移动&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;移动本窗口到最顶端     ctrl + w then K(大写)
+移动本窗口到最底端     ctrl + w then J(大写)
+移动本窗口到最左端     ctrl + w then H(大写)
+移动本窗口到最右端     ctrl + w then L(大写)
+移动本窗口向右或向下轮换        ctrl + w then r(小写)
+移动本窗口向左或向上轮换        ctrl + w then R(大写)
+移动本窗口与下一个窗口交换     ctrl + w then x
+
+上下左右的窗口移动都是不太实用的操作，很少会有。本来窗口移动的频率就小，基本都是顶底左右，其他操作基本可以忽略。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;窗口大小调整&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;窗口高度减少一行    ctrl + w then -
+窗口高度增加一行    ctrl + w then +
+窗口宽度减少一行    ctrl + w then &amp;gt;
+窗口宽度增加一行    ctrl + w then &amp;lt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;标签页多窗口&lt;/h5&gt;
+
+&lt;p&gt;:tabe &amp;lt;文件名&amp;gt;  在新标签页中打开指定的文件。
+:tabnew &amp;lt;文件名&amp;gt;  在新标签页中编辑新的文件。
+:tab split  在新标签页中，打开当前缓冲区中的文件。
+:tabf 或 :tabfind  允许你在当前目录搜索文件，并在新标签页中打开。比如:tabf img.*。此命令只能打开一个文件.&lt;/p&gt;
+
+&lt;p&gt;Vim默认最多只能打开10个标签页。你可以用set tabpagemax=15改变这个限制。&lt;/p&gt;
+
+&lt;p&gt;列示标签页
+:tabs  显示已打开标签页的列表，并用“&amp;gt;”标识出当前页面，用“+”标识出已更改的页面。&lt;/p&gt;
+
+&lt;p&gt;关闭标签页
+:tabc  关闭当前标签页。
+:tabo  关闭所有的标签页。
+:tabo :tabonly 关闭所有其他标签页&lt;/p&gt;
+
+&lt;p&gt;切换标签
+:tabn 或 gt  移动到下一个标签页。
+:tabp 或 gT  移动到上一个标签页。
+:tabfirst 或 :tabfir 或 :tabr  移动到第一个标签页。
+:tablast 或 :tabl  移动到最后一个标签页。&lt;/p&gt;
+
+&lt;p&gt;移动标签页
+:tabm [次序]  移动当前文件的标签页次序。比如:tabm 1将把当前标签页移动到第2的位置。如:tabm不指定参数将被移动到最后。&lt;/p&gt;
+
+&lt;p&gt;配置标签页
+:set showtabline=[1,2,3]  标签页在窗口上方显示标签栏。=0完全不显示标签栏，=1只有用户新建时才显示，=2总是显示标签栏。&lt;/p&gt;
+
+&lt;p&gt;多标签页命令
+:tabdo &amp;lt;命令&amp;gt;  同时在多个标签页中执行命令。比如:tabdo %s/food/drink/g 命令把当前多个标签页文件中的“food”都替换成“drink”。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;批量缩进&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;方法一
+
+    按v进入visual状态，选择多行，然后用&amp;gt;缩进或&amp;lt;缩出 
+
+方法二
+
+    &amp;gt;为缩进，&amp;lt;为缩出，前面加n，表示当前行起n行同时缩进或缩出，5&amp;gt; then 回车 或 5&amp;lt; then 回车
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Markdown(MD)的语法说明</title>

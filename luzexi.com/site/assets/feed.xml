@@ -7,6 +7,388 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>Vi和Vim常用命令集</title>
+               <description>&lt;h1&gt;Vi和Vim常用命令集&lt;/h1&gt;
+
+&lt;p&gt;vi,vim命令是种神奇的存在，他似乎提高了编辑的效率但门槛又变的太高导致不能流行在程序员中。看起来有些复杂的vi命令编辑，在一些人眼里感觉很厉害，其实都是通过成千上百次的练习掌握的技巧。本文我就来试图分解这些命令块，让大家在练习时，能更加有针对性更加有序有逻辑。&lt;/p&gt;
+
+&lt;h2&gt;入门命令之简单编辑&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;光标移动&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;←↓↑→                h,j,k,l
+到下一行的第一个字符  +
+到上一行的第一个字符  -
+到单词的结尾          e或E(忽略符号，只识别空格，回车)
+往后一个单词          w或W(跟符号和空格和回车挂钩)
+往前一个单词          b或B(跟符号和空格和回车挂钩)
+到一行的结尾          $
+到一行的开头          0(零)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;文本编辑操作&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;在光标位置插入文本         i
+在一行的开头插入文本      I(大写I)
+在光标所在位置附加文本       a
+在一行的最后附加文本      A(大写A)
+在光标下一行打开新行      o
+在光标上一行打开新行      O(大写O)
+删除一行并替换文本         S(大写S)
+用新文本覆盖现有的文本       R(大写R)
+合并当前这一行与下一行       J(大写J)
+切换当前字符的大小写      ~
+重复上一个动作           .
+撤销上一个动作           u
+将一整行恢复到原来的      U(大写U)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;对缓冲区的操作&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;粘贴内容                    p或P
+保存文件                    w
+保存并退出             wq
+强制退出不保存           q!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;组合命令&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;更改一个单词      cw
+删除一个单词      dw
+赋值一个单词      yw
+更改一整行     cc
+删除一整行     dd
+复制一整行     yy
+更改到行尾     c$或C
+删除到行尾     d$或D
+复制到行尾     y$
+更改到行头     c0
+删除到行头     d0
+复制到行头     y0
+更改一个字     I
+删除一个字     x或X
+复制一个字     y1或yh
+更改5个字           5s
+删除5个字           5x
+复制5个字           5yl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;h2&gt;高级进阶之光标快速移动&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;快速翻屏&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;往后滚动一整屏       ctrl + f
+往前滚动一整屏       ctrl + b
+往后半屏                ctrl + d
+往前半屏                ctrl + u
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;同屏移动&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;移动到屏幕顶端       H
+移动到屏幕中间       M
+移动到屏幕底部       L
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;段落移动&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;移动到当前段落开头     {
+移动到下一段开头        }
+移动到这一节开头        [[
+移动到下一节开头        ]]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;搜索模式移动&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;往后搜索某个字符串     /搜索的字符串
+往前搜索某个字符串     ?搜索的字符串
+往同一个方向重复搜索  n
+往反方向重复搜索        N
+往后重复搜索          /
+往前重复搜索          ?
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;直接跳转到某个位置&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;跳转至第n行            nG
+跳转至文件末尾       ``
+显示当前的行号       ctrl + g
+光标往后n行            nj
+光标往前n行            nk
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;做标记(只在一个文件内有效)&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;将当前位置标记成x字符     mx
+将光标移动到第一个标记x      &amp;#39;x(单引号)
+将光标移动到以x标记的字符   `x(反引号)
+回到上一个标记位置         ``(两个反引号)
+回到上一个标记开头         &amp;#39;&amp;#39;(两个单引号)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;h2&gt;高级进阶之搜索与替换&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;搜索与替换的基本命令&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;s/old/new       搜索替换当前行，第一个找到的
+s/old/new/g     搜索替换当前行，所有找到的
+g/old/new/g     搜索替换当前文件中，所有找到的内容
+g/old/new/gc    搜索替换当前文件中，所有找到的内容，并且做yes or no 的替换确认
+g/pattern/s/old/new/gc 先搜索文件中所有含有pattern的行，在这些行中找到的所有old内容，并且做yes or no 的替换确认
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;搜索替换匹配规则&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;.(点号) 表示任意一个字符
+* 表示任意字符
+^ 是正则表达式的开头
+$ 正则表达式的结尾
+\ 特殊字符
+[] 匹配出方括号里的任何一个字符。
+\&amp;lt; 以某字符开头
+\&amp;gt; 以某字符结尾
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;查找替换多个文件内容&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;多文件查找内容
+grep
+    直接在vim中输入:grep abc * 这是直接调用unix下的grep命令 
+
+vimgrep 
+    基本用法就是
+    :vimgrep /匹配模式/[g][j] 要搜索的文件/范围 
+    :vim[grep][!] /{pattern}/[g][j] {file} ...
+    g 和 j 是两个可选的标志位，g表示是否把每一行的多个匹配结果都加入。j表示是否搜索完后定位到第一个匹配位置。
+    要搜索的文件 可以是具体的文件路径，也可以是带通配符的路径比如 *.as **/*.as ，**表示递归所有子目录。 要搜索的文件和或搜索范围都可 以写多个，用空格分开。
+
+例子：
+    :vimgrep /\&amp;lt;flash\&amp;gt;/ **/*.as 搜索当前目录以及所有子目录内as文件中的 &amp;quot;flash&amp;quot;
+    :vimgrep /an error/ *.c 就是在所有的.c文件中搜索an error。
+    :vimgrep/an error/* 意思是查找当前目录下的文件中的an error，不包括子目录
+
+定位 
+    输入上述的命令后，可以像输入:make命令，那样定位匹配到的文件位置 
+   :cnext (:cn)           下一个匹配位置
+   :cprevious (:cp)     上一个匹配位置
+   :cwindow (:cw)     quickfix窗口，可以选择匹配的文件位置
+   :cl(:clist)                查看所有匹配的位置
+
+多文件替换(arg) 
+a、加入要处理的文件  :args *.txt
+b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里将hate替换成love，update表示要写入到文件中，否则只作替换而不写入）
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;h2&gt;高级进阶之强化功能&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;分割多窗口&lt;/h5&gt;
+
+&lt;p&gt;直接打开多窗口&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;$ vim -o file1 file2 使用shell命令开启多窗口
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;分割窗口&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;:[n]split [++opt] [+cmd] [file] 横向分割窗口
+
+: 前面必须以冒号开始命令
+
+n 为新窗口中显示的行数
+
+opt 为传递给新窗口的选项信息(必须前置两个+号)
+
+cmd 为传入新窗口中执行的命令(必须前置一个+号)
+
+file 指定打开的文件地址
+
+例如： :15split ++fileformat-unix ./site/testfile.txt
+新窗口有15行高，确保是unix文件格式，路径为./site/testfile.txt
+
+另外还有，vsplit, new, vnew都是同理分割窗口，split和new只有细微差别。
+:[n]vsplit [++opt] [+cmd] [file] 是垂直分割
+:[n]new [++opt] [+cmd] [file] 是横向分割，并执行自动命令
+:[n]vnew [++opt] [+cmd] [file] 为垂直分割，并执行自动命令
+
+此外，还有sview filename 和 sfind filename作为辅助作用也很重要。
+sview 以只读形式打分割一个窗口打开文件
+sfind 为在path中寻找filename，如果未找到则不会分割窗口
+
+vi命令
+split       ctrl + w then s
+vsplit      ctrl + w then v
+new         ctrl + w then n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;窗口游走&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;光标游走到下边窗口 ctrl + w then j 或 ↓(down)
+光标游走到上边窗口 ctrl + w then k 或 ↑(up)
+光标游走到左边窗口 ctrl + w then h 或 ←(left)
+光标游走到右边窗口 ctrl + w then l 或 →(right)
+
+另外还有一些不太实用的游走命令比如左上，右上，左下，右下游走等这里不进行细致的说明了，用到的实在是很少。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;窗口移动&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;移动本窗口到最顶端     ctrl + w then K(大写)
+移动本窗口到最底端     ctrl + w then J(大写)
+移动本窗口到最左端     ctrl + w then H(大写)
+移动本窗口到最右端     ctrl + w then L(大写)
+移动本窗口向右或向下轮换        ctrl + w then r(小写)
+移动本窗口向左或向上轮换        ctrl + w then R(大写)
+移动本窗口与下一个窗口交换     ctrl + w then x
+
+上下左右的窗口移动都是不太实用的操作，很少会有。本来窗口移动的频率就小，基本都是顶底左右，其他操作基本可以忽略。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;窗口大小调整&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;窗口高度减少一行    ctrl + w then -
+窗口高度增加一行    ctrl + w then +
+窗口宽度减少一行    ctrl + w then &amp;gt;
+窗口宽度增加一行    ctrl + w then &amp;lt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h5&gt;标签页多窗口&lt;/h5&gt;
+
+&lt;p&gt;:tabe &amp;lt;文件名&amp;gt;  在新标签页中打开指定的文件。
+:tabnew &amp;lt;文件名&amp;gt;  在新标签页中编辑新的文件。
+:tab split  在新标签页中，打开当前缓冲区中的文件。
+:tabf 或 :tabfind  允许你在当前目录搜索文件，并在新标签页中打开。比如:tabf img.*。此命令只能打开一个文件.&lt;/p&gt;
+
+&lt;p&gt;Vim默认最多只能打开10个标签页。你可以用set tabpagemax=15改变这个限制。&lt;/p&gt;
+
+&lt;p&gt;列示标签页
+:tabs  显示已打开标签页的列表，并用“&amp;gt;”标识出当前页面，用“+”标识出已更改的页面。&lt;/p&gt;
+
+&lt;p&gt;关闭标签页
+:tabc  关闭当前标签页。
+:tabo  关闭所有的标签页。
+:tabo :tabonly 关闭所有其他标签页&lt;/p&gt;
+
+&lt;p&gt;切换标签
+:tabn 或 gt  移动到下一个标签页。
+:tabp 或 gT  移动到上一个标签页。
+:tabfirst 或 :tabfir 或 :tabr  移动到第一个标签页。
+:tablast 或 :tabl  移动到最后一个标签页。&lt;/p&gt;
+
+&lt;p&gt;移动标签页
+:tabm [次序]  移动当前文件的标签页次序。比如:tabm 1将把当前标签页移动到第2的位置。如:tabm不指定参数将被移动到最后。&lt;/p&gt;
+
+&lt;p&gt;配置标签页
+:set showtabline=[1,2,3]  标签页在窗口上方显示标签栏。=0完全不显示标签栏，=1只有用户新建时才显示，=2总是显示标签栏。&lt;/p&gt;
+
+&lt;p&gt;多标签页命令
+:tabdo &amp;lt;命令&amp;gt;  同时在多个标签页中执行命令。比如:tabdo %s/food/drink/g 命令把当前多个标签页文件中的“food”都替换成“drink”。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h5&gt;批量缩进&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;方法一
+
+    按v进入visual状态，选择多行，然后用&amp;gt;缩进或&amp;lt;缩出 
+
+方法二
+
+    &amp;gt;为缩进，&amp;lt;为缩出，前面加n，表示当前行起n行同时缩进或缩出，5&amp;gt; then 回车 或 5&amp;lt; then 回车
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+               <pubDate>Sat, 30 Jun 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/30/Vi%E5%92%8CVim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%9B%86.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/30/Vi%E5%92%8CVim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%9B%86.html</guid>
+            </item>
+        
+            <item>
                <title>Markdown(MD)的语法说明</title>
                <description>&lt;h1&gt;Markdown(MD)的语法说明&lt;/h1&gt;
 
@@ -1319,116 +1701,6 @@ MVP为基础的架构&lt;/p&gt;
                <pubDate>Sat, 26 Sep 2015 14:46:26 +0800</pubDate>
                <link>http://www.luzexi.com//unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93.html</guid>
-            </item>
-        
-            <item>
-               <title>Unity3D-重新编译Mono加密DLL</title>
-               <description>&lt;p&gt;Unity3D-重新编译Mono加密DLL。安卓应用总是让人头疼，游戏遭到破解与反编译是研发的人最不愿意看到的。自己的辛苦劳动成果被人随意窃取与利用，对这些咬牙切齿的痛恨。所以我们需要加强自身的反破解技术力量。不过这世上没有破解不了的东西，道高一尺魔高一丈，我们做的只是让破解更加困难而已。让那些破解的人付出点代价才能得到他们想要的，如果他们觉得代价太高，看不清前面的道路，他们就有可能放弃，然后我们的目的达到了。&lt;/p&gt;
-
-&lt;p&gt;游戏本身加密方式有很多，对apk加壳，防止apk二次打包等。对这些android的加密与破解技术看过比较好的文章参考：&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/column/details/security-android.html&quot;&gt;《Android安全及病毒分析》&lt;/a&gt; ，其中&lt;a href=&quot;http://blog.csdn.net/androidsecurity/article/details/8809542&quot;&gt;《Android APK加壳技术方案【2】》&lt;/a&gt; 最为经典。而本篇文章我们主要来说说针对Unity3D的加密。&lt;/p&gt;
-
-&lt;p&gt;闲扯就到这里，我们开始说正事：&lt;/p&gt;
-
-&lt;p&gt;Unity3D所有客户端的代码都会以dll文件形式存下来，当游戏应用被开启时c#vm(也就是mono的虚拟机)会去加载所有dll，从而开始运行真正的程序画面了。而破解的很大一部分都是通过解压apk后拿到主逻辑dll，对dll进行反编译，然后修改后重新编译，再放入apk重新签名打包。所以我们需要针对dll进行加密，以防止他们反编译dll。&lt;/p&gt;
-
-&lt;p&gt;加密一个dll文件非常容易，无论你用什么算法都行，但是在哪解密呢？答案是libmono.so。libmono.so是mono的核心程序，它承载了加载解析dll和虚拟机运行的功能。所以说libmono.so是关键，我们需要修改mono内核程序并重新编译它。&lt;/p&gt;
-
-&lt;p&gt;下面将开始mono的编译过程，别看步骤写得简单明了，其实我花了起码一个多星期的思考，尝试，失败，再思考，再尝试，再失败.....总结其中原因一方面也是自己的愚钝的资质，另一方面是unity mono和mono并不一样，unity mono缺少编译文档并且还混合着原mono的编译文档，导致误判了很多：&lt;/p&gt;
-
-&lt;p&gt;1.首先不要认为unity mono 与 原生态mono一样。可以编译mono就可以同样步骤编译unity mono。我在这里尝试了很久，使用configure进行编译，尝试使用不同的编译参数，进行编译，最后发现unity mono使用的是ndk-9下的linux-4.8编译器，所有参数都是根据这个编译器所设定的。&lt;/p&gt;
-
-&lt;p&gt;2.unity mono 地址：&lt;a href=&quot;https://github.com/Unity-Technologies/mono&quot;&gt;https://github.com/Unity-Technologies/mono&lt;/a&gt; 你需要从这里下载unity mono。&lt;/p&gt;
-
-&lt;p&gt;3.mono需要autoconf automake libtool pkg-config这些工具。你最好还是去下载安装了。你可以用brew安装。brew install autoconf automake libtool pkg-config。&lt;/p&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt; --&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
-
-&lt;p&gt;4.我一开始使用mac x86&lt;em&gt;64进行编译，折腾了很久然后建了个linux-x86&lt;/em&gt;64虚拟机来编译，然后又折腾了很久，又建了个linux-i386来重新编译mono，因为我一直认为交叉编译需要加些不同的编译参数和变量。在linux-i386首次编译成功后又开始转化到mac上，进行交叉编译也一样成功，最后发现其实是我没找对路子。这路子就是unity 的mono-build-tool：&lt;a href=&quot;https://github.com/Unity-Technologies/monobuildtools&quot;&gt;https://github.com/Unity-Technologies/monobuildtools&lt;/a&gt; 它已经在unity mono的项目里了，在mono的external/buildscripts下。&lt;/p&gt;
-
-&lt;p&gt;5.buildscripts下的build&lt;em&gt;runtime&lt;/em&gt;android.sh是编译安卓平台的关键。它是unity制作的一个自动编译 mono 流程的脚本。你需要将这个脚本copy到mono根目录下再执行。&lt;/p&gt;
-
-&lt;p&gt;6.脚本里写些内容，如果你懒得看，我帮你稍微解释下。它会去检查你当前的ANDROID&lt;em&gt;NDK&lt;/em&gt;ROOT环境变量是否是指向ndk-9，所以你需要去下ndk-9版本，放到机子上，然后编辑环境变量ANDROID&lt;em&gt;NDK&lt;/em&gt;ROOT指向它，如果你没有它会通过perl模块lwp-download去下载ndk-9，但是你必须要要有这个perl模块才行，我劝你还是老老实实自己去下吧。ndk版本下载地址参考这里：&lt;a href=&quot;/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/06/Android-SDK-NDK-Studio-%E4%B8%8B%E8%BD%BD%E5%88%97%E8%A1%A8%E5%92%8C%E6%9E%84%E5%BB%BA%E8%AF%B4%E6%98%8E.html&quot;&gt;《android-sdk-ndk-studio-下载列表和构建说明》&lt;/a&gt;。如果是linux下编译环境变量设定参考这里：&lt;a href=&quot;/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/07/linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B.html&quot;&gt;《linux环境变量简介》&lt;/a&gt;。然后呢，它会用git去clone一个编译时用到的库，这个也是unity自己改编过的一个库，地址为：&lt;a href=&quot;https://github.com/Unity-Technologies/krait-signal-handler&quot;&gt;https://github.com/Unity-Technologies/krait-signal-handler&lt;/a&gt; ，这个库有个坑说下：perl脚本build.pl头部有个命令是#!/usr/bin/env perl -w，这个在部分机子上并不兼容，如果你有错误停在这里这个文件上，你可以将env去除再尝试手动perl build.pl 运行构建一遍没问题再重新编译，原因参考：&lt;a href=&quot;http://abloz.com/2011/01/13/why-use-usr-bin-env.html&quot;&gt;http://abloz.com/2011/01/13/why-use-usr-bin-env.html&lt;/a&gt; 。最后就先make clean &amp;amp;&amp;amp; make distclean 清除前面编译的内容，然后进行预编译configure，参数都在脚本里设置好了，你不需要关心了。预编译后就开始make编译了。&lt;/p&gt;
-
-&lt;p&gt;7.执行build&lt;em&gt;runtime&lt;/em&gt;android.sh后terminal基本都是刷屏的节奏。刷刷刷的编译输出，你根本来不及看清到底做到哪了做了些什么内容。而config.log这个文件记录所有的编译输出，包括哪行错误了，哪行通过了。调试基本也考这个log文件，如果关键部位错误它会停止，然后你就可以针对性的查了。这里提醒一点，编译时它很多地方都是在检测编译器是否正常，因为它要确认编译器对错误的编译内容是否能够检测到，所以很多错误内容只是测试内容-你需要省略掉。&lt;/p&gt;
-
-&lt;p&gt;8.如果编译成功，那就恭喜你了。windows下我没有测试过，有可能会增加不少坑，我建议还是用linux或者mac编译吧，因为我搜集资料的时候不少人对windows下编译mono都抱怨不少。那么我们开始迈入下一个坑吧:)&lt;/p&gt;
-
-&lt;p&gt;下面介绍加解密DLL部分：&lt;/p&gt;
-
-&lt;p&gt;加密算法自己选我不多说了，但我这里要引用一篇同样介绍mono的dll加密的文章，我觉得也写得满不错的，但是文章描述不够详尽。我这篇文章弥补了他的不足，将细节补充得更加细致。你大可以两篇文章加起来参考。&lt;a href=&quot;http://www.unitymanual.com/home.php?mod=space&amp;uid=7672&amp;do=blog&amp;id=1440&quot;&gt;http://www.unitymanual.com/home.php?mod=space&amp;amp;uid=7672&amp;amp;do=blog&amp;amp;id=1440&lt;/a&gt; 不知道地址是不是原作者的，如果不是我再更换吧。&lt;/p&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt; --&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
-
-&lt;p&gt;1.首先找到dll解密入口。mono下/mono/metadata/image.c里mono&lt;em&gt;image&lt;/em&gt;open&lt;em&gt;from&lt;/em&gt;data&lt;em&gt;with&lt;/em&gt;name是关键方法，参数中的data是dll传入的数据。你要做的就是将它解密后传给datac，这个方法程序你必须看下，因为你要了解下解密程序放在哪才合适。&lt;/p&gt;
-
-&lt;p&gt;2.大部分dll都会通过mono&lt;em&gt;image&lt;/em&gt;open&lt;em&gt;from&lt;/em&gt;data&lt;em&gt;with&lt;/em&gt;name这个方法进行加载，但不是所有dll，例如mscorlib.dll和System.Core.dll就不会，可能还有其他dll，我并不确定还有哪些。所以你还是得辨别下哪些dll会通过这个方法，这样你才能确定哪个dll可以加密。如何判断data属于哪个dll呢，参数name就是data的路径名，name打印出来后就像:/data/app/com.xx.xx.apk/assets/bin/Data/Managed/xxx.dll 这样。&lt;/p&gt;
-
-&lt;p&gt;3.打印调试。你可以使用g&lt;em&gt;message例如：g&lt;/em&gt;warning(&amp;quot;dll name: %s \n&amp;quot;, name); 其他的打印调试你可以查看源码中的它写的代码。很容易找到，查关键字LOG吧。&lt;/p&gt;
-
-&lt;p&gt;4.改完后重新编译mono，找到libmono.so(find . -name libmono.so)，完成编译后libmono.so的平台有好几个，你可以根据自己的平台来选。有人拷贝这些mono重新编译过的文件去覆盖了unity编辑器的原来mono文件，这样也可行。但我选择在打包android时再从外部复制libmono.so，这样就可以绕过编译器重新编译后无法读取无加密dll的麻烦，可以少做一层无意义的编辑器状态下的加解密工作。&lt;/p&gt;
-
-&lt;p&gt;5.mono解密部分就到这里了。其他部分的关键就是你的加解密程序了，是否能够加密和解密都是ok的并且都是不改变size。你需要的参数有data和data&lt;em&gt;len，mono&lt;/em&gt;image&lt;em&gt;open&lt;/em&gt;from&lt;em&gt;data&lt;/em&gt;with_name方法里面都有。&lt;/p&gt;
-
-&lt;p&gt;6.为了安全起见我使用c来编写加密程序，因为我认为c#和c的编译器对于变量内存的存储机制不一样，怕引起不必要的麻烦。
-这里要非常感谢一个人，全程都在提供帮助：炽乐@宗树&lt;/p&gt;
-
-&lt;p&gt;转载请注明出处：http://www.luzexi.com&lt;/p&gt;
-</description>
-               <pubDate>Sat, 11 Apr 2015 18:58:36 +0800</pubDate>
-               <link>http://www.luzexi.com//unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL.html</guid>
             </item>
         
     </channel>
