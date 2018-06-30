@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-01T00:02:03+08:00</updated>
+ <updated>2018-07-01T00:06:12+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -188,6 +188,7 @@
 s/old/new/g     搜索替换当前行，所有找到的
 g/old/new/g     搜索替换当前文件中，所有找到的内容
 g/old/new/gc    搜索替换当前文件中，所有找到的内容，并且做yes or no 的替换确认
+
 g/pattern/s/old/new/gc 先搜索文件中所有含有pattern的行，在这些行中找到的所有old内容，并且做yes or no 的替换确认
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;&lt;h5&gt;搜索替换匹配规则&lt;/h5&gt;
@@ -202,27 +203,32 @@ $ 正则表达式的结尾
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;&lt;h5&gt;查找替换多个文件内容&lt;/h5&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;多文件查找内容
-grep
-    直接在vim中输入:grep abc * 这是直接调用unix下的grep命令 
 
-vimgrep 
-    基本用法就是
-    :vimgrep /匹配模式/[g][j] 要搜索的文件/范围 
-    :vim[grep][!] /{pattern}/[g][j] {file} ...
-    g 和 j 是两个可选的标志位，g表示是否把每一行的多个匹配结果都加入。j表示是否搜索完后定位到第一个匹配位置。
-    要搜索的文件 可以是具体的文件路径，也可以是带通配符的路径比如 *.as **/*.as ，**表示递归所有子目录。 要搜索的文件和或搜索范围都可 以写多个，用空格分开。
+使用grep
+
+直接在vim中输入:grep abc * 这是直接调用unix下的grep命令 
+
+使用vimgrep 
+
+基本用法就是
+:vimgrep /匹配模式/[g][j] 要搜索的文件/范围 
+:vim[grep][!] /{pattern}/[g][j] {file} ...
+g 和 j 是两个可选的标志位，g表示是否把每一行的多个匹配结果都加入。j表示是否搜索完后定位到第一个匹配位置。
+要搜索的文件 可以是具体的文件路径，也可以是带通配符的路径比如 *.as **/*.as ，**表示递归所有子目录。 要搜索的文件和或搜索范围都可 以写多个，用空格分开。
 
 例子：
-    :vimgrep /\&amp;lt;flash\&amp;gt;/ **/*.as 搜索当前目录以及所有子目录内as文件中的 &amp;quot;flash&amp;quot;
-    :vimgrep /an error/ *.c 就是在所有的.c文件中搜索an error。
-    :vimgrep/an error/* 意思是查找当前目录下的文件中的an error，不包括子目录
+
+:vimgrep /\&amp;lt;flash\&amp;gt;/ **/*.as 搜索当前目录以及所有子目录内as文件中的 &amp;quot;flash&amp;quot;
+:vimgrep /an error/ *.c 就是在所有的.c文件中搜索an error。
+:vimgrep/an error/* 意思是查找当前目录下的文件中的an error，不包括子目录
 
 定位 
-    输入上述的命令后，可以像输入:make命令，那样定位匹配到的文件位置 
-   :cnext (:cn)           下一个匹配位置
-   :cprevious (:cp)     上一个匹配位置
-   :cwindow (:cw)     quickfix窗口，可以选择匹配的文件位置
-   :cl(:clist)                查看所有匹配的位置
+
+输入上述的命令后，可以像输入:make命令，那样定位匹配到的文件位置 
+:cnext (:cn)           下一个匹配位置
+:cprevious (:cp)     上一个匹配位置
+:cwindow (:cw)     quickfix窗口，可以选择匹配的文件位置
+:cl(:clist)                查看所有匹配的位置
 
 多文件替换(arg) 
 a、加入要处理的文件  :args *.txt
@@ -351,44 +357,44 @@ new         ctrl + w then n
 
 &lt;ol&gt;
 &lt;li&gt;&lt;h5&gt;标签页多窗口&lt;/h5&gt;
-
-&lt;p&gt;:tabe &amp;lt;文件名&amp;gt;  在新标签页中打开指定的文件。
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;:tabe &amp;lt;文件名&amp;gt;  在新标签页中打开指定的文件。
 :tabnew &amp;lt;文件名&amp;gt;  在新标签页中编辑新的文件。
 :tab split  在新标签页中，打开当前缓冲区中的文件。
-:tabf 或 :tabfind  允许你在当前目录搜索文件，并在新标签页中打开。比如:tabf img.*。此命令只能打开一个文件.&lt;/p&gt;
+:tabf 或 :tabfind  允许你在当前目录搜索文件，并在新标签页中打开。比如:tabf img.*。此命令只能打开一个文件.
 
-&lt;p&gt;Vim默认最多只能打开10个标签页。你可以用set tabpagemax=15改变这个限制。&lt;/p&gt;
+Vim默认最多只能打开10个标签页。你可以用set tabpagemax=15改变这个限制。
 
-&lt;p&gt;列示标签页
-:tabs  显示已打开标签页的列表，并用“&amp;gt;”标识出当前页面，用“+”标识出已更改的页面。&lt;/p&gt;
+列示标签页
+:tabs  显示已打开标签页的列表，并用“&amp;gt;”标识出当前页面，用“+”标识出已更改的页面。
 
-&lt;p&gt;关闭标签页
+关闭标签页
 :tabc  关闭当前标签页。
 :tabo  关闭所有的标签页。
-:tabo :tabonly 关闭所有其他标签页&lt;/p&gt;
+:tabo :tabonly 关闭所有其他标签页
 
-&lt;p&gt;切换标签
+切换标签
 :tabn 或 gt  移动到下一个标签页。
 :tabp 或 gT  移动到上一个标签页。
 :tabfirst 或 :tabfir 或 :tabr  移动到第一个标签页。
-:tablast 或 :tabl  移动到最后一个标签页。&lt;/p&gt;
+:tablast 或 :tabl  移动到最后一个标签页。
 
-&lt;p&gt;移动标签页
-:tabm [次序]  移动当前文件的标签页次序。比如:tabm 1将把当前标签页移动到第2的位置。如:tabm不指定参数将被移动到最后。&lt;/p&gt;
+移动标签页
+:tabm [次序]  移动当前文件的标签页次序。比如:tabm 1将把当前标签页移动到第2的位置。如:tabm不指定参数将被移动到最后。
 
-&lt;p&gt;配置标签页
-:set showtabline=[1,2,3]  标签页在窗口上方显示标签栏。=0完全不显示标签栏，=1只有用户新建时才显示，=2总是显示标签栏。&lt;/p&gt;
+配置标签页
+:set showtabline=[1,2,3]  标签页在窗口上方显示标签栏。=0完全不显示标签栏，=1只有用户新建时才显示，=2总是显示标签栏。
 
-&lt;p&gt;多标签页命令
-:tabdo &amp;lt;命令&amp;gt;  同时在多个标签页中执行命令。比如:tabdo %s/food/drink/g 命令把当前多个标签页文件中的“food”都替换成“drink”。&lt;/p&gt;&lt;/li&gt;
+多标签页命令
+:tabdo &amp;lt;命令&amp;gt;  同时在多个标签页中执行命令。比如:tabdo %s/food/drink/g 命令把当前多个标签页文件中的“food”都替换成“drink”。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;&lt;h5&gt;批量缩进&lt;/h5&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;方法一
 
-    按v进入visual状态，选择多行，然后用&amp;gt;缩进或&amp;lt;缩出 
+按v进入visual状态，选择多行，然后用&amp;gt;缩进或&amp;lt;缩出 
 
 方法二
 
-    &amp;gt;为缩进，&amp;lt;为缩出，前面加n，表示当前行起n行同时缩进或缩出，5&amp;gt; then 回车 或 5&amp;lt; then 回车
+&amp;gt;为缩进，&amp;lt;为缩出，前面加n，表示当前行起n行同时缩进或缩出，5&amp;gt; then 回车 或 5&amp;lt; then 回车
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </content>
