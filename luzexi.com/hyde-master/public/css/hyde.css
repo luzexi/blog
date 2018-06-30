@@ -90,6 +90,7 @@ html {
 .sidebar-nav-item {
   display: block;
   line-height: 1.75;
+  /*font-size: 0.7rem;*/
 }
 a.sidebar-nav-item:hover,
 a.sidebar-nav-item:focus {
@@ -109,7 +110,8 @@ a.sidebar-nav-item:focus {
   .sidebar-sticky {
     position: absolute;
     right:  1rem;
-    bottom: 1rem;
+    /*bottom: 1rem;*/
+    top:    1rem;
     left:   1rem;
   }
 }
