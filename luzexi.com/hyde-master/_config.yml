@@ -17,10 +17,15 @@ author:
   name:           'Jesse Lu'
   url:            http://www.luzexi.com
 
-gems: [jekyll-paginate]
+# gems: [jekyll-paginate]
 paginate:         10
 
 excerpt_separator: "\n\n"
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+
 
 # plugins
 comments: 		  true
