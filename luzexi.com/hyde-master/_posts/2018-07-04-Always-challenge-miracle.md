@@ -20,8 +20,6 @@ Recently I'm thinking of the meaning in my life. Whatever I lose or get somethin
 
 So I'm thinking that why me always like to chanllenge the work or the job or the task. Because i have much when i'm working or geting something or get some new skills or learned some knowledge. The root is I'm insteresting in doing some special thing which I like.
 
-{% include advertisement_content.html %}
-
 Sometimes I was tired, I dont know why, but I was really tired to do the special thing which interest before. But I'm still keep moving to do that, it makes the job much more lower effective, and my brain becomes more and more slow to run. The feeling of failed and sad coming, the situation becomes much more bad now.
 
 I know you have to win or get something, its your purpose you would like to insist.
