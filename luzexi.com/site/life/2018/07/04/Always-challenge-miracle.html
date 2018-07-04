@@ -8,12 +8,12 @@
 
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta content="unity3d assetbundle 加载封装" name="description">
+  <meta content="life english" name="description">
 
 
   <title>
     
-      Unity3D之AssetBundle资源加载封装
+      Always challenge miracle
     
   </title>
 
@@ -36,23 +36,15 @@
 
     <div class="content container">
       <div class="post">
-  <h1 class="post-title">Unity3D之AssetBundle资源加载封装</h1>
-  <span class="post-date">16 Apr 2014</span>
-  <p>Unity3D之AssetBundle资源加载封装。在《临兵斗者三国志》中我使用了U3D的AssetBundle资源动态加载机制，原因是某些画面资源太多，IO阻塞过慢会造成游戏奔溃。在开发过程中，遇到点问题:</p>
+  <h1 class="post-title">Always challenge miracle</h1>
+  <span class="post-date">04 Jul 2018</span>
+  <h1>Always challenge miracle</h1>
 
-<p>1.当资源更改变化时，如何能快速得反应到开发中。</p>
+<p>Recently I&#39;m thinking of the meaning in my life. Whatever I lose or get something that was not the end of the life, we always have another objective to get or maybe restart training or studying and try to get again and again until win.</p>
 
-<p>解决方案:</p>
+<p>===</p>
 
-<p>我使用宏定义UNITY_EDITOR来判断是否是开发编辑状态。当处于开发编辑状态时，自动读取指定目录下U3D本身资源，而不使用AssetBundle。这样就达到了当prefb变化时能快速反应到开发编辑中。而当不是处于编辑状态时，则正常使用异步加载读取AssetBundle。这个方式唯一的毛病就是，必须让所有U3D程序员都非常清除明白，如果写错，编辑模式下会没问题，发布后会出问题，所以需要检查。</p>
-
-<p>2.当不同资源之间有重复的资源时如何将AssetBundle空间占有量最小化。</p>
-
-<p>解决方案:</p>
-
-<p>GUI资源之间有特别多的重复的问题，挑出几个重复得特别厉害的，比如ICON图集，公用图集。在打包期间把他们设为共享资源，并在加载时首先加载共享资源，这样既节省了AssetBundle空间占有量，也节省了内存。这个方式的毛病是当你将资源更改要打包某个资源时，需要将所有与共享有关的资源重新打包一遍。</p>
-
-<p>3.如何应对自动释放资源问题。</p>
+<p>So I&#39;m thinking that why me always like to chanllenge the work or the job or the task. Because i have much when i&#39;m working or geting something or get some new skills or learned some knowledge. The root is I&#39;m insteresting in doing some special thing which I like.</p>
 
 <!-- <script type="text/javascript">
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
@@ -81,21 +73,44 @@
 </script>
 <script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
 
-<p>解决方案:</p>
+<p>Sometimes I was tired, I dont know why, but I was really tired to do the special thing which interest before. But I&#39;m still keep moving to do that, it makes the job much more lower effective, and my brain becomes more and more slow to run. The feeling of failed and sad coming, the situation becomes much more bad now.</p>
 
-<p>在游戏中有指定资源释放和自动释放所有AssetBundle资源以销毁内存(这里不是指销毁U3D内存，而是AssetBundle内存，U3D内存管理分图片内存，AssetBundle内存，编译程序)。销毁指定资源就按正常来没有争议。销毁所有资源就要有点措施了，因为有些资源是不能被销毁的，因为它们是共享资源，需要全程跟着游戏走，所以当自动销毁所有资源时，将共享资源排除在外。并且在销毁后调用Resources.UnloadUnusedAssets();和GC.Collect();</p>
+<p>I know you have to win or get something, its your purpose you would like to insist.</p>
 
-<p>4.打包AssetBundle方式。</p>
+<p>So i would like to say that, we must keep moving but not only in one thing. The most important thing is we are keeping have fun in studying or learning something. If you are tired, pls just put it down or drop it directly, then finding out the thing which you have fun.</p>
 
-<p>解决方案:</p>
+<!-- <script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = "u3471606";
+        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = "u3469788";
+        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+    }
+</script> -->
 
-<p>打包AssetBundle方式有几种:1.单资源打包，也就是说一个.prefb或Texture打一个包。2.多个资源打包，将某些资源都打成一个AssetBundle，节省了几个资源包之间的共享资源也减小了多个AssetBundle引起的空间扩大问题。但并不是说所有项目都是多个资源打成一个AssetBundle是好的。《临兵斗者三国志》就是一大部分使用单一打包，而共享资源使用多个资源打成一个AssetBundle的方式。</p>
+<script type="text/javascript">
+    /*700*200信息流*/
+    var cpro_id = "u3469788";
+</script>
 
-<p>最后奉上本人对AssetBundle封装的源码。<a href="https://github.com/luzexi/Unity3DGameResource">https://github.com/luzexi/Unity3DGameResource</a></p>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
 
-<p>你也可以去我的<a href="https://github.com/luzexi">github</a>上查看找我做的一些源码插件，如果喜欢的话可以star或者fllow。</p>
+<!-- <script type="text/javascript">
+    /*文内嵌入*/
+    var cpro_id = "u3471606";
+</script>
+<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
 
-<p>转发请注明出自：http://www.luzexi.com</p>
+<p>Do not spend all your time on training or studying - this way you will probably become very exhausted and unwilling to compete more. Whatever you do - have fun.</p>
+
+<p>Once you find programming is no fun anymore – drop it. Play soccer, find a girlfriend or boyfriend, study something not related to programming, just live a life.</p>
+
+<p>work are only work, job are only job, programming contests are only programming contests, and nothing more. Don&#39;t let them become your life - for your life is much more interesting and colorful.</p>
 
   <p>感谢您的耐心阅读</p>
   <p>Thanks for your reading</p>
@@ -152,15 +167,6 @@
     
       <li>
         <h3>
-          <a href="/life/2018/07/04/Always-challenge-miracle.html">
-            Always challenge miracle
-            <small>04 Jul 2018</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
           <a href="/%E9%87%91%E8%9E%8D/2018/07/02/%E8%82%A1%E5%B8%82%E5%BA%95%E9%83%A8%E6%8E%A2%E7%B4%A2%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90.html">
             股市底部探索逻辑分析
             <small>02 Jul 2018</small>
@@ -173,6 +179,15 @@
           <a href="/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/30/Vi%E5%92%8CVim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%9B%86.html">
             Vi和Vim常用命令集
             <small>30 Jun 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/27/Markdown-MD-%E7%9A%84%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html">
+            Markdown(MD)的语法说明
+            <small>27 Jun 2018</small>
           </a>
         </h3>
       </li>
