@@ -26,8 +26,6 @@ I know you have to win or get something, its your purpose you would like to insi
 
 So i would like to say that, we must keep moving but not only in one thing. The most important thing is we are keeping have fun in studying or learning something. If you are tired, pls just put it down or drop it directly, then finding out the thing which you have fun.
 
-{% include advertisement_content.html %}
-
 Do not spend all your time on training or studying - this way you will probably become very exhausted and unwilling to compete more. Whatever you do - have fun.
 
 Once you find programming is no fun anymore – drop it. Play soccer, find a girlfriend or boyfriend, study something not related to programming, just live a life.
