@@ -47,8 +47,6 @@ tags:
 		console.log(b); // 20
 		console.log(rest); // {c: 30, d: 40}
 
-{% include advertisement_content.html %}
-
 3. ###[] 数组分配赋值用法
 
 	######数组分配1

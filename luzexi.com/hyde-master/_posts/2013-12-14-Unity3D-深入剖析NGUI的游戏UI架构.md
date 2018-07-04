@@ -64,8 +64,6 @@ else
 }
 ```
 
-{% include advertisement_content.html %}
-
 5.拆分以及固定各个锚点，上，左上，右上，中，左中，右中，下，左下，右下
 
 6.拆分GUI层级，层级越高，显示越靠前。层级的正确拆分能有效管理GUI的显示方式。
@@ -139,8 +137,6 @@ UIWidget中最重要的虚方法为 virtual public void OnFill(BetterList<Vector
 
 UIWidget中在使用OnFill方法的重要的方法是 更新渲染多边型方法：
 
-{% include advertisement_content.html %}
-
 ``` c#
 public bool UpdateGeometry (ref Matrix4x4 worldToPanel, bool parentMoved, bool generateNormals)
 {
@@ -173,8 +169,6 @@ public bool UpdateGeometry (ref Matrix4x4 worldToPanel, bool parentMoved, bool g
 ```
 
 它的作用就是，当需要重新组织多边型展示内容时，进行多边型的重新规划。
- 
-{% include advertisement_content.html %}
 
 接着，我们来看看UINode，这个类很容易被人忽视，而他的作用也很重要。它是在UIPanel被告知有新的UIWidget显示元素时被创建的，它的创建主要是为了监视被创建的UIWidget的位置，旋转，大小是否被更改，若被更改，将由UIPanel进行重新的渲染工作。
 HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel用来监视每个元素是否改变了进而进行重新渲染。
@@ -329,8 +323,6 @@ public void Set (BetterList<Vector3> verts, BetterList<Vector3> norms, BetterLis
     注意：所有的渲染都是在LateUpdate下进行，也就是它是进行的延迟渲染。
 
 接口源码：
-
-{% include advertisement_content.html %}
 
 ``` c#
 void LateUpdate ()

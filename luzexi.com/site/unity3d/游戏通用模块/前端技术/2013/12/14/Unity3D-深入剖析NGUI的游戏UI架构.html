@@ -68,33 +68,6 @@
     <span class="n">root</span><span class="p">.</span><span class="n">manualHeight</span> <span class="p">=</span> <span class="m">480</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<!-- <script type="text/javascript">
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        var cpro_id = "u3471606";
-        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
-    }
-    else
-    {
-        /*700*200信息流*/
-        var cpro_id = "u3469788";
-        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
-    }
-</script> -->
-
-<script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
-
 <p>5.拆分以及固定各个锚点，上，左上，右上，中，左中，右中，下，左下，右下</p>
 
 <p>6.拆分GUI层级，层级越高，显示越靠前。层级的正确拆分能有效管理GUI的显示方式。</p>
@@ -186,33 +159,6 @@
 <p>UIWidget中最重要的虚方法为 virtual public void OnFill(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols) { } 它是区分子类的显示内容的重要方法。它的工作就是填写如何显示，显示什么。</p>
 
 <p>UIWidget中在使用OnFill方法的重要的方法是 更新渲染多边型方法：</p>
-
-<!-- <script type="text/javascript">
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        var cpro_id = "u3471606";
-        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
-    }
-    else
-    {
-        /*700*200信息流*/
-        var cpro_id = "u3469788";
-        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
-    }
-</script> -->
-
-<script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="kt">bool</span> <span class="nf">UpdateGeometry</span> <span class="p">(</span><span class="k">ref</span> <span class="n">Matrix4x4</span> <span class="n">worldToPanel</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">parentMoved</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">generateNormals</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">material</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
@@ -243,33 +189,6 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>它的作用就是，当需要重新组织多边型展示内容时，进行多边型的重新规划。</p>
-
-<!-- <script type="text/javascript">
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        var cpro_id = "u3471606";
-        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
-    }
-    else
-    {
-        /*700*200信息流*/
-        var cpro_id = "u3469788";
-        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
-    }
-</script> -->
-
-<script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
 
 <p>接着，我们来看看UINode，这个类很容易被人忽视，而他的作用也很重要。它是在UIPanel被告知有新的UIWidget显示元素时被创建的，它的创建主要是为了监视被创建的UIWidget的位置，旋转，大小是否被更改，若被更改，将由UIPanel进行重新的渲染工作。
 HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel用来监视每个元素是否改变了进而进行重新渲染。</p>
@@ -443,33 +362,6 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
     注意：所有的渲染都是在LateUpdate下进行，也就是它是进行的延迟渲染。</p>
 
 <p>接口源码：</p>
-
-<!-- <script type="text/javascript">
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        var cpro_id = "u3471606";
-        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
-    }
-    else
-    {
-        /*700*200信息流*/
-        var cpro_id = "u3469788";
-        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
-    }
-</script> -->
-
-<script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">void</span> <span class="nf">LateUpdate</span> <span class="p">()</span>
 <span class="p">{</span>
   <span class="c1">// Only the very first panel should be doing the update logic</span>
@@ -590,6 +482,10 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 <p>Copyright attention</p>
 <p>If you would like to reprint this article please write auth's name and link in the page.</p>
 
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
 </li>
   <li>
 <!-- <script type="text/javascript">

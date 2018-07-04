@@ -54,6 +54,12 @@ Debug.Log(string.Format(&quot;CallFromJS[{0}]&quot;, msg));
 
 <p>通过地址加载某网页：WebViewObject.sInstance.LoadURL(path);</p>
 
+<p>二、Webview在不同平台的插件载体和编译这些载体的方法。</p>
+
+<p>这里主要是Android、IPHONE和MAC平台---因为它只做了这3个平台，所以Windows平台的同学就不能再编辑器里看到了，调试Webview时就用MAC吧。Android使用jar做插件体，iphone用.mm文件做插件体，mac用bundle做插件载体。</p>
+
+<p>iphone是用.mm文件，所以不用编译载体，只有Android和Mac需要。在platform<em>src/Android和platfor</em>src/iOS下分别有install.ssh文件可以执行，用来编译各自的载体。所以你只要执行就可以了。</p>
+
 <!-- <script type="text/javascript">
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
@@ -80,12 +86,6 @@ Debug.Log(string.Format(&quot;CallFromJS[{0}]&quot;, msg));
     var cpro_id = "u3471606";
 </script>
 <script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
-
-<p>二、Webview在不同平台的插件载体和编译这些载体的方法。</p>
-
-<p>这里主要是Android、IPHONE和MAC平台---因为它只做了这3个平台，所以Windows平台的同学就不能再编辑器里看到了，调试Webview时就用MAC吧。Android使用jar做插件体，iphone用.mm文件做插件体，mac用bundle做插件载体。</p>
-
-<p>iphone是用.mm文件，所以不用编译载体，只有Android和Mac需要。在platform<em>src/Android和platfor</em>src/iOS下分别有install.ssh文件可以执行，用来编译各自的载体。所以你只要执行就可以了。</p>
 
 <p>三、Webview网页按钮回调。</p>
 
@@ -122,6 +122,10 @@ Debug.Log(string.Format(&quot;CallFromJS[{0}]&quot;, msg));
 <p>Copyright attention</p>
 <p>If you would like to reprint this article please write auth's name and link in the page.</p>
 
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
 </li>
   <li>
 <!-- <script type="text/javascript">

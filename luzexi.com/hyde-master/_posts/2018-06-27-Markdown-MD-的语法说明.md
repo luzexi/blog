@@ -63,8 +63,6 @@ tags:
 
 - - -
 
-{% include advertisement_content.html %}
-
 ### 链接
 
 链接内容定义的形式为：

@@ -88,8 +88,6 @@ Parallel Node提供了并发，提高性能。
 
 不需要像Selector/Sequence那样预判哪个Child Node应摆前，哪个应摆后，
 
-{% include advertisement_content.html %}
-
 常见情况是：
 
 (1)用于并行多棵Action子树。

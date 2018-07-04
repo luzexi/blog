@@ -46,8 +46,6 @@ Unity3D所有客户端的代码都会以dll文件形式存下来，当游戏应�
 
 3.mono需要autoconf automake libtool pkg-config这些工具。你最好还是去下载安装了。你可以用brew安装。brew install autoconf automake libtool pkg-config。
 
-{% include advertisement_content.html %}
-
 4.我一开始使用mac x86_64进行编译，折腾了很久然后建了个linux-x86_64虚拟机来编译，然后又折腾了很久，又建了个linux-i386来重新编译mono，因为我一直认为交叉编译需要加些不同的编译参数和变量。在linux-i386首次编译成功后又开始转化到mac上，进行交叉编译也一样成功，最后发现其实是我没找对路子。这路子就是unity 的mono-build-tool：[https://github.com/Unity-Technologies/monobuildtools](https://github.com/Unity-Technologies/monobuildtools) 它已经在unity mono的项目里了，在mono的external/buildscripts下。
 
 5.buildscripts下的build_runtime_android.sh是编译安卓平台的关键。它是unity制作的一个自动编译 mono 流程的脚本。你需要将这个脚本copy到mono根目录下再执行。

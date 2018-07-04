@@ -38,6 +38,7 @@ Position ：Shanghai
 		不迈出脚步，永远找不到你前进的方向;
 
 
+{% include gongzhonghao.html %}
 
 开源地址: [https://github.com/luzexi](https://github.com/luzexi)
 
