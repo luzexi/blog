@@ -30,4 +30,4 @@ Do not spend all your time on training or studying - this way you will probably 
 
 Once you find programming is no fun anymore – drop it. Play soccer, find a girlfriend or boyfriend, study something not related to programming, just live a life.
 
-work are only work, job are only job, programming contests are only programming contests, and nothing more. Don't let them become your life - for your life is much more interesting and colorful.
+work are only work, job are only job, programming are only programming, and nothing more. Don't let them become your life - for your life is much more interesting and colorful.
