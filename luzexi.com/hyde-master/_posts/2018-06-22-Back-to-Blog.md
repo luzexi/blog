@@ -22,6 +22,8 @@ And also, through studying finance I completely know technology is very much imp
 
 I stay at Weibo for a long time and learn much. But why I'm back, first reason is its too much information in Weibo both good and bad that makes me mix. Second one is more and more uesless information on Weibo makes me too tired to skip them. So i said to myself that i must think in individual style, only thinking individual style makes me more and more powerful. If I just follow some guy or some information I will be completely failed in my life. The only way to beat otherones else is keep leaning and thinking in individual style.
 
+{% include advertisement_content.html %}
+
 Now I'm back. It's a completely new start for my technology and my life. I will record all my mind, idea, experience or life in the blog. I wont be shy if my words were error in your view, but I would like to see that you can comment in the end of the page.
 
 'Keep moving, never stop" is my motto.

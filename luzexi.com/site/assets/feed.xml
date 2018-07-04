@@ -1369,6 +1369,33 @@ function processContent(options) {
 
 &lt;p&gt;I stay at Weibo for a long time and learn much. But why I&amp;#39;m back, first reason is its too much information in Weibo both good and bad that makes me mix. Second one is more and more uesless information on Weibo makes me too tired to skip them. So i said to myself that i must think in individual style, only thinking individual style makes me more and more powerful. If I just follow some guy or some information I will be completely failed in my life. The only way to beat otherones else is keep leaning and thinking in individual style.&lt;/p&gt;
 
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
 &lt;p&gt;Now I&amp;#39;m back. It&amp;#39;s a completely new start for my technology and my life. I will record all my mind, idea, experience or life in the blog. I wont be shy if my words were error in your view, but I would like to see that you can comment in the end of the page.&lt;/p&gt;
 
 &lt;p&gt;&amp;#39;Keep moving, never stop&amp;quot; is my motto.&lt;/p&gt;
@@ -1393,6 +1420,33 @@ function processContent(options) {
 &lt;p&gt;Since that i didnt go to swim a long time, maybe 3 month i dont remember. But i still try to do some excersice to keep health. i try to go to gym and buy 5 years membership. i know its waste my money but i bought :( 2 month ago i decide to come back to swim again. This time i try swimming carefully and do spread myself before swim and swim slowly at the beginning. Its feels good, and i think its make me realize that swimming is really good for health and easy to have in my life. So i start to swim every week and recommend others to swim.&lt;/p&gt;
 
 &lt;p&gt;Actually these years i touch many new stuff in my life. i tried understanding foreign culture and learning foreign language and travelling lots of foreign countries and do swimming sport. All these stuffs are out of work, but i think its good for my life. I learn much things which i never touch any or maybe dont like it any. I think its great, i like to challenge.&lt;/p&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;Well, i really like swimming but u know sometimes people is just like to do it in a short time, but i think i will insist swimming in a long time, maybe 3 years maybe 10 years. i dont know, i hope i can insist much more times.&lt;/p&gt;
 
@@ -1462,6 +1516,33 @@ http://www.meetup.com/Shanghai-Swimming-Meetup/&lt;/p&gt;
 
 &lt;p&gt;its really hard for me to install lib of mysql for ruby because i dont know which source of apt-get i should use. i installed
 5.5.47 mysql version but it tells me the lib of mysql is 5.5.37 and it is the newest version in source of apt-get which the installed is failed. i change some of them but still cant be install. i even download the mysql of source and make them and try to pick the lib to install but failed. finally i choose the nature source of aliyun to install the lib of mysql, its success. i think its my bad, because i dont believe the nature source of aliyun so i change it.&lt;/p&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;4.After i finished all, i open gitlab site and it works. Then pull one of the repositories and change some file and push them. It said something wrong in the gitlab so i cant push the commit. i check search the problem and find i have to reline the update file in every repositories&amp;#39;s hook. So i do it, but it still socks. A little git time later i find that redis is not able to visit, so i add the user which git use into redis group. So the redis&amp;#39;s problem is solved but still cant push. I feel something wrong in satellites but i actually dont how to fix. So i remove all of the gitlab except repositories and install gitlab again, then import the respositories by using:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;cd /home/git/gitlab/

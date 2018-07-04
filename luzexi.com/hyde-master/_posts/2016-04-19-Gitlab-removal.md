@@ -40,6 +40,8 @@ ok, all of the data is already be move to new server.
 its really hard for me to install lib of mysql for ruby because i dont know which source of apt-get i should use. i installed
 5.5.47 mysql version but it tells me the lib of mysql is 5.5.37 and it is the newest version in source of apt-get which the installed is failed. i change some of them but still cant be install. i even download the mysql of source and make them and try to pick the lib to install but failed. finally i choose the nature source of aliyun to install the lib of mysql, its success. i think its my bad, because i dont believe the nature source of aliyun so i change it.
 
+{% include advertisement_content.html %}
+
 4.After i finished all, i open gitlab site and it works. Then pull one of the repositories and change some file and push them. It said something wrong in the gitlab so i cant push the commit. i check search the problem and find i have to reline the update file in every repositories's hook. So i do it, but it still socks. A little git time later i find that redis is not able to visit, so i add the user which git use into redis group. So the redis's problem is solved but still cant push. I feel something wrong in satellites but i actually dont how to fix. So i remove all of the gitlab except repositories and install gitlab again, then import the respositories by using:
 
 	cd /home/git/gitlab/
