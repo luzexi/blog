@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-05T14:28:02+08:00</updated>
+ <updated>2018-07-05T14:29:56+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -52,6 +52,33 @@
 &lt;p&gt;第三。一次进货就有量起步，大概看了下，一件商品进货的起步资金需求在3000-10000不等。如果是5件商品以上的话，在库存压货上的资金就会有很大的压力。于是我想到了二级代理，让别人去压货，就相当于把被人当做仓库，提供了货源的资金，自己专注于做商品营销策划。这样我大大降低了，进货的风险和成本，坏处就是自己的利润少了，对商品的改进的主动能力少了，把控商品更加困难。&lt;/p&gt;
 
 &lt;p&gt;第四。如果我又想控制商品质量和价格，又想少承担风险呢？怎么办？招募合伙人，分摊资金风险。&lt;/p&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;关于营销&lt;/h3&gt;
 
@@ -156,6 +183,33 @@
 
     这一点麦当劳就做得很好，总部搞研发，制定标准和流程；分部只需要按部就班的执行就可以了，这对于以全国为市场的行业来说是一个非常重要的方法。千万不能让终端人员自己发挥聪明才智，搞策划方案，最后弄得乌烟瘴气一团糟；一定要总部亲力亲为做市场调查，然后效果评估，最后制定出一个标准，再在全国铺开来做。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
 &lt;p&gt;产品的品质是关键中的关键，好的品质才能衬托出大的潜力，加上精准的营销，让广告效应和传播效应深入人们的心里面，当人们有此类产品需求时，第一个想到的就是我们这个产品。而团队的配合和执行力，使得营销方案再锦上添花，爆款一触即发。所谓爆款都是天时地利人和的一种机遇，但没有品质，营销，团队三个因素，再好的机遇都会瞬间溜走。&lt;/p&gt;
 </content>
  </entry>
