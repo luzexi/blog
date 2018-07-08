@@ -49,42 +49,43 @@
 <h3>List 底层代码</h3>
 
 <p>我们首先来看看List的构造部分，源码如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    public class List&lt;T&gt; : IList&lt;T&gt;, System.Collections.IList, IReadOnlyList&lt;T&gt;
-    {
-        private const int _defaultCapacity = 4;
 
-        private T[] _items;
-        private int _size;
-        private int _version;
-        private Object _syncRoot;
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;,</span> <span class="n">System</span><span class="p">.</span><span class="n">Collections</span><span class="p">.</span><span class="n">IList</span><span class="p">,</span> <span class="n">IReadOnlyList</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">_defaultCapacity</span> <span class="p">=</span> <span class="m">4</span><span class="p">;</span>
 
-        static readonly T[]  _emptyArray = new T[0];        
+    <span class="k">private</span> <span class="n">T</span><span class="p">[]</span> <span class="n">_items</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">_size</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">_version</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">Object</span> <span class="n">_syncRoot</span><span class="p">;</span>
+    
+    <span class="k">static</span> <span class="k">readonly</span> <span class="n">T</span><span class="p">[]</span>  <span class="n">_emptyArray</span> <span class="p">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>        
+        
+    <span class="c1">// Constructs a List. The list is initially empty and has a capacity</span>
+    <span class="c1">// of zero. Upon adding the first element to the list the capacity is</span>
+    <span class="c1">// increased to 16, and then increased in multiples of two as required.</span>
+    <span class="k">public</span> <span class="nf">List</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">_items</span> <span class="p">=</span> <span class="n">_emptyArray</span><span class="p">;</span>
+    <span class="p">}</span>
 
-        // Constructs a List. The list is initially empty and has a capacity
-        // of zero. Upon adding the first element to the list the capacity is
-        // increased to 16, and then increased in multiples of two as required.
-        public List() {
-            _items = _emptyArray;
-        }
+    <span class="c1">// Constructs a List with a given initial capacity. The list is</span>
+    <span class="c1">// initially empty, but will have room for the given number of elements</span>
+    <span class="c1">// before any reallocations are required.</span>
+    <span class="c1">// </span>
+    <span class="k">public</span> <span class="nf">List</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">capacity</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentOutOfRangeException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">capacity</span><span class="p">,</span> <span class="n">ExceptionResource</span><span class="p">.</span><span class="n">ArgumentOutOfRange_NeedNonNegNum</span><span class="p">);</span>
+        <span class="n">Contract</span><span class="p">.</span><span class="n">EndContractBlock</span><span class="p">();</span>
 
-        // Constructs a List with a given initial capacity. The list is
-        // initially empty, but will have room for the given number of elements
-        // before any reallocations are required.
-        // 
-        public List(int capacity) {
-            if (capacity &lt; 0) ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.capacity, ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
-            Contract.EndContractBlock();
+        <span class="k">if</span> <span class="p">(</span><span class="n">capacity</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+            <span class="n">_items</span> <span class="p">=</span> <span class="n">_emptyArray</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="n">_items</span> <span class="p">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">capacity</span><span class="p">];</span>
+    <span class="p">}</span>
 
-            if (capacity == 0)
-                _items = _emptyArray;
-            else
-                _items = new T[capacity];
-        }
+    <span class="c1">//...</span>
+    <span class="c1">//其他内容</span>
+<span class="p">}</span></code></pre></figure>
 
-        //...
-        //其他内容
-    }
-</code></pre></div>
 <p>从源码中可以知道，List 继承于IList，IReadOnlyList，IList是提供了主要的接口，IReadOnlyList提供了迭代接口。</p>
 
 <p><a href="https://referencesource.microsoft.com/#mscorlib/system/collections/ilist.cs,5d74f6adfeaf6c7d">IList源码</a></p>
@@ -96,31 +97,32 @@
 <p>也就是说，可以大概率推测List在Add,Remove时都是用数组拷贝生成新数组的方式工作的。下面我们来看下，我们的猜测是否正确。</p>
 
 <p>Add接口源码：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    // Adds the given object to the end of this list. The size of the list is
-    // increased by one. If required, the capacity of the list is doubled
-    // before adding the new element.
-    //
-    public void Add(T item) {
-        if (_size == _items.Length) EnsureCapacity(_size + 1);
-        _items[_size++] = item;
-        _version++;
-    }
 
-    // Ensures that the capacity of this list is at least the given minimum
-    // value. If the currect capacity of the list is less than min, the
-    // capacity is increased to twice the current capacity or to min,
-    // whichever is larger.
-    private void EnsureCapacity(int min) {
-        if (_items.Length &lt; min) {
-            int newCapacity = _items.Length == 0? _defaultCapacity : _items.Length * 2;
-            // Allow the list to grow to maximum possible capacity (~2G elements) before encountering overflow.
-            // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
-            if ((uint)newCapacity &gt; Array.MaxArrayLength) newCapacity = Array.MaxArrayLength;
-            if (newCapacity &lt; min) newCapacity = min;
-            Capacity = newCapacity;
-        }
-    }
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Adds the given object to the end of this list. The size of the list is</span>
+<span class="c1">// increased by one. If required, the capacity of the list is doubled</span>
+<span class="c1">// before adding the new element.</span>
+<span class="c1">//</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Add</span><span class="p">(</span><span class="n">T</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">_size</span> <span class="p">==</span> <span class="n">_items</span><span class="p">.</span><span class="n">Length</span><span class="p">)</span> <span class="n">EnsureCapacity</span><span class="p">(</span><span class="n">_size</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+    <span class="n">_items</span><span class="p">[</span><span class="n">_size</span><span class="p">++]</span> <span class="p">=</span> <span class="n">item</span><span class="p">;</span>
+    <span class="n">_version</span><span class="p">++;</span>
+<span class="p">}</span>
+
+<span class="c1">// Ensures that the capacity of this list is at least the given minimum</span>
+<span class="c1">// value. If the currect capacity of the list is less than min, the</span>
+<span class="c1">// capacity is increased to twice the current capacity or to min,</span>
+<span class="c1">// whichever is larger.</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">EnsureCapacity</span><span class="p">(</span><span class="kt">int</span> <span class="n">min</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">_items</span><span class="p">.</span><span class="n">Length</span> <span class="p">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">newCapacity</span> <span class="p">=</span> <span class="n">_items</span><span class="p">.</span><span class="n">Length</span> <span class="p">==</span> <span class="m">0</span><span class="p">?</span> <span class="n">_defaultCapacity</span> <span class="p">:</span> <span class="n">_items</span><span class="p">.</span><span class="n">Length</span> <span class="p">*</span> <span class="m">2</span><span class="p">;</span>
+        <span class="c1">// Allow the list to grow to maximum possible capacity (~2G elements) before encountering overflow.</span>
+        <span class="c1">// Note that this check works even when _items.Length overflowed thanks to the (uint) cast</span>
+        <span class="k">if</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span><span class="n">newCapacity</span> <span class="p">&gt;</span> <span class="n">Array</span><span class="p">.</span><span class="n">MaxArrayLength</span><span class="p">)</span> <span class="n">newCapacity</span> <span class="p">=</span> <span class="n">Array</span><span class="p">.</span><span class="n">MaxArrayLength</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">newCapacity</span> <span class="p">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">newCapacity</span> <span class="p">=</span> <span class="n">min</span><span class="p">;</span>
+        <span class="n">Capacity</span> <span class="p">=</span> <span class="n">newCapacity</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
 <p>每次增加一个元素的数据，Add接口首先检查的是容量还够吗，如果不够则用 EnsureCapacity 来增加容量。</p>
 
 <p>在 EnsureCapacity 中，</p>
@@ -131,71 +133,73 @@
 <p>用数组形式作为底层数据结构，好处是使用索引方式提取元素很快，但在扩容的时候就很糟糕了，每次new数组都会造成内存垃圾，这给垃圾回收GC带来了很多负担。一次性扩充更多的数组容量为GC减轻了负担，但数组连续的new也还是GC的不小负担，特别是代码中List频繁使用的Add时。另外，如果数量不得当也会浪费大量内存空间，比如当元素数量为 520 时，List 就会扩容到1024个元素，如果不使用剩余的504个空间单位，就造成了大部分的内存空间的浪费。</p>
 
 <p>我们再来看看Remove接口部分的源码。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    // Removes the element at the given index. The size of the list is
-    // decreased by one.
-    // 
-    public bool Remove(T item) {
-        int index = IndexOf(item);
-        if (index &gt;= 0) {
-            RemoveAt(index);
-            return true;
-        }
 
-        return false;
-    }
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Removes the element at the given index. The size of the list is</span>
+<span class="c1">// decreased by one.</span>
+<span class="c1">// </span>
+<span class="k">public</span> <span class="kt">bool</span> <span class="nf">Remove</span><span class="p">(</span><span class="n">T</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">index</span> <span class="p">=</span> <span class="n">IndexOf</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">RemoveAt</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    // Returns the index of the first occurrence of a given value in a range of
-    // this list. The list is searched forwards from beginning to end.
-    // The elements of the list are compared to the given value using the
-    // Object.Equals method.
-    // 
-    // This method uses the Array.IndexOf method to perform the
-    // search.
-    // 
-    public int IndexOf(T item) {
-        Contract.Ensures(Contract.Result&lt;int&gt;() &gt;= -1);
-        Contract.Ensures(Contract.Result&lt;int&gt;() &lt; Count);
-        return Array.IndexOf(_items, item, 0, _size);
-    }
+    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+<span class="p">}</span>
 
-    // Removes the element at the given index. The size of the list is
-    // decreased by one.
-    // 
-    public void RemoveAt(int index) {
-        if ((uint)index &gt;= (uint)_size) {
-            ThrowHelper.ThrowArgumentOutOfRangeException();
-        }
-        Contract.EndContractBlock();
-        _size--;
-        if (index &lt; _size) {
-            Array.Copy(_items, index + 1, _items, index, _size - index);
-        }
-        _items[_size] = default(T);
-        _version++;
-    }
-</code></pre></div>
+<span class="c1">// Returns the index of the first occurrence of a given value in a range of</span>
+<span class="c1">// this list. The list is searched forwards from beginning to end.</span>
+<span class="c1">// The elements of the list are compared to the given value using the</span>
+<span class="c1">// Object.Equals method.</span>
+<span class="c1">// </span>
+<span class="c1">// This method uses the Array.IndexOf method to perform the</span>
+<span class="c1">// search.</span>
+<span class="c1">// </span>
+<span class="k">public</span> <span class="kt">int</span> <span class="nf">IndexOf</span><span class="p">(</span><span class="n">T</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Contract</span><span class="p">.</span><span class="n">Ensures</span><span class="p">(</span><span class="n">Contract</span><span class="p">.</span><span class="n">Result</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;()</span> <span class="p">&gt;=</span> <span class="p">-</span><span class="m">1</span><span class="p">);</span>
+    <span class="n">Contract</span><span class="p">.</span><span class="n">Ensures</span><span class="p">(</span><span class="n">Contract</span><span class="p">.</span><span class="n">Result</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;()</span> <span class="p">&lt;</span> <span class="n">Count</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Array</span><span class="p">.</span><span class="n">IndexOf</span><span class="p">(</span><span class="n">_items</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">_size</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Removes the element at the given index. The size of the list is</span>
+<span class="c1">// decreased by one.</span>
+<span class="c1">// </span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">RemoveAt</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span><span class="n">index</span> <span class="p">&gt;=</span> <span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="n">_size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentOutOfRangeException</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="n">Contract</span><span class="p">.</span><span class="n">EndContractBlock</span><span class="p">();</span>
+    <span class="n">_size</span><span class="p">--;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="p">&lt;</span> <span class="n">_size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">_items</span><span class="p">,</span> <span class="n">index</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span> <span class="n">_items</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">_size</span> <span class="p">-</span> <span class="n">index</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">_items</span><span class="p">[</span><span class="n">_size</span><span class="p">]</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+    <span class="n">_version</span><span class="p">++;</span>
+<span class="p">}</span></code></pre></figure>
+
 <p>Remove接口中包含了 IndexOf 和 RemoveAt，用 IndexOf 找到元素的索引位置，用 RemoveAt 删除指定位置的元素。删除的原理其实就是用 Array.Copy 对数组进行覆盖。IndexOf 启用的是 Array.IndexOf 接口来查找元素的索引位置，这个接口内部实现是就是按索引顺序从0到n对每个位置的比较，复杂度为O(n)。</p>
 
 <p>再看来 Insert 接口源码。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    // Inserts an element into this list at a given index. The size of the list
-    // is increased by one. If required, the capacity of the list is doubled
-    // before inserting the new element.
-    // 
-    public void Insert(int index, T item) {
-        // Note that insertions at the end are legal.
-        if ((uint) index &gt; (uint)_size) {
-            ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.index, ExceptionResource.ArgumentOutOfRange_ListInsert);
-        }
-        Contract.EndContractBlock();
-        if (_size == _items.Length) EnsureCapacity(_size + 1);
-        if (index &lt; _size) {
-            Array.Copy(_items, index, _items, index + 1, _size - index);
-        }
-        _items[index] = item;
-        _size++;            
-        _version++;
-    }
-</code></pre></div>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Inserts an element into this list at a given index. The size of the list</span>
+<span class="c1">// is increased by one. If required, the capacity of the list is doubled</span>
+<span class="c1">// before inserting the new element.</span>
+<span class="c1">// </span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Insert</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">,</span> <span class="n">T</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Note that insertions at the end are legal.</span>
+    <span class="k">if</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span> <span class="n">index</span> <span class="p">&gt;</span> <span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="n">_size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentOutOfRangeException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">index</span><span class="p">,</span> <span class="n">ExceptionResource</span><span class="p">.</span><span class="n">ArgumentOutOfRange_ListInsert</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">Contract</span><span class="p">.</span><span class="n">EndContractBlock</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">_size</span> <span class="p">==</span> <span class="n">_items</span><span class="p">.</span><span class="n">Length</span><span class="p">)</span> <span class="n">EnsureCapacity</span><span class="p">(</span><span class="n">_size</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="p">&lt;</span> <span class="n">_size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">_items</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">_items</span><span class="p">,</span> <span class="n">index</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span> <span class="n">_size</span> <span class="p">-</span> <span class="n">index</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">_items</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="p">=</span> <span class="n">item</span><span class="p">;</span>
+    <span class="n">_size</span><span class="p">++;</span>            
+    <span class="n">_version</span><span class="p">++;</span>
+<span class="p">}</span></code></pre></figure>
+
 <p>与Add接口一样，先检查容量是否足够，不足则扩容。插入元素时，则以拷贝数组的形式，将数组里的指定元素后面的元素向后移动一个位置。</p>
 
 <p>到这里，可以知道List的Add，Insert，IndexOf，Remove接口都是没有优化过的，如果过于频繁使用的话，会导致CPU使用过高，造成不少内存的冗余，也会使得垃圾回收(GC)时承担了更多的压力。</p>
@@ -232,271 +236,279 @@
 <h3>我们再来快速的看看其他常用接口的源码是如何实现的。</h3>
 
 <p>比如 []的实现，</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    // Sets or Gets the element at the given index.
-    // 
-    public T this[int index] {
-        get {
-            // Following trick can reduce the range check by one
-            if ((uint) index &gt;= (uint)_size) {
-                ThrowHelper.ThrowArgumentOutOfRangeException();
-            }
-            Contract.EndContractBlock();
-            return _items[index]; 
-        }
 
-        set {
-            if ((uint) index &gt;= (uint)_size) {
-                ThrowHelper.ThrowArgumentOutOfRangeException();
-            }
-            Contract.EndContractBlock();
-            _items[index] = value;
-            _version++;
-        }
-    }
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Sets or Gets the element at the given index.</span>
+<span class="c1">// </span>
+<span class="k">public</span> <span class="n">T</span> <span class="k">this</span><span class="p">[</span><span class="kt">int</span> <span class="n">index</span><span class="p">]</span> <span class="p">{</span>
+    <span class="k">get</span> <span class="p">{</span>
+        <span class="c1">// Following trick can reduce the range check by one</span>
+        <span class="k">if</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span> <span class="n">index</span> <span class="p">&gt;=</span> <span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="n">_size</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentOutOfRangeException</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="n">Contract</span><span class="p">.</span><span class="n">EndContractBlock</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">_items</span><span class="p">[</span><span class="n">index</span><span class="p">];</span> 
+    <span class="p">}</span>
+
+    <span class="k">set</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span> <span class="n">index</span> <span class="p">&gt;=</span> <span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="n">_size</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentOutOfRangeException</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="n">Contract</span><span class="p">.</span><span class="n">EndContractBlock</span><span class="p">();</span>
+        <span class="n">_items</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+        <span class="n">_version</span><span class="p">++;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
 <p>[]的实现，直接使用了数组的索引方式获取元素。</p>
 
 <p>再比如 Clear 清除接口</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    // Clears the contents of List.
-    public void Clear() {
-        if (_size &gt; 0)
-        {
-            Array.Clear(_items, 0, _size); // Don&#39;t need to doc this but we clear the elements so that the gc can reclaim the references.
-            _size = 0;
-        }
-        _version++;
-    }
-</code></pre></div>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Clears the contents of List.</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Clear</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">_size</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Array</span><span class="p">.</span><span class="n">Clear</span><span class="p">(</span><span class="n">_items</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">_size</span><span class="p">);</span> <span class="c1">// Don&#39;t need to doc this but we clear the elements so that the gc can reclaim the references.</span>
+        <span class="n">_size</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">_version</span><span class="p">++;</span>
+<span class="p">}</span></code></pre></figure>
+
 <p>Clear时并不会删除数组，而是将数组中的元素清空，并置 _size 为 0，表明当前容量为0.</p>
 
 <p>再比如 Contains 包含接口</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    // Contains returns true if the specified element is in the List.
-    // It does a linear, O(n) search.  Equality is determined by calling
-    // item.Equals().
-    //
-    public bool Contains(T item) {
-        if ((Object) item == null) {
-            for(int i=0; i&lt;_size; i++)
-                if ((Object) _items[i] == null)
-                    return true;
-            return false;
-        }
-        else {
-            EqualityComparer&lt;T&gt; c = EqualityComparer&lt;T&gt;.Default;
-            for(int i=0; i&lt;_size; i++) {
-                if (c.Equals(_items[i], item)) return true;
-            }
-            return false;
-        }
-    }
-</code></pre></div>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Contains returns true if the specified element is in the List.</span>
+<span class="c1">// It does a linear, O(n) search.  Equality is determined by calling</span>
+<span class="c1">// item.Equals().</span>
+<span class="c1">//</span>
+<span class="k">public</span> <span class="kt">bool</span> <span class="nf">Contains</span><span class="p">(</span><span class="n">T</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">Object</span><span class="p">)</span> <span class="n">item</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">=</span><span class="m">0</span><span class="p">;</span> <span class="n">i</span><span class="p">&lt;</span><span class="n">_size</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">Object</span><span class="p">)</span> <span class="n">_items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+                <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">c</span> <span class="p">=</span> <span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;.</span><span class="n">Default</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">=</span><span class="m">0</span><span class="p">;</span> <span class="n">i</span><span class="p">&lt;</span><span class="n">_size</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">_items</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">item</span><span class="p">))</span> <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
 <p>Contains 接口使用的是线性查找方式比较元素，复杂度为O(n)。</p>
 
 <p>再比如 ToArray 转化数组接口</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    // ToArray returns a new Object array containing the contents of the List.
-    // This requires copying the List, which is an O(n) operation.
-    public T[] ToArray() {
-        Contract.Ensures(Contract.Result&lt;T[]&gt;() != null);
-        Contract.Ensures(Contract.Result&lt;T[]&gt;().Length == Count);
 
-        T[] array = new T[_size];
-        Array.Copy(_items, 0, array, 0, _size);
-        return array;
-    }
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// ToArray returns a new Object array containing the contents of the List.</span>
+<span class="c1">// This requires copying the List, which is an O(n) operation.</span>
+<span class="k">public</span> <span class="n">T</span><span class="p">[]</span> <span class="nf">ToArray</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Contract</span><span class="p">.</span><span class="n">Ensures</span><span class="p">(</span><span class="n">Contract</span><span class="p">.</span><span class="n">Result</span><span class="p">&lt;</span><span class="n">T</span><span class="p">[]&gt;()</span> <span class="p">!=</span> <span class="k">null</span><span class="p">);</span>
+    <span class="n">Contract</span><span class="p">.</span><span class="n">Ensures</span><span class="p">(</span><span class="n">Contract</span><span class="p">.</span><span class="n">Result</span><span class="p">&lt;</span><span class="n">T</span><span class="p">[]&gt;().</span><span class="n">Length</span> <span class="p">==</span> <span class="n">Count</span><span class="p">);</span>
+
+    <span class="n">T</span><span class="p">[]</span> <span class="n">array</span> <span class="p">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">_size</span><span class="p">];</span>
+    <span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">_items</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">_size</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
 <p>ToArray接口，重新new了一个数组返回出来。</p>
 
 <p>再比如 Find 查找接口</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    public T Find(Predicate&lt;T&gt; match) {
-        if( match == null) {
-            ThrowHelper.ThrowArgumentNullException(ExceptionArgument.match);
-        }
-        Contract.EndContractBlock();
 
-        for(int i = 0 ; i &lt; _size; i++) {
-            if(match(_items[i])) {
-                return _items[i];
-            }
-        }
-        return default(T);
-    }
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="n">T</span> <span class="nf">Find</span><span class="p">(</span><span class="n">Predicate</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">match</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">match</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentNullException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">match</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">Contract</span><span class="p">.</span><span class="n">EndContractBlock</span><span class="p">();</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span> <span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">_size</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">match</span><span class="p">(</span><span class="n">_items</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_items</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nf">default</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
 <p>Find接口使用的也是线性查找，对每个元素都进行了比较，算法复杂度为O(n)。</p>
 
 <p>再比如 Enumerator 枚举迭代部分的细节</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    // Returns an enumerator for this list with the given
-    // permission for removal of elements. If modifications made to the list 
-    // while an enumeration is in progress, the MoveNext and 
-    // GetObject methods of the enumerator will throw an exception.
-    //
-    public Enumerator GetEnumerator() {
-        return new Enumerator(this);
-    }
 
-    /// &lt;internalonly/&gt;
-    IEnumerator&lt;T&gt; IEnumerable&lt;T&gt;.GetEnumerator() {
-        return new Enumerator(this);
-    }
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Returns an enumerator for this list with the given</span>
+<span class="c1">// permission for removal of elements. If modifications made to the list </span>
+<span class="c1">// while an enumeration is in progress, the MoveNext and </span>
+<span class="c1">// GetObject methods of the enumerator will throw an exception.</span>
+<span class="c1">//</span>
+<span class="k">public</span> <span class="n">Enumerator</span> <span class="nf">GetEnumerator</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">Enumerator</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
 
-    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
-        return new Enumerator(this);
-    }
+<span class="c1">/// &lt;internalonly/&gt;</span>
+<span class="n">IEnumerator</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;.</span><span class="n">GetEnumerator</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">Enumerator</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
 
-    [Serializable]
-    public struct Enumerator : IEnumerator&lt;T&gt;, System.Collections.IEnumerator
-    {
-        private List&lt;T&gt; list;
-        private int index;
-        private int version;
-        private T current;
+<span class="n">System</span><span class="p">.</span><span class="n">Collections</span><span class="p">.</span><span class="n">IEnumerator</span> <span class="n">System</span><span class="p">.</span><span class="n">Collections</span><span class="p">.</span><span class="n">IEnumerable</span><span class="p">.</span><span class="n">GetEnumerator</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">Enumerator</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
 
-        internal Enumerator(List&lt;T&gt; list) {
-            this.list = list;
-            index = 0;
-            version = list._version;
-            current = default(T);
-        }
+<span class="na">[Serializable]</span>
+<span class="k">public</span> <span class="k">struct</span> <span class="nc">Enumerator</span> <span class="p">:</span> <span class="n">IEnumerator</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;,</span> <span class="n">System</span><span class="p">.</span><span class="n">Collections</span><span class="p">.</span><span class="n">IEnumerator</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">index</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">version</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">T</span> <span class="n">current</span><span class="p">;</span>
 
-        public void Dispose() {
-        }
+    <span class="k">internal</span> <span class="nf">Enumerator</span><span class="p">(</span><span class="n">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">list</span> <span class="p">=</span> <span class="n">list</span><span class="p">;</span>
+        <span class="n">index</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="n">version</span> <span class="p">=</span> <span class="n">list</span><span class="p">.</span><span class="n">_version</span><span class="p">;</span>
+        <span class="n">current</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+    <span class="p">}</span>
 
-        public bool MoveNext() {
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Dispose</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-            List&lt;T&gt; localList = list;
+    <span class="k">public</span> <span class="kt">bool</span> <span class="nf">MoveNext</span><span class="p">()</span> <span class="p">{</span>
 
-            if (version == localList._version &amp;&amp; ((uint)index &lt; (uint)localList._size)) 
-            {                                                     
-                current = localList._items[index];                    
-                index++;
-                return true;
-            }
-            return MoveNextRare();
-        }
+        <span class="n">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">localList</span> <span class="p">=</span> <span class="n">list</span><span class="p">;</span>
 
-        private bool MoveNextRare()
-        {                
-            if (version != list._version) {
-                ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumFailedVersion);
-            }
+        <span class="k">if</span> <span class="p">(</span><span class="n">version</span> <span class="p">==</span> <span class="n">localList</span><span class="p">.</span><span class="n">_version</span> <span class="p">&amp;&amp;</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span><span class="n">index</span> <span class="p">&lt;</span> <span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="n">localList</span><span class="p">.</span><span class="n">_size</span><span class="p">))</span> 
+        <span class="p">{</span>                                                     
+            <span class="n">current</span> <span class="p">=</span> <span class="n">localList</span><span class="p">.</span><span class="n">_items</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>                    
+            <span class="n">index</span><span class="p">++;</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nf">MoveNextRare</span><span class="p">();</span>
+    <span class="p">}</span>
 
-            index = list._size + 1;
-            current = default(T);
-            return false;                
-        }
+    <span class="k">private</span> <span class="kt">bool</span> <span class="nf">MoveNextRare</span><span class="p">()</span>
+    <span class="p">{</span>                
+        <span class="k">if</span> <span class="p">(</span><span class="n">version</span> <span class="p">!=</span> <span class="n">list</span><span class="p">.</span><span class="n">_version</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowInvalidOperationException</span><span class="p">(</span><span class="n">ExceptionResource</span><span class="p">.</span><span class="n">InvalidOperation_EnumFailedVersion</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        public T Current {
-            get {
-                return current;
-            }
-        }
+        <span class="n">index</span> <span class="p">=</span> <span class="n">list</span><span class="p">.</span><span class="n">_size</span> <span class="p">+</span> <span class="m">1</span><span class="p">;</span>
+        <span class="n">current</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>                
+    <span class="p">}</span>
 
-        Object System.Collections.IEnumerator.Current {
-            get {
-                if( index == 0 || index == list._size + 1) {
-                     ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumOpCantHappen);
-                }
-                return Current;
-            }
-        }
+    <span class="k">public</span> <span class="n">T</span> <span class="n">Current</span> <span class="p">{</span>
+        <span class="k">get</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">current</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-        void System.Collections.IEnumerator.Reset() {
-            if (version != list._version) {
-                ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumFailedVersion);
-            }
+    <span class="n">Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Collections</span><span class="p">.</span><span class="n">IEnumerator</span><span class="p">.</span><span class="n">Current</span> <span class="p">{</span>
+        <span class="k">get</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span> <span class="n">index</span> <span class="p">==</span> <span class="m">0</span> <span class="p">||</span> <span class="n">index</span> <span class="p">==</span> <span class="n">list</span><span class="p">.</span><span class="n">_size</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+                 <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowInvalidOperationException</span><span class="p">(</span><span class="n">ExceptionResource</span><span class="p">.</span><span class="n">InvalidOperation_EnumOpCantHappen</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">Current</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-            index = 0;
-            current = default(T);
-        }
+    <span class="k">void</span> <span class="n">System</span><span class="p">.</span><span class="n">Collections</span><span class="p">.</span><span class="n">IEnumerator</span><span class="p">.</span><span class="n">Reset</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">version</span> <span class="p">!=</span> <span class="n">list</span><span class="p">.</span><span class="n">_version</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowInvalidOperationException</span><span class="p">(</span><span class="n">ExceptionResource</span><span class="p">.</span><span class="n">InvalidOperation_EnumFailedVersion</span><span class="p">);</span>
+        <span class="p">}</span>
+        
+        <span class="n">index</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="n">current</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    }
-</code></pre></div>
+<span class="p">}</span></code></pre></figure>
+
 <p>Enumerator 每次都是被new出来了，如果大量使用枚举器比如foreach就会造成大量的垃圾对象，这也是为什么大家说 list 的 foreach 会增加垃圾回收GC的压力了原因了。</p>
 
 <p>最后我们来看看 Sort 排序接口</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    // Sorts the elements in a section of this list. The sort compares the
-    // elements to each other using the given IComparer interface. If
-    // comparer is null, the elements are compared to each other using
-    // the IComparable interface, which in that case must be implemented by all
-    // elements of the list.
-    // 
-    // This method uses the Array.Sort method to sort the elements.
-    // 
-    public void Sort(int index, int count, IComparer&lt;T&gt; comparer) {
-        if (index &lt; 0) {
-            ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.index, ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
-        }
 
-        if (count &lt; 0) {
-            ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.count, ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
-        }
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Sorts the elements in a section of this list. The sort compares the</span>
+<span class="c1">// elements to each other using the given IComparer interface. If</span>
+<span class="c1">// comparer is null, the elements are compared to each other using</span>
+<span class="c1">// the IComparable interface, which in that case must be implemented by all</span>
+<span class="c1">// elements of the list.</span>
+<span class="c1">// </span>
+<span class="c1">// This method uses the Array.Sort method to sort the elements.</span>
+<span class="c1">// </span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Sort</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">,</span> <span class="kt">int</span> <span class="n">count</span><span class="p">,</span> <span class="n">IComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">comparer</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentOutOfRangeException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">index</span><span class="p">,</span> <span class="n">ExceptionResource</span><span class="p">.</span><span class="n">ArgumentOutOfRange_NeedNonNegNum</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentOutOfRangeException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">count</span><span class="p">,</span> <span class="n">ExceptionResource</span><span class="p">.</span><span class="n">ArgumentOutOfRange_NeedNonNegNum</span><span class="p">);</span>
+    <span class="p">}</span>
+        
+    <span class="k">if</span> <span class="p">(</span><span class="n">_size</span> <span class="p">-</span> <span class="n">index</span> <span class="p">&lt;</span> <span class="n">count</span><span class="p">)</span>
+        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentException</span><span class="p">(</span><span class="n">ExceptionResource</span><span class="p">.</span><span class="n">Argument_InvalidOffLen</span><span class="p">);</span>
+    <span class="n">Contract</span><span class="p">.</span><span class="n">EndContractBlock</span><span class="p">();</span>
 
-        if (_size - index &lt; count)
-            ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_InvalidOffLen);
-        Contract.EndContractBlock();
+    <span class="n">Array</span><span class="p">.</span><span class="n">Sort</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">_items</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">comparer</span><span class="p">);</span>
+    <span class="n">_version</span><span class="p">++;</span>
+<span class="p">}</span></code></pre></figure>
 
-        Array.Sort&lt;T&gt;(_items, index, count, comparer);
-        _version++;
-    }
-</code></pre></div>
 <p>我找到 Array.Sort 源码，使用的是快速排序方式进行排序。也决定了 List 的 Sort 排序部分的效率为O(nlogn)。</p>
 
 <p>以下为 Array.Sort 的使用的算法源码。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    internal static void DepthLimitedQuickSort(T[] keys, int left, int right, IComparer&lt;T&gt; comparer, int depthLimit)
-    {
-        do
-        {
-            if (depthLimit == 0)
-            {
-                Heapsort(keys, left, right, comparer);
-                return;
-            }
 
-            int i = left;
-            int j = right;
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">internal</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">DepthLimitedQuickSort</span><span class="p">(</span><span class="n">T</span><span class="p">[]</span> <span class="n">keys</span><span class="p">,</span> <span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">,</span> <span class="n">IComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">comparer</span><span class="p">,</span> <span class="kt">int</span> <span class="n">depthLimit</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">do</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">depthLimit</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Heapsort</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">comparer</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
 
-            // pre-sort the low, middle (pivot), and high values in place.
-            // this improves performance in the face of already sorted data, or 
-            // data that is made up of multiple sorted runs appended together.
-            int middle = i + ((j - i) &gt;&gt; 1);
-            SwapIfGreater(keys, comparer, i, middle);  // swap the low with the mid point
-            SwapIfGreater(keys, comparer, i, j);   // swap the low with the high
-            SwapIfGreater(keys, comparer, middle, j); // swap the middle with the high
+        <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">left</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="n">right</span><span class="p">;</span>
 
-            T x = keys[middle];
-            do
-            {
-                while (comparer.Compare(keys[i], x) &lt; 0) i++;
-                while (comparer.Compare(x, keys[j]) &lt; 0) j--;
-                Contract.Assert(i &gt;= left &amp;&amp; j &lt;= right, &quot;(i&gt;=left &amp;&amp; j&lt;=right)  Sort failed - Is your IComparer bogus?&quot;);
-                if (i &gt; j) break;
-                if (i &lt; j)
-                {
-                    T key = keys[i];
-                    keys[i] = keys[j];
-                    keys[j] = key;
-                }
-                i++;
-                j--;
-            } while (i &lt;= j);
+        <span class="c1">// pre-sort the low, middle (pivot), and high values in place.</span>
+        <span class="c1">// this improves performance in the face of already sorted data, or </span>
+        <span class="c1">// data that is made up of multiple sorted runs appended together.</span>
+        <span class="kt">int</span> <span class="n">middle</span> <span class="p">=</span> <span class="n">i</span> <span class="p">+</span> <span class="p">((</span><span class="n">j</span> <span class="p">-</span> <span class="n">i</span><span class="p">)</span> <span class="p">&gt;&gt;</span> <span class="m">1</span><span class="p">);</span>
+        <span class="n">SwapIfGreater</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">comparer</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">middle</span><span class="p">);</span>  <span class="c1">// swap the low with the mid point</span>
+        <span class="n">SwapIfGreater</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">comparer</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>   <span class="c1">// swap the low with the high</span>
+        <span class="n">SwapIfGreater</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">comparer</span><span class="p">,</span> <span class="n">middle</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="c1">// swap the middle with the high</span>
 
-            // The next iteration of the while loop is to &quot;recursively&quot; sort the larger half of the array and the
-            // following calls recrusively sort the smaller half.  So we subtrack one from depthLimit here so
-            // both sorts see the new value.
-            depthLimit--;
+        <span class="n">T</span> <span class="n">x</span> <span class="p">=</span> <span class="n">keys</span><span class="p">[</span><span class="n">middle</span><span class="p">];</span>
+        <span class="k">do</span>
+        <span class="p">{</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">comparer</span><span class="p">.</span><span class="n">Compare</span><span class="p">(</span><span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">x</span><span class="p">)</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="n">i</span><span class="p">++;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">comparer</span><span class="p">.</span><span class="n">Compare</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">keys</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="n">j</span><span class="p">--;</span>
+            <span class="n">Contract</span><span class="p">.</span><span class="n">Assert</span><span class="p">(</span><span class="n">i</span> <span class="p">&gt;=</span> <span class="n">left</span> <span class="p">&amp;&amp;</span> <span class="n">j</span> <span class="p">&lt;=</span> <span class="n">right</span><span class="p">,</span> <span class="s">&quot;(i&gt;=left &amp;&amp; j&lt;=right)  Sort failed - Is your IComparer bogus?&quot;</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="p">&gt;</span> <span class="n">j</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">j</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">T</span> <span class="n">key</span> <span class="p">=</span> <span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">keys</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+                <span class="n">keys</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="p">=</span> <span class="n">key</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">i</span><span class="p">++;</span>
+            <span class="n">j</span><span class="p">--;</span>
+        <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="p">&lt;=</span> <span class="n">j</span><span class="p">);</span>
 
-            if (j - left &lt;= right - i)
-            {
-                if (left &lt; j) DepthLimitedQuickSort(keys, left, j, comparer, depthLimit);
-                left = i;
-            }
-            else
-            {
-                if (i &lt; right) DepthLimitedQuickSort(keys, i, right, comparer, depthLimit);
-                right = j;
-            }
-        } while (left &lt; right);
-    }
-</code></pre></div>
+        <span class="c1">// The next iteration of the while loop is to &quot;recursively&quot; sort the larger half of the array and the</span>
+        <span class="c1">// following calls recrusively sort the smaller half.  So we subtrack one from depthLimit here so</span>
+        <span class="c1">// both sorts see the new value.</span>
+        <span class="n">depthLimit</span><span class="p">--;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="p">-</span> <span class="n">left</span> <span class="p">&lt;=</span> <span class="n">right</span> <span class="p">-</span> <span class="n">i</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="p">&lt;</span> <span class="n">j</span><span class="p">)</span> <span class="n">DepthLimitedQuickSort</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">comparer</span><span class="p">,</span> <span class="n">depthLimit</span><span class="p">);</span>
+            <span class="n">left</span> <span class="p">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">right</span><span class="p">)</span> <span class="n">DepthLimitedQuickSort</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">comparer</span><span class="p">,</span> <span class="n">depthLimit</span><span class="p">);</span>
+            <span class="n">right</span> <span class="p">=</span> <span class="n">j</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">left</span> <span class="p">&lt;</span> <span class="n">right</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
 <hr>
 
 <h3>从源码上看得出来，代码是线程不安全的。所以最好别使用公用的 List 来添加，并发情况下，无法判断 _size++ 的执行顺序。</h3>
