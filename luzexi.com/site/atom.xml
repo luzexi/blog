@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-08T09:50:10+08:00</updated>
+ <updated>2018-07-08T10:11:54+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -489,6 +489,8 @@
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;hr&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://referencesource.microsoft.com/#mscorlib/system/collections/generic/list.cs&quot;&gt;List源码&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3&gt;从源码上看得出来，代码是线程不安全的。所以最好别使用公用的 List 来添加，并发情况下，无法判断 _size++ 的执行顺序。&lt;/h3&gt;
 

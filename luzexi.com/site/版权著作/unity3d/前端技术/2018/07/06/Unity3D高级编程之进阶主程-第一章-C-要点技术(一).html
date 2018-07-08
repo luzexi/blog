@@ -511,6 +511,8 @@
 
 <hr>
 
+<p><a href="https://referencesource.microsoft.com/#mscorlib/system/collections/generic/list.cs">List源码</a></p>
+
 <h3>从源码上看得出来，代码是线程不安全的。所以最好别使用公用的 List 来添加，并发情况下，无法判断 _size++ 的执行顺序。</h3>
 
 <h3>List 并不是高效的组件，真实情况是，他比数组的效率还要差的多，他只是个兼容性比较强得组件而已，好用，但效率差。</h3>
