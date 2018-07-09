@@ -8,12 +8,12 @@
 
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta content="“JaveScript的奇葩写法规则 js语法 js奇怪语法”" name="description">
+  <meta content="unity3d 高级编程 主程 数据表 xls Json Xml 多语言" name="description">
 
 
   <title>
     
-      JaveScript的奇葩写法规则
+      《Unity3D高级编程之进阶主程》第三章，数据表(一)
     
   </title>
 
@@ -36,207 +36,80 @@
 
     <div class="content container">
       <div class="post">
-  <h1 class="post-title">JaveScript的奇葩写法规则</h1>
-  <span class="post-date">26 Jun 2018</span>
-  <h1>JaveScript的奇葩写法规则</h1>
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第三章，数据表(一)</h1>
+  <span class="post-date">09 Jul 2018</span>
+  <h1>《Unity3D高级编程之进阶主程》第三章，数据表(一)</h1>
 
-<ol>
-<li><h3>=&gt; 箭头函数</h3>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>两个箭头同时使用 arg1 =&gt; arg2 =&gt;{return xxx;}
-可以理解为
-function( arg1 )
-{
-    return function(arg2)
-    {
-        return xxx;
-    }
-}
-也就是可以是 (arg1,arg2)=&gt;{return xxx;}的简写
-也就是function( arg1, arg2 ){ return xxx; }的意思
-</code></pre></div>
-<p>===</p></li>
-<li><h3>... 剩余数据</h3>
+<p>数据表完全可以认为是一个本地的数据库，只是这个数据库里的这些数据不可修改，是只读的。它大部分是从excel里生成出来的，再导入到游戏中去。也有使用比较原始的方法，比如直接写在代码里。</p>
 
-<h6>数组中的剩余数据</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>[a, b, ...rest] = [10, 20, 30, 40, 50];
-console.log(a); // 10
-console.log(b); // 20
-console.log(rest); // [30, 40, 50]
-</code></pre></div>
-<h6>对象中的剩余数据</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>({a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40});
-console.log(a); // 10
-console.log(b); // 20
-console.log(rest); // {c: 30, d: 40}
-</code></pre></div></li>
-<li><h3>[] 数组分配赋值用法</h3>
+<p>数据表是连接美术，设计策划，和程序的桥梁。艺术家们用它来配置效果，设计师用它来调整游戏的数值平衡，程序员们用它来判断逻辑。所以数据表的意义非常大，是连接各个环节的桥梁。</p>
 
-<h6>数组分配1</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var x = [1, 2, 3, 4, 5];
-var [y, z] = x;
-console.log(y); // 1
-console.log(z); // 2
-</code></pre></div>
-<h6>数组分配2</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var foo = [&#39;one&#39;, &#39;two&#39;, &#39;three&#39;];
-var [one, two, three] = foo;
-console.log(one); // &quot;one&quot;
-console.log(two); // &quot;two&quot;
-console.log(three); // &quot;three&quot;
-</code></pre></div>
-<h6>数组赋值默认值用法</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var a, b;
-[a=5, b=7] = [1];
-console.log(a); // 1
-console.log(b); // 7
-</code></pre></div>
-<h6>用数组做变量置换</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var a = 1;
-var b = 3;
-[a, b] = [b, a];
-console.log(a); // 3
-console.log(b); // 1
-</code></pre></div>
-<h6>省略赋值用法</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var [a, ...b] = [1, 2, 3];
-console.log(a); // 1
-console.log(b); // [2, 3]
-</code></pre></div></li>
-<li><h3>{} 对象分配用法</h3>
+<p>===</p>
 
-<h6>对象分配赋值</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var o = {p: 42, q: true};
-var {p, q} = o;
-console.log(p); // 42
-console.log(q); // true
+<h3>数据跟excel分不开</h3>
+
+<p>自从微软创建出神级的excel后，全世界都爱上了这款软件，无论自用还是商用，制图还是分析都离不开它了。</p>
+
+<p>居我的了解，基本上所有的公司都在用excel。而且，只要跟数据，数字，接触的职业，都会大量使用excel来做数据分析，数据制表等工作。</p>
+
+<p>它能给你所有你想处理数据的功能，而且快捷，方便，易于保存，上手快，方便传播等等等，说不完的好品质。</p>
+
+<p>所以呢，游戏行业里数值策划更是喜欢这个工具了，我们的游戏数据跟excel分不开，我们需要用它的来加快效率，特别是数据开发，数值平衡部分。</p>
+
+<p>现在你应该明白了，我为何如此夸大的它的优秀，因为他确实在很大程度上加快了项目的进度。</p>
+
+<p>下面说所的数据表，基本上都是意味着从Excel文件中导出来的数据的集合。</p>
+
+<p>我们来看看数据表的建立可以有几种方式：</p>
+
+<h3>代码数据</h3>
+
+<p>最最原始的数据，是写在程序里的，这种临时级别的数据，在更改，增加，删除时增加了大量的程序员的工作量。</p>
+
+<p>然而让策划人员去自行更改代码里的数据，不但增加了修改程序的风险，也让数值策划人员批量修改数值的难度增加好几倍。</p>
+
+<p>所以这种放在代码里的数据，基本都只存在于Demo阶段，或者mini游戏中，因为数据量小，更改的次数少，不会特别去在意数值的平衡性。</p>
+
+<p>数据放在代码里的原因就只有一个，快。不需要建立与其他部门的桥梁，比如建立excel表，制定规则，转化数据等。代码里的数据只有程序员知道是什么，为什么这么写，也只有程序员能看明白。</p>
+
+<h3>txt文本数据</h3>
+
+<p>文本是一种常用的数据表形式，通常用.txt文件，里面全是字符串形式的文本，包括数字在内，在程序读取后转化为相应的数据类型，例如整数，浮点数，文本，数组等。所以怎么读取，读取的规则也有了一定的考究。</p>
+
+<p>文本读取规则有很多标准形式的，包括Json，Xml，CSV等。这些都是常用的文本读取规则，在很多环境下，用文本读取字符串形式的数据然后按规则来转化成相应的数据和数据组也是极佳的选择。它的优点是能肉眼看到数据，并且查找问题，也能立即直接修改。</p>
+
+<p>通常为了方便，把数据直接用逗号隔开，或者用空格隔开，或者用特别的符号比如&#39;;&#39;分号等形式隔开，就可以作为一个数据的规则格式了。</p>
+
+<p>还记得我们主要的数据开发工具是Excel么，为了能从Excel里更容易的导出数据，我们会选择一些更加简单实用的导出方式。比如直接从Excel里复制粘贴数据到txt文件，这是最最直接的手动导出方式。</p>
+
+<p>也有用Excel直接保存CSV格式的，就是以&#39;,&#39;逗号开的格式的txt文件。</p>
+
+<p>这些都是比较容易的方式，如果要做到不手动，而是用程序工具转化，那就需要写个程序读取Excel文件内容，并导出相应的格式了。</p>
+
+<p>写一个程序工具来导出Excel的数据，就有很多格式可以考虑了，比如我们前面提到的，Json格式，Xml格式，以及自定义格式。</p>
+
+<p>通常习惯使用工具导出Excel数据的同学，都会使用使用程序工具导出数据，因为他们已经熟悉了这套流程和方法，在制定项目模块规划时就很容易把这块规划进项目里，因为对他们来说，是顺手拈来的事情，而且这事很容易做到，一劳永逸。</p>
+
+<p>我是比较提倡自动化的，我希望任何工作都可以自动化，从而减少人力操作导致的失误，同时也减少不必要的精力浪费。</p>
+
+<h3>比特流数据</h3>
+
+<p>数据比特流是一种稍微高级点的数据表现形式，他是将数据转化为2进制形式存放在文件里，然后程序通过读取2进制文件，按一定的规则将其转化为所需要的数据。它比起文本形式的数据文件特点是，占用的空间更加小。</p>
+
+<p>为什么更加小，因为存储数字时，是直接用2进制形式存储的，比如，txt文本中23345是“23345”这个字符串，占用了5个字符，每个字符2个字节，就用了10个字节，而2进制存储可以直接使用2个字节(short)存储了这个数字，所以数据比特流形式的数据存储文件更加小。一个以文本形式的txt文件来建立的10MB的数据文件，转化为2进制格式后，最大应该可以压缩到几百KB。</p>
+
+<p>一个10MB的文件在读取的时候是很消耗CPU的，假如项目中有几个甚至几十个这样的数据文件，在游戏进行中的卡顿是难免的，因为这么大的文件光读取整个内容就已经很消耗CPU资源了，更别说，还需要在读取文本数据后进行解析。庞大的文本解析，让几百上千个字符串，转化为数字或者浮点数，是很浪费CPU的。</p>
+
+<p>这个和数据网络传输时使用的协议是一个道理，有人使用了json格式的数据协议来传输网络数据，所以当数据大时，json字符串占用的数据量也非常大，启用压缩算法也不能解决根本问题。所以很多人转而使用数据比特流形式的数据协议来传输网络数据，以减少网络数据占用量，即使在网络不稳定的情况下，因为体量比较少，所以能够准确送达的概率也大了很多，从而网络性能也提高了很多。关于网络协议具体内容，会在以后的章节中一一介绍。</p>
+
+<p>以比特流形式作为协议的标准很多。比如最近比较流行的，Google protobuf。</p>
+
+<p>这里简单介绍下Google protobuf：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    protobuf是一个开源项目，而且是后台很硬的开源项目。网上现有的大部分（至少80%）开源项目，要么是某人单干、要么是几个闲杂人等合伙搞。而protobuf则不然，它是鼎鼎大名的Google公司开发出来，并且在Google内部久经考验的一个东东。由此可见，它的作者绝非一般闲杂人等可比。
+
+    那这个听起来牛X的东东到底有啥用处捏？简单地说，这个东东干的事儿其实和XML差不多，也就是把某种数据结构的信息，以某种格式保存起来。主要用于数据存储、传输协议格式等场合。
 </code></pre></div>
-<h6>默认值用法</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var {a = 10, b = 5} = {a: 3};
-console.log(a); // 3
-console.log(b); // 5
-</code></pre></div>
-<h6>指定key赋值+默认值</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var {a:aa = 10, b:bb = 5} = {a: 3};
-console.log(aa); // 3
-console.log(bb); // 5
-</code></pre></div>
-<h6>指定属性key解析赋值</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>let key = &#39;z&#39;;
-let {[key]: foo} = {z: &#39;bar&#39;};
-console.log(foo); // &quot;bar&quot;
-</code></pre></div>
-<h6>对象中剩余赋值法</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>let {a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40}
-a; // 10 
-b; // 20 
-rest; // { c: 30, d: 40 }
-</code></pre></div>
-<h6>弱变量定义与赋值</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>const foo = { &#39;fizz-buzz&#39;: true };
-const { &#39;fizz-buzz&#39;: fizzBuzz } = foo;
-console.log(fizzBuzz); // &quot;true&quot;
-</code></pre></div></li>
-</ol>
-
-<!-- <script type="text/javascript">
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        var cpro_id = "u3471606";
-        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
-    }
-    else
-    {
-        /*700*200信息流*/
-        var cpro_id = "u3469788";
-        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
-    }
-</script> -->
-
-<script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
-
-<ol>
-<li><h3>Object.assign() 合并对象</h3>
-
-<h6>将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var target = { a: 1 };
-var source1 = { b: 2 };
-var source2 = { c: 3 };
-Object.assign(target, source1, source2);
-target // {a:1, b:2, c:3}
-</code></pre></div>
-<h6>如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var target = { a: 1, b: 1 };
-var source1 = { b: 2, c: 2 };
-var source2 = { c: 3 };
-Object.assign(target, source1, source2);
-target // {a:1, b:2, c:3}
-</code></pre></div>
-<h6>Object.assign方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var obj1 = {a: {b: 1}};
-var obj2 = Object.assign({}, obj1);
-obj1.a.b = 2;
-obj2.a.b // 2
-</code></pre></div>
-<h6>对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>var target = { a: { b: &#39;c&#39;, d: &#39;e&#39; } }
-var source = { a: { b: &#39;hello&#39; } }
-Object.assign(target, source)
-// { a: { b: &#39;hello&#39; } }
-</code></pre></div>
-<h6>Object.assign 常见用途</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>为对象添加属性
-class Point {
-    constructor(x, y) {
-        Object.assign(this, {x, y});
-    }
-}
-
-为对象添加方法
-Object.assign(SomeClass.prototype, {
-    someMethod(arg1, arg2) {
-    ···
-    },
-    anotherMethod() {
-    ···
-    }
-});
-//  等同于下面的写法
-SomeClass.prototype.someMethod = function (arg1, arg2) {
-···
-};
-SomeClass.prototype.anotherMethod = function () {
-···
-};
-
-克隆对象
-function clone(origin) {
-    return Object.assign({}, origin);
-}
-
-合并多个对象
-const merge =(target, ...sources) =&gt; Object.assign(target, ...sources);
-
-为属性指定默认值
-const DEFAULTS = {
-    logLevel: 0,
-    outputFormat: &#39;html&#39;
-};
-function processContent(options) {
-    let options = Object.assign({}, DEFAULTS, options);
-}
-</code></pre></div></li>
-</ol>
+<p>protobuf有啥特色呢？会放在网络层的章节里讲。</p>
 
   <p>感谢您的耐心阅读</p>
   <p>Thanks for your reading</p>
@@ -250,8 +123,8 @@ function processContent(options) {
   <li>
 <p>版权申明</p>
 <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/26/JaveScript%E7%9A%84%E5%A5%87%E8%91%A9%E5%86%99%E6%B3%95%E8%A7%84%E5%88%99.html">JaveScript的奇葩写法规则</a></p> -->
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/26/JaveScript%E7%9A%84%E5%A5%87%E8%91%A9%E5%86%99%E6%B3%95%E8%A7%84%E5%88%99.html">JaveScript的奇葩写法规则</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html">《Unity3D高级编程之进阶主程》第三章，数据表(一)</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html">《Unity3D高级编程之进阶主程》第三章，数据表(一)</a></p> -->
 <p>Copyright attention</p>
 <p>If you would like to reprint this article please write auth's name and link in the page.</p>
 
@@ -299,15 +172,6 @@ function processContent(options) {
     
       <li>
         <h3>
-          <a href="/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html">
-            《Unity3D高级编程之进阶主程》第三章，数据表(一)
-            <small>09 Jul 2018</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
           <a href="/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF1.html">
             《Unity3D高级编程之进阶主程》第一章，C#要点技术(一)
             <small>06 Jul 2018</small>
@@ -320,6 +184,15 @@ function processContent(options) {
           <a href="/%E9%87%91%E8%9E%8D/%E9%87%91%E8%9E%8D%E6%8A%95%E8%B5%84/2018/07/05/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A8(%E4%B8%80).html">
             白领投资探讨(一)
             <small>05 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/life/2018/07/04/Always-challenge-miracle.html">
+            Always challenge miracle
+            <small>04 Jul 2018</small>
           </a>
         </h3>
       </li>
