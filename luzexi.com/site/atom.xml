@@ -4,13 +4,129 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-17T17:44:04+08:00</updated>
+ <updated>2018-07-17T17:46:47+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>《Unity3D高级编程之进阶主程》第三章，数据表(三)</title>
+   <link href="http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html"/>
+   <updated>2018-07-17T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D高级编程之进阶主程-数据表3</id>
+   <content type="html">&lt;h1&gt;《Unity3D高级编程之进阶主程》第三章，数据表(三)&lt;/h1&gt;
+
+&lt;p&gt;前文介绍了关于数据表的几种形式。&lt;a href=&quot;http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html&quot;&gt;《Unity3D高级编程之进阶主程》第三章，数据表(一)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以及如何让数据表运用更加简单高效。&lt;a href=&quot;http://luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html&quot;&gt;《Unity3D高级编程之进阶主程》第三章，数据表(二)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;这篇我们来讲讲多语言在数据表中的实现方式。&lt;/p&gt;
+
+&lt;p&gt;游戏项目中文字显示本身就是件比较头疼的事，再加上多语言，更多的问题将待需解决。很多时候项目起初，文本是写进代码里的，但是当项目中后期，文字又需要由策划来修改和添加，这个导致了大量的程序员的重复工作。所以文字的数据还是放在表里比较好些，就让改考虑文字内容的人去考虑文字内容吧。&lt;/p&gt;
+
+&lt;p&gt;文字放在表里一般都会以Key-Value形式存放，就比如，Key为&amp;quot;RoleName&amp;quot;,Value为&amp;quot;角色名字&amp;quot;，或者Key为1101,Value为&amp;quot;好友分享&amp;quot;等。&lt;/p&gt;
+
+&lt;p&gt;这种Key-Value形式，一般会以Int-String形式存在，或者string-string形式存在。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;我们先来讨论下这两种形式。&lt;/p&gt;
+
+&lt;p&gt;你从数据表里获取文字的方式，你是喜欢以整数为键值还是字符串形式呢？&lt;/p&gt;
+
+&lt;p&gt;用整数形式获取，比如string content = GetTextString(12)这种形式。看起来不是很美观，对不，我怎么知道12代表什么？只能意淫下，这个12可能是某个字符串。当代码多了文字多了，数字多了，你很难识别这句话是代表什么，调试起来很麻烦。一个项目基本会有10-30万行代码，到处都是这种形式的字符串获取方式，看了就奔溃。维护性太差，校验检查难度太大，效率太低。&lt;/p&gt;
+
+&lt;p&gt;那么用字符串形式获取，比如string content = GetTextString(“FightWin”)这种形式。会好些吗？
+看起来似乎好了些，我知道了我获取的大概是什么内容的字符串。但是问题来，你用一个字符串去获取另一个字符串，那岂不是双份。原本只要存储一个字符串就够了，现在要存两个，因为你用了键值字符串去获取内容字符串。&lt;/p&gt;
+
+&lt;p&gt;当文字内容很多时，你可能要用很长的字符串去代表一个很长的内容，比如用”BattleSceneFightAllianceWin” 去取”联盟战胜利了”，这种形式的字符串换字符串，导致文字数据表变得很大，内存占用量也加大了很多，因为你要另外存一份常量的字符串。&lt;/p&gt;
+
+&lt;p&gt;那么我们来想个更好的方法吧，我们既要用简洁的数字去代表文字，又要让键值看起来形象。怎么办？&lt;/p&gt;
+
+&lt;p&gt;在文字表生成数据表时，生成数据定义类，使用变量去代表数字。我们依然在表里填字符串对应字符串，比如上面提到的”BattleSceneFightAllianceWin” 对应”联盟战胜利了”，在导出xls数据文件时，生成一个类文件，专门把Key值按次序写进类中当变量。如下&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TextKey&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceWin&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceLose&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;再把“联盟战胜利了”这种文本数据按次序，依次写入数据文件。这样就可以一一对应了。也就是，第一个变量对应第一个文字，第二个变量对应第二个文字。获取文本的方式改为了，string content = GetTextString(TextKey. BattleSceneFightAllianceWin)。&lt;/p&gt;
+
+&lt;p&gt;这时文本数据的排列是这样的。如下&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;联盟战胜利了
+联盟战失败了
+…
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;而程序变量如下：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TextKey&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceWin&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceLose&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;文字与变量的数字依次对应，既解决了用数字做Key不够形象的问题，又解决了字符串做Key太多冗余的问题。&lt;/p&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;p&gt;那么多语言部分怎么处理？&lt;/p&gt;
+
+&lt;p&gt;简单的处理方式就是做多个表，每个表一个语言。获取方式可以根据不同语言来获取，比如&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;string content = GetTextString(”win”,Language.Chinese)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;不过每次增加删除都要一一对应，否则一个语言没有改就会报错，调试起来非常麻烦。&lt;/p&gt;
+
+&lt;p&gt;优化下。合并数据表，把一个表里的一个Key对应多个语言的文字内容写在一个表里面。如下，&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;键值，中文，英文，日文，韩文
+Win,赢了,Win, 勝った, 이기다
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样就有了规则，第2列是中文，第3列是英文，第4列是日文，第5列是韩文，依次类推。&lt;/p&gt;
+
+&lt;p&gt;接口没变，任然是&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;string content = GetTextString(”win”,Language.Chinese)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;但是文字表在编辑时就更加的形象，方便，快捷了。&lt;/p&gt;
+
+&lt;p&gt;做到这里多语言部分就完美了。策划设计人员和运营人员只要关心文字语言表里内容和键值是否正确就可以了，其他都可以完全交给程序员处理了。&lt;/p&gt;
+
+&lt;p&gt;关于分散读取，和集中读取，以及预读取部分，我想也在这里做个简单的讨论。&lt;/p&gt;
+
+&lt;p&gt;假如把所有表都集中起来成一个表，那么游戏在加载数据表就需要花很多CPU去处理，导致游戏有非常卡的现象，不合理。我们需要让游戏表现的非常顺畅，而不是某个点非常开。&lt;/p&gt;
+
+&lt;p&gt;所以分散读取比较可取，各个表数据都自己管自己读取吧，这样就CPU就分散开来了，不会一下子对CPU的需求量很大。而且在读取数据表时，要按需读取，而不是一开始就初始化，这样的话跟集中在一起就没有区别了。&lt;/p&gt;
+
+&lt;p&gt;至于预读取，其实和提前集中读取没有区别，关键是如何利用空挡时间进行预读取。比如在Loading等待时读取一部分数据，这样在等待时也不浪费CPU。&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第三章，数据表(二)</title>

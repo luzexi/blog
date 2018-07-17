@@ -7,6 +7,122 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第三章，数据表(三)</title>
+               <description>&lt;h1&gt;《Unity3D高级编程之进阶主程》第三章，数据表(三)&lt;/h1&gt;
+
+&lt;p&gt;前文介绍了关于数据表的几种形式。&lt;a href=&quot;http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html&quot;&gt;《Unity3D高级编程之进阶主程》第三章，数据表(一)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以及如何让数据表运用更加简单高效。&lt;a href=&quot;http://luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html&quot;&gt;《Unity3D高级编程之进阶主程》第三章，数据表(二)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;这篇我们来讲讲多语言在数据表中的实现方式。&lt;/p&gt;
+
+&lt;p&gt;游戏项目中文字显示本身就是件比较头疼的事，再加上多语言，更多的问题将待需解决。很多时候项目起初，文本是写进代码里的，但是当项目中后期，文字又需要由策划来修改和添加，这个导致了大量的程序员的重复工作。所以文字的数据还是放在表里比较好些，就让改考虑文字内容的人去考虑文字内容吧。&lt;/p&gt;
+
+&lt;p&gt;文字放在表里一般都会以Key-Value形式存放，就比如，Key为&amp;quot;RoleName&amp;quot;,Value为&amp;quot;角色名字&amp;quot;，或者Key为1101,Value为&amp;quot;好友分享&amp;quot;等。&lt;/p&gt;
+
+&lt;p&gt;这种Key-Value形式，一般会以Int-String形式存在，或者string-string形式存在。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;我们先来讨论下这两种形式。&lt;/p&gt;
+
+&lt;p&gt;你从数据表里获取文字的方式，你是喜欢以整数为键值还是字符串形式呢？&lt;/p&gt;
+
+&lt;p&gt;用整数形式获取，比如string content = GetTextString(12)这种形式。看起来不是很美观，对不，我怎么知道12代表什么？只能意淫下，这个12可能是某个字符串。当代码多了文字多了，数字多了，你很难识别这句话是代表什么，调试起来很麻烦。一个项目基本会有10-30万行代码，到处都是这种形式的字符串获取方式，看了就奔溃。维护性太差，校验检查难度太大，效率太低。&lt;/p&gt;
+
+&lt;p&gt;那么用字符串形式获取，比如string content = GetTextString(“FightWin”)这种形式。会好些吗？
+看起来似乎好了些，我知道了我获取的大概是什么内容的字符串。但是问题来，你用一个字符串去获取另一个字符串，那岂不是双份。原本只要存储一个字符串就够了，现在要存两个，因为你用了键值字符串去获取内容字符串。&lt;/p&gt;
+
+&lt;p&gt;当文字内容很多时，你可能要用很长的字符串去代表一个很长的内容，比如用”BattleSceneFightAllianceWin” 去取”联盟战胜利了”，这种形式的字符串换字符串，导致文字数据表变得很大，内存占用量也加大了很多，因为你要另外存一份常量的字符串。&lt;/p&gt;
+
+&lt;p&gt;那么我们来想个更好的方法吧，我们既要用简洁的数字去代表文字，又要让键值看起来形象。怎么办？&lt;/p&gt;
+
+&lt;p&gt;在文字表生成数据表时，生成数据定义类，使用变量去代表数字。我们依然在表里填字符串对应字符串，比如上面提到的”BattleSceneFightAllianceWin” 对应”联盟战胜利了”，在导出xls数据文件时，生成一个类文件，专门把Key值按次序写进类中当变量。如下&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TextKey&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceWin&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceLose&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;再把“联盟战胜利了”这种文本数据按次序，依次写入数据文件。这样就可以一一对应了。也就是，第一个变量对应第一个文字，第二个变量对应第二个文字。获取文本的方式改为了，string content = GetTextString(TextKey. BattleSceneFightAllianceWin)。&lt;/p&gt;
+
+&lt;p&gt;这时文本数据的排列是这样的。如下&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;联盟战胜利了
+联盟战失败了
+…
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;而程序变量如下：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TextKey&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceWin&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceLose&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;文字与变量的数字依次对应，既解决了用数字做Key不够形象的问题，又解决了字符串做Key太多冗余的问题。&lt;/p&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;p&gt;那么多语言部分怎么处理？&lt;/p&gt;
+
+&lt;p&gt;简单的处理方式就是做多个表，每个表一个语言。获取方式可以根据不同语言来获取，比如&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;string content = GetTextString(”win”,Language.Chinese)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;不过每次增加删除都要一一对应，否则一个语言没有改就会报错，调试起来非常麻烦。&lt;/p&gt;
+
+&lt;p&gt;优化下。合并数据表，把一个表里的一个Key对应多个语言的文字内容写在一个表里面。如下，&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;键值，中文，英文，日文，韩文
+Win,赢了,Win, 勝った, 이기다
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样就有了规则，第2列是中文，第3列是英文，第4列是日文，第5列是韩文，依次类推。&lt;/p&gt;
+
+&lt;p&gt;接口没变，任然是&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;string content = GetTextString(”win”,Language.Chinese)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;但是文字表在编辑时就更加的形象，方便，快捷了。&lt;/p&gt;
+
+&lt;p&gt;做到这里多语言部分就完美了。策划设计人员和运营人员只要关心文字语言表里内容和键值是否正确就可以了，其他都可以完全交给程序员处理了。&lt;/p&gt;
+
+&lt;p&gt;关于分散读取，和集中读取，以及预读取部分，我想也在这里做个简单的讨论。&lt;/p&gt;
+
+&lt;p&gt;假如把所有表都集中起来成一个表，那么游戏在加载数据表就需要花很多CPU去处理，导致游戏有非常卡的现象，不合理。我们需要让游戏表现的非常顺畅，而不是某个点非常开。&lt;/p&gt;
+
+&lt;p&gt;所以分散读取比较可取，各个表数据都自己管自己读取吧，这样就CPU就分散开来了，不会一下子对CPU的需求量很大。而且在读取数据表时，要按需读取，而不是一开始就初始化，这样的话跟集中在一起就没有区别了。&lt;/p&gt;
+
+&lt;p&gt;至于预读取，其实和提前集中读取没有区别，关键是如何利用空挡时间进行预读取。比如在Loading等待时读取一部分数据，这样在等待时也不浪费CPU。&lt;/p&gt;
+</description>
+               <pubDate>Tue, 17 Jul 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第三章，数据表(二)</title>
                <description>&lt;h1&gt;《Unity3D高级编程之进阶主程》第三章，数据表(二)&lt;/h1&gt;
 
@@ -1451,355 +1567,6 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
                <pubDate>Sat, 30 Jun 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/30/Vi%E5%92%8CVim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%9B%86.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/30/Vi%E5%92%8CVim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%9B%86.html</guid>
-            </item>
-        
-            <item>
-               <title>Markdown(MD)的语法说明</title>
-               <description>&lt;h1&gt;Markdown(MD)的语法说明&lt;/h1&gt;
-
-&lt;p&gt;针对中文,演示Markdown的各种语法&lt;/p&gt;
-
-&lt;p&gt;标题大小用多个#号表示大小，#越多字体越小&lt;/p&gt;
-
-&lt;p&gt;#&lt;/p&gt;
-
-&lt;h1&gt;这是 H1&lt;/h1&gt;
-
-&lt;p&gt;##&lt;/p&gt;
-
-&lt;h2&gt;这是 H2&lt;/h2&gt;
-
-&lt;p&gt;###&lt;/p&gt;
-
-&lt;h3&gt;这是 H3&lt;/h3&gt;
-
-&lt;p&gt;####&lt;/p&gt;
-
-&lt;h4&gt;这是 h4&lt;/h4&gt;
-
-&lt;p&gt;#####&lt;/p&gt;
-
-&lt;h5&gt;这是 h5&lt;/h5&gt;
-
-&lt;p&gt;######&lt;/p&gt;
-
-&lt;h6&gt;这是 h6&lt;/h6&gt;
-
-&lt;p&gt;????&lt;/p&gt;
-
-&lt;h3&gt;注意!!!下面所有语法的提示我都先用小标题提醒了!!!&lt;/h3&gt;
-
-&lt;h3&gt;单行文本框&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;这是一个单行的文本框,只要1个Tab再输入文字即可
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;多行文本框&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    这是一个有多行的文本框
-    你可以写入代码等,每行文字只要输入2个Tab再输入文字即可
-    这里你可以输入一段代码
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;比如我们可以在多行文本框里输入一段代码,来一个Java版本的HelloWorld吧&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    public class HelloWorld {
-      /**
-      * @param args
-        */
-        public static void main(String[] args) {
-            System.out.println(&amp;quot;HelloWorld!&amp;quot;);
-
-        }
-
-    }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;hr&gt;
-
-&lt;h3&gt;链接&lt;/h3&gt;
-
-&lt;p&gt;链接内容定义的形式为：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;方括号（前面可以选择性地加上至多三个空格来缩进），里面输入链接文字
-接着一个冒号加空格或直接括号
-接着链接的网址
-选择性地接着 title 内容，可以用单引号、双引号或是括弧包着
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;例如:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    [点击这里你可以链接到www.baidu.com](http://www.baidu.com)&amp;lt;br /&amp;gt;
-    [点击这里我你可以链接到我的博客](http://luzexi.com)&amp;lt;br /&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.baidu.com&quot;&gt;点击这里你可以链接到www.baidu.com&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://luzexi.com&quot;&gt;点击这里我你可以链接到我的博客&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr&gt;
-
-&lt;h3&gt;显示图片&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    []前面加!就代表图片了，其他和普通的连接差不多
-    ![icon](http://luzexi.com/public/apple-touch-icon-144-precomposed.png &amp;quot;icon&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://luzexi.com/public/apple-touch-icon-144-precomposed.png&quot; alt=&quot;icon&quot; title=&quot;icon&quot;&gt;&lt;/p&gt;
-
-&lt;h3&gt;想点击某个图片进入一个网页,比如我想点击blog的icorn然后再进入www.luzexi.com&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    []中加入图片显示，进行嵌套操作
-    [![image](http://luzexi.com/public/favicon.ico &amp;quot;blog&amp;quot;)](http://www.luzexi.com/)
-    这个可以分解拆分为[![image](http://luzexi.com/public/favicon.ico &amp;quot;blog&amp;quot;)] 和 (http://www.luzexi.com/) 两部分
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.luzexi.com/&quot;&gt;&lt;img src=&quot;http://luzexi.com/public/favicon.ico&quot; alt=&quot;image&quot; title=&quot;blog&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;h3&gt;文字被些字符包围&lt;/h3&gt;
-
-&lt;p&gt;&amp;gt; 文字被些字符包围&lt;/p&gt;
-
-&lt;p&gt;&amp;gt; 只要再文字前面加上&amp;gt;空格即可&lt;/p&gt;
-
-&lt;p&gt;&amp;gt; 如果你要换行的话,新起一行,输入&amp;gt;空格即可,后面不接文字&lt;/p&gt;
-
-&lt;p&gt;&amp;gt; 但&amp;gt; 只能放在行首才有效&lt;/p&gt;
-
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;文字被些字符包围&lt;/p&gt;
-
-&lt;p&gt;只要再文字前面加上&amp;gt;空格即可&lt;/p&gt;
-
-&lt;p&gt;如果你要换行的话,新起一行,输入&amp;gt;空格即可,后面不接文字
-但&amp;gt; 只能放在行首才有效&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;hr&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt; --&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
-
-&lt;h3&gt;文字被些字符包围,多重包围&lt;/h3&gt;
-
-&lt;p&gt;&amp;gt; 文字被些字符包围开始&lt;/p&gt;
-
-&lt;p&gt;&amp;gt; &amp;gt; 只要再文字前面加上&amp;gt;空格即可&lt;/p&gt;
-
-&lt;p&gt;&amp;gt;  &amp;gt; &amp;gt; 如果你要换行的话,新起一行,输入&amp;gt;空格即可,后面不接文字&lt;/p&gt;
-
-&lt;p&gt;&amp;gt; &amp;gt; &amp;gt; &amp;gt; 但&amp;gt; 只能放在行首才有效&lt;/p&gt;
-
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;文字被些字符包围开始&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;只要再文字前面加上&amp;gt;空格即可&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;如果你要换行的话,新起一行,输入&amp;gt;空格即可,后面不接文字&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;但&amp;gt; 只能放在行首才有效&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/blockquote&gt;
-&lt;/blockquote&gt;
-&lt;/blockquote&gt;
-
-&lt;hr&gt;
-
-&lt;h3&gt;特殊字符处理&lt;/h3&gt;
-
-&lt;p&gt;有一些特殊字符如&amp;lt;,#等,只要在特殊字符前面加上转义字符\即可&lt;br /&gt;
-你想换行的话其实可以直接用html标签&amp;lt;br /&amp;gt;&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;h3&gt;列表&lt;/h3&gt;
-
-&lt;h5&gt;无序列表使用星号、加号或是减号作为列表标记：&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;*   Jesse
-*   Sharon
-*   Anne
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;  Jesse&lt;/li&gt;
-&lt;li&gt;  Sharon&lt;/li&gt;
-&lt;li&gt;  Anne&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;等同于：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+   Jesse
-+   Sharon
-+   Anne
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;  Jesse&lt;/li&gt;
-&lt;li&gt;  Sharon&lt;/li&gt;
-&lt;li&gt;  Anne&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;等同于：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;-   Jesse
--   Sharon
--   Anne
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;  Jesse&lt;/li&gt;
-&lt;li&gt;  Sharon&lt;/li&gt;
-&lt;li&gt;  Anne&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr&gt;
-
-&lt;h5&gt;有序列表则使用数字接着一个英文句点&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;1.  Jesse
-2.  Sharon
-3.  Anne
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt; Jesse&lt;/li&gt;
-&lt;li&gt; Sharon&lt;/li&gt;
-&lt;li&gt; Anne&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;等同于:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;1. Jesse
-1. Sharon
-1. Anne
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Jesse&lt;/li&gt;
-&lt;li&gt;Sharon&lt;/li&gt;
-&lt;li&gt;Anne&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;等同于:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;4. Jesse
-2. Sharon
-8. Anne
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Jesse&lt;/li&gt;
-&lt;li&gt;Sharon&lt;/li&gt;
-&lt;li&gt;Anne&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt; --&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
-
-&lt;h3&gt;分割线&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    * * *
-
-    ***
-
-    *****
-
-    - - -
-
-    ---------------------------------------
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;p&gt;test1&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;p&gt;test2&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;p&gt;test3&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;p&gt;testend&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;h3&gt;强调&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    *single asterisks*
-
-    _single underscores_
-
-    **double asterisks**
-
-    __double underscores__
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;效果:&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;single asterisks&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;single underscores&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;double asterisks&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;double underscores&lt;/strong&gt;&lt;/p&gt;
-</description>
-               <pubDate>Wed, 27 Jun 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/27/Markdown-MD-%E7%9A%84%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/27/Markdown-MD-%E7%9A%84%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html</guid>
             </item>
         
     </channel>
