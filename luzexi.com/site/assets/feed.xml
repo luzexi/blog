@@ -49,6 +49,33 @@
 
 &lt;p&gt;所以我们需要再深入的加强这种好用的规则优化。&lt;/p&gt;
 
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+
 &lt;p&gt;再深入一点，每次策划设计人员增加Excel表时，都需要更程序员打招呼说，你帮我把这个Excel表加入到自动化和一键XXX的功能里去。程序员就需要腾出时间和精力来为策划设计人员服务。我们把这块移出去，策划设计人员能够可以自定义导出哪个Excel文件，以及Excel文件里的哪个工作簿。这样策划可以自主选择和自主增加表的导出内容。&lt;/p&gt;
 
 &lt;p&gt;怎么做？一个可行的办法是，写程序指定导出哪个表时，会预留几个参数，这个参数是指向某个需要导出的文件的，以及需要导出sheet。那么在命令行里，执行这个程序并且后面跟上参与就能导出数据。&lt;/p&gt;

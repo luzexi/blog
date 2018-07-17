@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-17T17:03:44+08:00</updated>
+ <updated>2018-07-17T17:09:26+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -57,6 +57,33 @@
 &lt;p&gt;假如，有了自动化，有了一键转化XXX的功能，策划设计人员可以自由的将Excel数据转化成能让程序员读取的数据格式，但是策划设计人员一直在对数据进行变动，特别是对字段的类型，字段的名字，一直在变。今天这个字段定义为id，明天这个字段成了是time了。或者插入了一个新的字段，删掉了旧的字段，或者新增了一个数据表，或者删掉了一个旧的数据表，等等。这让程序员很头疼，每次改程序员都及时得到通知，即使及时得到通知，也会遇到很大的麻烦。&lt;/p&gt;
 
 &lt;p&gt;所以我们需要再深入的加强这种好用的规则优化。&lt;/p&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        var cpro_id = &quot;u3471606&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt; --&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*文内嵌入*/
+    var cpro_id = &quot;u3471606&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;再深入一点，每次策划设计人员增加Excel表时，都需要更程序员打招呼说，你帮我把这个Excel表加入到自动化和一键XXX的功能里去。程序员就需要腾出时间和精力来为策划设计人员服务。我们把这块移出去，策划设计人员能够可以自定义导出哪个Excel文件，以及Excel文件里的哪个工作簿。这样策划可以自主选择和自主增加表的导出内容。&lt;/p&gt;
 
