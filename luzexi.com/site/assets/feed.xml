@@ -7,6 +7,93 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第三章，数据表(二)</title>
+               <description>&lt;h1&gt;《Unity3D高级编程之进阶主程》第三章，数据表(二)&lt;/h1&gt;
+
+&lt;p&gt;前文介绍了关于数据表的几种形式。&lt;a href=&quot;http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html&quot;&gt;《Unity3D高级编程之进阶主程》第三章，数据表(一)&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;本篇来介绍下数据表的几种制作数据的方式。&lt;/h3&gt;
+
+&lt;p&gt;Excel是大部分数值策划选择用的填数工具，因为Excel是天生的为数据处理而生。而Excel转什么格式就需要选择了。&lt;/p&gt;
+
+&lt;p&gt;比如最简单的就是直接复制黏贴到txt文件作为游戏数据了。这种方式最简单快捷，任何人都能做，但问题就是当多个xls转化为文件数据时，你就麻烦了，每次都要手动复制粘贴一遍。而且手动导入后你还要想想，是不是复制粘贴错了。为了Demo加快进度，也这么干过。但好几次查些莫名奇妙的数据表错误，都是因为人脑是有极限的，时常会因为重复劳动太多次而出错。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;有比较简单的直接Excel手动另存为导出CSV，就有了CSV的一个规范。
+这样既有了规范，又不怕复制粘贴错误，但还是有很多问题，比如多个文件时，你的重复劳动还是很多。&lt;/p&gt;
+
+&lt;p&gt;于是自动化是再次进阶的主题，将所有需要人工操作的流程，全部写入程序，让程序来帮助你完成工作。&lt;/p&gt;
+
+&lt;p&gt;主流自动化程序方式有很多，例如使用Shell设计自动化流程操作，也有自己通过特定语言写自动化的比如C#从Excel中读取数据后写入特定文件，还有使用Jenkins的，Jenkins不是万能的，他只是一个Web的管理页面，他也需要借助特定的语言，比如Shell或C#或Python或Ruby，甚至这些语言的组合，如果这些你都不太熟悉，还可以使用Unity3D的菜单栏编辑功能，实现点击菜单栏按钮后执行一套相关程序，也是种不错的选择。&lt;/p&gt;
+
+&lt;p&gt;自动化其实是最终的目标，让人力成本降到最低，节省所有能节省的精力消耗，把所有人员的注意力都集中到核心问题上去，比如框架，核心战斗，变化多端的渲染方式等。&lt;/p&gt;
+
+&lt;h3&gt;让数据使用起来更加方便&lt;/h3&gt;
+
+&lt;p&gt;用什么形式的文件作为数据表并不最最重要的，CSV也照样能把游戏跑得很好。这些技术并不决定游戏的性能会怎么样，只要你喜欢，什么形式都可以。很多时候，我们在选定数据存储规则时，大都选择的是自己熟悉，并且团队任何的方式。因为这能给我们带来很大的便捷性，也加快了开发速度，让团队不用这么痛苦并且浪费时间去适应新的规则。&lt;/p&gt;
+
+&lt;p&gt;关键是数据表是连接策划与其他部门的桥梁，所以你在做的时候需要考虑体验因素。如何让策划在配置数据表的时候能够有更好的体验就成了关键。所以好用是关键。&lt;/p&gt;
+
+&lt;p&gt;为什么要好用呢？只有好用才能提高效率，人员用着舒心顺畅，让项目在进展中，这种工具的使用提高了效率，而不是阻碍了效率。&lt;/p&gt;
+
+&lt;p&gt;前面提到的自动化就是提高效率的一种方法，还有比如一键转化XXX，这种形式的也是提高效率的好办法。&lt;/p&gt;
+
+&lt;p&gt;一键转化Excel到其他格式是一个比较人性化的工具，不需要人工手动去转化，通过工具就能搞定，只要数值策划按照你们双方约定的规则就行。这能大大提高数值策划与程序的协调性，一个系统，一个模块，需要什么数值，什么类型的数值，表要怎么建立，在你们约定的填表规则上，建立，读取，转化，变得轻而易举。&lt;/p&gt;
+
+&lt;p&gt;但是只有自动化，一键XXXX的功能，还是不够。因为这些只是一种工具，我们要的是团队间，特别是部门间，不同工种间的配合能顺畅无障碍。&lt;/p&gt;
+
+&lt;p&gt;再深入的解释下这种，要达成部门间顺畅无障碍的配合的意思。&lt;/p&gt;
+
+&lt;p&gt;假如，有了自动化，有了一键转化XXX的功能，策划设计人员可以自由的将Excel数据转化成能让程序员读取的数据格式，但是策划设计人员一直在对数据进行变动，特别是对字段的类型，字段的名字，一直在变。今天这个字段定义为id，明天这个字段成了是time了。或者插入了一个新的字段，删掉了旧的字段，或者新增了一个数据表，或者删掉了一个旧的数据表，等等。这让程序员很头疼，每次改程序员都及时得到通知，即使及时得到通知，也会遇到很大的麻烦。&lt;/p&gt;
+
+&lt;p&gt;所以我们需要再深入的加强这种好用的规则优化。&lt;/p&gt;
+
+&lt;p&gt;再深入一点，每次策划设计人员增加Excel表时，都需要更程序员打招呼说，你帮我把这个Excel表加入到自动化和一键XXX的功能里去。程序员就需要腾出时间和精力来为策划设计人员服务。我们把这块移出去，策划设计人员能够可以自定义导出哪个Excel文件，以及Excel文件里的哪个工作簿。这样策划可以自主选择和自主增加表的导出内容。&lt;/p&gt;
+
+&lt;p&gt;怎么做？一个可行的办法是，写程序指定导出哪个表时，会预留几个参数，这个参数是指向某个需要导出的文件的，以及需要导出sheet。那么在命令行里，执行这个程序并且后面跟上参与就能导出数据。&lt;/p&gt;
+
+&lt;p&gt;但是批处理写命令行也好，shell写命令行也好，毕竟还是程序级别的。策划并不能很好的控制对表的导出内容的增加和修改。
+比如我需要新增一个表，或者修改某个表的文件名，或者修改导出某个表文件里的sheet，这项工作还是需要修改命令行的，或者说修改批处理文件，或shell文件的。策划并不会改，或者说并且这种命令形式并不直观。&lt;/p&gt;
+
+&lt;p&gt;再次加入规则，让自动化和一键XXX更加人性化。我们可以增加一个Excel表，表里面填有具体要导出哪些Excel文件里的哪个sheet，这些sheet的数据导出后的文件名是什么，以及生成文件后，文件应该转移到哪个文件夹中去。这样策划就可以自行定制，我们需要用哪些Excel里的哪些sheet，可以自行增删改，可以完全自给自足了。策划设计人员完全能够主导所有数据的导出工作和转移工作都了。&lt;/p&gt;
+
+&lt;p&gt;还不够。方便了策划设计人员，程序员的麻烦还没解决，如果设计人员改了字段名字，插入了新的字段，删除了字段，又没有及时通知程序员，或者说忘记了自己做过什么怎么办，那岂不是要全盘彻查了？不可以，彻查这样的效率太低，不可以让这种事情发生。如果能在生成数据时自动检查与程序的对应关系就好了。&lt;/p&gt;
+
+&lt;p&gt;再加一个规则，让字段名字与程序对应的规则。&lt;/p&gt;
+
+&lt;p&gt;我们来再深入一点，用程序生成一群变量定义与每个数据表字段名对应，将每个要导出的sheet里的头行的列名作为变量名字写入程序变量定义中，以方便程序在读取数据表时，列名与数据表对齐，无形中校验做好了。&lt;/p&gt;
+
+&lt;p&gt;比如，role.xls文件中，role这个sheet(工作簿)中的第一列字段为ID，第二列字段为Name，第三列字段为Age，那么程序变量生成后就是这种格式。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ExcelDefine&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_ID&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_Name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_Age&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;当策划设计人员更改字段后，新增字段，删除字段后，会如何呢，比如第一列ID更改为Identifier,第二列插入School，第三列Age删除后，生成了如下的代码。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ExcelDefine&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_Identifier&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_School&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_Name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;这样一来，原来在程序中使用的ExcelDefine.role&lt;em&gt;role&lt;/em&gt;ID，ExcelDefine.role&lt;em&gt;role&lt;/em&gt;Age，将失效报错，而 ExcelDefine.role&lt;em&gt;role&lt;/em&gt;Name则自动转入读取第三列无需修改。&lt;/p&gt;
+
+&lt;p&gt;这样一来程序员不再需要知道策划设计人员修了数据是第几列，策划设计人员忘记了修改哪里也无妨，因为在编译时就会报出相关的错误，提示程序员们，表中的哪些字段进行了修改，你需要向策划设计人员询问具体意向。&lt;/p&gt;
+
+&lt;p&gt;做到这里，有了自动化和一键转化XXX的工具，省去了不少人力；加入了规则，让策划设计人员完全可以自己控制Excel数据表的操作；加入了检查校验和修复的功能，让程序员在数据表衔接部分也得到了很好的检查和校验作用，可以说完美了。&lt;/p&gt;
+</description>
+               <pubDate>Tue, 17 Jul 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html</guid>
+            </item>
+        
+            <item>
                <title>Challenge your fearing</title>
                <description>&lt;h1&gt;Challenge your fearing&lt;/h1&gt;
 
@@ -161,7 +248,7 @@
 
 &lt;p&gt;通常习惯使用工具导出Excel数据的同学，都会使用使用程序工具导出数据，因为他们已经熟悉了这套流程和方法，在制定项目模块规划时就很容易把这块规划进项目里，因为对他们来说，是顺手拈来的事情，而且这事很容易做到，一劳永逸。&lt;/p&gt;
 
-&lt;p&gt;我是比较提倡自动化的，我希望任何工作都可以自动化，从而减少人力操作导致的失误，同时也减少不必要的精力浪费。&lt;/p&gt;
+&lt;p&gt;自动化是最终的目标，我也希望任何工作都可以自动化来代替，从而减少人力操作导致的失误，减少了工作量，同时也减少不必要的精力浪费。&lt;/p&gt;
 
 &lt;h3&gt;比特流数据&lt;/h3&gt;
 
@@ -1686,213 +1773,6 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
                <pubDate>Wed, 27 Jun 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/27/Markdown-MD-%E7%9A%84%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/27/Markdown-MD-%E7%9A%84%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html</guid>
-            </item>
-        
-            <item>
-               <title>JaveScript的奇葩写法规则</title>
-               <description>&lt;h1&gt;JaveScript的奇葩写法规则&lt;/h1&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;h3&gt;=&amp;gt; 箭头函数&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;两个箭头同时使用 arg1 =&amp;gt; arg2 =&amp;gt;{return xxx;}
-可以理解为
-function( arg1 )
-{
-    return function(arg2)
-    {
-        return xxx;
-    }
-}
-也就是可以是 (arg1,arg2)=&amp;gt;{return xxx;}的简写
-也就是function( arg1, arg2 ){ return xxx; }的意思
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;===&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;h3&gt;... 剩余数据&lt;/h3&gt;
-
-&lt;h6&gt;数组中的剩余数据&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;[a, b, ...rest] = [10, 20, 30, 40, 50];
-console.log(a); // 10
-console.log(b); // 20
-console.log(rest); // [30, 40, 50]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;对象中的剩余数据&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;({a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40});
-console.log(a); // 10
-console.log(b); // 20
-console.log(rest); // {c: 30, d: 40}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;h3&gt;[] 数组分配赋值用法&lt;/h3&gt;
-
-&lt;h6&gt;数组分配1&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var x = [1, 2, 3, 4, 5];
-var [y, z] = x;
-console.log(y); // 1
-console.log(z); // 2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;数组分配2&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var foo = [&amp;#39;one&amp;#39;, &amp;#39;two&amp;#39;, &amp;#39;three&amp;#39;];
-var [one, two, three] = foo;
-console.log(one); // &amp;quot;one&amp;quot;
-console.log(two); // &amp;quot;two&amp;quot;
-console.log(three); // &amp;quot;three&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;数组赋值默认值用法&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var a, b;
-[a=5, b=7] = [1];
-console.log(a); // 1
-console.log(b); // 7
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;用数组做变量置换&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var a = 1;
-var b = 3;
-[a, b] = [b, a];
-console.log(a); // 3
-console.log(b); // 1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;省略赋值用法&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var [a, ...b] = [1, 2, 3];
-console.log(a); // 1
-console.log(b); // [2, 3]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;h3&gt;{} 对象分配用法&lt;/h3&gt;
-
-&lt;h6&gt;对象分配赋值&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var o = {p: 42, q: true};
-var {p, q} = o;
-console.log(p); // 42
-console.log(q); // true
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;默认值用法&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var {a = 10, b = 5} = {a: 3};
-console.log(a); // 3
-console.log(b); // 5
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;指定key赋值+默认值&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var {a:aa = 10, b:bb = 5} = {a: 3};
-console.log(aa); // 3
-console.log(bb); // 5
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;指定属性key解析赋值&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;let key = &amp;#39;z&amp;#39;;
-let {[key]: foo} = {z: &amp;#39;bar&amp;#39;};
-console.log(foo); // &amp;quot;bar&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;对象中剩余赋值法&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;let {a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40}
-a; // 10 
-b; // 20 
-rest; // { c: 30, d: 40 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;弱变量定义与赋值&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;const foo = { &amp;#39;fizz-buzz&amp;#39;: true };
-const { &amp;#39;fizz-buzz&amp;#39;: fizzBuzz } = foo;
-console.log(fizzBuzz); // &amp;quot;true&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt; --&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;h3&gt;Object.assign() 合并对象&lt;/h3&gt;
-
-&lt;h6&gt;将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var target = { a: 1 };
-var source1 = { b: 2 };
-var source2 = { c: 3 };
-Object.assign(target, source1, source2);
-target // {a:1, b:2, c:3}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var target = { a: 1, b: 1 };
-var source1 = { b: 2, c: 2 };
-var source2 = { c: 3 };
-Object.assign(target, source1, source2);
-target // {a:1, b:2, c:3}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;Object.assign方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var obj1 = {a: {b: 1}};
-var obj2 = Object.assign({}, obj1);
-obj1.a.b = 2;
-obj2.a.b // 2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;var target = { a: { b: &amp;#39;c&amp;#39;, d: &amp;#39;e&amp;#39; } }
-var source = { a: { b: &amp;#39;hello&amp;#39; } }
-Object.assign(target, source)
-// { a: { b: &amp;#39;hello&amp;#39; } }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;Object.assign 常见用途&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;为对象添加属性
-class Point {
-    constructor(x, y) {
-        Object.assign(this, {x, y});
-    }
-}
-
-为对象添加方法
-Object.assign(SomeClass.prototype, {
-    someMethod(arg1, arg2) {
-    ···
-    },
-    anotherMethod() {
-    ···
-    }
-});
-//  等同于下面的写法
-SomeClass.prototype.someMethod = function (arg1, arg2) {
-···
-};
-SomeClass.prototype.anotherMethod = function () {
-···
-};
-
-克隆对象
-function clone(origin) {
-    return Object.assign({}, origin);
-}
-
-合并多个对象
-const merge =(target, ...sources) =&amp;gt; Object.assign(target, ...sources);
-
-为属性指定默认值
-const DEFAULTS = {
-    logLevel: 0,
-    outputFormat: &amp;#39;html&amp;#39;
-};
-function processContent(options) {
-    let options = Object.assign({}, DEFAULTS, options);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-               <pubDate>Tue, 26 Jun 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/26/JaveScript%E7%9A%84%E5%A5%87%E8%91%A9%E5%86%99%E6%B3%95%E8%A7%84%E5%88%99.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/26/JaveScript%E7%9A%84%E5%A5%87%E8%91%A9%E5%86%99%E6%B3%95%E8%A7%84%E5%88%99.html</guid>
             </item>
         
     </channel>
