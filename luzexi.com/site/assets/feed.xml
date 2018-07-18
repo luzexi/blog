@@ -62,32 +62,26 @@
 
 &lt;p&gt;文字与变量的数字依次对应，既解决了用数字做Key不够形象的问题，又解决了字符串做Key太多冗余的问题。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;那么多语言部分怎么处理？&lt;/p&gt;
 
@@ -165,32 +159,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;所以我们需要再深入的加强这种好用的规则优化。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;再深入一点，每次策划设计人员增加Excel表时，都需要更程序员打招呼说，你帮我把这个Excel表加入到自动化和一键XXX的功能里去。程序员就需要腾出时间和精力来为策划设计人员服务。我们把这块移出去，策划设计人员能够可以自定义导出哪个Excel文件，以及Excel文件里的哪个工作簿。这样策划可以自主选择和自主增加表的导出内容。&lt;/p&gt;
 
@@ -346,32 +334,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;数据放在代码里的原因就只有一个，快。不需要建立与其他部门的桥梁，比如建立excel表，制定规则，转化数据等。代码里的数据只有程序员知道是什么，为什么这么写，也只有程序员能看明白。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;txt文本数据&lt;/h3&gt;
 
@@ -587,32 +569,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;AddRange，RemoveRange的原理和Add与Remove是一样的，只是多了几个元素，把单个元素变成了以容器为单位的形式进行操作。都是先检查容量是否合适，不合适则扩容，以及Remove时先得到索引位置再进行整体的覆盖删掉的元素。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;我们再来快速的看看其他常用接口的源码是如何实现的。&lt;/h3&gt;
 
@@ -941,32 +917,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;第四。如果我又想控制商品质量和价格，又想少承担风险呢？怎么办？招募合伙人，分摊资金风险。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;关于营销&lt;/h3&gt;
 
@@ -1073,32 +1043,26 @@ Win,赢了,Win, 勝った, 이기다
 
     这一点麦当劳就做得很好，总部搞研发，制定标准和流程；分部只需要按部就班的执行就可以了，这对于以全国为市场的行业来说是一个非常重要的方法。千万不能让终端人员自己发挥聪明才智，搞策划方案，最后弄得乌烟瘴气一团糟；一定要总部亲力亲为做市场调查，然后效果评估，最后制定出一个标准，再在全国铺开来做。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;产品的品质是关键中的关键，好的品质才能衬托出大的潜力，加上精准的营销，让广告效应和传播效应深入人们的心里面，当人们有此类产品需求时，第一个想到的就是我们这个产品。而团队的配合和执行力，使得营销方案再锦上添花，爆款一触即发。所谓爆款都是天时地利人和的一种机遇，但没有品质，营销，团队三个因素，再好的机遇都会瞬间溜走。&lt;/p&gt;
 </description>
@@ -1150,32 +1114,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;那么要怎么样判断股票在下跌过程中时可以买入的呢？&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;一。基本面扎实。 是最最重要的一点，也是所有买入的必要条件。所谓买好股做好人就是这个道理。只有买好的公司的股票才真正赚钱。投资股票要像投资实业那样脚踏实地才能真正赚到钱。否则所谓的炒作，最终都会将自己带入坟墓。&lt;/p&gt;
 
@@ -1201,32 +1159,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;真正便宜的价格是在熊市中出现的。为什么这么说呢？因为只有在熊市中，人们的风险意识才是最高的，这个时候，很多利好甚至重大利好消息，都会被忽略，导致价格与实际基本面完全背离。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;在熊市中，有两种风险，一种是底部还有底，二是破产。熊市中的风险就是人们的恐慌，所以底部下还有底部，因为人们不相信一切未来，只在乎当下的亏损。而破产很大一部分原因就是因为大家的谨慎导致资金面紧缺，最后可能由于债务或者资金链导致无法继续经营下去而破产。只有那种基本面扎实的，一心扑在行业里深耕拓展的企业才能最终活下来。也只有脚踏实地的企业，能在熊市中崛起。&lt;/p&gt;
 
@@ -1348,32 +1300,26 @@ Win,赢了,Win, 勝った, 이기다
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h2&gt;高级进阶之搜索与替换&lt;/h2&gt;
 
@@ -1497,32 +1443,26 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
     窗口宽度减少一行    ctrl + w then &amp;gt;
     窗口宽度增加一行    ctrl + w then &amp;lt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h5&gt;2.标签页多窗口&lt;/h5&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    :tabe &amp;lt;文件名&amp;gt;  在新标签页中打开指定的文件。

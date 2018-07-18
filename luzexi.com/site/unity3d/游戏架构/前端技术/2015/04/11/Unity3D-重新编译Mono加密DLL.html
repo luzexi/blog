@@ -72,32 +72,26 @@
 
 <p>加密算法自己选我不多说了，但我这里要引用一篇同样介绍mono的dll加密的文章，我觉得也写得满不错的，但是文章描述不够详尽。我这篇文章弥补了他的不足，将细节补充得更加细致。你大可以两篇文章加起来参考。<a href="http://www.unitymanual.com/home.php?mod=space&uid=7672&do=blog&id=1440">http://www.unitymanual.com/home.php?mod=space&amp;uid=7672&amp;do=blog&amp;id=1440</a> 不知道地址是不是原作者的，如果不是我再更换吧。</p>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = "u3471606";
-        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+        /*mobile-6:5*/
+        var cpro_id = "u3485972";
+        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = "u3469788";
-        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
     }
-</script> -->
+</script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <p>1.首先找到dll解密入口。mono下/mono/metadata/image.c里mono<em>image</em>open<em>from</em>data<em>with</em>name是关键方法，参数中的data是dll传入的数据。你要做的就是将它解密后传给datac，这个方法程序你必须看下，因为你要了解下解密程序放在哪才合适。</p>
 
@@ -137,29 +131,25 @@
 <p><image src="/public/qrcode_for_gzh.jpg" /></p>
 </li>
   <li>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-    	var cpro_id = "u3471606";
-		document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
     }
     else
     {
-	    /*700*200信息流*/
-	    var cpro_id = "u3469788";
-		document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
 	}
-</script> -->
-<script type="text/javascript">
+</script>
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 </li>
 </div>
@@ -212,22 +202,20 @@
 <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
 
 <script type="text/javascript">
- //    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
- //    { //移动端
- //    	var cpro_id = "u3471606";
- //    	document.write("\<script type=\"text\/javascript\" src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/cm.js\"\>\<\/script\>");
-	// }
-	// else
-	// { //pc端
-	// 	/*700*200信息流*/
-	// 	var cpro_id = "u3469788";
-	// 	document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
-	// }
-	
-	/*700*200信息流*/
-	var cpro_id = "u3469788";
-	document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
+ 
 
 
 

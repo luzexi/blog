@@ -104,32 +104,26 @@
 
 <p>以上是我能想起来的注意点，若有没想起来的，在以后的时间想到的也将补充进去。口无遮拦的说了这么多，不剖析一下源码怎么说的过去，之前对NGUI输入消息进行了封装，对2D动画序列帧进行了封装，却一直没能完整剖析它的底层源码，着实遗憾。</p>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = "u3471606";
-        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+        /*mobile-6:5*/
+        var cpro_id = "u3485972";
+        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = "u3469788";
-        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
     }
-</script> -->
+</script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <p>NGUI中UIPanel是渲染的关键，他承载了在他下面的子物体的所有渲染工作，每个渲染元素都是由UIWidget继承而来，每个UI物体的渲染都是由面片、材质球、UV点组成，每个种材质由一个UIDrawCall完成渲染工作，UIDrawCall中自己创建Mesh和MeshRender来进行统一的渲染工作。这些都是对NGUI底层的简单的介绍，下面将进行更加细致的分析。</p>
 
@@ -251,32 +245,26 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 <p>由这些内部变量可知，UIDrawCall是负责NGUI的最重要的渲染类。他制造Mesh制造Material，设置裁剪范围，为NGUI提供渲染底层。
 他最重要的方法是：</p>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = "u3471606";
-        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+        /*mobile-6:5*/
+        var cpro_id = "u3485972";
+        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = "u3469788";
-        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
     }
-</script> -->
+</script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">void</span> <span class="nf">Set</span> <span class="p">(</span><span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;</span> <span class="n">verts</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;</span> <span class="n">norms</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector4</span><span class="p">&gt;</span> <span class="n">tans</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;</span> <span class="n">uvs</span><span class="p">,</span> <span class="n">BetterList</span><span class="p">&lt;</span><span class="n">Color32</span><span class="p">&gt;</span> <span class="n">cols</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="kt">int</span> <span class="n">count</span> <span class="p">=</span> <span class="n">verts</span><span class="p">.</span><span class="n">size</span><span class="p">;</span>
@@ -489,29 +477,25 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 <p><image src="/public/qrcode_for_gzh.jpg" /></p>
 </li>
   <li>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-    	var cpro_id = "u3471606";
-		document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
     }
     else
     {
-	    /*700*200信息流*/
-	    var cpro_id = "u3469788";
-		document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
 	}
-</script> -->
-<script type="text/javascript">
+</script>
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 </li>
 </div>
@@ -564,22 +548,20 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
 
 <script type="text/javascript">
- //    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
- //    { //移动端
- //    	var cpro_id = "u3471606";
- //    	document.write("\<script type=\"text\/javascript\" src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/cm.js\"\>\<\/script\>");
-	// }
-	// else
-	// { //pc端
-	// 	/*700*200信息流*/
-	// 	var cpro_id = "u3469788";
-	// 	document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
-	// }
-	
-	/*700*200信息流*/
-	var cpro_id = "u3469788";
-	document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
+ 
 
 
 

@@ -100,32 +100,26 @@
 </code></pre></div>
 <p>有人会问，那如何让物品对应好几个Action呢？我再引入一个Action事件类，把它定义为类EventAction，他里面存储着16个Action ID，前8个ActionID是条件型动作，后8个ActionID为执行型动作。物品的数据中就有一个EventAction的ID，由这个EventAction来判断该执行那些Action，是否满足物品执行条件。当EventAction执行时，首先执行前8个Action，看看是否满足物品执行条件，如果不满足，则不执行后8个效果，如果满足再去执行后8个Action效果。因此EventAction也有很多各实例，由ID来区分不同的EventAction，由EventActionManager来管理所有事件Action。EventAction类结构：</p>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = "u3471606";
-        document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+        /*mobile-6:5*/
+        var cpro_id = "u3485972";
+        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = "u3469788";
-        document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
     }
-</script> -->
+</script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>  
 <span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>  
@@ -267,29 +261,25 @@ ActionID9,ActionID10,...ActionID16.
 <p><image src="/public/qrcode_for_gzh.jpg" /></p>
 </li>
   <li>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-    	var cpro_id = "u3471606";
-		document.write("\<script type=\"text/javascript\" src=\"http://cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
     }
     else
     {
-	    /*700*200信息流*/
-	    var cpro_id = "u3469788";
-		document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
 	}
-</script> -->
-<script type="text/javascript">
+</script>
+<!-- <script type="text/javascript">
     /*700*200信息流*/
     var cpro_id = "u3469788";
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-<!-- <script type="text/javascript">
-    /*文内嵌入*/
-    var cpro_id = "u3471606";
-</script>
-<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script> -->
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 </li>
 </div>
@@ -342,22 +332,20 @@ ActionID9,ActionID10,...ActionID16.
 <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
 
 <script type="text/javascript">
- //    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
- //    { //移动端
- //    	var cpro_id = "u3471606";
- //    	document.write("\<script type=\"text\/javascript\" src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/cm.js\"\>\<\/script\>");
-	// }
-	// else
-	// { //pc端
-	// 	/*700*200信息流*/
-	// 	var cpro_id = "u3469788";
-	// 	document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
-	// }
-	
-	/*700*200信息流*/
-	var cpro_id = "u3469788";
-	document.write("\<script type=\"text\/javascript\" src=\"\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"\>\<\/script\>");
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
+ 
 
 
 

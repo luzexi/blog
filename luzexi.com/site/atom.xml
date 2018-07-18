@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-17T17:53:54+08:00</updated>
+ <updated>2018-07-18T11:28:06+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -71,32 +71,26 @@
 
 &lt;p&gt;文字与变量的数字依次对应，既解决了用数字做Key不够形象的问题，又解决了字符串做Key太多冗余的问题。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;那么多语言部分怎么处理？&lt;/p&gt;
 
@@ -174,32 +168,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;所以我们需要再深入的加强这种好用的规则优化。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;再深入一点，每次策划设计人员增加Excel表时，都需要更程序员打招呼说，你帮我把这个Excel表加入到自动化和一键XXX的功能里去。程序员就需要腾出时间和精力来为策划设计人员服务。我们把这块移出去，策划设计人员能够可以自定义导出哪个Excel文件，以及Excel文件里的哪个工作簿。这样策划可以自主选择和自主增加表的导出内容。&lt;/p&gt;
 
@@ -355,32 +343,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;数据放在代码里的原因就只有一个，快。不需要建立与其他部门的桥梁，比如建立excel表，制定规则，转化数据等。代码里的数据只有程序员知道是什么，为什么这么写，也只有程序员能看明白。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;txt文本数据&lt;/h3&gt;
 
@@ -596,32 +578,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;AddRange，RemoveRange的原理和Add与Remove是一样的，只是多了几个元素，把单个元素变成了以容器为单位的形式进行操作。都是先检查容量是否合适，不合适则扩容，以及Remove时先得到索引位置再进行整体的覆盖删掉的元素。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;我们再来快速的看看其他常用接口的源码是如何实现的。&lt;/h3&gt;
 
@@ -950,32 +926,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;第四。如果我又想控制商品质量和价格，又想少承担风险呢？怎么办？招募合伙人，分摊资金风险。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;关于营销&lt;/h3&gt;
 
@@ -1082,32 +1052,26 @@ Win,赢了,Win, 勝った, 이기다
 
     这一点麦当劳就做得很好，总部搞研发，制定标准和流程；分部只需要按部就班的执行就可以了，这对于以全国为市场的行业来说是一个非常重要的方法。千万不能让终端人员自己发挥聪明才智，搞策划方案，最后弄得乌烟瘴气一团糟；一定要总部亲力亲为做市场调查，然后效果评估，最后制定出一个标准，再在全国铺开来做。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;产品的品质是关键中的关键，好的品质才能衬托出大的潜力，加上精准的营销，让广告效应和传播效应深入人们的心里面，当人们有此类产品需求时，第一个想到的就是我们这个产品。而团队的配合和执行力，使得营销方案再锦上添花，爆款一触即发。所谓爆款都是天时地利人和的一种机遇，但没有品质，营销，团队三个因素，再好的机遇都会瞬间溜走。&lt;/p&gt;
 </content>
@@ -1159,32 +1123,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;那么要怎么样判断股票在下跌过程中时可以买入的呢？&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;一。基本面扎实。 是最最重要的一点，也是所有买入的必要条件。所谓买好股做好人就是这个道理。只有买好的公司的股票才真正赚钱。投资股票要像投资实业那样脚踏实地才能真正赚到钱。否则所谓的炒作，最终都会将自己带入坟墓。&lt;/p&gt;
 
@@ -1210,32 +1168,26 @@ Win,赢了,Win, 勝った, 이기다
 
 &lt;p&gt;真正便宜的价格是在熊市中出现的。为什么这么说呢？因为只有在熊市中，人们的风险意识才是最高的，这个时候，很多利好甚至重大利好消息，都会被忽略，导致价格与实际基本面完全背离。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;在熊市中，有两种风险，一种是底部还有底，二是破产。熊市中的风险就是人们的恐慌，所以底部下还有底部，因为人们不相信一切未来，只在乎当下的亏损。而破产很大一部分原因就是因为大家的谨慎导致资金面紧缺，最后可能由于债务或者资金链导致无法继续经营下去而破产。只有那种基本面扎实的，一心扑在行业里深耕拓展的企业才能最终活下来。也只有脚踏实地的企业，能在熊市中崛起。&lt;/p&gt;
 
@@ -1357,32 +1309,26 @@ Win,赢了,Win, 勝った, 이기다
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h2&gt;高级进阶之搜索与替换&lt;/h2&gt;
 
@@ -1506,32 +1452,26 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
     窗口宽度减少一行    ctrl + w then &amp;gt;
     窗口宽度增加一行    ctrl + w then &amp;lt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h5&gt;2.标签页多窗口&lt;/h5&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    :tabe &amp;lt;文件名&amp;gt;  在新标签页中打开指定的文件。
@@ -1699,32 +1639,26 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 
 &lt;hr&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;文字被些字符包围,多重包围&lt;/h3&gt;
 
@@ -1847,32 +1781,26 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 
 &lt;hr&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;分割线&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    * * *
@@ -2029,32 +1957,26 @@ console.log(fizzBuzz); // &amp;quot;true&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;h3&gt;Object.assign() 合并对象&lt;/h3&gt;
@@ -2152,32 +2074,26 @@ function processContent(options) {
 
 &lt;p&gt;无法准确预测是件很恐怖的事，因为未知，或者说对未知的恐惧。庆幸的是，无法准确预测，却可以从一个比较长的时间中猜测到大概率会发生什么。我们可以根据大概率发生的事件而提前布局，比如中国股市大概率在未来10-20年内会全面开放给全球，全球投资者涌入的同时会带来一波巨大的牛市，冲破6000点不是梦。当然，这10-20年内中间的过程究竟会发生什么，谁都无法知道。就目前来看，是不会太顺利的。毕竟不经历风雨怎能见彩虹。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;从上面的分析来看，股市是不确定的，无法准确的预测，甚至有时模糊的预测都是错误的，只可以做一个5年或者10年或者20年后大概率发生的事，时间越久概率越大。人性恐惧导致了底部还有底。&lt;/p&gt;
 
@@ -2324,62 +2240,50 @@ http://www.meetup.com/Shanghai-Swimming-Meetup/&lt;/p&gt;
 
 &lt;p&gt;3.the hardest things i have is install ruby, lib of mysql and some of the dependent stuff.&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;its really hard for me to install lib of mysql for ruby because i dont know which source of apt-get i should use. i installed
 5.5.47 mysql version but it tells me the lib of mysql is 5.5.37 and it is the newest version in source of apt-get which the installed is failed. i change some of them but still cant be install. i even download the mysql of source and make them and try to pick the lib to install but failed. finally i choose the nature source of aliyun to install the lib of mysql, its success. i think its my bad, because i dont believe the nature source of aliyun so i change it.&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;4.After i finished all, i open gitlab site and it works. Then pull one of the repositories and change some file and push them. It said something wrong in the gitlab so i cant push the commit. i check search the problem and find i have to reline the update file in every repositories&amp;#39;s hook. So i do it, but it still socks. A little git time later i find that redis is not able to visit, so i add the user which git use into redis group. So the redis&amp;#39;s problem is solved but still cant push. I feel something wrong in satellites but i actually dont how to fix. So i remove all of the gitlab except repositories and install gitlab again, then import the respositories by using:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;cd /home/git/gitlab/
@@ -2492,32 +2396,26 @@ DataManager是架构的大脑。它广泛使用RxJava操作去合并过滤转换
                 });
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;视图中的组件像Activity或Fragment会简单调用这个方法并订阅返回的Observable。一旦订阅结束，用Observable得到的不同的文章能直接加入到适配器去展示在RecyclerView或者类似地方。&lt;/p&gt;
 
@@ -2557,32 +2455,26 @@ MVP为基础的架构&lt;/p&gt;
 
 &lt;p&gt;如果你想了解一整个MVP为基础架构的工作样例，你可以渐出我们的Android Boilerplatex(https://github.com/ribot/android-boilerplate)项目在Github上，你也可以在ribot的指南(https://github.com/ribot/android-guidelines/blob/master/architecture&lt;em&gt;guidelines/android&lt;/em&gt;architecture.md)上了解更多。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;为什么这个方法更好？&lt;/h3&gt;
 
@@ -2680,32 +2572,26 @@ MVP为基础的架构&lt;/p&gt;
 
 &lt;p&gt;很多复杂的着色器比简单的可能消耗性能。VertexLit Diffuse 着色器应该是带贴图和光照最快的着色器了。然而，如果没有像素灯光在场景里或者所有像素光都被Quality Manager关掉了，那么大多数着色器将回退到更加简单的顶点渲染版本。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;脚本&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;1.你是否使用了好的算法？选择一个好的算法对工作收益来说比其他的调整会有更好的优化效果如果可能的话。
@@ -2759,32 +2645,26 @@ MVP为基础的架构&lt;/p&gt;
 
 &lt;p&gt;6.sqlite (&lt;a href=&quot;https://github.com/LuaDist/lsqlite3&quot;&gt;https://github.com/LuaDist/lsqlite3&lt;/a&gt;) 是一个以文件形式存在的轻量级数据库，他被很多软件用来做本地数据存储。他的api轻便好用，广受程序员欢迎。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;源码中已将所有第三方库构建进slua里，并完成了android(x86,armv7),ios,mac,windows(x86,x64)这几个平台的测试。&lt;/p&gt;
 
@@ -2845,32 +2725,26 @@ MVP为基础的架构&lt;/p&gt;
 
 &lt;p&gt;加密算法自己选我不多说了，但我这里要引用一篇同样介绍mono的dll加密的文章，我觉得也写得满不错的，但是文章描述不够详尽。我这篇文章弥补了他的不足，将细节补充得更加细致。你大可以两篇文章加起来参考。&lt;a href=&quot;http://www.unitymanual.com/home.php?mod=space&amp;uid=7672&amp;do=blog&amp;id=1440&quot;&gt;http://www.unitymanual.com/home.php?mod=space&amp;amp;uid=7672&amp;amp;do=blog&amp;amp;id=1440&lt;/a&gt; 不知道地址是不是原作者的，如果不是我再更换吧。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;1.首先找到dll解密入口。mono下/mono/metadata/image.c里mono&lt;em&gt;image&lt;/em&gt;open&lt;em&gt;from&lt;/em&gt;data&lt;em&gt;with&lt;/em&gt;name是关键方法，参数中的data是dll传入的数据。你要做的就是将它解密后传给datac，这个方法程序你必须看下，因为你要了解下解密程序放在哪才合适。&lt;/p&gt;
 
@@ -2898,32 +2772,26 @@ MVP为基础的架构&lt;/p&gt;
 因为我使用的是iframe标签，所以有可能有部分浏览器并不支持。
 如果你查看时有问题可以直接点击:&lt;a href=&quot;/static-page/linux-env.html/index.html&quot;&gt;linux环境变量简介&lt;/a&gt;&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;iframe src=&quot;/static-page/linux-env.html/index.html&quot; width=&quot;100%&quot; , height=&quot;1000&quot;&gt;
 &lt;/iframe&gt;
@@ -2940,32 +2808,26 @@ MVP为基础的架构&lt;/p&gt;
    <content type="html">&lt;p&gt;Android-SDK-NDK-Studio-下载列表和构建说明。是一个我整理的安卓的开发资料，无论是用安卓还是其他第三方平台都需要的工具。
 你可以通过这个地址直接访问我整理的资料，资料中的标题点击左边图标可以展开请耐心查看：&lt;a href=&quot;/static-page/android-list.html/index.html&quot;&gt;Android-SDK-NDK-Studio-Build_process&lt;/a&gt;&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;展示内容：
 &lt;iframe src=&quot;/static-page/android-list.html/index.html&quot; width=&quot;100%&quot; height=&quot;2000&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
@@ -2988,32 +2850,26 @@ ngui和ugui切换方式有所不同，一个基于atlas一种基于Image，一�
 
 &lt;p&gt;2.基于两套图和两套prefab。开发期间，在修改其中一个prefab时，做个工具脚本，自动复制这个prefab到sd文件夹下，并将prefab里的所有图替换为sd。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;3.程序在选择sd还是hd时，只要关注prefab名就可以了。prefab名可以后缀不一样，load时可以区分开来。&lt;/p&gt;
 
@@ -3071,32 +2927,26 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
 (string类型中&amp;quot;和&amp;#39;会自动用\&amp;quot;和\&amp;#39;替代)
 (空列将会被默认值代替，例如:0,&amp;quot;&amp;quot;,false,{})
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;Lua script (生成后的Lua文件示例)&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;-- this file is generated by program!&lt;/span&gt;
@@ -3155,32 +3005,26 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
 
 &lt;p&gt;以上是所有开发需要的步骤，包括了 主逻辑开发，平台对接，项目管理，测试管理，备忘录，数据同步，资源打包，客户端打包，以及客户端同步。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;这些都只是称述而已，那么如何将这些部分连起来呢。看下图：
 &lt;img class=&quot;alignnone size-full wp-image-501&quot; src=&quot;/assets/uploads/2015/03/客户端环境布局.jpg&quot; alt=&quot;客户端环境布局&quot; width=&quot;711&quot; height=&quot;486&quot; /&gt;能看明白吗，容我解释下(其实上面也有一部分称述)：&lt;/p&gt;
@@ -3226,32 +3070,26 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
 
 &lt;p&gt;6.unity5 将与unity4完全不同，互不兼容，也就是像cocosx 2与cocosx 3一样，拆分两个版本维护。IL2P将会逐渐替代mono的打包方式。mono也很难升级，因为高版本的授权费用很高，一般的用户承受不了。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;7.以下是一些unity5比较有用的改善。没兴趣关注的就不提了。&lt;/p&gt;
 
@@ -3304,32 +3142,26 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
 
 &lt;p&gt;int lua_type(int index) : 获得索引index的值的类型。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;===================中级========================&lt;/p&gt;
 
@@ -3398,32 +3230,26 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 
 &lt;p&gt;iphone是用.mm文件，所以不用编译载体，只有Android和Mac需要。在platform&lt;em&gt;src/Android和platfor&lt;/em&gt;src/iOS下分别有install.ssh文件可以执行，用来编译各自的载体。所以你只要执行就可以了。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;三、Webview网页按钮回调。&lt;/p&gt;
 
@@ -3463,32 +3289,26 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 
 &lt;p&gt;状态机极大的简化了对人物行为变化的处理方式，也更加容易进行扩展。Unity3D里有一个动作的状态功能Animator，他的图形界面很清晰得解释了状态机的原理。但我自己并不喜欢使用，因为我认为这个Animator限制了程序员的思维，虽然达到了可视化状态机的目的但扩展性差，所以我一直不推崇使用，不过这只是个人看法。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;&lt;img class=&quot;alignnone size-full wp-image-433&quot; src=&quot;/assets/uploads/2014/10/10039783.jpg&quot; alt=&quot;10039783&quot; width=&quot;550&quot; height=&quot;240&quot; /&gt;&lt;/p&gt;
 
@@ -3530,32 +3350,26 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 
 &lt;p&gt;6.为了让行为树运用到项目里去，我们可以对BNodeAction，BNodeCondition，BNodeDecorator，进行扩展。继承书写的规则：继承子类必须在Game.AIBehaviorTree命名空间里，构造函数里最好对m_strName进行赋值，这样就能在行为树编辑器里看到你的扩展类和扩展命名，每个扩展的节点，如果有需要对变量进行编辑的，变量必须是public的，而且类型只限于int,float,bool,string四种。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;7.行为树编辑器是行为树系统可用性的关键。我把行为树用目录结构的方式来实现，这样对于节点的增加，删除，切换，拖拽，体验都非常便捷。对于每个节点的编辑状态在选择该节点后会在编辑器的右下脚现实。编辑器还承载了保存，加载，以及对行为树的增加和删除，重命名的功能。如下图：&lt;/p&gt;
 
@@ -3600,32 +3414,26 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 
 &lt;p&gt;主要用到的有分享朋友圈，分享给朋友，分享后回调。你可以首先看这几个重点。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;关于html5游戏渠道:&lt;/p&gt;
 
@@ -3725,32 +3533,26 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 &lt;h4&gt;fetch:&lt;/h4&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git fetch 这个我只知道抓取当前项目的所有信息主要实分支信息和提交记录，并不下载内容
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h4&gt;merge:&lt;/h4&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git merge server branch_name 合并server项目上branch_name分支
@@ -3828,32 +3630,26 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;cp&quot;&gt;#endif&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;3.拆分网络通信事件。将网络通信事件拆分为OnConnect , OnError , OnDisconnect , 这3个事件是最常见的通信事件。这3个事件也必须在主线程中调用，但这3个事件又不是以网络数据包为基础，所以需要在专门处理通信逻辑的类中加入3种状态start , error , disconnect.当网络通信层出现这三种事件时，将状态切过去（ps:而不是直接调用句柄）,然后再由专门处理通信逻辑的类在下一帧去调用对应的事件句柄。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;UnityEngine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -4029,32 +3825,26 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 
 &lt;p&gt;其实www.LoadFromCacheOrDownload加载机制也可以算一种，但似乎u3d4.5.2开始已经摒弃这个接口，大部分人也不太建议使用这个接口，似乎是因为这个界面消耗内存太厉害。其实具体什么原因我也不太清楚。个人认为这个接口太过死板，操作余地太小，受限太大。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;资源导入内存的方式有几种：&lt;/p&gt;
 
@@ -4116,32 +3906,26 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 
 &lt;p&gt;U3D的内部机制为自动生成图片类型来替换我们给的图片，在图片的压缩方式上需要进行谨慎的选择。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;压缩格式在U3D的&lt;a href=&quot;http://docs.unity3d.com/Documentation/Components/class-Texture2D.html&quot;&gt;Component Reference&lt;/a&gt;里有介绍我就不再详细介绍，只介绍几个重点的:&lt;/p&gt;
 
@@ -4190,32 +3974,26 @@ GB_DB(Mysql)
 GM_ADMIN_PHP+(memcache)  
 ------------------------------------------
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;描述：&lt;/p&gt;
 
@@ -4254,32 +4032,26 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 
 &lt;p&gt;3.如何应对自动释放资源问题。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;解决方案:&lt;/p&gt;
 
@@ -4360,32 +4132,26 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 
 &lt;p&gt;&lt;img class=&quot;alignnone size-full wp-image-355&quot; src=&quot;/assets/uploads/2014/02/48391BD3-BEAC-4E45-B6C4-17AA7B5B0428.png&quot; alt=&quot;48391BD3-BEAC-4E45-B6C4-17AA7B5B0428&quot; width=&quot;568&quot; height=&quot;211&quot; /&gt;&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;测试代码如下：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;UnityEngine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -4469,32 +4235,26 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 
 &lt;p&gt;HttpDummySession类，我还做了虚拟会话，主要是给HTTP和单机切换用，有些游戏想做网络和单机一起兼顾，可以用HTTP虚拟类来实现，不需要改原来写好的HTTP请求，只要你对加个请求句柄处理就可以了。不过一般人不会用到。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;三.网络层最重要的是能够快速，方便使用，能够适应变化多端的需求改变。&lt;/p&gt;
 
@@ -4531,32 +4291,26 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 
 &lt;p&gt;2015-09-28: 我这里做一下修正，其实这个问题就是assetbundle版本更新解决方案。答案可以在这里找到&lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4.html&quot;&gt;Unity3D之如何将包大小减少到极致&lt;/a&gt; &lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;3.如何知道哪些资源包需要加载以及加载地址和版本号。&lt;/p&gt;
 
@@ -4635,32 +4389,26 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;有人会问，那如何让物品对应好几个Action呢？我再引入一个Action事件类，把它定义为类EventAction，他里面存储着16个Action ID，前8个ActionID是条件型动作，后8个ActionID为执行型动作。物品的数据中就有一个EventAction的ID，由这个EventAction来判断该执行那些Action，是否满足物品执行条件。当EventAction执行时，首先执行前8个Action，看看是否满足物品执行条件，如果不满足，则不执行后8个效果，如果满足再去执行后8个Action效果。因此EventAction也有很多各实例，由ID来区分不同的EventAction，由EventActionManager来管理所有事件Action。EventAction类结构：&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
 &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Collections.Generic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
 &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Linq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
@@ -4852,32 +4600,26 @@ ActionID9,ActionID10,...ActionID16.
 
 &lt;p&gt;以上是我能想起来的注意点，若有没想起来的，在以后的时间想到的也将补充进去。口无遮拦的说了这么多，不剖析一下源码怎么说的过去，之前对NGUI输入消息进行了封装，对2D动画序列帧进行了封装，却一直没能完整剖析它的底层源码，着实遗憾。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;NGUI中UIPanel是渲染的关键，他承载了在他下面的子物体的所有渲染工作，每个渲染元素都是由UIWidget继承而来，每个UI物体的渲染都是由面片、材质球、UV点组成，每个种材质由一个UIDrawCall完成渲染工作，UIDrawCall中自己创建Mesh和MeshRender来进行统一的渲染工作。这些都是对NGUI底层的简单的介绍，下面将进行更加细致的分析。&lt;/p&gt;
 
@@ -4999,32 +4741,26 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 &lt;p&gt;由这些内部变量可知，UIDrawCall是负责NGUI的最重要的渲染类。他制造Mesh制造Material，设置裁剪范围，为NGUI提供渲染底层。
 他最重要的方法是：&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BetterList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;verts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BetterList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;norms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BetterList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vector4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BetterList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vector2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uvs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BetterList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Color32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cols&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;verts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -5234,32 +4970,26 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 
 &lt;p&gt;四.&lt;strong&gt;分层结构设计全面可扩展&lt;/strong&gt;。架构最重要的部分之一就是能够适应变化不断的项目需求，优秀的架构能够尽量减少当需求变化而引起的程序上的修改或删除而引起的整体架构更改。项目的需求变化并不是由我们可以控制，在不断变化的情况下，甚至是当程序员已经适应当前架构的情况下，架构这块基石仍是稳如泰山。我在架构设计时最看重分层设计，每一层都有统一的意图，且只可被上一层调用，必要时以动态库形式存在。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;架构思想就谈到这里，接下来讲如何将这些架构思想融入到实际的Uniyt3D项目当中去。&lt;/p&gt;
 
@@ -5292,32 +5022,26 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 
 &lt;p&gt;3.大量用户集中使用同一功能的优化。《王途霸业》的挂机系统就遇到这样的情况，大部分玩家都会使用这个功能，而且这是机器与机器的交互，大部分玩家都会在长时间里使用这个功能。当大量用户时，这个挂机战斗功能，对数据存储服务器的SQL语句执行冲击很大，类似的情况还有很多。像这样的功能呢，就需要我们进一步优化，不但是优化逻辑处理，还要优化数据存储方式，不可以加大了逻辑服务器的承载，却忽视了数据服务器的承载。优化方法很多，比如当前功能不存储数据，只在玩家下线时操作数据存储更新，还有数据差异化存储，当数据有变化才进行储存更新，去除了很多不必要的存储SQL执行时间。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;4.HTTP与TCP结合的优化。《王途霸业》一开始尝试过只使用TCP长连接的架构方式，但最终以不方便，不好用的试用结果落败。TCP与WEB的HTTP结合的方式优化架构是个非常好的方式。首先WEB的HTTP本身就是个大众化稳定的架构体系，它在帐号管理，数据记录，需求变化的适应力等方面都有非常好的表现。其实就是人们口中所有的短连接和长连接的结合。《王途霸业》使用HTTP方式做了帐号认证系统是为了所有服务器的帐号获取方式，又用HTTP方式做了服务器列表，全服公告，网关轮询等做为中心服务器，这个中心服务器还配备了后台管理界面，让运营人员非常舒服，最后还用HTTP方式为《王途霸业》的数据统计做了一个统计管理的WEB后台管理，让市场人员能清晰得看到整个游戏数据的起伏变化情况。&lt;/p&gt;
 
@@ -5481,32 +5205,26 @@ Seeker 寻路主算法类&lt;/p&gt;
             &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NavResCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;这里对如何计算DT点进行一个说明：&lt;/p&gt;
 
@@ -5628,32 +5346,26 @@ Seeker 寻路主算法类&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;还需要注意的是：上面的程序中，我们当然可以把n改成2&lt;em&gt;n或者10&lt;/em&gt;n，产生的结果都是&amp;#39;个体概率所表示扇区越大，该个体被选中的几率也越大&amp;#39;，并且随着实验次数的增大，这一结果越精确。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;2）这种方法可以想象成往划分好扇区的轮盘里扔色子，事先生成一组满足均匀分布的随机数，代表n次掷色子或者n个色子一起扔，轮盘不动，色子所在区域为选择结果。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rand&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;预先产生n个色子的位置&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;注意这里r服从0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;之间均匀分布&lt;/span&gt;
@@ -5727,32 +5439,26 @@ Seeker 寻路主算法类&lt;/p&gt;
 
 &lt;p&gt;《王途霸业》中缓冲服务器有，DB缓冲服务器，日志缓冲服务器&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;这两个服务器分别分则对游戏数据存储和游戏日志数据存储。&lt;/p&gt;
 
@@ -5903,32 +5609,26 @@ Seeker 寻路主算法类&lt;/p&gt;
 
 &lt;p&gt;====================================================================&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;总的来说，行为树具有如下几种优点，确实是实现AI框架的利器，甚至是一种&lt;/p&gt;
 
@@ -6012,32 +5712,26 @@ Seeker 寻路主算法类&lt;/p&gt;
 
 &lt;p&gt;好了，闲话少说，下一篇，也就是第一篇了，主题为，服务器结构探讨。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;服务器结构探讨 -- 最简单的结构&lt;/p&gt;
 
@@ -6061,32 +5755,26 @@ client
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;该结构下的玩家操作流程为，先选择大区，再选择大区下的某台服务器，即某个游戏世界，点击进入后开始帐号验证过程，验证成功则进入了该游戏世界。但是，如果玩家想要切换游戏世界，他只能先退出当前游戏世界，然后进入新的游戏世界重新进行帐号验证。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;早期的游戏大都采用的是这种结构，有些游戏在实现时采用了一些技术手段使得在切换游戏服时不需要再次验证帐号，但整体结构还是未做改变。&lt;/p&gt;
 
@@ -6110,32 +5798,26 @@ client
 
 &lt;p&gt;好了，需求已经提出来了，现在来考虑如何将其实现。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;对于负载均衡来说，已有了成熟的解决方案。一般最常用，也最简单部署的应该是基于DNS的负载均衡系统了，其通过在DNS中为一个域名配置多个IP地址 来实现。最新的DNS服务已实现了根据服务器系统状态来实现的动态负载均衡，也就是实现了真正意义上的负载均衡，这样也就有效地解决了当某台登录服当机 后，DNS服务器不能立即做出反应的问题。当然，如果找不到这样的解决方案，自己从头打造一个也并不难。而且，通过DNS来实现的负载均衡已经包含了所做 的修改对登录服及客户端的透明。&lt;/p&gt;
 
@@ -6160,32 +5842,26 @@ client
 
 &lt;p&gt;讨论了这么久我们一直都还没有进入游戏世界服务器内部，现在就让我们来窥探一下里面的结构吧。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;对于现在大多数MMORPG来说，游戏服务器要处理的基本逻辑有移动、聊天、技能、物品、任务和生物等，另外还有地图管理与消息广播来对其他高级功能做支撑。如纵队、好友、公会、战场和副本等，这些都是通过基本逻辑功能组合或扩展而成。&lt;/p&gt;
 
@@ -6218,32 +5894,26 @@ client
 
 &lt;p&gt;最直接的方法就是把那个图倒转过来就行了。客户端只需要连接到中心服上，所有到地图服务器的数据都由中心服来转发。很完美的解决方案，不是吗？&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;这种结构在实际的部署中也遇到了一些挑战。对于一般的MMORPG服务器来说，单台服务器的承载量平均在2000左右，如果你的服务器很不幸地只能带 1000人，没关系，不少游戏都是如此；如果你的服务器上跑了3000多玩家依然比较流畅，那你可以自豪地告诉你的策划，多设计些大量消耗服务器资源的玩 法吧，比如大型国战、公会战争等。&lt;/p&gt;
 
@@ -6282,32 +5952,26 @@ Client
 
 &lt;p&gt;如果我们就此打住，可能马上就会有人要嗤之以鼻了，就这点古董级的技术也敢出来现。好吧，我们还是把之前留下的问题拿出来解决掉吧。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;一般来说，当某一部分能力达不到我们的要求时，最简单的解决方法就是在此多投入一点资源。既然想要更多的连接数，那就再加一台网关服务器吧。新增加了网 关服后需要在大区服上做相应的支持，或者再简单点，有一台主要的网关服，当其负载较高时，主动将新到达的连接重定向到其他网关服上。&lt;/p&gt;
 
@@ -6337,32 +6001,26 @@ Client
 
 &lt;p&gt;差不多就这么多了吧，接下来我们会按照这个大致的结构来详细讨论各部分的实现。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;服务器结构探讨 -- 一点杂谈&lt;/p&gt;
 
@@ -6392,32 +6050,26 @@ Client
 
 &lt;p&gt;想象一下帐号验证的实现方法，最容易的那就是把用户输入的明文用帐号和密码直接发给登录服，服务器根据帐号从数据库中取出密码，与用户输入的密码相比较。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;这个方法存在的安全隐患实在太大，明文的密码传输太容易被截获了。那我们试着在传输之前先加一下密，为了服务器能进行密码比较，我们应该采用一个可逆的 加密算法，在服务器端把这个加密后的字串还原为原始的明文密码，然后与数据库密码进行比较。既然是一个可逆的过程，那外挂制作者总有办法知道我们的加密过 程，所以，这个方法仍不够安全。&lt;/p&gt;
 
@@ -6439,32 +6091,26 @@ Client
 
 &lt;p&gt;当阅读一项工程的源码时，我们大概会选择从main函数开始，而当开始一项新的工程时，第一个写下的函数大多也是main。那我们就先来看看，游戏服务器代码实现中，main函数都做了些什么。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;由于我在读技术文章时最不喜看到的就是大段大段的代码，特别是那些直接Ctrl+C再Ctrl+V后未做任何修改的代码，用句时髦的话说，一点技术含量 都没有！所以在我们今后所要讨论的内容中，尽量会避免出现直接的代码，在有些地方确实需要代码来表述时，也将会选择使用伪码。&lt;/p&gt;
 
@@ -6488,32 +6134,26 @@ Client
 
 &lt;p&gt;前面我们只简单了解了下mangos登录服的程序结构，也发现了一些不足之处，现在我们就来看看如何提供一个更好的方案。&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;正如我们曾讨论过的，为了游戏主逻辑循环的流畅运行，所有比较耗时的IO操作都会分享到单独的线程中去做，如网络IO，数据库IO和日志IO等。当然，也有把这些分享到单独的进程中去做的。&lt;/p&gt;
 
@@ -6542,32 +6182,26 @@ Message* getMessage();
 
 &lt;p&gt;这样的话，我们的主循环就很清晰了，从主线程的消息队列中取消息，处理消息，再取下一条消息......&lt;/p&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        var cpro_id = &quot;u3471606&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;http://cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
-&lt;/script&gt; --&gt;
+&lt;/script&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
     /*700*200信息流*/
     var cpro_id = &quot;u3469788&quot;;
 &lt;/script&gt;
-
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*文内嵌入*/
-    var cpro_id = &quot;u3471606&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://cpro.baidustatic.com/cpro/ui/cm.js&quot;&gt;&lt;/script&gt; --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;服务器公共组件实现 -- 消息队列&lt;/p&gt;
 
