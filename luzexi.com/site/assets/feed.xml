@@ -430,11 +430,25 @@
 
 &lt;hr&gt;
 
+&lt;p&gt;Dictionary 不是线程安全的组件，官方源码中进行了这样的解释。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    ** Hashtable has multiple reader/single writer (MR/SW) thread safety built into 
+    ** certain methods and properties, whereas Dictionary doesn&amp;#39;t. If you&amp;#39;re 
+    ** converting framework code that formerly used Hashtable to Dictionary, it&amp;#39;s
+    ** important to consider whether callers may have taken a dependence on MR/SW
+    ** thread safety. If a reader writer lock is available, then that may be used
+    ** with a Dictionary to get the same thread safety guarantee. 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如果要在多个线程中共享Dictionaray的读写操作，就要自己写lock以保证线程安全。&lt;/p&gt;
+
+&lt;hr&gt;
+
 &lt;h3&gt;到这里我们已经全面了解了 Dictionary 的内部构造和运作机制。他是由数组构成，并且由哈希函数完成地址构建，由拉链法冲突解决方案来解决冲突的。&lt;/h3&gt;
 
 &lt;h3&gt;从效率上看，new时先确定大致数量会更加高效，另外用数值方式做Key比用类实例方式作为Key值更加有效率。&lt;/h3&gt;
 
 &lt;h3&gt;从内存操作上看，大小以3-&amp;gt;7-&amp;gt;17-&amp;gt;37-&amp;gt;....的速度，每次增加2倍多的顺序进行，删除时，并不缩减内存。&lt;/h3&gt;
+
+&lt;h3&gt;Dictionary不是线程安全的，需要进行自己进行lock操作。&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://referencesource.microsoft.com/#mscorlib/system/collections/generic/dictionary.cs&quot;&gt;Dictionary源码&lt;/a&gt;&lt;/p&gt;
 </description>

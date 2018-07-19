@@ -8,7 +8,7 @@
 
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta content="unity3d 高级编程 c# 主程 算法 设计模式 动态库 底层算法" name="description">
+  <meta content="unity3d 高级编程 c# 主程 算法 设计模式 动态库 底层源码 Dictionary" name="description">
 
 
   <title>
@@ -460,11 +460,25 @@
 
 <hr>
 
+<p>Dictionary 不是线程安全的组件，官方源码中进行了这样的解释。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    ** Hashtable has multiple reader/single writer (MR/SW) thread safety built into 
+    ** certain methods and properties, whereas Dictionary doesn&#39;t. If you&#39;re 
+    ** converting framework code that formerly used Hashtable to Dictionary, it&#39;s
+    ** important to consider whether callers may have taken a dependence on MR/SW
+    ** thread safety. If a reader writer lock is available, then that may be used
+    ** with a Dictionary to get the same thread safety guarantee. 
+</code></pre></div>
+<p>如果要在多个线程中共享Dictionaray的读写操作，就要自己写lock以保证线程安全。</p>
+
+<hr>
+
 <h3>到这里我们已经全面了解了 Dictionary 的内部构造和运作机制。他是由数组构成，并且由哈希函数完成地址构建，由拉链法冲突解决方案来解决冲突的。</h3>
 
 <h3>从效率上看，new时先确定大致数量会更加高效，另外用数值方式做Key比用类实例方式作为Key值更加有效率。</h3>
 
 <h3>从内存操作上看，大小以3-&gt;7-&gt;17-&gt;37-&gt;....的速度，每次增加2倍多的顺序进行，删除时，并不缩减内存。</h3>
+
+<h3>Dictionary不是线程安全的，需要进行自己进行lock操作。</h3>
 
 <p><a href="https://referencesource.microsoft.com/#mscorlib/system/collections/generic/dictionary.cs">Dictionary源码</a></p>
 

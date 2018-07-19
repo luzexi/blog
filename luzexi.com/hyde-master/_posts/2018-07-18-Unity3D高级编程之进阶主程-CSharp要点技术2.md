@@ -3,7 +3,7 @@ layout: post
 status: publish
 published: true
 title: 《Unity3D高级编程之进阶主程》第一章，C#要点技术(二)
-description: "unity3d 高级编程 c# 主程 算法 设计模式 动态库 底层算法"
+description: "unity3d 高级编程 c# 主程 算法 设计模式 动态库 底层源码 Dictionary"
 excerpt_separator: ===
 categories:
 - 版权著作
@@ -456,11 +456,26 @@ public new static extern bool Equals(Object o1, Object o2);
 
 - - -
 
+Dictionary 不是线程安全的组件，官方源码中进行了这样的解释。
+
+		** Hashtable has multiple reader/single writer (MR/SW) thread safety built into 
+		** certain methods and properties, whereas Dictionary doesn't. If you're 
+		** converting framework code that formerly used Hashtable to Dictionary, it's
+		** important to consider whether callers may have taken a dependence on MR/SW
+		** thread safety. If a reader writer lock is available, then that may be used
+		** with a Dictionary to get the same thread safety guarantee. 
+
+如果要在多个线程中共享Dictionaray的读写操作，就要自己写lock以保证线程安全。
+
+- - -
+
 ### 到这里我们已经全面了解了 Dictionary 的内部构造和运作机制。他是由数组构成，并且由哈希函数完成地址构建，由拉链法冲突解决方案来解决冲突的。
 
 ### 从效率上看，new时先确定大致数量会更加高效，另外用数值方式做Key比用类实例方式作为Key值更加有效率。
 
 ### 从内存操作上看，大小以3->7->17->37->....的速度，每次增加2倍多的顺序进行，删除时，并不缩减内存。
+
+### Dictionary不是线程安全的，需要进行自己进行lock操作。
 
 [Dictionary源码](https://referencesource.microsoft.com/#mscorlib/system/collections/generic/dictionary.cs)
 
