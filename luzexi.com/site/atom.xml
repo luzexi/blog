@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-19T19:10:22+08:00</updated>
+ <updated>2018-07-19T21:00:18+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第二章，架构(一)</title>
-   <link href="http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html"/>
+   <link href="http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html"/>
    <updated>2018-07-18T00:00:00+08:00</updated>
-   <id>http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D高级编程之进阶主程-架构1</id>
+   <id>http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D高级编程之进阶主程-架构1</id>
    <content type="html">&lt;h1&gt;第二章，架构(一)&lt;/h1&gt;
 
 &lt;p&gt;什么是软件系统架构?&lt;/p&gt;
@@ -70,9 +70,9 @@
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(二)</title>
-   <link href="http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF2.html"/>
+   <link href="http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF2.html"/>
    <updated>2018-07-18T00:00:00+08:00</updated>
-   <id>http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D高级编程之进阶主程-CSharp要点技术2</id>
+   <id>http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D高级编程之进阶主程-CSharp要点技术2</id>
    <content type="html">&lt;h1&gt;第一章，C#要点技术(二)&lt;/h1&gt;
 
 &lt;p&gt;前文回顾 &lt;a href=&quot;http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0-C-%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF(%E4%B8%80).html&quot;&gt;《Unity3D高级编程之进阶主程》第一章，C#要点技术(一)&lt;/a&gt;&lt;/p&gt;
@@ -521,9 +521,9 @@
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第三章，数据表(三)</title>
-   <link href="http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html"/>
+   <link href="http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html"/>
    <updated>2018-07-17T00:00:00+08:00</updated>
-   <id>http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D高级编程之进阶主程-数据表3</id>
+   <id>http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D高级编程之进阶主程-数据表3</id>
    <content type="html">&lt;h1&gt;《Unity3D高级编程之进阶主程》第三章，数据表(三)&lt;/h1&gt;
 
 &lt;p&gt;前文介绍了关于数据表的几种形式。&lt;a href=&quot;http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html&quot;&gt;《Unity3D高级编程之进阶主程》第三章，数据表(一)&lt;/a&gt;&lt;/p&gt;
@@ -631,9 +631,9 @@ Win,赢了,Win, 勝った, 이기다
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第三章，数据表(二)</title>
-   <link href="http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html"/>
+   <link href="http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html"/>
    <updated>2018-07-17T00:00:00+08:00</updated>
-   <id>http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D高级编程之进阶主程-数据表2</id>
+   <id>http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/17/Unity3D高级编程之进阶主程-数据表2</id>
    <content type="html">&lt;h1&gt;《Unity3D高级编程之进阶主程》第三章，数据表(二)&lt;/h1&gt;
 
 &lt;p&gt;前文介绍了关于数据表的几种形式。&lt;a href=&quot;http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html&quot;&gt;《Unity3D高级编程之进阶主程》第三章，数据表(一)&lt;/a&gt;&lt;/p&gt;
@@ -813,9 +813,9 @@ Win,赢了,Win, 勝った, 이기다
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第三章，数据表(一)</title>
-   <link href="http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html"/>
+   <link href="http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html"/>
    <updated>2018-07-09T00:00:00+08:00</updated>
-   <id>http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D高级编程之进阶主程-数据表1</id>
+   <id>http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/09/Unity3D高级编程之进阶主程-数据表1</id>
    <content type="html">&lt;h1&gt;《Unity3D高级编程之进阶主程》第三章，数据表(一)&lt;/h1&gt;
 
 &lt;p&gt;数据表完全可以认为是一个本地的数据库，只是这个数据库里的这些数据不可修改，是只读的。它大部分是从excel里生成出来的，再导入到游戏中去。也有使用比较原始的方法，比如直接写在代码里。&lt;/p&gt;
@@ -914,9 +914,9 @@ Win,赢了,Win, 勝った, 이기다
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(一)</title>
-   <link href="http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF1.html"/>
+   <link href="http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF1.html"/>
    <updated>2018-07-06T00:00:00+08:00</updated>
-   <id>http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/06/Unity3D高级编程之进阶主程-CSharp要点技术1</id>
+   <id>http://www.luzexi.com/%E8%91%97%E4%BD%9C%E4%B9%A6%E7%B1%8D/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/06/Unity3D高级编程之进阶主程-CSharp要点技术1</id>
    <content type="html">&lt;h1&gt;第一章，C#要点技术(一)&lt;/h1&gt;
 
 &lt;p&gt;很多老鸟看到C#基础总想跳过，因为看了太多次，次次都一样，有时候看得都想吐，基础里无非是几个语法，或者由继承展开的特性，再加上一些高级特有的属性，看多了当然会吐。而我在这里想写些不一样的东西，我认为能看这本书的，基本上都能做到基础的语法部分已经滚瓜烂熟了。所以我们在基础的语法之上讲些更高级的东西会来得更有趣些，比如算法设计，比如常用组件的底层代码分析，比如设计模式，比如动态库(so文件和dll文件)等等。&lt;/p&gt;
