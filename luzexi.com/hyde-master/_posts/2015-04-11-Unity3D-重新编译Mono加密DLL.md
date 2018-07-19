@@ -18,13 +18,10 @@ date: !binary |-
   MjAxNS0wNC0xMSAxODo1ODozNiArMDgwMA==
 date_gmt: !binary |-
   MjAxNS0wNC0xMSAxMDo1ODozNiArMDgwMA==
-categories:
+tags:
 - Unity3D
 - 游戏架构
 - 前端技术
-tags:
-- Unity3D
-- 加密
 ---
 Unity3D-重新编译Mono加密DLL。安卓应用总是让人头疼，游戏遭到破解与反编译是研发的人最不愿意看到的。自己的辛苦劳动成果被人随意窃取与利用，对这些咬牙切齿的痛恨。所以我们需要加强自身的反破解技术力量。不过这世上没有破解不了的东西，道高一尺魔高一丈，我们做的只是让破解更加困难而已。让那些破解的人付出点代价才能得到他们想要的，如果他们觉得代价太高，看不清前面的道路，他们就有可能放弃，然后我们的目的达到了。
 

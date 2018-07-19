@@ -35,7 +35,7 @@ module Jekyll
 
     def posts_group_by_category(site)
       category_map = {}
-      site.posts.docs.reverse.each {|p| p.categories.each {|c| (category_map[c] ||= []) << p } }
+      site.posts.docs.reverse.each {|p| p.tags.each {|c| (category_map[c] ||= []) << p } }
       category_map
     end
   end

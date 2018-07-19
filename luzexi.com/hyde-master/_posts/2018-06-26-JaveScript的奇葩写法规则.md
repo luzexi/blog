@@ -5,12 +5,9 @@ published: true
 title: JaveScript的奇葩写法规则
 description: “JaveScript的奇葩写法规则 js语法 js奇怪语法”
 excerpt_separator: ===
-categories:
+tags:
 - 前端技术
 - 其他技术
-tags:
-- js
-- 语法
 ---
 
 #JaveScript的奇葩写法规则

@@ -5,10 +5,8 @@ published: true
 title: Gitlab removal
 description: "gitlab removal"
 excerpt_separator: ===
-categories:
-- 其他技术
 tags:
-- Gitlab
+- 其他技术
 ---
 
 #Gitlab removal

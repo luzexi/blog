@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta content="unity3d 高级编程 主程 数据表 xls Json Xml 多语言" name="description">
+
+
+  <title>
+    
+      《Unity3D高级编程之进阶主程》第三章，数据表(一)
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css?version=20180701">
+  <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"> -->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第三章，数据表(一)</h1>
+  <span class="post-date">09 Jul 2018</span>
+  <h1>《Unity3D高级编程之进阶主程》第三章，数据表(一)</h1>
+
+<p>数据表完全可以认为是一个本地的数据库，只是这个数据库里的这些数据不可修改，是只读的。它大部分是从excel里生成出来的，再导入到游戏中去。也有使用比较原始的方法，比如直接写在代码里。</p>
+
+<p>数据表是连接美术，设计策划，和程序的桥梁。艺术家们用它来配置效果，设计师用它来调整游戏的数值平衡，程序员们用它来判断逻辑。所以数据表的意义非常大，是连接各个环节的桥梁。</p>
+
+<p>===</p>
+
+<h3>数据跟excel分不开</h3>
+
+<p>自从微软创建出神级的excel后，全世界都爱上了这款软件，无论自用还是商用，制图还是分析都离不开它了。</p>
+
+<p>居我的了解，基本上所有的公司都在用excel。而且，只要跟数据，数字，接触的职业，都会大量使用excel来做数据分析，数据制表等工作。</p>
+
+<p>它能给你所有你想处理数据的功能，而且快捷，方便，易于保存，上手快，方便传播等等等，说不完的好品质。</p>
+
+<p>所以呢，游戏行业里数值策划更是喜欢这个工具了，我们的游戏数据跟excel分不开，我们需要用它的来加快效率，特别是数据开发，数值平衡部分。</p>
+
+<p>现在你应该明白了，我为何如此夸大的它的优秀，因为他确实在很大程度上加快了项目的进度。</p>
+
+<p>下面说所的数据表，基本上都是意味着从Excel文件中导出来的数据的集合。</p>
+
+<p>我们来看看数据表的建立可以有几种方式：</p>
+
+<h3>代码数据</h3>
+
+<p>最最原始的数据，是写在程序里的，这种临时级别的数据，在更改，增加，删除时增加了大量的程序员的工作量。</p>
+
+<p>然而让策划人员去自行更改代码里的数据，不但增加了修改程序的风险，也让数值策划人员批量修改数值的难度增加好几倍。</p>
+
+<p>所以这种放在代码里的数据，基本都只存在于Demo阶段，或者mini游戏中，因为数据量小，更改的次数少，不会特别去在意数值的平衡性。</p>
+
+<p>数据放在代码里的原因就只有一个，快。不需要建立与其他部门的桥梁，比如建立excel表，制定规则，转化数据等。代码里的数据只有程序员知道是什么，为什么这么写，也只有程序员能看明白。</p>
+
+<script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+        var cpro_id = "u3485972";
+        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+    }
+</script>
+
+<!-- <script type="text/javascript">
+    /*700*200信息流*/
+    var cpro_id = "u3469788";
+</script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
+
+<h3>txt文本数据</h3>
+
+<p>文本是一种常用的数据表形式，通常用.txt文件，里面全是字符串形式的文本，包括数字在内，在程序读取后转化为相应的数据类型，例如整数，浮点数，文本，数组等。所以怎么读取，读取的规则也有了一定的考究。</p>
+
+<p>文本读取规则有很多标准形式的，包括Json，Xml，CSV等。这些都是常用的文本读取规则，在很多环境下，用文本读取字符串形式的数据然后按规则来转化成相应的数据和数据组也是极佳的选择。它的优点是能肉眼看到数据，并且查找问题，也能立即直接修改。</p>
+
+<p>通常为了方便，把数据直接用逗号隔开，或者用空格隔开，或者用特别的符号比如&#39;;&#39;分号等形式隔开，就可以作为一个数据的规则格式了。</p>
+
+<p>还记得我们主要的数据开发工具是Excel么，为了能从Excel里更容易的导出数据，我们会选择一些更加简单实用的导出方式。比如直接从Excel里复制粘贴数据到txt文件，这是最最直接的手动导出方式。</p>
+
+<p>也有用Excel直接保存CSV格式的，就是以&#39;,&#39;逗号开的格式的txt文件。</p>
+
+<p>这些都是比较容易的方式，如果要做到不手动，而是用程序工具转化，那就需要写个程序读取Excel文件内容，并导出相应的格式了。</p>
+
+<p>写一个程序工具来导出Excel的数据，就有很多格式可以考虑了，比如我们前面提到的，Json格式，Xml格式，以及自定义格式。</p>
+
+<p>通常习惯使用工具导出Excel数据的同学，都会使用使用程序工具导出数据，因为他们已经熟悉了这套流程和方法，在制定项目模块规划时就很容易把这块规划进项目里，因为对他们来说，是顺手拈来的事情，而且这事很容易做到，一劳永逸。</p>
+
+<p>自动化是最终的目标，我也希望任何工作都可以自动化来代替，从而减少人力操作导致的失误，减少了工作量，同时也减少不必要的精力浪费。</p>
+
+<h3>比特流数据</h3>
+
+<p>数据比特流是一种稍微高级点的数据表现形式，他是将数据转化为2进制形式存放在文件里，然后程序通过读取2进制文件，按一定的规则将其转化为所需要的数据。它比起文本形式的数据文件特点是，占用的空间更加小。</p>
+
+<p>为什么更加小，因为存储数字时，是直接用2进制形式存储的，比如，txt文本中23345是“23345”这个字符串，占用了5个字符，每个字符2个字节，就用了10个字节，而2进制存储可以直接使用2个字节(short)存储了这个数字，所以数据比特流形式的数据存储文件更加小。一个以文本形式的txt文件来建立的10MB的数据文件，转化为2进制格式后，最大应该可以压缩到几百KB。</p>
+
+<p>一个10MB的文件在读取的时候是很消耗CPU的，假如项目中有几个甚至几十个这样的数据文件，在游戏进行中的卡顿是难免的，因为这么大的文件光读取整个内容就已经很消耗CPU资源了，更别说，还需要在读取文本数据后进行解析。庞大的文本解析，让几百上千个字符串，转化为数字或者浮点数，是很浪费CPU的。</p>
+
+<p>这个和数据网络传输时使用的协议是一个道理，有人使用了json格式的数据协议来传输网络数据，所以当数据大时，json字符串占用的数据量也非常大，启用压缩算法也不能解决根本问题。所以很多人转而使用数据比特流形式的数据协议来传输网络数据，以减少网络数据占用量，即使在网络不稳定的情况下，因为体量比较少，所以能够准确送达的概率也大了很多，从而网络性能也提高了很多。关于网络协议具体内容，会在以后的章节中一一介绍。</p>
+
+<p>以比特流形式作为协议的标准很多。比如最近比较流行的，Google protobuf。</p>
+
+<p>这里简单介绍下Google protobuf：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    protobuf是一个开源项目，而且是后台很硬的开源项目。网上现有的大部分（至少80%）开源项目，要么是某人单干、要么是几个闲杂人等合伙搞。而protobuf则不然，它是鼎鼎大名的Google公司开发出来，并且在Google内部久经考验的一个东东。由此可见，它的作者绝非一般闲杂人等可比。
+
+    那这个听起来牛X的东东到底有啥用处捏？简单地说，这个东东干的事儿其实和XML差不多，也就是把某种数据结构的信息，以某种格式保存起来。主要用于数据存储、传输协议格式等场合。
+</code></pre></div>
+<p>protobuf有啥特色呢？会放在网络层的章节里讲。</p>
+
+  <p>感谢您的耐心阅读</p>
+  <p>Thanks for your reading</p>
+</div>
+<div>
+  
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+<div id="cyReward" role="cylabs" data-use="reward" align="center" ></div>
+
+  <li>
+<p>版权申明</p>
+<p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html">《Unity3D高级编程之进阶主程》第三章，数据表(一)</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html">《Unity3D高级编程之进阶主程》第三章，数据表(一)</a></p> -->
+<p>Copyright attention</p>
+<p>If you would like to reprint this article please write auth's name and link in the page.</p>
+
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
+</li>
+  <li>
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+<!-- <script type="text/javascript">
+    /*700*200信息流*/
+    var cpro_id = "u3469788";
+</script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
+
+</li>
+</div>
+<div class="related">
+    
+<div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+
+</div>
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html">
+            《Unity3D高级编程之进阶主程》第二章，架构(一)
+            <small>18 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF2.html">
+            《Unity3D高级编程之进阶主程》第一章，C#要点技术(二)
+            <small>18 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html">
+            《Unity3D高级编程之进阶主程》第三章，数据表(三)
+            <small>17 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+ 
+
+
+
+
+    </div>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          技术人生
+        </a>
+      </h1>
+      <p class="lead">漫漫人生,记录点滴技术,始于2013</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About Me</a>
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+
+      <a class="sidebar-nav-item" href="/书籍著作/index.html">书籍著作</a>
+      <a class="sidebar-nav-item" href="/unity3d/index.html">Unity3D</a>
+      <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
+      <a class="sidebar-nav-item" href="/金融投资/index.html">金融投资</a>
+      <a class="sidebar-nav-item" href="/life/index.html">Life</a>
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <a href="http://www.luzexi.com/assets/feed.xml">RSS feed</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+    </nav>
+
+    <p>&copy; 2018. All rights reserved.</p>
+    <p>浙ICP备13028172号-1</p>
+  </div>
+</div>
+
+
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </body>
+  
+</html>

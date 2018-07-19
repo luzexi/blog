@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta content="unity3d 寻路 navmesh 设计 架构" name="description">
+
+
+  <title>
+    
+      Unity3D架构设计NavMesh寻路
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css?version=20180701">
+  <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"> -->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Unity3D架构设计NavMesh寻路</h1>
+  <span class="post-date">06 Oct 2013</span>
+  <p>国庆闲来没事把NavMesh巩固一下。以Unity3D引擎为例写一个底层c# NavMesh寻路。因为Unity3D中本身自带的NavMesh寻路不能很好的融入到游戏项目当中，所以重写一个NavMesh寻路是个必经之路。NavMesh在很多游戏中应用广泛，不同种类的框架下NavMesh寻路发挥的淋漓尽致。与传统的A星寻路相比，NavMesh不仅减少了内存空间占有量，加快了寻路速度，还可以加入寻路角色的宽高限制，以及动态物体寻路等功能，基本上适应了大部分项目变化多端的需求。</p>
+
+<p>我把写NavMesh的过程分成好几个部分，一一进行描述：</p>
+
+<p>一.首先要理解NavMesh核心算法。NavMesh的核心算法就是用三角形代替传统寻路的方格，用计算拐点优化寻路路径来代替合并路径直线。
+如下图1NavMesh寻路:
+<img class="alignnone wp-image-91 size-full" src="/assets/uploads/2013/10/2303121.jpg" alt="" width="479" height="312" /></p>
+
+<p>以及如下图2传统的方格寻路:
+<img class="alignnone wp-image-94 size-full" src="/assets/uploads/2013/10/20131006173445.jpg" alt="" width="621" height="568" /></p>
+
+<p>看到两者的差别了吧，NavMesh已三角形为寻路块，而传统以方格为寻路块。其实两者都使用A*寻路，但就是其网格生成不一样，导致当有大范围寻路时，其效率和要求也不一样。</p>
+
+<p>二.NavMesh寻路中的路径优化之拐点计算。其实NavMesh中比较常用的是<strong>光照射线法，</strong>但这里不做详细介绍，光照射浅法详细内容地址:<a href="http://www.cnblogs.com/neoragex2002/archive/2007/09/09/887556.html">http://www.cnblogs.com/neoragex2002/archive/2007/09/09/887556.html</a>
+拐点计算优化路径就是到达目的地需要经过的一堆三角形中计算出最简洁的移动方式。其核心算法就是从当前点到另一个三角形中的点之间的线段，与这条线段相交的线段全部是路径所穿越的线段，就是拐点，把所有的拐点找出来，并得到一条最长的拐点，那个拐点就是最佳的拐点位置。</p>
+
+<p>三.NavMesh类设计详解(这里只设计2D的寻路，对于3D方向的寻路，其实是可以2D寻路代替的)：</p>
+
+<p>1.所有类都在同一的命名空间NavMesh内 namespace NavMesh
+Triangle 三角形基础类
+NavTriangle 寻路三角形类 (继承Triangle)
+Line2D 线段类
+Polygon 多边形类
+Seeker 寻路主算法类</p>
+
+<p>----------------------------------------- 让大家久等了 ------------------------------------</p>
+
+<p>在寻路前，我们需要建立MESH三角形网格，这是NAV_MESH的重点之一。</p>
+
+<p>1.首先我们先要画出一个范围来确定我们的可行走范围。</p>
+
+<p>2.再在可行走范围中去添加不可行走的范围。</p>
+
+<p>3.我们用多个多边形Polygon代替以上的范围，也就是说，一个大的可行走Polygon内包含了若干个小的不可行走的Polygon。</p>
+
+<p>这是生成MESH前我们需要知道的生成范围，然后再由这些多边形的各个顶点来生成三角形网格,三角形网格的生成算法如下：</p>
+
+<p>Step 1 :  用可行走Polygon的任意一条边作为起点，将其推入堆栈列表。到Step2.</p>
+
+<p>Step 2:  从堆栈中推出一条边，在所有三角形中计算出边的DT点，构成约束Delaunay三角形，到Step3。如果没有DT点就重复做Step2，直到堆栈为空就结束整个程序。</p>
+
+<p>Step 3:  将所构成的三角形，另两边做如下处理：检查堆栈中是否已存在，如果存在就删除该边，如果不存在就加入到堆栈中。</p>
+
+<p>生成mesh后如图：（绿色的为多边形边框，蓝色的为寻路路径，红色的为编辑器选中的多边形）
+<img class="alignnone size-full wp-image-376" src="/assets/uploads/2013/10/OD04RIKAWEMUTM_3MSBQ.jpg" alt="OD04[RIKAWEMUTM_3MS}B$Q" width="475" height="312" /></p>
+
+<p>核心源码为：</p>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span>        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// 创建导航网格</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// 所有阻挡区域&lt;/param&gt;</span>
+        <span class="c1">/// 输出的导航网格&lt;/param&gt;</span>
+        <span class="c1">/// &lt;returns&gt;&lt;/returns&gt;</span>
+        <span class="k">public</span> <span class="n">NavResCode</span> <span class="nf">CreateNavMesh</span><span class="p">(</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Polygon</span><span class="p">&gt;</span> <span class="n">polyAll</span> <span class="p">,</span> <span class="k">ref</span> <span class="kt">int</span> <span class="n">id</span> <span class="p">,</span> <span class="kt">int</span> <span class="n">groupid</span> <span class="p">,</span> <span class="k">ref</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Triangle</span><span class="p">&gt;</span> <span class="n">triAll</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">triAll</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Line2D</span><span class="p">&gt;</span> <span class="n">allLines</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Line2D</span><span class="p">&gt;();</span> <span class="c1">//线段堆栈</span>
+
+            <span class="c1">//Step1 保存顶点和边</span>
+            <span class="n">NavResCode</span> <span class="n">initRes</span> <span class="p">=</span> <span class="n">InitData</span><span class="p">(</span><span class="n">polyAll</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">initRes</span> <span class="p">!=</span> <span class="n">NavResCode</span><span class="p">.</span><span class="n">Success</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">initRes</span><span class="p">;</span>
+
+            <span class="kt">int</span> <span class="n">lastNeighborId</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+            <span class="n">Triangle</span> <span class="n">lastTri</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+
+            <span class="c1">//Step2.遍历边界边作为起点</span>
+            <span class="p">{</span>
+                <span class="n">Line2D</span> <span class="n">sEdge</span> <span class="p">=</span> <span class="n">startEdge</span><span class="p">;</span>
+                <span class="n">allLines</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">sEdge</span><span class="p">);</span>
+                <span class="n">Line2D</span> <span class="n">edge</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+
+                <span class="k">do</span>
+                <span class="p">{</span>
+                    <span class="c1">//Step3.选出计算出边的DT点，构成约束Delaunay三角形</span>
+                    <span class="n">edge</span> <span class="p">=</span> <span class="n">allLines</span><span class="p">[</span><span class="n">allLines</span><span class="p">.</span><span class="n">Count</span> <span class="p">-</span> <span class="m">1</span><span class="p">];</span>
+                    <span class="n">allLines</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">edge</span><span class="p">);</span>
+
+                    <span class="n">Vector2</span> <span class="n">dtPoint</span><span class="p">;</span>
+                    <span class="kt">bool</span> <span class="n">isFindDt</span> <span class="p">=</span> <span class="n">FindDT</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="k">out</span> <span class="n">dtPoint</span><span class="p">);</span>
+                    <span class="k">if</span> <span class="p">(!</span><span class="n">isFindDt</span><span class="p">)</span>
+                        <span class="k">continue</span><span class="p">;</span>
+                    <span class="n">Line2D</span> <span class="n">lAD</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Line2D</span><span class="p">(</span><span class="n">edge</span><span class="p">.</span><span class="n">GetStartPoint</span><span class="p">(),</span> <span class="n">dtPoint</span><span class="p">);</span>
+                    <span class="n">Line2D</span> <span class="n">lDB</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Line2D</span><span class="p">(</span><span class="n">dtPoint</span><span class="p">,</span> <span class="n">edge</span><span class="p">.</span><span class="n">GetEndPoint</span><span class="p">());</span>
+
+                    <span class="c1">//创建三角形</span>
+                    <span class="n">Triangle</span> <span class="n">delaunayTri</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Triangle</span><span class="p">(</span><span class="n">edge</span><span class="p">.</span><span class="n">GetStartPoint</span><span class="p">(),</span> <span class="n">edge</span><span class="p">.</span><span class="n">GetEndPoint</span><span class="p">(),</span> <span class="n">dtPoint</span><span class="p">,</span> <span class="n">id</span><span class="p">++</span> <span class="p">,</span> <span class="n">groupid</span><span class="p">);</span>
+                    <span class="c1">// 保存邻居节点</span>
+                    <span class="c1">// if (lastNeighborId != -1)</span>
+                    <span class="c1">// {</span>
+                    <span class="c1">// delaunayTri.SetNeighbor(lastNeighborId);</span>
+                    <span class="c1">// if(lastTri != null)</span>
+                    <span class="c1">// lastTri.SetNeighbor(delaunayTri.ID);</span>
+                    <span class="c1">// }</span>
+                    <span class="c1">//save result triangle</span>
+                    <span class="n">triAll</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">delaunayTri</span><span class="p">);</span>
+
+                    <span class="c1">// 保存上一次的id和三角形</span>
+                    <span class="n">lastNeighborId</span> <span class="p">=</span> <span class="n">delaunayTri</span><span class="p">.</span><span class="n">GetID</span><span class="p">();</span>
+                    <span class="n">lastTri</span> <span class="p">=</span> <span class="n">delaunayTri</span><span class="p">;</span>
+
+                    <span class="kt">int</span> <span class="n">lineIndex</span><span class="p">;</span>
+                    <span class="c1">//Step4.检测刚创建的的线段ad,db；如果如果它们不是约束边</span>
+                    <span class="c1">//并且在线段堆栈中，则将其删除，如果不在其中，那么将其放入</span>
+                    <span class="k">if</span> <span class="p">(!</span><span class="n">Line2D</span><span class="p">.</span><span class="n">CheckLineIn</span><span class="p">(</span><span class="n">allEdges</span><span class="p">,</span> <span class="n">lAD</span><span class="p">,</span> <span class="k">out</span> <span class="n">lineIndex</span><span class="p">))</span>
+                    <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(!</span><span class="n">Line2D</span><span class="p">.</span><span class="n">CheckLineIn</span><span class="p">(</span><span class="n">allLines</span><span class="p">,</span> <span class="n">lAD</span><span class="p">,</span> <span class="k">out</span> <span class="n">lineIndex</span><span class="p">))</span>
+                            <span class="n">allLines</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">lAD</span><span class="p">);</span>
+                        <span class="k">else</span>
+                            <span class="n">allLines</span><span class="p">.</span><span class="n">RemoveAt</span><span class="p">(</span><span class="n">lineIndex</span><span class="p">);</span>
+                    <span class="p">}</span>
+
+                    <span class="k">if</span> <span class="p">(!</span><span class="n">Line2D</span><span class="p">.</span><span class="n">CheckLineIn</span><span class="p">(</span><span class="n">allEdges</span><span class="p">,</span> <span class="n">lDB</span><span class="p">,</span> <span class="k">out</span> <span class="n">lineIndex</span><span class="p">))</span>
+                    <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(!</span><span class="n">Line2D</span><span class="p">.</span><span class="n">CheckLineIn</span><span class="p">(</span><span class="n">allLines</span><span class="p">,</span> <span class="n">lDB</span><span class="p">,</span> <span class="k">out</span> <span class="n">lineIndex</span><span class="p">))</span>
+                            <span class="n">allLines</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">lDB</span><span class="p">);</span>
+                        <span class="k">else</span>
+                            <span class="n">allLines</span><span class="p">.</span><span class="n">RemoveAt</span><span class="p">(</span><span class="n">lineIndex</span><span class="p">);</span>
+                    <span class="p">}</span>
+
+                    <span class="c1">//Step5.如果堆栈不为空，则转到第Step3.否则结束循环</span>
+                <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">allLines</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 计算邻接边和每边中点距离</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">triAll</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">Triangle</span> <span class="n">tri</span> <span class="p">=</span> <span class="n">triAll</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="c1">//// 计算每个三角形每边中点距离</span>
+                <span class="c1">//tri.calcWallDistance();</span>
+
+                <span class="c1">// 计算邻居边</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">triAll</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">j</span><span class="p">++)</span>
+                <span class="p">{</span>
+                    <span class="n">Triangle</span> <span class="n">triNext</span> <span class="p">=</span> <span class="n">triAll</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">tri</span><span class="p">.</span><span class="n">GetID</span><span class="p">()</span> <span class="p">==</span> <span class="n">triNext</span><span class="p">.</span><span class="n">GetID</span><span class="p">())</span>
+                        <span class="k">continue</span><span class="p">;</span>
+
+                    <span class="kt">int</span> <span class="n">result</span> <span class="p">=</span> <span class="n">tri</span><span class="p">.</span><span class="n">isNeighbor</span><span class="p">(</span><span class="n">triNext</span><span class="p">);</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="p">!=</span> <span class="p">-</span><span class="m">1</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="n">tri</span><span class="p">.</span><span class="n">SetNeighbor</span><span class="p">(</span><span class="n">result</span> <span class="p">,</span> <span class="n">triNext</span><span class="p">.</span><span class="n">GetID</span><span class="p">()</span> <span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">NavResCode</span><span class="p">.</span><span class="n">Success</span><span class="p">;</span>
+        <span class="p">}</span>
+</code></pre></div>
+<script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+        var cpro_id = "u3485972";
+        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+    }
+</script>
+
+<!-- <script type="text/javascript">
+    /*700*200信息流*/
+    var cpro_id = "u3469788";
+</script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
+
+<p>这里对如何计算DT点进行一个说明：</p>
+
+<p>Step1. 构造三角形的外接圆，以及外接圆的包围盒</p>
+
+<p>Step2. 依次访问网格包围盒内的每个网格单元：</p>
+
+<p>若某个网格单元中存在可见点 p, 并且 &ang;p1pp2 &gt; &ang;p1p3p2，则令 p3=p，转Step1；</p>
+
+<p>否则，转Step3.</p>
+
+<p>Step3. 若当前网格包围盒内所有网格单元都已被处理完,也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点.</p>
+
+<p>核心源码为：</p>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// 找到指定边的约束边DT</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;param name=&quot;line&quot;&gt;&lt;/param&gt;</span>
+<span class="c1">/// &lt;returns&gt;&lt;/returns&gt;</span>
+<span class="k">private</span> <span class="kt">bool</span> <span class="nf">FindDT</span><span class="p">(</span><span class="n">Line2D</span> <span class="n">line</span><span class="p">,</span> <span class="k">out</span> <span class="n">Vector2</span> <span class="n">dtPoint</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">dtPoint</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">line</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+
+    <span class="n">Vector2</span> <span class="n">ptA</span> <span class="p">=</span> <span class="n">line</span><span class="p">.</span><span class="n">GetStartPoint</span><span class="p">();</span>
+    <span class="n">Vector2</span> <span class="n">ptB</span> <span class="p">=</span> <span class="n">line</span><span class="p">.</span><span class="n">GetEndPoint</span><span class="p">();</span>
+
+    <span class="n">List</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;</span> <span class="n">visiblePnts</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;();</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="n">Vector2</span> <span class="n">point</span> <span class="k">in</span> <span class="n">allPoints</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">IsPointVisibleOfLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">point</span><span class="p">))</span>
+            <span class="n">visiblePnts</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">point</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">visiblePnts</span><span class="p">.</span><span class="n">Count</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="n">bContinue</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="n">dtPoint</span> <span class="p">=</span> <span class="n">visiblePnts</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
+
+    <span class="k">do</span>
+    <span class="p">{</span>
+        <span class="n">bContinue</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="c1">//Step1.构造三角形的外接圆，以及外接圆的包围盒</span>
+        <span class="n">Circle</span> <span class="n">circle</span> <span class="p">=</span> <span class="n">NMath</span><span class="p">.</span><span class="n">CreateCircle</span><span class="p">(</span><span class="n">ptA</span><span class="p">,</span> <span class="n">ptB</span><span class="p">,</span> <span class="n">dtPoint</span><span class="p">);</span>
+        <span class="n">Rect</span> <span class="n">boundBox</span> <span class="p">=</span> <span class="n">NMath</span><span class="p">.</span><span class="n">GetCircleBoundBox</span><span class="p">(</span><span class="n">circle</span><span class="p">);</span>
+
+        <span class="c1">//Step2. 依次访问网格包围盒内的每个网格单元：</span>
+        <span class="c1">//若某个网格单元中存在可见点 p, 并且 &amp;ang;p1pp2 &gt; &amp;ang;p1p3p2，则令 p3=p，转Step1；</span>
+        <span class="c1">//否则，转Step3.</span>
+        <span class="kt">float</span> <span class="n">angOld</span> <span class="p">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">Math</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">NMath</span><span class="p">.</span><span class="n">LineRadian</span><span class="p">(</span><span class="n">ptA</span><span class="p">,</span> <span class="n">dtPoint</span><span class="p">,</span> <span class="n">ptB</span><span class="p">));</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="n">Vector2</span> <span class="n">pnt</span> <span class="k">in</span> <span class="n">visiblePnts</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">pnt</span> <span class="p">==</span> <span class="n">ptA</span> <span class="p">||</span> <span class="n">pnt</span> <span class="p">==</span> <span class="n">ptB</span> <span class="p">||</span> <span class="n">pnt</span> <span class="p">==</span> <span class="n">dtPoint</span><span class="p">)</span>
+                <span class="k">continue</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(!</span><span class="n">boundBox</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="n">pnt</span><span class="p">))</span>
+                <span class="k">continue</span><span class="p">;</span>
+
+            <span class="kt">float</span> <span class="n">angNew</span> <span class="p">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">Math</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">NMath</span><span class="p">.</span><span class="n">LineRadian</span><span class="p">(</span><span class="n">ptA</span><span class="p">,</span> <span class="n">pnt</span><span class="p">,</span> <span class="n">ptB</span><span class="p">));</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">angNew</span> <span class="p">&gt;</span> <span class="n">angOld</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">dtPoint</span> <span class="p">=</span> <span class="n">pnt</span><span class="p">;</span>
+                <span class="n">bContinue</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">//false 转Step3</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">bContinue</span><span class="p">);</span>
+
+    <span class="c1">//Step3. 若当前网格包围盒内所有网格单元都已被处理完，</span>
+    <span class="c1">// 也即C（p1，p2，p3）内无可见点，则 p3 为的 p1p2 的 DT 点</span>
+    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>为了让各位能更容易读懂此文，此文仍会继续补充。</p>
+
+<p>现在我将所有源码都存放在了Github上，请各位跟随我到Github去取源码：<a href="https://github.com/luzexi/Unity3DNavMesh">https://github.com/luzexi/Unity3DNavMesh</a></p>
+
+<p>转载请注明出处：http://www.luzexi.com</p>
+
+  <p>感谢您的耐心阅读</p>
+  <p>Thanks for your reading</p>
+</div>
+<div>
+  
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+<div id="cyReward" role="cylabs" data-use="reward" align="center" ></div>
+
+  <li>
+<p>版权申明</p>
+<p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2013/10/06/Unity3D%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1NavMesh%E5%AF%BB%E8%B7%AF.html">Unity3D架构设计NavMesh寻路</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2013/10/06/Unity3D%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1NavMesh%E5%AF%BB%E8%B7%AF.html">Unity3D架构设计NavMesh寻路</a></p> -->
+<p>Copyright attention</p>
+<p>If you would like to reprint this article please write auth's name and link in the page.</p>
+
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
+</li>
+  <li>
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+<!-- <script type="text/javascript">
+    /*700*200信息流*/
+    var cpro_id = "u3469788";
+</script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
+
+</li>
+</div>
+<div class="related">
+    
+<div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+
+</div>
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html">
+            《Unity3D高级编程之进阶主程》第二章，架构(一)
+            <small>18 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF2.html">
+            《Unity3D高级编程之进阶主程》第一章，C#要点技术(二)
+            <small>18 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html">
+            《Unity3D高级编程之进阶主程》第三章，数据表(三)
+            <small>17 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+ 
+
+
+
+
+    </div>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          技术人生
+        </a>
+      </h1>
+      <p class="lead">漫漫人生,记录点滴技术,始于2013</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About Me</a>
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+
+      <a class="sidebar-nav-item" href="/书籍著作/index.html">书籍著作</a>
+      <a class="sidebar-nav-item" href="/unity3d/index.html">Unity3D</a>
+      <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
+      <a class="sidebar-nav-item" href="/金融投资/index.html">金融投资</a>
+      <a class="sidebar-nav-item" href="/life/index.html">Life</a>
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <a href="http://www.luzexi.com/assets/feed.xml">RSS feed</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+    </nav>
+
+    <p>&copy; 2018. All rights reserved.</p>
+    <p>浙ICP备13028172号-1</p>
+  </div>
+</div>
+
+
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </body>
+  
+</html>

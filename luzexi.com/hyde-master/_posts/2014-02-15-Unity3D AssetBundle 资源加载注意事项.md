@@ -18,13 +18,10 @@ date: !binary |-
   MjAxNC0wMi0xNSAxNDo0Nzo1NyArMDgwMA==
 date_gmt: !binary |-
   MjAxNC0wMi0xNSAwNjo0Nzo1NyArMDgwMA==
-categories:
+tags:
 - Unity3D
 - 游戏通用模块
 - 前端技术
-tags:
-- AssetBundle
-- Unity3D
 ---
 Unity3D AssetBundle 资源加载注意事项.U3d资源打包以及加载出过很多问题，在这里把所有该注意的东西列出来分享下。
 

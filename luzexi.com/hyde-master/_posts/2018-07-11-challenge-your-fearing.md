@@ -5,11 +5,8 @@ published: true
 title: Challenge your fearing
 description: "life english challenge"
 excerpt_separator: ===
-categories:
-- life
 tags:
 - life
-- english
 ---
 
 #Challenge your fearing

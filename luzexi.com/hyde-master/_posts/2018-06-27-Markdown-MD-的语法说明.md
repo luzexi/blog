@@ -5,12 +5,8 @@ published: true
 title: Markdown(MD)的语法说明
 description: "Markdown(MD)的语法说明 md语法 Markdown语法"
 excerpt_separator: ????
-categories:
-- 其他技术
 tags:
-- md
-- 语法
-- markdown
+- 其他技术
 ---
 
 #Markdown(MD)的语法说明

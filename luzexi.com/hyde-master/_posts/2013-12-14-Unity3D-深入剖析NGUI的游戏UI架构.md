@@ -18,17 +18,10 @@ date: !binary |-
   MjAxMy0xMi0xNCAxMzowMDo1NCArMDgwMA==
 date_gmt: !binary |-
   MjAxMy0xMi0xNCAwNTowMDo1NCArMDgwMA==
-categories:
+tags:
 - Unity3D
 - 游戏通用模块
 - 前端技术
-tags:
-- NGUI
-- UI
-- Unity3D
-- 客户端架构
-- 服务器架构设计
-- 游戏架构
 ---
 Unity3D-NGUI分析，使用NGUI做UI需要注意的几个要点在此我想罗列一下，对我在U3D上做UI的一些总结，最后解剖一下NGUI的源代码，它是如果架构和运作的。
 

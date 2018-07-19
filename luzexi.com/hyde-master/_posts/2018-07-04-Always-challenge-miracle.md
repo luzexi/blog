@@ -5,11 +5,8 @@ published: true
 title: Always challenge miracle
 description: "life english"
 excerpt_separator: ===
-categories:
-- life
 tags:
 - life
-- english
 ---
 
 # Always challenge miracle

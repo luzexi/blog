@@ -18,15 +18,9 @@ date: !binary |-
   MjAxNC0wNS0yMSAxMTowNToyMSArMDgwMA==
 date_gmt: !binary |-
   MjAxNC0wNS0yMSAwMzowNToyMSArMDgwMA==
-categories:
-- Unity3D
-- 前端技术
 tags:
 - Unity3D
-- 优化
-- 客户端架构
-- 图片纹理
-- Texture
+- 前端技术
 ---
 Texture图片空间和内存占用分析。由于U3D并没有很好的诠释对于图片的处理方式，所以很多人一直对于图集的大小和内存的占用情况都不了解。在此对于U3D的图片问题做一个实际数据的分析。此前的项目都会存在这样或者那样的打包后包大小与内存占用情况的问题，所以这次所以彻彻底底得分析下U3D对于Texture的处理方式。程序里的内存优化请参考[《unity3d优化之路》](/unity3d/游戏架构/前端技术/2014/02/22/Unity3d优化之路.html)。减少U3D包大小请参考[《unity3d之如何将包大小减少到极致》](/unity3d/游戏架构/前端技术/2014/06/06/Unity3D之如何将包大小减少到极致.html)。
 
