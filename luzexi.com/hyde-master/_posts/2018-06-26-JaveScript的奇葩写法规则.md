@@ -8,6 +8,9 @@ excerpt_separator: ===
 tags:
 - 前端技术
 - 其他技术
+categories:
+- 前端技术
+- 其他技术
 ---
 
 #JaveScript的奇葩写法规则

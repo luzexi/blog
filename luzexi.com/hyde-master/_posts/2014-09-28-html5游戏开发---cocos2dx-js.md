@@ -21,6 +21,9 @@ date_gmt: !binary |-
 tags:
 - 前端技术
 - 后端技术
+categories:
+- 前端技术
+- 后端技术
 ---
 html5游戏开发---cocos2dx-js。在神经猫发热后，我开始关注html5游戏。所以前段时间做了2个html5小游戏当试水，用的引擎是cocos2dx-js。在这里我想做回忆下，html5的制作过程和需要注意的地方，也阐述下当下html5游戏渠道的问题。
 

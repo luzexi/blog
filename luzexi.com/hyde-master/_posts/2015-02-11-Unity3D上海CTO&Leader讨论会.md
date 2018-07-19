@@ -21,6 +21,9 @@ date_gmt: !binary |-
 tags:
 - Unity3D
 - 前端技术
+categories:
+- Unity3D
+- 前端技术
 ---
 2015-02-11 今天去了趟unity上海分部的CTO&Leader讨论会。记录下会议内容很多无聊的东西我都略过不写了，报告下我们比较关心的，或者将来会遇到的困难。
 

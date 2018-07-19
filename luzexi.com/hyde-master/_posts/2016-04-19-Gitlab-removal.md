@@ -7,6 +7,8 @@ description: "gitlab removal"
 excerpt_separator: ===
 tags:
 - 其他技术
+categories:
+- 其他技术
 ---
 
 #Gitlab removal

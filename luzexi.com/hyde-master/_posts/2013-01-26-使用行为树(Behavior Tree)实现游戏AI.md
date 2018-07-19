@@ -20,6 +20,8 @@ date_gmt: !binary |-
   MjAxMy0wMS0yNiAxMTowOTozMyArMDgwMA==
 tags:
 - 游戏通用模块
+categories:
+- 游戏通用模块
 ---
 使用行为树(Behavior Tree)实现游戏AI
 by AKara 2010-12-09 @ http://blog.csdn.net/akara @ akaras@163.com

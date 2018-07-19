@@ -7,6 +7,8 @@ description: "Markdown(MD)的语法说明 md语法 Markdown语法"
 excerpt_separator: ????
 tags:
 - 其他技术
+categories:
+- 其他技术
 ---
 
 #Markdown(MD)的语法说明
