@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-19T21:54:57+08:00</updated>
+ <updated>2018-07-19T22:02:53+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -3013,9 +3013,9 @@ MVP为基础的架构&lt;/p&gt;
  
  <entry>
    <title>译Unity3d 综合性能窍门</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/01/08/%E8%AF%91Unity3d%E7%BB%BC%E5%90%88%E6%80%A7%E8%83%BD%E7%AA%8D%E9%97%A8.html"/>
+   <link href="http://www.luzexi.com/2016/01/08/%E8%AF%91Unity3d%E7%BB%BC%E5%90%88%E6%80%A7%E8%83%BD%E7%AA%8D%E9%97%A8.html"/>
    <updated>2016-01-08T00:00:00+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/01/08/译Unity3d综合性能窍门</id>
+   <id>http://www.luzexi.com/2016/01/08/译Unity3d综合性能窍门</id>
    <content type="html">&lt;p&gt;很久没写博文，抱歉让大家失望了，最近忙于学习新的东西，也有懒惰的成分。现在开始我打算用英文来写我的博文，不为了什么，只是自己的英文太差，想练习练习。最近开始翻译一些自己觉得好的文章，其实这篇文章，很早就有人翻译了，因为比较好，我又为自己翻译了一遍。&lt;/p&gt;
 
 &lt;p&gt;Hi everyone, long time no see. these days i&amp;#39;m busy to learn something else not about technology but life, maybe it&amp;#39;s just a excuse that i didnt write anymore :) from now on i&amp;#39;d like to write in english, just practice my poor english :( recently i maybe translate some article which is usefully for you guys maybe translated before by other people.&lt;/p&gt;
@@ -3129,9 +3129,9 @@ MVP为基础的架构&lt;/p&gt;
  
  <entry>
    <title>Unity3D之slua集成第三方库</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93.html"/>
+   <link href="http://www.luzexi.com/2015/09/26/Unity3D%E4%B9%8Bslua%E9%9B%86%E6%88%90%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93.html"/>
    <updated>2015-09-26T14:46:26+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/09/26/Unity3D之slua集成第三方库</id>
+   <id>http://www.luzexi.com/2015/09/26/Unity3D之slua集成第三方库</id>
    <content type="html">&lt;p&gt;Unity3D中使用lua最近越来越火，我比较中意slua的思路与代码质量。因为先前的项目对slua做了几个第三方库的封装，所有在空出来的时间就对slua做了fork加入了一些大家都比较常用的第三方库。&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://github.com/luzexi/slua-3rd-lib&quot;&gt;源码&lt;/a&gt;&lt;/p&gt;
@@ -3195,9 +3195,9 @@ MVP为基础的架构&lt;/p&gt;
  
  <entry>
    <title>Unity3D-重新编译Mono加密DLL</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL.html"/>
+   <link href="http://www.luzexi.com/2015/04/11/Unity3D-%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91Mono%E5%8A%A0%E5%AF%86DLL.html"/>
    <updated>2015-04-11T18:58:36+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/11/Unity3D-重新编译Mono加密DLL</id>
+   <id>http://www.luzexi.com/2015/04/11/Unity3D-重新编译Mono加密DLL</id>
    <content type="html">&lt;p&gt;Unity3D-重新编译Mono加密DLL。安卓应用总是让人头疼，游戏遭到破解与反编译是研发的人最不愿意看到的。自己的辛苦劳动成果被人随意窃取与利用，对这些咬牙切齿的痛恨。所以我们需要加强自身的反破解技术力量。不过这世上没有破解不了的东西，道高一尺魔高一丈，我们做的只是让破解更加困难而已。让那些破解的人付出点代价才能得到他们想要的，如果他们觉得代价太高，看不清前面的道路，他们就有可能放弃，然后我们的目的达到了。&lt;/p&gt;
 
 &lt;p&gt;游戏本身加密方式有很多，对apk加壳，防止apk二次打包等。对这些android的加密与破解技术看过比较好的文章参考：&lt;/p&gt;
@@ -3308,46 +3308,10 @@ MVP为基础的架构&lt;/p&gt;
  </entry>
  
  <entry>
-   <title>Android-SDK-NDK-Studio-下载列表和构建说明</title>
-   <link href="http://www.luzexi.com/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/06/Android-SDK-NDK-Studio-%E4%B8%8B%E8%BD%BD%E5%88%97%E8%A1%A8%E5%92%8C%E6%9E%84%E5%BB%BA%E8%AF%B4%E6%98%8E.html"/>
-   <updated>2015-04-06T18:07:29+08:00</updated>
-   <id>http://www.luzexi.com/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/06/Android-SDK-NDK-Studio-下载列表和构建说明</id>
-   <content type="html">&lt;p&gt;Android-SDK-NDK-Studio-下载列表和构建说明。是一个我整理的安卓的开发资料，无论是用安卓还是其他第三方平台都需要的工具。
-你可以通过这个地址直接访问我整理的资料，资料中的标题点击左边图标可以展开请耐心查看：&lt;a href=&quot;/static-page/android-list.html/index.html&quot;&gt;Android-SDK-NDK-Studio-Build_process&lt;/a&gt;&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
-&lt;p&gt;展示内容：
-&lt;iframe src=&quot;/static-page/android-list.html/index.html&quot; width=&quot;100%&quot; height=&quot;2000&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;p&gt;转载注明出处 http://www.luzexi.com&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
    <title>Unity3D-游戏画面高低品质切换</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/01/Unity3D-%E6%B8%B8%E6%88%8F%E7%94%BB%E9%9D%A2%E9%AB%98%E4%BD%8E%E5%93%81%E8%B4%A8%E5%88%87%E6%8D%A2.html"/>
+   <link href="http://www.luzexi.com/2015/04/01/Unity3D-%E6%B8%B8%E6%88%8F%E7%94%BB%E9%9D%A2%E9%AB%98%E4%BD%8E%E5%93%81%E8%B4%A8%E5%88%87%E6%8D%A2.html"/>
    <updated>2015-04-01T00:36:06+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/04/01/Unity3D-游戏画面高低品质切换</id>
+   <id>http://www.luzexi.com/2015/04/01/Unity3D-游戏画面高低品质切换</id>
    <content type="html">&lt;p&gt;Unity3D-游戏画面高低品质切换。最近想办法让游戏在高画质和低画质之间切换，在判定游戏帧数高低后，可以实时切换游戏品质让游戏更加流畅。这能给客户端在渠道发行后提高些许留存率。
 ngui和ugui切换方式有所不同，一个基于atlas一种基于Image，一种是之前的ngui的atlas，一种是Unity3D4.6.1后的sprite 2D(ugui)。&lt;/p&gt;
 
@@ -3393,9 +3357,9 @@ ngui部分的prefab，编写脚本使用atlas指向切换。ugui部分的prefab�
  
  <entry>
    <title>Unity3DLua-将xls转化为lua</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/03/26/Unity3DLua-%E5%B0%86xls%E8%BD%AC%E5%8C%96%E4%B8%BAlua.html"/>
+   <link href="http://www.luzexi.com/2015/03/26/Unity3DLua-%E5%B0%86xls%E8%BD%AC%E5%8C%96%E4%B8%BAlua.html"/>
    <updated>2015-03-26T13:29:02+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/03/26/Unity3DLua-将xls转化为lua</id>
+   <id>http://www.luzexi.com/2015/03/26/Unity3DLua-将xls转化为lua</id>
    <content type="html">&lt;p&gt;Unity3DLua-将xls转化为lua。使用lua写unity3d项目，由于加载数据一直觉得不方便，于是写个脚本将xls数据文件转化为lua文件，这样lua逻辑就可以直接读取数据。
 为什么要这样做呢？&lt;/p&gt;
 
@@ -3485,9 +3449,9 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
  
  <entry>
    <title>Unity3D项目环境全部署</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/03/06/Unity3D%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E5%85%A8%E9%83%A8%E7%BD%B2.html"/>
+   <link href="http://www.luzexi.com/2015/03/06/Unity3D%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E5%85%A8%E9%83%A8%E7%BD%B2.html"/>
    <updated>2015-03-06T18:18:08+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/03/06/Unity3D项目环境全部署</id>
+   <id>http://www.luzexi.com/2015/03/06/Unity3D项目环境全部署</id>
    <content type="html">&lt;p&gt;Unity3D项目环境全部署。这次我想总结下项目环境部署。可别小看了这个开发环境部署，这将直接导致项目的进程速度，以及成员们在这个开发行程中的疲劳积累速度。优秀的部署能省去成员们不必要的心理负担，卸下包袱专心去做自己的功能块。差劲的部署，会加重成员们的心理负担，并且有可能引起不必要的开发冲突。&lt;/p&gt;
 
 &lt;p&gt;首先我来罗列下Unity3D开发手游需要经历哪些节点。&lt;/p&gt;
@@ -3560,9 +3524,9 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
  
  <entry>
    <title>Unity3D上海CTO&Leader讨论会</title>
-   <link href="http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/02/11/Unity3D%E4%B8%8A%E6%B5%B7CTO&Leader%E8%AE%A8%E8%AE%BA%E4%BC%9A.html"/>
+   <link href="http://www.luzexi.com/2015/02/11/Unity3D%E4%B8%8A%E6%B5%B7CTO&Leader%E8%AE%A8%E8%AE%BA%E4%BC%9A.html"/>
    <updated>2015-02-11T20:15:24+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2015/02/11/Unity3D上海CTO&Leader讨论会</id>
+   <id>http://www.luzexi.com/2015/02/11/Unity3D上海CTO&Leader讨论会</id>
    <content type="html">&lt;p&gt;2015-02-11 今天去了趟unity上海分部的CTO&amp;amp;Leader讨论会。记录下会议内容很多无聊的东西我都略过不写了，报告下我们比较关心的，或者将来会遇到的困难。&lt;/p&gt;
 
 &lt;p&gt;1.现在unity3d 4.6.2 打包64位的ios app 不靠谱，bug有400多个，不建议升级。4月1号前说是会出个稳定版，但讨论中透露，稳定版中也会由许多未知因素。IL2P打成c++的方式有众多问题和困难。&lt;/p&gt;
@@ -3712,9 +3676,9 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
  
  <entry>
    <title>Unity3D手机中的网页调用与回调</title>
-   <link href="http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/11/23/Unity3D%E6%89%8B%E6%9C%BA%E4%B8%AD%E7%9A%84%E7%BD%91%E9%A1%B5%E8%B0%83%E7%94%A8%E4%B8%8E%E5%9B%9E%E8%B0%83.html"/>
+   <link href="http://www.luzexi.com/2014/11/23/Unity3D%E6%89%8B%E6%9C%BA%E4%B8%AD%E7%9A%84%E7%BD%91%E9%A1%B5%E8%B0%83%E7%94%A8%E4%B8%8E%E5%9B%9E%E8%B0%83.html"/>
    <updated>2014-11-23T23:04:46+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/11/23/Unity3D手机中的网页调用与回调</id>
+   <id>http://www.luzexi.com/2014/11/23/Unity3D手机中的网页调用与回调</id>
    <content type="html">&lt;p&gt;Unity3D手机中的网页调用与回调，其实就是我们口中常说的Webview，是手机项目里调用网页，来代替游戏画面展示的一种方法。因为其展示的是网页，所以展示画面是相对动态的，可以由服务器来控制。但是我们不只需要展示画面，还需要当点击网页按钮时产生回调以使U3D执行指定程序。&lt;/p&gt;
 
 &lt;p&gt;其实日本在webview这个模块上做的很不错，我也是借用日本Gree公司在github上公开的webview程序来作为底层代码的，只是我稍微改进了下，以适合自己的程序习惯和项目习惯。下面我主要介绍下这个webview的运作机制。&lt;/p&gt;
@@ -3781,9 +3745,9 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
  
  <entry>
    <title>Unity3D人物行为状态机和指令状态机</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/10/25/Unity3D%E4%BA%BA%E7%89%A9%E8%A1%8C%E4%B8%BA%E7%8A%B6%E6%80%81%E6%9C%BA%E5%92%8C%E6%8C%87%E4%BB%A4%E7%8A%B6%E6%80%81%E6%9C%BA.html"/>
+   <link href="http://www.luzexi.com/2014/10/25/Unity3D%E4%BA%BA%E7%89%A9%E8%A1%8C%E4%B8%BA%E7%8A%B6%E6%80%81%E6%9C%BA%E5%92%8C%E6%8C%87%E4%BB%A4%E7%8A%B6%E6%80%81%E6%9C%BA.html"/>
    <updated>2014-10-25T15:06:18+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/10/25/Unity3D人物行为状态机和指令状态机</id>
+   <id>http://www.luzexi.com/2014/10/25/Unity3D人物行为状态机和指令状态机</id>
    <content type="html">&lt;p&gt;Unity3D人物行为状态机和指令状态机。状态机在各类游戏中都应用的比较平凡，不要以为只有角色扮演类游戏才用到状态机，但凡有物体有动作切换或者重复的指令切换都是状态机用到的地方。其实状态机到处都是，只有你想不到没有有他触及不到的地方，当然我这里主要讲有限状态机。这里省略一万字的状态机基础知识以及我的唠叨。&lt;/p&gt;
 
 &lt;p&gt;状态机在游戏项目中的主要运用点：&lt;/p&gt;
@@ -3833,9 +3797,9 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
  
  <entry>
    <title>Unity3D行为树系统编程实现</title>
-   <link href="http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/10/24/Unity3D%E8%A1%8C%E4%B8%BA%E6%A0%91%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0.html"/>
+   <link href="http://www.luzexi.com/2014/10/24/Unity3D%E8%A1%8C%E4%B8%BA%E6%A0%91%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0.html"/>
    <updated>2014-10-24T11:16:11+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/10/24/Unity3D行为树系统编程实现</id>
+   <id>http://www.luzexi.com/2014/10/24/Unity3D行为树系统编程实现</id>
    <content type="html">&lt;p&gt;Unity3D行为树系统编程实现。行为树在AI领域使用十分广泛，行为树的架构非常通用和便捷，在扩展性方面表现得更是非常好。我这里只讲关于如何实现行为树，跳过了基础的行为树概念。关于行为树的介绍和行为树概念请看&lt;a href=&quot;/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/01/26/%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E6%A0%91(Behavior-Tree)%E5%AE%9E%E7%8E%B0%E6%B8%B8%E6%88%8FAI.html&quot;&gt;《使用行为树behavior-tree实现游戏ai》&lt;/a&gt;这是业界一个前辈写的文章我只是代为转载。&lt;/p&gt;
 
 &lt;p&gt;很久没有写文章了，如果文笔弱请多见谅，随着工作的繁忙，写博客也是件奢侈的事情。在整理完代码后累得跟死猪一样，时间并不充裕，经历也有限，请各位期待更新的朋友多多见谅。行为树一直是我希望完善的一个系统框架，本身在2011年时就用在3DRPG里，但那是并不完善，只是个初级的产品。这次我彻彻底底把他完善成一个固定框架，可以直接拿来扩展使用。原本也这个行程也只是记在笔记本上，但最近有个英国的出版社发MAILL给我说有篇UNITY3D AI的书他们正在出版，要我做一下审阅和评论，于是看了几天审阅了段时间，里面大部分内容都是讲U3D里一个行为树插件RAIN如何使用，一项不喜欢使用插件的我看得我很不爽，因为文章大部分内容都是叙述使用过程没什么可看的。一念之下，一口气直接把行为树系统框架和行为树编辑器写了一遍。审阅和评论的事情没弄完，自己的行为树系统倒是写完了，罪过罪过。-----废话完毕。&lt;/p&gt;
@@ -4102,9 +4066,9 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
  
  <entry>
    <title>Unity3D之对pomelo框架网络层改装</title>
-   <link href="http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/25/Unity3D%E4%B9%8B%E5%AF%B9pomelo%E6%A1%86%E6%9E%B6%E7%BD%91%E7%BB%9C%E5%B1%82%E6%94%B9%E8%A3%85.html"/>
+   <link href="http://www.luzexi.com/2014/06/25/Unity3D%E4%B9%8B%E5%AF%B9pomelo%E6%A1%86%E6%9E%B6%E7%BD%91%E7%BB%9C%E5%B1%82%E6%94%B9%E8%A3%85.html"/>
    <updated>2014-06-25T14:27:25+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/25/Unity3D之对pomelo框架网络层改装</id>
+   <id>http://www.luzexi.com/2014/06/25/Unity3D之对pomelo框架网络层改装</id>
    <content type="html">&lt;p&gt;最近了解了下网易的开源服务器框架pomelo，github地址：&lt;a href=&quot;https://github.com/NetEase/pomelo&quot;&gt;https://github.com/NetEase/pomelo&lt;/a&gt;发现其中它封装的u3d的网络层部分有线程安全问题，几乎不能直接u3d项目，所以对其进行了2次封装，让他可以真正用于u3d项目。&lt;/p&gt;
 
 &lt;p&gt;封装后的源码也同样放在我的github上：&lt;a href=&quot;https://github.com/luzexi&quot;&gt;https://github.com/luzexi&lt;/a&gt; 供大家参考。&lt;/p&gt;
@@ -4277,9 +4241,9 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
  
  <entry>
    <title>Unity3D之如何将包大小减少到极致</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4.html"/>
+   <link href="http://www.luzexi.com/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4.html"/>
    <updated>2014-06-06T18:38:46+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/06/Unity3D之如何将包大小减少到极致</id>
+   <id>http://www.luzexi.com/2014/06/06/Unity3D之如何将包大小减少到极致</id>
    <content type="html">&lt;p&gt;Unity3D之如何将包大小减少到极致,图片是游戏app里最最占空间的资源，所以请各位还没有理解u3d对图片文件存储方式理解的请看&lt;a href=&quot;/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/05/21/Unity3D-Texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html&quot;&gt;《unity3d-texture图片空间和内存占用分析》&lt;/a&gt;。因为u3d对资源的压缩并不阐述的十分详细，所以很多项目在遇到包大小瓶颈时非常头疼。我也不是神仙，也同样痛苦过，但经历几个项目的折腾，最终能梳理出一套能将u3d包大小减少到合理范围的方法。&lt;/p&gt;
 
 &lt;p&gt;首先来展示下，官方如何说的:（&lt;a href=&quot;http://docs.unity3d.com/Manual/ReducingFilesize.html&quot;&gt;http://docs.unity3d.com/Manual/ReducingFilesize.html&lt;/a&gt; 官方手册）&lt;/p&gt;
@@ -4381,9 +4345,9 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
  
  <entry>
    <title>Unity3D--Texture图片空间和内存占用分析</title>
-   <link href="http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/05/21/Unity3D-Texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html"/>
+   <link href="http://www.luzexi.com/2014/05/21/Unity3D-Texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html"/>
    <updated>2014-05-21T11:05:21+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/05/21/Unity3D-Texture图片空间和内存占用分析</id>
+   <id>http://www.luzexi.com/2014/05/21/Unity3D-Texture图片空间和内存占用分析</id>
    <content type="html">&lt;p&gt;Texture图片空间和内存占用分析。由于U3D并没有很好的诠释对于图片的处理方式，所以很多人一直对于图集的大小和内存的占用情况都不了解。在此对于U3D的图片问题做一个实际数据的分析。此前的项目都会存在这样或者那样的打包后包大小与内存占用情况的问题，所以这次所以彻彻底底得分析下U3D对于Texture的处理方式。程序里的内存优化请参考&lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/02/22/Unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF.html&quot;&gt;《unity3d优化之路》&lt;/a&gt;。减少U3D包大小请参考&lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4.html&quot;&gt;《unity3d之如何将包大小减少到极致》&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;我打包多种类型的项目，空项目和10张放在Resources文件夹中的图为比较案例。以下是比较数据。&lt;/p&gt;
@@ -4520,9 +4484,9 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
  
  <entry>
    <title>Unity3D之AssetBundle资源加载封装</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/04/16/Unity3D%E4%B9%8BAssetBundle%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E5%B0%81%E8%A3%85.html"/>
+   <link href="http://www.luzexi.com/2014/04/16/Unity3D%E4%B9%8BAssetBundle%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E5%B0%81%E8%A3%85.html"/>
    <updated>2014-04-16T21:07:53+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/04/16/Unity3D之AssetBundle资源加载封装</id>
+   <id>http://www.luzexi.com/2014/04/16/Unity3D之AssetBundle资源加载封装</id>
    <content type="html">&lt;p&gt;Unity3D之AssetBundle资源加载封装。在《临兵斗者三国志》中我使用了U3D的AssetBundle资源动态加载机制，原因是某些画面资源太多，IO阻塞过慢会造成游戏奔溃。在开发过程中，遇到点问题:&lt;/p&gt;
 
 &lt;p&gt;1.当资源更改变化时，如何能快速得反应到开发中。&lt;/p&gt;
@@ -4580,9 +4544,9 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
  
  <entry>
    <title>Unity3d优化之路</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/02/22/Unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF.html"/>
+   <link href="http://www.luzexi.com/2014/02/22/Unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF.html"/>
    <updated>2014-02-22T19:43:01+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/02/22/Unity3d优化之路</id>
+   <id>http://www.luzexi.com/2014/02/22/Unity3d优化之路</id>
    <content type="html">&lt;p&gt;U3D的架构部分已经讲了很多了，这里我想讲讲对于U3D优化的亲身体验。从渲染优化，包体大小，再到内存，深入分析与解释如何进行游戏优化。&lt;/p&gt;
 
 &lt;p&gt;优化之路分三块：&lt;/p&gt;
@@ -4723,9 +4687,9 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
  
  <entry>
    <title>Unity3D-HTTP网络层封装</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/02/15/Unity3D-HTTP%E7%BD%91%E7%BB%9C%E5%B1%82%E5%B0%81%E8%A3%85.html"/>
+   <link href="http://www.luzexi.com/2014/02/15/Unity3D-HTTP%E7%BD%91%E7%BB%9C%E5%B1%82%E5%B0%81%E8%A3%85.html"/>
    <updated>2014-02-15T15:59:57+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/02/15/Unity3D-HTTP网络层封装</id>
+   <id>http://www.luzexi.com/2014/02/15/Unity3D-HTTP网络层封装</id>
    <content type="html">&lt;p&gt;Unity3D-HTTP网络层封装。短连接的C#封装在这里做些分享。我把网络层封装成DLL在项目中使用，所以在设计时要将接口封装的很好。 我又对HTTP部分进行了改造不再使用DDL封装了（所以去除文章部分暂时用横线做标记），所有源码都以git的submodule形式作为项目的模块。源码会再文章的最后给出来。这次改装主要是针对程序员是否能快速理解，快速上手的方面来进行的。随着对HTTP网络层不断的理解加深，我将给出更加全面的HTTP源码模块，我还对本HTTP模块写了测试案例，你们可以看测试案例，进行使用。谢谢各位的关注，再次感谢不断得支持。&lt;/p&gt;
 
 &lt;p&gt;一.首先说下网络层需要的一些接口，在游戏里需要用到的网络层都具有大部分的共同点，无论是TCP长连接还是HTTP短连接有部分区别，HTTP的网络事件要相对少一点。&lt;/p&gt;
@@ -4781,9 +4745,9 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
  
  <entry>
    <title>Unity3D AssetBundle 资源加载注意事项</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/02/15/Unity3D-AssetBundle-%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.html"/>
+   <link href="http://www.luzexi.com/2014/02/15/Unity3D-AssetBundle-%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.html"/>
    <updated>2014-02-15T14:47:57+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/02/15/Unity3D AssetBundle 资源加载注意事项</id>
+   <id>http://www.luzexi.com/2014/02/15/Unity3D AssetBundle 资源加载注意事项</id>
    <content type="html">&lt;p&gt;Unity3D AssetBundle 资源加载注意事项.U3d资源打包以及加载出过很多问题，在这里把所有该注意的东西列出来分享下。&lt;/p&gt;
 
 &lt;p&gt;1.由于Unity3D的自身的问题，在资源打包时会遗漏一些引用的资源，导致在游戏加载 AssetBundle 时没有问题，但在把资源实例化时出现资源找不到，或者资源缺少引用资源等问题。&lt;/p&gt;
@@ -4831,9 +4795,9 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
  
  <entry>
    <title>游戏物品系统通用架构</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/12/31/%E6%B8%B8%E6%88%8F%E7%89%A9%E5%93%81%E7%B3%BB%E7%BB%9F%E9%80%9A%E7%94%A8%E6%9E%B6%E6%9E%84.html"/>
+   <link href="http://www.luzexi.com/2013/12/31/%E6%B8%B8%E6%88%8F%E7%89%A9%E5%93%81%E7%B3%BB%E7%BB%9F%E9%80%9A%E7%94%A8%E6%9E%B6%E6%9E%84.html"/>
    <updated>2013-12-31T23:24:47+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/12/31/游戏物品系统通用架构</id>
+   <id>http://www.luzexi.com/2013/12/31/游戏物品系统通用架构</id>
    <content type="html">&lt;p&gt;游戏物品系统通用架构，物品系统是游戏中最最常用的功能之一，面对各种纷繁复杂的游戏物品系统，在具体项目中如何顺手拈来、驾驭自如？请容我一一到来。在内容前我有必要说明几点，所有内容都是基于我最大的架构思想之下，其中 客户端U3D架构思想的文章地址为 &lt;a href=&quot;/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF//2013/10/29/Unity3D%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84.html&quot;&gt;Unity3D游戏架构&lt;/a&gt; ，以及服务器架构：&lt;a href=&quot;%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/08/24/%E7%8E%8B%E9%80%94%E9%9C%B8%E4%B8%9A-%E6%88%98%E4%BA%89%E7%AD%96%E7%95%A5%E6%B8%B8%E6%88%8F%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1.html&quot;&gt;《王图霸业》战争策略游戏服务器架构&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;直入主题&lt;/p&gt;
@@ -5038,9 +5002,9 @@ ActionID9,ActionID10,...ActionID16.
  
  <entry>
    <title>Unity3D-深入剖析NGUI的游戏UI架构</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/12/14/Unity3D-%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90NGUI%E7%9A%84%E6%B8%B8%E6%88%8FUI%E6%9E%B6%E6%9E%84.html"/>
+   <link href="http://www.luzexi.com/2013/12/14/Unity3D-%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90NGUI%E7%9A%84%E6%B8%B8%E6%88%8FUI%E6%9E%B6%E6%9E%84.html"/>
    <updated>2013-12-14T13:00:54+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/12/14/Unity3D-深入剖析NGUI的游戏UI架构</id>
+   <id>http://www.luzexi.com/2013/12/14/Unity3D-深入剖析NGUI的游戏UI架构</id>
    <content type="html">&lt;p&gt;Unity3D-NGUI分析，使用NGUI做UI需要注意的几个要点在此我想罗列一下，对我在U3D上做UI的一些总结，最后解剖一下NGUI的源代码，它是如果架构和运作的。&lt;/p&gt;
 
 &lt;p&gt;在此前我介绍了自己项目的架构方式，所以在NGUI的利用上也是同样的做法，UI逻辑的程序不被绑定在物体上。那么如何做到GUI输入消息的传递呢，答案是：我封装了一个关于NGUI输入消息的类，由于NGUI的输入消息传递方式是U3D中的SendMessage方式，所以在每个需要接入输入的物体上动态的绑定该封装脚本。在这个消息封装类中，加入消息传递的委托方法后，所有关于该物体的输入消息将通过封装类直接传递到方法上，再通过消息类型的识别就可以脱离传统脚本绑定的束缚了。&lt;/p&gt;
@@ -5461,9 +5425,9 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
  
  <entry>
    <title>Unity3D游戏架构</title>
-   <link href="http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/10/29/Unity3D%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84.html"/>
+   <link href="http://www.luzexi.com/2013/10/29/Unity3D%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84.html"/>
    <updated>2013-10-29T15:32:51+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/10/29/Unity3D游戏架构</id>
+   <id>http://www.luzexi.com/2013/10/29/Unity3D游戏架构</id>
    <content type="html">&lt;p&gt;Unity3D虽然是一款3D的引擎，但由于一部分开发者提供了GUI的插件，所以它也是可以用来开发2D游戏的，但我还需要改造一下。《王途霸业》就是完完全全在U3D上架构起来的2D游戏，在去年年底前完成这款游戏的架构底层后，开发速度直线上升，这也同样证明了我的这套架构的可行性。下面我将介绍如何用U3D和GUI插件架构一套2D游戏。&lt;/p&gt;
 
 &lt;p&gt;《王途霸业》U3D项目中有个最大的特点就是不再有纷繁复杂的脚本绑定，整个游戏逻辑不再依赖众多的 MonoBehaviour ，所有GUI不存在脚本绑定一说。我这样做最主要的原因是要将美术，策划，程序的工作完全拆分开来，美术看不到程序，程序不需要管美术，策划更是不需要去顾及那些纷繁复杂的美术和程序专业技术。这样做最直接提升了游戏项目开发效率，用一句话代表这种架构意图：各顾各的，却能成事。&lt;/p&gt;
@@ -5518,9 +5482,9 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
  
  <entry>
    <title>游戏服务端优化</title>
-   <link href="http://www.luzexi.com/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/10/22/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BC%98%E5%8C%96.html"/>
+   <link href="http://www.luzexi.com/2013/10/22/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BC%98%E5%8C%96.html"/>
    <updated>2013-10-22T13:42:14+08:00</updated>
-   <id>http://www.luzexi.com/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/10/22/游戏服务端优化</id>
+   <id>http://www.luzexi.com/2013/10/22/游戏服务端优化</id>
    <content type="html">&lt;p&gt;完成《王途霸业》后，慢慢地开始整理客户端，服务端的架构思路和优化思路。虽然1年来项目工作非常累，但我还是不想放弃这个整理资料，梳理知识的绝佳机会。废话不多说，直接开始游戏服务端优化思路。&lt;/p&gt;
 
 &lt;p&gt;1.整体架构决定承载量。想要完全突破游戏用户承载量，你必须尽快即使调整自己服务器的架构，这个非常不容易，特别是在项目开发后期，在过多的代码积累的情况下，你很难对当前的架构进行调整。基本上，当时的情况都是，不动则已，一动一发不可收拾。架构调整主要是为了分担服务器的 游戏逻辑处理，数据存储，第三方接口处理。&lt;/p&gt;
@@ -5560,9 +5524,9 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
  
  <entry>
    <title>Unity3D架构设计NavMesh寻路</title>
-   <link href="http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/10/06/Unity3D%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1NavMesh%E5%AF%BB%E8%B7%AF.html"/>
+   <link href="http://www.luzexi.com/2013/10/06/Unity3D%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1NavMesh%E5%AF%BB%E8%B7%AF.html"/>
    <updated>2013-10-06T18:04:28+08:00</updated>
-   <id>http://www.luzexi.com/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/10/06/Unity3D架构设计NavMesh寻路</id>
+   <id>http://www.luzexi.com/2013/10/06/Unity3D架构设计NavMesh寻路</id>
    <content type="html">&lt;p&gt;国庆闲来没事把NavMesh巩固一下。以Unity3D引擎为例写一个底层c# NavMesh寻路。因为Unity3D中本身自带的NavMesh寻路不能很好的融入到游戏项目当中，所以重写一个NavMesh寻路是个必经之路。NavMesh在很多游戏中应用广泛，不同种类的框架下NavMesh寻路发挥的淋漓尽致。与传统的A星寻路相比，NavMesh不仅减少了内存空间占有量，加快了寻路速度，还可以加入寻路角色的宽高限制，以及动态物体寻路等功能，基本上适应了大部分项目变化多端的需求。&lt;/p&gt;
 
 &lt;p&gt;我把写NavMesh的过程分成好几个部分，一一进行描述：&lt;/p&gt;

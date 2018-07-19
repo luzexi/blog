@@ -22,10 +22,6 @@ tags:
 - Unity3D
 - 游戏通用模块
 - 前端技术
-categories:
-- Unity3D
-- 游戏通用模块
-- 前端技术
 ---
 Unity3D之AssetBundle资源加载封装。在《临兵斗者三国志》中我使用了U3D的AssetBundle资源动态加载机制，原因是某些画面资源太多，IO阻塞过慢会造成游戏奔溃。在开发过程中，遇到点问题:
 

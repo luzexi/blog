@@ -22,10 +22,6 @@ tags:
 - Unity3D
 - 游戏通用模块
 - 前端技术
-categories:
-- unity3d
-- 游戏通用模块
-- 前端技术
 ---
 Unity3DLua-将xls转化为lua。使用lua写unity3d项目，由于加载数据一直觉得不方便，于是写个脚本将xls数据文件转化为lua文件，这样lua逻辑就可以直接读取数据。
 为什么要这样做呢？

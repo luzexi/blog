@@ -22,10 +22,6 @@ tags:
 - Unity3D
 - 游戏通用模块
 - 前端技术
-categories:
-- unity3d
-- 游戏通用模块
-- 前端技术
 ---
 Unity3D-NGUI分析，使用NGUI做UI需要注意的几个要点在此我想罗列一下，对我在U3D上做UI的一些总结，最后解剖一下NGUI的源代码，它是如果架构和运作的。
 
