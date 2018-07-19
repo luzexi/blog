@@ -7,6 +7,62 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第二章，架构(一)</title>
+               <description>&lt;h1&gt;第二章，架构(一)&lt;/h1&gt;
+
+&lt;p&gt;什么是软件系统架构?&lt;/p&gt;
+
+&lt;p&gt;网络上百科解释很多，比如，软件架构是一个系统的草图，又比如，软件体系结构是构建计算机软件实践的基础，还有，软件系统架构是一系列相关的抽象模式，用于指导大型软件系统各个方面的设计。&lt;/p&gt;
+
+&lt;p&gt;通俗易懂的讲，软件系统架构可以理解为是软件程序的架子，和现实中的书架差不多，这个架子上有很多大大小小的格子，每个格子里都可以放固定种类的程序。架子有大有小，大的需要花费点去做，小的轻便快捷。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;架子做好了要拿出去用，拿出去用的时候，够不够结实，是要关注的点，一有什么不同的情况就倒了或散架了就不算是个好的架子了，所以架子好不好，质量第一。&lt;/p&gt;
+
+&lt;p&gt;另外，大家都去用的时候，架子能承受多少人同时使用也是个比较关键的点，如果10个人去用就要开始排队了，比如要排10分钟，那么如果有100个人去用的时候，光排队就要排一个半小时以上，这低的效率，即使有很好的创意也没人来用，谁还会来光顾你的产品。所以架子好不好，承载力也是关键。&lt;/p&gt;
+
+&lt;p&gt;还有，可以放多少种不同种类的程序也在考量范围内。一个架子用的人多了，需求就多了，如果不能满足众多的需求，那么这个架子也是迟早要被淘汰的，因为你没有的功能别人有，别人就占有了优势，长此以往，就会被拉开很大的差距。&lt;/p&gt;
+
+&lt;p&gt;有时我们杀鸡用牛刀时会在大的架子上放小的东西，看起来不是那么协调对么。放小东西时，我们却搭了一个大的架子，费时费力，不划算。所以架子的大小和结实程度，并不是固定不变的，一定要大的或者一定要小的，是随着项目大小，资金多少，流量大小来决定的。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;p&gt;那么为什么需要架构呢？肯定有人说大规模开发，没有架构，规范就没了，大家各做各的，肯定会乱啊。我想说，这种说法只是其一，即使一个人开发时，也需要架构。架构既承载了你对这个项目的抽象思维构建，也同时帮助了你整理程序。&lt;/p&gt;
+
+&lt;p&gt;如果要问软件研发/系统架构中最重要的能力是什么，我会毫不犹豫回答是抽象能力。抽象(abstraction)这个词大家经常听到，但是真正理解和能讲清楚什么是抽象的人少之又少。&lt;/p&gt;
+
+&lt;p&gt;在系统架构和设计中，抽象帮助我们从大处着眼，隐藏细节。抽象能力的强弱，直接决定我们所能解决问题的复杂性和规模大小。&lt;/p&gt;
+
+&lt;p&gt;我认为软件系统架构设计和小朋友搭积木无本质差异，只是解决的问题域和规模不同罢了。架构师先要在大脑中形成抽象概念，然后是子模块分解，然后是依次实现子模块，最后将子模块拼装组合起来，形成最后系统。所以我常说编程和架构设计就是搭积木，优秀的架构师受职业习惯影响，眼睛里看到的世界都是模块化拼装组合式的。&lt;/p&gt;
+
+&lt;p&gt;抽象能力不仅对软件系统架构设计重要，对建筑、商业、管理等人类其它领域活动同样非常重要。其实可以这样认为，我们生存的世界都是在抽象的基础上构建起来的，离开抽象人类将寸步难行。&lt;/p&gt;
+</description>
+               <pubDate>Wed, 18 Jul 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(二)</title>
                <description>&lt;h1&gt;第一章，C#要点技术(二)&lt;/h1&gt;
 
@@ -1547,103 +1603,6 @@ Win,赢了,Win, 勝った, 이기다
                <pubDate>Wed, 04 Jul 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//life/2018/07/04/Always-challenge-miracle.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//life/2018/07/04/Always-challenge-miracle.html</guid>
-            </item>
-        
-            <item>
-               <title>股市底部探索逻辑分析</title>
-               <description>&lt;h1&gt;股市底部探索逻辑分析&lt;/h1&gt;
-
-&lt;p&gt;前面探讨了 &lt;a href=&quot;http://www.luzexi.com/%E9%87%91%E8%9E%8D/2018/06/22/%E8%82%A1%E5%B8%82%E7%9A%84%E5%BA%95%E9%83%A8%E7%A9%B6%E7%AB%9F%E6%98%AF%E6%80%8E%E6%A0%B7%E5%BD%A2%E6%88%90%E7%9A%84.html&quot;&gt;《股市的底部究竟是怎样形成的》&lt;/a&gt; 分析了股市是由人性决定的，是由人创造的，所以会因为人而辉煌，并且也会因为人而毁坏。&lt;/p&gt;
-
-&lt;p&gt;面对不确定的持续性的下跌，我们应该如何面对的呢？&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;首先，我们是避不开下跌的，所以的上升都会引起同样的下跌。只要你在股市里，就必须面对下跌。&lt;/p&gt;
-
-&lt;p&gt;其次，下跌也分好几种。有从高位摔下来的，有从中继平台继续下探的，有再创历史新低的。三种情况都不一样，高位摔下来肯定不能玩，中继平台下跌的可以看看，新低的要研究其基本面。&lt;/p&gt;
-
-&lt;p&gt;那么要怎么样判断股票在下跌过程中时可以买入的呢？&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
-&lt;p&gt;一。基本面扎实。 是最最重要的一点，也是所有买入的必要条件。所谓买好股做好人就是这个道理。只有买好的公司的股票才真正赚钱。投资股票要像投资实业那样脚踏实地才能真正赚到钱。否则所谓的炒作，最终都会将自己带入坟墓。&lt;/p&gt;
-
-&lt;p&gt;那么什么叫基本面扎实？&lt;/p&gt;
-
-&lt;p&gt;首先，营收要稳定增长，毛利率要稳定，&lt;/p&gt;
-
-&lt;p&gt;其次，债务不能太多否则营收利润都会被债务吃掉，&lt;/p&gt;
-
-&lt;p&gt;然后，管理层人员，特别是CEO要有能力，善于学习，积极学习，深耕本行业。而不是为了抄高股价而来。&lt;/p&gt;
-
-&lt;p&gt;最后，研发能力强，研发经费占比要大，这能说明公司比较重视科研，那些以运营为目的公司是走不长的。&lt;/p&gt;
-
-&lt;p&gt;另外市值大小其实并不能说明其爆发力和持续能力的多少，小企业也同样能爆发大力量，大企业也会因为不善的经营管理策略而衰败。&lt;/p&gt;
-
-&lt;p&gt;二。行业未来前途光明。如果行业未来的不确定性过大，就无法支撑当前的基本面的持续增长。也将导致股票价格的不确定性波动。一个在未来无法确定的东西，那跟赌博是没有区别的。所以我们一定要选，行业在未来的潜力大却持续性很好的来做。&lt;/p&gt;
-
-&lt;p&gt;三。被低估。如果不是被低估的股票，是能难有好的收益的，即使他是高成长高发展的股票，也有到头的时候，如果不是被低估，注定要做很大的过山车。&lt;/p&gt;
-
-&lt;p&gt;其实在牛市里，我们很难找到被低估的股票，基本上所有的股票都是被高估的，因为在牛市里大家的风险意识下降，只要有点前景的股票都会被买到很高的价格。&lt;/p&gt;
-
-&lt;p&gt;而在牛熊中间，有很多诱骗人的价格，因为是从高处下来的股价，所以会认为捡到便宜货，而其实并不便宜，因为价格是相对的，看见过高的，就认为现在时便宜的。殊不知，在未来的熊市中，会有比这低一倍的价格出现。&lt;/p&gt;
-
-&lt;p&gt;真正便宜的价格是在熊市中出现的。为什么这么说呢？因为只有在熊市中，人们的风险意识才是最高的，这个时候，很多利好甚至重大利好消息，都会被忽略，导致价格与实际基本面完全背离。&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
-&lt;p&gt;在熊市中，有两种风险，一种是底部还有底，二是破产。熊市中的风险就是人们的恐慌，所以底部下还有底部，因为人们不相信一切未来，只在乎当下的亏损。而破产很大一部分原因就是因为大家的谨慎导致资金面紧缺，最后可能由于债务或者资金链导致无法继续经营下去而破产。只有那种基本面扎实的，一心扑在行业里深耕拓展的企业才能最终活下来。也只有脚踏实地的企业，能在熊市中崛起。&lt;/p&gt;
-
-&lt;p&gt;从另外一个角度看，熊市是一个很好的布局机会。因为只有熊市才会让好企业的价格完全低于它企业本身的价值，在未来爆发的过程中，能得到很好的投资收益。&lt;/p&gt;
-
-&lt;p&gt;记住，价格不会因为有人买而见底，只会因为没人卖而见底。同样，价格也不会因为有人卖而见顶，只会因为没人买而见顶。股市，房市，都是一样的道理，因为交易是由人性构成的。&lt;/p&gt;
-
-&lt;p&gt;在持续下跌的熊市中，我们需要很好的耐心，来等待底部的形成，也需要很好的资金控制，逐步买入好的企业的股票。这也是我提倡的，无限现金流打法，按月持续买入底部好企业，并深入研究企业的运营状况，以及行业的发展方向。&lt;/p&gt;
-
-&lt;p&gt;这市场有不少靠嘴巴吃饭的分析师几乎都是一个套路，市场刚刚下跌或没下跌时会反复说“A股没有大幅下跌的基础，长期慢牛上涨将是股市波动主基调”。后来市场大幅下跌了，跌得惨不忍睹，他们就开始换口吻说“股市大幅下跌已严重背离经济基本面”。其实，股市的涨跌一定有其内在原因。再说，股市就算是经济的晴雨表，也是未来经济基本面的晴雨表吧？既然是未来，是不是具备太多的不确定性因素呢？&lt;/p&gt;
-</description>
-               <pubDate>Mon, 02 Jul 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//%E9%87%91%E8%9E%8D/%E9%87%91%E8%9E%8D%E6%8A%95%E8%B5%84/2018/07/02/%E8%82%A1%E5%B8%82%E5%BA%95%E9%83%A8%E6%8E%A2%E7%B4%A2%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//%E9%87%91%E8%9E%8D/%E9%87%91%E8%9E%8D%E6%8A%95%E8%B5%84/2018/07/02/%E8%82%A1%E5%B8%82%E5%BA%95%E9%83%A8%E6%8E%A2%E7%B4%A2%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90.html</guid>
             </item>
         
     </channel>

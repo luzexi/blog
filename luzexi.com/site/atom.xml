@@ -4,13 +4,69 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-19T14:43:04+08:00</updated>
+ <updated>2018-07-19T19:10:22+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>《Unity3D高级编程之进阶主程》第二章，架构(一)</title>
+   <link href="http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html"/>
+   <updated>2018-07-18T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/%E7%89%88%E6%9D%83%E8%91%97%E4%BD%9C/unity3d/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2018/07/18/Unity3D高级编程之进阶主程-架构1</id>
+   <content type="html">&lt;h1&gt;第二章，架构(一)&lt;/h1&gt;
+
+&lt;p&gt;什么是软件系统架构?&lt;/p&gt;
+
+&lt;p&gt;网络上百科解释很多，比如，软件架构是一个系统的草图，又比如，软件体系结构是构建计算机软件实践的基础，还有，软件系统架构是一系列相关的抽象模式，用于指导大型软件系统各个方面的设计。&lt;/p&gt;
+
+&lt;p&gt;通俗易懂的讲，软件系统架构可以理解为是软件程序的架子，和现实中的书架差不多，这个架子上有很多大大小小的格子，每个格子里都可以放固定种类的程序。架子有大有小，大的需要花费点去做，小的轻便快捷。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;架子做好了要拿出去用，拿出去用的时候，够不够结实，是要关注的点，一有什么不同的情况就倒了或散架了就不算是个好的架子了，所以架子好不好，质量第一。&lt;/p&gt;
+
+&lt;p&gt;另外，大家都去用的时候，架子能承受多少人同时使用也是个比较关键的点，如果10个人去用就要开始排队了，比如要排10分钟，那么如果有100个人去用的时候，光排队就要排一个半小时以上，这低的效率，即使有很好的创意也没人来用，谁还会来光顾你的产品。所以架子好不好，承载力也是关键。&lt;/p&gt;
+
+&lt;p&gt;还有，可以放多少种不同种类的程序也在考量范围内。一个架子用的人多了，需求就多了，如果不能满足众多的需求，那么这个架子也是迟早要被淘汰的，因为你没有的功能别人有，别人就占有了优势，长此以往，就会被拉开很大的差距。&lt;/p&gt;
+
+&lt;p&gt;有时我们杀鸡用牛刀时会在大的架子上放小的东西，看起来不是那么协调对么。放小东西时，我们却搭了一个大的架子，费时费力，不划算。所以架子的大小和结实程度，并不是固定不变的，一定要大的或者一定要小的，是随着项目大小，资金多少，流量大小来决定的。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;p&gt;那么为什么需要架构呢？肯定有人说大规模开发，没有架构，规范就没了，大家各做各的，肯定会乱啊。我想说，这种说法只是其一，即使一个人开发时，也需要架构。架构既承载了你对这个项目的抽象思维构建，也同时帮助了你整理程序。&lt;/p&gt;
+
+&lt;p&gt;如果要问软件研发/系统架构中最重要的能力是什么，我会毫不犹豫回答是抽象能力。抽象(abstraction)这个词大家经常听到，但是真正理解和能讲清楚什么是抽象的人少之又少。&lt;/p&gt;
+
+&lt;p&gt;在系统架构和设计中，抽象帮助我们从大处着眼，隐藏细节。抽象能力的强弱，直接决定我们所能解决问题的复杂性和规模大小。&lt;/p&gt;
+
+&lt;p&gt;我认为软件系统架构设计和小朋友搭积木无本质差异，只是解决的问题域和规模不同罢了。架构师先要在大脑中形成抽象概念，然后是子模块分解，然后是依次实现子模块，最后将子模块拼装组合起来，形成最后系统。所以我常说编程和架构设计就是搭积木，优秀的架构师受职业习惯影响，眼睛里看到的世界都是模块化拼装组合式的。&lt;/p&gt;
+
+&lt;p&gt;抽象能力不仅对软件系统架构设计重要，对建筑、商业、管理等人类其它领域活动同样非常重要。其实可以这样认为，我们生存的世界都是在抽象的基础上构建起来的，离开抽象人类将寸步难行。&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(二)</title>
