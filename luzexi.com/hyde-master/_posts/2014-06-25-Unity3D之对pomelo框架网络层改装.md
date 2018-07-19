@@ -22,7 +22,7 @@ tags:
 - Unity3D
 - 前端技术
 categories:
-- Unity3D
+- unity3d
 - 前端技术
 ---
 最近了解了下网易的开源服务器框架pomelo，github地址：[https://github.com/NetEase/pomelo](https://github.com/NetEase/pomelo)发现其中它封装的u3d的网络层部分有线程安全问题，几乎不能直接u3d项目，所以对其进行了2次封装，让他可以真正用于u3d项目。
