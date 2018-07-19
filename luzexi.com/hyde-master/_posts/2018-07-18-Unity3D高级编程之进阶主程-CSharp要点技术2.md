@@ -6,7 +6,7 @@ title: 《Unity3D高级编程之进阶主程》第一章，C#要点技术(二)
 description: "unity3d 高级编程 c# 主程 算法 设计模式 动态库 底层源码 Dictionary"
 excerpt_separator: ===
 categories:
-- 著作书籍
+- 书籍著作
 - 版权著作
 - Unity3D
 - 前端技术
