@@ -7,6 +7,8 @@ description: "life english"
 excerpt_separator: ===
 tags:
 - life
+categories:
+- life
 ---
 
 
