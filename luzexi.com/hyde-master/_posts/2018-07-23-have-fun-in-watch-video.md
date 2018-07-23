@@ -11,11 +11,11 @@ tags:
 
 #Have fun in watch video
 
-This is a funy video I would like to share with you. Learn english should be more funy than u think. I prefer find out the funy way to keep, not only the boring thing as learn words or do homework on paper.
+This is a funy video I would like to share with you. Learn english should be more funy than u think. I prefer to find out the funy way to keep, not only the boring thing as learn words or do homework on paper.
 
 ===
 
-The way I find out this time is a short funy video. It's just has 3 minutes long to watch, but make me laugh out loudly.
+The way I find out this time is a short funy video. It's just has 3 minutes long to watch, but makes me laugh out loudly.
 
 The story happend in a normal company, a person which in HR department is having a interview with a job seeker.
 
