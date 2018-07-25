@@ -202,4 +202,25 @@ categories:
 			let options = Object.assign({}, DEFAULTS, options);
 		}
 
+6. ### (function(){})();
 
+		举个例子:
+
+		(function(p1,p2){alert(p1+p2);})(1,2);
+
+		实际就相当与
+
+		function test(p1,p2){
+		   alert(p1+p2);
+		};
+		test(1,2);
+
+		这种写法可以看做是私有的内部类,一般出于加载时就需要立即执行的代码可以这样来些,第2个就是避免与其它的名称相冲突.
+
+		匿名方法的好处,上面也有提到.
+
+		1.其它外部调用不到,相对安全.
+
+		2.可用于onload事件保证不与其冲突.
+
+		3.可看做线程安全.
