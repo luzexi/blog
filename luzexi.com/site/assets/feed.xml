@@ -7,6 +7,205 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第四章，UI(三)</title>
+               <description>&lt;h1&gt;第四章，UI(三)&lt;/h1&gt;
+
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
+
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html&quot;&gt;UI(二)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;UGUI的原理，以及组件使用详解。&lt;/p&gt;
+
+&lt;p&gt;此篇我们来对UGUI的源码中的输入事件模块进行剖析。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;h3&gt;UGUI源码剖析&lt;/h3&gt;
+
+&lt;p&gt;UGUI的源码是Unity3D官方公开的，这里我们来剖析一下UGUI在Unity2017中的源码部分。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/4/ugui1.png&quot; alt=&quot;ugui文件夹&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;这是UGUI内核源码的文件夹结构图。从图中可以看出，它把UGUI分成了，三块，输入事件，动画，核心渲染。其中动画部分相对比较简单，用了tween补间动画的形式，对颜色，位置，大小进行了渐进操作。我们重点来看看输入事件和核心渲染两块。&lt;/p&gt;
+
+&lt;h3&gt;输入事件源码&lt;/h3&gt;
+
+&lt;p&gt;输入事件源码的整个文件结构图如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/4/ugui2.png&quot; alt=&quot;ugui事件文件夹结构&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;从图中文件夹结构可以看出他有四部分构成，事件数据模块，输入事件捕获模块，射线碰撞检测模块，事件逻辑处理及回调模块。&lt;/p&gt;
+
+&lt;h6&gt;事件数据模块&lt;/h6&gt;
+
+&lt;p&gt;事件数据模块部分相对比较简单，主要定义和存储了，事件发生时的点位，事件对应的物体，事件的位移大小，事件的类型，以及事件的设备类型等。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;PointerEventData&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BaseEventData&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GameObject&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pointerEnter&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// The object that received OnPointerDown&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GameObject&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m_PointerPress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// The object last received OnPointerDown&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GameObject&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastPress&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// The object that the press happened on even if it can not handle the press event&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GameObject&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rawPointerPress&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// The object that received OnDrag&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GameObject&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pointerDrag&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RaycastResult&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pointerCurrentRaycast&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RaycastResult&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pointerPressRaycast&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GameObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hovered&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GameObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eligibleForClick&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pointerId&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Current position of the mouse or touch event&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Delta since last update&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delta&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Position of the press event&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pressPosition&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// World-space position where a ray cast into the screen hits something&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;    [Obsolete(&amp;quot;Use either pointerCurrentRaycast.worldPosition or pointerPressRaycast.worldPosition&amp;quot;)]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;worldPosition&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// World-space normal where a ray cast into the screen hits something&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;    [Obsolete(&amp;quot;Use either pointerCurrentRaycast.worldNormal or pointerPressRaycast.worldNormal&amp;quot;)]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;worldNormal&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// The last time a click event was sent out (used for double-clicks)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clickTime&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Number of clicks in a row. 2 for a double-click for example.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clickCount&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scrollDelta&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;useDragThreshold&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dragging&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;InputButton&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;button&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;事件数据模块，主要用途是在各种事件发生时，或者两个前后事件发生后，相应数据的存储。为事件逻辑做好数据工作。数据类的主要核心是 PointerEventData 类，它存储了大部分的逻辑需要的数据，包括按下时的位置，松开与按下的时间差，拖动的位移差等等，几乎承载了所有数据。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;h6&gt;输入事件捕获模块源码&lt;/h6&gt;
+
+&lt;p&gt;输入事件捕获模块由四个类组成，BaseInputModule，PointerInputModule，StandaloneInputModule，TouchInputModule。&lt;/p&gt;
+
+&lt;p&gt;BaseInputModule 是抽象(abstract)基类，提供必须的空接口和基本变量。&lt;/p&gt;
+
+&lt;p&gt;PointerInputModule 继承了BaseInputModule，并且在他基础上扩展了关于点位的输入逻辑，也增加了输入的类型和状态。&lt;/p&gt;
+
+&lt;p&gt;StandaloneInputModule 和 TouchInputModule 继承了 PointerInputModule，它们两个是区分标准键盘鼠标和触控板输入的类。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;/// &amp;lt;summary&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;/// Process all mouse events.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;/// &amp;lt;/summary&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ProcessMouseEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mouseData&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GetMousePointerEventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leftButtonData&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mouseData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetButtonState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PointerEventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InputButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Process the first mouse button fully&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ProcessMousePress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leftButtonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ProcessMove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leftButtonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buttonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ProcessDrag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leftButtonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buttonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Now process right / middle clicks&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ProcessMousePress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mouseData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetButtonState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PointerEventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InputButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ProcessDrag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mouseData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetButtonState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PointerEventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InputButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buttonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ProcessMousePress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mouseData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetButtonState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PointerEventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InputButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Middle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ProcessDrag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mouseData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetButtonState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PointerEventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InputButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Middle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buttonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Mathf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Approximately&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leftButtonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buttonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scrollDelta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sqrMagnitude&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.0f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scrollHandler&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ExecuteEvents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetEventHandler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IScrollHandler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leftButtonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buttonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pointerCurrentRaycast&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gameObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ExecuteEvents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExecuteHierarchy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scrollHandler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leftButtonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buttonData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ExecuteEvents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scrollHandler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;StandaloneInputModule 从鼠标键盘输入事件上扩展了输入的逻辑。上面代码展示了其核心的监测输入的部分。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;/// &amp;lt;summary&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;/// Process all touch events.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;/// &amp;lt;/summary&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ProcessTouchEvents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touchCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Touch&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetTouch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;released&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pressed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pointer&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GetTouchPointerEventData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pressed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;released&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;ProcessTouchPress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pressed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;released&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;released&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;ProcessMove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;ProcessDrag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+            &lt;span class=&quot;nf&quot;&gt;RemovePointerData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;而 TouchInputModule 则从触控板输入上进行扩展。上面代码展示了其核心的监测输入的部分。&lt;/p&gt;
+
+&lt;h6&gt;射线碰撞检测模块源码&lt;/h6&gt;
+
+&lt;p&gt;射线检测类部分主要做的工作是从摄像头指定的位置上，做射线碰撞检测，并获取碰撞结果。再把结果返回给事件处理逻辑类，由事件处理逻辑处理事件。&lt;/p&gt;
+
+&lt;p&gt;射线检测部分总共就3个类，里面也就几十行代码，主要还是 2D 碰撞检测 和 3D碰撞检测的一点点小小区别。用 Physics2D 还是 Physics 的区别，以及在2D碰撞结果里预留了2D的层级次序以便在后面的碰撞结果排序时，以这个层级次序为依据做排序，而3D的碰撞检测结果则是以距离大小为依据排序的。&lt;/p&gt;
+
+&lt;p&gt;主要的数据结构是 RaycastResult 类，这里承载了所有碰撞检测结果的依据。包括了距离，世界点位，屏幕点位，2D层级次序，碰撞物体等。为后面事件处理提供了数据上的依据。&lt;/p&gt;
+
+&lt;h6&gt;事件逻辑处理模块&lt;/h6&gt;
+
+&lt;p&gt;事件主逻辑处理部分看似复杂，主要的逻辑都集中在 EventSystem 类中，其他都是对它起辅助作用的。&lt;/p&gt;
+
+&lt;p&gt;比如，EventInterfaces，EventTrigger，EventTriggerType 都是定义事件回调函数，而 ExecuteEvents 是执行事件回调的。&lt;/p&gt;
+
+&lt;p&gt;RaycasterManager 是管理碰撞测试的。这些类都是几十行代码就完结了的，并没有多少东西在里面，它们的主要作用是为 EventSystem 主逻辑服务。&lt;/p&gt;
+
+&lt;p&gt;EventSystem 主逻辑里也并不复杂总，共300行代码基本上都在处理由射线碰撞检测后引起的各类事件，判断事件是否成立，成立则发起事件回调，不成立则继续轮训检查，等待相关事件的发生。&lt;/p&gt;
+
+&lt;p&gt;EventSystem 是事件处理模块中唯一继承 MonoBehavior 并且有在 Update 帧循环中做轮训的。也就是说，所有UI事件的发生都是通过 EventSystem 轮训监测到的并且实施的。&lt;/p&gt;
+
+&lt;p&gt;所以 EventSystem 是重点，是整个事件模块的主心骨。不过 EventSystem 写的并不复杂，因为架构师在架构时，已经将它们各自的职能分的很清楚了，所以我们看起来也并没有那么难。&lt;/p&gt;
+
+&lt;p&gt;比如说输入监测已经由输入事件捕捉模块完成了，碰撞检测也已经有碰撞检测模块完成了，事件的数据类都已经搭建好了，EventSystem 要做的就只是把它们拼装起来，成为主逻辑块。&lt;/p&gt;
+</description>
+               <pubDate>Thu, 26 Jul 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第四章，UI(二)</title>
                <description>&lt;h1&gt;第四章，UI(二)&lt;/h1&gt;
 
@@ -14,7 +213,7 @@
 
 &lt;p&gt;前文对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
 
-&lt;p&gt;这篇我们来讲讲，UGUI的组件使用详解。&lt;/p&gt;
+&lt;p&gt;这篇我们来讲讲，UGUI的原理，以及UGUI的组件使用详解。&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
 
@@ -22,11 +221,21 @@
 
 &lt;p&gt;首先我们来介绍下ugui的运作机制。&lt;/p&gt;
 
-&lt;p&gt;UGUI是在3D网格下建立起来的UI系统，它的每个可显示的元素都是以3D模型面片的形式来构建的，在UI被构建时，UGUI首先要做的事就是构建网格。也就是说，在Unity3D制作一个图元素，或者一个按钮，或者一个背景时，都会先构建一个方形网格，再将图片放入网格中，就相当于一个3D模型一样，一个网格绑定一个材质球，材质球里放了图片。&lt;/p&gt;
+&lt;p&gt;UGUI是在3D网格下建立起来的UI系统，它的每个可显示的元素都是以3D模型面片的形式来构建的，在UI被构建时，UGUI首先要做的事就是构建网格。&lt;/p&gt;
 
-&lt;p&gt;如果每个元素，生成一个模型，绑定一个材质球，切入一张图片的话，UI上成千上百个元素就会拥有成千上百个材质球，以及成千上百张图。这样会造成引擎需要每次渲染时都需要读取成千上百张图，对每个材质球和网格都进行渲染，这会导致性能开销过大，性能急剧下降。于是UGUI做了优化，将一部分相同类型的图片都集合起来合成一个张图，然后将拥有相同图片相同shader的材质球合并成一个材质球，并且把分散开的模型网格也一起合并了，这样就生成了几个大网格和几个材质球，以及少许整张的图集。节省了很多材质球，图片，网格的渲染，UI的效率更高了很多，游戏在进行时才会顺畅。&lt;/p&gt;
+&lt;p&gt;也就是说，在Unity3D制作一个图元素，或者一个按钮，或者一个背景时，都会先构建一个方形网格，再将图片放入网格中，就相当于一个3D模型一样，一个网格绑定一个材质球，材质球里放了图片。&lt;/p&gt;
 
-&lt;p&gt;不是所有的网格和材质球都合并成一个，只有相同的图集和相同的材质球参数才能合并网格，而且在当UI中的元素变动时，也同样需要做拆分网格和重新合并网格的操作。在Unity3D中各类UI系统中，性能优劣差距就在这里拉开了，哪个系统能合并得更好，哪个系统能更多的减少合并的次数，以及在合并时是否能有更高的效率，成了拉开差距的关键，因为这些合并和拆分的操作会消耗很多CPU，UI系统要做的就是尽一切可能节省些CPU消耗，把尽量多的剩余CPU让给项目逻辑。&lt;/p&gt;
+&lt;p&gt;如果每个元素，生成一个模型，绑定一个材质球，切入一张图片的话，UI上成千上百个元素就会拥有成千上百个材质球，以及成千上百张图。&lt;/p&gt;
+
+&lt;p&gt;这样会造成引擎需要每次渲染时都需要读取成千上百张图，对每个材质球和网格都进行渲染，这会导致性能开销过大，性能急剧下降。&lt;/p&gt;
+
+&lt;p&gt;于是UGUI做了优化，将一部分相同类型的图片都集合起来合成一个张图，然后将拥有相同图片相同shader的材质球合并成一个材质球，并且把分散开的模型网格也一起合并了，这样就生成了几个大网格和几个材质球，以及少许整张的图集。节省了很多材质球，图片，网格的渲染，UI的效率更高了很多，游戏在进行时才会顺畅。&lt;/p&gt;
+
+&lt;p&gt;不是所有的网格和材质球都合并成一个，只有相同的图集和相同的材质球参数才能合并网格，而且在当UI中的元素变动时，也同样需要做拆分网格和重新合并网格的操作。&lt;/p&gt;
+
+&lt;p&gt;在Unity3D中各类UI系统中，性能优劣差距就在这里拉开了，哪个系统能合并得更好，哪个系统能更多的减少合并的次数，以及在合并时是否能有更高的效率，成了拉开差距的关键.&lt;/p&gt;
+
+&lt;p&gt;因为这些合并和拆分的操作会消耗很多CPU，UI系统要做的就是尽一切可能节省些CPU消耗，把尽量多的剩余CPU让给项目逻辑。&lt;/p&gt;
 
 &lt;p&gt;下面我们来主要介绍下UGUI的核心组件。&lt;/p&gt;
 
@@ -38,7 +247,9 @@
     Overlay模式主要用在纯UI的区域内，例如我们不想使用Camera排序，而想用Sort order这个参数排序时可以使用，Sort order参数的值越大，越靠前渲染。如果这个模式下，加入一些非UGUI的物体时，会使得排序混乱。
 
     Sceen Camera模式，相对比较通用一点，他依赖Camera，所以需要创建一个矩形的Camera来进行绑定，渲染依靠的是于他绑定的Camera。
-    在当非UGUI元素加入到UI中时，Screen Camera模式更加具有优势。在对UI进行排序时，可以通过与Camera的距离来进行绑定，也可以通过Order in layer这个参数进行排序，这样在开发和调试期间更加形象化。
+
+    在当非UGUI元素加入到UI中时，Screen Camera模式更加具有优势。
+    在对UI进行排序时，可以通过与Camera的距离来进行绑定，也可以通过Order in layer这个参数进行排序，这样在开发和调试期间更加形象化。
 
     World Space模式，主要用于当UI物体放在3D世界中时用的，比如，一个大的场景中，需要将一张标志图放在一个石块头上，这时就需要World Space模式。
 
@@ -67,24 +278,45 @@
 
 &lt;h6&gt;Canvas Scaler&lt;/h6&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    这是个缩放比例组件，用来指定画布中元素的比例大小。
+
     有简单指定比例大小的Constant Pixel Size模式，也有Scale With Screen Size以屏幕为基准的自动适配比例大小，或者Constant Physical Size以物理大小为基准的适配规则。
 
     注，在手游项目里，通常使用以屏幕为基准的自动适配比例大小的Scale With Screen Size选项。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6&gt;Graphic Raycaster&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    输入事件与图形的碰撞测试组件，他检测着画布下的所有组件，是否与输入事件的射线碰撞，是否需要将碰撞的组件进行相应。你可以设置成完全忽略输入事件，或者阻止对某些layers进行事件相应。
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    输入事件与图形的碰撞测试组件，他检测着画布下的所有组件，是否与输入事件的射线碰撞，是否需要将碰撞的组件进行相应。
+
+    你可以设置成完全忽略输入事件，或者阻止对某些layers进行事件相应。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6&gt;EventTrigger&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    输入事件触发器，与此脚本绑定的UI物体，都可以接受到输入事件。比如(鼠标，手指)按下，弹起，点击，开始拖动，拖动中，结束拖动，鼠标滚动事件等。有了他，我们就可以对需要响应手指触摸或鼠标的UI进行绑定了。
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    输入事件触发器，与此脚本绑定的UI物体，都可以接受到输入事件。
+
+    比如(鼠标，手指)按下，弹起，点击，开始拖动，拖动中，结束拖动，鼠标滚动事件等。
+
+    有了他，我们就可以对需要响应手指触摸或鼠标的UI进行绑定了。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6&gt;Image，RawImage&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    这两个是UI里的主要部件，都是对图片的展示部件，图片，图集，图元，通过Image和RawImage可以展示在屏幕上。两者的区别是Image仅能展示图集中的图元，而RawImage仅能展示单张图片。通常我们会将小块的图片，打成图集来展示，这样更节省性能也更节省内存。但当遇到大块的图片时却不是这样了，因为太大，打成图集会造成图集不够用，或者说会图集的空间利用效率太低，所以用单独分出来自己独立展示。
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    这两个是UI里的主要部件，都是对图片的展示部件，图片，图集，图元，通过Image和RawImage可以展示在屏幕上。
+
+    两者的区别是Image仅能展示图集中的图元，而RawImage仅能展示单张图片。通常我们会将小块的图片，打成图集来展示，这样更节省性能也更节省内存。
+
+    但是，当遇到大块的图片时却不是这样了，因为太大，打成图集会造成图集不够用，或者说会图集的空间利用效率太低，所以用单独分出来自己独立展示。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6&gt;Mask，RectMask2D&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    遮挡组件，用来将其子节点下的区域外的内容遮挡。在上下滚动的菜单栏里用的会用到，因为我们需要将区域外的元素内容进行不显示操作。Mask和RectMask2D区别是，RectMask2D的效率比Mask更高，可以节省更多的drawcall，但是限制条件是RectMask2D只能用于2D上的展示。
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    遮挡组件，用来将其子节点下的区域外的内容遮挡。
+
+    在上下滚动的菜单栏里用的会用到，因为我们需要将区域外的元素内容进行不显示操作。
+
+    Mask和RectMask2D区别是，RectMask2D的效率比Mask更高，可以节省更多的drawcall，但是限制条件是RectMask2D只能用于2D上的展示。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6&gt;其他组件&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    大部分逻辑组件都是可以重写的，比如按钮组件Button，切换组件Toggle，滚动条组件ScrollBar，滑动组件Slider，下拉框组件DropDown，视图组件ScrollView，都是可以用Image，Mask等几个核心组件组合自己重写的。为什么要重写？因为很多时候项目里的需求更多样化，而且也需要足够的可控性，自己写的可以修改特殊需求和特殊逻辑，比原生态的组件好用的多。所以通常项目中，都会重写一些组件来用来自己项目使用，也有一些人总结了这些组件的经验，写了些比较好用的组件开源在Github上。
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    大部分逻辑组件都是可以重写的，
+
+    比如按钮组件Button，切换组件Toggle，滚动条组件ScrollBar，滑动组件Slider，下拉框组件DropDown，视图组件ScrollView，都是可以用Image，Mask等几个核心组件组合自己重写的。
+
+    为什么要重写？因为很多时候项目里的需求更多样化，而且也需要足够的可控性，自己写的可以修改特殊需求和特殊逻辑，比原生态的组件好用的多。
+
+    所以通常项目中，都会重写一些组件来用来自己项目使用，也有一些人总结了这些组件的经验，写了些比较好用的组件开源在Github上。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
                <pubDate>Wed, 25 Jul 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html</link>
@@ -1137,114 +1369,6 @@ Win,赢了,Win, 勝った, 이기다
                <pubDate>Tue, 17 Jul 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html</guid>
-            </item>
-        
-            <item>
-               <title>《Unity3D高级编程之进阶主程》第三章，数据表(二)</title>
-               <description>&lt;h1&gt;第三章，数据表(二)&lt;/h1&gt;
-
-&lt;p&gt;前文介绍了关于数据表的几种形式。&lt;a href=&quot;http://www.luzexi.com/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html&quot;&gt;《Unity3D高级编程之进阶主程》第三章，数据表(一)&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3&gt;本篇来介绍下数据表的几种制作数据的方式。&lt;/h3&gt;
-
-&lt;p&gt;Excel是大部分数值策划选择用的填数工具，因为Excel是天生的为数据处理而生。而Excel转什么格式就需要选择了。&lt;/p&gt;
-
-&lt;p&gt;比如最简单的就是直接复制黏贴到txt文件作为游戏数据了。这种方式最简单快捷，任何人都能做，但问题就是当多个xls转化为文件数据时，你就麻烦了，每次都要手动复制粘贴一遍。而且手动导入后你还要想想，是不是复制粘贴错了。为了Demo加快进度，也这么干过。但好几次查些莫名奇妙的数据表错误，都是因为人脑是有极限的，时常会因为重复劳动太多次而出错。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;有比较简单的直接Excel手动另存为导出CSV，就有了CSV的一个规范。
-这样既有了规范，又不怕复制粘贴错误，但还是有很多问题，比如多个文件时，你的重复劳动还是很多。&lt;/p&gt;
-
-&lt;p&gt;于是自动化是再次进阶的主题，将所有需要人工操作的流程，全部写入程序，让程序来帮助你完成工作。&lt;/p&gt;
-
-&lt;p&gt;主流自动化程序方式有很多，例如使用Shell设计自动化流程操作，也有自己通过特定语言写自动化的比如C#从Excel中读取数据后写入特定文件，还有使用Jenkins的，Jenkins不是万能的，他只是一个Web的管理页面，他也需要借助特定的语言，比如Shell或C#或Python或Ruby，甚至这些语言的组合，如果这些你都不太熟悉，还可以使用Unity3D的菜单栏编辑功能，实现点击菜单栏按钮后执行一套相关程序，也是种不错的选择。&lt;/p&gt;
-
-&lt;p&gt;自动化其实是最终的目标，让人力成本降到最低，节省所有能节省的精力消耗，把所有人员的注意力都集中到核心问题上去，比如框架，核心战斗，变化多端的渲染方式等。&lt;/p&gt;
-
-&lt;h3&gt;让数据使用起来更加方便&lt;/h3&gt;
-
-&lt;p&gt;用什么形式的文件作为数据表并不最最重要的，CSV也照样能把游戏跑得很好。这些技术并不决定游戏的性能会怎么样，只要你喜欢，什么形式都可以。很多时候，我们在选定数据存储规则时，大都选择的是自己熟悉，并且团队任何的方式。因为这能给我们带来很大的便捷性，也加快了开发速度，让团队不用这么痛苦并且浪费时间去适应新的规则。&lt;/p&gt;
-
-&lt;p&gt;关键是数据表是连接策划与其他部门的桥梁，所以你在做的时候需要考虑体验因素。如何让策划在配置数据表的时候能够有更好的体验就成了关键。所以好用是关键。&lt;/p&gt;
-
-&lt;p&gt;为什么要好用呢？只有好用才能提高效率，人员用着舒心顺畅，让项目在进展中，这种工具的使用提高了效率，而不是阻碍了效率。&lt;/p&gt;
-
-&lt;p&gt;前面提到的自动化就是提高效率的一种方法，还有比如一键转化XXX，这种形式的也是提高效率的好办法。&lt;/p&gt;
-
-&lt;p&gt;一键转化Excel到其他格式是一个比较人性化的工具，不需要人工手动去转化，通过工具就能搞定，只要数值策划按照你们双方约定的规则就行。这能大大提高数值策划与程序的协调性，一个系统，一个模块，需要什么数值，什么类型的数值，表要怎么建立，在你们约定的填表规则上，建立，读取，转化，变得轻而易举。&lt;/p&gt;
-
-&lt;p&gt;但是只有自动化，一键XXXX的功能，还是不够。因为这些只是一种工具，我们要的是团队间，特别是部门间，不同工种间的配合能顺畅无障碍。&lt;/p&gt;
-
-&lt;p&gt;再深入的解释下这种，要达成部门间顺畅无障碍的配合的意思。&lt;/p&gt;
-
-&lt;p&gt;假如，有了自动化，有了一键转化XXX的功能，策划设计人员可以自由的将Excel数据转化成能让程序员读取的数据格式，但是策划设计人员一直在对数据进行变动，特别是对字段的类型，字段的名字，一直在变。今天这个字段定义为id，明天这个字段成了是time了。或者插入了一个新的字段，删掉了旧的字段，或者新增了一个数据表，或者删掉了一个旧的数据表，等等。这让程序员很头疼，每次改程序员都及时得到通知，即使及时得到通知，也会遇到很大的麻烦。&lt;/p&gt;
-
-&lt;p&gt;所以我们需要再深入的加强这种好用的规则优化。&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
-&lt;p&gt;再深入一点，每次策划设计人员增加Excel表时，都需要更程序员打招呼说，你帮我把这个Excel表加入到自动化和一键XXX的功能里去。程序员就需要腾出时间和精力来为策划设计人员服务。我们把这块移出去，策划设计人员能够可以自定义导出哪个Excel文件，以及Excel文件里的哪个工作簿。这样策划可以自主选择和自主增加表的导出内容。&lt;/p&gt;
-
-&lt;p&gt;怎么做？一个可行的办法是，写程序指定导出哪个表时，会预留几个参数，这个参数是指向某个需要导出的文件的，以及需要导出sheet。那么在命令行里，执行这个程序并且后面跟上参与就能导出数据。&lt;/p&gt;
-
-&lt;p&gt;但是批处理写命令行也好，shell写命令行也好，毕竟还是程序级别的。策划并不能很好的控制对表的导出内容的增加和修改。
-比如我需要新增一个表，或者修改某个表的文件名，或者修改导出某个表文件里的sheet，这项工作还是需要修改命令行的，或者说修改批处理文件，或shell文件的。策划并不会改，或者说并且这种命令形式并不直观。&lt;/p&gt;
-
-&lt;p&gt;再次加入规则，让自动化和一键XXX更加人性化。我们可以增加一个Excel表，表里面填有具体要导出哪些Excel文件里的哪个sheet，这些sheet的数据导出后的文件名是什么，以及生成文件后，文件应该转移到哪个文件夹中去。这样策划就可以自行定制，我们需要用哪些Excel里的哪些sheet，可以自行增删改，可以完全自给自足了。策划设计人员完全能够主导所有数据的导出工作和转移工作都了。&lt;/p&gt;
-
-&lt;p&gt;还不够。方便了策划设计人员，程序员的麻烦还没解决，如果设计人员改了字段名字，插入了新的字段，删除了字段，又没有及时通知程序员，或者说忘记了自己做过什么怎么办，那岂不是要全盘彻查了？不可以，彻查这样的效率太低，不可以让这种事情发生。如果能在生成数据时自动检查与程序的对应关系就好了。&lt;/p&gt;
-
-&lt;p&gt;再加一个规则，让字段名字与程序对应的规则。&lt;/p&gt;
-
-&lt;p&gt;我们来再深入一点，用程序生成一群变量定义与每个数据表字段名对应，将每个要导出的sheet里的头行的列名作为变量名字写入程序变量定义中，以方便程序在读取数据表时，列名与数据表对齐，无形中校验做好了。&lt;/p&gt;
-
-&lt;p&gt;比如，role.xls文件中，role这个sheet(工作簿)中的第一列字段为ID，第二列字段为Name，第三列字段为Age，那么程序变量生成后就是这种格式。&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ExcelDefine&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_ID&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_Name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_Age&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;当策划设计人员更改字段后，新增字段，删除字段后，会如何呢，比如第一列ID更改为Identifier,第二列插入School，第三列Age删除后，生成了如下的代码。&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ExcelDefine&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_Identifier&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_School&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role_role_Name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;这样一来，原来在程序中使用的ExcelDefine.role&lt;em&gt;role&lt;/em&gt;ID，ExcelDefine.role&lt;em&gt;role&lt;/em&gt;Age，将失效报错，而 ExcelDefine.role&lt;em&gt;role&lt;/em&gt;Name则自动转入读取第三列无需修改。&lt;/p&gt;
-
-&lt;p&gt;这样一来程序员不再需要知道策划设计人员修了数据是第几列，策划设计人员忘记了修改哪里也无妨，因为在编译时就会报出相关的错误，提示程序员们，表中的哪些字段进行了修改，你需要向策划设计人员询问具体意向。&lt;/p&gt;
-
-&lt;p&gt;做到这里，有了自动化和一键转化XXX的工具，省去了不少人力；加入了规则，让策划设计人员完全可以自己控制Excel数据表的操作；加入了检查校验和修复的功能，让程序员在数据表衔接部分也得到了很好的检查和校验作用，可以说完美了。&lt;/p&gt;
-</description>
-               <pubDate>Tue, 17 Jul 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html</guid>
             </item>
         
     </channel>

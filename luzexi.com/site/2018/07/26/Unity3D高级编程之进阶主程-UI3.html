@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta content="unity3d 高级编程 c# 主程 算法 设计模式 动态库 底层算法" name="description">
+
+
+  <title>
+    
+      《Unity3D高级编程之进阶主程》第四章，UI(三)
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css?version=20180701">
+  <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"> -->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+  	<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          技术人生
+        </a>
+      </h1>
+      <p class="lead">漫漫人生,记录点滴技术,始于2013</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About Me</a>
+          
+        
+      
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/friendlink.html">About Me</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+
+      <a class="sidebar-nav-item" href="/书籍著作/index.html">书籍著作</a>
+      <a class="sidebar-nav-item" href="/unity3d/index.html">Unity3D</a>
+      <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
+      <a class="sidebar-nav-item" href="/金融投资/index.html">金融投资</a>
+      <a class="sidebar-nav-item" href="/life/index.html">Life</a>
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <a href="http://www.luzexi.com/assets/feed.xml">RSS feed</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+    </nav>
+
+    <p>&copy; 2018. All rights reserved.</p>
+    <p>浙ICP备13028172号-1</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第四章，UI(三)</h1>
+  <span class="post-date">26 Jul 2018</span>
+  <h1>第四章，UI(三)</h1>
+
+<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
+
+<p>对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。</p>
+
+<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
+
+<p>UGUI的原理，以及组件使用详解。</p>
+
+<p>此篇我们来对UGUI的源码中的输入事件模块进行剖析。</p>
+
+<p>===</p>
+
+<h3>UGUI源码剖析</h3>
+
+<p>UGUI的源码是Unity3D官方公开的，这里我们来剖析一下UGUI在Unity2017中的源码部分。</p>
+
+<p><img src="/assets/book/4/ugui1.png" alt="ugui文件夹"></p>
+
+<p>这是UGUI内核源码的文件夹结构图。从图中可以看出，它把UGUI分成了，三块，输入事件，动画，核心渲染。其中动画部分相对比较简单，用了tween补间动画的形式，对颜色，位置，大小进行了渐进操作。我们重点来看看输入事件和核心渲染两块。</p>
+
+<h3>输入事件源码</h3>
+
+<p>输入事件源码的整个文件结构图如下：</p>
+
+<p><img src="/assets/book/4/ugui2.png" alt="ugui事件文件夹结构"></p>
+
+<p>从图中文件夹结构可以看出他有四部分构成，事件数据模块，输入事件捕获模块，射线碰撞检测模块，事件逻辑处理及回调模块。</p>
+
+<h6>事件数据模块</h6>
+
+<p>事件数据模块部分相对比较简单，主要定义和存储了，事件发生时的点位，事件对应的物体，事件的位移大小，事件的类型，以及事件的设备类型等。</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">PointerEventData</span> <span class="p">:</span> <span class="n">BaseEventData</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">pointerEnter</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="c1">// The object that received OnPointerDown</span>
+    <span class="k">private</span> <span class="n">GameObject</span> <span class="n">m_PointerPress</span><span class="p">;</span>
+    <span class="c1">// The object last received OnPointerDown</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">lastPress</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="c1">// The object that the press happened on even if it can not handle the press event</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">rawPointerPress</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="c1">// The object that received OnDrag</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">pointerDrag</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">RaycastResult</span> <span class="n">pointerCurrentRaycast</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">RaycastResult</span> <span class="n">pointerPressRaycast</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">hovered</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;();</span>
+
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">eligibleForClick</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">pointerId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="c1">// Current position of the mouse or touch event</span>
+    <span class="k">public</span> <span class="n">Vector2</span> <span class="n">position</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="c1">// Delta since last update</span>
+    <span class="k">public</span> <span class="n">Vector2</span> <span class="n">delta</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="c1">// Position of the press event</span>
+    <span class="k">public</span> <span class="n">Vector2</span> <span class="n">pressPosition</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="c1">// World-space position where a ray cast into the screen hits something</span>
+<span class="na">    [Obsolete(&quot;Use either pointerCurrentRaycast.worldPosition or pointerPressRaycast.worldPosition&quot;)]</span>
+    <span class="k">public</span> <span class="n">Vector3</span> <span class="n">worldPosition</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="c1">// World-space normal where a ray cast into the screen hits something</span>
+<span class="na">    [Obsolete(&quot;Use either pointerCurrentRaycast.worldNormal or pointerPressRaycast.worldNormal&quot;)]</span>
+    <span class="k">public</span> <span class="n">Vector3</span> <span class="n">worldNormal</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="c1">// The last time a click event was sent out (used for double-clicks)</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">clickTime</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="c1">// Number of clicks in a row. 2 for a double-click for example.</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">clickCount</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">Vector2</span> <span class="n">scrollDelta</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">useDragThreshold</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">dragging</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">InputButton</span> <span class="n">button</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>事件数据模块，主要用途是在各种事件发生时，或者两个前后事件发生后，相应数据的存储。为事件逻辑做好数据工作。数据类的主要核心是 PointerEventData 类，它存储了大部分的逻辑需要的数据，包括按下时的位置，松开与按下的时间差，拖动的位移差等等，几乎承载了所有数据。</p>
+
+<script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+        var cpro_id = "u3485972";
+        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+    }
+</script>
+
+<!-- <script type="text/javascript">
+    /*700*200信息流*/
+    var cpro_id = "u3469788";
+</script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
+
+<h6>输入事件捕获模块源码</h6>
+
+<p>输入事件捕获模块由四个类组成，BaseInputModule，PointerInputModule，StandaloneInputModule，TouchInputModule。</p>
+
+<p>BaseInputModule 是抽象(abstract)基类，提供必须的空接口和基本变量。</p>
+
+<p>PointerInputModule 继承了BaseInputModule，并且在他基础上扩展了关于点位的输入逻辑，也增加了输入的类型和状态。</p>
+
+<p>StandaloneInputModule 和 TouchInputModule 继承了 PointerInputModule，它们两个是区分标准键盘鼠标和触控板输入的类。</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Process all mouse events.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">protected</span> <span class="k">void</span> <span class="nf">ProcessMouseEvent</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">mouseData</span> <span class="p">=</span> <span class="n">GetMousePointerEventData</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+    <span class="kt">var</span> <span class="n">leftButtonData</span> <span class="p">=</span> <span class="n">mouseData</span><span class="p">.</span><span class="n">GetButtonState</span><span class="p">(</span><span class="n">PointerEventData</span><span class="p">.</span><span class="n">InputButton</span><span class="p">.</span><span class="n">Left</span><span class="p">).</span><span class="n">eventData</span><span class="p">;</span>
+
+    <span class="c1">// Process the first mouse button fully</span>
+    <span class="n">ProcessMousePress</span><span class="p">(</span><span class="n">leftButtonData</span><span class="p">);</span>
+    <span class="n">ProcessMove</span><span class="p">(</span><span class="n">leftButtonData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">);</span>
+    <span class="n">ProcessDrag</span><span class="p">(</span><span class="n">leftButtonData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">);</span>
+
+    <span class="c1">// Now process right / middle clicks</span>
+    <span class="n">ProcessMousePress</span><span class="p">(</span><span class="n">mouseData</span><span class="p">.</span><span class="n">GetButtonState</span><span class="p">(</span><span class="n">PointerEventData</span><span class="p">.</span><span class="n">InputButton</span><span class="p">.</span><span class="n">Right</span><span class="p">).</span><span class="n">eventData</span><span class="p">);</span>
+    <span class="n">ProcessDrag</span><span class="p">(</span><span class="n">mouseData</span><span class="p">.</span><span class="n">GetButtonState</span><span class="p">(</span><span class="n">PointerEventData</span><span class="p">.</span><span class="n">InputButton</span><span class="p">.</span><span class="n">Right</span><span class="p">).</span><span class="n">eventData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">);</span>
+    <span class="n">ProcessMousePress</span><span class="p">(</span><span class="n">mouseData</span><span class="p">.</span><span class="n">GetButtonState</span><span class="p">(</span><span class="n">PointerEventData</span><span class="p">.</span><span class="n">InputButton</span><span class="p">.</span><span class="n">Middle</span><span class="p">).</span><span class="n">eventData</span><span class="p">);</span>
+    <span class="n">ProcessDrag</span><span class="p">(</span><span class="n">mouseData</span><span class="p">.</span><span class="n">GetButtonState</span><span class="p">(</span><span class="n">PointerEventData</span><span class="p">.</span><span class="n">InputButton</span><span class="p">.</span><span class="n">Middle</span><span class="p">).</span><span class="n">eventData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(!</span><span class="n">Mathf</span><span class="p">.</span><span class="n">Approximately</span><span class="p">(</span><span class="n">leftButtonData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">.</span><span class="n">scrollDelta</span><span class="p">.</span><span class="n">sqrMagnitude</span><span class="p">,</span> <span class="m">0.0f</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">scrollHandler</span> <span class="p">=</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">GetEventHandler</span><span class="p">&lt;</span><span class="n">IScrollHandler</span><span class="p">&gt;(</span><span class="n">leftButtonData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">.</span><span class="n">pointerCurrentRaycast</span><span class="p">.</span><span class="n">gameObject</span><span class="p">);</span>
+        <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">ExecuteHierarchy</span><span class="p">(</span><span class="n">scrollHandler</span><span class="p">,</span> <span class="n">leftButtonData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">,</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">scrollHandler</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>StandaloneInputModule 从鼠标键盘输入事件上扩展了输入的逻辑。上面代码展示了其核心的监测输入的部分。</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Process all touch events.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">ProcessTouchEvents</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">Input</span><span class="p">.</span><span class="n">touchCount</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Touch</span> <span class="n">input</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetTouch</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+        <span class="kt">bool</span> <span class="n">released</span><span class="p">;</span>
+        <span class="kt">bool</span> <span class="n">pressed</span><span class="p">;</span>
+        <span class="kt">var</span> <span class="n">pointer</span> <span class="p">=</span> <span class="n">GetTouchPointerEventData</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="k">out</span> <span class="n">pressed</span><span class="p">,</span> <span class="k">out</span> <span class="n">released</span><span class="p">);</span>
+
+        <span class="n">ProcessTouchPress</span><span class="p">(</span><span class="n">pointer</span><span class="p">,</span> <span class="n">pressed</span><span class="p">,</span> <span class="n">released</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(!</span><span class="n">released</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">ProcessMove</span><span class="p">(</span><span class="n">pointer</span><span class="p">);</span>
+            <span class="n">ProcessDrag</span><span class="p">(</span><span class="n">pointer</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+            <span class="nf">RemovePointerData</span><span class="p">(</span><span class="n">pointer</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>而 TouchInputModule 则从触控板输入上进行扩展。上面代码展示了其核心的监测输入的部分。</p>
+
+<h6>射线碰撞检测模块源码</h6>
+
+<p>射线检测类部分主要做的工作是从摄像头指定的位置上，做射线碰撞检测，并获取碰撞结果。再把结果返回给事件处理逻辑类，由事件处理逻辑处理事件。</p>
+
+<p>射线检测部分总共就3个类，里面也就几十行代码，主要还是 2D 碰撞检测 和 3D碰撞检测的一点点小小区别。用 Physics2D 还是 Physics 的区别，以及在2D碰撞结果里预留了2D的层级次序以便在后面的碰撞结果排序时，以这个层级次序为依据做排序，而3D的碰撞检测结果则是以距离大小为依据排序的。</p>
+
+<p>主要的数据结构是 RaycastResult 类，这里承载了所有碰撞检测结果的依据。包括了距离，世界点位，屏幕点位，2D层级次序，碰撞物体等。为后面事件处理提供了数据上的依据。</p>
+
+<h6>事件逻辑处理模块</h6>
+
+<p>事件主逻辑处理部分看似复杂，主要的逻辑都集中在 EventSystem 类中，其他都是对它起辅助作用的。</p>
+
+<p>比如，EventInterfaces，EventTrigger，EventTriggerType 都是定义事件回调函数，而 ExecuteEvents 是执行事件回调的。</p>
+
+<p>RaycasterManager 是管理碰撞测试的。这些类都是几十行代码就完结了的，并没有多少东西在里面，它们的主要作用是为 EventSystem 主逻辑服务。</p>
+
+<p>EventSystem 主逻辑里也并不复杂总，共300行代码基本上都在处理由射线碰撞检测后引起的各类事件，判断事件是否成立，成立则发起事件回调，不成立则继续轮训检查，等待相关事件的发生。</p>
+
+<p>EventSystem 是事件处理模块中唯一继承 MonoBehavior 并且有在 Update 帧循环中做轮训的。也就是说，所有UI事件的发生都是通过 EventSystem 轮训监测到的并且实施的。</p>
+
+<p>所以 EventSystem 是重点，是整个事件模块的主心骨。不过 EventSystem 写的并不复杂，因为架构师在架构时，已经将它们各自的职能分的很清楚了，所以我们看起来也并没有那么难。</p>
+
+<p>比如说输入监测已经由输入事件捕捉模块完成了，碰撞检测也已经有碰撞检测模块完成了，事件的数据类都已经搭建好了，EventSystem 要做的就只是把它们拼装起来，成为主逻辑块。</p>
+
+  <p>感谢您的耐心阅读</p>
+  <p>Thanks for your reading</p>
+</div>
+<div>
+  
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+<div id="cyReward" role="cylabs" data-use="reward" align="center" ></div>
+
+  <li>
+<p>版权申明</p>
+<p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">《Unity3D高级编程之进阶主程》第四章，UI(三)</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">《Unity3D高级编程之进阶主程》第四章，UI(三)</a></p> -->
+<p>Copyright attention</p>
+<p>If you would like to reprint this article please write auth's name and link in the page.</p>
+
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
+</li>
+  <li>
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = "u3485994";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+<!-- <script type="text/javascript">
+    /*700*200信息流*/
+    var cpro_id = "u3469788";
+</script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
+
+</li>
+</div>
+<div class="related">
+    
+<div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+
+</div>
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">
+            《Unity3D高级编程之进阶主程》第四章，UI(二)
+            <small>25 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">
+            《Unity3D高级编程之进阶主程》第四章，UI(一)
+            <small>25 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/24/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%843.html">
+            《Unity3D高级编程之进阶主程》第二章，架构(三)
+            <small>24 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/24/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%842.html">
+            《Unity3D高级编程之进阶主程》第二章，架构(二)
+            <small>24 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/23/have-fun-in-watch-video.html">
+            Have fun in watch video
+            <small>23 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/20/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A83.html">
+            白领投资探讨(三)
+            <small>20 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html">
+            《Unity3D高级编程之进阶主程》第二章，架构(一)
+            <small>18 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF2.html">
+            《Unity3D高级编程之进阶主程》第一章，C#要点技术(二)
+            <small>18 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html">
+            《Unity3D高级编程之进阶主程》第三章，数据表(三)
+            <small>17 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html">
+            《Unity3D高级编程之进阶主程》第三章，数据表(二)
+            <small>17 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+<div id="SOHUCS" ></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cys17tiy3',
+conf: 'prod_3b20e80a06c760385d4781c30f8ebf5c'
+});
+</script>
+
+
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+    	var cpro_id = "u3485972";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+ 
+
+
+
+    </div>
+
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </body>
+  
+</html>
