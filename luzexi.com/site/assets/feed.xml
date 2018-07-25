@@ -78,6 +78,27 @@
 
 &lt;p&gt;图中把网络层先拆分成http，tcp-socket，udp这三种形式，再对具体的接口进行了拆分，对于拆分出来的每个接口，如果还不能直接使用再进行细致的拆分，直到拆分到可以具体实施了为止。图中先将接口拆分成，连接，断开连接，发送数据，接受数据，以及网络事件，再对每个接口进行拆分，把接口需要做的事拆分出来各个击破。&lt;/p&gt;
 
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
+
 &lt;p&gt;其他层级部分的框架也是同样的方式进行分解，用分而治之的方法逐个攻破。这里简单描述下各个模块的拆分。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;数据表--从XLS导为2进制文件还是CSV或其他格式。
 
