@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-26T01:23:55+08:00</updated>
+ <updated>2018-07-26T01:30:04+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -3306,7 +3306,7 @@ function processContent(options) {
     let options = Object.assign({}, DEFAULTS, options);
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;h3&gt;(function(){})();&lt;/h3&gt;
+&lt;li&gt;&lt;h3&gt;(function(){})(); 函数function后面跟()括号&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;举个例子:
 
 (function(p1,p2){alert(p1+p2);})(1,2);
@@ -3327,6 +3327,26 @@ test(1,2);
 2.可用于onload事件保证不与其冲突.
 
 3.可看做线程安全.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h3&gt;!function(){}(); 函数function前面加!感叹号&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;如果我们尝试为一个“定义函数”末尾加上()，解析器是无法理解的。
+
+function msg(){
+  alert(&amp;#39;message&amp;#39;);
+}();//解析器是无法理解的
+
+原来，使用括号包裹定义函数体，解析器将会以函数表达式的方式去调用定义函数。也就是说，任何能将函数变成一个函数表达式的作法，都可以使解析器正确的调用定义函数。而 ! 就是其中一个，而 + - || 都有这样的功能。
+
+其实就是为了能省略一个字符……
+
+// 这么写会报错，因为这是一个函数定义：
+function(){}()
+
+// 常见的（多了一对括号），调用匿名函数：
+(function() {})()
+
+// 但在前面加上一个布尔运算符（只多了一个感叹号），就是表达式了，将执行后面的代码，也就合法实现调用
+!function() {}()
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </content>

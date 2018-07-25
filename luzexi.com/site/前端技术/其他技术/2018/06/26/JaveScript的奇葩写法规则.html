@@ -365,7 +365,7 @@ function processContent(options) {
     let options = Object.assign({}, DEFAULTS, options);
 }
 </code></pre></div></li>
-<li><h3>(function(){})();</h3>
+<li><h3>(function(){})(); 函数function后面跟()括号</h3>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>举个例子:
 
 (function(p1,p2){alert(p1+p2);})(1,2);
@@ -386,6 +386,26 @@ test(1,2);
 2.可用于onload事件保证不与其冲突.
 
 3.可看做线程安全.
+</code></pre></div></li>
+<li><h3>!function(){}(); 函数function前面加!感叹号</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>如果我们尝试为一个“定义函数”末尾加上()，解析器是无法理解的。
+
+function msg(){
+  alert(&#39;message&#39;);
+}();//解析器是无法理解的
+
+原来，使用括号包裹定义函数体，解析器将会以函数表达式的方式去调用定义函数。也就是说，任何能将函数变成一个函数表达式的作法，都可以使解析器正确的调用定义函数。而 ! 就是其中一个，而 + - || 都有这样的功能。
+
+其实就是为了能省略一个字符……
+
+// 这么写会报错，因为这是一个函数定义：
+function(){}()
+
+// 常见的（多了一对括号），调用匿名函数：
+(function() {})()
+
+// 但在前面加上一个布尔运算符（只多了一个感叹号），就是表达式了，将执行后面的代码，也就合法实现调用
+!function() {}()
 </code></pre></div></li>
 </ol>
 
