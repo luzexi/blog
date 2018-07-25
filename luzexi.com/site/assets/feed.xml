@@ -76,10 +76,10 @@
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI依靠Panel depth、RenderQueue来控制层级。
     UGUI可以依靠距离摄像机的前后位置来控制层级，也可以用sort order排序设置前后顺序。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;字体制作
-        NGUI不支持dynamic font。
-        UGUI支持dynamic font，可直接使用字体文件&lt;/p&gt;
-
+&lt;p&gt;字体制作&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI不支持dynamic font。
+    UGUI支持dynamic font，可直接使用字体文件
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;社区完善程度&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI商业运营，氛围良好
     UGUI官方自运营，后台强大
@@ -88,23 +88,39 @@
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGU据很多测试网站统计，性能尚可
     UGUI同样，据很多测试网站统计，性能良好
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
+
 &lt;p&gt;好了，以上列出的是从几个方面对NGUI和UGUI的比较。&lt;/p&gt;
 
-&lt;p&gt;从图集工具来看，NGUI有更多的自主选择权，而UGUI更多的自动化的便利，&lt;/p&gt;
-
-&lt;p&gt;从组件支持度来看NGUI更适合偷懒型选手，而UGUI更多的是需要自己编写适合自己的组件。&lt;/p&gt;
-
-&lt;p&gt;从UI底层可定制度上看，两者都是可定制的，但NGUI更加方便。&lt;/p&gt;
-
-&lt;p&gt;从输入事件处理上看，NGUI混合了物理系统，而UGUI更加独立。&lt;/p&gt;
-
-&lt;p&gt;从层级显示上看，NGUI概念有点混淆，而UGUI更加功能强大，概念清洁干净。&lt;/p&gt;
-
-&lt;p&gt;从字体制作上看，NGUI麻烦了点，而UGUI更加方便。&lt;/p&gt;
-
-&lt;p&gt;从社区完善上看，NGUI更加商业化，而UGUI有官方支持后台强大。&lt;/p&gt;
-
-&lt;p&gt;从性能上比较看，NGUI臃肿了点但尚可，而UGUI更加良好。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;从图集工具来看，NGUI有更多的自主选择权，而UGUI更多的自动化的便利，&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;从组件支持度来看NGUI更适合偷懒型选手，而UGUI更多的是需要自己编写适合自己的组件。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;从UI底层可定制度上看，两者都是可定制的，但NGUI更加方便。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;从输入事件处理上看，NGUI混合了物理系统，而UGUI更加独立。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;从层级显示上看，NGUI概念有点混淆，而UGUI更加功能强大，概念清洁干净。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;从字体制作上看，NGUI麻烦了点，而UGUI更加方便。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;从社区完善上看，NGUI更加商业化，而UGUI有官方支持后台强大。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;从性能上比较看，NGUI臃肿了点但尚可，而UGUI更加良好。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;综合来看，NGUI和UGUI都各自有各自的特点，没有绝对好，也没有绝对的差，都各自有各自的特点，和擅长的领域，不分伯仲。针对不同的人群和项目有不同的选择。&lt;/p&gt;
 
