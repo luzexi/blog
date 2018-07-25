@@ -7,8 +7,93 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第四章，UI(二)</title>
+               <description>&lt;h1&gt;第四章，UI(二)&lt;/h1&gt;
+
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;前文对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
+
+&lt;p&gt;这篇我们来讲讲，UGUI的组件使用详解。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;h3&gt;UGUI的初级和高级使用详解&lt;/h3&gt;
+
+&lt;p&gt;首先我们来介绍下ugui的运作机制。&lt;/p&gt;
+
+&lt;p&gt;UGUI是在3D网格下建立起来的UI系统，它的每个可显示的元素都是以3D模型面片的形式来构建的，在UI被构建时，UGUI首先要做的事就是构建网格。也就是说，在Unity3D制作一个图元素，或者一个按钮，或者一个背景时，都会先构建一个方形网格，再将图片放入网格中，就相当于一个3D模型一样，一个网格绑定一个材质球，材质球里放了图片。&lt;/p&gt;
+
+&lt;p&gt;如果每个元素，生成一个模型，绑定一个材质球，切入一张图片的话，UI上成千上百个元素就会拥有成千上百个材质球，以及成千上百张图。这样会造成引擎需要每次渲染时都需要读取成千上百张图，对每个材质球和网格都进行渲染，这会导致性能开销过大，性能急剧下降。于是UGUI做了优化，将一部分相同类型的图片都集合起来合成一个张图，然后将拥有相同图片相同shader的材质球合并成一个材质球，并且把分散开的模型网格也一起合并了，这样就生成了几个大网格和几个材质球，以及少许整张的图集。节省了很多材质球，图片，网格的渲染，UI的效率更高了很多，游戏在进行时才会顺畅。&lt;/p&gt;
+
+&lt;p&gt;不是所有的网格和材质球都合并成一个，只有相同的图集和相同的材质球参数才能合并网格，而且在当UI中的元素变动时，也同样需要做拆分网格和重新合并网格的操作。在Unity3D中各类UI系统中，性能优劣差距就在这里拉开了，哪个系统能合并得更好，哪个系统能更多的减少合并的次数，以及在合并时是否能有更高的效率，成了拉开差距的关键，因为这些合并和拆分的操作会消耗很多CPU，UI系统要做的就是尽一切可能节省些CPU消耗，把尽量多的剩余CPU让给项目逻辑。&lt;/p&gt;
+
+&lt;p&gt;下面我们来主要介绍下UGUI的核心组件。&lt;/p&gt;
+
+&lt;h3&gt;核心组件Canvas&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Canvas，我们暂且叫它画布。Canvas就相当于一张画画时铺在上边的画板，我们把各类元素放在画布上后，Canvas要做的事情就是合并这些元素。
+
+    Canvas上的参数包括Render Mode 渲染模式，你可以选择不以Camera为基准的Overlay模式，或者以Camera为基准的Screen Camera模式，也可以选择3D直接坐标为基准的World Space模式。三者根据的使用区域不同而不同。
+
+    Overlay模式主要用在纯UI的区域内，例如我们不想使用Camera排序，而想用Sort order这个参数排序时可以使用，Sort order参数的值越大，越靠前渲染。如果这个模式下，加入一些非UGUI的物体时，会使得排序混乱。
+
+    Sceen Camera模式，相对比较通用一点，他依赖Camera，所以需要创建一个矩形的Camera来进行绑定，渲染依靠的是于他绑定的Camera。
+    在当非UGUI元素加入到UI中时，Screen Camera模式更加具有优势。在对UI进行排序时，可以通过与Camera的距离来进行绑定，也可以通过Order in layer这个参数进行排序，这样在开发和调试期间更加形象化。
+
+    World Space模式，主要用于当UI物体放在3D世界中时用的，比如，一个大的场景中，需要将一张标志图放在一个石块头上，这时就需要World Space模式。
+
+    他需要绑定一个透视(Perspective)的Camera，当UI物体在这个Camera视野中时，就相当于渲染了一个普通的3D面片的效果，只不过Canvas也对这些3D场景里的UI进行了合并优化处理。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;h6&gt;Canvas Scaler&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    这是个缩放比例组件，用来指定画布中元素的比例大小。
+    有简单指定比例大小的Constant Pixel Size模式，也有Scale With Screen Size以屏幕为基准的自动适配比例大小，或者Constant Physical Size以物理大小为基准的适配规则。
+
+    注，在手游项目里，通常使用以屏幕为基准的自动适配比例大小的Scale With Screen Size选项。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;Graphic Raycaster&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    输入事件与图形的碰撞测试组件，他检测着画布下的所有组件，是否与输入事件的射线碰撞，是否需要将碰撞的组件进行相应。你可以设置成完全忽略输入事件，或者阻止对某些layers进行事件相应。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;EventTrigger&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    输入事件触发器，与此脚本绑定的UI物体，都可以接受到输入事件。比如(鼠标，手指)按下，弹起，点击，开始拖动，拖动中，结束拖动，鼠标滚动事件等。有了他，我们就可以对需要响应手指触摸或鼠标的UI进行绑定了。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;Image，RawImage&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    这两个是UI里的主要部件，都是对图片的展示部件，图片，图集，图元，通过Image和RawImage可以展示在屏幕上。两者的区别是Image仅能展示图集中的图元，而RawImage仅能展示单张图片。通常我们会将小块的图片，打成图集来展示，这样更节省性能也更节省内存。但当遇到大块的图片时却不是这样了，因为太大，打成图集会造成图集不够用，或者说会图集的空间利用效率太低，所以用单独分出来自己独立展示。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;Mask，RectMask2D&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    遮挡组件，用来将其子节点下的区域外的内容遮挡。在上下滚动的菜单栏里用的会用到，因为我们需要将区域外的元素内容进行不显示操作。Mask和RectMask2D区别是，RectMask2D的效率比Mask更高，可以节省更多的drawcall，但是限制条件是RectMask2D只能用于2D上的展示。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;其他组件&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    大部分逻辑组件都是可以重写的，比如按钮组件Button，切换组件Toggle，滚动条组件ScrollBar，滑动组件Slider，下拉框组件DropDown，视图组件ScrollView，都是可以用Image，Mask等几个核心组件组合自己重写的。为什么要重写？因为很多时候项目里的需求更多样化，而且也需要足够的可控性，自己写的可以修改特殊需求和特殊逻辑，比原生态的组件好用的多。所以通常项目中，都会重写一些组件来用来自己项目使用，也有一些人总结了这些组件的经验，写了些比较好用的组件开源在Github上。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+               <pubDate>Wed, 25 Jul 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第四章，UI(一)</title>
-               <description>&lt;h1&gt;《Unity3D高级编程之进阶主程》第四章，UI(一)&lt;/h1&gt;
+               <description>&lt;h1&gt;第四章，UI(一)&lt;/h1&gt;
 
 &lt;p&gt;UI是游戏项目中重要的组成部分，面对一个从零开始的项目，首先要确立的就是选用哪个UI系统作为主框架。&lt;/p&gt;
 
@@ -946,7 +1031,7 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
         
             <item>
                <title>《Unity3D高级编程之进阶主程》第三章，数据表(三)</title>
-               <description>&lt;h1&gt;《Unity3D高级编程之进阶主程》第三章，数据表(三)&lt;/h1&gt;
+               <description>&lt;h1&gt;第三章，数据表(三)&lt;/h1&gt;
 
 &lt;p&gt;前文介绍了关于数据表的几种形式。&lt;a href=&quot;http://www.luzexi.com/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html&quot;&gt;《Unity3D高级编程之进阶主程》第三章，数据表(一)&lt;/a&gt;&lt;/p&gt;
 
@@ -1056,7 +1141,7 @@ Win,赢了,Win, 勝った, 이기다
         
             <item>
                <title>《Unity3D高级编程之进阶主程》第三章，数据表(二)</title>
-               <description>&lt;h1&gt;《Unity3D高级编程之进阶主程》第三章，数据表(二)&lt;/h1&gt;
+               <description>&lt;h1&gt;第三章，数据表(二)&lt;/h1&gt;
 
 &lt;p&gt;前文介绍了关于数据表的几种形式。&lt;a href=&quot;http://www.luzexi.com/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html&quot;&gt;《Unity3D高级编程之进阶主程》第三章，数据表(一)&lt;/a&gt;&lt;/p&gt;
 
@@ -1160,43 +1245,6 @@ Win,赢了,Win, 勝った, 이기다
                <pubDate>Tue, 17 Jul 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html</guid>
-            </item>
-        
-            <item>
-               <title>Challenge your fearing</title>
-               <description>&lt;h1&gt;Challenge your fearing&lt;/h1&gt;
-
-&lt;p&gt;Recently I&amp;#39;m thinking about the challenge. Why we stop challenging? Why pick up again after we drop it? What it the best way to keep moving?&lt;/p&gt;
-
-&lt;p&gt;We challenge a lot in live. Pick one example in my life.&lt;/p&gt;
-
-&lt;p&gt;My swimming experience.&lt;/p&gt;
-
-&lt;p&gt;In my swimming experience fearing is the most important thing I have to overcome. I&amp;#39;m not the smart one in people, my swimming experience begin at 10 years old, until now I just know how to swim in free style.&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;Fearing stay in the whole swimming experience. At the beginning of swim, I scare gone down in the water, I cant breathe air as normally as on lands. It makes me feel that I will die. I escape like a army deserter.&lt;/p&gt;
-
-&lt;p&gt;The fearing makes me stop learning swim. A long time after, one day in summer, my fearing about swim fade away, but still dont like to swim, until one day someone invite me to swim together. I lie to them that I can swim, it makes me feel good. Because some of them never tried swim, they even never went to swim pool before. I feel good, at least i went to swim pool, and tried.&lt;/p&gt;
-
-&lt;p&gt;I&amp;#39;m in my a little self-confidence, try to focous on learning, but still scare a lot. I scare after my energy expend I will die. There&amp;#39;s too much fearing in my head, makes me drop again. &amp;#39;I can not learn swim&amp;#39; I told to myself in sad.&lt;/p&gt;
-
-&lt;p&gt;a long time after again, fearing fade away again. One day in summer again, in one friend&amp;#39;s party we talk about the sport, I support swimming is the best one in sport. After that I think must keep the truth in life, I went to swim pool, start learning again.&lt;/p&gt;
-
-&lt;p&gt;This time, I keep do swimming sport for a long days, because no longer scare breathe air, and no longer scare expend energy. I put my focous on swimming skill, the skill how to breathe enough air and how to save energy. I do a greate job on swim now, can swim a lot without fearing.&lt;/p&gt;
-
-&lt;p&gt;I know one example is not enough to prove anything, but most of things has the same root. Fearing is always the most important thing we have to beat. If you can beat fearing in anything, u can win the world.&lt;/p&gt;
-
-&lt;p&gt;Why we stop? Most of the reason is fearing, or you can say the unknow future, its the same as fearing. We scare that we can&amp;#39;t learn or finish, we thought its too hard for us.&lt;/p&gt;
-
-&lt;p&gt;Why pick up again? The fearing fade away, or maybe we forget the feelling of fear, or maybe someone push us to do. Many unknow reasons or things will push us to pick up again after fearing away. But no scare anymore is necessary.&lt;/p&gt;
-
-&lt;p&gt;What&amp;#39;s the best way to keep moving? Try your best to find the way you think is fun for you to overcome the fearing. Fearing is the biggest boss we must beat, and you must clear that it can&amp;#39;t be beated in a short time, it will be continues for a long long time in your head, longer than you think. So find out the fun thing for you, it will makes you more intereted in keep moving.&lt;/p&gt;
-</description>
-               <pubDate>Wed, 11 Jul 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/07/11/challenge-your-fearing.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/07/11/challenge-your-fearing.html</guid>
             </item>
         
     </channel>
