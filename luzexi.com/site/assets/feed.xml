@@ -44,10 +44,8 @@
             </item>
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第四章，UI(六)</title>
-               <description>&lt;h1&gt;第四章，UI(六)&lt;/h1&gt;
-
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
+               <title>《Unity3D高级编程之进阶主程》第四章，UI(六) - 如何架构UI框架</title>
+               <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
 
@@ -215,10 +213,8 @@
             </item>
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第四章，UI(三)</title>
-               <description>&lt;h1&gt;第四章，UI(三)&lt;/h1&gt;
-
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
+               <title>《Unity3D高级编程之进阶主程》第四章，UI(三) - 剖析UGUI源码中的输入与事件模块</title>
+               <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
 
@@ -226,7 +222,7 @@
 
 &lt;p&gt;UGUI的原理，以及组件使用详解。&lt;/p&gt;
 
-&lt;p&gt;此篇我们来对UGUI的源码中的输入事件模块进行剖析。&lt;/p&gt;
+&lt;p&gt;此篇我们来对UGUI的源码中的输入事件与模块进行剖析。&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
 
@@ -416,10 +412,8 @@
             </item>
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第四章，UI(二)</title>
-               <description>&lt;h1&gt;第四章，UI(二)&lt;/h1&gt;
-
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
+               <title>《Unity3D高级编程之进阶主程》第四章，UI(二) - UGUI的原理及组件使用详解</title>
+               <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;前文对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
 
@@ -534,10 +528,8 @@
             </item>
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第四章，UI(一)</title>
-               <description>&lt;h1&gt;第四章，UI(一)&lt;/h1&gt;
-
-&lt;p&gt;UI是游戏项目中重要的组成部分，面对一个从零开始的项目，首先要确立的就是选用哪个UI系统作为主框架。&lt;/p&gt;
+               <title>《Unity3D高级编程之进阶主程》第四章，UI(一) - NGUI和UGUI比较</title>
+               <description>&lt;p&gt;UI是游戏项目中重要的组成部分，面对一个从零开始的项目，首先要确立的就是选用哪个UI系统作为主框架。&lt;/p&gt;
 
 &lt;p&gt;现在主流项目中基本上都是NGUI和UGUI，那么到底选哪个。我们先来做个比较。&lt;/p&gt;
 
@@ -667,10 +659,8 @@
             </item>
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第二章，架构(三)</title>
-               <description>&lt;h1&gt;第二章，架构(三)&lt;/h1&gt;
-
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://www.luzexi.com/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html&quot;&gt;架构(一)&lt;/a&gt;&lt;/p&gt;
+               <title>《Unity3D高级编程之进阶主程》第二章，架构(三) - 架构的误区，如何做前端架构，以及如何架构Unity3D项目</title>
+               <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://www.luzexi.com/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html&quot;&gt;架构(一)&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;对软件系统架构进行一个彻头彻尾的解释。什么是软件系统架构，为什么需要软件系统架构，以及什么样的软件系统架构才是好的。还包括介绍了，抽象构建架构的思维方式。&lt;/p&gt;
 
@@ -794,10 +784,8 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
             </item>
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第二章，架构(二)</title>
-               <description>&lt;h1&gt;第二章，架构(二)&lt;/h1&gt;
-
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://www.luzexi.com/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html&quot;&gt;架构，第一篇&lt;/a&gt;&lt;/p&gt;
+               <title>《Unity3D高级编程之进阶主程》第二章，架构(二) - 软件系统架构思维方式</title>
+               <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://www.luzexi.com/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html&quot;&gt;架构，第一篇&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;前面对软件系统架构进行一个彻头彻尾的解释。什么是软件系统架构，为什么需要软件系统架构，以及什么样的软件系统架构才是好的。还包括介绍了，抽象构建架构的思维方式。&lt;/p&gt;
 
@@ -890,9 +878,7 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
         
             <item>
                <title>Have fun in watch video</title>
-               <description>&lt;h1&gt;Have fun in watch video&lt;/h1&gt;
-
-&lt;p&gt;This is a funy video I would like to share with you. Learn english should be more funy than u think. I prefer to find out the funy way to keep, not only the boring thing as learn words or do homework on paper.&lt;/p&gt;
+               <description>&lt;p&gt;This is a funy video I would like to share with you. Learn english should be more funy than u think. I prefer to find out the funy way to keep, not only the boring thing as learn words or do homework on paper.&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
 
@@ -917,9 +903,7 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
         
             <item>
                <title>白领投资探讨(三)</title>
-               <description>&lt;h1&gt;白领投资探讨(三)&lt;/h1&gt;
-
-&lt;p&gt;最近P2P雷爆很多，据统计平均每天有2家网贷平台倒闭和跑路，据说把所有倒闭跑路的网贷平台资金总量加起来有2万亿，倒霉的都是老百姓，很多家庭的财富顷刻间灰飞烟灭。我们今天就来说说，用钱赚钱这事。&lt;/p&gt;
+               <description>&lt;p&gt;最近P2P雷爆很多，据统计平均每天有2家网贷平台倒闭和跑路，据说把所有倒闭跑路的网贷平台资金总量加起来有2万亿，倒霉的都是老百姓，很多家庭的财富顷刻间灰飞烟灭。我们今天就来说说，用钱赚钱这事。&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
 
@@ -965,10 +949,8 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
             </item>
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第二章，架构(一)</title>
-               <description>&lt;h1&gt;第二章，架构(一)&lt;/h1&gt;
-
-&lt;p&gt;什么是软件系统架构?&lt;/p&gt;
+               <title>《Unity3D高级编程之进阶主程》第二章，架构(一) - 架构的意义</title>
+               <description>&lt;p&gt;什么是软件系统架构?&lt;/p&gt;
 
 &lt;p&gt;网络上百科解释很多，比如，软件架构是一个系统的草图，又比如，软件体系结构是构建计算机软件实践的基础，还有，软件系统架构是一系列相关的抽象模式，用于指导大型软件系统各个方面的设计。&lt;/p&gt;
 

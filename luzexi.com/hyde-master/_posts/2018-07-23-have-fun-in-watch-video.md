@@ -9,8 +9,6 @@ tags:
 - life
 ---
 
-#Have fun in watch video
-
 This is a funy video I would like to share with you. Learn english should be more funy than u think. I prefer to find out the funy way to keep, not only the boring thing as learn words or do homework on paper.
 
 ===

@@ -11,9 +11,6 @@ categories:
 - life
 ---
 
-
-#Back to blog
-
 It's a long time before back to blog. Before, I went to Weibo to study something about finance. It's good for me in the future. So now I have much knowledge and experience in finance invest. I'm glad that I make the real world more close to me.
 
 ===

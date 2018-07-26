@@ -13,8 +13,6 @@ categories:
 - 其他技术
 ---
 
-#JaveScript的奇葩写法规则
-
 ### ① => 箭头函数
 
 		两个箭头同时使用 arg1 => arg2 =>{return xxx;}

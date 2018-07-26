@@ -2,7 +2,7 @@
 layout: post
 status: publish
 published: true
-title: 《Unity3D高级编程之进阶主程》第一章，C#要点技术(二)
+title: 《Unity3D高级编程之进阶主程》第一章，C#要点技术(二) - Dictionary 底层源码剖析
 description: "unity3d 高级编程 c# 主程 算法 设计模式 动态库 底层源码 Dictionary"
 excerpt_separator: ===
 tags:
@@ -10,8 +10,6 @@ tags:
 - Unity3D
 - 前端技术
 ---
-
-#第一章，C\#要点技术(二)
 
 前文回顾 [《Unity3D高级编程之进阶主程》第一章，C#要点技术(一)](http://www.luzexi.com/2018/07/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF1.html)
 

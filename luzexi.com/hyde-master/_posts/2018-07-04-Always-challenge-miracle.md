@@ -11,8 +11,6 @@ categories:
 - life
 ---
 
-# Always challenge miracle
-
 Recently I'm thinking of the meaning in my life. Whatever I lose or get something that was not the end of the life, we always have another objective to get or maybe restart training or studying and try to get again and again until win.
 
 ===
