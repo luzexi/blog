@@ -24,11 +24,11 @@ Jekyll 的 ‘Relate-相关文章’的功能，写的真的不好用。完全�
 
 原以为是 Jekyll 是 Ruby 写的，网页上也是 Ruby，还复习了下 Ruby 写法。以前写过很久没用就会忘记。
 
-谁能知道，网页部分不是Ruby语法呢，原来是 Liquid 的语法，他时用 ruby 写的‘模板引擎’。
+最后发现网页部分不是Ruby语法呢，而是 Liquid 的语法，一款用 ruby 写的‘模板引擎’。
 
-[Liquid源码](https://github.com/Shopify/liquid)
+[Liquid github](https://github.com/Shopify/liquid)
 
-查了下他的用法，API其实还真的不多，用起来好难受。比如 for循环 就是个要命的点。还有变量申明和运算，和平常用的语言相差有点大的。
+查了下他的用法，API还真的不多，用起来好难受。比如 for循环 就是个要命的点。还有变量申明和运算，和平常用的语言相差有点大的。
 
 ### 关于Relate功能，我希望是，有最新的文章链接，之前的文章链接和之后的文章链接，让读者能有更大的概率找到自己想要的文章。
 
