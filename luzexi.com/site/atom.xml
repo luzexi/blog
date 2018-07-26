@@ -4,13 +4,50 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-26T16:44:28+08:00</updated>
+ <updated>2018-07-26T17:47:51+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>重写Jekyll的Relate功能</title>
+   <link href="http://www.luzexi.com/2018/07/26/jekyll-related-page.html"/>
+   <updated>2018-07-26T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2018/07/26/jekyll-related-page</id>
+   <content type="html">&lt;p&gt;Jekyll 的 ‘Relate-相关文章’的功能，写的真的不好用。完全表达不了相关文章的含义。&lt;/p&gt;
+
+&lt;p&gt;于是打算修一下 Relate 部分的功能。&lt;/p&gt;
+
+&lt;p&gt;网上查了很久，很多人在抱怨，但没人把写好的 Relate 放到网上。&lt;/p&gt;
+
+&lt;p&gt;唯一一个Jekyll 的 Relate 插件都是渣的要命的那种，根本没法用。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;于是就有了重写这个功能的欲望，本想也简单，只是几个for循环而已。&lt;/p&gt;
+
+&lt;p&gt;原以为是 Jekyll 是 Ruby 写的，网页上也是 Ruby，还复习了下 Ruby 写法。以前写过很久没用就会忘记。&lt;/p&gt;
+
+&lt;p&gt;谁能知道，网页部分不是Ruby语法呢，原来是 Liquid 的语法，他时用 ruby 写的‘模板引擎’。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Shopify/liquid&quot;&gt;Liquid源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;查了下他的用法，API其实还真的不多，用起来好难受。比如 for循环 就是个要命的点。还有变量申明和运算，和平常用的语言相差有点大的。&lt;/p&gt;
+
+&lt;h3&gt;关于Relate功能，我希望是，有最新的文章链接，之前的文章链接和之后的文章链接，让读者能有更大的概率找到自己想要的文章。&lt;/h3&gt;
+
+&lt;p&gt;写完后的效果如图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/uploads/2018/07/jekyll-relate.png&quot; alt=&quot;relate功能图&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;源码如下:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/luzexi/jekyll-relate&quot;&gt;Jekyll Relate github&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第四章，UI(六)</title>

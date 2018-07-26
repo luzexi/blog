@@ -8,12 +8,12 @@
 
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta content="unity3d 高级编程 主程 ui ugui 原理 使用详解" name="description">
+  <meta content="jekyll liquid ruby related" name="description">
 
 
   <title>
     
-      《Unity3D高级编程之进阶主程》第四章，UI(二)
+      重写Jekyll的Relate功能
     
   </title>
 
@@ -171,119 +171,38 @@
 
     <div class="content container">
       <div class="post">
-  <h1 class="post-title">《Unity3D高级编程之进阶主程》第四章，UI(二)</h1>
-  <span class="post-date">25 Jul 2018</span>
-  <h1>第四章，UI(二)</h1>
+  <h1 class="post-title">重写Jekyll的Relate功能</h1>
+  <span class="post-date">26 Jul 2018</span>
+  <p>Jekyll 的 ‘Relate-相关文章’的功能，写的真的不好用。完全表达不了相关文章的含义。</p>
 
-<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
+<p>于是打算修一下 Relate 部分的功能。</p>
 
-<p>前文对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。</p>
+<p>网上查了很久，很多人在抱怨，但没人把写好的 Relate 放到网上。</p>
 
-<p>这篇我们来讲讲，UGUI的原理，以及UGUI的组件使用详解。</p>
+<p>唯一一个Jekyll 的 Relate 插件都是渣的要命的那种，根本没法用。</p>
 
 <p>===</p>
 
-<h3>UGUI的初级和高级使用详解</h3>
+<p>于是就有了重写这个功能的欲望，本想也简单，只是几个for循环而已。</p>
 
-<p>首先我们来介绍下ugui的运作机制。</p>
+<p>原以为是 Jekyll 是 Ruby 写的，网页上也是 Ruby，还复习了下 Ruby 写法。以前写过很久没用就会忘记。</p>
 
-<p>UGUI是在3D网格下建立起来的UI系统，它的每个可显示的元素都是以3D模型面片的形式来构建的，在UI被构建时，UGUI首先要做的事就是构建网格。</p>
+<p>谁能知道，网页部分不是Ruby语法呢，原来是 Liquid 的语法，他时用 ruby 写的‘模板引擎’。</p>
 
-<p>也就是说，在Unity3D制作一个图元素，或者一个按钮，或者一个背景时，都会先构建一个方形网格，再将图片放入网格中，就相当于一个3D模型一样，一个网格绑定一个材质球，材质球里放了图片。</p>
+<p><a href="https://github.com/Shopify/liquid">Liquid源码</a></p>
 
-<p>如果每个元素，生成一个模型，绑定一个材质球，切入一张图片的话，UI上成千上百个元素就会拥有成千上百个材质球，以及成千上百张图。</p>
+<p>查了下他的用法，API其实还真的不多，用起来好难受。比如 for循环 就是个要命的点。还有变量申明和运算，和平常用的语言相差有点大的。</p>
 
-<p>这样会造成引擎需要每次渲染时都需要读取成千上百张图，对每个材质球和网格都进行渲染，这会导致性能开销过大，性能急剧下降。</p>
+<h3>关于Relate功能，我希望是，有最新的文章链接，之前的文章链接和之后的文章链接，让读者能有更大的概率找到自己想要的文章。</h3>
 
-<p>于是UGUI做了优化，将一部分相同类型的图片都集合起来合成一个张图，然后将拥有相同图片相同shader的材质球合并成一个材质球，并且把分散开的模型网格也一起合并了，这样就生成了几个大网格和几个材质球，以及少许整张的图集。节省了很多材质球，图片，网格的渲染，UI的效率更高了很多，游戏在进行时才会顺畅。</p>
+<p>写完后的效果如图：</p>
 
-<p>不是所有的网格和材质球都合并成一个，只有相同的图集和相同的材质球参数才能合并网格，而且在当UI中的元素变动时，也同样需要做拆分网格和重新合并网格的操作。</p>
+<p><img src="/assets/uploads/2018/07/jekyll-relate.png" alt="relate功能图"></p>
 
-<p>在Unity3D中各类UI系统中，性能优劣差距就在这里拉开了，哪个系统能合并得更好，哪个系统能更多的减少合并的次数，以及在合并时是否能有更高的效率，成了拉开差距的关键.</p>
+<p>源码如下:</p>
 
-<p>因为这些合并和拆分的操作会消耗很多CPU，UI系统要做的就是尽一切可能节省些CPU消耗，把尽量多的剩余CPU让给项目逻辑。</p>
+<p><a href="https://github.com/luzexi/jekyll-relate">Jekyll Relate github</a></p>
 
-<p>下面我们来主要介绍下UGUI的核心组件。</p>
-
-<h3>核心组件Canvas</h3>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Canvas，我们暂且叫它画布。Canvas就相当于一张画画时铺在上边的画板，我们把各类元素放在画布上后，Canvas要做的事情就是合并这些元素。
-
-    Canvas上的参数包括Render Mode 渲染模式，你可以选择不以Camera为基准的Overlay模式，或者以Camera为基准的Screen Camera模式，也可以选择3D直接坐标为基准的World Space模式。三者根据的使用区域不同而不同。
-
-    Overlay模式主要用在纯UI的区域内，例如我们不想使用Camera排序，而想用Sort order这个参数排序时可以使用，Sort order参数的值越大，越靠前渲染。如果这个模式下，加入一些非UGUI的物体时，会使得排序混乱。
-
-    Sceen Camera模式，相对比较通用一点，他依赖Camera，所以需要创建一个矩形的Camera来进行绑定，渲染依靠的是于他绑定的Camera。
-
-    在当非UGUI元素加入到UI中时，Screen Camera模式更加具有优势。
-    在对UI进行排序时，可以通过与Camera的距离来进行绑定，也可以通过Order in layer这个参数进行排序，这样在开发和调试期间更加形象化。
-
-    World Space模式，主要用于当UI物体放在3D世界中时用的，比如，一个大的场景中，需要将一张标志图放在一个石块头上，这时就需要World Space模式。
-
-    他需要绑定一个透视(Perspective)的Camera，当UI物体在这个Camera视野中时，就相当于渲染了一个普通的3D面片的效果，只不过Canvas也对这些3D场景里的UI进行了合并优化处理。
-</code></pre></div>
-<script type="text/javascript">
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-6:5*/
-        var cpro_id = "u3485972";
-        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
-    }
-    else
-    {
-        /*760*90-图*/
-        var cpro_id = "u3485994";
-        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
-    }
-</script>
-
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
-
-<h6>Canvas Scaler</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    这是个缩放比例组件，用来指定画布中元素的比例大小。
-
-    有简单指定比例大小的Constant Pixel Size模式，也有Scale With Screen Size以屏幕为基准的自动适配比例大小，或者Constant Physical Size以物理大小为基准的适配规则。
-
-    注，在手游项目里，通常使用以屏幕为基准的自动适配比例大小的Scale With Screen Size选项。
-</code></pre></div>
-<h6>Graphic Raycaster</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    输入事件与图形的碰撞测试组件，他检测着画布下的所有组件，是否与输入事件的射线碰撞，是否需要将碰撞的组件进行相应。
-
-    你可以设置成完全忽略输入事件，或者阻止对某些layers进行事件相应。
-</code></pre></div>
-<h6>EventTrigger</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    输入事件触发器，与此脚本绑定的UI物体，都可以接受到输入事件。
-
-    比如(鼠标，手指)按下，弹起，点击，开始拖动，拖动中，结束拖动，鼠标滚动事件等。
-
-    有了他，我们就可以对需要响应手指触摸或鼠标的UI进行绑定了。
-</code></pre></div>
-<h6>Image，RawImage</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    这两个是UI里的主要部件，都是对图片的展示部件，图片，图集，图元，通过Image和RawImage可以展示在屏幕上。
-
-    两者的区别是Image仅能展示图集中的图元，而RawImage仅能展示单张图片。通常我们会将小块的图片，打成图集来展示，这样更节省性能也更节省内存。
-
-    但是，当遇到大块的图片时却不是这样了，因为太大，打成图集会造成图集不够用，或者说会图集的空间利用效率太低，所以用单独分出来自己独立展示。
-</code></pre></div>
-<h6>Mask，RectMask2D</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    遮挡组件，用来将其子节点下的区域外的内容遮挡。
-
-    在上下滚动的菜单栏里用的会用到，因为我们需要将区域外的元素内容进行不显示操作。
-
-    Mask和RectMask2D区别是，RectMask2D的效率比Mask更高，可以节省更多的drawcall，但是限制条件是RectMask2D只能用于2D上的展示。
-</code></pre></div>
-<h6>其他组件</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    大部分逻辑组件都是可以重写的，
-
-    比如按钮组件Button，切换组件Toggle，滚动条组件ScrollBar，滑动组件Slider，下拉框组件DropDown，视图组件ScrollView，都是可以用Image，Mask等几个核心组件组合自己重写的。
-
-    为什么要重写？因为很多时候项目里的需求更多样化，而且也需要足够的可控性，自己写的可以修改特殊需求和特殊逻辑，比原生态的组件好用的多。
-
-    所以通常项目中，都会重写一些组件来用来自己项目使用，也有一些人总结了这些组件的经验，写了些比较好用的组件开源在Github上。
-</code></pre></div>
   <p>感谢您的耐心阅读</p>
   <p>Thanks for your reading</p>
 </div>
@@ -296,8 +215,8 @@
   <li>
 <p>版权申明</p>
 <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">《Unity3D高级编程之进阶主程》第四章，UI(二)</a></p> -->
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">《Unity3D高级编程之进阶主程》第四章，UI(二)</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/26/jekyll-related-page.html">重写Jekyll的Relate功能</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/26/jekyll-related-page.html">重写Jekyll的Relate功能</a></p> -->
 <p>Copyright attention</p>
 <p>If you would like to reprint this article please write auth's name and link in the page.</p>
 
@@ -384,27 +303,6 @@
       
 
       
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
         
           <li>
             <h3>
@@ -465,24 +363,33 @@
       
 
       
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
+        
+          <li>
+            <h3>
+              <a href="/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(六)
+                <small>26 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(三)
+                <small>26 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(二)
+                <small>25 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
         
           <li>
             <h3>
@@ -498,33 +405,6 @@
               <a href="/2018/07/24/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%843.html">
                 《Unity3D高级编程之进阶主程》第二章，架构(三)
                 <small>24 Jul 2018</small>
-              </a>
-            </h3>
-          </li>
-        
-          <li>
-            <h3>
-              <a href="/2018/07/24/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%842.html">
-                《Unity3D高级编程之进阶主程》第二章，架构(二)
-                <small>24 Jul 2018</small>
-              </a>
-            </h3>
-          </li>
-        
-          <li>
-            <h3>
-              <a href="/2018/07/23/have-fun-in-watch-video.html">
-                Have fun in watch video
-                <small>23 Jul 2018</small>
-              </a>
-            </h3>
-          </li>
-        
-          <li>
-            <h3>
-              <a href="/2018/07/20/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A83.html">
-                白领投资探讨(三)
-                <small>20 Jul 2018</small>
               </a>
             </h3>
           </li>
