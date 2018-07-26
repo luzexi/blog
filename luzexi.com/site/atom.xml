@@ -4,13 +4,184 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-26T01:30:04+08:00</updated>
+ <updated>2018-07-26T11:12:00+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>《Unity3D高级编程之进阶主程》第四章，UI(六)</title>
+   <link href="http://www.luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html"/>
+   <updated>2018-07-26T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2018/07/26/Unity3D高级编程之进阶主程-UI6</id>
+   <content type="html">&lt;h1&gt;第四章，UI(六)&lt;/h1&gt;
+
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
+
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html&quot;&gt;UI(二)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;UGUI的原理，以及组件使用详解。&lt;/p&gt;
+
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html&quot;&gt;UI(三)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;UGUI源码中输入事件模块源码剖析。&lt;/p&gt;
+
+&lt;p&gt;这篇我们来讲讲，如何在Unity3D游戏项目中架构UI框架。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;h3&gt;如何架构UI&lt;/h3&gt;
+
+&lt;p&gt;架构是门经验活，在经历众多项目后，会总结所有经历过的这些项目的经验，这些经验其实就是构建架构的基础。&lt;/p&gt;
+
+&lt;p&gt;架构肯定不是凭空出现，天马行空的。他是建立在经验的基础上的一门技术。&lt;/p&gt;
+
+&lt;p&gt;他也不是像在写逻辑或在写组件时的那样天天都在精雕细琢，而是大笔一挥，画几块区域，粗糙得描述了整体的形状，给出了大致的方向，而后才是完善在具体项目中完善，修整，修补，雕琢。&lt;/p&gt;
+
+&lt;h3&gt;那么怎么大笔一挥，构架UI呢？&lt;/h3&gt;
+
+&lt;p&gt;我们先要从宏观或者说抽象的看UI架构需求。&lt;/p&gt;
+
+&lt;h3&gt;Ⅰ.管理类。&lt;/h3&gt;
+
+&lt;p&gt;整个UI是由N个界面构成的。这些UI界面有基本的功能，生成，展示，销毁，查找。如果说，我们分别对N个UI界面的这些功能进行编程，就会有大量的工作产生，而且维护起来的工作量也是巨大的。&lt;/p&gt;
+
+&lt;p&gt;我们需要用一个实例来管理所有的UI界面，让他们能有统一的接口进行以上的活动，创建UI管理类是最好的选择，假如命名为 UIManager。&lt;/p&gt;
+
+&lt;p&gt;UIManager 里面需要做什么呢，需要创建UI，需要查找现有的UI，以及需要销毁UI。UIManager 承担了所有UI的管理工作，所以UI在生成后的实例将存储在里面。&lt;/p&gt;
+
+&lt;p&gt;不但如此，还有一些UI重要的变量也存储在里面，比如屏幕的适配标准大小，比如UI的Camera实例等等。&lt;/p&gt;
+
+&lt;p&gt;嗯，这样一来，第一个方向确定了，那就是UIManager是UI界面的管理员，统筹管理UI问题。包括了一些特殊的需求，比如下层UI切换到上层，比如加载方式变更，比如选择性预加载UI等，都需要在UIManager里编写。&lt;/p&gt;
+
+&lt;h3&gt;Ⅱ.基类。&lt;/h3&gt;
+
+&lt;p&gt;项目中有很多界面，这N个界面他们有自己的共性，比如最基本的，他们都需要进行初始化，他们都需要有展示接口，他们都可以关闭，共性产生统一特征的接口，Init，Open和Close。继承基类又使得管理起来比较方便，在上面提到的 UIManager 里存储的UI实例时，可以统一使用基类的方式存储。&lt;/p&gt;
+
+&lt;p&gt;所以我们将所有UI都定义为基类的子类，对有需要做特殊处理的UI界面，可以重写Init，Open和Close。如果需要，我们也可以定义一个UI状态，比如Open打开状态，Close关闭状态，Hiden隐藏状态，Preopen预加载状态，以状态的形式来判断UI现在的情况。&lt;/p&gt;
+
+&lt;p&gt;这样一来，界面有了自己可以特殊化的接口，也可以自主定义自己的功能性的接口，同时还受到管理类的统一管理。做到了，既满足有序管理，又能满足自定义需求。看似简单的几行代码，里面蕴含着复杂的思考过程，抽象的意义就在于此。&lt;/p&gt;
+
+&lt;h3&gt;Ⅲ.输入事件响应机制。&lt;/h3&gt;
+
+&lt;p&gt;UI中输入事件的响应机制极其重要，好的输入事件响应机制能提高更多的效率，让程序员编写逻辑的时候更加舒服，而体验差的输入事件响应机制，能让编写逻辑的程序员仿佛进入地狱般痛苦。所以要好好想想，根据以往经验多总结，多思考。&lt;/p&gt;
+
+&lt;p&gt;Unity3D输入事件响应机制建立通常有2种，一种是继承型，一种是绑定型。&lt;/p&gt;
+
+&lt;p&gt;继承型是指事件先到基类，再由基类反应给父类，由父类做处理，这样UI既可以得到对输入事件的响应，也可以自行修改自己需要的逻辑。&lt;/p&gt;
+
+&lt;p&gt;比如一个组件uiBase是父类，能接受各种输入事件响应，而uiButton是继承uiBase的，当输入事件过来时，uiButton也能做出响应。&lt;/p&gt;
+
+&lt;p&gt;绑定型是指在对输入事件响应之前，我们需要对这个UI元素绑定一个事件响应的UI组件。&lt;/p&gt;
+
+&lt;p&gt;比如编写一个绑定型事件类 UIEvent，当某个UI元素需要输入事件回调时，对这个物体加绑一个 UIEvent，并且对 UIEvent 里需要的相关响应事件进行赋值或注册操作句柄。当输入事件响应时，由 UIEvent 来区分输入什么类型的输入事件，再分别调用响应到具体句柄上进行回调操作。&lt;/p&gt;
+
+&lt;p&gt;继承型和绑定型都有一个共同的特点，是需要与UI元素关联，区别是继承型融入在了各种组件内，而绑定型以独立的组件形式体现。&lt;/p&gt;
+
+&lt;p&gt;继承型UI事件输入响应机制需要关联到组件内，而UGUI和NGUI都已经有了自己的基础的组件，所以很难在这上面使用，而在另一些比较特殊的GUI系统内可以很好的适应。&lt;/p&gt;
+
+&lt;p&gt;比如本人以前做过一个项目，他们建立的一套UI系统的完全独立于UGUI和NGUI的GUI系统之外，他们将输入事件处理注入到这个系统的各个组件内，达到了输入事件处理与组件融合的效果。&lt;/p&gt;
+
+&lt;p&gt;绑定型的方式更适合在已经建立了GUI系统的基础上，对输入事件进行封装处理。&lt;/p&gt;
+
+&lt;p&gt;通常在UGUI和NGUI上都会使用绑定型对输入事件处理进行封装。&lt;/p&gt;
+
+&lt;p&gt;例如，在UI初始化中，对需要输入事件响应的，绑定一个事件处理类，比如命名为 UIEvent，然后对事件句柄进行赋值，例如，ui_event.onclick = OnClickLogin，OnClickLogin就是响应登录按钮的事件句柄。&lt;/p&gt;
+
+&lt;p&gt;这样的赋值方式，让程序员写逻辑时看起来更加清爽，简洁，直观。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-6:5*/
+        var cpro_id = &quot;u3485972&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+        /*760*90-图*/
+        var cpro_id = &quot;u3485994&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;h3&gt;Ⅳ.自定义组件。&lt;/h3&gt;
+
+&lt;p&gt;除了NGUI和UGUI本身的组件外，我们自己的自定义组件是必不可少的，特别是游戏项目，无论大小，都需要有自己的自定义组件，自定义组件不仅能让程序员在写逻辑时快速上手，满足项目的设计需求，而且也能起到对UI优化的作用，尤其在元素多的组件内。&lt;/p&gt;
+
+&lt;p&gt;在写自定义组件时，我们也需要定义几个方向去写，否则会很盲目。&lt;/p&gt;
+
+&lt;h6&gt;① UI动画组件。&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    动画在UI中扮演重要的角色，这里主要说的是Animation的K线动画。
+
+    如何让Animation在美术人员手里自如的制作，并且让程序员能方便调用是关键。
+
+    UI动画组件里应该有什么呢？我们暂时命名为 UIAnimation 好了。
+
+    首先它肯定要依赖 Unity3D 的 Animator 组件 [RequireComponent (typeof(Animator))]。
+
+    其次它要有播放(Play)接口用来播放指定动画，Play的参数包括，动画名，播放完毕后的回调函数委托。
+
+    再次他可以在无需程序调用的情况下自动播放，因此在 public 变量中需要 AutoPlay 这个参数，这样美术人员就可以在 Unity3D 界面上设置自动播放而无需程序调用了。
+
+    最后美术人员需要在自动播放时选择指定的动画名和是否循环播放，以及循环播放间隔。
+
+    这样就基本成形了，接下来要做的事就是我们对抽象的 UIAnimation 里完善以上的功能。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;② 按钮播放音效组件。&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    在点击按钮时会需要播放音效，这是每个项目必要的组件。
+
+    功能也挺简单，当输入事件触发Click事件时发出绑定的声音文件就可以了。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;③ UI跟随3D物体组件。&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    项目中很多时候需要UI元素来跟随它们，比如游戏中的血条，又比如场景中建筑物头上的标志等等，因此UI跟随3D物体的组件非常必要。
+
+    它的功能实现起来也挺简单的，不断地计算3D物体在屏幕中的位置，来确定UI位置，并且在前后位置不同时再进行更改以避免不必要的移动。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;④ 无限滚动页面组件。&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    在可以滚动的菜单栏里，如果有几百个UI元素同时生成，或同时滚动时，效率会非常低，因为UI在每帧都需要重新构建Mesh，每一次的滚动都会引起不小的CPU消耗。
+
+    因此一个自定义的无限滚动页面组件来，替换原来的模式，让CPU花最小的代价来运行这个滚动页面是非常有必要的。
+
+    那么这个无限滚动页面组件关键点在哪呢？设想下，这么多UI元素一起生成，一起移动，都是一件很费力的事，我们需要减少UI元素的数量。
+
+    最好减少到与在屏幕上显示的数量差不多，利用看不见的UI元素，来补充能看见的元素，可以描述为一个把上下UI元素不可见时的再利用过程。
+
+    我们就拿游戏里的背包界面来举例吧，500个物品在背包界面中时，实例化，初始化，滚动都会很费劲，我们可以减少UI元素在背包界面里的显示数量。
+
+    当UI元素滚动时一部分元素被遮挡住时，不再需要他们显示了，这时我们就可以对这些元素进行再利用。
+
+    当上面有一行元素被遮挡住，可以被再利用时，我们就把他们移动到下面去，让他们变成下面的背包物品元素。
+
+    这样不断得滚动，在表现上跟真的有500个物品滚动过程一模一样。这样就可以大量地削减组件消耗的CPU，不管有多少物品在背包里面，也不会引起CPU的负担了。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;⑤ 其他组件。&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    其他需求的组件，在项目被开发期间也是有很大需求的，
+
+    比如美术数字组件，让美术制定的数字展示得更好，
+
+    例如暴击数字是特殊的图片数字等。
+
+    又比如计数组件，可以让数字滚动的更加漂亮，
+
+    例如在获得游戏币时数字会像动画一样跳动由慢到快。
+
+    再比如，针对UGUI改变颜色动画时过于消耗CPU而设计的优化组件，让动画只改变组件的颜色值，由组件来改变UI元素的材质球颜色，这样能省去很多重构Mesh导致的CPU消耗。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;编写自定义的UI组件的目标就是让程序员在编写UI界面时更加快捷高效，同时提升UI的渲染效率。这种一箭双雕的事，是每个主程人员必须重视的事。拥有属于自己的一套自定义套件，对项目来说也是非常有价值和高效的一件事。&lt;/h3&gt;
+</content>
+ </entry>
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第四章，UI(三)</title>
