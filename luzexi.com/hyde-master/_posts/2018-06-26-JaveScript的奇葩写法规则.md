@@ -15,7 +15,7 @@ categories:
 
 #JaveScript的奇葩写法规则
 
-1. ###=> 箭头函数
+1 ###=> 箭头函数
 
 		两个箭头同时使用 arg1 => arg2 =>{return xxx;}
 		可以理解为
@@ -31,7 +31,7 @@ categories:
 
 	===
 
-2. ###... 剩余数据
+2 ###... 剩余数据
 
 	######数组中的剩余数据
 
@@ -47,7 +47,7 @@ categories:
 		console.log(b); // 20
 		console.log(rest); // {c: 30, d: 40}
 
-3. ###[] 数组分配赋值用法
+3 ###[] 数组分配赋值用法
 
 	######数组分配1
 
@@ -85,7 +85,7 @@ categories:
 		console.log(a); // 1
 		console.log(b); // [2, 3]
 
-4. ###{} 对象分配用法
+4 ###{} 对象分配用法
 	
 	######对象分配赋值
 
@@ -127,7 +127,7 @@ categories:
 
 {% include advertisement_content.html %}
 
-5. ### Object.assign() 合并对象
+5 ### Object.assign() 合并对象
 
 	###### 将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）
 
@@ -202,7 +202,7 @@ categories:
 			let options = Object.assign({}, DEFAULTS, options);
 		}
 
-6. ### (function(){})(); 函数function后面跟()括号
+6 ### (function(){})(); 函数function后面跟()括号
 
 		举个例子:
 
@@ -225,7 +225,7 @@ categories:
 
 		3.可看做线程安全.
 
-7. ### !function(){}(); 函数function前面加!感叹号
+7 ### !function(){}(); 函数function前面加!感叹号
 
 		如果我们尝试为一个“定义函数”末尾加上()，解析器是无法理解的。
 

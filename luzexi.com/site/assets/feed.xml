@@ -370,6 +370,8 @@
 &lt;p&gt;所以 EventSystem 是重点，是整个事件模块的主心骨。不过 EventSystem 写的并不复杂，因为架构师在架构时，已经将它们各自的职能分的很清楚了，所以我们看起来也并没有那么难。&lt;/p&gt;
 
 &lt;p&gt;比如说输入监测已经由输入事件捕捉模块完成了，碰撞检测也已经有碰撞检测模块完成了，事件的数据类都已经搭建好了，EventSystem 要做的就只是把它们拼装起来，成为主逻辑块。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://bitbucket.org/Unity-Technologies/ui/downloads/?tab=downloads&quot;&gt;源码地址&lt;/a&gt;&lt;/p&gt;
 </description>
                <pubDate>Thu, 26 Jul 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html</link>
