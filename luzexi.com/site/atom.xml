@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-26T11:35:42+08:00</updated>
+ <updated>2018-07-26T11:37:10+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -3289,7 +3289,7 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
    <id>http://www.luzexi.com/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/26/JaveScript的奇葩写法规则</id>
    <content type="html">&lt;h1&gt;JaveScript的奇葩写法规则&lt;/h1&gt;
 
-&lt;p&gt;1 ###=&amp;gt; 箭头函数&lt;/p&gt;
+&lt;h3&gt;=&amp;gt; 箭头函数&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    两个箭头同时使用 arg1 =&amp;gt; arg2 =&amp;gt;{return xxx;}
     可以理解为
     function( arg1 )
@@ -3304,7 +3304,7 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 
 ===
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;2 ###... 剩余数据&lt;/p&gt;
+&lt;h3&gt;... 剩余数据&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;######数组中的剩余数据
 
     [a, b, ...rest] = [10, 20, 30, 40, 50];
@@ -3319,7 +3319,7 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
     console.log(b); // 20
     console.log(rest); // {c: 30, d: 40}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;3 ###[] 数组分配赋值用法&lt;/p&gt;
+&lt;h3&gt;[] 数组分配赋值用法&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;######数组分配1
 
     var x = [1, 2, 3, 4, 5];
@@ -3356,7 +3356,7 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
     console.log(a); // 1
     console.log(b); // [2, 3]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;4 ###{} 对象分配用法&lt;/p&gt;
+&lt;h3&gt;{} 对象分配用法&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;######对象分配赋值
 
     var o = {p: 42, q: true};
@@ -3416,7 +3416,7 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 &lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;p&gt;5 ### Object.assign() 合并对象&lt;/p&gt;
+&lt;h3&gt;Object.assign() 合并对象&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;###### 将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）
 
     var target = { a: 1 };
@@ -3490,7 +3490,7 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
         let options = Object.assign({}, DEFAULTS, options);
     }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;6 ### (function(){})(); 函数function后面跟()括号&lt;/p&gt;
+&lt;h3&gt;(function(){})(); 函数function后面跟()括号&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    举个例子:
 
     (function(p1,p2){alert(p1+p2);})(1,2);
@@ -3512,7 +3512,7 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 
     3.可看做线程安全.
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;7 ### !function(){}(); 函数function前面加!感叹号&lt;/p&gt;
+&lt;h3&gt;!function(){}(); 函数function前面加!感叹号&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    如果我们尝试为一个“定义函数”末尾加上()，解析器是无法理解的。
 
     function msg(){

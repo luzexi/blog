@@ -175,7 +175,7 @@
   <span class="post-date">26 Jun 2018</span>
   <h1>JaveScript的奇葩写法规则</h1>
 
-<p>1 ###=&gt; 箭头函数</p>
+<h3>=&gt; 箭头函数</h3>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    两个箭头同时使用 arg1 =&gt; arg2 =&gt;{return xxx;}
     可以理解为
     function( arg1 )
@@ -190,7 +190,7 @@
 
 ===
 </code></pre></div>
-<p>2 ###... 剩余数据</p>
+<h3>... 剩余数据</h3>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>######数组中的剩余数据
 
     [a, b, ...rest] = [10, 20, 30, 40, 50];
@@ -205,7 +205,7 @@
     console.log(b); // 20
     console.log(rest); // {c: 30, d: 40}
 </code></pre></div>
-<p>3 ###[] 数组分配赋值用法</p>
+<h3>[] 数组分配赋值用法</h3>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>######数组分配1
 
     var x = [1, 2, 3, 4, 5];
@@ -242,7 +242,7 @@
     console.log(a); // 1
     console.log(b); // [2, 3]
 </code></pre></div>
-<p>4 ###{} 对象分配用法</p>
+<h3>{} 对象分配用法</h3>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>######对象分配赋值
 
     var o = {p: 42, q: true};
@@ -302,7 +302,7 @@
 </script>
 <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
-<p>5 ### Object.assign() 合并对象</p>
+<h3>Object.assign() 合并对象</h3>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>###### 将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）
 
     var target = { a: 1 };
@@ -376,7 +376,7 @@
         let options = Object.assign({}, DEFAULTS, options);
     }
 </code></pre></div>
-<p>6 ### (function(){})(); 函数function后面跟()括号</p>
+<h3>(function(){})(); 函数function后面跟()括号</h3>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    举个例子:
 
     (function(p1,p2){alert(p1+p2);})(1,2);
@@ -398,7 +398,7 @@
 
     3.可看做线程安全.
 </code></pre></div>
-<p>7 ### !function(){}(); 函数function前面加!感叹号</p>
+<h3>!function(){}(); 函数function前面加!感叹号</h3>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如果我们尝试为一个“定义函数”末尾加上()，解析器是无法理解的。
 
     function msg(){
