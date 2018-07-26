@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-26T11:37:10+08:00</updated>
+ <updated>2018-07-26T11:40:24+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -3289,7 +3289,7 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
    <id>http://www.luzexi.com/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/26/JaveScript的奇葩写法规则</id>
    <content type="html">&lt;h1&gt;JaveScript的奇葩写法规则&lt;/h1&gt;
 
-&lt;h3&gt;=&amp;gt; 箭头函数&lt;/h3&gt;
+&lt;h3&gt;① =&amp;gt; 箭头函数&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    两个箭头同时使用 arg1 =&amp;gt; arg2 =&amp;gt;{return xxx;}
     可以理解为
     function( arg1 )
@@ -3304,94 +3304,84 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 
 ===
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;... 剩余数据&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;######数组中的剩余数据
+&lt;h3&gt;② ... 剩余数据&lt;/h3&gt;
 
-    [a, b, ...rest] = [10, 20, 30, 40, 50];
+&lt;h6&gt;数组中的剩余数据&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    [a, b, ...rest] = [10, 20, 30, 40, 50];
     console.log(a); // 10
     console.log(b); // 20
     console.log(rest); // [30, 40, 50]
-
-######对象中的剩余数据
-
-    ({a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40});
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;对象中的剩余数据&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    ({a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40});
     console.log(a); // 10
     console.log(b); // 20
     console.log(rest); // {c: 30, d: 40}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;[] 数组分配赋值用法&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;######数组分配1
+&lt;h3&gt;③ [] 数组分配赋值用法&lt;/h3&gt;
 
-    var x = [1, 2, 3, 4, 5];
+&lt;h6&gt;数组分配1&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var x = [1, 2, 3, 4, 5];
     var [y, z] = x;
     console.log(y); // 1
     console.log(z); // 2
-
-######数组分配2
-
-    var foo = [&amp;#39;one&amp;#39;, &amp;#39;two&amp;#39;, &amp;#39;three&amp;#39;];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;数组分配2&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var foo = [&amp;#39;one&amp;#39;, &amp;#39;two&amp;#39;, &amp;#39;three&amp;#39;];
     var [one, two, three] = foo;
     console.log(one); // &amp;quot;one&amp;quot;
     console.log(two); // &amp;quot;two&amp;quot;
     console.log(three); // &amp;quot;three&amp;quot;
-
-######数组赋值默认值用法
-
-    var a, b;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;数组赋值默认值用法&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var a, b;
     [a=5, b=7] = [1];
     console.log(a); // 1
     console.log(b); // 7
-
-######用数组做变量置换
-
-    var a = 1;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;用数组做变量置换&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var a = 1;
     var b = 3;
     [a, b] = [b, a];
     console.log(a); // 3
     console.log(b); // 1
-
-######省略赋值用法
-
-    var [a, ...b] = [1, 2, 3];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;省略赋值用法&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var [a, ...b] = [1, 2, 3];
     console.log(a); // 1
     console.log(b); // [2, 3]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;{} 对象分配用法&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;######对象分配赋值
+&lt;h3&gt;④ {} 对象分配用法&lt;/h3&gt;
 
-    var o = {p: 42, q: true};
+&lt;h6&gt;对象分配赋值&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var o = {p: 42, q: true};
     var {p, q} = o;
     console.log(p); // 42
     console.log(q); // true
-
-######默认值用法
-
-    var {a = 10, b = 5} = {a: 3};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;默认值用法&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var {a = 10, b = 5} = {a: 3};
     console.log(a); // 3
     console.log(b); // 5
-
-######指定key赋值+默认值
-
-    var {a:aa = 10, b:bb = 5} = {a: 3};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;指定key赋值+默认值&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var {a:aa = 10, b:bb = 5} = {a: 3};
     console.log(aa); // 3
     console.log(bb); // 5
-
-######指定属性key解析赋值
-
-    let key = &amp;#39;z&amp;#39;;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;指定属性key解析赋值&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    let key = &amp;#39;z&amp;#39;;
     let {[key]: foo} = {z: &amp;#39;bar&amp;#39;};
     console.log(foo); // &amp;quot;bar&amp;quot;
-
-######对象中剩余赋值法
-
-    let {a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;对象中剩余赋值法&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    let {a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40}
     a; // 10 
     b; // 20 
     rest; // { c: 30, d: 40 }
-
-######弱变量定义与赋值
-
-    const foo = { &amp;#39;fizz-buzz&amp;#39;: true };
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;弱变量定义与赋值&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    const foo = { &amp;#39;fizz-buzz&amp;#39;: true };
     const { &amp;#39;fizz-buzz&amp;#39;: fizzBuzz } = foo;
     console.log(fizzBuzz); // &amp;quot;true&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -3416,40 +3406,36 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 &lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
-&lt;h3&gt;Object.assign() 合并对象&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;###### 将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）
+&lt;h3&gt;⑤ Object.assign() 合并对象&lt;/h3&gt;
 
-    var target = { a: 1 };
+&lt;h6&gt;将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var target = { a: 1 };
     var source1 = { b: 2 };
     var source2 = { c: 3 };
     Object.assign(target, source1, source2);
     target // {a:1, b:2, c:3}
-
-###### 如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性
-
-    var target = { a: 1, b: 1 };
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var target = { a: 1, b: 1 };
     var source1 = { b: 2, c: 2 };
     var source2 = { c: 3 };
     Object.assign(target, source1, source2);
     target // {a:1, b:2, c:3}
-
-###### Object.assign方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。
-
-    var obj1 = {a: {b: 1}};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;Object.assign方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var obj1 = {a: {b: 1}};
     var obj2 = Object.assign({}, obj1);
     obj1.a.b = 2;
     obj2.a.b // 2
-
-###### 对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。
-
-    var target = { a: { b: &amp;#39;c&amp;#39;, d: &amp;#39;e&amp;#39; } }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    var target = { a: { b: &amp;#39;c&amp;#39;, d: &amp;#39;e&amp;#39; } }
     var source = { a: { b: &amp;#39;hello&amp;#39; } }
     Object.assign(target, source)
     // { a: { b: &amp;#39;hello&amp;#39; } }
-
-###### Object.assign 常见用途
-
-    为对象添加属性
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;Object.assign 常见用途&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    为对象添加属性
     class Point {
         constructor(x, y) {
             Object.assign(this, {x, y});
@@ -3490,7 +3476,7 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
         let options = Object.assign({}, DEFAULTS, options);
     }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;(function(){})(); 函数function后面跟()括号&lt;/h3&gt;
+&lt;h3&gt;⑥ (function(){})(); 函数function后面跟()括号&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    举个例子:
 
     (function(p1,p2){alert(p1+p2);})(1,2);
@@ -3512,7 +3498,7 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 
     3.可看做线程安全.
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;!function(){}(); 函数function前面加!感叹号&lt;/h3&gt;
+&lt;h3&gt;⑦ !function(){}(); 函数function前面加!感叹号&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    如果我们尝试为一个“定义函数”末尾加上()，解析器是无法理解的。
 
     function msg(){
