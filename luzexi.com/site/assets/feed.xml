@@ -385,17 +385,59 @@
 
 &lt;p&gt;&lt;img src=&quot;/assets/book/4/ugui3.png&quot; alt=&quot;ugui-core&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;从图中可以看出，由文件夹拆分的模块有，Culling, Layout, MaterialModifiers, SpecializedCollections, Utility, VertexModifiers，这几个模块很容易看出来是什么作用.&lt;/p&gt;
+&lt;p&gt;从图中可以看出，由文件夹拆分的模块有，Culling, Layout, MaterialModifiers, SpecializedCollections, Utility, VertexModifiers，我们下面就先来分析下这几个工具模块.&lt;/p&gt;
 
 &lt;h3&gt;Culling文件夹&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/book/4/ugui4.png&quot; alt=&quot;ugui-core&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;Culling里都是对模型裁剪的工具类，大都用在 Mask 遮罩上。&lt;/p&gt;
+&lt;p&gt;Culling 里是对模型裁剪的工具类，大都用在 Mask 遮罩上，因为只有 Mask 才需要裁剪。&lt;/p&gt;
 
-&lt;p&gt;里面四个文件，其中一个是静态类，一个是接口类，每个文件都只有不超过50行的代码。&lt;/p&gt;
+&lt;p&gt;里面四个文件，其中一个是静态类，一个是接口类。&lt;/p&gt;
 
-&lt;p&gt;看了下里面的内容，基本都是辅助工具函数或者接口定义函数，所以认定为Culling 文件夹里的都是裁剪用的工具函数。&lt;/p&gt;
+&lt;p&gt;代码虽然不多，但有2个函数比较重要，如下：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rect&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FindCullAndClipWorldRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RectMask2D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectMaskParents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;validRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rectMaskParents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;validRect&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Rect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compoundRect&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectMaskParents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;canvasRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectMaskParents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;compoundRect&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RectIntersect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compoundRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectMaskParents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;canvasRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cull&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compoundRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compoundRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;validRect&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Rect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compoundRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compoundRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.0f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compoundRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compoundRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compoundRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compoundRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.0f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;validRect&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Rect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;point1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rect&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;RectIntersect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Rect&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rect&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xMin&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Mathf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xMax&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Mathf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yMin&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Mathf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yMax&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Mathf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xMax&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xMin&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yMax&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yMin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Rect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xMin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yMin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xMax&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xMin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yMax&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yMin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Rect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;第一个函数的意义是，当有很多 RectMask2D 重叠时，计算出重叠部分。&lt;/p&gt;
+
+&lt;p&gt;第二个函数的意义是，计算两个矩阵的重叠部分。&lt;/p&gt;
+
+&lt;p&gt;他们都是静态函数，所以视为工具类。&lt;/p&gt;
 
 &lt;h3&gt;Layout文件夹&lt;/h3&gt;
 
@@ -403,15 +445,13 @@
 
 &lt;p&gt;从图中文件夹结构可以看出，Layout 主要做的都是布局方面的事，横向布局，纵向布局，方格布局等等。&lt;/p&gt;
 
-&lt;p&gt;总共12个文件，有9个带有 Layout 字样，这些带有 Layout 字样的文件或者类，都是处理布局的。&lt;/p&gt;
+&lt;p&gt;总共12个文件，有9个带有 Layout 字样，都是处理布局的。&lt;/p&gt;
 
 &lt;p&gt;除了处理布局类意外，其余3个文件，CanvasScaler，AspectRatioFitter，ContentSizeFitter 是调整自适应的。&lt;/p&gt;
 
-&lt;p&gt;而且ContentSizeFitter，AspectRatioFitter 类在核心代码中并没有被用到，它们是独立存在的。&lt;/p&gt;
-
 &lt;p&gt;ContentSizeFitter，AspectRatioFitter 从都带有 Fitter 字样可以了解到，它们的功能都是处理自适应的。&lt;/p&gt;
 
-&lt;p&gt;看了两者代码后明白它们做的事情是按指定规则，指定比例缩放长宽。代码量都在100行多点。&lt;/p&gt;
+&lt;p&gt;ContentSizeFitter 是处理内容自适应的， AspectRatioFitter 是处理朝向自适应的，以长度为准，以宽度为准，以父节点为准，以外层父节点为准，这四种类型的自适应。&lt;/p&gt;
 
 &lt;p&gt;相对于它们两个，CanvasScaler 做的功能更重要点，它操作Canvas 画布针对不同屏幕进行自适应调整。&lt;/p&gt;
 
@@ -454,7 +494,7 @@
     &lt;span class=&quot;n&quot;&gt;SetReferencePixelsPerUnit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_ReferencePixelsPerUnit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;从代码中可以看出不同 ScreenMathMode 模式下，对屏幕的适应算法的不同。&lt;/p&gt;
+&lt;p&gt;不同 ScreenMathMode 模式下 CanvasScaler 对屏幕的适应算法，优先匹配长或宽的，最小化固定拉伸的，以及最大化固定拉伸三种算法。&lt;/p&gt;
 
 &lt;h3&gt;MaterialModifiers, SpecializedCollections, Utility&lt;/h3&gt;
 
@@ -462,7 +502,15 @@
 
 &lt;p&gt;&lt;img src=&quot;/assets/book/4/ugui6.png&quot; alt=&quot;ugui-core&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;这三块相对比较简单。IMaterialModifier是一个接口类为Mask 遮罩修改Material提供接口。IndexedSet是一个容器。ListPool是List对象池。ObjectPool是对象池。VertexHelper 是用来存储生成 Mesh 网格需要的所有数据，不过 VertexHelper 只负责存储，不负责计算和生成。&lt;/p&gt;
+&lt;p&gt;这三块相对代码量少，但并不是说代码量少就不重要。&lt;/p&gt;
+
+&lt;p&gt;IMaterialModifier 是一个接口类为Mask 遮罩修改Material提供接口。&lt;/p&gt;
+
+&lt;p&gt;IndexedSet是一个容器，在很多核心代码上都有使用，它加速了移除元素的速度，加速了包含判断。&lt;/p&gt;
+
+&lt;p&gt;ListPool是List对象池，ObjectPool是对象池，很多狠心代码上用到了它们，它们让内存使用更加高效。&lt;/p&gt;
+
+&lt;p&gt;VertexHelper 是用来存储生成 Mesh 网格需要的所有数据，在Mesh生成的过程中使用频率非常高，不过 VertexHelper 只负责存储 Mesh 相关数据，不负责计算和生成 Mesh。&lt;/p&gt;
 
 &lt;h3&gt;VertexModifiers&lt;/h3&gt;
 
@@ -505,11 +553,11 @@
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;此函数作用是，在原有的顶点基础上，加入新的顶点，并且这些新的顶点是在原来的顶点的上修改了位置的偏移量和顶点颜色，使得在原来的图形基础上，描绘一些新的样式。比如外描边或者阴影。&lt;/p&gt;
+&lt;p&gt;此函数作用是，在原有的Mesh顶点基础上，加入新的顶点，这些新的顶点被赋值了原有的顶点数据，并在此基础上修改了位置和颜色，使得在原来的图形基础上，渲染出一些新的样式。比如外描边或者阴影。&lt;/p&gt;
 
 &lt;h3&gt;核心渲染类&lt;/h3&gt;
 
-&lt;p&gt;上面讲解完了这些用来辅助核心渲染的模块之后，我们来看看核心渲染类的奥秘所在。&lt;/p&gt;
+&lt;p&gt;现在我们来看看核心渲染类的奥秘所在。&lt;/p&gt;
 
 &lt;p&gt;我们常用的组件 Image，RawImage，Mask，RectMask2D，Text，InputField 中，Image，RawImage，Text 都是继承了 MaskableGraphic ，而 MaskableGraphic 又继承自 Graphic 类，所以核心最底层的类就是 Graphic 类。另外 CanvasUpdateRegistry 是存储和管理所有可绘制元素的管理类是哥蛮重要的类，我们下面会提到。&lt;/p&gt;
 
@@ -557,11 +605,15 @@
         &lt;span class=&quot;n&quot;&gt;m_OnDirtyMaterialCallback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;这是 Graphic 通知 LayoutRebuilder 布局管理类进行重新布局，以及通知 CanvasUpdateRegistry 绘制物体管理进行重新构建Mesh网格，而 LayoutRebuilder 最终还是通过 CanvasUpdateRegistry 来实现重新布局的。所以重构物体管理类 CanvasUpdateRegistry 很重要。他掌握着重构的生死。&lt;/p&gt;
+&lt;p&gt;Graphic 通知 LayoutRebuilder 布局管理类进行重新布局，以及通知 CanvasUpdateRegistry 绘制物体管理进行重新构建Mesh网格，&lt;/p&gt;
 
-&lt;p&gt;CanvasUpdateRegistry 被通知重新绘制后，并没有立即重新重构，而是将需要重构的原件加入到容器中，等待下一帧时统一重构。&lt;/p&gt;
+&lt;p&gt;而 LayoutRebuilder 源码中最终还是通过 CanvasUpdateRegistry 来实现重新布局的。&lt;/p&gt;
 
-&lt;p&gt;注意，CanvasUpdateRegistry 只负责重构Mesh网格，并不负责渲染和合并。另外，所有重构完毕的Mesh都将被移出重构列表。&lt;/p&gt;
+&lt;p&gt;所以重构Mesh的管理类 CanvasUpdateRegistry 比较关键，他掌握着Mesh重构的生死。&lt;/p&gt;
+
+&lt;p&gt;CanvasUpdateRegistry 被通知重新重构Mesh后，并没有立即重新构建，而是将需要重构的元件数据加入到容器中，等待下一帧时统一重构。&lt;/p&gt;
+
+&lt;p&gt;注意，CanvasUpdateRegistry 只负责重构Mesh网格，并不负责渲染和合并。&lt;/p&gt;
 
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
@@ -607,22 +659,22 @@
     &lt;span class=&quot;n&quot;&gt;canvasRenderer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SetMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;workerMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;此段代码是 Graphic 创建Mesh的部分，先创建自己的Mesh，然后调用所有需要修改Mesh的修改者进行修改后放入 CanvasRenderer 。&lt;/p&gt;
+&lt;p&gt;此段代码是 Graphic 构建 Mesh 的部分，先创建自己的Mesh(OnPopulateMesh)，然后调用所有需要修改 Mesh 的修改者(IMeshModifier)进行修改，后放入 CanvasRenderer 。&lt;/p&gt;
 
-&lt;p&gt;CanvasRenderer 是每个绘制元素都必须有的组件，它时画布渲染的连接组件，通过 CanvasRenderer 我们才能把网格绘制到 Canvas 画布上去。&lt;/p&gt;
+&lt;p&gt;CanvasRenderer 是每个绘制元素都必须有的组件，它是画布渲染的连接组件，通过 CanvasRenderer 我们才能把网格绘制到 Canvas 画布上去。&lt;/p&gt;
 
-&lt;p&gt;这里使用静态的 s&lt;em&gt;VertexHelper 是为了节省内存和CPU消耗，所有Graphic 元素都要用的临时变量，设置为静态。还有 workerMesh 也是静态变量，目的和 s&lt;/em&gt;VertexHelper 一样，都是为了节省临时变量的内存消耗和CPU消耗，因为 Graphic 很多所以这么做是需要的。&lt;/p&gt;
+&lt;p&gt;这里使用静态的 s&lt;em&gt;VertexHelper 是为了节省内存和CPU消耗，所有 Graphic 元素都要用的临时变量设置为静态。还有 workerMesh 也是静态变量，目的和 s&lt;/em&gt;VertexHelper 一样，都是为了节省临时变量的内存消耗和CPU消耗，因为 Graphic 数量很多，这么能大幅提高内存和CPU的使用效率。&lt;/p&gt;
 
 &lt;p&gt;Image, RawImage, Text 都override重写了 OnPopulateMesh 函数。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    protected override void OnPopulateMesh(VertexHelper toFill)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;原因是他们需要有自己自定义的网格样式，已达到构建不同类型的网格。&lt;/p&gt;
+&lt;p&gt;他们需要有自己自定义的网格样式，已达到构建不同类型的网格。&lt;/p&gt;
 
-&lt;p&gt;看样子CanvasRenderer 和 Canvas 才是合并Mesh网格的关键，但 CanvasRenderer 和 Canvas 并没有开源出来。&lt;/p&gt;
+&lt;p&gt;看样子 CanvasRenderer 和 Canvas 才是合并Mesh网格的关键，但 CanvasRenderer 和 Canvas 并没有开源出来。并且从源码上看，他们是 C++ 编写的，从另外dll引用进来。&lt;/p&gt;
 
-&lt;p&gt;我试图通过查找反编译的代码查看相关内容，也没有找到，原因是Unity3D加强了反编译的防护工作，我们无法完整的得到核心的代码。&lt;/p&gt;
+&lt;p&gt;我试图通过查找反编译的代码查看相关内容，也没有找到，我们无法完整的得到核心的代码。但仔细一想，也差不多能想个大概。合并部分无非就是每次重构时获取 Canvas 下面所有的 CanvasRenderer 实例，将它们的 Mesh 合并起来，其实也没有什么可变化的操作。&lt;/p&gt;
 
-&lt;p&gt;但仔细一想，也差不多能想个大概。合并部分无非就是每次重构时获取 Canvas 下面所有的 CanvasRenderer 实例，将它们的 Mesh 合并起来，其实也没有什么可变化的操作。关键还是要看，如何在重构Mesh时，减少重构数量和次数。&lt;/p&gt;
+&lt;p&gt;关键还是要看，如何减少重构次数，以及提高内存，CPU使用效率。&lt;/p&gt;
 
 &lt;hr&gt;
 
@@ -697,9 +749,9 @@
         &lt;span class=&quot;n&quot;&gt;canvasRenderer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DisableRectClipping&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;最后操作是在 CanvasRenderer 中进行的。前面说过 CanvasRenderer 是被反编译闭屏的，我们无法得知内容。但是我们可以想象，在裁切时的多做，计算两个四边形的相交点，再组合成裁切后的多边形，差不多是一个数学计算的过程。&lt;/p&gt;
+&lt;p&gt;最后操作是在 CanvasRenderer 中进行的。前面说过 CanvasRenderer 是我们无法得知内容。但是我们可以想象，在裁切时的多做，计算两个四边形的相交点，再组合成裁切后的多边形，差不多是一个数学计算的过程。&lt;/p&gt;
 
-&lt;h3&gt;至此我们把 UGUI 的核心代码部分都剖析完毕了。其实也并没有什么高深的算法，或者技术。所有核心部分都围绕着，如何构建Mesh，如何重构Mesh，以及如何裁切的问题上。倘若想仔细阅读Unity3D源码，可以去如下地址获得。&lt;/h3&gt;
+&lt;h3&gt;至此我们把 UGUI 的核心代码部分都剖析完毕。其实也并没有什么高深的算法，或者技术。所有核心部分都围绕着，如何构建Mesh，如何重构Mesh，以及如何裁切的问题上。关键还是在于，如何减少重构次数，以及提高内存和CPU的使用效率。&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://bitbucket.org/Unity-Technologies/ui/downloads/?tab=downloads&quot;&gt;UGUI源码地址&lt;/a&gt;&lt;/p&gt;
 
@@ -1159,7 +1211,7 @@
 
 &lt;p&gt;所以 EventSystem 是主线逻辑，是整个事件模块的主心骨。架构师在架构时已经将整个事件层各自的职能拆分的很清楚，所以我们看起来也并没有那么难。&lt;/p&gt;
 
-&lt;p&gt;比如说输入监测已经由输入事件捕捉模块完成，碰撞检测由碰撞检测模块完成，事件的数据类都有各自的定义，EventSystem 要做的就只是把它们拼装起来成为主逻辑块。&lt;/p&gt;
+&lt;p&gt;输入监测已经由输入事件捕捉模块完成，碰撞检测由碰撞检测模块完成，事件的数据类都有各自的定义，EventSystem 要做的就只是把它们拼装起来成为主逻辑块。&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://bitbucket.org/Unity-Technologies/ui/downloads/?tab=downloads&quot;&gt;UGUI源码地址&lt;/a&gt;&lt;/p&gt;
 </description>
