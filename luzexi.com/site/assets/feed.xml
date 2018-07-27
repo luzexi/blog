@@ -9,17 +9,14 @@
             <item>
                <title>《Unity3D高级编程之进阶主程》第四章，UI(四) - UGUI核心源码剖析</title>
                <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html&quot;&gt;UI(二)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;UGUI的原理，以及组件使用详解。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI的原理，以及组件使用详解。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html&quot;&gt;UI(三)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;UGUI源码中输入事件模块源码剖析。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI源码中输入事件模块源码剖析。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;此篇我们来讲解下，UGUI渲染部分的核心源码。&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
@@ -395,21 +392,17 @@
             <item>
                <title>《Unity3D高级编程之进阶主程》第四章，UI(六) - 如何架构UI框架</title>
                <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html&quot;&gt;UI(二)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;UGUI的原理，以及组件使用详解。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI的原理，以及组件使用详解。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html&quot;&gt;UI(三)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;UGUI源码中输入事件模块源码剖析。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI源码中输入事件模块源码剖析。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html&quot;&gt;UI(四)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;UGUI渲染核心源码剖析&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI渲染核心源码剖析
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这篇我们来讲讲，如何在Unity3D游戏项目中架构UI框架。&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
@@ -568,13 +561,11 @@
             <item>
                <title>《Unity3D高级编程之进阶主程》第四章，UI(三) - 剖析UGUI源码中的输入与事件模块</title>
                <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html&quot;&gt;UI(二)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;UGUI的原理，以及组件使用详解。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI的原理，以及组件使用详解。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;此篇我们来对UGUI的源码中的输入事件与模块进行剖析。&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
@@ -767,9 +758,8 @@
             <item>
                <title>《Unity3D高级编程之进阶主程》第四章，UI(二) - UGUI的原理及组件使用详解</title>
                <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;前文对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    前文对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这篇我们来讲讲，UGUI的原理，以及UGUI的组件使用详解。&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
@@ -1014,13 +1004,11 @@
             <item>
                <title>《Unity3D高级编程之进阶主程》第二章，架构(三) - 架构的误区，如何做前端架构，以及如何架构Unity3D项目</title>
                <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://www.luzexi.com/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html&quot;&gt;架构(一)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;对软件系统架构进行一个彻头彻尾的解释。什么是软件系统架构，为什么需要软件系统架构，以及什么样的软件系统架构才是好的。还包括介绍了，抽象构建架构的思维方式。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对软件系统架构进行一个彻头彻尾的解释。什么是软件系统架构，为什么需要软件系统架构，以及什么样的软件系统架构才是好的。还包括介绍了，抽象构建架构的思维方式。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;前文回顾 &lt;a href=&quot;http://www.luzexi.com/2018/07/24/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%842.html&quot;&gt;架构(二)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;对软件系统架构抽象的思维方式进行了一番详细介绍，包括了分层，分治，演化。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对软件系统架构抽象的思维方式进行了一番详细介绍，包括了分层，分治，演化。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这篇我们将来具体介绍下，架构的误区，如何做前端架构，以及如何架构Unity3D项目。&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
@@ -1139,9 +1127,8 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
             <item>
                <title>《Unity3D高级编程之进阶主程》第二章，架构(二) - 软件系统架构思维方式</title>
                <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://www.luzexi.com/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html&quot;&gt;架构，第一篇&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;前面对软件系统架构进行一个彻头彻尾的解释。什么是软件系统架构，为什么需要软件系统架构，以及什么样的软件系统架构才是好的。还包括介绍了，抽象构建架构的思维方式。&lt;/p&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    前面对软件系统架构进行一个彻头彻尾的解释。什么是软件系统架构，为什么需要软件系统架构，以及什么样的软件系统架构才是好的。还包括介绍了，抽象构建架构的思维方式。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这篇我们来讲讲，软件系统架构思维方式有哪些？&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
