@@ -244,12 +244,6 @@
     }
 </script>
 
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
-
 <p>那么多语言部分怎么处理？</p>
 
 <p>简单的处理方式就是做多个表，每个表一个语言。获取方式可以根据不同语言来获取，比如</p>
@@ -303,10 +297,19 @@ Win,赢了,Win, 勝った, 이기다
   <!-- <li>
 
 <script type="text/javascript">
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = "u2514412";
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
 
 </li> -->
 </div>
@@ -320,10 +323,19 @@ Win,赢了,Win, 勝った, 이기다
 
 
 <script type="text/javascript">
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = "u2514412";
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
 
 
 

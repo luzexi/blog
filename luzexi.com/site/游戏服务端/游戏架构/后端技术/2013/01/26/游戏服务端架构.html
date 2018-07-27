@@ -205,12 +205,6 @@
     }
 </script>
 
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
-
 <p>服务器结构探讨 -- 最简单的结构</p>
 
 <p>所谓服务器结构，也就是如何将服务器各部分合理地安排，以实现最初的功能需求。所以，结构本无所谓正确与错误；当然，优秀的结构更有助于系统的搭建，对系统的可扩展性及可维护性也有更大的帮助。</p>
@@ -247,12 +241,6 @@ client
         document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
     }
 </script>
-
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <p>早期的游戏大都采用的是这种结构，有些游戏在实现时采用了一些技术手段使得在切换游戏服时不需要再次验证帐号，但整体结构还是未做改变。</p>
 
@@ -291,12 +279,6 @@ client
     }
 </script>
 
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
-
 <p>对于负载均衡来说，已有了成熟的解决方案。一般最常用，也最简单部署的应该是基于DNS的负载均衡系统了，其通过在DNS中为一个域名配置多个IP地址 来实现。最新的DNS服务已实现了根据服务器系统状态来实现的动态负载均衡，也就是实现了真正意义上的负载均衡，这样也就有效地解决了当某台登录服当机 后，DNS服务器不能立即做出反应的问题。当然，如果找不到这样的解决方案，自己从头打造一个也并不难。而且，通过DNS来实现的负载均衡已经包含了所做 的修改对登录服及客户端的透明。</p>
 
 <p>而对于数据库的应用，在这种结构下，登录服及游戏世界服都会需要连接数据库。从数据库服务器的部署上来说，可以将帐号和角色数据都放在一个中心数据库中，也可分为两个不同的库分别来处理，基到从物理上分到两台不同的服务器上去也行。</p>
@@ -334,12 +316,6 @@ client
         document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
     }
 </script>
-
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <p>对于现在大多数MMORPG来说，游戏服务器要处理的基本逻辑有移动、聊天、技能、物品、任务和生物等，另外还有地图管理与消息广播来对其他高级功能做支撑。如纵队、好友、公会、战场和副本等，这些都是通过基本逻辑功能组合或扩展而成。</p>
 
@@ -386,12 +362,6 @@ client
         document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
     }
 </script>
-
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <p>这种结构在实际的部署中也遇到了一些挑战。对于一般的MMORPG服务器来说，单台服务器的承载量平均在2000左右，如果你的服务器很不幸地只能带 1000人，没关系，不少游戏都是如此；如果你的服务器上跑了3000多玩家依然比较流畅，那你可以自豪地告诉你的策划，多设计些大量消耗服务器资源的玩 法吧，比如大型国战、公会战争等。</p>
 
@@ -445,12 +415,6 @@ Client
     }
 </script>
 
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
-
 <p>一般来说，当某一部分能力达不到我们的要求时，最简单的解决方法就是在此多投入一点资源。既然想要更多的连接数，那就再加一台网关服务器吧。新增加了网 关服后需要在大区服上做相应的支持，或者再简单点，有一台主要的网关服，当其负载较高时，主动将新到达的连接重定向到其他网关服上。</p>
 
 <p>而对于游戏服来说，有一台还是多台网关服是没有什么区别的。每个代表客户端玩家的对象内部都保留一个代表其连接的对象，消息广播时要求每个玩家对象使用 自己的连接对象发送数据即可，至于连接是在什么地方，那是完全透明的。当然，这只是一种简单的实现，也是普通使用的一种方案，如果后期想对消息广播做一些 优化的话，那可能才需要多考虑一下。</p>
@@ -493,12 +457,6 @@ Client
         document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
     }
 </script>
-
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <p>服务器结构探讨 -- 一点杂谈</p>
 
@@ -543,12 +501,6 @@ Client
     }
 </script>
 
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
-
 <p>这个方法存在的安全隐患实在太大，明文的密码传输太容易被截获了。那我们试着在传输之前先加一下密，为了服务器能进行密码比较，我们应该采用一个可逆的 加密算法，在服务器端把这个加密后的字串还原为原始的明文密码，然后与数据库密码进行比较。既然是一个可逆的过程，那外挂制作者总有办法知道我们的加密过 程，所以，这个方法仍不够安全。</p>
 
 <p>哦，如果我们只 是希望密码不可能被还原出来，那还不容易吗，使用一个不可逆的散列算法就行了。用户在登录时发送给服务器的是明文的帐号和经散列后的不可逆密码串，服务器 取出密码后也用同样的算法进行散列后再进行比较。比如，我们就用使用最广泛的md5算法吧。噢，不要管那个王小云的什么论文，如果我真有那么好的运气，早 中500w了，还用在这考虑该死的服务器设计吗？</p>
@@ -583,12 +535,6 @@ Client
         document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
     }
 </script>
-
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <p>由于我在读技术文章时最不喜看到的就是大段大段的代码，特别是那些直接Ctrl+C再Ctrl+V后未做任何修改的代码，用句时髦的话说，一点技术含量 都没有！所以在我们今后所要讨论的内容中，尽量会避免出现直接的代码，在有些地方确实需要代码来表述时，也将会选择使用伪码。</p>
 
@@ -626,12 +572,6 @@ Client
         document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
     }
 </script>
-
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <p>正如我们曾讨论过的，为了游戏主逻辑循环的流畅运行，所有比较耗时的IO操作都会分享到单独的线程中去做，如网络IO，数据库IO和日志IO等。当然，也有把这些分享到单独的进程中去做的。</p>
 
@@ -674,12 +614,6 @@ Message* getMessage();
         document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
     }
 </script>
-
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
 <p>服务器公共组件实现 -- 消息队列</p>
 
@@ -726,10 +660,19 @@ Message* getMessage();
   <!-- <li>
 
 <script type="text/javascript">
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = "u2514412";
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
 
 </li> -->
 </div>
@@ -743,10 +686,19 @@ Message* getMessage();
 
 
 <script type="text/javascript">
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = "u2514412";
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
 
 
 

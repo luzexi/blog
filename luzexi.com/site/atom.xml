@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-27T17:59:53+08:00</updated>
+ <updated>2018-07-27T18:04:54+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -106,12 +106,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;h3&gt;⑤ UI字体拆分。&lt;/h3&gt;
 
 &lt;p&gt;为什么要拆分UI字体？&lt;/p&gt;
@@ -167,12 +161,6 @@
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;⑦ UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。&lt;/h3&gt;
 
@@ -312,12 +300,6 @@
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;③ UI预加载。&lt;/h3&gt;
 
@@ -639,12 +621,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;hr&gt;
 
 &lt;p&gt;Graphic 另一个重要的核心代码如下：&lt;/p&gt;
@@ -901,12 +877,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;h3&gt;Ⅳ.自定义组件。&lt;/h3&gt;
 
 &lt;p&gt;除了NGUI和UGUI本身的组件外，我们自己的自定义组件是必不可少的，特别是游戏项目，无论大小，都需要有自己的自定义组件，自定义组件不仅能让程序员在写逻辑时快速上手，满足项目的设计需求，而且也能起到对UI优化的作用，尤其在元素多的组件内。&lt;/p&gt;
@@ -1077,12 +1047,6 @@
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h6&gt;输入事件捕获模块源码&lt;/h6&gt;
 
@@ -1291,12 +1255,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;h6&gt;Canvas Scaler&lt;/h6&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    这是个缩放比例组件，用来指定画布中元素的比例大小。
 
@@ -1439,12 +1397,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;好了，以上列出的是从几个方面对NGUI和UGUI的比较。&lt;/p&gt;
 
 &lt;ul&gt;
@@ -1558,12 +1510,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;其他层级部分的框架也是同样的方式进行分解，用分而治之的方法逐个攻破。这里简单描述下各个模块的拆分。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;数据表--从XLS导为2进制文件还是CSV或其他格式。
 
@@ -1661,12 +1607,6 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;演化思维&lt;/h3&gt;
 
@@ -1794,12 +1734,6 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;那么为什么需要架构呢？肯定有人说大规模开发，没有架构，规范就没了，大家各做各的，肯定会乱啊。我想说，这种说法只是其一，即使一个人开发时，也需要架构。架构既承载了你对这个项目的抽象思维构建，也同时帮助了你整理程序。&lt;/p&gt;
 
@@ -2121,12 +2055,6 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;其他接口相对比较简单了，&lt;/p&gt;
 
 &lt;p&gt;比如 TryGetValue&lt;/p&gt;
@@ -2333,12 +2261,6 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;那么多语言部分怎么处理？&lt;/p&gt;
 
 &lt;p&gt;简单的处理方式就是做多个表，每个表一个语言。获取方式可以根据不同语言来获取，比如&lt;/p&gt;
@@ -2429,12 +2351,6 @@ Win,赢了,Win, 勝った, 이기다
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;再深入一点，每次策划设计人员增加Excel表时，都需要更程序员打招呼说，你帮我把这个Excel表加入到自动化和一键XXX的功能里去。程序员就需要腾出时间和精力来为策划设计人员服务。我们把这块移出去，策划设计人员能够可以自定义导出哪个Excel文件，以及Excel文件里的哪个工作簿。这样策划可以自主选择和自主增加表的导出内容。&lt;/p&gt;
 
@@ -2602,12 +2518,6 @@ Win,赢了,Win, 勝った, 이기다
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;txt文本数据&lt;/h3&gt;
 
@@ -2835,12 +2745,6 @@ Win,赢了,Win, 勝った, 이기다
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;我们再来快速的看看其他常用接口的源码是如何实现的。&lt;/h3&gt;
 
@@ -3182,12 +3086,6 @@ Win,赢了,Win, 勝った, 이기다
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;h3&gt;关于营销&lt;/h3&gt;
 
 &lt;p&gt;从商品在卖出去到卖完的过程中，本身就需要一个自我完善的过程，其实就是从无到有过程。&lt;/p&gt;
@@ -3308,12 +3206,6 @@ Win,赢了,Win, 勝った, 이기다
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;产品的品质是关键中的关键，好的品质才能衬托出大的潜力，加上精准的营销，让广告效应和传播效应深入人们的心里面，当人们有此类产品需求时，第一个想到的就是我们这个产品。而团队的配合和执行力，使得营销方案再锦上添花，爆款一触即发。所谓爆款都是天时地利人和的一种机遇，但没有品质，营销，团队三个因素，再好的机遇都会瞬间溜走。&lt;/p&gt;
 </content>
  </entry>
@@ -3377,12 +3269,6 @@ Win,赢了,Win, 勝った, 이기다
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;一。基本面扎实。 是最最重要的一点，也是所有买入的必要条件。所谓买好股做好人就是这个道理。只有买好的公司的股票才真正赚钱。投资股票要像投资实业那样脚踏实地才能真正赚到钱。否则所谓的炒作，最终都会将自己带入坟墓。&lt;/p&gt;
 
 &lt;p&gt;那么什么叫基本面扎实？&lt;/p&gt;
@@ -3421,12 +3307,6 @@ Win,赢了,Win, 勝った, 이기다
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;在熊市中，有两种风险，一种是底部还有底，二是破产。熊市中的风险就是人们的恐慌，所以底部下还有底部，因为人们不相信一切未来，只在乎当下的亏损。而破产很大一部分原因就是因为大家的谨慎导致资金面紧缺，最后可能由于债务或者资金链导致无法继续经营下去而破产。只有那种基本面扎实的，一心扑在行业里深耕拓展的企业才能最终活下来。也只有脚踏实地的企业，能在熊市中崛起。&lt;/p&gt;
 
@@ -3560,12 +3440,6 @@ Win,赢了,Win, 勝った, 이기다
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h2&gt;高级进阶之搜索与替换&lt;/h2&gt;
 
@@ -3703,12 +3577,6 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h5&gt;2.标签页多窗口&lt;/h5&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    :tabe &amp;lt;文件名&amp;gt;  在新标签页中打开指定的文件。
@@ -3889,12 +3757,6 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;h3&gt;文字被些字符包围,多重包围&lt;/h3&gt;
 
 &lt;p&gt;&amp;gt; 文字被些字符包围开始&lt;/p&gt;
@@ -4030,12 +3892,6 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;分割线&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    * * *
@@ -4203,12 +4059,6 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;h3&gt;⑤ Object.assign() 合并对象&lt;/h3&gt;
 
 &lt;h6&gt;将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）&lt;/h6&gt;
@@ -4356,12 +4206,6 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;从上面的分析来看，股市是不确定的，无法准确的预测，甚至有时模糊的预测都是错误的，只可以做一个5年或者10年或者20年后大概率发生的事，时间越久概率越大。人性恐惧导致了底部还有底。&lt;/p&gt;
 
@@ -4521,12 +4365,6 @@ http://www.meetup.com/Shanghai-Swimming-Meetup/&lt;/p&gt;
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;its really hard for me to install lib of mysql for ruby because i dont know which source of apt-get i should use. i installed
 5.5.47 mysql version but it tells me the lib of mysql is 5.5.37 and it is the newest version in source of apt-get which the installed is failed. i change some of them but still cant be install. i even download the mysql of source and make them and try to pick the lib to install but failed. finally i choose the nature source of aliyun to install the lib of mysql, its success. i think its my bad, because i dont believe the nature source of aliyun so i change it.&lt;/p&gt;
 
@@ -4544,12 +4382,6 @@ http://www.meetup.com/Shanghai-Swimming-Meetup/&lt;/p&gt;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;4.After i finished all, i open gitlab site and it works. Then pull one of the repositories and change some file and push them. It said something wrong in the gitlab so i cant push the commit. i check search the problem and find i have to reline the update file in every repositories&amp;#39;s hook. So i do it, but it still socks. A little git time later i find that redis is not able to visit, so i add the user which git use into redis group. So the redis&amp;#39;s problem is solved but still cant push. I feel something wrong in satellites but i actually dont how to fix. So i remove all of the gitlab except repositories and install gitlab again, then import the respositories by using:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;cd /home/git/gitlab/
@@ -4677,12 +4509,6 @@ DataManager是架构的大脑。它广泛使用RxJava操作去合并过滤转换
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;视图中的组件像Activity或Fragment会简单调用这个方法并订阅返回的Observable。一旦订阅结束，用Observable得到的不同的文章能直接加入到适配器去展示在RecyclerView或者类似地方。&lt;/p&gt;
 
 &lt;p&gt;文章最后一个元素是事件总线。事件总线允许我们广播那些发生在数据层上的事件，所以在视图层里的多种组件可以订阅这些事件。例如，在DataManager里的asignOut()方法可以推出一个事件当Observable完成时，然后在这个事件里被订阅的多种Activity就可以更换他们的UI来展示一个不在线的信号。&lt;/p&gt;
@@ -4735,12 +4561,6 @@ MVP为基础的架构&lt;/p&gt;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;为什么这个方法更好？&lt;/h3&gt;
 
@@ -4853,12 +4673,6 @@ MVP为基础的架构&lt;/p&gt;
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;h3&gt;脚本&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;1.你是否使用了好的算法？选择一个好的算法对工作收益来说比其他的调整会有更好的优化效果如果可能的话。
 注意最好的算法不总是那个最低平均复杂度的算法。对于小数据量来说，通常使用一个简单的低速算法比智能却带高初始化的算法要来的好。(例如可以用hash表或二叉树作为以名字存取的大型数据，但你可以使用一个简单链表和线性算法如果你存取小型数据的话。虽然dotnet的哈希表类在这种情况下已经选择了最佳的方式根据你的数据量大小。)
@@ -4925,12 +4739,6 @@ MVP为基础的架构&lt;/p&gt;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;源码中已将所有第三方库构建进slua里，并完成了android(x86,armv7),ios,mac,windows(x86,x64)这几个平台的测试。&lt;/p&gt;
 
@@ -5006,12 +4814,6 @@ MVP为基础的架构&lt;/p&gt;
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;1.首先找到dll解密入口。mono下/mono/metadata/image.c里mono&lt;em&gt;image&lt;/em&gt;open&lt;em&gt;from&lt;/em&gt;data&lt;em&gt;with&lt;/em&gt;name是关键方法，参数中的data是dll传入的数据。你要做的就是将它解密后传给datac，这个方法程序你必须看下，因为你要了解下解密程序放在哪才合适。&lt;/p&gt;
 
 &lt;p&gt;2.大部分dll都会通过mono&lt;em&gt;image&lt;/em&gt;open&lt;em&gt;from&lt;/em&gt;data&lt;em&gt;with&lt;/em&gt;name这个方法进行加载，但不是所有dll，例如mscorlib.dll和System.Core.dll就不会，可能还有其他dll，我并不确定还有哪些。所以你还是得辨别下哪些dll会通过这个方法，这样你才能确定哪个dll可以加密。如何判断data属于哪个dll呢，参数name就是data的路径名，name打印出来后就像:/data/app/com.xx.xx.apk/assets/bin/Data/Managed/xxx.dll 这样。&lt;/p&gt;
@@ -5053,12 +4855,6 @@ MVP为基础的架构&lt;/p&gt;
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;iframe src=&quot;/static-page/linux-env.html/index.html&quot; width=&quot;100%&quot; , height=&quot;1000&quot;&gt;
 &lt;/iframe&gt;
 
@@ -5094,12 +4890,6 @@ ngui和ugui切换方式有所不同，一个基于atlas一种基于Image，一�
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;3.程序在选择sd还是hd时，只要关注prefab名就可以了。prefab名可以后缀不一样，load时可以区分开来。&lt;/p&gt;
 
@@ -5171,12 +4961,6 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;Lua script (生成后的Lua文件示例)&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;-- this file is generated by program!&lt;/span&gt;
@@ -5250,12 +5034,6 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;这些都只是称述而已，那么如何将这些部分连起来呢。看下图：
 &lt;img class=&quot;alignnone size-full wp-image-501&quot; src=&quot;/assets/uploads/2015/03/客户端环境布局.jpg&quot; alt=&quot;客户端环境布局&quot; width=&quot;711&quot; height=&quot;486&quot; /&gt;能看明白吗，容我解释下(其实上面也有一部分称述)：&lt;/p&gt;
 
@@ -5314,12 +5092,6 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;7.以下是一些unity5比较有用的改善。没兴趣关注的就不提了。&lt;/p&gt;
 
@@ -5386,12 +5158,6 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;===================中级========================&lt;/p&gt;
 
@@ -5475,12 +5241,6 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;三、Webview网页按钮回调。&lt;/p&gt;
 
 &lt;p&gt;Webview网页按钮回调的功能对我们来说非常有用，所以这里细致讲下它是如何辨认并回调的。
@@ -5533,12 +5293,6 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;&lt;img class=&quot;alignnone size-full wp-image-433&quot; src=&quot;/assets/uploads/2014/10/10039783.jpg&quot; alt=&quot;10039783&quot; width=&quot;550&quot; height=&quot;240&quot; /&gt;&lt;/p&gt;
 
@@ -5594,12 +5348,6 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;7.行为树编辑器是行为树系统可用性的关键。我把行为树用目录结构的方式来实现，这样对于节点的增加，删除，切换，拖拽，体验都非常便捷。对于每个节点的编辑状态在选择该节点后会在编辑器的右下脚现实。编辑器还承载了保存，加载，以及对行为树的增加和删除，重命名的功能。如下图：&lt;/p&gt;
 
@@ -5658,12 +5406,6 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;关于html5游戏渠道:&lt;/p&gt;
 
@@ -5778,12 +5520,6 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;h4&gt;merge:&lt;/h4&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git merge server branch_name 合并server项目上branch_name分支
 
@@ -5874,12 +5610,6 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;3.拆分网络通信事件。将网络通信事件拆分为OnConnect , OnError , OnDisconnect , 这3个事件是最常见的通信事件。这3个事件也必须在主线程中调用，但这3个事件又不是以网络数据包为基础，所以需要在专门处理通信逻辑的类中加入3种状态start , error , disconnect.当网络通信层出现这三种事件时，将状态切过去（ps:而不是直接调用句柄）,然后再由专门处理通信逻辑的类在下一帧去调用对应的事件句柄。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;UnityEngine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -6070,12 +5800,6 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;资源导入内存的方式有几种：&lt;/p&gt;
 
 &lt;p&gt;1.从Resources文件夹中导入。这是阻塞加载最常见的方式，接口Resources.Load();&lt;/p&gt;
@@ -6151,12 +5875,6 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;压缩格式在U3D的&lt;a href=&quot;http://docs.unity3d.com/Documentation/Components/class-Texture2D.html&quot;&gt;Component Reference&lt;/a&gt;里有介绍我就不再详细介绍，只介绍几个重点的:&lt;/p&gt;
 
 &lt;p&gt;RGBA32格式为无压缩最保真格式，但也是最浪费内存和空间的格式。Automatic Turecolor和它一个意思。&lt;/p&gt;
@@ -6219,12 +5937,6 @@ GM_ADMIN_PHP+(memcache)
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;描述：&lt;/p&gt;
 
 &lt;p&gt;Ngix起负载均衡作用。&lt;/p&gt;
@@ -6276,12 +5988,6 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;解决方案:&lt;/p&gt;
 
@@ -6376,12 +6082,6 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;测试代码如下：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;UnityEngine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -6480,12 +6180,6 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;三.网络层最重要的是能够快速，方便使用，能够适应变化多端的需求改变。&lt;/p&gt;
 
 &lt;p&gt;每个请求类（HTTPPacketRequest子类）和回调类（HTTPPacketAck子类）都是自动生成参数和自动映射回调类实例的，但千万记住，回调过来的数据和HTTPPacketAck子类里的变量名必须一致。&lt;/p&gt;
@@ -6535,12 +6229,6 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;3.如何知道哪些资源包需要加载以及加载地址和版本号。&lt;/p&gt;
 
@@ -6633,12 +6321,6 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
 &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Collections.Generic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
 &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Linq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
@@ -6845,12 +6527,6 @@ ActionID9,ActionID10,...ActionID16.
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;NGUI中UIPanel是渲染的关键，他承载了在他下面的子物体的所有渲染工作，每个渲染元素都是由UIWidget继承而来，每个UI物体的渲染都是由面片、材质球、UV点组成，每个种材质由一个UIDrawCall完成渲染工作，UIDrawCall中自己创建Mesh和MeshRender来进行统一的渲染工作。这些都是对NGUI底层的简单的介绍，下面将进行更加细致的分析。&lt;/p&gt;
 
 &lt;p&gt;首先我们来看UIWidget这个组件基类，从它拥有的类内部变量就能知道它承担得怎样的责任:&lt;/p&gt;
@@ -6985,12 +6661,6 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BetterList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;verts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BetterList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;norms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BetterList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vector4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BetterList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vector2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uvs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BetterList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Color32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cols&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;verts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -7215,12 +6885,6 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;架构思想就谈到这里，接下来讲如何将这些架构思想融入到实际的Uniyt3D项目当中去。&lt;/p&gt;
 
 &lt;p&gt;一.&lt;strong&gt;SVN与AssetServer结合控制版本&lt;/strong&gt;。这是分离美术与程序的第一步，也是保证安全性的重要手段。SVN更适合做代码版本控制，而AssetServer更适合做U3D的资源版本控制，两者相结合能够让项目管理更加出彩。&lt;/p&gt;
@@ -7266,12 +6930,6 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;4.HTTP与TCP结合的优化。《王途霸业》一开始尝试过只使用TCP长连接的架构方式，但最终以不方便，不好用的试用结果落败。TCP与WEB的HTTP结合的方式优化架构是个非常好的方式。首先WEB的HTTP本身就是个大众化稳定的架构体系，它在帐号管理，数据记录，需求变化的适应力等方面都有非常好的表现。其实就是人们口中所有的短连接和长连接的结合。《王途霸业》使用HTTP方式做了帐号认证系统是为了所有服务器的帐号获取方式，又用HTTP方式做了服务器列表，全服公告，网关轮询等做为中心服务器，这个中心服务器还配备了后台管理界面，让运营人员非常舒服，最后还用HTTP方式为《王途霸业》的数据统计做了一个统计管理的WEB后台管理，让市场人员能清晰得看到整个游戏数据的起伏变化情况。&lt;/p&gt;
 
@@ -7450,12 +7108,6 @@ Seeker 寻路主算法类&lt;/p&gt;
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;这里对如何计算DT点进行一个说明：&lt;/p&gt;
 
 &lt;p&gt;Step1. 构造三角形的外接圆，以及外接圆的包围盒&lt;/p&gt;
@@ -7591,12 +7243,6 @@ Seeker 寻路主算法类&lt;/p&gt;
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;2）这种方法可以想象成往划分好扇区的轮盘里扔色子，事先生成一组满足均匀分布的随机数，代表n次掷色子或者n个色子一起扔，轮盘不动，色子所在区域为选择结果。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rand&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;预先产生n个色子的位置&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;注意这里r服从0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;之间均匀分布&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;第i次轮盘赌&lt;/span&gt;
@@ -7683,12 +7329,6 @@ Seeker 寻路主算法类&lt;/p&gt;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;这两个服务器分别分则对游戏数据存储和游戏日志数据存储。&lt;/p&gt;
 
@@ -7854,12 +7494,6 @@ Seeker 寻路主算法类&lt;/p&gt;
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;总的来说，行为树具有如下几种优点，确实是实现AI框架的利器，甚至是一种&lt;/p&gt;
 
 &lt;p&gt;通用的可维护的复杂流程管理利器：&lt;/p&gt;
@@ -7957,12 +7591,6 @@ Seeker 寻路主算法类&lt;/p&gt;
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;服务器结构探讨 -- 最简单的结构&lt;/p&gt;
 
 &lt;p&gt;所谓服务器结构，也就是如何将服务器各部分合理地安排，以实现最初的功能需求。所以，结构本无所谓正确与错误；当然，优秀的结构更有助于系统的搭建，对系统的可扩展性及可维护性也有更大的帮助。&lt;/p&gt;
@@ -7999,12 +7627,6 @@ client
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;早期的游戏大都采用的是这种结构，有些游戏在实现时采用了一些技术手段使得在切换游戏服时不需要再次验证帐号，但整体结构还是未做改变。&lt;/p&gt;
 
@@ -8043,12 +7665,6 @@ client
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;对于负载均衡来说，已有了成熟的解决方案。一般最常用，也最简单部署的应该是基于DNS的负载均衡系统了，其通过在DNS中为一个域名配置多个IP地址 来实现。最新的DNS服务已实现了根据服务器系统状态来实现的动态负载均衡，也就是实现了真正意义上的负载均衡，这样也就有效地解决了当某台登录服当机 后，DNS服务器不能立即做出反应的问题。当然，如果找不到这样的解决方案，自己从头打造一个也并不难。而且，通过DNS来实现的负载均衡已经包含了所做 的修改对登录服及客户端的透明。&lt;/p&gt;
 
 &lt;p&gt;而对于数据库的应用，在这种结构下，登录服及游戏世界服都会需要连接数据库。从数据库服务器的部署上来说，可以将帐号和角色数据都放在一个中心数据库中，也可分为两个不同的库分别来处理，基到从物理上分到两台不同的服务器上去也行。&lt;/p&gt;
@@ -8086,12 +7702,6 @@ client
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;对于现在大多数MMORPG来说，游戏服务器要处理的基本逻辑有移动、聊天、技能、物品、任务和生物等，另外还有地图管理与消息广播来对其他高级功能做支撑。如纵队、好友、公会、战场和副本等，这些都是通过基本逻辑功能组合或扩展而成。&lt;/p&gt;
 
@@ -8138,12 +7748,6 @@ client
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;这种结构在实际的部署中也遇到了一些挑战。对于一般的MMORPG服务器来说，单台服务器的承载量平均在2000左右，如果你的服务器很不幸地只能带 1000人，没关系，不少游戏都是如此；如果你的服务器上跑了3000多玩家依然比较流畅，那你可以自豪地告诉你的策划，多设计些大量消耗服务器资源的玩 法吧，比如大型国战、公会战争等。&lt;/p&gt;
 
@@ -8197,12 +7801,6 @@ Client
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;一般来说，当某一部分能力达不到我们的要求时，最简单的解决方法就是在此多投入一点资源。既然想要更多的连接数，那就再加一台网关服务器吧。新增加了网 关服后需要在大区服上做相应的支持，或者再简单点，有一台主要的网关服，当其负载较高时，主动将新到达的连接重定向到其他网关服上。&lt;/p&gt;
 
 &lt;p&gt;而对于游戏服来说，有一台还是多台网关服是没有什么区别的。每个代表客户端玩家的对象内部都保留一个代表其连接的对象，消息广播时要求每个玩家对象使用 自己的连接对象发送数据即可，至于连接是在什么地方，那是完全透明的。当然，这只是一种简单的实现，也是普通使用的一种方案，如果后期想对消息广播做一些 优化的话，那可能才需要多考虑一下。&lt;/p&gt;
@@ -8245,12 +7843,6 @@ Client
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;服务器结构探讨 -- 一点杂谈&lt;/p&gt;
 
@@ -8295,12 +7887,6 @@ Client
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;这个方法存在的安全隐患实在太大，明文的密码传输太容易被截获了。那我们试着在传输之前先加一下密，为了服务器能进行密码比较，我们应该采用一个可逆的 加密算法，在服务器端把这个加密后的字串还原为原始的明文密码，然后与数据库密码进行比较。既然是一个可逆的过程，那外挂制作者总有办法知道我们的加密过 程，所以，这个方法仍不够安全。&lt;/p&gt;
 
 &lt;p&gt;哦，如果我们只 是希望密码不可能被还原出来，那还不容易吗，使用一个不可逆的散列算法就行了。用户在登录时发送给服务器的是明文的帐号和经散列后的不可逆密码串，服务器 取出密码后也用同样的算法进行散列后再进行比较。比如，我们就用使用最广泛的md5算法吧。噢，不要管那个王小云的什么论文，如果我真有那么好的运气，早 中500w了，还用在这考虑该死的服务器设计吗？&lt;/p&gt;
@@ -8335,12 +7921,6 @@ Client
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;由于我在读技术文章时最不喜看到的就是大段大段的代码，特别是那些直接Ctrl+C再Ctrl+V后未做任何修改的代码，用句时髦的话说，一点技术含量 都没有！所以在我们今后所要讨论的内容中，尽量会避免出现直接的代码，在有些地方确实需要代码来表述时，也将会选择使用伪码。&lt;/p&gt;
 
@@ -8378,12 +7958,6 @@ Client
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;正如我们曾讨论过的，为了游戏主逻辑循环的流畅运行，所有比较耗时的IO操作都会分享到单独的线程中去做，如网络IO，数据库IO和日志IO等。当然，也有把这些分享到单独的进程中去做的。&lt;/p&gt;
 
@@ -8426,12 +8000,6 @@ Message* getMessage();
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;p&gt;服务器公共组件实现 -- 消息队列&lt;/p&gt;
 

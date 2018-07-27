@@ -206,12 +206,6 @@
     }
 </script>
 
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
-
 <p>3.如何知道哪些资源包需要加载以及加载地址和版本号。</p>
 
 <del>解决办法： 1.使用XML，将所有需要加载的资源信息写入XML文件。每次游戏开始，先读取该文件。 2.由服务器的逻辑服务器提供需要加载的资源信息。</del>
@@ -245,10 +239,19 @@
   <!-- <li>
 
 <script type="text/javascript">
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = "u2514412";
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
 
 </li> -->
 </div>
@@ -262,10 +265,19 @@
 
 
 <script type="text/javascript">
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = "u2514412";
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
 
 
 

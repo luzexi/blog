@@ -201,12 +201,6 @@ ngui和ugui切换方式有所不同，一个基于atlas一种基于Image，一�
     }
 </script>
 
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
-
 <p>3.程序在选择sd还是hd时，只要关注prefab名就可以了。prefab名可以后缀不一样，load时可以区分开来。</p>
 
 <p>4.最后做到极致时，可以加强工具脚本，一键生成所有sd的prefab。
@@ -243,10 +237,19 @@ ngui部分的prefab，编写脚本使用atlas指向切换。ugui部分的prefab�
   <!-- <li>
 
 <script type="text/javascript">
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = "u2514412";
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
 
 </li> -->
 </div>
@@ -260,10 +263,19 @@ ngui部分的prefab，编写脚本使用atlas指向切换。ugui部分的prefab�
 
 
 <script type="text/javascript">
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = "u2514412";
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
 
 
 

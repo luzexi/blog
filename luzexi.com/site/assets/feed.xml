@@ -97,12 +97,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;h3&gt;⑤ UI字体拆分。&lt;/h3&gt;
 
 &lt;p&gt;为什么要拆分UI字体？&lt;/p&gt;
@@ -158,12 +152,6 @@
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;⑦ UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。&lt;/h3&gt;
 
@@ -303,12 +291,6 @@
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;③ UI预加载。&lt;/h3&gt;
 
@@ -630,12 +612,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;hr&gt;
 
 &lt;p&gt;Graphic 另一个重要的核心代码如下：&lt;/p&gt;
@@ -892,12 +868,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;h3&gt;Ⅳ.自定义组件。&lt;/h3&gt;
 
 &lt;p&gt;除了NGUI和UGUI本身的组件外，我们自己的自定义组件是必不可少的，特别是游戏项目，无论大小，都需要有自己的自定义组件，自定义组件不仅能让程序员在写逻辑时快速上手，满足项目的设计需求，而且也能起到对UI优化的作用，尤其在元素多的组件内。&lt;/p&gt;
@@ -1068,12 +1038,6 @@
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h6&gt;输入事件捕获模块源码&lt;/h6&gt;
 
@@ -1282,12 +1246,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;h6&gt;Canvas Scaler&lt;/h6&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    这是个缩放比例组件，用来指定画布中元素的比例大小。
 
@@ -1430,12 +1388,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;好了，以上列出的是从几个方面对NGUI和UGUI的比较。&lt;/p&gt;
 
 &lt;ul&gt;
@@ -1549,12 +1501,6 @@
     }
 &lt;/script&gt;
 
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
-
 &lt;p&gt;其他层级部分的框架也是同样的方式进行分解，用分而治之的方法逐个攻破。这里简单描述下各个模块的拆分。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;数据表--从XLS导为2进制文件还是CSV或其他格式。
 
@@ -1652,12 +1598,6 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
-
-&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
-    /*700*200信息流*/
-    var cpro_id = &quot;u3469788&quot;;
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
 
 &lt;h3&gt;演化思维&lt;/h3&gt;
 

@@ -200,12 +200,6 @@
     }
 </script>
 
-<!-- <script type="text/javascript">
-    /*700*200信息流*/
-    var cpro_id = "u3469788";
-</script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
-
 <p>4.HTTP与TCP结合的优化。《王途霸业》一开始尝试过只使用TCP长连接的架构方式，但最终以不方便，不好用的试用结果落败。TCP与WEB的HTTP结合的方式优化架构是个非常好的方式。首先WEB的HTTP本身就是个大众化稳定的架构体系，它在帐号管理，数据记录，需求变化的适应力等方面都有非常好的表现。其实就是人们口中所有的短连接和长连接的结合。《王途霸业》使用HTTP方式做了帐号认证系统是为了所有服务器的帐号获取方式，又用HTTP方式做了服务器列表，全服公告，网关轮询等做为中心服务器，这个中心服务器还配备了后台管理界面，让运营人员非常舒服，最后还用HTTP方式为《王途霸业》的数据统计做了一个统计管理的WEB后台管理，让市场人员能清晰得看到整个游戏数据的起伏变化情况。</p>
 
 <p>5.循环驱动更改为事件驱动。很多时候我们服务器里会有一些需要用逻辑帧循环来做的事情，《王途霸业》中就有很多，比如建筑时间完成判断，常胜峰战斗奖励判断，玩家当前资源量计算，盘丝洞挂机计算，这些程序逻辑倘若都用服务器的主逻辑帧来做，那将是个非常损耗CPU的事情，并且它还会影响到DB存储服务器的效率。这时候我们就要好好利用事件驱动，在玩家下线时，上线时，玩家获取信息时，更或者在玩家退出某个场景时，进行操作。这样不仅省去了主逻辑帧的循环CPU损耗，更让DB服务器有了更多的力量去处理更重要的事，大大提高了整个游戏服务器的承载量。</p>
@@ -237,10 +231,19 @@
   <!-- <li>
 
 <script type="text/javascript">
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = "u2514412";
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
 
 </li> -->
 </div>
@@ -254,10 +257,19 @@
 
 
 <script type="text/javascript">
-    /*760*90 创建于 2016-02-02*/
-    var cpro_id = "u2514412";
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
-<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
 
 
 
