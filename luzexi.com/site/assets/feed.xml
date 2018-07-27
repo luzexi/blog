@@ -211,14 +211,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -406,6 +406,10 @@
 
 &lt;p&gt;UGUI源码中输入事件模块源码剖析。&lt;/p&gt;
 
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html&quot;&gt;UI(四)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;UGUI渲染核心源码剖析&lt;/p&gt;
+
 &lt;p&gt;这篇我们来讲讲，如何在Unity3D游戏项目中架构UI框架。&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
@@ -473,14 +477,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -646,14 +650,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -811,14 +815,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -959,14 +963,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -1080,14 +1084,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -1185,14 +1189,14 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;

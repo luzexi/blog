@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-27T10:31:05+08:00</updated>
+ <updated>2018-07-27T10:44:40+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -220,14 +220,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -415,6 +415,10 @@
 
 &lt;p&gt;UGUI源码中输入事件模块源码剖析。&lt;/p&gt;
 
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html&quot;&gt;UI(四)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;UGUI渲染核心源码剖析&lt;/p&gt;
+
 &lt;p&gt;这篇我们来讲讲，如何在Unity3D游戏项目中架构UI框架。&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
@@ -482,14 +486,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -655,14 +659,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -820,14 +824,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -968,14 +972,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -1089,14 +1093,14 @@
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -1194,14 +1198,14 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -1327,14 +1331,14 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -1654,14 +1658,14 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -1866,14 +1870,14 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -1963,14 +1967,14 @@ Win,赢了,Win, 勝った, 이기다
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -2136,14 +2140,14 @@ Win,赢了,Win, 勝った, 이기다
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -2369,14 +2373,14 @@ Win,赢了,Win, 勝った, 이기다
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -2715,14 +2719,14 @@ Win,赢了,Win, 勝った, 이기다
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -2841,14 +2845,14 @@ Win,赢了,Win, 勝った, 이기다
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -2910,14 +2914,14 @@ Win,赢了,Win, 勝った, 이기다
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -2955,14 +2959,14 @@ Win,赢了,Win, 勝った, 이기다
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -3094,14 +3098,14 @@ Win,赢了,Win, 勝った, 이기다
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -3237,14 +3241,14 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -3422,14 +3426,14 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -3564,14 +3568,14 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -3736,14 +3740,14 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -3890,14 +3894,14 @@ b、输入对上述文件的动作  :argdo %s/hate/love/gc | update  （这里�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4054,14 +4058,14 @@ http://www.meetup.com/Shanghai-Swimming-Meetup/&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4078,14 +4082,14 @@ http://www.meetup.com/Shanghai-Swimming-Meetup/&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4210,14 +4214,14 @@ DataManager是架构的大脑。它广泛使用RxJava操作去合并过滤转换
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4269,14 +4273,14 @@ MVP为基础的架构&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4386,14 +4390,14 @@ MVP为基础的架构&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4459,14 +4463,14 @@ MVP为基础的架构&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4539,14 +4543,14 @@ MVP为基础的架构&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4586,14 +4590,14 @@ MVP为基础的架构&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4628,14 +4632,14 @@ ngui和ugui切换方式有所不同，一个基于atlas一种基于Image，一�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4705,14 +4709,14 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4783,14 +4787,14 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4848,14 +4852,14 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -4920,14 +4924,14 @@ The empty col will be a default value like 0 or &amp;quot;&amp;quot; or false or
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -5008,14 +5012,14 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -5067,14 +5071,14 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -5128,14 +5132,14 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -5192,14 +5196,14 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -5311,14 +5315,14 @@ Debug.Log(string.Format(&amp;quot;CallFromJS[{0}]&amp;quot;, msg));
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -5408,14 +5412,14 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -5603,14 +5607,14 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -5684,14 +5688,14 @@ pomelo网络通信方式分:原始socket和websocket两种，这两种方式由�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -5752,14 +5756,14 @@ GM_ADMIN_PHP+(memcache)
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -5810,14 +5814,14 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -5910,14 +5914,14 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -6013,14 +6017,14 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -6069,14 +6073,14 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -6167,14 +6171,14 @@ Mysql和Memcache设置为多台，主要是用于当数据过大时的对数据�
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -6378,14 +6382,14 @@ ActionID9,ActionID10,...ActionID16.
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -6519,14 +6523,14 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -6748,14 +6752,14 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -6800,14 +6804,14 @@ HasChanged这是UINode唯一重要的方法之一，它的作用就是被UIPanel
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -6983,14 +6987,14 @@ Seeker 寻路主算法类&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7124,14 +7128,14 @@ Seeker 寻路主算法类&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7217,14 +7221,14 @@ Seeker 寻路主算法类&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7387,14 +7391,14 @@ Seeker 寻路主算法类&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7490,14 +7494,14 @@ Seeker 寻路主算法类&lt;/p&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7533,14 +7537,14 @@ client
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7576,14 +7580,14 @@ client
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7620,14 +7624,14 @@ client
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7672,14 +7676,14 @@ client
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7730,14 +7734,14 @@ Client
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7779,14 +7783,14 @@ Client
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7828,14 +7832,14 @@ Client
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7869,14 +7873,14 @@ Client
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7912,14 +7916,14 @@ Client
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
@@ -7960,14 +7964,14 @@ Message* getMessage();
 &lt;script type=&quot;text/javascript&quot;&gt;
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
-        /*mobile-6:5*/
-        var cpro_id = &quot;u3485972&quot;;
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
         document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
     else
     {
-        /*760*90-图*/
-        var cpro_id = &quot;u3485994&quot;;
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
         document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
     }
 &lt;/script&gt;
