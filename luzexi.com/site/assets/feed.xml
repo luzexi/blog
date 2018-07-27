@@ -7,6 +7,148 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>第四章，UI(七) - UI优化(一)</title>
+               <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html&quot;&gt;UI(二)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI的原理，以及组件使用详解。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html&quot;&gt;UI(三)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI源码中输入事件模块源码剖析。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html&quot;&gt;UI(四)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI渲染核心源码剖析
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html&quot;&gt;UI(六)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    如何在游戏项目中架构UI框架。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这篇我们来聊聊，优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;h3&gt;① UI动静分离。&lt;/h3&gt;
+
+&lt;p&gt;什么是UI动静分离？&lt;/p&gt;
+
+&lt;p&gt;动就是左右上下移动，或放大缩小频率比较高的UI，静就是静止不动的，或者说动的比较少的UI。&lt;/p&gt;
+
+&lt;p&gt;我们在做项目中，避免不了一些UI会动，从左边移到右边，或从上面移到下面，或者一个小范围的移动，这些一直在动的，或者说有时会动的UI就属于行动中的UI。&lt;/p&gt;
+
+&lt;p&gt;那么为什么要将他们分离开来呢？&lt;/p&gt;
+
+&lt;p&gt;UGUI 和 NGUI一样，都是用模型构建UI画面的，在构建后都做了合并Mesh的有优化操作，不合并会导致无数drawcall进而导致CPU，GPU消耗过大，游戏画面卡顿。&lt;/p&gt;
+
+&lt;p&gt;合并操作是好的，但问题是UI元素一动就需要重新合并，而不需要重新构建的内容也一并合进去了，导致原来合并Mesh的好事变坏事。&lt;/p&gt;
+
+&lt;p&gt;因此要将行动的UI元素和静态不动的UI元素分离开来，让合并的范围缩小，只合并那些会动的UI元素，因为他们重绘的频率比较高，而那些基本不动的UI元素就不让它们参与重新合并Mesh的操作了。&lt;/p&gt;
+
+&lt;p&gt;那么如何分离他们呢？&lt;/p&gt;
+
+&lt;p&gt;UGUI 和 NGUI都有自己的重绘合并节点，UGUI是Canvas，NGUI是UIPanel。&lt;/p&gt;
+
+&lt;p&gt;以重绘的合并节点为关键点，进行拆分。把会动的UI元素放入专门为它们准备的合并节点上，而将静止不动的UI留在原来的合并节点上。&lt;/p&gt;
+
+&lt;p&gt;这样一来，当会动的UI元素来回移动缩放的时候，不再重构静态部分的UI了，毕竟静态的UI元素占UI的大多数，而动态的UI元素只是小部分，减少了不少的CPU在重绘和合并时的消耗。&lt;/p&gt;
+
+&lt;h3&gt;② 拆分过大的UI。&lt;/h3&gt;
+
+&lt;p&gt;为什么要拆分过大的UI？&lt;/p&gt;
+
+&lt;p&gt;项目的制作过程是个比较长的过程，在这个过程中UI的大小会随着项目时间的积累而不断扩大。&lt;/p&gt;
+
+&lt;p&gt;很多时候我们总是莫名其妙的感觉，‘怎么这个UI界面，前段时间还好好的，现在打开会变得如何缓慢呢？！‘。&lt;/p&gt;
+
+&lt;p&gt;问题就在于，随着项目的推进，UI经手的人越来越多，添加的内容也越来越多，有的甚至一个Prefab里，装着2-3个界面，只是在显示时隐藏了其他的几个而已。最后导致，UI过大，实例化，初始化，过慢的问题。所以我们要想办法拆分这些，过大的UI界面。&lt;/p&gt;
+
+&lt;p&gt;如何拆分？&lt;/p&gt;
+
+&lt;p&gt;首先，把隐藏的UI界面拆分出来，成为独立运作的界面，只在需要是调用实例化。&lt;/p&gt;
+
+&lt;p&gt;其次，如果界面内容还是很多，我们可以把2次显示的内容拆出来。&lt;/p&gt;
+
+&lt;p&gt;什么是2次内容？打个比方，一个界面打开时会显示一些内容(例如动画)，完毕后或者点击后才能看到另外的内容。&lt;/p&gt;
+
+&lt;p&gt;这后来出现的内容视为2次显示内容，可以考虑拆分出来成为独立的界面，需要时再加载。&lt;/p&gt;
+
+&lt;p&gt;注意权衡加载速度与内存，过大的UI固然加载缓慢内存消耗大，但拆分成小个体时，如果小个体频繁加载和销毁，也同样会消耗过多CPU。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;!-- &lt;script type=&quot;text/javascript&quot;&gt;
+    /*700*200信息流*/
+    var cpro_id = &quot;u3469788&quot;;
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//cpro.baidustatic.com/cpro/ui/c.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;h3&gt;③ UI预加载。&lt;/h3&gt;
+
+&lt;p&gt;为什么要进行UI的预加载？&lt;/p&gt;
+
+&lt;p&gt;我们在UI实例化时，需要将Prefab实例化到场景中，这期间还会有Mesh的合并，组件的初始化，渲染初始化，图片的加载，界面逻辑的初始化等程序调用，消耗掉了很多CPU。&lt;/p&gt;
+
+&lt;p&gt;这导致了在我们打开某个界面时，出现卡顿的现象，就是CPU消耗过重的表现。如何优化呢？&lt;/p&gt;
+
+&lt;p&gt;上面讲的拆分UI是一个方面，但只能用在一些冗余比较大的界面上，而一些容易比较小，难以拆分的UI界面，就很难用这个方法达到优化到顺畅的效果。&lt;/p&gt;
+
+&lt;p&gt;甚至有的UI界面即使拆分后，任然会消耗很多CPU，出现卡顿的现象。如何优化呢？&lt;/p&gt;
+
+&lt;p&gt;加载图片的数量是无法减少的，不能因为要优化我就把图给删了，这样不太妥当，偏离优化而不伤害项目的本质。&lt;/p&gt;
+
+&lt;p&gt;UI上的元素也是不能减少的，也不能因为要优化，把UI元素给去掉，影响原本的项目。&lt;/p&gt;
+
+&lt;p&gt;初始化程序也是必不可少的，虽然从某种程度上说初始化程序里也有糟糕的程序，但这部分我们总是可以在Unity3D分析器Profile找出原因，所以可以先放下不管。&lt;/p&gt;
+
+&lt;p&gt;从分析上来看，我们已经不能从内部优化UI的实例化问题了，这导致了我们需要通过外部的方法进行优化，也就是我们需要对UI进行预加载。&lt;/p&gt;
+
+&lt;p&gt;如何进行UI预加载？ &lt;/p&gt;
+
+&lt;p&gt;第一种方法，&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    最直接的方法，在游戏开始前加载UI资源但不实例化，比如把Resources.Load(“ui”)这句放在进游戏画面之前。这样当点击按钮后，弹出UI界面时就少了一点加载资源的时间，把CPU消耗重心放在了实例化和初始化上。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第二种方法，&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    在第一种方法的基础上，打开界面时CPU还是消耗太严重，那么就将UI实例化和初始化也提前到游戏开始前。
+
+    但在实例化和初始化后，对UI界面进行了隐藏，当需要他出现时，再显示出来，而不是重新实例化，当关闭时，也同样只是隐藏，而不是销毁。
+
+    这样一来在打开和关闭时，只消耗了少量CPU在展示和隐藏上。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第三种方法，&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Unity3D 5.x的新功能Preload，在平台设置里，有这个功能，可以把需要预加载的Prefab加入到列表中去。
+
+    它会将这些Prefab在进入APP或者说打开应用展示LOGO界面时进行预加载。
+
+    它在整个APP初始化时，预加载了指定的Prefab，CPU消耗在了前置的碎片时间，很难让人感觉到加载的停顿感，整体效果不错。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;最后，我要提醒一下，所有的预加载，都会出现另一个问题，CPU集中消耗带来的卡顿。&lt;/p&gt;
+
+&lt;p&gt;我们预加载并没有削减CPU，CPU消耗的总量是不变的，需要加载的图片数是不变的，实例化的面片数是不变的，以及初始化程序需要消耗的时间是不变的，所有消耗都是不变的。&lt;/p&gt;
+
+&lt;p&gt;我们只是把它们这些消耗分离了或者说提前了，然后拆分到各个时间碎片里去，让人感觉不到很大的CPU消耗，或者说卡顿感。&lt;/p&gt;
+
+&lt;p&gt;但如果你将这些预加载，集中在某个位置，比如全部集中在游戏开始前，或者进度条的某个位置，也同样会有强烈的卡顿感，因为CPU在这个点进行了集中的消耗。&lt;/p&gt;
+
+&lt;h3&gt;下篇将继续聊聊 UI 优化。&lt;/h3&gt;
+</description>
+               <pubDate>Fri, 27 Jul 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第四章，UI(四) - UGUI核心源码剖析</title>
                <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
@@ -1239,53 +1381,6 @@ AI层—使用状态机还是行为树或者其他，状态机如何实现，行
                <pubDate>Mon, 23 Jul 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/07/23/have-fun-in-watch-video.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/07/23/have-fun-in-watch-video.html</guid>
-            </item>
-        
-            <item>
-               <title>白领投资探讨(三)</title>
-               <description>&lt;p&gt;最近P2P雷爆很多，据统计平均每天有2家网贷平台倒闭和跑路，据说把所有倒闭跑路的网贷平台资金总量加起来有2万亿，倒霉的都是老百姓，很多家庭的财富顷刻间灰飞烟灭。我们今天就来说说，用钱赚钱这事。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;首先我并不认为他们那些把钱投向P2P的人值得同情，他们只想躺着赚钱，脑经连动都不想动，懒且贪。对于这些人，我认为教点财商税，交点智商税，交点学费是应该的。不给他们教训，他们是不会明白，这个世界从来都没有容易赚的钱。&lt;/p&gt;
-
-&lt;p&gt;要达到财务自由，只有一条路：勤奋，并且努力学习，并且节俭。&lt;/p&gt;
-
-&lt;p&gt;所有违背这条规则的路，最终是无法到达胜利的彼岸。如果彻底违背这条规则，那么将是另一面的情景，地狱情景。&lt;/p&gt;
-
-&lt;p&gt;也就是说，在金融投资中，但凡你简单看两眼，或者看几个新闻，听别人说几句话，就把钱投进去的，都会被吞没掉，或者严重亏损。&lt;/p&gt;
-
-&lt;p&gt;我可以100%肯定的跟你说，所有金融理财公司，包括最大的和最厉害的，全部看上的是你的本金，而不是你的本金带给他们的利润，而你看上的却是他们口头上承诺的利息。&lt;/p&gt;
-
-&lt;p&gt;我明白，这个结论跟大多数人的观念是冲突的，他们会用比如“专业的事情交给专业的人去做”，来反驳我。虽然这个道理在很多其他领域上是正确的，但在金融投资中，却是错误的，至少错了一大半。&lt;/p&gt;
-
-&lt;p&gt;在金融领域，专业人士不能100%保证给你赚钱，其实他们来操作和你自己来操作的赔率差不多。因为金融就是不确定的代名词，没有人能预测，也没有人能掌控，政府都没有这个能力，何况是小老百姓。&lt;/p&gt;
-
-&lt;p&gt;金融的不确定性是人类造成的，人类的情绪就是金融波动的原因，情绪好时所有人都会往上冲，而情绪差时，所有人都往后跑形成挤兑和踩踏。&lt;/p&gt;
-
-&lt;p&gt;这就是为什么温家宝说，信心比黄金还珍贵的原因。我们说的信心不仅仅只在金融领域，在生活，工作，学习中也是同样的道理。特别是人民大众的信心，是由一个个小老百姓构成的，不是说颠覆就颠覆，说雄起就雄起的，没有人有这么大的能耐，天皇老子也不行。&lt;/p&gt;
-
-&lt;p&gt;看起来，像是赌博一样的金融投资，不确定性太大。那么什么才是确定的？唯有坚持不懈的努力和勤奋才是确定的。任何一个国家，公司，个人，能最最确定的一样事情就是，勤奋努力能带给他们好结果。&lt;/p&gt;
-
-&lt;p&gt;过去30年的中国经济大发展带给人们太多的误区，导致大多数人都认为，今后的30年也会像前面那样，快速发展，包括房地产，企业，金融，投资等还会快速的增长。殊不知，我们已经到达了一个瓶颈，说瓶颈还是太容易了点，毕竟瓶颈看起来只要稍微努力下就能突破，应该把瓶颈换成‘天花板’，让我们有可能这辈子都无法颠覆的天花板。这个天花板就是美国。&lt;/p&gt;
-
-&lt;p&gt;很多国人还没有清醒的意识到美国的强大，以及怎么个强大法。简单解释下：&lt;/p&gt;
-
-&lt;p&gt;以下内容，可能有人认为，我忽视了中国的潜力和中国作为全球第二大经济国家的力量。我只是说说美国强大在什么地方，并没有说中国完全不可能超越，也说没有哪里中国不好。&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;全球都用美元来做交易货币。导致美国很容易就能控制全球的现金流，让钱回到国内就能回来，想放出去就放出去。如果他大量印钞，全球都在帮他分担通货膨胀的危机，也就是说他可以随时从全球国家的口袋中抽点利息税什么的。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;美国是全球最大(交易量最大，金融产品最丰富)的金融交易场所。只要在美国的交易所里公认某某资产贬值了，全球的市场的相关产品都跟着下跌。这就是领头羊的效应。也就是说美国主导了整个全球的金融产品价格。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;美国是全球资金力量最集中的地方。全球大部分有钱的，有名望的都扎根在美国或者有根据地在美国，形成聚拢效应，越有钱的人越想去美国。导致美国不缺少风险投资的资金，任何有希望成为未来风向标，或者新科技的公司，都被大量资金包围着。做公司和产品的人，会更关注产品质量和体验，而不是分出很大一部分精力来融资。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;中国现在的‘天花板’就是这样一个美国。一个GDP比你大几乎一倍，人均GDP比你大10倍的美国。而从历史角度看，美国从前都忽视了中国的崛起，可能忽视不太准确，用睁一只眼闭一只眼来形容更加确切。而当前不一样了，现在的中国，可以威胁到美国了，虽然还不能构成巨大颠覆性的威胁，但跟从前的弱小比起来那是相当不一样的影响。&lt;/p&gt;
-
-&lt;p&gt;美国完全有理由站起来，主动打压中国。面对美国这种主动性的打压，中国前面的道路更加艰难。但也不是没有翻盘的机会，我们只要秉持，勤奋努力，脚踏实地的准则，坚持韬光养晦的政策，多一点真诚，少一点虚假，翻盘也是早晚的事。&lt;/p&gt;
-</description>
-               <pubDate>Fri, 20 Jul 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/07/20/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A83.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/07/20/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A83.html</guid>
             </item>
         
     </channel>

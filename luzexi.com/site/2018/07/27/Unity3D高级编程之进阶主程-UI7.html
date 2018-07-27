@@ -8,12 +8,12 @@
 
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta content="unity3d 高级编程 主程 ui ugui 原理 使用详解" name="description">
+  <meta content="unity3d 高级编程 主程 UI ugui ngui 优化 动静分离" name="description">
 
 
   <title>
     
-      《Unity3D高级编程之进阶主程》第四章，UI(二) - UGUI的原理及组件使用详解
+      第四章，UI(七) - UI优化(一)
     
   </title>
 
@@ -175,53 +175,73 @@
 
     <div class="content container">
       <div class="post">
-  <h1 class="post-title">《Unity3D高级编程之进阶主程》第四章，UI(二) - UGUI的原理及组件使用详解</h1>
-  <span class="post-date">25 Jul 2018</span>
+  <h1 class="post-title">第四章，UI(七) - UI优化(一)</h1>
+  <span class="post-date">27 Jul 2018</span>
   <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    前文对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
 </code></pre></div>
-<p>这篇我们来讲讲，UGUI的原理，以及UGUI的组件使用详解。</p>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">UI(六)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如何在游戏项目中架构UI框架。
+</code></pre></div>
+<p>这篇我们来聊聊，优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载。</p>
 
 <p>===</p>
 
-<h3>UGUI的初级和高级使用详解</h3>
+<h3>① UI动静分离。</h3>
 
-<p>首先我们来介绍下ugui的运作机制。</p>
+<p>什么是UI动静分离？</p>
 
-<p>UGUI是在3D网格下建立起来的UI系统，它的每个可显示的元素都是以3D模型面片的形式来构建的，在UI被构建时，UGUI首先要做的事就是构建网格。</p>
+<p>动就是左右上下移动，或放大缩小频率比较高的UI，静就是静止不动的，或者说动的比较少的UI。</p>
 
-<p>也就是说，在Unity3D制作一个图元素，或者一个按钮，或者一个背景时，都会先构建一个方形网格，再将图片放入网格中，就相当于一个3D模型一样，一个网格绑定一个材质球，材质球里放了图片。</p>
+<p>我们在做项目中，避免不了一些UI会动，从左边移到右边，或从上面移到下面，或者一个小范围的移动，这些一直在动的，或者说有时会动的UI就属于行动中的UI。</p>
 
-<p>如果每个元素，生成一个模型，绑定一个材质球，切入一张图片的话，UI上成千上百个元素就会拥有成千上百个材质球，以及成千上百张图。</p>
+<p>那么为什么要将他们分离开来呢？</p>
 
-<p>这样会造成引擎需要每次渲染时都需要读取成千上百张图，对每个材质球和网格都进行渲染，这会导致性能开销过大，性能急剧下降。</p>
+<p>UGUI 和 NGUI一样，都是用模型构建UI画面的，在构建后都做了合并Mesh的有优化操作，不合并会导致无数drawcall进而导致CPU，GPU消耗过大，游戏画面卡顿。</p>
 
-<p>于是UGUI做了优化，将一部分相同类型的图片都集合起来合成一个张图，然后将拥有相同图片相同shader的材质球合并成一个材质球，并且把分散开的模型网格也一起合并了，这样就生成了几个大网格和几个材质球，以及少许整张的图集。节省了很多材质球，图片，网格的渲染，UI的效率更高了很多，游戏在进行时才会顺畅。</p>
+<p>合并操作是好的，但问题是UI元素一动就需要重新合并，而不需要重新构建的内容也一并合进去了，导致原来合并Mesh的好事变坏事。</p>
 
-<p>不是所有的网格和材质球都合并成一个，只有相同的图集和相同的材质球参数才能合并网格，而且在当UI中的元素变动时，也同样需要做拆分网格和重新合并网格的操作。</p>
+<p>因此要将行动的UI元素和静态不动的UI元素分离开来，让合并的范围缩小，只合并那些会动的UI元素，因为他们重绘的频率比较高，而那些基本不动的UI元素就不让它们参与重新合并Mesh的操作了。</p>
 
-<p>在Unity3D中各类UI系统中，性能优劣差距就在这里拉开了，哪个系统能合并得更好，哪个系统能更多的减少合并的次数，以及在合并时是否能有更高的效率，成了拉开差距的关键.</p>
+<p>那么如何分离他们呢？</p>
 
-<p>因为这些合并和拆分的操作会消耗很多CPU，UI系统要做的就是尽一切可能节省些CPU消耗，把尽量多的剩余CPU让给项目逻辑。</p>
+<p>UGUI 和 NGUI都有自己的重绘合并节点，UGUI是Canvas，NGUI是UIPanel。</p>
 
-<p>下面我们来主要介绍下UGUI的核心组件。</p>
+<p>以重绘的合并节点为关键点，进行拆分。把会动的UI元素放入专门为它们准备的合并节点上，而将静止不动的UI留在原来的合并节点上。</p>
 
-<h3>核心组件Canvas</h3>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Canvas，我们暂且叫它画布。Canvas就相当于一张画画时铺在上边的画板，我们把各类元素放在画布上后，Canvas要做的事情就是合并这些元素。
+<p>这样一来，当会动的UI元素来回移动缩放的时候，不再重构静态部分的UI了，毕竟静态的UI元素占UI的大多数，而动态的UI元素只是小部分，减少了不少的CPU在重绘和合并时的消耗。</p>
 
-    Canvas上的参数包括Render Mode 渲染模式，你可以选择不以Camera为基准的Overlay模式，或者以Camera为基准的Screen Camera模式，也可以选择3D直接坐标为基准的World Space模式。三者根据的使用区域不同而不同。
+<h3>② 拆分过大的UI。</h3>
 
-    Overlay模式主要用在纯UI的区域内，例如我们不想使用Camera排序，而想用Sort order这个参数排序时可以使用，Sort order参数的值越大，越靠前渲染。如果这个模式下，加入一些非UGUI的物体时，会使得排序混乱。
+<p>为什么要拆分过大的UI？</p>
 
-    Sceen Camera模式，相对比较通用一点，他依赖Camera，所以需要创建一个矩形的Camera来进行绑定，渲染依靠的是于他绑定的Camera。
+<p>项目的制作过程是个比较长的过程，在这个过程中UI的大小会随着项目时间的积累而不断扩大。</p>
 
-    在当非UGUI元素加入到UI中时，Screen Camera模式更加具有优势。
-    在对UI进行排序时，可以通过与Camera的距离来进行绑定，也可以通过Order in layer这个参数进行排序，这样在开发和调试期间更加形象化。
+<p>很多时候我们总是莫名其妙的感觉，‘怎么这个UI界面，前段时间还好好的，现在打开会变得如何缓慢呢？！‘。</p>
 
-    World Space模式，主要用于当UI物体放在3D世界中时用的，比如，一个大的场景中，需要将一张标志图放在一个石块头上，这时就需要World Space模式。
+<p>问题就在于，随着项目的推进，UI经手的人越来越多，添加的内容也越来越多，有的甚至一个Prefab里，装着2-3个界面，只是在显示时隐藏了其他的几个而已。最后导致，UI过大，实例化，初始化，过慢的问题。所以我们要想办法拆分这些，过大的UI界面。</p>
 
-    他需要绑定一个透视(Perspective)的Camera，当UI物体在这个Camera视野中时，就相当于渲染了一个普通的3D面片的效果，只不过Canvas也对这些3D场景里的UI进行了合并优化处理。
-</code></pre></div>
+<p>如何拆分？</p>
+
+<p>首先，把隐藏的UI界面拆分出来，成为独立运作的界面，只在需要是调用实例化。</p>
+
+<p>其次，如果界面内容还是很多，我们可以把2次显示的内容拆出来。</p>
+
+<p>什么是2次内容？打个比方，一个界面打开时会显示一些内容(例如动画)，完毕后或者点击后才能看到另外的内容。</p>
+
+<p>这后来出现的内容视为2次显示内容，可以考虑拆分出来成为独立的界面，需要时再加载。</p>
+
+<p>注意权衡加载速度与内存，过大的UI固然加载缓慢内存消耗大，但拆分成小个体时，如果小个体频繁加载和销毁，也同样会消耗过多CPU。</p>
+
 <script type="text/javascript">
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
@@ -243,48 +263,55 @@
 </script>
 <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script> -->
 
-<h6>Canvas Scaler</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    这是个缩放比例组件，用来指定画布中元素的比例大小。
+<h3>③ UI预加载。</h3>
 
-    有简单指定比例大小的Constant Pixel Size模式，也有Scale With Screen Size以屏幕为基准的自动适配比例大小，或者Constant Physical Size以物理大小为基准的适配规则。
+<p>为什么要进行UI的预加载？</p>
 
-    注，在手游项目里，通常使用以屏幕为基准的自动适配比例大小的Scale With Screen Size选项。
+<p>我们在UI实例化时，需要将Prefab实例化到场景中，这期间还会有Mesh的合并，组件的初始化，渲染初始化，图片的加载，界面逻辑的初始化等程序调用，消耗掉了很多CPU。</p>
+
+<p>这导致了在我们打开某个界面时，出现卡顿的现象，就是CPU消耗过重的表现。如何优化呢？</p>
+
+<p>上面讲的拆分UI是一个方面，但只能用在一些冗余比较大的界面上，而一些容易比较小，难以拆分的UI界面，就很难用这个方法达到优化到顺畅的效果。</p>
+
+<p>甚至有的UI界面即使拆分后，任然会消耗很多CPU，出现卡顿的现象。如何优化呢？</p>
+
+<p>加载图片的数量是无法减少的，不能因为要优化我就把图给删了，这样不太妥当，偏离优化而不伤害项目的本质。</p>
+
+<p>UI上的元素也是不能减少的，也不能因为要优化，把UI元素给去掉，影响原本的项目。</p>
+
+<p>初始化程序也是必不可少的，虽然从某种程度上说初始化程序里也有糟糕的程序，但这部分我们总是可以在Unity3D分析器Profile找出原因，所以可以先放下不管。</p>
+
+<p>从分析上来看，我们已经不能从内部优化UI的实例化问题了，这导致了我们需要通过外部的方法进行优化，也就是我们需要对UI进行预加载。</p>
+
+<p>如何进行UI预加载？ </p>
+
+<p>第一种方法，</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    最直接的方法，在游戏开始前加载UI资源但不实例化，比如把Resources.Load(“ui”)这句放在进游戏画面之前。这样当点击按钮后，弹出UI界面时就少了一点加载资源的时间，把CPU消耗重心放在了实例化和初始化上。
 </code></pre></div>
-<h6>Graphic Raycaster</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    输入事件与图形的碰撞测试组件，他检测着画布下的所有组件，是否与输入事件的射线碰撞，是否需要将碰撞的组件进行相应。
+<p>第二种方法，</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    在第一种方法的基础上，打开界面时CPU还是消耗太严重，那么就将UI实例化和初始化也提前到游戏开始前。
 
-    你可以设置成完全忽略输入事件，或者阻止对某些layers进行事件相应。
+    但在实例化和初始化后，对UI界面进行了隐藏，当需要他出现时，再显示出来，而不是重新实例化，当关闭时，也同样只是隐藏，而不是销毁。
+
+    这样一来在打开和关闭时，只消耗了少量CPU在展示和隐藏上。
 </code></pre></div>
-<h6>EventTrigger</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    输入事件触发器，与此脚本绑定的UI物体，都可以接受到输入事件。
+<p>第三种方法，</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Unity3D 5.x的新功能Preload，在平台设置里，有这个功能，可以把需要预加载的Prefab加入到列表中去。
 
-    比如(鼠标，手指)按下，弹起，点击，开始拖动，拖动中，结束拖动，鼠标滚动事件等。
+    它会将这些Prefab在进入APP或者说打开应用展示LOGO界面时进行预加载。
 
-    有了他，我们就可以对需要响应手指触摸或鼠标的UI进行绑定了。
+    它在整个APP初始化时，预加载了指定的Prefab，CPU消耗在了前置的碎片时间，很难让人感觉到加载的停顿感，整体效果不错。
 </code></pre></div>
-<h6>Image，RawImage</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    这两个是UI里的主要部件，都是对图片的展示部件，图片，图集，图元，通过Image和RawImage可以展示在屏幕上。
+<p>最后，我要提醒一下，所有的预加载，都会出现另一个问题，CPU集中消耗带来的卡顿。</p>
 
-    两者的区别是Image仅能展示图集中的图元，而RawImage仅能展示单张图片。通常我们会将小块的图片，打成图集来展示，这样更节省性能也更节省内存。
+<p>我们预加载并没有削减CPU，CPU消耗的总量是不变的，需要加载的图片数是不变的，实例化的面片数是不变的，以及初始化程序需要消耗的时间是不变的，所有消耗都是不变的。</p>
 
-    但是，当遇到大块的图片时却不是这样了，因为太大，打成图集会造成图集不够用，或者说会图集的空间利用效率太低，所以用单独分出来自己独立展示。
-</code></pre></div>
-<h6>Mask，RectMask2D</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    遮挡组件，用来将其子节点下的区域外的内容遮挡。
+<p>我们只是把它们这些消耗分离了或者说提前了，然后拆分到各个时间碎片里去，让人感觉不到很大的CPU消耗，或者说卡顿感。</p>
 
-    在上下滚动的菜单栏里用的会用到，因为我们需要将区域外的元素内容进行不显示操作。
+<p>但如果你将这些预加载，集中在某个位置，比如全部集中在游戏开始前，或者进度条的某个位置，也同样会有强烈的卡顿感，因为CPU在这个点进行了集中的消耗。</p>
 
-    Mask和RectMask2D区别是，RectMask2D的效率比Mask更高，可以节省更多的drawcall，但是限制条件是RectMask2D只能用于2D上的展示。
-</code></pre></div>
-<h6>其他组件</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    大部分逻辑组件都是可以重写的，
+<h3>下篇将继续聊聊 UI 优化。</h3>
 
-    比如按钮组件Button，切换组件Toggle，滚动条组件ScrollBar，滑动组件Slider，下拉框组件DropDown，视图组件ScrollView，都是可以用Image，Mask等几个核心组件组合自己重写的。
-
-    为什么要重写？因为很多时候项目里的需求更多样化，而且也需要足够的可控性，自己写的可以修改特殊需求和特殊逻辑，比原生态的组件好用的多。
-
-    所以通常项目中，都会重写一些组件来用来自己项目使用，也有一些人总结了这些组件的经验，写了些比较好用的组件开源在Github上。
-</code></pre></div>
   <p>感谢您的耐心阅读</p>
   <p>Thanks for your reading</p>
 </div>
@@ -297,8 +324,8 @@
   <li>
 <p>版权申明</p>
 <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">《Unity3D高级编程之进阶主程》第四章，UI(二) - UGUI的原理及组件使用详解</a></p> -->
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">《Unity3D高级编程之进阶主程》第四章，UI(二) - UGUI的原理及组件使用详解</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">第四章，UI(七) - UI优化(一)</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">第四章，UI(七) - UI优化(一)</a></p> -->
 <p>Copyright attention</p>
 <p>If you would like to reprint this article please write auth's name and link in the page.</p>
 
@@ -382,41 +409,6 @@
       
 
       
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
         
           <li>
             <h3>
@@ -477,78 +469,48 @@
       
 
       
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
         
           <li>
             <h3>
-              <a href="/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">
-                《Unity3D高级编程之进阶主程》第四章，UI(一) - NGUI和UGUI比较
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(四) - UGUI核心源码剖析
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/26/jekyll-related-page.html">
+                重写Jekyll的Relate功能
+                <small>26 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(六) - 如何架构UI框架
+                <small>26 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(三) - 剖析UGUI源码中的输入与事件模块
+                <small>26 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(二) - UGUI的原理及组件使用详解
                 <small>25 Jul 2018</small>
-              </a>
-            </h3>
-          </li>
-        
-          <li>
-            <h3>
-              <a href="/2018/07/24/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%843.html">
-                《Unity3D高级编程之进阶主程》第二章，架构(三) - 架构的误区，如何做前端架构，以及如何架构Unity3D项目
-                <small>24 Jul 2018</small>
-              </a>
-            </h3>
-          </li>
-        
-          <li>
-            <h3>
-              <a href="/2018/07/24/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%842.html">
-                《Unity3D高级编程之进阶主程》第二章，架构(二) - 软件系统架构思维方式
-                <small>24 Jul 2018</small>
-              </a>
-            </h3>
-          </li>
-        
-          <li>
-            <h3>
-              <a href="/2018/07/23/have-fun-in-watch-video.html">
-                Have fun in watch video
-                <small>23 Jul 2018</small>
-              </a>
-            </h3>
-          </li>
-        
-          <li>
-            <h3>
-              <a href="/2018/07/20/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A83.html">
-                白领投资探讨(三)
-                <small>20 Jul 2018</small>
               </a>
             </h3>
           </li>
