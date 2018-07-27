@@ -193,7 +193,11 @@
 
 <p><img src="/assets/book/4/ugui1.png" alt="ugui文件夹"></p>
 
-<p>这是UGUI内核源码的文件夹结构图。从图中可以看出，它把UGUI分成了，三块，输入事件，动画，核心渲染。其中动画部分相对比较简单，用了tween补间动画的形式，对颜色，位置，大小进行了渐进操作。我们重点来看看输入事件和核心渲染两块。</p>
+<p>这是UGUI内核源码的文件夹结构图。它把UGUI分成了，三块，输入事件，动画，核心渲染。</p>
+
+<p>其中动画部分相对比较简单，用了tween补间动画的形式，对颜色，位置，大小进行了渐进操作。</p>
+
+<p>我们重点来剖析下输入事件和核心渲染两块。</p>
 
 <h3>输入事件源码</h3>
 
@@ -201,11 +205,11 @@
 
 <p><img src="/assets/book/4/ugui2.png" alt="ugui事件文件夹结构"></p>
 
-<p>从图中文件夹结构可以看出他有四部分构成，事件数据模块，输入事件捕获模块，射线碰撞检测模块，事件逻辑处理及回调模块。</p>
+<p>UGUI输入事件模块有四部分构成，事件数据模块，输入事件捕获模块，射线碰撞检测模块，事件逻辑处理及回调模块。</p>
 
 <h6>事件数据模块</h6>
 
-<p>事件数据模块部分相对比较简单，主要定义和存储了，事件发生时的点位，事件对应的物体，事件的位移大小，事件的类型，以及事件的设备类型等。</p>
+<p>事件数据模块部分，主要定义和存储事件发生时的点位，事件对应的物体，事件的位移大小，事件的类型，以及事件的设备类型等。</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">PointerEventData</span> <span class="p">:</span> <span class="n">BaseEventData</span>
 <span class="p">{</span>
@@ -253,7 +257,9 @@
     <span class="k">public</span> <span class="n">InputButton</span> <span class="n">button</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>事件数据模块，主要用途是在各种事件发生时，或者两个前后事件发生后，相应数据的存储。为事件逻辑做好数据工作。数据类的主要核心是 PointerEventData 类，它存储了大部分的逻辑需要的数据，包括按下时的位置，松开与按下的时间差，拖动的位移差等等，几乎承载了所有数据。</p>
+<p>事件数据模块，主要用途是在各种事件发生时，或者两个前后事件发生后，对相应数据的存储，为事件逻辑做好数据工作。</p>
+
+<p>数据类的主要核心是 PointerEventData 类，它存储了大部分的逻辑需要的数据，包括按下时的位置，松开与按下的时间差，拖动的位移差等等，几乎承载了所有数据。这是事件数据模块部分的意义所在，存储数据并为逻辑部分做好准备。</p>
 
 <script type="text/javascript">
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
@@ -284,7 +290,11 @@
 
 <p>PointerInputModule 继承了BaseInputModule，并且在他基础上扩展了关于点位的输入逻辑，也增加了输入的类型和状态。</p>
 
-<p>StandaloneInputModule 和 TouchInputModule 继承了 PointerInputModule，它们两个是区分标准键盘鼠标和触控板输入的类。</p>
+<p>StandaloneInputModule 和 TouchInputModule 继承了 PointerInputModule，它们从父类开始延展向不同的方向。</p>
+
+<p>StandaloneInputModule 向标准键盘鼠标输入方向拓展，而 TouchInputModule 向触控板输入方向拓展。</p>
+
+<p>下面是他们的核心代码部分：</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Process all mouse events.</span>
@@ -312,7 +322,7 @@
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>StandaloneInputModule 从鼠标键盘输入事件上扩展了输入的逻辑。上面代码展示了其核心的监测输入的部分。</p>
+<p>以上 StandaloneInputModule 从鼠标键盘输入事件上扩展了输入的逻辑。检测并处理了鼠标的按下，移动，拖拽的操作。</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Process all touch events.</span>
@@ -339,31 +349,76 @@
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>而 TouchInputModule 则从触控板输入上进行扩展。上面代码展示了其核心的监测输入的部分。</p>
+<p>以上 TouchInputModule 则从触控板输入上进行扩展。检测并处理了，触控板手指按下，移动拖拽的操作。</p>
 
 <h6>射线碰撞检测模块源码</h6>
 
-<p>射线检测类部分主要做的工作是从摄像头指定的位置上，做射线碰撞检测，并获取碰撞结果。再把结果返回给事件处理逻辑类，由事件处理逻辑处理事件。</p>
+<p>射线碰撞检测模块主要工作是从摄像头指定的位置上，做射线碰撞检测，并获取碰撞结果。再把结果返回给事件处理逻辑类，由事件处理逻辑处理事件。</p>
 
-<p>射线检测部分总共就3个类，里面也就几十行代码，主要还是 2D 碰撞检测 和 3D碰撞检测的一点点小小区别。用 Physics2D 还是 Physics 的区别，以及在2D碰撞结果里预留了2D的层级次序以便在后面的碰撞结果排序时，以这个层级次序为依据做排序，而3D的碰撞检测结果则是以距离大小为依据排序的。</p>
+<p>射线碰撞检测部分总共4个类，主要是 2D 碰撞检测，3D 碰撞检测，以及UGUI元素点位检测三个方面的检测。</p>
 
-<p>主要的数据结构是 RaycastResult 类，这里承载了所有碰撞检测结果的依据。包括了距离，世界点位，屏幕点位，2D层级次序，碰撞物体等。为后面事件处理提供了数据上的依据。</p>
+<p>用 Physics2D 还是 Physics 区别了2D 和 3D 的碰撞检测，在2D碰撞结果里预留了2D的层级次序以便在后面的碰撞结果排序时，以这个层级次序为依据做排序，而3D的碰撞检测结果则是以距离大小为依据排序的。</p>
+
+<p>另外有一个不在这个文件夹里的一个 UGUI元素点位检测 的类 GraphicRaycaster ，它被放在了 Core 渲染块的文件夹里。</p>
+
+<p>它主要针对 ScreenSpaceOverlay 模式下输入点位检测，这个模式下的检测并不依赖于射线，而是遍历所有可点击的UGUI元素来检查和计算，判断是该响应哪个UI元素。</p>
+
+<p>核心源码如下：</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Perform a raycast into the screen and collect all graphics underneath it.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="na">[NonSerialized]</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Graphic</span><span class="p">&gt;</span> <span class="n">s_SortedGraphics</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Graphic</span><span class="p">&gt;();</span>
+<span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Raycast</span><span class="p">(</span><span class="n">Canvas</span> <span class="n">canvas</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">eventCamera</span><span class="p">,</span> <span class="n">Vector2</span> <span class="n">pointerPosition</span><span class="p">,</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Graphic</span><span class="p">&gt;</span> <span class="n">results</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Debug.Log(&quot;ttt&quot; + pointerPoision + &quot;:::&quot; + camera);</span>
+    <span class="c1">// Necessary for the event system</span>
+    <span class="kt">var</span> <span class="n">foundGraphics</span> <span class="p">=</span> <span class="n">GraphicRegistry</span><span class="p">.</span><span class="n">GetGraphicsForCanvas</span><span class="p">(</span><span class="n">canvas</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">foundGraphics</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Graphic</span> <span class="n">graphic</span> <span class="p">=</span> <span class="n">foundGraphics</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+        <span class="c1">// -1 means it hasn&#39;t been processed by the canvas, which means it isn&#39;t actually drawn</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">graphic</span><span class="p">.</span><span class="n">depth</span> <span class="p">==</span> <span class="p">-</span><span class="m">1</span> <span class="p">||</span> <span class="p">!</span><span class="n">graphic</span><span class="p">.</span><span class="n">raycastTarget</span><span class="p">)</span>
+            <span class="k">continue</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(!</span><span class="n">RectTransformUtility</span><span class="p">.</span><span class="n">RectangleContainsScreenPoint</span><span class="p">(</span><span class="n">graphic</span><span class="p">.</span><span class="n">rectTransform</span><span class="p">,</span> <span class="n">pointerPosition</span><span class="p">,</span> <span class="n">eventCamera</span><span class="p">))</span>
+            <span class="k">continue</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">graphic</span><span class="p">.</span><span class="n">Raycast</span><span class="p">(</span><span class="n">pointerPosition</span><span class="p">,</span> <span class="n">eventCamera</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">s_SortedGraphics</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">graphic</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">s_SortedGraphics</span><span class="p">.</span><span class="n">Sort</span><span class="p">((</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">g2</span><span class="p">.</span><span class="n">depth</span><span class="p">.</span><span class="n">CompareTo</span><span class="p">(</span><span class="n">g1</span><span class="p">.</span><span class="n">depth</span><span class="p">));</span>
+    <span class="c1">//      StringBuilder cast = new StringBuilder();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">s_SortedGraphics</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">s_SortedGraphics</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="c1">//      Debug.Log (cast.ToString());</span>
+
+    <span class="n">s_SortedGraphics</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>上述 GraphicRaycaster 类中的代码，对每个可以点击的元素(raycastTarget是否为true，并且 depth 不为-1)进行检测点位是否落在该元素上。</p>
+
+<p>再通过 depth 变量排序，判断最先落在哪个元素上，从而确定哪个元素响应输入事件。</p>
+
+<p>检测碰撞模块主要的数据结构是 RaycastResult 类，这里承载了所有碰撞检测结果的依据。包括了距离，世界点位，屏幕点位，2D层级次序，碰撞物体等，为后面事件处理提供了数据上的依据。</p>
 
 <h6>事件逻辑处理模块</h6>
 
-<p>事件主逻辑处理部分看似复杂，主要的逻辑都集中在 EventSystem 类中，其他都是对它起辅助作用的。</p>
+<p>事件主逻辑处理模块，主要的逻辑都集中在 EventSystem 类中，其余的类都是对它起辅助作用的。</p>
 
-<p>比如，EventInterfaces，EventTrigger，EventTriggerType 都是定义事件回调函数，而 ExecuteEvents 是执行事件回调的。</p>
+<p>EventInterfaces，EventTrigger，EventTriggerType 定义了事件回调函数，ExecuteEvents 编写了所有执行事件的回调接口。</p>
 
-<p>RaycasterManager 是管理碰撞测试的。这些类都是几十行代码就完结了的，并没有多少东西在里面，它们的主要作用是为 EventSystem 主逻辑服务。</p>
+<p>EventSystem 主逻辑里总共300行代码基本上都在处理由射线碰撞检测后引起的各类事件，判断事件是否成立，成立则发起事件回调，不成立则继续轮询检查，等待相关事件的发生。</p>
 
-<p>EventSystem 主逻辑里也并不复杂总，共300行代码基本上都在处理由射线碰撞检测后引起的各类事件，判断事件是否成立，成立则发起事件回调，不成立则继续轮询检查，等待相关事件的发生。</p>
+<p>EventSystem 是事件处理模块中唯一继承 MonoBehavior 并且有在 Update 帧循环中做轮询的。也就是说，所有UI事件的发生都是通过 EventSystem 轮询监测到的并且实施的。EventSystem 通过调用输入事件检测模块，检测碰撞模块，来形成自己主逻辑部分。</p>
 
-<p>EventSystem 是事件处理模块中唯一继承 MonoBehavior 并且有在 Update 帧循环中做轮询的。也就是说，所有UI事件的发生都是通过 EventSystem 轮询监测到的并且实施的。</p>
+<p>所以 EventSystem 是主线逻辑，是整个事件模块的主心骨。架构师在架构时已经将整个事件层各自的职能拆分的很清楚，所以我们看起来也并没有那么难。</p>
 
-<p>所以 EventSystem 是重点，是整个事件模块的主心骨。不过 EventSystem 写的并不复杂，因为架构师在架构时，已经将它们各自的职能分的很清楚了，所以我们看起来也并没有那么难。</p>
-
-<p>比如说输入监测已经由输入事件捕捉模块完成了，碰撞检测也已经有碰撞检测模块完成了，事件的数据类都已经搭建好了，EventSystem 要做的就只是把它们拼装起来，成为主逻辑块。</p>
+<p>比如说输入监测已经由输入事件捕捉模块完成，碰撞检测由碰撞检测模块完成，事件的数据类都有各自的定义，EventSystem 要做的就只是把它们拼装起来成为主逻辑块。</p>
 
 <p><a href="https://bitbucket.org/Unity-Technologies/ui/downloads/?tab=downloads">UGUI源码地址</a></p>
 
