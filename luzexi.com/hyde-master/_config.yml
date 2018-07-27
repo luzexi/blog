@@ -41,7 +41,7 @@ gongzhonghao: true
 relate_article: true
 
 #donation
-paypal_donation: true
+paypal_donation: false
 
 # Custom vars
 version:          2.1.0

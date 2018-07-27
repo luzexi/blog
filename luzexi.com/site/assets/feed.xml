@@ -7,7 +7,7 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第四章，UI(四) - UGUI渲染部分的核心源码剖析</title>
+               <title>《Unity3D高级编程之进阶主程》第四章，UI(四) - UGUI核心源码剖析</title>
                <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。&lt;/p&gt;
@@ -344,9 +344,11 @@
 
 &lt;p&gt;最后操作是在 CanvasRenderer 中进行的。前面说过 CanvasRenderer 是被反编译闭屏的，我们无法得知内容。但是我们可以想象，在裁切时的多做，计算两个四边形的相交点，再组合成裁切后的多边形，差不多是一个数学计算的过程。&lt;/p&gt;
 
-&lt;h3&gt;至此我们把 UGUI 的核心代码部分都剖析完毕了。其实也并没有什么高深的算法，或者技术。所有核心部分都围绕着，如何构建Mesh，如何重构Mesh，以及如何裁切的问题上。如果想仔细阅读源码，可以去如下地址获得源码。&lt;/h3&gt;
+&lt;h3&gt;至此我们把 UGUI 的核心代码部分都剖析完毕了。其实也并没有什么高深的算法，或者技术。所有核心部分都围绕着，如何构建Mesh，如何重构Mesh，以及如何裁切的问题上。倘若想仔细阅读Unity3D源码，可以去如下地址获得。&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://bitbucket.org/Unity-Technologies/ui/downloads/?tab=downloads&quot;&gt;UGUI源码地址&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Unity-Technologies/UnityCsReference/tree/master/Runtime&quot;&gt;Unity3D开源代码地址&lt;/a&gt;&lt;/p&gt;
 </description>
                <pubDate>Fri, 27 Jul 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html</link>
