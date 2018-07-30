@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta content="unity3d 高级编程 主程 UI ugui ngui 优化 区别针对高低端机型的优化 UI图集拼接的优化 GC的优化" name="description">
+
+
+  <title>
+    
+      《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css?version=20180701">
+  <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"> -->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+  	<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          技术人生
+        </a>
+      </h1>
+      <p class="lead">漫漫人生,记录点滴技术,始于2013</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      <a class="sidebar-nav-item" href="/书籍著作/index.html">书籍著作</a>
+      <a class="sidebar-nav-item" href="/unity3d/index.html">Unity3D</a>
+      <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
+      <a class="sidebar-nav-item" href="/金融投资/index.html">金融投资</a>
+      <a class="sidebar-nav-item" href="/life/index.html">Life</a>
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About Me</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/engineer-shopping.html">程序员必需品</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/friendlink.html">友情链接</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+      
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <a href="http://www.luzexi.com/assets/feed.xml">RSS feed</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+    </nav>
+
+    <p>&copy; 2018. All rights reserved.</p>
+    <p>浙ICP备13028172号-1</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)</h1>
+  <span class="post-date">30 Jul 2018</span>
+  <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">UI(六)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如何在游戏项目中架构UI框架。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">UI(七)-优化(一)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html">UI(七)-优化(二)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI图集Alpha分离，UI字体拆分，Scroll View 滚屏优化，以及UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">UI(七)-优化(三)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI展示与关闭的优化，对象池的运用，UI贴图设置的优化，内存泄露排查与预防。
+</code></pre></div>
+<p>这篇我们继续聊UI优化，这篇讲，区别针对高低端机型的优化，UI图集拼接的优化，GC的优化。</p>
+
+<p>===</p>
+
+<h3>⑫ 区别针对高低端机型的优化。</h3>
+
+<p>为什么要区分高低端机型？</p>
+
+<p>我们在做游戏项目时画质和流畅度是非常重要的，不过市面上的设备并不是统一的一种设备，纷繁复杂的设备市场，各种厂商都会推出不同型号不同性能的设备来满足大众的需求。</p>
+
+<p>一款游戏的画质和流畅度是决定游戏是否能畅销的关键，而画质和流畅度又需要靠设备来支撑，高低性能的设备会导致游戏产生不同的性能效果，这是最让人头疼的。</p>
+
+<p>辛苦开发的游戏，却不能在设备上顺畅的跑起来，导致画质糟糕，画面过慢，卡顿，甚至崩溃等问题，影响了游戏的可玩性，也影响了游戏在市场上的前景。</p>
+
+<p>为了让市场上的高低机型的设备都能让游戏流畅的跑起来，我们需要让游戏对高低机型区别对待。</p>
+
+<p>在高端机型中使用画质好的画面，而在低端机型中使用差一点的画质。因为低端机型内存低，CPU性能差，设备中部件之间配合并没那么好，所以如果还是运行高端的画质会比较不流畅。</p>
+
+<p>如何处理高低端机型的画质问题？</p>
+
+<p>高低端机型的区分对待，我们可以从几个方面入手：</p>
+
+<p>1， UI贴图质量区分对待。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    针对高低端不同的机型，分别使用不同的两套UI贴图，其中一套是针对高端机型的，无任何压缩，无缩小，
+
+    另一套是针对低端机型的，对UI贴图进行了压缩，且缩小了UI贴图的大小。
+
+    我们会在下面详细的讲如何在游戏中用NGUI和UGUI无缝的切换高低质量的UI画面。
+</code></pre></div>
+<p>2， 特效使用情况区分对待。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    针对高低端不同的机型，分别使用不同的特效，或者非关键部位不使用特效。
+
+    特效在项目中使用的最常见也最频繁，高质量的特效能直接导致低端机型的卡顿，因此在低端机型中更换低质量的特效，或者甚至在非关键部位不使用特效。
+</code></pre></div>
+<p>3， 阴影使用情况区分对待。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    针对高低端不同的机型，分别使用不同质量的阴影，或者不使用阴影。
+
+    场景中的模型物体越多，面数就越多，实时阴影的计算量与渲染量就越多。
+
+    在低端机型上保持顺畅是第一，如果能不使用阴影那是最好的，直接省去了阴影的计算。
+
+    但假如一定要使用，那我们也有办法减低阴影计算和渲染的消耗。
+
+    下面是针对高低端机型对阴影处理的几个方法：
+
+        方法1，用Unity3D提供的阴影渲染设置接口，QualitySettings.shadowResolution 设置渲染质量，QualitySettings.shadows 设置有无和模式，以及 QualitySettings.shadowProjection 投射质量，QualitySettings.shadowDistance 阴影显示距离，QualitySettings.shadowCascades 接受灯光的数量等。
+
+        在高端机型上使用高质量阴影渲染设置，而在中端机型上使用中端阴影渲染设置，在低端机型上使用低端阴影渲染设置，甚至关闭阴影渲染设置。
+
+        方法2，关闭传统的阴影渲染设置，使用简单的底部圆形黑色阴影面片代替。
+
+        这样就省去了阴影计算的CPU消耗，而且还能看见阴影在底部。
+
+        用一些简单的阴影面片替换了阴影计算的CPU消耗，用内存换了CPU。
+
+        方法3，关闭部分模型的阴影计算。
+
+        使用简单的圆形面片代替阴影在真实感上效果还是差了点，如果我们既需要实时的阴影效果，又不想消耗过多的CPU，怎么办？
+
+        我们可以对部分模型使用简单的阴影面片代替，对另一部分比较重要的模型使用实时阴影渲染。
+
+        这就需要我们将场景中的所有可被计算阴影的模型集中起来管理。
+
+        我们将场景中的Render全部收集起来，把需要实时阴影计算的模型打开Render.receiveShadows选项，对另一些不需要实时阴影计算的模型关闭Render.receiveShadows选项，并选择使用简单阴影模型代替。
+</code></pre></div>
+<p>4，    抗噪声，LOD，像素光数量使用情况区分对待。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    针对高低端不同的机型，分别使用不同质量的抗锯齿效果和不同级别的LOD效果，或者直接不使用抗锯齿和LOD效果。
+
+    Unity3D渲染设置专门有针对抗噪声，LOD，像素光数量限制的选项，我们可以在程序里调用 QualitySettings.antiAliasing，QualitySettings.lodBias，QualitySettings.maximumLODLevel，QualitySettings.pixelLightCount等。
+
+    可以使用这些接口在高中低端机上分别进行设置，让不同性能的机子拥有不同画质的设置。
+</code></pre></div>
+<p>5，    整体贴图渲染质量区分对待。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    针对高低端不同的机型，分别使用不同的贴图渲染质量。
+
+    Unity3D有对贴图渲染质量的设置，QualitySettings.masterTextureLimit，这个API默认是0，就是不对贴图渲染进行限制，假如设置为1，就是渲染1/2大小的画质，相当于压缩了所有要渲染的贴图的大小至原先的1/2大小，假如设置2，就是1/4画质，以此类推。
+
+    对所有贴图进行渲染限制，是个大杀器，能直接让CPU和GPU消耗降下来，但画质也遭到了毁灭性的打击，我们需要它在低端机型上发挥作用，但也要谨慎使用。
+</code></pre></div>
+<h6>那么怎么用程序区分机子是高低端呢？</h6>
+
+<p>区分机子是高低端的几个方法介绍下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1，    Apple，毕竟IOS的型号是有限的，我们可以把其中一些型号的机子归类为高端，其中一些型号的机子归类为中端，另一些型号的机子归类为低端。Unity3D中的API有可以用的接口，例如 UnityEngine.iOS.Device.generation == UnityEngine.iOS.DeviceGeneration.iPhone6，等以此类推就能实现区分Apple机子高低端的情况。
+
+    2，    Android 等其他机型，由于机子型号太多，我们可以用内存大小，系统版本号，屏幕分辨率大小，平均帧率等因素判断是高端机还是低端机。
+
+    比如，3G内存或以上为高端机，1G或以下肯定是低端，其他为中端。
+
+    又比如，Android 7.0以上为高端，Android 5.0以下都是低端，其他为中端。
+
+    如上描述通过一些简单的规则将高低端机型区分开来。
+
+    3， 我们也可以通过平均帧率来判定高低端机型。
+
+    在游戏中加入统计平均帧率的程序，将机型型号和平均帧率发送给服务器，由服务器记录各机型型号的平均帧率，再统计出来一份报表给客户端，客户端根据这份统计报表决定，哪些机型型号是高端设备，哪些是低端设备。
+
+    最后再通过高低端设备画质不同的方法，来优化高低端设备的游戏流畅度。
+</code></pre></div>
+<p>区分高低端的方法，我们可以三种一起用，因为Android中有一些机子是有固定名称或者编号的，我们可以确定他的高低端类型，有些是不确定型号的，就需要通过设备的硬件设置来确定高低端，哪些完全不能确定高低端的机子，就只能在统计中得到答案了。</p>
+
+<p>在高低端机型优化中，UI贴图质量的区别对待是个比较重要的手法，我们下面将对此方法进行详细的介绍。</p>
+
+<p>在开发游戏时免不了要针对不同机型的做不同的处理，让游戏在高画质和低画质之间切换，在判定高低端设备后，可以实时切换游戏品质让游戏更加流畅。这能给客户端在渠道发行后提高些许留存率。</p>
+
+<p>NGUI和UGUI切换方式有所不同，NGUI基于图集Atlas，UGUI基于Image Unity3D4.6.1后的Sprite 2D。</p>
+
+<p>UI高低画质切换在NGUI和UGUI里都是基于两套图和两套Prefab的。</p>
+
+<p>它们的共同特点是在所有的原生态的高画质(HD)Prefab都是用脚本工具去生成相应的标准画质(SD)Prefab。</p>
+
+<p>用编写的程序把高清UI和标清UI做成两个不同的Prefab，两个UI的功能是相同的，只是相对应的图集质量不同罢了。</p>
+
+<p>然后我们在高端机型中运行高清UI，在中低端机型中运行标清UI，使得高低端机型都能流畅的跑游戏，而且拥有相同的功能。</p>
+
+<p>这个生成高低画质Prefab的程序其运行的步骤是，先把所有UI用到的图集，材质球都复制一份到固定文件夹下，再复制一份Prefab存放在文件夹下面，再把Prefab里与图集有关的变量都指向标清SD材质球或者标清SD图集，或者也可以是标清SD单张图。</p>
+
+<p>我们来看看实时切换高清和标清的UI时的具体步骤：</p>
+
+<ol>
+<li><p>一套UI图复制成两套图。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>一套高清一套标清，高清(HD) Prefab指向高清图，(标清SD)Prefab指向低清图。
+
+这里NGUI和UGUI的方法不同。
+
+NGUI需要制作两个Atlas prefab，再通过修改内核将Atlas实时更换掉，也可以复制并制作另一个SD UI Prefab只改变Atlas部分的指向标清画质的Atlas。
+
+UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来切换高清画质和标清画质，但也可以通过制作一个SD Prefab来达到高清和标清切换的目的。
+
+步骤是，首先复制所有图片到SD文件夹，并加上前缀sd，这样好辨认，然后复制一个相同UI Prefab命名为SD UI Prefab，再把复制过来的SD UI Prefab里的图都换成SD里的图。这样高清和标清UI Prefab都有相同的逻辑，只是指向的图不同而已。
+</code></pre></div></li>
+<li><p>程序在选择SD还是HD时，只要需要关注Prefab名的不同。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>Prefab名字在高清和标清之间只是前缀不一样，高清的前缀HD或者没有前缀，而标清的文件名前缀统一设置为SD，所以加载时很容易用前缀名区分开来。
+</code></pre></div></li>
+<li><p>最后，NGUI和UGUI制作SD Prefab的流程可以通过写一个脚本程序一键搞定，就不用再麻烦手动一个个复制一个个修改了。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>在开发过程中，我们只要维护好HD UI Prefab就可以了，在打包前用脚本一键构建SD UI Prefab能节省不少时间，提高不少效率。
+
+这样一来，在制作过程中，我们不用再关心SD的事情，完全可以只把注意力和精力集中在做好高清的UI上，关于标清SD的问题，脚本程序已经帮我们全部搞定。
+</code></pre></div></li>
+</ol>
+
+<p>最后总结：两套图一高一低，需要维护两套，使用脚本程序工具根据HD的Prefab生成SD的Prefab。</p>
+
+<h3>⑬ UI图集拼接的优化。</h3>
+
+<p>为什么要优化UI图集拼接？</p>
+
+<p>UI图集概念在Unity3D的UI中是必不可少的。UI图在整个项目中也占了举足轻重的作用。所以UI图集的大小，个数，也一定程度上决定了项目打包后的大小和运行效率。</p>
+
+<p>没有优化过UI图集的项目，会浪费很多空间，包括硬盘空间和内存空间，同时也会浪费CPU的工作效率。所以优化UI图集拼接也是很重要的。</p>
+
+<p>如何优化图集拼接？</p>
+
+<p>下面介绍几个方法：</p>
+
+<p>1，    充分利用图集空间。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    在我们大小图拼接在一起制作成图集时，尽量不要让图集空出太多碎片空间。
+
+    碎片空间怎么来的呢，基本上由大图与大图拼接而来，因为大图需要大块的拼接空间，所以会有几张大图拼接在一起形成图集的情况，导致很多浪费的空白空间在图集内。
+
+    我们要把大图拆分开来拼接，或者把大图分离出去不放入图集内，而使用单独的图片做渲染。
+
+    在拼接时，大图穿插小图，让空间更充分的利用。
+</code></pre></div>
+<p>2，    图集大小控制。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    假设我们图集的大小不加以控制，就会形成例如 2048x2048 甚至 4096x4096 的图。
+
+    这会导致什么问题呢，在游戏加载UI时异常的卡顿，而且由于卡顿的时间过长内存消耗过快，导致糟糕的用户体验甚至崩溃。
+
+    我们需要规范图集大小，例如我们通常规定图集大小标准在1024x1024，这样不仅在制作时要考虑让大小图充分利用空白空间，也让UI在加载时，只加载需要的图集，让加载速度更快。
+</code></pre></div>
+<p>3，    图片的拼接归类。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    在没有图片拼接归类的情况下，通常会在加载UI时加载了一些不必要的图集，导致加速速度过慢，内存消耗过大的问题。
+
+    比如背包界面的一部分图片，放在了大厅图集里，导致，在加载大厅UI时，也把背包界面的图集一并加载了进来，导致加速速度缓慢，内存飙升。
+
+    我们要人为的规范他们，把图集分类，例如，通常我们分为，常用图集（里面包含了一些各个界面都会用到的常用图片），功能类图集（比如大厅界面图集，背包界面图集，任务界面图集等），链接类图集（链接两种界面的图集，比如只在大厅界面与背包界面都会用的，特别需要拆分出来单独成为一张图集）
+</code></pre></div>
+<p>我们优化图集拼接的最终目的是，减少图集大小，减少图集数量，减少一次性加载图集数量，让游戏运行的更稳，更快。</p>
+
+<script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = "u3493987";
+        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = "u3469788";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+    }
+</script>
+
+<h3>⑭ GC的优化。</h3>
+
+<p>什么是GC？为什么要优化GC？</p>
+
+<p>GC(garbage collection)就是垃圾回收机制。前面在内存泄漏章节中对垃圾回收机制做过详细的介绍，这里再简单介绍下。</p>
+
+<p>在游戏运行的时候，数据主要存储在内存中，当游戏的数据在不需要的时候，存储当前数据的内存就可以被回收以再次使用。</p>
+
+<p>内存垃圾是指当前废弃数据所占用的内存，垃圾回收（GC）是指将废弃的内存重新回收再次使用的过程。</p>
+
+<p>在进行垃圾回收（GC）时，会检查内存上的每个存储变量，然后对每个变量检查其引用是否处于激活状态，如果变量的引用不处于激活状态，则会被标记为可回收，被标记的变量会在接下去的程序中被移除，其所占的内存也会被回收到堆内存中。</p>
+
+<p>所以GC操作是一个相当耗时的操作，堆内存上变量或者引用越多则其检查的操作会更多，耗时也更长。</p>
+
+<p>引用变量的多少和层数，只是GC耗时的其中一个因素。其他关键的耗时因素，还有内存分配和申请系统内存的耗时，回收内存的耗时以及垃圾回收（GC）接口被调用的次数，都是非常关键的GC耗时因素。</p>
+
+<p>下面我们来看内存分配和申请系统内存是如何影响耗时的：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1）Unity3D内部有两个内存管理池：堆内存和堆栈内存。堆栈内存(stack)主要用来存储较小的和短暂的数据，堆内存(heap)主要用来存储较大的和存储时间较长的数据。
+
+    2）Unity3D中的变量只会在堆栈或者堆内存上进行内存分配，变量要么存储在堆栈内存上，要么处于堆内存上。
+
+    3）只要变量处于激活状态，则其占用的内存会被标记为使用状态，则该部分的内存处于被分配的状态。
+
+    4）一旦变量不再激活，则其所占用的内存不再需要，该部分内存可以被回收到内存池中被再次使用，这样的操作就是内存回收。处于堆栈上的内存回收及其快速，处于堆上的内存并不是及时回收的，此时其对应的内存依然会被标记为使用状态。
+
+    5) 垃圾回收主要是指堆上的内存分配和回收，Unity3D中会定时对堆内存进行GC操作。
+
+    6) Unity3D中堆内存只会增加，不会减少，也就是当堆内存不足时只会向系统申请更多内存，而不会空闲时还给系统，除非应用结束重新开始。
+</code></pre></div>
+<p>由于Unity3D在堆内存不足时会向系统申请新的内存以扩充堆内存，这种向系统申请新内存的方式是比较耗时的。</p>
+
+<p>我们平时的游戏项目中，常常由于堆内存中的申请与回收导致大量的碎片内存，而当大块的内存需要使用时，这些碎片内存却无法用于大块内存需求，此时就会引起一个耗时的操作，就是向系统申请更多的内存，申请的次数越多越频繁，GC的耗时也就越多。</p>
+
+<p>垃圾回收（GC）接口被调用的次数也是关键因素。</p>
+
+<p>经常有游戏项目中，不断频繁的调用垃圾回收（GC）接口，每次调用都会重新检查所有内存变量是否被激活，并且标记需要回收的内存块并且在后面回收，这样就在逻辑中产生了很多不必要的检查，和并不集中的销毁导致的内存命中率下降，最终导致浪费了宝贵的CPU资源。</p>
+
+<p>GC的调用次数以及时机是非常关键的，GC操作会需要大量的时间来运行，如果堆内存上有大量的变量或者引用需要检查，则检查的操作会十分缓慢，这就会使得游戏运行缓慢。</p>
+
+<p>其次GC可能会在关键时候运行，例如在CPU处于游戏的性能运行关键时刻，此时任何一个额外的操作都可能会带来极大的影响，使得游戏帧率下降。</p>
+
+<p>另外一个GC带来的问题是堆内存的碎片化。</p>
+
+<p>当一个内存单元从堆内存上分配出来，其大小取决于其存储的变量的大小。</p>
+
+<p>当该内存被回收到堆内存上的时候，有可能使得堆内存被分割成碎片化的单元。</p>
+
+<p>也就是说堆内存总体可以使用的内存单元较大，但是单独的内存单元较小，在下次内存分配的时候不能找到合适大小的存储单元，这也会触发GC操作或者堆内存扩展操作。</p>
+
+<p>堆内存碎片会造成两个结果，一个是游戏占用的内存会越来越大，一个是GC会更加频繁地被触发。</p>
+
+<h3>如何主动减少GC的消耗？</h3>
+
+<p>主要有三个操作会触发垃圾回收：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>　　 1） 在堆内存上进行内存分配操作而内存不够的时候都会触发垃圾回收来利用闲置的内存；
+
+　　 2） GC会自动的触发，不同平台运行频率不一样；
+
+　　 3） GC可以被强制执行。
+</code></pre></div>
+<p>特别是在堆内存上进行内存分配时内存单元不足够的时候，GC会被频繁触发，这就意味着频繁在堆内存上进行内存分配和回收会触发频繁的GC操作。</p>
+
+<p>在Unity3D中，值类型变量都在堆栈上进行内存分配，而引用类型和其他类型的变量都在堆内存上分配。</p>
+
+<p>所以值类型的分配和释放,在其生命周期后会被立即收回，例如函数中的临时变量Int，其对应函数调用完后会立即回收。</p>
+
+<p>而引用类型的分配和释放，是在其生命周期后或被清除后，在GC的时候才回收，例如函数中的临时变量List<Int>，在函数调用结束后并不会立刻被回收，而是要等到下次GC时才被回收至堆内存。</p>
+
+<p>大体上来说，我们可以通过三种方法来降低GC的影响：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>　　1）减少GC的运行次数；
+
+　　2）减少单次GC的运行时间；
+
+　　3）将GC的运行时间延迟，避免在关键时候触发，比如可以在场景加载的时候调用GC。
+</code></pre></div>
+<p>我们可以采用三种策略：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>　　1）对游戏进行重构，减少堆内存的分配和引用的分配。更少的变量和引用会减少GC操作中的检测个数从而提高GC的运行效率。
+
+　　2）降低堆内存分配和回收的频率，尤其是在关键时刻。也就是说更少的事件触发GC操作，同时也降低堆内存的碎片化。
+
+　　3）我们可以试着测量GC和堆内存扩展的时间，使其按照可预测的顺序执行。当然这样操作的难度极大，但是这会大大降低GC的影响。
+</code></pre></div>
+<p>减少内存垃圾的一些方法：</p>
+
+<p>1，    缓存变量，达到重复利用的目的，减少不必要的内存垃圾。</p>
+
+<p>比如，Update或OnTriggerEnter中使用 MeshRenderer meshrender = gameObject.GetComponent<MeshRenderer>()来处理模型渲染类，就会造成不必要的内存垃圾。</p>
+
+<p>我们可以在Start或Awake中先缓存起来，然后在Update或OnTriggerEnter中使用。这样我们已经缓存的变量内存一直存在在那，而不会被反复的销毁和分配。</p>
+
+<p>优化前</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">void</span> <span class="nf">OnTriggerEnter</span><span class="p">(</span><span class="n">Collider</span> <span class="n">other</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">MeshRenderer</span> <span class="n">meshRenderer</span> <span class="p">=</span> <span class="n">gameObject</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">MeshRenderer</span><span class="p">&gt;();</span>
+    <span class="n">ExampleFunction</span><span class="p">(</span><span class="n">meshRenderer</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>优化后</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">private</span> <span class="n">MeshRenderer</span> <span class="n">mMeshRenderer</span><span class="p">;</span>
+ 
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
+<span class="p">{</span>
+   <span class="n">mMeshRenderer</span> <span class="p">=</span> <span class="n">gameObject</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">MeshRenderer</span><span class="p">&gt;();</span>
+<span class="p">}</span>
+ 
+<span class="k">void</span> <span class="nf">OnTriggerEnter</span><span class="p">(</span><span class="n">Collider</span> <span class="n">other</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ExampleFunction</span><span class="p">(</span><span class="n">mMeshRenderer</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>2， 减少逻辑调用。</p>
+
+<p>堆内存分配，最坏的情况就是在其反复调用的函数中进行堆内存分配，例如Update()和LateUpdate()函数这种每帧都调用的函数，这会造成大量的内存垃圾。</p>
+
+<p>我们要想方设法减少逻辑调用，可以利用时间因素，对比是否改变的情况等将Update和LateUpdate中的逻辑调用减少到最低程度。</p>
+
+<p>例如，用时间因素，决定是否调用逻辑的案例</p>
+
+<p>优化前，每一帧都在调用逻辑。</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">ExampleFunction</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>优化后，调用逻辑的间隔延迟到1秒。</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">private</span> <span class="kt">float</span> <span class="n">timeSinceLastCalled</span> <span class="p">=</span>  <span class="m">0</span><span class="p">;</span>
+<span class="k">private</span> <span class="kt">float</span> <span class="n">delay</span> <span class="p">=</span> <span class="m">1f</span><span class="p">;</span>
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">timSinceLastCalled</span> <span class="p">+=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">timeSinceLastCalled</span> <span class="p">&gt;</span> <span class="n">delay</span><span class="p">)</span>
+    <span class="p">{</span>
+         <span class="n">ExampleFunction</span><span class="p">();</span>
+         <span class="n">timeSinceLastCalled</span> <span class="p">=</span> <span class="m">0f</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>例如，用对比情况，决定是否调用逻辑的案例</p>
+
+<p>优化前，每帧都在调用逻辑。</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">ExampleFunction</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>优化后，只在坐标X改变的情况下才调用逻辑。</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">private</span> <span class="kt">float</span> <span class="n">previousTransformPositionX</span><span class="p">;</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="p">!=</span> <span class="n">previousTransformPositionX</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">ExampleFunction</span> <span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>    
+        <span class="n">previousTransformPositionX</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>通过这样细小的改变，我们可以使得代码运行的更快同时减少内存垃圾的产生。案例中，我们只使用了几个变量的代价，却节省了很多CPU消耗。</p>
+
+<p>3，    清除链表，而不是不停的生成新的链表。</p>
+
+<p>在堆内存上进行链表的分配的时候，如果该链表需要多次反复的分配，我们可以采用链表的clear函数来清空链表从而替代反复多次的创建分配链表。</p>
+
+<p>优化前，每帧都会分配一个链表的内存进行调用。</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">List</span> <span class="n">myList</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">();</span>
+    <span class="n">ExampleFunction</span><span class="p">(</span><span class="n">myList</span><span class="p">);</span>       
+<span class="p">}</span></code></pre></figure>
+
+<p>优化后，不再重复分配链表内存，而是将他清理后再使用。</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">private</span> <span class="n">List</span> <span class="n">myList</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">();</span>
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">myList</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+    <span class="n">ExampleFunction</span><span class="p">(</span><span class="n">myList</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>4， 对象池。</p>
+
+<p>用对象池技术保留废弃的内存变量，在当重复利用时不再需要重新分配内存而是利用对象池内的旧有的对象。</p>
+
+<p>因为即便我们在代码中尽可能地减少堆内存的分配行为，但是如果游戏有大量的对象需要产生和销毁，依然会造成频繁的GC。</p>
+
+<p>对象池技术可以通过重复使用对象来降低堆内存的分配和回收频率。</p>
+
+<p>对象池在游戏中广泛的使用，特别是在游戏中需要频繁的创建和销毁相同的游戏对象的时候，例如枪的子弹这种会频繁生成和销毁的对象。</p>
+
+<p>5，    字符串。</p>
+
+<p>在C#中，字符串是引用类型变量而不是值类型变量，即使看起来它是存储字符串的值的。</p>
+
+<p>这就意味着字符串会造成一定的内存垃圾，由于代码中经常使用字符串，所以我们需要对其格外小心。</p>
+
+<p>C#中的字符串是不可变更的，也就是说其内部的值在创建后是不可被变更的。</p>
+
+<p>每次在对字符串进行操作的时候（例如运用字符串的“加”操作），C#会新建一个字符串用来存储新的字符串，使得旧的字符串被废弃，这样就会造成内存垃圾。</p>
+
+<p>我们可以采用以下的一些方法来最小化字符串的影响：</p>
+
+<p>1）    减少不必要的字符串的创建，如果一个字符串被多次利用，我们可以创建并缓存该字符串。</p>
+
+<p>例如项目中常用到的，将文字字符串存储在数据表中，然后由程序去读取数据表，从而将所有常用的字符串存储在内存里。</p>
+
+<p>这样的话，成员们在调用字符串时就可以直接调用我们存储的字符串了，而不需要去新建一个字符串来操作。</p>
+
+<p>2）减少不必要的字符串操作。</p>
+
+<p>例如如果在Text组件中，有一部分字符串需要经常改变，但是其他部分不会，则我们可以将其分为两个部分的组件，对于不变的部分就设置为类似常量字符串即可。</p>
+
+<p>优化前，每帧都会重新创建一个字符串来设置时间文字。</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="n">Text</span> <span class="n">timerText</span><span class="p">;</span>
+<span class="k">private</span> <span class="kt">float</span> <span class="n">timer</span><span class="p">;</span>
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">timer</span> <span class="p">+=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
+    <span class="n">timerText</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&quot;Time:&quot;</span><span class="p">+</span> <span class="n">timer</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>优化后，不再操作字符串，而是赋值给文字组件显示，从而减少了内存垃圾。</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="n">Text</span> <span class="n">timerHeaderText</span><span class="p">;</span>
+<span class="k">public</span> <span class="n">Text</span> <span class="n">timerValueText</span><span class="p">;</span>
+<span class="k">private</span> <span class="kt">float</span> <span class="n">timer</span><span class="p">;</span>
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">timerHeaderText</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&quot;TIME:&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+   <span class="n">timerValueText</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="n">timer</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>3）如果我们需要实时的操作字符串，我们可以采用StringBuilderClass来代替，StringBuilder专为不需要进行内存分配而设计，从而减少字符串产生的内存垃圾。</p>
+
+<p>不过此类方法还是要选择性使用，因为在实际项目中，如果大量的使用StringBuilder，又会产生很多new的操作，导致内存垃圾的产生，同时原本工作量小的字符串操作，又会变成工作量大的StringBuilder函数调用。</p>
+
+<p>所以只能在小范围特定区域使用，比如，特别频繁的操作字符串的情况下，不断增加，改变字符串的地方。例如，游戏中有对字符串逐步显示的需求，像写文章一样一个个或者一片片的显示，而不是全部一下子显示的需求时，用StringBuilder就恰到好处。</p>
+
+<p>4）移除游戏中的Debug.Log()函数的代码.</p>
+
+<p>尽管该函数可能输出为空，对该函数的调用依然会执行，该函数会创建至少一个字符（空字符）的字符串。</p>
+
+<p>如果游戏中有大量的该函数的调用，这会造成内存垃圾的增加。</p>
+
+<p>6，    协程。</p>
+
+<p>调用 StartCoroutine()会产生少量的内存垃圾，因为Unity3D会生成实体来管理协程。任何在游戏关键时刻调用的协程都需要特别的注意，特别是包含延迟回调的协程。</p>
+
+<p>yield在协程中不会产生堆内存分配，但是如果yield带有参数返回，则会造成不必要的内存垃圾，例如：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    yield return 0;
+</code></pre></div>
+<p>由于需要返回0，引发了装箱操作，所以会产生内存垃圾。这种情况下，为了避免内存垃圾，我们可以这样返回：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    yield return null;
+</code></pre></div>
+<p>另外一种对协程的错误使用是每次返回的时候都new同一个变量，例如：</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">while</span><span class="p">(!</span><span class="n">isComplete</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nf">WaitForSeconds</span><span class="p">(</span><span class="m">1f</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>我们可以采用缓存来避免这样的内存垃圾产生：</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">WaitForSeconds</span> <span class="n">delay</span> <span class="p">=</span> <span class="k">new</span> <span class="n">WaiForSeconds</span><span class="p">(</span><span class="m">1f</span><span class="p">);</span>
+<span class="k">while</span><span class="p">(!</span><span class="n">isComplete</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="n">delay</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>7，    Foreach循环。</p>
+
+<p>在Unity3D 5.5以前的版本中，在foreach的迭代中都会生成内存垃圾，主要来自于其后的装箱操作。</p>
+
+<p>每次在foreach迭代的时候，都会在堆内存上生产一个System.Object用来实现迭代循环操作。</p>
+
+<p>如果游戏工程不能升级到5.5以上，则可以用for或者while循环来解决这个问题。</p>
+
+<p>8，    函数引用。</p>
+
+<p>函数的引用，无论是指向匿名函数还是显式函数，在Unity3D中都是引用类型变量，这都会在堆内存上进行分配。</p>
+
+<p>特别是System.Action匿名函数在项目中使用的特别频繁，匿名函数调用完成后都会增加内存的使用和堆内存的分配。</p>
+
+<p>具体函数的引用和终止都取决于操作平台和编译器设置，但是如果想减少GC最好减少函数的引用，特别是匿名函数。</p>
+
+<p>9，    LINQ和常量表达式。</p>
+
+<p>由于LINQ和常量表达式以装箱的方式实现，所以在使用的时候最好进行性能测试。</p>
+
+<p>如果可以尽量使用其他方式代替LINQ，以家少LINQ对内存垃圾的增加。</p>
+
+<p>10，   主动调用GC操作。</p>
+
+<p>如果我们知道堆内存在被分配后并没有被使用，我们希望可以主动地调用GC操作，或者在GC操作并不影响游戏体验的时候（例如场景切换，或读进度条的时候），我们可以主动的调用GC操作System.GC.Collect()。通过主动的调用，我们可以主动驱使GC操作来回收堆内存。让体验不好的时间段放在察觉不到的地方，或者不会被明显察觉的地方。</p>
+
+<p>参考资料：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1， Unity优化之GC——合理优化Unity的GC 作者：zblade
+
+    2， Optimizing garbage collection in Unity games 作者：Unity3D
+</code></pre></div>
+  <p>感谢您的耐心阅读</p>
+  <p>Thanks for your reading</p>
+</div>
+<div>
+  
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+<div id="cyReward" role="cylabs" data-use="reward" align="center" ></div>
+
+  <li>
+<p>版权申明</p>
+<p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)</a></p> -->
+<p>Copyright attention</p>
+<p>If you would like to reprint this article please write auth's name and link in the page.</p>
+
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
+</li>
+</div>
+<div class="related">
+    
+<div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+
+
+
+
+
+<div class="related">
+  <h2>最新发表的文章</h2>
+  <ul class="related-posts">
+
+    
+      <li>
+        <h3>
+          <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">
+            《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)
+            <small>30 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
+            《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
+            <small>30 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html">
+            《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(二)
+            <small>27 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+
+  </ul>
+
+  <h2>之后发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
+                <small>30 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(二)
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(一)
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(四) - UGUI核心源码剖析
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/26/jekyll-related-page.html">
+                重写Jekyll的Relate功能
+                <small>26 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  <!-- </ul> -->
+
+  <h2>之前发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
+                <small>30 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(二)
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(一)
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(四) - UGUI核心源码剖析
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/26/jekyll-related-page.html">
+                重写Jekyll的Relate功能
+                <small>26 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  </ul>
+</div>
+
+
+
+
+<div id="SOHUCS" ></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cys17tiy3',
+conf: 'prod_3b20e80a06c760385d4781c30f8ebf5c'
+});
+</script>
+
+
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-悬浮20:3*/
+    	var cpro_id = "u3495898";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+ 
+
+
+
+    </div>
+
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </body>
+  
+</html>
