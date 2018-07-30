@@ -4,13 +4,319 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-07-30T11:14:27+08:00</updated>
+ <updated>2018-07-30T22:13:20+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)</title>
+   <link href="http://www.luzexi.com/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html"/>
+   <updated>2018-07-30T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2018/07/30/Unity3D高级编程之进阶主程-UI9</id>
+   <content type="html">&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html&quot;&gt;UI(二)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI的原理，以及组件使用详解。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html&quot;&gt;UI(三)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI源码中输入事件模块源码剖析。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html&quot;&gt;UI(四)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI渲染核心源码剖析。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html&quot;&gt;UI(六)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    如何在游戏项目中架构UI框架。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html&quot;&gt;UI(七)-优化(一)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html&quot;&gt;UI(七)-优化(二)&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    优化UI的几种方法，UI图集Alpha分离，UI字体拆分，Scroll View 滚屏优化，以及UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这篇我们来继续聊聊，UI展示与关闭的优化，对象池的运用，UI贴图设置的优化，内存泄露排查与预防。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;h3&gt;⑧ UI展示与关闭的优化。&lt;/h3&gt;
+
+&lt;p&gt;UI的展示与关闭动作最常见，需要看界面时打开，看完了关闭。但打开和关闭也会消耗一定的CPU，因为打开需要实例化和初始化，关闭需要销毁GameObject。&lt;/p&gt;
+
+&lt;p&gt;对于关闭和打开的CPU消耗的优化这里有几个策略可寻，&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    ① 前面提过利用碎片时间的预加载，会让展示速度更加快，因为提交消耗了一部分需要消耗的CPU。
+
+    ② 在关闭时隐藏GameObject，而不是销毁。在以后再次显示时，直接显示，并再次初始化。这里初始化很必要，因为需要让UI回到原来的状态，不过也会因界面的不同而不同，有些界面不需要我们回到原始状态。
+
+    ③ 移出屏幕。移出屏幕并不会让CPU消耗全部消失，但会减少一部分，不过GPU在这个界面上的消耗就会基本消失。当需要显示时再移入屏幕，并且如果需要的话，进行初始化回到原来的状态。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;2、3两个方法相同点是，都是用内存换CPU，关闭界面时不减少内存，而减少了CPU的消耗。不同点是，方法2 在关闭期间CPU消耗比方法3的更少，在打开时CPU消耗比方法3 的却更多。&lt;/p&gt;
+
+&lt;p&gt;方法3 比较平均的消耗了CPU，而 方法2 消耗的CPU波幅稍微大了点。两者方法的消耗比起来，并没有差很多，具体项目中的具体情况我们可以利用这些差异进行优化，让UI跑起来更舒服，比如关闭的时间长的界面用方法2，关闭时间相对短的用方法3。&lt;/p&gt;
+
+&lt;h3&gt;⑨ 对象池的运用。&lt;/h3&gt;
+
+&lt;p&gt;什么是对象池，以及为什么要用对象池？&lt;/p&gt;
+
+&lt;p&gt;对象池，即对象的池子，这样描述起来比较形象。对象池里寄存着一些废弃的对象，当计算机程序需要该种对象时，可以向对象池申请，对废弃的对象再利用。&lt;/p&gt;
+
+&lt;p&gt;废物再利用能省去了实例化的CPU消耗，而实例化消耗包括了，模型文件读取，贴图文件读取，建模，渲染，逻辑初始化，销毁物体等。在对象用完后，再将对象隐藏并放入对象池。&lt;/p&gt;
+
+&lt;p&gt;对象池的方法，本质是用内存换CPU的策略。在内存中保留了模型和贴图，再次利用时就省去了实例化和销毁的CPU消耗。&lt;/p&gt;
+
+&lt;p&gt;我们在UI界面中，有时会出现，需要不断跳出不同的物体。这时实例化和销毁是逻辑中消耗最大的，物体不断冒出来，又大量不断消失。CPU大部分浪费在了实例化和销毁上，而渲染的比重只占了很小一部分。&lt;/p&gt;
+
+&lt;p&gt;这时运用对象池就能解决大部分浪费的问题，将要销毁的实例对象，隐藏并放入对象池，然后再需要他们时再放出来重新初始化。&lt;/p&gt;
+
+&lt;p&gt;对象池是个用内存换CPU的方法，它用内存付出代价来换取CPU的效率，如果使用的不恰当的话，会引起不少内存问题的，所以一定要用在重复利用量大的对象上。&lt;/p&gt;
+
+&lt;p&gt;这里总结了几个对象池运用的经验：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;只在重复实例化，不断销毁的对象上使用。重复实例化和销毁操作的对象上会消耗大量CPU，在此类对象上使用对象池效果极佳，相反如果在很少或较少做重复和销毁操作的对象上使用对象池，则会浪费内存，得不偿失。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;每个需要使用对象池的类都继承对象池的基类对象，这样在初始化时可以做不同对象的重载，分别对待不同类型的对象。让不同对象的初始化方法都不同。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;主动使用对象池接口进行销毁操作。在销毁物体时使用对象池提供的销毁接口，让对象池决定，是真销毁，还是隐藏对象。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;场景结束时要及时销毁整个对象池，避免无意义的内存驻留。当场景结束后，在对象池内的物体，已经不再适合新的场景了，或者说面临的环境情况与旧场景不同了所以需要及时清理对象池，把内存空出来，给新场景使用。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;⑩ UI贴图设置的优化。&lt;/h3&gt;
+
+&lt;p&gt;为什么要关心UI贴图设置？&lt;/p&gt;
+
+&lt;p&gt;首先我们得知道，Unity3D会重置全部贴图格式。可以理解为，无论你是JPG，PNG，PSD等，只要放在Unity3D中，Unity3D就会读取图片内容，然后重新生成一个自己格式的图，用自己生成的图和格式。因此在Unity3D中使用图片其实不必关心用什么格式的图。&lt;/p&gt;
+
+&lt;p&gt;Unity3D中图片的设置也有很多讲究，因为关系到重新生成的图片的格式，最终将决定加载入引擎的是什么样的图片，所以我们不得不要研究下贴图的设置问题。&lt;/p&gt;
+
+&lt;p&gt;这里以NGUI和UGUI为例分别讨论。NGUI的UI贴图使用传统的贴图方式，常使用 Editor GUI and Legacy GUI 方式，毕竟这种方式隐藏了一些设置，我们需要全面掌握所有对图片的功能才能做好优化工作，所以 Advance 类型更适合我们。&lt;/p&gt;
+
+&lt;p&gt;Advance 里面需要注意的有：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1。 Alpha是否需要。
+
+        如果需要透明通道，则要把透明通道点开，否则最好关闭。
+
+
+    2。    是否需要进行2次方大小的大小纠正。
+
+        Non Power of 2，对UI贴图来说基本上都是2次方大小的图集所以使用的不多。
+
+
+    3。 读写权限去除。
+
+        常会默认勾选，导致内存量大增。此选项会使贴图在内存中存储两份，内存会有比不勾选大1倍。
+
+
+    4。 Mipmap去除。
+
+        Mipmap是对3D远近视觉的优化，当摄像头离物体远时因为不需要高清的图片，而选择使用Mipmap生成的贴图小的模糊图像，从而减轻GPU压力。
+
+        但是UI里没有远近之分，所以不需要Mipmap这个选项，而且Mipmap会导致内存和磁盘空间加大，完全没有必要在UI里勾选。
+
+
+    5.  压缩方式选择。
+
+        压缩方式的选择，主要是为了减少包体的大小，在清晰度足够的情况下，我们可以选择一些压缩方式来减少包体大小。
+
+        最高的色彩度是无压缩，其次是RGBA16色彩少了点且有透明通道，再次是RGB24没有alpha通道，再RGB16色彩少了点也没了透明通道，最后是算法级别的压缩，RGBA ECT2 8bits和RGBA PVRTC 4bits，带透明通道的压缩算法，以及不带透明通道的压缩算法，RGB ECT2 4bits和RGB PVRTC 4bits。
+
+        这样逐级下来，压缩的越来越厉害，同时画质就越来越差。前面有介绍过关于UI贴图Alpha分离的方法，这方法就是压缩的极致和平衡，既要画质又要紧最大极限压缩，缩小包体大小。
+
+        UGUI使用的是Sprite模式，需要注意的是，Packing Tag，可以自由选择图集的拼接情况，从而优化图集的拼接。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;最后注意，UI的选项优化，可以写个脚本，当放入UI贴图时自动设置编写好的图片设置，辅助我们更改UI贴图设置，省去不少二次检查时间。&lt;/p&gt;
+
+&lt;p&gt;但要完全省去检查时间是不可能的，在实际项目中我们也不得不从头检查一遍所有贴图的设置情况，来确认是否是我们所期望的设置，因为也不是所有贴图都是一种统一的设置，更多时候特殊部分会区别对待。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;h3&gt;⑪ 内存泄露。&lt;/h3&gt;
+
+&lt;p&gt;内存泄露是个敏感的词汇，在各大项目中，都会对内存泄露进行检验，一旦涉及到内存泄露所有内存，大家都会格外重视。&lt;/p&gt;
+
+&lt;p&gt;其实在整个项目各个地方都有可能，我把内存泄露放在UI章节里是因为UI逻辑占去了游戏项目的大部分，所以内存泄露在UI逻辑中是重灾区。&lt;/p&gt;
+
+&lt;p&gt;什么是内存泄露？ &lt;/p&gt;
+
+&lt;p&gt;内存泄漏，简单来说就是由程序向系统申请内存，使用完毕后并没有将内存还给系统的过程。系统本身的内存是有限的，如果内存泄漏一直被调用，就会耗尽系统内存，最终导致奔溃。就像你一直向银行借钱不还一样，银行一直容忍你的不道德行为，但银行是有底线的，最终会切断你的资金来源，一下子收回全部资金，那个时候，你就崩溃了。计算机系统也是一样，他不会无限制的让程序申请到内存，当申请内存影响到系统运行时就会停止。&lt;/p&gt;
+
+&lt;p&gt;为什么会内存泄露？&lt;/p&gt;
+
+&lt;p&gt;内存泄漏简单分两种，一种是程序上的内存泄漏，另一种是资源上的内存泄漏。虽然资源上的内存泄漏也跟程序有关，但跟程序上的自身内存泄漏还是有区别的。&lt;/p&gt;
+
+&lt;p&gt;程序上的内存泄漏主要是因为Mono的垃圾回收机制并没有识别“垃圾”的原因造成的。那为什么会没有识别呢，根源还是在编程时的疏忽，在编程时一些不好的习惯，错误的想法，不清晰的逻辑，导致申请的内存或指向内存的引用，没有有效的释放，导致垃圾回收机制没能识别出释放此块内存的理由。
+而资源上的内存泄漏，主要是因为在人为的申请资源，使用完毕后并没有释放，导致资源内存长期驻留在内存里。&lt;/p&gt;
+
+&lt;p&gt;程序上的内存泄漏，排查难度比较大，可以说是属于预防型为主。&lt;/p&gt;
+
+&lt;p&gt;而资源上的内存泄漏，就完全是属于人为的过错或疏忽，关键是容易排查，我们在排查中重点排查的对象就是资源的内存泄漏。&lt;/p&gt;
+
+&lt;p&gt;资源内存泄漏，主要排查的内容就是，资源在不需要使用时或者说还没有使用时，却已经驻留在内存里的情况。&lt;/p&gt;
+
+&lt;p&gt;什么是垃圾回收机制？&lt;/p&gt;
+
+&lt;p&gt;Unity3D是使用基于Mono的C#作为脚本语言，它是基于Garbage Collection（简称GC）机制的内存托管语言。&lt;/p&gt;
+
+&lt;p&gt;那么既然是内存托管了，为什么还会存在内存泄漏呢？因为GC本身并不是万能的，GC能做的是通过一定的算法找到“垃圾”，并且自动将“垃圾”占用的内存回收。&lt;/p&gt;
+
+&lt;p&gt;找“垃圾”的算法有两种，一种是用引用计数的方式，另一种是跟踪收集的方式。&lt;/p&gt;
+
+&lt;p&gt;引用计数，简单的说，就是当被分配的内存块地址赋值给引用时，增加计数1，相反当引用清除内存块地址时，减少计数1。当引用计数变为0时，表明没有人再需要此内存块了，所以可以把内存块归还给系统，此时这个内存块就是垃圾回收机制要找的“垃圾”。&lt;/p&gt;
+
+&lt;p&gt;跟踪收集，简单的说，就是遍历一遍引用内存块地址的根变量，以及与之相关联的变量，对内存资源没有引用的内存块，进行标记，标记为“垃圾”，在回收时还给系统。&lt;/p&gt;
+
+&lt;p&gt;那为什么有了这么智能的垃圾回收机制，还会有内存泄漏呢？&lt;/p&gt;
+
+&lt;p&gt;首先引用计数方式，它很难解决对象之间相互循环引用的问题。所以现代计算机语言中已经很少使用这种方式去做了，可能有些C++智能指针还在这么做。&lt;/p&gt;
+
+&lt;p&gt;其次跟踪收集，并不是万能的，很多时候会有环状的引用链存在，以及包括在编码时错误操作的泄漏，这些编码的泄漏问题在实际编码过程中是非常隐蔽且难以查找的，都需要人工去仔细的检查引用变量是否释放引用，工作量比较巨大且繁琐，特别是程序侧的内存泄漏，尤其难找。&lt;/p&gt;
+
+&lt;p&gt;资源侧的内存泄漏是最大的，大到几百MB甚至几个G，不过万幸的是相对程序侧来说资源侧的内存泄漏查找相对比较容易。&lt;/p&gt;
+
+&lt;p&gt;下面就会介绍一些关于Unity3D内存运作，泄漏排查，预防泄漏的经验，来帮助大家在实际项目中，针对内存泄漏理解，排查，和预防。&lt;/p&gt;
+
+&lt;p&gt;Unity3D内存是如何运作的？&lt;/p&gt;
+
+&lt;p&gt;C#代码所占用的内存又称为Mono内存，这是因为Unity是通过Mono来跨平台解析并运行C#代码的，在Android系统上，游戏的lib目录下存在的libmono.so文件，就是Mono在Android系统上的实现。C#代码通过Mono解析执行，所需要的内存自然也是由Mono来进行分配管理。&lt;/p&gt;
+
+&lt;p&gt;Mono堆内存的占用，是只会增加不会减少的。具体来说，可以将Mono堆，理解为一个内存池，每次Mono内存的申请，都会在池内进行分配；释放的时候，也是归还给池，而不会归还给操作系统。&lt;/p&gt;
+
+&lt;p&gt;如果某次分配，发现池内内存不够了，则会对池进行扩建——向操作系统申请更多的内存扩大池以满足该次的内存分配。需要注意的是，每次对池的扩建，都是一次较大的内存分配，每次扩建，都会将池扩大6-10M左右。&lt;/p&gt;
+
+&lt;p&gt;分配在Mono堆内存上的，其内存占用量一般较小，主要目的是程序员在处理程序逻辑时使用；而Unity的资源，是通过Unity的C++层，分配在Native堆内存上的那部分内存。与Mono堆内存是分开来管理的。&lt;/p&gt;
+
+&lt;p&gt;Mono通过垃圾回收机制（Garbage Collect，简称GC）对内存进行管理。Mono内存分为两部分，已用内存（used）和堆内存（heap），已用内存指的是Mono实际需要使用的内存，堆内存指的是Mono向操作系统申请的内存，两者的差值就是Mono的空闲内存。当Mono需要分配内存时，会先查看空闲内存是否足够，如果足够的话，直接在空闲内存中分配，否则Mono会进行一次GC以释放更多的空闲内存，如果GC之后仍然没有足够的空闲内存，则Mono会向操作系统申请内存，并扩充堆内存。&lt;/p&gt;
+
+&lt;p&gt;除了空闲内存不足时Mono会自动调用GC外，也可以在代码中调用GC.Collect()手动进行GC，但是，GC本身是比较耗时的操作，而且由于GC会暂停那些需要Mono内存分配的线程（C#代码创建的线程和主线程），因此无论是否在主线程中调用，GC都会导致游戏一定程度的卡顿，需要谨慎处理。另外，GC释放的内存只会留给Mono使用，并不会交还给操作系统，因此Mono堆内存是只增不减的。&lt;/p&gt;
+
+&lt;p&gt;如何排查内存泄露？&lt;/p&gt;
+
+&lt;p&gt;Mono内存泄漏排查。&lt;/p&gt;
+
+&lt;p&gt;游戏中大部分Mono内存泄漏的情况都是由于静态对象的引用引起的，静态对象是GC的根节点，因此对于静态对象的使用需要特别注意，尽量少用静态对象，对于不再需要的对象将其引用设置为null，使其可以被GC及时回收，但是由于游戏代码过于复杂，对象间的引用关系层层嵌套，真正操作起来难度很大。&lt;/p&gt;
+
+&lt;p&gt;资源内存泄漏排查。&lt;/p&gt;
+
+&lt;p&gt;资源内存泄漏，方式主要有：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，    典型的泄漏情况，存在该释放却没有释放的错误引用，导致回收机制认为目标对象不是“垃圾”，以至于不能被回收。主要发生对象贴图，模型。
+
+    2，    在触发了资源卸载之后，才清除对资源引用，错过了GC回收点，导致本应该被GC回收的资源内存，并没有将回收回去。
+
+    3，    资源内存拷贝，导致的泄漏。在逻辑中拷贝了一份资源，例如贴图拷贝后修改像素再次放入UI中，或者无形中Unity3D默认拷贝了一份资源，例如Material需要独立出来修改参数，于是就拷贝了一份，最后都因为没有即使清除引用和销毁导致内存泄漏。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;将引用解开就可以避免内存泄漏了，似乎是个很简单的问题。但是由于实际项目的逻辑复杂度往往超出想象，引用关系也不是简单的一层两层（有时候往往会多达十几层，甚至数十层才连接到最终的引用对象），并且可能存在交叉引用、环状引用等复杂情况，单纯从代码review的角度，是很难正确地解开引用的。&lt;/p&gt;
+
+&lt;p&gt;如何查找导致泄漏的引用，是修复泄漏的难点和重点。所以我们需要借助一些工具来查找内存泄漏。&lt;/p&gt;
+
+&lt;p&gt;Unity3D的 MemoryProfiler 是个查内存泄漏的利器，他是由官方开发的专门用于Unity3D 5.x以上版本的内存快照工具。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://bitbucket.org/Unity-Technologies/memoryprofiler&quot;&gt;MemoryProfiler&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;他可以快照内存的信息，并可以以文件形式保存和加载。这样我们可以在不同的节点进行内存快照，再经过两者的对比找出内存泄漏的资源，定位了泄漏的资源点，就可以根据此方向，从程序逻辑中寻找泄漏点。&lt;/p&gt;
+
+&lt;p&gt;比较遗憾的是，MemoryProfiler并没有提供两次（或多次）内存快照的比较功能。所以更多的是需要人工去核实。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/4/ui-optimization1.png&quot; alt=&quot;MemoryProfiler&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;从图中可以看出整体上的内存占用规模，包括，音效，字体，Assetbundle，动画，模型，粒子，贴图，Shader等。也可以点击整个模块细致的检查，模块中的各个点位资源的信息。比如我选中的Texture模块中的一个贴图，他就会展示出此贴图的信息，包括，名字，图案，材质球，关联了哪些脚本等。&lt;/p&gt;
+
+&lt;p&gt;我们也可以借助Unity3D自带的Memory Profiler，这是个比较老的工具，但对于资深程序员来说却能用的很顺手。他会记录CPU使用情况，精准定位CPU耗时节点，也可以记录Mono堆内存和资源内存的使用情况，并且详细记录下了内存中资源的详细情况。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/4/ui-optimization2.png&quot; alt=&quot;MemoryProfiler&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;当我们检查到当前场景，不需要用到的资源时，这个资源就是泄漏的点。我们可以顺藤摸瓜根据Profiler提供的信息，在代码中寻找线索。寻找的过程还是很枯燥的，这是肯定的，但当我们寻找出一个资源泄漏点时，可以举一反三的找出更多的资源泄漏点。&lt;/p&gt;
+
+&lt;p&gt;在平时项目中，我们找到这些泄漏的资源的方法，最直观的方法，就是在每次游戏状态切换的时候，做一次内存采样，并且将内存中的资源一一点开查看，判断它是否是当前游戏状态真正需要的。这种方法最大的问题，就是耗时耗力，资源数量太多眼睛容易看花看漏。&lt;/p&gt;
+
+&lt;p&gt;这里介绍两种寻找资源内存泄漏的技巧： &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1） 通过资源名来识别。
+
+        即在美术资源（如贴图、材质）命名的时候，就将其所属的游戏状态放在文件名中，如某贴图叫做bg.png，在房间中使用，则修改为Room_bg.png。
+
+        这样在Profile工具里一坨内存资源里面，混入了一个Room大头的资源，可以很容易地识别出来，也方便利用程序来识别。
+
+        这个方法但也不是万能的，因为在项目制作过程当中，一张图需要被用到各个场景中去，很可能也不只一两个，有时甚至四五个场景中都会用，只用前缀来代替使用场景的指定，很多时候也会造成另一种误区。
+
+        甚至由于项目的复杂度扩展到一定程度，包括人员更替，在检查资源泄漏时，用前缀来判断使用场景点不太靠谱，因为你根本就不知道这张图在哪使用了。所以说技巧只能辅助你，并不是说一定能有效。
+
+    2） 我们可以通过Unity提供的接口Resources.FindObjectsOfTypeAll()进行资源的Dump.
+
+        可以根据需求Dump贴图、材质、模型或其他资源类型，只需要将Type作为参数传入即可。
+
+        Dump成功之后我们将这些信息结果保存成一份文本文件，这样可以用对比工具对多次Dump之后的结果进行比较，找到新增的资源，那么这些资源就是潜在的泄漏对象，需要重点追查。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;另外还有一个比较好用的工具是UWA的GOT，他会逐帧记录资源内存和Mono堆内存的使用情况，并且可以在快照之间进行相互比较，得出新增或减少的资源名称。&lt;/p&gt;
+
+&lt;p&gt;有了内存快照之间的对比，就大大加快了我们查找内存泄漏的问题。不过遗憾的是，GOT工具并没有Editor版本，不能在Unity3D Editor上实时查找内存泄漏问题。&lt;/p&gt;
+
+&lt;p&gt;假如有更好的工具，或者我们自己也可以写一个快照对比工具，简单的实现下也不会花太多时间的，让功能更贴近我们的需求，这样在查找资源内存泄漏时就更加的方便了。&lt;/p&gt;
+
+&lt;p&gt;在Github有一个在Editor下可以对内存快照进行比较的工具。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/PerfAssist/PA_ResourceTracker&quot;&gt;内存快照进行比较的工具&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;它是将Unity Memory Profiler改造后，加了快照比较，搜索，内存分配跟踪的功能，在原来Unity Memory Profiler的快照功能上提升了不少实用性。&lt;/p&gt;
+
+&lt;p&gt;我们可以用这个工具来方便得快照内存以及比较内存的使用情况，借此来查找内存泄漏情况，确实是一个内存泄漏查找利器。&lt;/p&gt;
+
+&lt;p&gt;它也有一个小缺点，实时性并不是很好，每次都需要手动快照，没有将每帧的内存变化记录下来。&lt;/p&gt;
+
+&lt;p&gt;于是我写了一个简单的工具，来查看实时的贴图在内存中的变化。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/luzexi/Unity3DMemoryCompare&quot;&gt;实时贴图在内存中的变化&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;这个工具以Resources.FindObjectsOfTypeAll()接口为核心，每帧都对内存遍历，对当下这一帧新加入的贴图，和移除的贴图，以及他们的大小，名称，当前帧数，都打印在log中，让开发者能知道当下到底哪些贴图被加入进来的，而又有哪些贴图被移除了。这样能让开发者更好的明白当下，或者前几帧的情况。&lt;/p&gt;
+
+&lt;p&gt;最后，把工具结合起来用会达到更佳的效果。用原生态 profiler 和 Unity Memory Profiler 初步定位，修复一下很明显就能看到的内存泄漏问题。&lt;/p&gt;
+
+&lt;p&gt;再用快照比较功能将内存泄漏定位的更加准确些，一些细小的泄漏就能查找出来。&lt;/p&gt;
+
+&lt;p&gt;最后再用实时的内存贴图比较功能进行检验，看看整个过程，是否如我们所期望的那样进行加载和卸载，可以找出一些前面没有被定位到的内存泄漏的问题。&lt;/p&gt;
+
+&lt;p&gt;接下来，继续重复前面的步骤，直到将内存泄漏完全消灭。&lt;/p&gt;
+
+&lt;p&gt;这里对各类 Unity3D 资源内存释放的接口进行归类一下:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Destroy: 主要用于销毁克隆对象，也可以用于场景内的静态物体，不会自动释放该对象的所有引用。虽然也可以用于资源类型,但是概念不一样要小心，如果用于销毁从文件加载的资源对象会销毁相应的资源文件！但是如果销毁的资源是Copy的或者用脚本动态生成的，只会销毁内存对象。
+
+    AssetBundle.Unload(false):释放AssetBundle文件内存镜像。
+
+    AssetBundle.Unload(true):释放AssetBundle文件内存镜像同时销毁所有已经Load的资源内存对象。
+
+    Reources.UnloadAsset(Object):显式的释放已加载的资源对象，只能卸载磁盘文件加载的资源对象。
+
+    Resources.UnloadUnusedAssets:用于释放所有没有引用的资源对象。
+
+    GC.Collect()强制垃圾收集器立即释放内存。 Unity3D的GC功能不算好，没把握的时候就强制调用一下。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如何预防内存泄露？&lt;/p&gt;
+
+&lt;p&gt;上面全面介绍了内存泄露的原理以及发生的情况，这里对内存泄露的预防做一个总结，虽然预防的效果并不是非常明显，但有这个意识去预防，就会让检查内存泄露时更加省心。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，    减少使用静态变量，静态变量的使用一定要慎重。尤其是单例模式中，一个静态实例类中的变量需要更加的注意即使销毁或置空。
+
+    2，    在创建资源的类的基类中加入纯虚函数abstract。在架构上，多添加析构的abstract接口，提醒团队成员，要注意清理自己产生的“垃圾”。
+
+    3，    强化生命周期的概念，无论是代码对象还是资源，都有它存在的生命周期，在生命周期结束后就要被释放。如果可能，需要在功能设计文档中对生命周期加以描述。
+
+    4，    加强资源的管理，资源管理越集中，越容易查出泄露问题，即使成员们把加载和卸载接口分散在项目逻辑的各个角落，也能在统一的管理类中轻而易举的查出来泄露问题，反之越分散越麻烦。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    深入浅出再谈Unity内存泄漏 作者：Arthuryu
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+ </entry>
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(二)</title>
