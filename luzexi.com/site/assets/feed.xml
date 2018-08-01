@@ -7,6 +7,171 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>SSR 安装配置，以及 Mac 下使用 P-s-i-phon</title>
+               <description>&lt;h6&gt;文内所有敏感词语都做了处理，请自行脑补。&lt;/h6&gt;
+
+&lt;p&gt;最近国内封锁 V.P.N，阿里云这个畜生把我的服务器给封了访问外网的权限。原本布置在香港服务器上SSR，直接给废了。&lt;/p&gt;
+
+&lt;p&gt;于是我疯狂得找渠道翻过这道墙，毕竟程序员需要向全世界学习的啊。把V.P.N封了，让程序员怎么活。&lt;/p&gt;
+
+&lt;p&gt;一开始我想把服务器迁到国外去，但是国外的网络和国内连的真的不好，一个ssh卡的要死，速度还是慢。&lt;/p&gt;
+
+&lt;p&gt;何况我的个人博客在国内，以后还想在国内做些自己的idea，所以需要服务器连接速度在国内更快一些，就放弃了搬出去的念头，转而专心搞如何躲猫猫。&lt;/p&gt;
+
+&lt;p&gt;这里来讲讲我的心路历程和经验，SSR 安装配置，以及 Mac 下使用 P-s-i-phon的经验和说明。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;一开始用的是 SSR，这里顺便描述下 SSR 在Linux 上的安装和配置。&lt;/p&gt;
+
+&lt;p&gt;1， 需要Linux服务器安装 Python，最好是Python3。&lt;/p&gt;
+
+&lt;p&gt;2， 再从网上下一份SSR源码，使用 manyuser分支 &lt;a href=&quot;https://github.com/shadowsocksr-backup/shadowsocksr/tree/manyuser&quot;&gt;github地址&lt;/a&gt; &lt;a href=&quot;https://pan.baidu.com/s/1_oc9aKwNF8Kp2UaDdAdUWA&quot;&gt;ssr备用网盘连接&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;3， 解压后，将 shadowsocksr-manyuser/debian/config.json 考一份到指定的目录，比如 shadowsocksr-manyuser 文件夹。&lt;/p&gt;
+
+&lt;p&gt;4， 更改config.json，配置，密码，加密方式，协议，混淆方式等。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    经过我的调查推荐使用，aes-128-ctr 作为加密方式，auth_sha1_v4 作为协议方式， tls1.2_ticket_auth 作为混淆方式
+
+    其他还需要你填写，端口，密码。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;server&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.0.0.0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;port_password&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;quot;端口&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;密码&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;local_address&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;local_port&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3331&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;timeout&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;300&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;fast_open&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;workers&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;protocol&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;auth_sha1_v4&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;protocol_param&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;method&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;aes-128-ctr&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;obfs&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;tls1.2_ticket_auth&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;obfs_param&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;www.bing.com&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;5， 完成配置后，可以运行了。记得把服务器的端口在安全组里开起来，否则外网访问不了端口。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    python shadowsocksr-manyuser/shadowsocks/server.py -c config.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这是调试模式，所有的log日志都打印在终端上，你可以用客户端去访问下试试。&lt;/p&gt;
+
+&lt;p&gt;想启用后台模式可以使用以下命令：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    python shadowsocksr-manyuser/shadowsocks/server.py -c config.json -d start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;关闭命令为：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    python shadowsocksr-manyuser/shadowsocks/server.py -d stop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;6，客户端安装。下载客户端软件。&lt;a href=&quot;https://pan.baidu.com/s/1QckyHag4QK8X7AP74Yci5Q&quot;&gt;mac版-网盘&lt;/a&gt; &lt;a href=&quot;https://pan.baidu.com/s/1AnZ6lKawhAbHqXBS9_evFg&quot;&gt;win版-网盘&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;然后新建服务器，填上你的服务器地址，端口，密码，加密方式，协议方式，混淆方式等。如图所示&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/uploads/2018/08/vpn1.png&quot; alt=&quot;服务器参数&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;7， 规则配置，规则让你在访问国内外的网站时使用不同的网络，国内使用直连，国外使用SSR。&lt;/p&gt;
+
+&lt;p&gt;配置的地址可以参考 &lt;a href=&quot;https://github.com/ACL4SSR/ACL4SSR&quot;&gt;https://github.com/ACL4SSR/ACL4SSR&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;客户端，服务器到这里全都完成了，开始ssr试试吧。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;hr&gt;
+
+&lt;h3&gt;下面我讲讲 P-s-i-phon 在 Mac 上的使用。&lt;/h3&gt;
+
+&lt;p&gt;P-s-i-phon 是一个开源的项目，致力于无国家网络的组织，其背后的力量到底是什么不得而知，我只知道他允许你免费使用V.P.N。&lt;/p&gt;
+
+&lt;p&gt;不过它会搜集你的上网资料哦，具体用在什么地方，会用来做什么就不得而知。所以我建议不要使用的太过于频繁，或者不用使用在敏感位置，适度使用我觉得没什么问题。&lt;/p&gt;
+
+&lt;p&gt;P-s-i-phon 它有win版本，ios版本(海外的appstore)，android版本，就是没有Mac版本。&lt;/p&gt;
+
+&lt;p&gt;但幸好它是开源的，可以用它的核心代码在Mac上布置一下，然后用代理的方式用它来访问’外网‘。&lt;/p&gt;
+
+&lt;h6&gt;开门见山写具体步骤：&lt;/h6&gt;
+
+&lt;p&gt;1， psiphon是golang编写的，所以需要go语言。下载并安装go语言 &lt;a href=&quot;https://pan.baidu.com/s/1Xra482GlKBgfiPpu5WKpYw&quot;&gt;go语言mac版&lt;/a&gt; &lt;/p&gt;
+
+&lt;p&gt;2， 从GitHub上下载psiphon源码&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git clone https://github.com/Psiphon-Labs/psiphon-tunnel-core
+
+    或 (P-s-i-phon-网盘)(https://pan.baidu.com/s/14vQZfLwHP3nlV5uUeGjUgA)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;3， 编译P-s-i-phon，因为在Mac下会有编译bug，所以我们需要修改一个行文件。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    修改make.bash文件里
+
+    BUILDDATE=$(date --iso-8601=seconds)
+
+    改为
+
+    BUILDDATE=$(date +%Y-%m-%dT%H:%M:%S%z)
+
+    然后执行
+
+    ./make.bash osx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;4， 编译时，它需要git一些组件，大概10分钟左右的时间。编译完成后，进入当前目录的bin/darwin/文件夹。&lt;/p&gt;
+
+&lt;p&gt;新建一个文件，命名为 config.json ，然后将一下配置放入文件内。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;quot;LocalHttpProxyPort&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8081&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;quot;LocalSocksProxyPort&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1081&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;quot;PropagationChannelId&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;FFFFFFFFFFFFFFFF&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;quot;RemoteServerListDownloadFilename&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;remote_server_list&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;quot;RemoteServerListSignaturePublicKey&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;MIICIDANBgkqhkiG9w0BAQEFAAOCAg0AMIICCAKCAgEAt7Ls+/39r+T6zNW7GiVpJfzq/xvL9SBH5rIFnk0RXYEYavax3WS6HOD35eTAqn8AniOwiH+DOkvgSKF2caqk/y1dfq47Pdymtwzp9ikpB1C5OfAysXzBiwVJlCdajBKvBZDerV1cMvRzCKvKwRmvDmHgphQQ7WfXIGbRbmmk6opMBh3roE42KcotLFtqp0RRwLtcBRNtCdsrVsjiI1Lqz/lH+T61sGjSjQ3CHMuZYSQJZo/KrvzgQXpkaCTdbObxHqb6/+i1qaVOfEsvjoiyzTxJADvSytVtcTjijhPEV6XskJVHE1Zgl+7rATr/pDQkw6DPCNBS1+Y6fy7GstZALQXwEDN/qhQI9kWkHijT8ns+i1vGg00Mk/6J75arLhqcodWsdeG/M/moWgqQAnlZAGVtJI1OgeF5fsPpXu4kctOfuZlGjVZXQNW34aOzm8r8S0eVZitPlbhcPiR4gT/aSMz/wd8lZlzZYsje/Jr8u/YtlwjjreZrGRmG8KMOzukV3lLmMppXFMvl4bxv6YFEmIuTsOhbLTwFgh7KYNjodLj/LsqRVfwz31PgWQFTEPICV7GCvgVlPRxnofqKSjgTWI4mxDhBpVcATvaoBl1L/6WLbFvBsoAUBItWwctO2xalKxF5szhGm8lccoc5MZr8kfE0uxMgsxz4er68iCID+rsCAQM=&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;quot;RemoteServerListUrl&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;https://s3.amazonaws.com//psiphon/web/mjr4-p23r-puwl/server_list_compressed&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;quot;SponsorId&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;FFFFFFFFFFFFFFFF&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;quot;UseIndistinguishableTLS&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;这里意思是http代理监听端口为8081，socks5监听端口为1081，可以自行修改。&lt;/p&gt;
+
+&lt;p&gt;然后就可以启动 P-s-i-phon 了，启动命令如下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    ./psiphon-tunnel-core-x86_64 -config ./config.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;5， 安装客户端代理软件，我谷歌浏览器，所以使用 Proxy SwitchyOmega 做代理。&lt;/p&gt;
+
+&lt;p&gt;如果不是谷歌浏览器，完全可以使用其他插件，或者直接添加代理，设置为&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    http(s): 127.0.0.1:8081
+
+    或者
+
+    SOCKS5: 127.0.0.1:1081
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;6， 配置 Proxy SwitchyOmega 的自动切换规则。&lt;/p&gt;
+
+&lt;p&gt;使用 &lt;a href=&quot;https://github.com/ACL4SSR/ACL4SSR/blob/master/SwitchyOmega/%E8%A7%84%E5%88%99%E5%88%97%E8%A1%A8%E8%AE%BE%E7%BD%AE.txt&quot;&gt;配置 Proxy SwitchyOmega 的自动切换规则&lt;/a&gt; &lt;/p&gt;
+
+&lt;p&gt;配置如下图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/uploads/2018/08/vpn2.png&quot; alt=&quot;自动切换规则&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;7， 完成后，就可以在谷歌浏览器右上角开启auto switch(自动切换路线)来访问’内外网‘。&lt;/p&gt;
+
+&lt;h6&gt;注意，记得要把 P-s-i-phon 也开着，因为 P-s-i-phon 是主核心程序。每次启动都是随机连接某个地区的服务器。&lt;/h6&gt;
+</description>
+               <pubDate>Wed, 01 Aug 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/08/01/SSR-%E5%92%8C-P-s-i-phon-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/08/01/SSR-%E5%92%8C-P-s-i-phon-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)</title>
                <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
@@ -2133,131 +2298,6 @@ UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来�
                <pubDate>Wed, 25 Jul 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html</guid>
-            </item>
-        
-            <item>
-               <title>《Unity3D高级编程之进阶主程》第四章，UI(一) - NGUI和UGUI比较</title>
-               <description>&lt;p&gt;UI是游戏项目中重要的组成部分，面对一个从零开始的项目，首先要确立的就是选用哪个UI系统作为主框架。&lt;/p&gt;
-
-&lt;p&gt;现在主流项目中基本上都是NGUI和UGUI，那么到底选哪个。我们先来做个比较。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;h3&gt;图集处理功能比较&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI需要使用工具手动拼接图片成图集。
-
-    UGUI开发期间可以直接使用图片作为元素，打包时会自动拼接成图集。
-
-    图集的alpha拆分功能，NGUI可以通过增加工具类和shader来做，UGUI则需要5.5以上版本支持才能实现，否则5.5以下版本很难实现，需要增加shader和额外贴图不说，光对层级的处理就已经很麻烦了，所以Unity3d 5.5以下版本真的可以说不建议使用alpha拆分。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;组件支持功能比较&lt;/h3&gt;
-
-&lt;p&gt;NGUI组件比较多，比较常用的有&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Localization System -- 多语言组件
-    UIScrollView -- 滚动视图
-    UIButton -- 按钮
-    UIToggle -- 切换选择组件
-    UIScrollBar -- 滚动条
-    UIProcessBar -- 进度条
-    UIPopupList --下拉列表菜单
-    UIInput -- 输入框
-    UIKeyBinding -- 快捷键绑定
-    UIKeyNavigation -- 导航绑定
-    UIGrid -- 排列
-    UITable – 表格排列
-    UIPlayAnimation -- UI动画
-    UIAnchor -- 锚点
-    UICamera -- UI摄像头
-    UIDragXXX – 拖拽摄像头，元素，视图等
-    UIFont – UI字体
-    UILabel – 文字组件
-    UIPanel – 绘制面板
-    UIPlaySound – 声音播放
-    UITexture – 贴图
-    等等等等…还有很多
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;UGUI组件比较少&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Text – 文字
-    Image – 贴图(图集中的元素)
-    RawImage – 贴图(单张图)
-    Button – 按钮
-    Toggle – 切换与选择
-    Slider – 大小滑动块
-    Scrollbar – 滑动条
-    Dropdown – 下拉框
-    Input Field – 输入框
-    Canvas – 画布
-    Panel – 一大块元素
-    Scroll View – 滑动视图
-    Mask – 遮挡块
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;可定制程度&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI有源码，可以随时随地修改满足特殊需求
-    UGUI源码c#开源，可修改，但不是那么方便，需要重新打成dll后再替换原来的
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;输入事件处理&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI通过摄像头发出射线碰撞，接受输入事件，并通过碰撞顺序来处理层级。
-    UGUI根据输入点的位置RaycastTarget，判断事件应该交给哪个UI元素。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;层级显示控制&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI依靠Panel depth、RenderQueue来控制层级。
-    UGUI可以依靠距离摄像机的前后位置来控制层级，也可以用sort order排序设置前后顺序。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;字体制作&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI不支持dynamic font。
-    UGUI支持dynamic font，可直接使用字体文件
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;社区完善程度&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI商业运营，氛围良好
-    UGUI官方自运营，后台强大
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;性能&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGU据很多测试网站统计，性能尚可
-    UGUI同样，据很多测试网站统计，性能良好
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = &quot;u3493987&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;p&gt;好了，以上列出的是从几个方面对NGUI和UGUI的比较。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;从图集工具来看，NGUI有更多的自主选择权，而UGUI更多的自动化的便利，&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从组件支持度来看NGUI更适合偷懒型选手，而UGUI更多的是需要自己编写适合自己的组件。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从UI底层可定制度上看，两者都是可定制的，但NGUI更加方便。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从输入事件处理上看，NGUI混合了物理系统，而UGUI更加独立。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从层级显示上看，NGUI概念有点混淆，而UGUI更加功能强大，概念清洁干净。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从字体制作上看，NGUI麻烦了点，而UGUI更加方便。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从社区完善上看，NGUI更加商业化，而UGUI有官方支持后台强大。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从性能上比较看，NGUI臃肿了点但尚可，而UGUI更加良好。&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;综合来看，NGUI和UGUI都各自有各自的特点，没有绝对好，也没有绝对的差，都各自有各自的特点，和擅长的领域，不分伯仲。针对不同的人群和项目有不同的选择。&lt;/p&gt;
-
-&lt;h3&gt;如何选择适合你的GUI&lt;/h3&gt;
-
-&lt;p&gt;适不适合，并不是绝对的，根据人和项目来分，上面分析过，NGUI和UGUI各自都有自己的特点，对每个人，每种情况来说都是不一样的。我的建议是选择你熟悉的，尝试你不熟悉的，比较后再做决定。&lt;/p&gt;
-
-&lt;p&gt;Unity3D4.x的项目通常会选择NGUI，因为Unity3D4.x对UGUI支持的并不好。而如今新项目都会选择使用最新版本的Unity3D，所以选择UGUI的会多一点。我们需要与时俱进，所以如果你没有尝试过UGUI，熟悉UGUI是迟早的事，早熟悉早好。&lt;/p&gt;
-
-&lt;p&gt;如果硬要说出，一个决定，是用NGUI还是用UGUI，我的建议是，新项目启用UGUI，老项目继续使用NGUI。没有对错，只是一个与时俱进的方法而已。&lt;/p&gt;
-
-&lt;p&gt;但也不一定是一个套路用到底，比如有些人就是喜欢把控源码，希望在源码基础上进行更多的自定义的修改，然后完善成自己的系统框架，更好的服务于游戏逻辑，或者拥有更好的性能定制，那么最好的选择就是NGUI。&lt;/p&gt;
-</description>
-               <pubDate>Wed, 25 Jul 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html</guid>
             </item>
         
     </channel>
