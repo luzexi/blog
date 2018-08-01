@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-08-01T20:14:23+08:00</updated>
+ <updated>2018-08-01T20:16:40+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -25,7 +25,9 @@
 
 &lt;p&gt;一开始我想把服务器迁到国外去，但是国外的网络和国内连的真的不好，一个ssh卡的要死，速度还是慢。&lt;/p&gt;
 
-&lt;p&gt;何况我的个人博客在国内，以后还想在国内做些自己的idea，所以需要服务器连接速度在国内更快一些，就放弃了搬出去的念头，转而专心搞如何躲猫猫。最终经友人提点找到了 P-s-i-phon，这可是程序员的福音啊。&lt;/p&gt;
+&lt;p&gt;何况我的个人博客在国内，以后还想在国内做些自己的idea，所以需要服务器连接速度在国内更快一些，就放弃了搬出去的念头，转而专心搞如何躲猫猫。&lt;/p&gt;
+
+&lt;p&gt;最终经友人提点找到了 P-s-i-phon，这可是程序员的福音啊。SSR 被彻底封锁了，但可以借助 P-s-i-phon 让世界更加通畅。可惜的是 P-s-i-phon 在Mac并没有客户端，所以只好自己弄一个了。&lt;/p&gt;
 
 &lt;p&gt;这里来讲讲我的心路历程和经验，SSR 安装配置，以及 Mac 下使用 P-s-i-phon的经验和说明。&lt;/p&gt;
 
