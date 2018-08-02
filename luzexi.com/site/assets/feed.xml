@@ -7,6 +7,31 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>被封纪念帖</title>
+               <description>&lt;p&gt;www.luzexi.com 博客 被关小黑屋了，原因是自己架了梯子，还写文章教别人怎么架梯子。被冠以双重罪，直接封服务器了，不仅仅是域名，服务器也不给用了。&lt;/p&gt;
+
+&lt;p&gt;这是不给程序员活路么，不学习外来技术怎么振兴中华。&lt;/p&gt;
+
+&lt;p&gt;但是我想通了，生活在中国就要按照中国的规矩办事，政治觉悟要有。&lt;/p&gt;
+
+&lt;p&gt;被封让我彻底放弃了阿里云，也放弃了国外的服务器，转而用国内，也同时放弃了自建某些服务器，感觉也轻松了很多，并且又多了一个域名，luzexi.cn 因为原来的域名不知道什么时候恢复，暂时用这个吧。&lt;/p&gt;
+
+&lt;p&gt;我想明白了在中国还是需要按中国的套路走，如果你移民在国外也一样，要拼劲全力融入当地的风俗民习，都不容易。&lt;/p&gt;
+
+&lt;p&gt;所以那些在国外的说国内不好的，或者在国内说国外不好的，都是井底之蛙，过于偏见纠结问题的表面。&lt;/p&gt;
+
+&lt;p&gt;做好自己，在规矩下办事，在规则下取胜才是关键，不要去秀下限，而是要努力去突破上限。&lt;/p&gt;
+
+&lt;p&gt;放个连接吧，总不至于白写。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/luzexi/blog/blob/master/luzexi.com/hyde-master/_posts/2018-08-01-SSR-%E5%92%8C-P-s-i-phon-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.md&quot;&gt;被封的说明书&lt;/a&gt;&lt;/p&gt;
+</description>
+               <pubDate>Fri, 03 Aug 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/08/03/%E8%A2%AB%E5%B0%81%E7%BA%AA%E5%BF%B5%E5%B8%96.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/08/03/%E8%A2%AB%E5%B0%81%E7%BA%AA%E5%BF%B5%E5%B8%96.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)</title>
                <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
@@ -2133,131 +2158,6 @@ UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来�
                <pubDate>Wed, 25 Jul 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html</guid>
-            </item>
-        
-            <item>
-               <title>《Unity3D高级编程之进阶主程》第四章，UI(一) - NGUI和UGUI比较</title>
-               <description>&lt;p&gt;UI是游戏项目中重要的组成部分，面对一个从零开始的项目，首先要确立的就是选用哪个UI系统作为主框架。&lt;/p&gt;
-
-&lt;p&gt;现在主流项目中基本上都是NGUI和UGUI，那么到底选哪个。我们先来做个比较。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;h3&gt;图集处理功能比较&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI需要使用工具手动拼接图片成图集。
-
-    UGUI开发期间可以直接使用图片作为元素，打包时会自动拼接成图集。
-
-    图集的alpha拆分功能，NGUI可以通过增加工具类和shader来做，UGUI则需要5.5以上版本支持才能实现，否则5.5以下版本很难实现，需要增加shader和额外贴图不说，光对层级的处理就已经很麻烦了，所以Unity3d 5.5以下版本真的可以说不建议使用alpha拆分。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;组件支持功能比较&lt;/h3&gt;
-
-&lt;p&gt;NGUI组件比较多，比较常用的有&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Localization System -- 多语言组件
-    UIScrollView -- 滚动视图
-    UIButton -- 按钮
-    UIToggle -- 切换选择组件
-    UIScrollBar -- 滚动条
-    UIProcessBar -- 进度条
-    UIPopupList --下拉列表菜单
-    UIInput -- 输入框
-    UIKeyBinding -- 快捷键绑定
-    UIKeyNavigation -- 导航绑定
-    UIGrid -- 排列
-    UITable – 表格排列
-    UIPlayAnimation -- UI动画
-    UIAnchor -- 锚点
-    UICamera -- UI摄像头
-    UIDragXXX – 拖拽摄像头，元素，视图等
-    UIFont – UI字体
-    UILabel – 文字组件
-    UIPanel – 绘制面板
-    UIPlaySound – 声音播放
-    UITexture – 贴图
-    等等等等…还有很多
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;UGUI组件比较少&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Text – 文字
-    Image – 贴图(图集中的元素)
-    RawImage – 贴图(单张图)
-    Button – 按钮
-    Toggle – 切换与选择
-    Slider – 大小滑动块
-    Scrollbar – 滑动条
-    Dropdown – 下拉框
-    Input Field – 输入框
-    Canvas – 画布
-    Panel – 一大块元素
-    Scroll View – 滑动视图
-    Mask – 遮挡块
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;可定制程度&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI有源码，可以随时随地修改满足特殊需求
-    UGUI源码c#开源，可修改，但不是那么方便，需要重新打成dll后再替换原来的
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;输入事件处理&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI通过摄像头发出射线碰撞，接受输入事件，并通过碰撞顺序来处理层级。
-    UGUI根据输入点的位置RaycastTarget，判断事件应该交给哪个UI元素。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;层级显示控制&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI依靠Panel depth、RenderQueue来控制层级。
-    UGUI可以依靠距离摄像机的前后位置来控制层级，也可以用sort order排序设置前后顺序。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;字体制作&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI不支持dynamic font。
-    UGUI支持dynamic font，可直接使用字体文件
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;社区完善程度&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGUI商业运营，氛围良好
-    UGUI官方自运营，后台强大
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;性能&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    NGU据很多测试网站统计，性能尚可
-    UGUI同样，据很多测试网站统计，性能良好
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = &quot;u3493987&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;p&gt;好了，以上列出的是从几个方面对NGUI和UGUI的比较。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;从图集工具来看，NGUI有更多的自主选择权，而UGUI更多的自动化的便利，&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从组件支持度来看NGUI更适合偷懒型选手，而UGUI更多的是需要自己编写适合自己的组件。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从UI底层可定制度上看，两者都是可定制的，但NGUI更加方便。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从输入事件处理上看，NGUI混合了物理系统，而UGUI更加独立。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从层级显示上看，NGUI概念有点混淆，而UGUI更加功能强大，概念清洁干净。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从字体制作上看，NGUI麻烦了点，而UGUI更加方便。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从社区完善上看，NGUI更加商业化，而UGUI有官方支持后台强大。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从性能上比较看，NGUI臃肿了点但尚可，而UGUI更加良好。&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;综合来看，NGUI和UGUI都各自有各自的特点，没有绝对好，也没有绝对的差，都各自有各自的特点，和擅长的领域，不分伯仲。针对不同的人群和项目有不同的选择。&lt;/p&gt;
-
-&lt;h3&gt;如何选择适合你的GUI&lt;/h3&gt;
-
-&lt;p&gt;适不适合，并不是绝对的，根据人和项目来分，上面分析过，NGUI和UGUI各自都有自己的特点，对每个人，每种情况来说都是不一样的。我的建议是选择你熟悉的，尝试你不熟悉的，比较后再做决定。&lt;/p&gt;
-
-&lt;p&gt;Unity3D4.x的项目通常会选择NGUI，因为Unity3D4.x对UGUI支持的并不好。而如今新项目都会选择使用最新版本的Unity3D，所以选择UGUI的会多一点。我们需要与时俱进，所以如果你没有尝试过UGUI，熟悉UGUI是迟早的事，早熟悉早好。&lt;/p&gt;
-
-&lt;p&gt;如果硬要说出，一个决定，是用NGUI还是用UGUI，我的建议是，新项目启用UGUI，老项目继续使用NGUI。没有对错，只是一个与时俱进的方法而已。&lt;/p&gt;
-
-&lt;p&gt;但也不一定是一个套路用到底，比如有些人就是喜欢把控源码，希望在源码基础上进行更多的自定义的修改，然后完善成自己的系统框架，更好的服务于游戏逻辑，或者拥有更好的性能定制，那么最好的选择就是NGUI。&lt;/p&gt;
-</description>
-               <pubDate>Wed, 25 Jul 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html</guid>
             </item>
         
     </channel>
