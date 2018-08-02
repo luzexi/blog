@@ -1,7 +1,7 @@
 ---
 layout: post
 status: publish
-published: true
+published: false
 title: SSR 安装配置，以及 Mac 下使用 P-s-i-phon
 description: "mac V.P.N P-s-i-phon SSR 安装配置"
 excerpt_separator: ===
