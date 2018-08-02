@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta content="unity3d 高级编程 主程 UI ugui ngui 优化 动静分离" name="description">
+
+
+  <title>
+    
+      《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(一)
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css?version=20180701">
+  <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"> -->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+  	<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          技术人生
+        </a>
+      </h1>
+      <p class="lead">漫漫人生,记录点滴技术,始于2013</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      <a class="sidebar-nav-item" href="/书籍著作/index.html">书籍著作</a>
+      <a class="sidebar-nav-item" href="/Unity3D/index.html">Unity3D</a>
+      <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
+      <a class="sidebar-nav-item" href="/金融投资/index.html">金融投资</a>
+      <a class="sidebar-nav-item" href="/life/index.html">Life</a>
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About Me</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/engineer-shopping.html">程序员必需品</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/friendlink.html">友情链接</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+      
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <a href="http://www.luzexi.com/assets/feed.xml">RSS feed</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+    </nav>
+
+    <p>&copy; 2018. All rights reserved.</p>
+    <p>浙ICP备13028172号-1</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(一)</h1>
+  <span class="post-date">27 Jul 2018</span>
+  <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">UI(六)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如何在游戏项目中架构UI框架。
+</code></pre></div>
+<p>这篇我们来聊聊，优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载。</p>
+
+<p>===</p>
+
+<h3>① UI动静分离。</h3>
+
+<p>什么是UI动静分离？</p>
+
+<p>动就是左右上下移动，或放大缩小频率比较高的UI，静就是静止不动的，或者说动的比较少的UI。</p>
+
+<p>我们在做项目中，避免不了一些UI会动，从左边移到右边，或从上面移到下面，或者一个小范围的移动，这些一直在动的，或者说有时会动的UI就属于行动中的UI。</p>
+
+<p>那么为什么要将他们分离开来呢？</p>
+
+<p>UGUI 和 NGUI一样，都是用模型构建UI画面的，在构建后都做了合并Mesh的有优化操作，不合并会导致无数drawcall进而导致CPU，GPU消耗过大，游戏画面卡顿。</p>
+
+<p>合并操作是好的，但问题是UI元素一动就需要重新合并，而不需要重新构建的内容也一并合进去了，导致原来合并Mesh的好事变坏事。</p>
+
+<p>因此要将行动的UI元素和静态不动的UI元素分离开来，让合并的范围缩小，只合并那些会动的UI元素，因为他们重绘的频率比较高，而那些基本不动的UI元素就不让它们参与重新合并Mesh的操作了。</p>
+
+<p>那么如何分离他们呢？</p>
+
+<p>UGUI 和 NGUI都有自己的重绘合并节点，UGUI是Canvas，NGUI是UIPanel。</p>
+
+<p>以重绘的合并节点为关键点，进行拆分。把会动的UI元素放入专门为它们准备的合并节点上，而将静止不动的UI留在原来的合并节点上。</p>
+
+<p>这样一来，当会动的UI元素来回移动缩放的时候，不再重构静态部分的UI了，毕竟静态的UI元素占UI的大多数，而动态的UI元素只是小部分，减少了不少的CPU在重绘和合并时的消耗。</p>
+
+<h3>② 拆分过大的UI。</h3>
+
+<p>为什么要拆分过大的UI？</p>
+
+<p>项目的制作过程是个比较长的过程，在这个过程中UI的大小会随着项目时间的积累而不断扩大。</p>
+
+<p>很多时候我们总是莫名其妙的感觉，‘怎么这个UI界面，前段时间还好好的，现在打开会变得如何缓慢呢？！‘。</p>
+
+<p>问题就在于，随着项目的推进，UI经手的人越来越多，添加的内容也越来越多，有的甚至一个Prefab里，装着2-3个界面，只是在显示时隐藏了其他的几个而已。最后导致，UI过大，实例化，初始化，过慢的问题。所以我们要想办法拆分这些，过大的UI界面。</p>
+
+<p>如何拆分？</p>
+
+<p>首先，把隐藏的UI界面拆分出来，成为独立运作的界面，只在需要是调用实例化。</p>
+
+<p>其次，如果界面内容还是很多，我们可以把2次显示的内容拆出来。</p>
+
+<p>什么是2次内容？打个比方，一个界面打开时会显示一些内容(例如动画)，完毕后或者点击后才能看到另外的内容。</p>
+
+<p>这后来出现的内容视为2次显示内容，可以考虑拆分出来成为独立的界面，需要时再加载。</p>
+
+<p>注意权衡加载速度与内存，过大的UI固然加载缓慢内存消耗大，但拆分成小个体时，如果小个体频繁加载和销毁，也同样会消耗过多CPU。</p>
+
+<script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = "u3493987";
+        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = "u3469788";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+    }
+</script>
+
+<h3>③ UI预加载。</h3>
+
+<p>为什么要进行UI的预加载？</p>
+
+<p>我们在UI实例化时，需要将Prefab实例化到场景中，这期间还会有Mesh的合并，组件的初始化，渲染初始化，图片的加载，界面逻辑的初始化等程序调用，消耗掉了很多CPU。</p>
+
+<p>这导致了在我们打开某个界面时，出现卡顿的现象，就是CPU消耗过重的表现。如何优化呢？</p>
+
+<p>上面讲的拆分UI是一个方面，但只能用在一些冗余比较大的界面上，而一些容易比较小，难以拆分的UI界面，就很难用这个方法达到优化到顺畅的效果。</p>
+
+<p>甚至有的UI界面即使拆分后，任然会消耗很多CPU，出现卡顿的现象。如何优化呢？</p>
+
+<p>加载图片的数量是无法减少的，不能因为要优化我就把图给删了，这样不太妥当，偏离优化而不伤害项目的本质。</p>
+
+<p>UI上的元素也是不能减少的，也不能因为要优化，把UI元素给去掉，影响原本的项目。</p>
+
+<p>初始化程序也是必不可少的，虽然从某种程度上说初始化程序里也有糟糕的程序，但这部分我们总是可以在Unity3D分析器Profile找出原因，所以可以先放下不管。</p>
+
+<p>从分析上来看，我们已经不能从内部优化UI的实例化问题了，这导致了我们需要通过外部的方法进行优化，也就是我们需要对UI进行预加载。</p>
+
+<p>如何进行UI预加载？ </p>
+
+<p>第一种方法，</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    最直接的方法，在游戏开始前加载UI资源但不实例化，比如把Resources.Load(“ui”)这句放在进游戏画面之前。这样当点击按钮后，弹出UI界面时就少了一点加载资源的时间，把CPU消耗重心放在了实例化和初始化上。
+</code></pre></div>
+<p>第二种方法，</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    在第一种方法的基础上，打开界面时CPU还是消耗太严重，那么就将UI实例化和初始化也提前到游戏开始前。
+
+    但在实例化和初始化后，对UI界面进行了隐藏，当需要他出现时，再显示出来，而不是重新实例化，当关闭时，也同样只是隐藏，而不是销毁。
+
+    这样一来在打开和关闭时，只消耗了少量CPU在展示和隐藏上。
+</code></pre></div>
+<p>第三种方法，</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Unity3D 5.x的新功能Preload，在平台设置里，有这个功能，可以把需要预加载的Prefab加入到列表中去。
+
+    它会将这些Prefab在进入APP或者说打开应用展示LOGO界面时进行预加载。
+
+    它在整个APP初始化时，预加载了指定的Prefab，CPU消耗在了前置的碎片时间，很难让人感觉到加载的停顿感，整体效果不错。
+</code></pre></div>
+<p>最后，我要提醒一下，所有的预加载，都会出现另一个问题，CPU集中消耗带来的卡顿。</p>
+
+<p>我们预加载并没有削减CPU，CPU消耗的总量是不变的，需要加载的图片数是不变的，实例化的面片数是不变的，以及初始化程序需要消耗的时间是不变的，所有消耗都是不变的。</p>
+
+<p>我们只是把它们这些消耗分离了或者说提前了，然后拆分到各个时间碎片里去，让人感觉不到很大的CPU消耗，或者说卡顿感。</p>
+
+<p>但如果你将这些预加载，集中在某个位置，比如全部集中在游戏开始前，或者进度条的某个位置，也同样会有强烈的卡顿感，因为CPU在这个点进行了集中的消耗。</p>
+
+<h3>下篇将继续聊聊 UI 优化。</h3>
+
+  <p>感谢您的耐心阅读</p>
+  <p>Thanks for your reading</p>
+</div>
+<div>
+  
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+<!-- <div id="cyReward" role="cylabs" data-use="reward" align="center" ></div> -->
+
+<script type="text/javascript" src="/assets/js/tctip-1.0.3.min.js"></script>
+<script>
+  new tctip({
+    top: '50%',
+    button: {
+      id: 9,
+      type: 'zanzhu'
+    },
+    list: [
+      {
+        type: 'alipay',
+        qrImg: '/assets/common/alipay.jpg'
+      }, {
+        type: 'wechat',
+        qrImg: '/assets/common/wechatpay.jpg'
+      }, {
+        type: 'bitcoin',
+        qrContent: '1ErCFmtoQY2KDctjgPALZri3USsMqdSvqh'
+      }
+    ]
+  }).init()
+</script>
+
+  <li>
+<p>版权申明</p>
+<p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(一)</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(一)</a></p> -->
+<p>Copyright attention</p>
+<p>If you would like to reprint this article please write auth's name and link in the page.</p>
+
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
+</li>
+</div>
+<div class="related">
+    
+<div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+
+
+
+
+
+<div class="related">
+  <h2>最新发表的文章</h2>
+  <ul class="related-posts">
+
+    
+      <li>
+        <h3>
+          <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">
+            《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)
+            <small>30 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
+            《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
+            <small>30 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html">
+            《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(二)
+            <small>27 Jul 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+
+  </ul>
+
+  <h2>之后发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+      
+
+      
+
+    
+
+      
+      
+
+      
+
+    
+
+      
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
+                <small>30 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(二)
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(一)
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(四) - UGUI核心源码剖析
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/26/jekyll-related-page.html">
+                重写Jekyll的Relate功能
+                <small>26 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  <!-- </ul> -->
+
+  <h2>之前发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+
+      
+
+    
+
+      
+
+      
+
+    
+
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(一)
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(四) - UGUI核心源码剖析
+                <small>27 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/26/jekyll-related-page.html">
+                重写Jekyll的Relate功能
+                <small>26 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(六) - 如何架构UI框架
+                <small>26 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(三) - 剖析UGUI源码中的输入与事件模块
+                <small>26 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  </ul>
+</div>
+
+
+
+
+<div id="SOHUCS" ></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cys17tiy3',
+conf: 'prod_3b20e80a06c760385d4781c30f8ebf5c'
+});
+</script>
+
+
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-悬浮20:3*/
+    	var cpro_id = "u3495898";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+ 
+
+
+
+    </div>
+
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </body>
+  
+</html>
