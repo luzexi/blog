@@ -1,2 +1,0 @@
-cd site
-jekyll serve
