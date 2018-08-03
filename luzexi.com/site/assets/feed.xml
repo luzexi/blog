@@ -101,6 +101,240 @@
             </item>
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型</title>
+               <description>&lt;h3&gt;Animation 和 Animator的选择。&lt;/h3&gt;
+
+&lt;p&gt;首先说明Unity3D引擎已经不再对Animation动画系统进行维护。但不维护也并不是说一定不能用，很多旧的项目任然用的很好，而且Animation系统也基本上是完善好了的。新动画系统 Mecanim 中有了新的动画组件 Animator。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;为什么要用新系统 Mecanim 呢？&lt;/p&gt;
+
+&lt;p&gt;原因如下几个方面，&lt;/p&gt;
+
+&lt;p&gt;1，    Mecanim 系统使用多线程计算，比Animation的单线程性能要高出一点。&lt;/p&gt;
+
+&lt;p&gt;2，    Unity3D本身就自带对 Mecanim 系统的优化选项“Optimize GameObject”。开启该选项，Animator.Update和MeshSkinning.Update的CPU占用均存在一定程度的降低；&lt;/p&gt;
+
+&lt;p&gt;3，    Animator功能更加多，Retargeting功能能让不同角色使用同一套动画资源，比如游戏中的角色的空闲动画，就可以使用同一个动画文件省去了动画资源内存的开销。Animator状态机的接入，让动画可以在不同的条件下自动的切换等。&lt;/p&gt;
+
+&lt;p&gt;Animator缺点:&lt;/p&gt;
+
+&lt;p&gt;1，    如果针对单个模型物体绑定单个动画的话，稍微繁琐了点。比如，场景有一棵树，它只会播放不停的摇的动画，我们需要对这棵树绑定Animator组件，然后创建一个AnimatorController放入Animator，还得在AnimatorController里设置一个State来绑定动画文件，才能完成整个自动播放动画的操作。&lt;/p&gt;
+
+&lt;p&gt;2，    如果从单个动画内存角度来讲，Animator的内存占有量比Animation大一些，因为Animator需要AnimatorController支持，比旧版的Animation多了一个数据文件支撑动画系统。&lt;/p&gt;
+
+&lt;p&gt;Animation因为Unity3D引擎不再维护了，所以大多数人选择了Animator，这是正确的做法。其实我很喜欢Animation，但也不得不抛弃它去投奔新‘主子’(Animator)，因为不再维护意味着从长远看会越来越糟糕。&lt;/p&gt;
+
+&lt;h3&gt;Unity3D 3D模型中SubMesh的意义?&lt;/h3&gt;
+
+&lt;p&gt;Mesh网格的构成可以由多个子Mesh组成也就是SubMesh，一个Mesh里可以有多个SubMesh。&lt;/p&gt;
+
+&lt;p&gt;每个SubMesh对应着一个Material材质球，一个SubMesh本身就是普通的模型有很多个三角形构成。在美术人员制作3D模型过程中，可以将SubMesh拆分成独立的Mesh，也可以并成多个SubMesh。&lt;/p&gt;
+
+&lt;p&gt;那么为什么美术人员在制作3D模型时，要制作成多个SubMesh？&lt;/p&gt;
+
+&lt;p&gt;一种情况是：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    3D模型制作人员在制作模型的时候，希望一个模型中一部分Mesh用一种材质球来表现效果，另一部分用另一种材质球来表现效果时，就需要用到SubMesh了。
+
+    因为一个Mesh只能对应一个材质球，一个材质球只能表现一种效果，当他们需要表现两种效果时就需要拆分了。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第二种情况时：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    模型的某部分，在众多模型中利用率非常高。为了不重复制作，单独拆分出来作为模型的子模型来拼接。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;与没有SubMesh的Mesh相比，多个SubMesh可以有与Mesh一样的动画，又能针对不同部分的Mesh选择有针对性的材质球来表现效果。&lt;/p&gt;
+
+&lt;p&gt;但SubMesh不是万能的，它有很多也很大的缺点，&lt;/p&gt;
+
+&lt;p&gt;首先SubMesh多出了材质球，也就多出了很多Drawcall渲染次数，SubMesh越多，增加的Drawcall也越多。&lt;/p&gt;
+
+&lt;p&gt;其次Mesh中多个SubMesh在动作和拆分材质球渲染上确实有很好的优势，但无法与其他Mesh合并，导致优化的一个重要环节被阻断。&lt;/p&gt;
+
+&lt;p&gt;SubMesh功能很强大，但对性能的开销也很伤，所以要慎重。有时我们也可以选择用拆分Mesh来代替SubMesh，这样在合并Mesh时就有更多的选择了。下面我们就来聊聊合并3D模型的深入浅出。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;h3&gt;动态合并3D模型。&lt;/h3&gt;
+
+&lt;p&gt;为什么要动态合并3D模型？&lt;/p&gt;
+
+&lt;p&gt;场景中的3D的物体很多，每个3D物体都会有一个材质球，每个材质球导致产生一个Drawcall（也就是一个渲染管线调用），众多的3D模型产生很多Drawcall，CPU消耗在渲染上过多，使得帧率下降画面卡顿感强烈。&lt;/p&gt;
+
+&lt;p&gt;大部分项目都会遇到这样的问题，场景中要摆放的3D物体很多，包括人物，建筑，路标，景观，树木等。这些3D物体，都有自己的材质球，一样的物体使用相同的材质球，不一样的物体使用不同的材质球，有时不一样的物体也有相同的材质球。&lt;/p&gt;
+
+&lt;p&gt;这么多的材质球引起的Drawcall，是否能合并合并成一个呢。这时就是合并3D模型发挥作用的时候了。&lt;/p&gt;
+
+&lt;p&gt;合并3D模型主要的目的就是为了合并材质球，为了能减少材质球，把相同材质球的模型合并起来成为一个模型和一个材质球。&lt;/p&gt;
+
+&lt;p&gt;Unity3D引擎在优化Drawcall批处理上，有动态批处理 和 静态批处理两种，它们的前提条件都是有用只有一个的相同材质球的模型，多个不行。&lt;/p&gt;
+
+&lt;p&gt;来介绍下Unity3D中动态批处理和静态批处理：&lt;/p&gt;
+
+&lt;h6&gt;动态批处理&lt;/h6&gt;
+
+&lt;p&gt;Unity3D可以自动批处理移动中的物体成为同一个drawcall，如果是他们使用的是同一个材质球并且满足一些条件。动态批处理是自动完成的，我们不需要增加额外的操作。&lt;/p&gt;
+
+&lt;p&gt;动态批处理的条件是，&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;1，动态批处理的物体的顶点数目要在一定范围之内，动态批处理只能应用在少于900个顶点的Mesh中。
+
+    如果你的Shader使用顶点坐标，法线，单独的UV，那么只能动态批处理300个顶点内的网格，
+
+    如果你的Shader使用顶点坐标，法线，UV0，UV1和切线，则只能有180个顶点了。
+
+2，物体缩放单位一定要相同，如果物体不在同一个缩放单位上，将不会进行动态批处理（比如物体A的scale是1，物体B的scale是2，他们是不会被一起处理的，除非A的scale改为2，或者B的scale改为1）
+
+3，必须使用相同的材质球，使用不同的材质球是不会被动态批处理的，即使他们看起来一样。
+
+4，多管线(pipeline)Shader会中断动态批处理。
+
+    很多Unity3D里的Shader支持多个灯光的前置渲染，有效增加渲染通道。Drawcall是“额外像素灯光”，是无法批处理渲染的。
+
+    Legacy Deferred(灯光前置通道)传统延迟渲染路径已经被动态处理关闭，因为它必须绘制物体两次。
+
+    多个pass的Shader增加了渲染管道，不会被动态批处理。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;动态批处理的条件是很苛刻的，在项目中很多模型是不符合动态批处理的。&lt;/p&gt;
+
+&lt;p&gt;另外，动态批处理要消耗CPU转换所有物体的顶点到世界空间，所以它唯一的优势是如果它的工作能让Drawcall变少。&lt;/p&gt;
+
+&lt;p&gt;Drawcall的资源需求取决于很多因素，主要被图形API使用。例如一个控制台或流行的API像Apple Metal这样的，Drawcall的开销会普遍很低。所以经常动态批处理在优化方面没有任何优势，甚至没有任何作用。&lt;/p&gt;
+
+&lt;h6&gt;静态批处理&lt;/h6&gt;
+
+&lt;p&gt;静态批处理允许引擎去降低Drawcall，无论模型多大只要使用同一个材质球。他通常比动态批处理有用（它不需要转换顶点到CPU），但静态批处理会消耗更多的内存。&lt;/p&gt;
+
+&lt;p&gt;为了让静态批处理的优势更大，你需要去确认指定的物体是否是静态的不能动，不能旋转或者缩放。最好给这物体在面板上标记一个静态的标记，以确定性告知引擎，此物体时不能动不能缩放的。&lt;/p&gt;
+
+&lt;p&gt;使用静态批处理需要增加内存来存储合并的模型。如果一些物体在静态批处理前共用一个模型，就会复制每个物体的模型，在Editor里或者在实时运行状态下都会做这个操作。&lt;/p&gt;
+
+&lt;p&gt;它可能不总是一个好的，有时你需要减少对物体的静态处理来减少内存的使用量，但牺牲了渲染性能，虽然我觉得内存换CPU是值得的，但是如果100MB换1%的CPu效率还是不划算。&lt;/p&gt;
+
+&lt;p&gt;静态批处理将所有静态物体放入世界空间，并且为他们构建一个大的顶点集合以及索引缓存。然后可见的物体就会被同一批处理，一系列的Drawcall被减少。&lt;/p&gt;
+
+&lt;p&gt;技术上静态批处理并没有节省3D API Drawcall数量，但他节省了他们之间的状态改变导致的消耗。在大多数平台上，批处理被限制在6万4千个顶点和6万4千个索引，所以倘若超过这个数量需要取消一些静态批处理对象。&lt;/p&gt;
+
+&lt;p&gt;现在我们知道动态批处理 和 静态批处理是什么了，我们来做个简单总结：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，    动态批处理条件是，使用同一材质球，顶点数量不超过900个，有法线的不超过300个顶点，有两个UV的不超过150个顶点，缩放大小要一致，Shader不能有多通道。
+
+    2，    静态批处理条件是，必须是点上静态标记的物体，不能动，不能旋转，不能缩放，不能有动画。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;动态批处理的规则是极其严格的，在具体的场景中，很少有能用到的地方，顶点限制太少，缩放比例要相同，渲染管道只能有一个。&lt;/p&gt;
+
+&lt;p&gt;静态批处理的用处多一点，但物体不能移动，旋转，缩放，即使偶尔动一下也不行。这个限制太死，用到的地方也只有完全不动的场景的固定物体了。&lt;/p&gt;
+
+&lt;p&gt;动态批处理限制太大，静态批处理又不满足我们的需求，所以只有我们自己手动合并模型来替代Unity3D的批处理了。&lt;/p&gt;
+
+&lt;p&gt;也只有我自己程序合并的模型才能体现自定义动态批处理的用途。比如构建场景后的动态建筑，动态小件合并，人物模型更换装备，发型，首饰，衣裤等导致多个模型挂载的需要合并模型来优化渲染。&lt;/p&gt;
+
+&lt;h3&gt;编写合并3D模型程序&lt;/h3&gt;
+
+&lt;p&gt;合并3D模型，需要依靠Unity3D的API，需要用到Unity3D的几个接口介绍一下：&lt;/p&gt;
+
+&lt;p&gt;Mesh类，有个CombineMeshes的接口提供了合并3D模型的入口。&lt;/p&gt;
+
+&lt;p&gt;MeshFilter类，是承载Mesh数据的类。&lt;/p&gt;
+
+&lt;p&gt;MeshRenderer类，是绘制Mesh网格的类。&lt;/p&gt;
+
+&lt;p&gt;在使用这几个接口前我们首先需要弄明白几个概念：&lt;/p&gt;
+
+&lt;p&gt;1，    SubMesh的意义。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    前文用专门的一节来解释它的意义。这里简单阐述下，SubMesh是Mesh里拆出来的子模型，SubMesh需要额外多个的材质球，而普通的Mesh只有一个材质球。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;2，    MeshFilter 和 MeshRenderer中的 mesh 和 shareMesh ，material 和 shareMaterial 的区别。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    mesh 和 material 都是实例型的变量，对 mesh 和 material 进行任何操作都会额外复制一份后再进行重新赋值，即使只是get操作也同样会发生复制效果。
+
+    也就是说对 mesh 和 material 进行操作后就会变成另一个实例，虽然看上去一样，但其实已经是同的实例了。
+
+    sharedMesh 和 sharedMaterial 与前面两个变量不同，他们是共享型的。
+
+    多个3D模型可以共用同一个指定的 sharedMesh 和 sharedMaterial，无论你怎么修改sharedMesh或sharedMaterial里面的实例，都不会改变很多3D模型使用同一个指定的 sharedMesh 和 sharedMaterial。
+
+    也就是说 sharedMesh 和 sharedMaterial 被改变后，所有使用sharedMesh 和 sharedMaterial资源的3D模型会有同一个表现效果。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;3，    materials 和 sharedMaterials 的区别。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    与前面 material 和 sharedMaterial 同样的区别， materials 是实例型，sharedMaterials 是共享型，只不过现在他们变成了数组形式。
+
+    materials 只要对它进行任何操作都会复制一份一模一样的来替换，sharedMaterials 操作后所有指向这个材质球的模型都会改变效果。
+
+    而 materials 和 material，与 sharedMaterials 和 sharedMaterial 的区别是，materials和sharedMaterials可以针对不同的subMesh，而material和sharedMaterial只针对主Mesh。
+
+    也就是说 material 和 sharedMaterial 等于 materials[0] 和 sharedMaterials[0]。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Mesh，MeshFilter，MeshRenderer的关系。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;Mesh是数据资源，它可以有自己的资源文件，比如XXX.FBX。
+
+Mesh里存储了，顶点，uv，顶点颜色，三角形，切线，法线，骨骼，骨骼权重等提供渲染必要的数据。
+
+MeshFilter是一个承载Mesh数据的类，Mesh被实例化后存储在MeshFilter，MeshFilter有两种实力型和共享型的变量，mesh和sharedMesh，对mesh的操作将生成新的mesh实例，而对sharedMesh操作将改变与其他模型共同拥有的那个指定的Mesh数据实例。
+
+MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合自身的materials或者sharedMaterials进行渲染。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;CombineInstance合并数据实例。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;合并时我们需要为每个需要合并的 Mesh 创建一个CombineInstance，并往里面放入，mesh，subMesh的索引，lightmap的缩放和偏移，以及realtimeLightmap的缩放和偏移(如果有的话)，和世界坐标矩阵。然后通过Mesh.CombineMeshes接口进行合并。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;理清以上概念后，我们在编写合并3D模型程序时难度会降低很多。下面来看下合并3D模型的具体步骤：&lt;/p&gt;
+
+&lt;p&gt;1，建立合并数据数组&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;2，填入合并数据&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;++)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mesh&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;localToWorldMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subMeshIndex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//标识Material的索引位置，可以为0，1，2等&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;3，合并所有Mesh为单独一个&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_meshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;或者，合并后保留SubMesh&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;new_meshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;4，CombineMeshes接口定义为&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mergeSubMeshes&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;useMatrices&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hasLightmapData&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;完整代码为：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;++)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mesh&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;localToWorldMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subMeshIndex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//标识Material的索引位置，可以为0，1，2等&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;new_meshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+</description>
+               <pubDate>Fri, 03 Aug 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范</title>
                <description>&lt;h3&gt;3D模型大小，面数，贴图大小，骨骼数量在游戏中的规范。&lt;/h3&gt;
 
@@ -1803,169 +2037,6 @@ UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来�
                <pubDate>Thu, 26 Jul 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/07/26/jekyll-related-page.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/07/26/jekyll-related-page.html</guid>
-            </item>
-        
-            <item>
-               <title>《Unity3D高级编程之进阶主程》第四章，UI(六) - 如何架构UI框架</title>
-               <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html&quot;&gt;UI(二)&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI的原理，以及组件使用详解。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html&quot;&gt;UI(三)&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI源码中输入事件模块源码剖析。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html&quot;&gt;UI(四)&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI渲染核心源码剖析
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这篇我们来讲讲，如何在Unity3D游戏项目中架构UI框架。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;h3&gt;如何架构UI&lt;/h3&gt;
-
-&lt;p&gt;架构是门经验活，在经历众多项目后，会总结所有经历过的这些项目的经验，这些经验其实就是构建架构的基础。&lt;/p&gt;
-
-&lt;p&gt;架构肯定不是凭空出现，天马行空的。他是建立在经验的基础上的一门技术。&lt;/p&gt;
-
-&lt;p&gt;他也不是像在写逻辑或在写组件时的那样天天都在精雕细琢，而是大笔一挥，画几块区域，粗糙得描述了整体的形状，给出了大致的方向，而后才是完善在具体项目中完善，修整，修补，雕琢。&lt;/p&gt;
-
-&lt;h3&gt;那么怎么大笔一挥，构架UI呢？&lt;/h3&gt;
-
-&lt;p&gt;我们先要从宏观或者说抽象的看UI架构需求。&lt;/p&gt;
-
-&lt;h3&gt;Ⅰ.管理类。&lt;/h3&gt;
-
-&lt;p&gt;整个UI是由N个界面构成的。这些UI界面有基本的功能，生成，展示，销毁，查找。如果说，我们分别对N个UI界面的这些功能进行编程，就会有大量的工作产生，而且维护起来的工作量也是巨大的。&lt;/p&gt;
-
-&lt;p&gt;我们需要用一个实例来管理所有的UI界面，让他们能有统一的接口进行以上的活动，创建UI管理类是最好的选择，假如命名为 UIManager。&lt;/p&gt;
-
-&lt;p&gt;UIManager 里面需要做什么呢，需要创建UI，需要查找现有的UI，以及需要销毁UI。UIManager 承担了所有UI的管理工作，所以UI在生成后的实例将存储在里面。&lt;/p&gt;
-
-&lt;p&gt;不但如此，还有一些UI重要的变量也存储在里面，比如屏幕的适配标准大小，比如UI的Camera实例等等。&lt;/p&gt;
-
-&lt;p&gt;嗯，这样一来，第一个方向确定了，那就是UIManager是UI界面的管理员，统筹管理UI问题。包括了一些特殊的需求，比如下层UI切换到上层，比如加载方式变更，比如选择性预加载UI等，都需要在UIManager里编写。&lt;/p&gt;
-
-&lt;h3&gt;Ⅱ.基类。&lt;/h3&gt;
-
-&lt;p&gt;项目中有很多界面，这N个界面他们有自己的共性，比如最基本的，他们都需要进行初始化，他们都需要有展示接口，他们都可以关闭，共性产生统一特征的接口，Init，Open和Close。继承基类又使得管理起来比较方便，在上面提到的 UIManager 里存储的UI实例时，可以统一使用基类的方式存储。&lt;/p&gt;
-
-&lt;p&gt;所以我们将所有UI都定义为基类的子类，对有需要做特殊处理的UI界面，可以重写Init，Open和Close。如果需要，我们也可以定义一个UI状态，比如Open打开状态，Close关闭状态，Hiden隐藏状态，Preopen预加载状态，以状态的形式来判断UI现在的情况。&lt;/p&gt;
-
-&lt;p&gt;这样一来，界面有了自己可以特殊化的接口，也可以自主定义自己的功能性的接口，同时还受到管理类的统一管理。做到了，既满足有序管理，又能满足自定义需求。看似简单的几行代码，里面蕴含着复杂的思考过程，抽象的意义就在于此。&lt;/p&gt;
-
-&lt;h3&gt;Ⅲ.输入事件响应机制。&lt;/h3&gt;
-
-&lt;p&gt;UI中输入事件的响应机制极其重要，好的输入事件响应机制能提高更多的效率，让程序员编写逻辑的时候更加舒服，而体验差的输入事件响应机制，能让编写逻辑的程序员仿佛进入地狱般痛苦。所以要好好想想，根据以往经验多总结，多思考。&lt;/p&gt;
-
-&lt;p&gt;Unity3D输入事件响应机制建立通常有2种，一种是继承型，一种是绑定型。&lt;/p&gt;
-
-&lt;p&gt;继承型是指事件先到基类，再由基类反应给父类，由父类做处理，这样UI既可以得到对输入事件的响应，也可以自行修改自己需要的逻辑。&lt;/p&gt;
-
-&lt;p&gt;比如一个组件uiBase是父类，能接受各种输入事件响应，而uiButton是继承uiBase的，当输入事件过来时，uiButton也能做出响应。&lt;/p&gt;
-
-&lt;p&gt;绑定型是指在对输入事件响应之前，我们需要对这个UI元素绑定一个事件响应的UI组件。&lt;/p&gt;
-
-&lt;p&gt;比如编写一个绑定型事件类 UIEvent，当某个UI元素需要输入事件回调时，对这个物体加绑一个 UIEvent，并且对 UIEvent 里需要的相关响应事件进行赋值或注册操作句柄。当输入事件响应时，由 UIEvent 来区分输入什么类型的输入事件，再分别调用响应到具体句柄上进行回调操作。&lt;/p&gt;
-
-&lt;p&gt;继承型和绑定型都有一个共同的特点，是需要与UI元素关联，区别是继承型融入在了各种组件内，而绑定型以独立的组件形式体现。&lt;/p&gt;
-
-&lt;p&gt;继承型UI事件输入响应机制需要关联到组件内，而UGUI和NGUI都已经有了自己的基础的组件，所以很难在这上面使用，而在另一些比较特殊的GUI系统内可以很好的适应。&lt;/p&gt;
-
-&lt;p&gt;比如本人以前做过一个项目，他们建立的一套UI系统的完全独立于UGUI和NGUI的GUI系统之外，他们将输入事件处理注入到这个系统的各个组件内，达到了输入事件处理与组件融合的效果。&lt;/p&gt;
-
-&lt;p&gt;绑定型的方式更适合在已经建立了GUI系统的基础上，对输入事件进行封装处理。&lt;/p&gt;
-
-&lt;p&gt;通常在UGUI和NGUI上都会使用绑定型对输入事件处理进行封装。&lt;/p&gt;
-
-&lt;p&gt;例如，在UI初始化中，对需要输入事件响应的，绑定一个事件处理类，比如命名为 UIEvent，然后对事件句柄进行赋值，例如，ui_event.onclick = OnClickLogin，OnClickLogin就是响应登录按钮的事件句柄。&lt;/p&gt;
-
-&lt;p&gt;这样的赋值方式，让程序员写逻辑时看起来更加清爽，简洁，直观。&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = &quot;u3493987&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;h3&gt;Ⅳ.自定义组件。&lt;/h3&gt;
-
-&lt;p&gt;除了NGUI和UGUI本身的组件外，我们自己的自定义组件是必不可少的，特别是游戏项目，无论大小，都需要有自己的自定义组件，自定义组件不仅能让程序员在写逻辑时快速上手，满足项目的设计需求，而且也能起到对UI优化的作用，尤其在元素多的组件内。&lt;/p&gt;
-
-&lt;p&gt;在写自定义组件时，我们也需要定义几个方向去写，否则会很盲目。&lt;/p&gt;
-
-&lt;h6&gt;① UI动画组件。&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    动画在UI中扮演重要的角色，这里主要说的是Animation的K线动画。
-
-    如何让Animation在美术人员手里自如的制作，并且让程序员能方便调用是关键。
-
-    UI动画组件里应该有什么呢？我们暂时命名为 UIAnimation 好了。
-
-    首先它肯定要依赖 Unity3D 的 Animator 组件 [RequireComponent (typeof(Animator))]。
-
-    其次它要有播放(Play)接口用来播放指定动画，Play的参数包括，动画名，播放完毕后的回调函数委托。
-
-    再次他可以在无需程序调用的情况下自动播放，因此在 public 变量中需要 AutoPlay 这个参数，这样美术人员就可以在 Unity3D 界面上设置自动播放而无需程序调用了。
-
-    最后美术人员需要在自动播放时选择指定的动画名和是否循环播放，以及循环播放间隔。
-
-    这样就基本成形了，接下来要做的事就是我们对抽象的 UIAnimation 里完善以上的功能。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;② 按钮播放音效组件。&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    在点击按钮时会需要播放音效，这是每个项目必要的组件。
-
-    功能也挺简单，当输入事件触发Click事件时发出绑定的声音文件就可以了。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;③ UI跟随3D物体组件。&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    项目中很多时候需要UI元素来跟随它们，比如游戏中的血条，又比如场景中建筑物头上的标志等等，因此UI跟随3D物体的组件非常必要。
-
-    它的功能实现起来也挺简单的，不断地计算3D物体在屏幕中的位置，来确定UI位置，并且在前后位置不同时再进行更改以避免不必要的移动。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;④ 无限滚动页面组件。&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    在可以滚动的菜单栏里，如果有几百个UI元素同时生成，或同时滚动时，效率会非常低，因为UI在每帧都需要重新构建Mesh，每一次的滚动都会引起不小的CPU消耗。
-
-    因此一个自定义的无限滚动页面组件来，替换原来的模式，让CPU花最小的代价来运行这个滚动页面是非常有必要的。
-
-    那么这个无限滚动页面组件关键点在哪呢？设想下，这么多UI元素一起生成，一起移动，都是一件很费力的事，我们需要减少UI元素的数量。
-
-    最好减少到与在屏幕上显示的数量差不多，利用看不见的UI元素，来补充能看见的元素，可以描述为一个把上下UI元素不可见时的再利用过程。
-
-    我们就拿游戏里的背包界面来举例吧，500个物品在背包界面中时，实例化，初始化，滚动都会很费劲，我们可以减少UI元素在背包界面里的显示数量。
-
-    当UI元素滚动时一部分元素被遮挡住时，不再需要他们显示了，这时我们就可以对这些元素进行再利用。
-
-    当上面有一行元素被遮挡住，可以被再利用时，我们就把他们移动到下面去，让他们变成下面的背包物品元素。
-
-    这样不断得滚动，在表现上跟真的有500个物品滚动过程一模一样。这样就可以大量地削减组件消耗的CPU，不管有多少物品在背包里面，也不会引起CPU的负担了。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;⑤ 其他组件。&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    其他需求的组件，在项目被开发期间也是有很大需求的，
-
-    比如美术数字组件，让美术制定的数字展示得更好，
-
-    例如暴击数字是特殊的图片数字等。
-
-    又比如计数组件，可以让数字滚动的更加漂亮，
-
-    例如在获得游戏币时数字会像动画一样跳动由慢到快。
-
-    再比如，针对UGUI改变颜色动画时过于消耗CPU而设计的优化组件，让动画只改变组件的颜色值，由组件来改变UI元素的材质球颜色，这样能省去很多重构Mesh导致的CPU消耗。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;编写自定义的UI组件的目标就是让程序员在编写UI界面时更加快捷高效，同时提升UI的渲染效率。这种一箭双雕的事，是每个主程人员必须重视的事。拥有属于自己的一套自定义套件，对项目来说也是非常有价值和高效的一件事。&lt;/h3&gt;
-</description>
-               <pubDate>Thu, 26 Jul 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html</guid>
             </item>
         
     </channel>

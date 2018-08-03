@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta content="unity3d 高级编程 主程 animation animator submesh 意义 合并Mesh 动态批处理 静态批处理" name="description">
+
+
+  <title>
+    
+      《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css?version=20180701">
+  <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"> -->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+  	<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          技术人生
+        </a>
+      </h1>
+      <p class="lead">漫漫人生,记录点滴技术,始于2013</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      <a class="sidebar-nav-item" href="/书籍著作/index.html">书籍著作</a>
+      <a class="sidebar-nav-item" href="/Unity3D/index.html">Unity3D</a>
+      <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
+      <a class="sidebar-nav-item" href="/金融投资/index.html">金融投资</a>
+      <a class="sidebar-nav-item" href="/life/index.html">Life</a>
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About Me</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/engineer-shopping.html">程序员必需品</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/friendlink.html">友情链接</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+      
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <a href="http://www.luzexi.com/assets/feed.xml">RSS feed</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+    </nav>
+
+    <p>&copy; 2018. All rights reserved.</p>
+    <p>浙ICP备13028172号-1</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型</h1>
+  <span class="post-date">03 Aug 2018</span>
+  <h3>Animation 和 Animator的选择。</h3>
+
+<p>首先说明Unity3D引擎已经不再对Animation动画系统进行维护。但不维护也并不是说一定不能用，很多旧的项目任然用的很好，而且Animation系统也基本上是完善好了的。新动画系统 Mecanim 中有了新的动画组件 Animator。</p>
+
+<p>===</p>
+
+<p>为什么要用新系统 Mecanim 呢？</p>
+
+<p>原因如下几个方面，</p>
+
+<p>1，    Mecanim 系统使用多线程计算，比Animation的单线程性能要高出一点。</p>
+
+<p>2，    Unity3D本身就自带对 Mecanim 系统的优化选项“Optimize GameObject”。开启该选项，Animator.Update和MeshSkinning.Update的CPU占用均存在一定程度的降低；</p>
+
+<p>3，    Animator功能更加多，Retargeting功能能让不同角色使用同一套动画资源，比如游戏中的角色的空闲动画，就可以使用同一个动画文件省去了动画资源内存的开销。Animator状态机的接入，让动画可以在不同的条件下自动的切换等。</p>
+
+<p>Animator缺点:</p>
+
+<p>1，    如果针对单个模型物体绑定单个动画的话，稍微繁琐了点。比如，场景有一棵树，它只会播放不停的摇的动画，我们需要对这棵树绑定Animator组件，然后创建一个AnimatorController放入Animator，还得在AnimatorController里设置一个State来绑定动画文件，才能完成整个自动播放动画的操作。</p>
+
+<p>2，    如果从单个动画内存角度来讲，Animator的内存占有量比Animation大一些，因为Animator需要AnimatorController支持，比旧版的Animation多了一个数据文件支撑动画系统。</p>
+
+<p>Animation因为Unity3D引擎不再维护了，所以大多数人选择了Animator，这是正确的做法。其实我很喜欢Animation，但也不得不抛弃它去投奔新‘主子’(Animator)，因为不再维护意味着从长远看会越来越糟糕。</p>
+
+<h3>Unity3D 3D模型中SubMesh的意义?</h3>
+
+<p>Mesh网格的构成可以由多个子Mesh组成也就是SubMesh，一个Mesh里可以有多个SubMesh。</p>
+
+<p>每个SubMesh对应着一个Material材质球，一个SubMesh本身就是普通的模型有很多个三角形构成。在美术人员制作3D模型过程中，可以将SubMesh拆分成独立的Mesh，也可以并成多个SubMesh。</p>
+
+<p>那么为什么美术人员在制作3D模型时，要制作成多个SubMesh？</p>
+
+<p>一种情况是：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    3D模型制作人员在制作模型的时候，希望一个模型中一部分Mesh用一种材质球来表现效果，另一部分用另一种材质球来表现效果时，就需要用到SubMesh了。
+
+    因为一个Mesh只能对应一个材质球，一个材质球只能表现一种效果，当他们需要表现两种效果时就需要拆分了。
+</code></pre></div>
+<p>第二种情况时：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    模型的某部分，在众多模型中利用率非常高。为了不重复制作，单独拆分出来作为模型的子模型来拼接。
+</code></pre></div>
+<p>与没有SubMesh的Mesh相比，多个SubMesh可以有与Mesh一样的动画，又能针对不同部分的Mesh选择有针对性的材质球来表现效果。</p>
+
+<p>但SubMesh不是万能的，它有很多也很大的缺点，</p>
+
+<p>首先SubMesh多出了材质球，也就多出了很多Drawcall渲染次数，SubMesh越多，增加的Drawcall也越多。</p>
+
+<p>其次Mesh中多个SubMesh在动作和拆分材质球渲染上确实有很好的优势，但无法与其他Mesh合并，导致优化的一个重要环节被阻断。</p>
+
+<p>SubMesh功能很强大，但对性能的开销也很伤，所以要慎重。有时我们也可以选择用拆分Mesh来代替SubMesh，这样在合并Mesh时就有更多的选择了。下面我们就来聊聊合并3D模型的深入浅出。</p>
+
+<script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = "u3493987";
+        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = "u3469788";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+    }
+</script>
+
+<h3>动态合并3D模型。</h3>
+
+<p>为什么要动态合并3D模型？</p>
+
+<p>场景中的3D的物体很多，每个3D物体都会有一个材质球，每个材质球导致产生一个Drawcall（也就是一个渲染管线调用），众多的3D模型产生很多Drawcall，CPU消耗在渲染上过多，使得帧率下降画面卡顿感强烈。</p>
+
+<p>大部分项目都会遇到这样的问题，场景中要摆放的3D物体很多，包括人物，建筑，路标，景观，树木等。这些3D物体，都有自己的材质球，一样的物体使用相同的材质球，不一样的物体使用不同的材质球，有时不一样的物体也有相同的材质球。</p>
+
+<p>这么多的材质球引起的Drawcall，是否能合并合并成一个呢。这时就是合并3D模型发挥作用的时候了。</p>
+
+<p>合并3D模型主要的目的就是为了合并材质球，为了能减少材质球，把相同材质球的模型合并起来成为一个模型和一个材质球。</p>
+
+<p>Unity3D引擎在优化Drawcall批处理上，有动态批处理 和 静态批处理两种，它们的前提条件都是有用只有一个的相同材质球的模型，多个不行。</p>
+
+<p>来介绍下Unity3D中动态批处理和静态批处理：</p>
+
+<h6>动态批处理</h6>
+
+<p>Unity3D可以自动批处理移动中的物体成为同一个drawcall，如果是他们使用的是同一个材质球并且满足一些条件。动态批处理是自动完成的，我们不需要增加额外的操作。</p>
+
+<p>动态批处理的条件是，</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>1，动态批处理的物体的顶点数目要在一定范围之内，动态批处理只能应用在少于900个顶点的Mesh中。
+
+    如果你的Shader使用顶点坐标，法线，单独的UV，那么只能动态批处理300个顶点内的网格，
+
+    如果你的Shader使用顶点坐标，法线，UV0，UV1和切线，则只能有180个顶点了。
+
+2，物体缩放单位一定要相同，如果物体不在同一个缩放单位上，将不会进行动态批处理（比如物体A的scale是1，物体B的scale是2，他们是不会被一起处理的，除非A的scale改为2，或者B的scale改为1）
+
+3，必须使用相同的材质球，使用不同的材质球是不会被动态批处理的，即使他们看起来一样。
+
+4，多管线(pipeline)Shader会中断动态批处理。
+
+    很多Unity3D里的Shader支持多个灯光的前置渲染，有效增加渲染通道。Drawcall是“额外像素灯光”，是无法批处理渲染的。
+
+    Legacy Deferred(灯光前置通道)传统延迟渲染路径已经被动态处理关闭，因为它必须绘制物体两次。
+
+    多个pass的Shader增加了渲染管道，不会被动态批处理。
+</code></pre></div>
+<p>动态批处理的条件是很苛刻的，在项目中很多模型是不符合动态批处理的。</p>
+
+<p>另外，动态批处理要消耗CPU转换所有物体的顶点到世界空间，所以它唯一的优势是如果它的工作能让Drawcall变少。</p>
+
+<p>Drawcall的资源需求取决于很多因素，主要被图形API使用。例如一个控制台或流行的API像Apple Metal这样的，Drawcall的开销会普遍很低。所以经常动态批处理在优化方面没有任何优势，甚至没有任何作用。</p>
+
+<h6>静态批处理</h6>
+
+<p>静态批处理允许引擎去降低Drawcall，无论模型多大只要使用同一个材质球。他通常比动态批处理有用（它不需要转换顶点到CPU），但静态批处理会消耗更多的内存。</p>
+
+<p>为了让静态批处理的优势更大，你需要去确认指定的物体是否是静态的不能动，不能旋转或者缩放。最好给这物体在面板上标记一个静态的标记，以确定性告知引擎，此物体时不能动不能缩放的。</p>
+
+<p>使用静态批处理需要增加内存来存储合并的模型。如果一些物体在静态批处理前共用一个模型，就会复制每个物体的模型，在Editor里或者在实时运行状态下都会做这个操作。</p>
+
+<p>它可能不总是一个好的，有时你需要减少对物体的静态处理来减少内存的使用量，但牺牲了渲染性能，虽然我觉得内存换CPU是值得的，但是如果100MB换1%的CPu效率还是不划算。</p>
+
+<p>静态批处理将所有静态物体放入世界空间，并且为他们构建一个大的顶点集合以及索引缓存。然后可见的物体就会被同一批处理，一系列的Drawcall被减少。</p>
+
+<p>技术上静态批处理并没有节省3D API Drawcall数量，但他节省了他们之间的状态改变导致的消耗。在大多数平台上，批处理被限制在6万4千个顶点和6万4千个索引，所以倘若超过这个数量需要取消一些静态批处理对象。</p>
+
+<p>现在我们知道动态批处理 和 静态批处理是什么了，我们来做个简单总结：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1，    动态批处理条件是，使用同一材质球，顶点数量不超过900个，有法线的不超过300个顶点，有两个UV的不超过150个顶点，缩放大小要一致，Shader不能有多通道。
+
+    2，    静态批处理条件是，必须是点上静态标记的物体，不能动，不能旋转，不能缩放，不能有动画。
+</code></pre></div>
+<p>动态批处理的规则是极其严格的，在具体的场景中，很少有能用到的地方，顶点限制太少，缩放比例要相同，渲染管道只能有一个。</p>
+
+<p>静态批处理的用处多一点，但物体不能移动，旋转，缩放，即使偶尔动一下也不行。这个限制太死，用到的地方也只有完全不动的场景的固定物体了。</p>
+
+<p>动态批处理限制太大，静态批处理又不满足我们的需求，所以只有我们自己手动合并模型来替代Unity3D的批处理了。</p>
+
+<p>也只有我自己程序合并的模型才能体现自定义动态批处理的用途。比如构建场景后的动态建筑，动态小件合并，人物模型更换装备，发型，首饰，衣裤等导致多个模型挂载的需要合并模型来优化渲染。</p>
+
+<h3>编写合并3D模型程序</h3>
+
+<p>合并3D模型，需要依靠Unity3D的API，需要用到Unity3D的几个接口介绍一下：</p>
+
+<p>Mesh类，有个CombineMeshes的接口提供了合并3D模型的入口。</p>
+
+<p>MeshFilter类，是承载Mesh数据的类。</p>
+
+<p>MeshRenderer类，是绘制Mesh网格的类。</p>
+
+<p>在使用这几个接口前我们首先需要弄明白几个概念：</p>
+
+<p>1，    SubMesh的意义。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    前文用专门的一节来解释它的意义。这里简单阐述下，SubMesh是Mesh里拆出来的子模型，SubMesh需要额外多个的材质球，而普通的Mesh只有一个材质球。
+</code></pre></div>
+<p>2，    MeshFilter 和 MeshRenderer中的 mesh 和 shareMesh ，material 和 shareMaterial 的区别。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    mesh 和 material 都是实例型的变量，对 mesh 和 material 进行任何操作都会额外复制一份后再进行重新赋值，即使只是get操作也同样会发生复制效果。
+
+    也就是说对 mesh 和 material 进行操作后就会变成另一个实例，虽然看上去一样，但其实已经是同的实例了。
+
+    sharedMesh 和 sharedMaterial 与前面两个变量不同，他们是共享型的。
+
+    多个3D模型可以共用同一个指定的 sharedMesh 和 sharedMaterial，无论你怎么修改sharedMesh或sharedMaterial里面的实例，都不会改变很多3D模型使用同一个指定的 sharedMesh 和 sharedMaterial。
+
+    也就是说 sharedMesh 和 sharedMaterial 被改变后，所有使用sharedMesh 和 sharedMaterial资源的3D模型会有同一个表现效果。
+</code></pre></div>
+<p>3，    materials 和 sharedMaterials 的区别。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    与前面 material 和 sharedMaterial 同样的区别， materials 是实例型，sharedMaterials 是共享型，只不过现在他们变成了数组形式。
+
+    materials 只要对它进行任何操作都会复制一份一模一样的来替换，sharedMaterials 操作后所有指向这个材质球的模型都会改变效果。
+
+    而 materials 和 material，与 sharedMaterials 和 sharedMaterial 的区别是，materials和sharedMaterials可以针对不同的subMesh，而material和sharedMaterial只针对主Mesh。
+
+    也就是说 material 和 sharedMaterial 等于 materials[0] 和 sharedMaterials[0]。
+</code></pre></div>
+<ol>
+<li><p>Mesh，MeshFilter，MeshRenderer的关系。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>Mesh是数据资源，它可以有自己的资源文件，比如XXX.FBX。
+
+Mesh里存储了，顶点，uv，顶点颜色，三角形，切线，法线，骨骼，骨骼权重等提供渲染必要的数据。
+
+MeshFilter是一个承载Mesh数据的类，Mesh被实例化后存储在MeshFilter，MeshFilter有两种实力型和共享型的变量，mesh和sharedMesh，对mesh的操作将生成新的mesh实例，而对sharedMesh操作将改变与其他模型共同拥有的那个指定的Mesh数据实例。
+
+MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合自身的materials或者sharedMaterials进行渲染。
+</code></pre></div></li>
+<li><p>CombineInstance合并数据实例。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>合并时我们需要为每个需要合并的 Mesh 创建一个CombineInstance，并往里面放入，mesh，subMesh的索引，lightmap的缩放和偏移，以及realtimeLightmap的缩放和偏移(如果有的话)，和世界坐标矩阵。然后通过Mesh.CombineMeshes接口进行合并。
+</code></pre></div></li>
+</ol>
+
+<p>理清以上概念后，我们在编写合并3D模型程序时难度会降低很多。下面来看下合并3D模型的具体步骤：</p>
+
+<p>1，建立合并数据数组</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">CombineInstance</span><span class="p">[]</span> <span class="n">combine</span> <span class="p">=</span> <span class="k">new</span> <span class="n">CombineInstance</span><span class="p">[</span><span class="n">mMeshFilter</span><span class="p">.</span><span class="n">Count</span><span class="p">];</span></code></pre></figure>
+
+<p>2，填入合并数据</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span> <span class="p">;</span> <span class="n">i</span><span class="p">&lt;</span> <span class="n">mMeshFilter</span><span class="p">.</span><span class="n">Count</span> <span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+<span class="p">{</span>
+    <span class="n">combine</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">mesh</span> <span class="p">=</span> <span class="n">mMeshFilter</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">sharedMesh</span><span class="p">;</span>
+    <span class="n">combine</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">transform</span> <span class="p">=</span> <span class="n">mMeshFilter</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">localToWorldMatrix</span><span class="p">;</span>
+    <span class="n">combine</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">subMeshIndex</span> <span class="p">=</span> <span class="n">i</span><span class="p">;</span> <span class="c1">//标识Material的索引位置，可以为0，1，2等</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>3，合并所有Mesh为单独一个</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">new_meshFilter</span><span class="p">.</span><span class="n">sharedMesh</span><span class="p">.</span><span class="n">CombineMeshes</span><span class="p">(</span><span class="n">combine</span><span class="p">);</span></code></pre></figure>
+
+<p>或者，合并后保留SubMesh</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span>       <span class="n">new_meshFilter</span><span class="p">.</span><span class="n">sharedMesh</span><span class="p">.</span><span class="n">CombineMeshes</span><span class="p">(</span><span class="n">combine</span><span class="p">,</span><span class="k">false</span><span class="p">);</span></code></pre></figure>
+
+<p>4，CombineMeshes接口定义为</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">void</span> <span class="nf">CombineMeshes</span><span class="p">(</span><span class="n">CombineInstance</span><span class="p">[]</span> <span class="n">combine</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">mergeSubMeshes</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">useMatrices</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">hasLightmapData</span> <span class="p">=</span> <span class="k">false</span><span class="p">);</span></code></pre></figure>
+
+<p>完整代码为：</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">CombineInstance</span><span class="p">[]</span> <span class="n">combine</span> <span class="p">=</span> <span class="k">new</span> <span class="n">CombineInstance</span><span class="p">[</span><span class="n">mMeshFilter</span><span class="p">.</span><span class="n">Count</span><span class="p">];</span>
+
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span> <span class="p">;</span> <span class="n">i</span><span class="p">&lt;</span> <span class="n">mMeshFilter</span><span class="p">.</span><span class="n">Count</span> <span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+<span class="p">{</span>
+    <span class="n">combine</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">mesh</span> <span class="p">=</span> <span class="n">mMeshFilter</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">sharedMesh</span><span class="p">;</span>
+    <span class="n">combine</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">transform</span> <span class="p">=</span> <span class="n">mMeshFilter</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">localToWorldMatrix</span><span class="p">;</span>
+    <span class="n">combine</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">subMeshIndex</span> <span class="p">=</span> <span class="n">i</span><span class="p">;</span><span class="c1">//标识Material的索引位置，可以为0，1，2等</span>
+<span class="p">}</span>
+
+<span class="n">new_meshFilter</span><span class="p">.</span><span class="n">sharedMesh</span><span class="p">.</span><span class="n">CombineMeshes</span><span class="p">(</span><span class="n">combine</span><span class="p">);</span></code></pre></figure>
+
+  <p>感谢您的耐心阅读</p>
+  <p>Thanks for your reading</p>
+</div>
+<div>
+  
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+<!-- <div id="cyReward" role="cylabs" data-use="reward" align="center" ></div> -->
+
+<script type="text/javascript" src="/assets/js/tctip-1.0.3.min.js"></script>
+<script>
+  new tctip({
+    top: '50%',
+    button: {
+      id: 9,
+      type: 'zanzhu'
+    },
+    list: [
+      {
+        type: 'alipay',
+        qrImg: '/assets/common/alipay.jpg'
+      }, {
+        type: 'wechat',
+        qrImg: '/assets/common/wechatpay.jpg'
+      }, {
+        type: 'bitcoin',
+        qrContent: '1ErCFmtoQY2KDctjgPALZri3USsMqdSvqh'
+      }
+    ]
+  }).init()
+</script>
+
+  <li>
+<p>版权申明</p>
+<p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型</a></p> -->
+<p>Copyright attention</p>
+<p>If you would like to reprint this article please write auth's name and link in the page.</p>
+
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
+</li>
+</div>
+<div class="related">
+    
+<div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+
+
+
+
+
+<div class="related">
+  <h2>最新发表的文章</h2>
+  <ul class="related-posts">
+
+    
+      <li>
+        <h3>
+          <a href="/2018/08/03/%E8%A2%AB%E5%B0%81%E7%BA%AA%E5%BF%B5%E5%B8%96.html">
+            被封纪念帖
+            <small>03 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">
+            git同步多个repository仓库
+            <small>03 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">
+            《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型
+            <small>03 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+
+  </ul>
+
+  <h2>之后发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">
+                git同步多个repository仓库
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">
+                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB1.html">
+                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)
+                <small>30 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
+                <small>30 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  <!-- </ul> -->
+
+  <h2>之前发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">
+                git同步多个repository仓库
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">
+                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB1.html">
+                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)
+                <small>30 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
+                <small>30 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  </ul>
+</div>
+
+
+
+
+<div id="SOHUCS" ></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cys17tiy3',
+conf: 'prod_3b20e80a06c760385d4781c30f8ebf5c'
+});
+</script>
+
+
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-悬浮20:3*/
+    	var cpro_id = "u3495898";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+ 
+
+
+
+    </div>
+
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </body>
+  
+</html>

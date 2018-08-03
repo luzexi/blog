@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-08-03T18:38:40+08:00</updated>
+ <updated>2018-08-03T18:40:05+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -104,6 +104,240 @@
     git commit -m &amp;#39;sync&amp;#39;
     git push origin master
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型</title>
+   <link href="http://www.luzexi.com/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html"/>
+   <updated>2018-08-03T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2018/08/03/Unity3D高级编程之进阶主程-3D模型与动画2</id>
+   <content type="html">&lt;h3&gt;Animation 和 Animator的选择。&lt;/h3&gt;
+
+&lt;p&gt;首先说明Unity3D引擎已经不再对Animation动画系统进行维护。但不维护也并不是说一定不能用，很多旧的项目任然用的很好，而且Animation系统也基本上是完善好了的。新动画系统 Mecanim 中有了新的动画组件 Animator。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;为什么要用新系统 Mecanim 呢？&lt;/p&gt;
+
+&lt;p&gt;原因如下几个方面，&lt;/p&gt;
+
+&lt;p&gt;1，    Mecanim 系统使用多线程计算，比Animation的单线程性能要高出一点。&lt;/p&gt;
+
+&lt;p&gt;2，    Unity3D本身就自带对 Mecanim 系统的优化选项“Optimize GameObject”。开启该选项，Animator.Update和MeshSkinning.Update的CPU占用均存在一定程度的降低；&lt;/p&gt;
+
+&lt;p&gt;3，    Animator功能更加多，Retargeting功能能让不同角色使用同一套动画资源，比如游戏中的角色的空闲动画，就可以使用同一个动画文件省去了动画资源内存的开销。Animator状态机的接入，让动画可以在不同的条件下自动的切换等。&lt;/p&gt;
+
+&lt;p&gt;Animator缺点:&lt;/p&gt;
+
+&lt;p&gt;1，    如果针对单个模型物体绑定单个动画的话，稍微繁琐了点。比如，场景有一棵树，它只会播放不停的摇的动画，我们需要对这棵树绑定Animator组件，然后创建一个AnimatorController放入Animator，还得在AnimatorController里设置一个State来绑定动画文件，才能完成整个自动播放动画的操作。&lt;/p&gt;
+
+&lt;p&gt;2，    如果从单个动画内存角度来讲，Animator的内存占有量比Animation大一些，因为Animator需要AnimatorController支持，比旧版的Animation多了一个数据文件支撑动画系统。&lt;/p&gt;
+
+&lt;p&gt;Animation因为Unity3D引擎不再维护了，所以大多数人选择了Animator，这是正确的做法。其实我很喜欢Animation，但也不得不抛弃它去投奔新‘主子’(Animator)，因为不再维护意味着从长远看会越来越糟糕。&lt;/p&gt;
+
+&lt;h3&gt;Unity3D 3D模型中SubMesh的意义?&lt;/h3&gt;
+
+&lt;p&gt;Mesh网格的构成可以由多个子Mesh组成也就是SubMesh，一个Mesh里可以有多个SubMesh。&lt;/p&gt;
+
+&lt;p&gt;每个SubMesh对应着一个Material材质球，一个SubMesh本身就是普通的模型有很多个三角形构成。在美术人员制作3D模型过程中，可以将SubMesh拆分成独立的Mesh，也可以并成多个SubMesh。&lt;/p&gt;
+
+&lt;p&gt;那么为什么美术人员在制作3D模型时，要制作成多个SubMesh？&lt;/p&gt;
+
+&lt;p&gt;一种情况是：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    3D模型制作人员在制作模型的时候，希望一个模型中一部分Mesh用一种材质球来表现效果，另一部分用另一种材质球来表现效果时，就需要用到SubMesh了。
+
+    因为一个Mesh只能对应一个材质球，一个材质球只能表现一种效果，当他们需要表现两种效果时就需要拆分了。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第二种情况时：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    模型的某部分，在众多模型中利用率非常高。为了不重复制作，单独拆分出来作为模型的子模型来拼接。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;与没有SubMesh的Mesh相比，多个SubMesh可以有与Mesh一样的动画，又能针对不同部分的Mesh选择有针对性的材质球来表现效果。&lt;/p&gt;
+
+&lt;p&gt;但SubMesh不是万能的，它有很多也很大的缺点，&lt;/p&gt;
+
+&lt;p&gt;首先SubMesh多出了材质球，也就多出了很多Drawcall渲染次数，SubMesh越多，增加的Drawcall也越多。&lt;/p&gt;
+
+&lt;p&gt;其次Mesh中多个SubMesh在动作和拆分材质球渲染上确实有很好的优势，但无法与其他Mesh合并，导致优化的一个重要环节被阻断。&lt;/p&gt;
+
+&lt;p&gt;SubMesh功能很强大，但对性能的开销也很伤，所以要慎重。有时我们也可以选择用拆分Mesh来代替SubMesh，这样在合并Mesh时就有更多的选择了。下面我们就来聊聊合并3D模型的深入浅出。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;h3&gt;动态合并3D模型。&lt;/h3&gt;
+
+&lt;p&gt;为什么要动态合并3D模型？&lt;/p&gt;
+
+&lt;p&gt;场景中的3D的物体很多，每个3D物体都会有一个材质球，每个材质球导致产生一个Drawcall（也就是一个渲染管线调用），众多的3D模型产生很多Drawcall，CPU消耗在渲染上过多，使得帧率下降画面卡顿感强烈。&lt;/p&gt;
+
+&lt;p&gt;大部分项目都会遇到这样的问题，场景中要摆放的3D物体很多，包括人物，建筑，路标，景观，树木等。这些3D物体，都有自己的材质球，一样的物体使用相同的材质球，不一样的物体使用不同的材质球，有时不一样的物体也有相同的材质球。&lt;/p&gt;
+
+&lt;p&gt;这么多的材质球引起的Drawcall，是否能合并合并成一个呢。这时就是合并3D模型发挥作用的时候了。&lt;/p&gt;
+
+&lt;p&gt;合并3D模型主要的目的就是为了合并材质球，为了能减少材质球，把相同材质球的模型合并起来成为一个模型和一个材质球。&lt;/p&gt;
+
+&lt;p&gt;Unity3D引擎在优化Drawcall批处理上，有动态批处理 和 静态批处理两种，它们的前提条件都是有用只有一个的相同材质球的模型，多个不行。&lt;/p&gt;
+
+&lt;p&gt;来介绍下Unity3D中动态批处理和静态批处理：&lt;/p&gt;
+
+&lt;h6&gt;动态批处理&lt;/h6&gt;
+
+&lt;p&gt;Unity3D可以自动批处理移动中的物体成为同一个drawcall，如果是他们使用的是同一个材质球并且满足一些条件。动态批处理是自动完成的，我们不需要增加额外的操作。&lt;/p&gt;
+
+&lt;p&gt;动态批处理的条件是，&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;1，动态批处理的物体的顶点数目要在一定范围之内，动态批处理只能应用在少于900个顶点的Mesh中。
+
+    如果你的Shader使用顶点坐标，法线，单独的UV，那么只能动态批处理300个顶点内的网格，
+
+    如果你的Shader使用顶点坐标，法线，UV0，UV1和切线，则只能有180个顶点了。
+
+2，物体缩放单位一定要相同，如果物体不在同一个缩放单位上，将不会进行动态批处理（比如物体A的scale是1，物体B的scale是2，他们是不会被一起处理的，除非A的scale改为2，或者B的scale改为1）
+
+3，必须使用相同的材质球，使用不同的材质球是不会被动态批处理的，即使他们看起来一样。
+
+4，多管线(pipeline)Shader会中断动态批处理。
+
+    很多Unity3D里的Shader支持多个灯光的前置渲染，有效增加渲染通道。Drawcall是“额外像素灯光”，是无法批处理渲染的。
+
+    Legacy Deferred(灯光前置通道)传统延迟渲染路径已经被动态处理关闭，因为它必须绘制物体两次。
+
+    多个pass的Shader增加了渲染管道，不会被动态批处理。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;动态批处理的条件是很苛刻的，在项目中很多模型是不符合动态批处理的。&lt;/p&gt;
+
+&lt;p&gt;另外，动态批处理要消耗CPU转换所有物体的顶点到世界空间，所以它唯一的优势是如果它的工作能让Drawcall变少。&lt;/p&gt;
+
+&lt;p&gt;Drawcall的资源需求取决于很多因素，主要被图形API使用。例如一个控制台或流行的API像Apple Metal这样的，Drawcall的开销会普遍很低。所以经常动态批处理在优化方面没有任何优势，甚至没有任何作用。&lt;/p&gt;
+
+&lt;h6&gt;静态批处理&lt;/h6&gt;
+
+&lt;p&gt;静态批处理允许引擎去降低Drawcall，无论模型多大只要使用同一个材质球。他通常比动态批处理有用（它不需要转换顶点到CPU），但静态批处理会消耗更多的内存。&lt;/p&gt;
+
+&lt;p&gt;为了让静态批处理的优势更大，你需要去确认指定的物体是否是静态的不能动，不能旋转或者缩放。最好给这物体在面板上标记一个静态的标记，以确定性告知引擎，此物体时不能动不能缩放的。&lt;/p&gt;
+
+&lt;p&gt;使用静态批处理需要增加内存来存储合并的模型。如果一些物体在静态批处理前共用一个模型，就会复制每个物体的模型，在Editor里或者在实时运行状态下都会做这个操作。&lt;/p&gt;
+
+&lt;p&gt;它可能不总是一个好的，有时你需要减少对物体的静态处理来减少内存的使用量，但牺牲了渲染性能，虽然我觉得内存换CPU是值得的，但是如果100MB换1%的CPu效率还是不划算。&lt;/p&gt;
+
+&lt;p&gt;静态批处理将所有静态物体放入世界空间，并且为他们构建一个大的顶点集合以及索引缓存。然后可见的物体就会被同一批处理，一系列的Drawcall被减少。&lt;/p&gt;
+
+&lt;p&gt;技术上静态批处理并没有节省3D API Drawcall数量，但他节省了他们之间的状态改变导致的消耗。在大多数平台上，批处理被限制在6万4千个顶点和6万4千个索引，所以倘若超过这个数量需要取消一些静态批处理对象。&lt;/p&gt;
+
+&lt;p&gt;现在我们知道动态批处理 和 静态批处理是什么了，我们来做个简单总结：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，    动态批处理条件是，使用同一材质球，顶点数量不超过900个，有法线的不超过300个顶点，有两个UV的不超过150个顶点，缩放大小要一致，Shader不能有多通道。
+
+    2，    静态批处理条件是，必须是点上静态标记的物体，不能动，不能旋转，不能缩放，不能有动画。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;动态批处理的规则是极其严格的，在具体的场景中，很少有能用到的地方，顶点限制太少，缩放比例要相同，渲染管道只能有一个。&lt;/p&gt;
+
+&lt;p&gt;静态批处理的用处多一点，但物体不能移动，旋转，缩放，即使偶尔动一下也不行。这个限制太死，用到的地方也只有完全不动的场景的固定物体了。&lt;/p&gt;
+
+&lt;p&gt;动态批处理限制太大，静态批处理又不满足我们的需求，所以只有我们自己手动合并模型来替代Unity3D的批处理了。&lt;/p&gt;
+
+&lt;p&gt;也只有我自己程序合并的模型才能体现自定义动态批处理的用途。比如构建场景后的动态建筑，动态小件合并，人物模型更换装备，发型，首饰，衣裤等导致多个模型挂载的需要合并模型来优化渲染。&lt;/p&gt;
+
+&lt;h3&gt;编写合并3D模型程序&lt;/h3&gt;
+
+&lt;p&gt;合并3D模型，需要依靠Unity3D的API，需要用到Unity3D的几个接口介绍一下：&lt;/p&gt;
+
+&lt;p&gt;Mesh类，有个CombineMeshes的接口提供了合并3D模型的入口。&lt;/p&gt;
+
+&lt;p&gt;MeshFilter类，是承载Mesh数据的类。&lt;/p&gt;
+
+&lt;p&gt;MeshRenderer类，是绘制Mesh网格的类。&lt;/p&gt;
+
+&lt;p&gt;在使用这几个接口前我们首先需要弄明白几个概念：&lt;/p&gt;
+
+&lt;p&gt;1，    SubMesh的意义。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    前文用专门的一节来解释它的意义。这里简单阐述下，SubMesh是Mesh里拆出来的子模型，SubMesh需要额外多个的材质球，而普通的Mesh只有一个材质球。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;2，    MeshFilter 和 MeshRenderer中的 mesh 和 shareMesh ，material 和 shareMaterial 的区别。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    mesh 和 material 都是实例型的变量，对 mesh 和 material 进行任何操作都会额外复制一份后再进行重新赋值，即使只是get操作也同样会发生复制效果。
+
+    也就是说对 mesh 和 material 进行操作后就会变成另一个实例，虽然看上去一样，但其实已经是同的实例了。
+
+    sharedMesh 和 sharedMaterial 与前面两个变量不同，他们是共享型的。
+
+    多个3D模型可以共用同一个指定的 sharedMesh 和 sharedMaterial，无论你怎么修改sharedMesh或sharedMaterial里面的实例，都不会改变很多3D模型使用同一个指定的 sharedMesh 和 sharedMaterial。
+
+    也就是说 sharedMesh 和 sharedMaterial 被改变后，所有使用sharedMesh 和 sharedMaterial资源的3D模型会有同一个表现效果。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;3，    materials 和 sharedMaterials 的区别。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    与前面 material 和 sharedMaterial 同样的区别， materials 是实例型，sharedMaterials 是共享型，只不过现在他们变成了数组形式。
+
+    materials 只要对它进行任何操作都会复制一份一模一样的来替换，sharedMaterials 操作后所有指向这个材质球的模型都会改变效果。
+
+    而 materials 和 material，与 sharedMaterials 和 sharedMaterial 的区别是，materials和sharedMaterials可以针对不同的subMesh，而material和sharedMaterial只针对主Mesh。
+
+    也就是说 material 和 sharedMaterial 等于 materials[0] 和 sharedMaterials[0]。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Mesh，MeshFilter，MeshRenderer的关系。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;Mesh是数据资源，它可以有自己的资源文件，比如XXX.FBX。
+
+Mesh里存储了，顶点，uv，顶点颜色，三角形，切线，法线，骨骼，骨骼权重等提供渲染必要的数据。
+
+MeshFilter是一个承载Mesh数据的类，Mesh被实例化后存储在MeshFilter，MeshFilter有两种实力型和共享型的变量，mesh和sharedMesh，对mesh的操作将生成新的mesh实例，而对sharedMesh操作将改变与其他模型共同拥有的那个指定的Mesh数据实例。
+
+MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合自身的materials或者sharedMaterials进行渲染。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;CombineInstance合并数据实例。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;合并时我们需要为每个需要合并的 Mesh 创建一个CombineInstance，并往里面放入，mesh，subMesh的索引，lightmap的缩放和偏移，以及realtimeLightmap的缩放和偏移(如果有的话)，和世界坐标矩阵。然后通过Mesh.CombineMeshes接口进行合并。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;理清以上概念后，我们在编写合并3D模型程序时难度会降低很多。下面来看下合并3D模型的具体步骤：&lt;/p&gt;
+
+&lt;p&gt;1，建立合并数据数组&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;2，填入合并数据&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;++)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mesh&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;localToWorldMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subMeshIndex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//标识Material的索引位置，可以为0，1，2等&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;3，合并所有Mesh为单独一个&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_meshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;或者，合并后保留SubMesh&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;new_meshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;4，CombineMeshes接口定义为&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mergeSubMeshes&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;useMatrices&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hasLightmapData&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;完整代码为：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;++)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mesh&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;localToWorldMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subMeshIndex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//标识Material的索引位置，可以为0，1，2等&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;new_meshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+</content>
  </entry>
  
  <entry>
