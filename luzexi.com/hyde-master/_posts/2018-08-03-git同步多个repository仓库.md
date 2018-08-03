@@ -40,6 +40,8 @@ tags:
 
 也就是，用shell程序把人工手动需要做的事情，让程序去完成，省时省力，一键搞定。
 
+{% include advertisement_content.html %}
+
 ###### 举例代码为同步三个仓库，具体的 shell 如下：
 
 		cp -r ../* /Users/luzexi/Desktop/work/gitee/blog/
