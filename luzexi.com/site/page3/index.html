@@ -184,6 +184,22 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF2.html">
+        《Unity3D高级编程之进阶主程》第一章，C#要点技术(二) - Dictionary 底层源码剖析
+      </a>
+    </h1>
+
+    <span class="post-date">18 Jul 2018</span>
+
+    <p>前文回顾 <a href="http://www.luzexi.com/2018/07/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF1.html">《Unity3D高级编程之进阶主程》第一章，C#要点技术(一)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    前文剖析了 List 的源码，我们明白了 List 是用数组构建而成的，增加，减少，插入的操作，都在数组中进行。我们还分析了大部分 List 的接口，包括Add，Remove，Insert，IndexOf，Find，Sort，ToArray，等等。我们还得出了一个结论，那就是 List 是一个兼容性比较好的组件，但线程并不安全，需要加锁机制来保证线程的安全性，而且 List 在效率方面并没有做优化。
+</code></pre></div>
+<p>这次我们来对常用的另一个组件Dictionary进行底层源码的分析，看看我们常用的字典树是如何构造而成的，它的优缺点如何。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html">
         《Unity3D高级编程之进阶主程》第三章，数据表(三) - 多语言的实现
       </a>
@@ -337,31 +353,6 @@
 
 <p>面对不确定的持续性的下跌，我们应该如何面对的呢？</p>
 
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/2018/06/30/Vi%E5%92%8CVim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%9B%86.html">
-        Vi和Vim常用命令集
-      </a>
-    </h1>
-
-    <span class="post-date">30 Jun 2018</span>
-
-    <p>vi,vim命令是种神奇的存在，他似乎提高了编辑的效率但门槛又变的太高导致不能流行在程序员中。看起来有些复杂的vi命令编辑，在一些人眼里感觉很厉害，其实都是通过成千上百次的练习掌握的技巧。本文我就来试图分解这些命令块，让大家在练习时，能更加有针对性更加有序有逻辑。</p>
-
-<h2>入门命令之简单编辑</h2>
-
-<h5>1.光标移动</h5>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    ←↓↑→                h,j,k,l
-    到下一行的第一个字符  +
-    到上一行的第一个字符  -
-    到单词的结尾          e或E(忽略符号，只识别空格，回车)
-    往后一个单词          w或W(跟符号和空格和回车挂钩)
-    往前一个单词          b或B(跟符号和空格和回车挂钩)
-    到一行的结尾          $
-    到一行的开头          0(零)
-</code></pre></div>
   </div>
   
 </div>

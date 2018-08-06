@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta content="unity3d 高级编程 主程 状态机 人物行为动作" name="description">
+
+
+  <title>
+    
+      《Unity3D高级编程之进阶主程》第五章，3D模型与动画(三) - 状态机
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css?version=20180701">
+  <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"> -->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+  	<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          技术人生
+        </a>
+      </h1>
+      <p class="lead">漫漫人生,记录点滴技术,始于2013</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      <a class="sidebar-nav-item" href="/书籍著作/index.html">书籍著作</a>
+      <a class="sidebar-nav-item" href="/Unity3D/index.html">Unity3D</a>
+      <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
+      <a class="sidebar-nav-item" href="/金融投资/index.html">金融投资</a>
+      <a class="sidebar-nav-item" href="/life/index.html">Life</a>
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About Me</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/engineer-shopping.html">程序员必需品</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/friendlink.html">友情链接</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+      
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <a href="http://www.luzexi.com/assets/feed.xml">RSS feed</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+    </nav>
+
+    <p>&copy; 2018. All rights reserved.</p>
+    <p>浙ICP备13028172号-1</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(三) - 状态机</h1>
+  <span class="post-date">06 Aug 2018</span>
+  <h2>如何用状态机模拟人物行为动作。</h2>
+
+<p>什么是状态机？</p>
+
+<p>状态机有两种，一种是有限状态机，一种是无限状态机。有限状态机运用的地方比较多，而无限状态机我还没看见过有在游戏项目中运用的。我们这里讲的状态机都是有限状态机。</p>
+
+<p>有限状态机简单描述下，实例本身有很多种状态，实例从一种状态切换到另一种状态的动作就是状态机转换，而转换是有条件的，这个条件就是状态机之间的连线。</p>
+
+<p>打个比方，人有三个状态健康，感冒，康复中。触发的条件有淋雨（t1），吃药（t2），打针（t3），休息（t4）。状态机的连接图可以是这样，健康-（t4休息）-&gt;健康；健康-（t1淋雨）-&gt;感冒；感冒-（t3打针）-&gt;健康；感冒-（t2吃药）-&gt;康复中；康复中-（t4休息）-&gt;健康，等等。状态在不同的条件下跳转到自己或不同状态中去。</p>
+
+<p>===</p>
+
+<p>状态机可归纳为4个要素，即现态、条件、动作、次态。这样的归纳主要是出于对状态机的内在因果关系的考虑。“现态”和“条件”是因，“动作”和“次态”是果。详解如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>①现态：是指当前所处的状态。
+
+②条件：又称为“事件”，当一个条件被满足，将会触发一个动作，或者执行一次状态的迁移。
+
+③动作：条件满足后执行的动作。动作执行完毕后，可以迁移到新的状态，也可以仍旧保持原状态。动作不是必需的，当条件满足后，也可以不执行任何动作，直接迁移到新状态。
+
+④次态：条件满足后要迁往的新状态。“次态”是相对于“现态”而言的，“次态”一旦被激活，就转变成新的“现态”了。
+</code></pre></div>
+<h3>游戏中人物行为动作中使用状态机</h3>
+
+<p>游戏中状态机的关键是事件和控制状态的控制类。状态机的数量和作用都会因系统的不同而不同，触发条件也各异的，唯有事件机制和控制类是状态机的不变的功能。</p>
+
+<p>事件机制在进入状态和退出状态时，触发进入事件和退出事件，这个是状态启动运作和停止运作的起点。</p>
+
+<p>状态在满足转换条件后，退出状态前向当前状态发起退出事件，告诉当前状态机，你将停止运行，停止运行前需要处理什么逻辑请赶快做，然后再向新状态发起进入事件，告诉新状态你将要开始运作，运作前的有什么逻辑或者准备工作请尽快做。这样每次状态的切换都能合理的告诉当前状态和将要切换的状态进行事件的调用。</p>
+
+<p>状态机在游戏中哪些地方会使用到？</p>
+
+<p>所有能够构成独立状态的系统或者功能都能使用状态机来表现：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1，    场景切换。
+
+    场景是独立的，只能有一个场景展示在游戏中，所以场景的切换可以用状态机来表示。比如当前是登录场景，点击登录后切换到游戏场景，这时需要把登录场景的UI销毁，UI的销毁工作是登录场景状态在退出时触发的退出事件中做的事。
+
+    之后进入到游戏场景状态时，要先把游戏场景的UI创建出来，这是游戏场景状态在触发启动事件时要做的事。
+
+    2，    人物行为状态切换。
+
+    人物只能做一个动作状态，比如攻击动作状态，比如防守动作状态，比如死亡状态，又比如人物跑步状态，这些行为都只能用单独的一个状态来表示，但也有人物边跑步边吃东西的时候，这时我们也会有几种方式去构建，比如我们把人物跑步且吃东西另外创建一个状态来运行，也可以把跑步状态里加一个吃东西的参数，让跑步这个状态机来运行不一样的跑步动作。
+
+    3，    宝箱，机关等具有多动画的元素都可以构成独立的状态。
+
+    每个动画的播放都可以成为一个状态，比如打开状态下的宝箱，比如触发机关时的状态等等。
+
+    4，    AI。
+
+    用状态机来封装AI是最常见到的，每个AI状态都是独立运行的。比如激怒状态，此状态中会不断向周围的敌人发起攻击，如果20秒后恢复到平静状态不再攻击，又比如巡逻状态，在某个点周围或者按一定路线进行走动，如果5米内发现敌人，就进去激怒状态等等。
+</code></pre></div>
+<script type="text/javascript">
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = "u3493987";
+        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = "u3469788";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+    }
+</script>
+
+<p>我们先按常见的需求把人物行为动作划分一下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1，    休息状态。原地不动，并且重复做一个休息的动画。
+
+    2，    攻击状态。播放攻击动画，并且对目标或前方进行攻击。
+
+    3，    技能状态。技能稍微复杂点，因为每个技能都不一样，所以技能状态里面的逻辑可以由不同的技能类来实现。比如建个技能基类class SkillBase，里面有几个统一的接口，然后子类对基类进行继承后，细化技能的细节。
+
+    4，    防御状态。播放防御动画，当受到攻击时，不切换受伤状态。
+
+    5，    受伤状态。播放受伤动画，完毕后自动进入休息状态。
+
+    6，    行走与跑步状态。播放行走或跑步动画，并根据操作输入移动方向。
+
+    7，    跳跃状态。播放跳跃动画，并上下移动人物进行跳跃，下落时底部受到碰撞就进入休息状态。
+
+    8，    死亡状态。播放死亡动画，并且不再受到任何指令而转入任何状态。
+</code></pre></div>
+<p>这里对每个状态编写一些伪代码来描述状态机在人物行为中的运作，如下：</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">Class</span> <span class="n">BaseState</span>
+<span class="p">{</span>
+    <span class="n">Public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">OnEnter</span><span class="p">(){}</span>
+    <span class="n">Public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">OnExit</span><span class="p">(){}</span>
+    <span class="n">Public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">(){}</span>
+<span class="p">}</span>
+
+<span class="n">Class</span> <span class="n">IdleState</span>
+<span class="p">{</span>
+    <span class="n">Public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnEnter</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">role</span><span class="p">.</span><span class="n">playAnimation</span><span class="p">(</span><span class="err">“</span><span class="n">idle</span><span class="err">”</span><span class="p">,</span><span class="n">loop</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">Class</span> <span class="n">HurtState</span>
+<span class="p">{</span>
+    <span class="n">Public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnEnter</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">role</span><span class="p">.</span><span class="n">playAnimation</span><span class="p">(</span><span class="err">“</span><span class="n">hurt</span><span class="err">”</span><span class="p">,</span><span class="n">Once</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="n">Public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">If</span><span class="p">(!</span><span class="n">Role</span><span class="p">.</span><span class="n">IsPlayingAnimation</span><span class="p">(</span><span class="err">“</span><span class="n">hurt</span><span class="err">”</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">HurtFinish</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">Public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnExit</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">GotoIdleState</span><span class="p">();</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="n">Class</span> <span class="n">AttackState</span>
+<span class="p">{</span>
+    <span class="n">Public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnEnter</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Role</span><span class="p">.</span><span class="n">playAnimation</span><span class="p">(</span><span class="err">“</span><span class="n">attack</span><span class="err">”</span><span class="p">,</span><span class="n">once</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">Public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">If</span><span class="p">(!</span><span class="n">Role</span><span class="p">.</span><span class="n">IsPlayingAnimation</span><span class="p">(</span><span class="err">“</span><span class="n">attack</span><span class="err">”</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">AttackStateFinish</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">Public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnExit</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">GotoIdleState</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">Class</span> <span class="n">MoveState</span>
+<span class="p">{</span>
+    <span class="n">Public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnEnter</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Role</span><span class="p">.</span><span class="n">playAnimation</span><span class="p">(</span><span class="err">“</span><span class="n">walk</span><span class="err">”</span><span class="p">,</span><span class="n">loop</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">Public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Move</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="n">Public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnExit</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">GotoIdleState</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>上述代码表达了对状态的描述，其中空闲状态，在没有收到任何指令时只循环播放Idle动画其他什么都不干；攻击状态，进入时播放攻击动画，并在动画结束后返回Idle状态并等待指令；移动状态在进入时播放walk动画并移动，在退出时进入Idle状态。</p>
+
+<p>除了事件对状态起了关键的作用外，控制状态的控制类也是关键，它就像是状态的管理类，用于管理状态的入口和出口。</p>
+
+<p>以下是伪代码：</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">Class</span> <span class="n">RoleStateController</span>
+<span class="p">{</span>
+    <span class="n">Private</span> <span class="n">IdleState</span> <span class="n">idleState</span><span class="p">;</span>
+    <span class="n">Private</span> <span class="n">MoveState</span> <span class="n">moveState</span><span class="p">;</span>
+    <span class="n">Private</span> <span class="n">AttackState</span> <span class="n">attackState</span><span class="p">;</span>
+    <span class="n">Private</span> <span class="n">HurtState</span> <span class="n">hurtState</span><span class="p">;</span>
+
+    <span class="n">Private</span> <span class="n">BaseState</span> <span class="n">currentState</span><span class="p">;</span>
+    
+    <span class="n">Public</span> <span class="k">void</span> <span class="nf">OnHurt</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">ReduceHP</span><span class="p">();</span>
+        <span class="n">If</span><span class="p">(</span><span class="n">currentState</span> <span class="p">!=</span> <span class="n">hurtState</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">ChangeToHurtState</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">Public</span> <span class="k">void</span> <span class="nf">InputAttack</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">If</span><span class="p">(</span><span class="n">currentState</span>  <span class="p">==</span> <span class="n">hurtState</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>  <span class="c1">//受伤状态下不可攻击</span>
+        <span class="n">If</span><span class="p">(</span><span class="n">currentState</span> <span class="p">==</span> <span class="n">attackState</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">//攻击状态还没结束时不可重新开始攻击</span>
+        <span class="n">ChangeToAttackState</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="n">Public</span> <span class="k">void</span> <span class="nf">InputMove</span><span class="p">(){}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>在状态机控制类中，存储了各个状态，并且提供了输入的接口，这种输入的事件是由状态机外部提供的，比如发起攻击，比如受到伤害，比如向前向后移动等等，在外部需要状态机触发状态改变时，发起了对状态机的输入事件。</p>
+
+<p>这样就是状态机控制类需要做的事，简单来说就是存储状态，并提供输入事件接口。</p>
+
+<p>有了状态机的控制类就有了状态机的管理，就可以对各种逻辑的控制，比如硬值，受伤中不可行走和攻击，攻击中不可移动等，这些当状态在切换时的条件限制，是阻挡还是通过，该切换什么状态，都是由控制类来决定的，它就是状态机系统的大脑。</p>
+
+  <p>感谢您的耐心阅读</p>
+  <p>Thanks for your reading</p>
+</div>
+<div>
+  
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+<!-- <div id="cyReward" role="cylabs" data-use="reward" align="center" ></div> -->
+
+<script type="text/javascript" src="/assets/js/tctip-1.0.3.min.js"></script>
+<script>
+  new tctip({
+    top: '50%',
+    button: {
+      id: 9,
+      type: 'zanzhu'
+    },
+    list: [
+      {
+        type: 'alipay',
+        qrImg: '/assets/common/alipay.jpg'
+      }, {
+        type: 'wechat',
+        qrImg: '/assets/common/wechatpay.jpg'
+      }, {
+        type: 'bitcoin',
+        qrContent: '1ErCFmtoQY2KDctjgPALZri3USsMqdSvqh'
+      }
+    ]
+  }).init()
+</script>
+
+  <li>
+<p>版权申明</p>
+<p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB3.html">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(三) - 状态机</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB3.html">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(三) - 状态机</a></p> -->
+<p>Copyright attention</p>
+<p>If you would like to reprint this article please write auth's name and link in the page.</p>
+
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
+</li>
+</div>
+<div class="related">
+    
+<div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+
+
+
+
+
+<div class="related">
+  <h2>最新发表的文章</h2>
+  <ul class="related-posts">
+
+    
+      <li>
+        <h3>
+          <a href="/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB3.html">
+            《Unity3D高级编程之进阶主程》第五章，3D模型与动画(三) - 状态机
+            <small>06 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/08/03/%E8%A2%AB%E5%B0%81%E7%BA%AA%E5%BF%B5%E5%B8%96.html">
+            被封纪念帖
+            <small>03 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">
+            git同步多个repository仓库
+            <small>03 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+
+  </ul>
+
+  <h2>之后发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/%E8%A2%AB%E5%B0%81%E7%BA%AA%E5%BF%B5%E5%B8%96.html">
+                被封纪念帖
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">
+                git同步多个repository仓库
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">
+                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB1.html">
+                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)
+                <small>30 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  <!-- </ul> -->
+
+  <h2>之前发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/%E8%A2%AB%E5%B0%81%E7%BA%AA%E5%BF%B5%E5%B8%96.html">
+                被封纪念帖
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">
+                git同步多个repository仓库
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">
+                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB1.html">
+                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">
+                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)
+                <small>30 Jul 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  </ul>
+</div>
+
+
+
+
+<div id="SOHUCS" ></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cys17tiy3',
+conf: 'prod_3b20e80a06c760385d4781c30f8ebf5c'
+});
+</script>
+
+
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-悬浮20:3*/
+    	var cpro_id = "u3495898";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+ 
+
+
+
+    </div>
+
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </body>
+  
+</html>
