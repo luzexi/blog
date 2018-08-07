@@ -2,8 +2,8 @@
 layout: post
 status: publish
 published: false
-title: 《Unity3D高级编程之进阶主程》第七章，Shader(二) - 
-description: "unity3d 高级编程 主程 shader Property shaderlab vertex fragment"
+title: 《Unity3D高级编程之进阶主程》第七章，Shader(二) - Pass
+description: "unity3d 高级编程 主程 shader pipe 渲染管道 subshader shaderlab vertex fragment pass"
 excerpt_separator: ===
 tags:
 - 书籍著作
@@ -12,69 +12,55 @@ tags:
 ---
 
 
-	SubShader模块
-	
-SubShader在ShaderLab中可以有很多个，每个SubShader都可以针对一种设备。当Unity去展示一个模型时，会从第一个SubShader开始寻找是否匹配该设备，如果不匹配则选择下一个SubShader，直到找到能够匹配该设备为止。
-格式：
-SubShader
-{
-	[Tags]
-	[CommonState]
-	[Pass1] Pass { [Name and Tags] [RenderSetup] }
-[Pass2] Pass { [Name and Tags] [RenderSetup] }
-[Pass3] Pass { [Name and Tags] [RenderSetup] }
-[…]
-}
-Fallback “name”  or Fallback Off
-SubShader中定义了Tag标签，Pass共同有用的状态(Common State)。Pass代表了一个渲染管道，每次通过Pass进行渲染都像是通过一次完整渲染管道。
-当一个SubShader被设备选中进行渲染时，定义的每个Pass都会渲染该物体一次，如果有很多灯光相互作用的话可能不止一次。通过Pass渲染一次会承担相当大的代价，所以我们在编写Shader Pass时需要小心，尽量减少Pass的使用，将Pass数量最小化。建议只有在我们无法使用单个Pass达到效果时，才启用多个Pass进行Shader编程。
-所有在SubShader块中的渲染状态(Render Statement)都可以在Pass中进行特殊化，而定义在SubShader中的渲染状态则是所有Pass公有的渲染状态，同时Pass可以定义自己的个性化的渲染状态。
-比如以下例子：
-SubShader{
-Lighting Off
-Pass{
-        Cull Front
-    }
-Pass{
-Cull Back
-    }
-}
-Fallback “Diffuse”
-例子中，SubShader设置了一个共同的渲染状态(Common State)就是把灯光影响关掉，灯光不再影响着色，第一个Pass中使用了独立的渲染状态是，裁切模型前半部分，第二个Pass中也使用了独立的渲染状态，裁切模型模型后半部分，然后他们共同拥有Common State是关闭灯光效果，所以第一个Pass就有了两个状态，一个是关闭灯光效果，第二个是裁切前半部分模型，而第二个Pass的也有两个状态，一个是关闭灯光效果，另一个是裁切后半部分模型。
-SubShader最后还有一个Fallback标识，代表了当所有SubShader都对设备无效时，则选择什么类型的Shader作为替代。而当你认为无法替代，或者无需替代的时候可以关闭Fallback的功能。在上面的例子中，Fallback “Diffuse”表示了，当所有SubShader都无法起作用的时候漫反射Diffuse替代当前Shader。
+### Pass
 
-SubShader本身并不复杂，但里有几个重要的模块，下面我们要详细讲一讲Pass块的格式和属性内容。
+===
 
-Pass模块
+Pass块的格式，如下：
 
-前面提到过每个Pass块都会对这个物体模型进行一次渲染，Pass块中也有自己的格式，如下：
+{% highlight c# %}
+
 Pass
 {
-	[Name and Tags]
-	[Render State]
+    [Name and Tags]
+    [Render State]
 }
-Pass可以定义自己的名字，和Tag标签。Pass可以通过Tag标签来变更渲染引擎里的设置。Pass里的这个Tag和SubShader上的Tag是同一种标签，SubShader起到了共享标签的作用，而Pass里的Tag则是独立的个性化的。
 
-Tag标签详解
-Tag的格式很简单，就如同KeyValue一样，每个标签都有一个Key，对应一个Value，Key之间用空格隔开。
-Tags { “TagKey1” = “Value1” “TagKey2” = “Value2” }
+{% endhighlight %}
 
-那么有哪些Tag可以供我们使用呢？
+Pass可以定义自己的名字，和Tag标签，以及渲染状态Render State。
 
-先介绍SubShader和Pass共用的Tag。
+Pass通过Tag标签来变更渲染引擎里的设置。Pass里的这个Tag和SubShader上的Tag是同一种标签，SubShader起到了共享标签的作用，而Pass里的Tag则是独立的个性化的。
 
-Queue 标签
+### Tag标签详解
+
+Tag的格式很简单，就同Key-Value一样，每个标签都有一个Key，对应一个Value，Key之间用空格隔开。
+
+        Tags { “TagKey1” = “Value1” “TagKey2” = “Value2” }
+
+那么究竟有哪些Tag可以供我们使用？
+
+我们先介绍SubShader和Pass共用的Tag。
+
+###### Queue 标签
+
 Queue是渲染顺序的标签。可以用这个标签决定模型在绘制时所用的顺序。
+
 Shader会在渲染前决定物体属于哪个渲染顺序，从而确保所有透明或半透明物体的绘制顺都排在不透明物体的后面。
 
-例子，Tags { "Queue" = "Transparent" }
+        例子，Tags { "Queue" = "Transparent" }
 
 如下为渲染顺序的定义选择。
-Background：这种类型的顺序会排在所有物体的前面。
-Geometry(默认)：大多数物体都使用这种方式。不透明物体使用这个类型。
-AlphaTest：使用Alpha Test的物体使用这个类型的渲染顺序。它被排在不透明物体的渲染后面。
-Transparent：排在Geometry和AlphaTest后渲染。所有alpha混合的物体都应该选择这个类型（因为Shader不会入depth buffer）。
-Overlay：这个类型是最后渲染的，比前面所有类型都要置后。
+
+        Background：这种类型的顺序会排在所有物体的前面。
+
+        Geometry(默认)：大多数物体都使用这种方式。不透明物体使用这个类型。
+
+        AlphaTest：使用Alpha Test的物体使用这个类型的渲染顺序。它被排在不透明物体的渲染后面。
+
+        Transparent：排在Geometry和AlphaTest后渲染。所有alpha混合的物体都应该选择这个类型（因为Shader不会入depth buffer）。
+
+        Overlay：这个类型是最后渲染的，比前面所有类型都要置后。
 
 在实际的运用过程中，Render Queue是可以在这几个类型有中间状态的。比如在Geometry之后渲染，但在Transparent之前。这种方式在透明和半透明的物体中特别适用，因为透明和半透明物体没有深度缓存深度缓存，所以他们之间的渲染顺序是混乱的，当两个半透明物体放在前后位置，进行渲染时，摄像机看到的是一个比较混乱的排序方式，因为他们没有深度缓存数据。所以在半透明物体的运用中我们时常人工指定某些物体的排序大小，比如，
 Tags { "Queue" = "Transparent+1" }
@@ -146,11 +132,10 @@ RequireOptions 标签
 RequrieOptions可以做到，一个Pass申明当有某种外部条件发生的时候才被渲染。
 SoftVegetation：当软植物(Soft Vegetation)在Quality Settings中被设置时，才渲染这个Pass。
 
+
 Render State Command渲染状态指令详解
 
 在Pass和SubShader里都可以设置各种渲染状态来达到渲染的效果。比如alpha的混合或者前后的裁切，还有深度的测试等等。
-
- 
 
 我们来介绍下Pass中的渲染状态Command指令
 1.	Cull，前后裁切指令。

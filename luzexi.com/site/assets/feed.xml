@@ -7,6 +7,164 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第七章，Shader(二) - 渲染管道</title>
+               <description>&lt;h3&gt;SubShader模块&lt;/h3&gt;
+
+&lt;p&gt;SubShader相当于子Shader的意思，SubShader在Shader中可以有很多个，每个SubShader都可以针对一种设备，但不是所有SubShader都会被采用。当Unity去展示一个模型时，会从第一个SubShader开始寻找是否匹配当前的设备，如果不匹配则与下一个SubShader继续匹配，直到找到能够匹配该设备为止。如果所有的SubShader都没有匹配上，则会使用 Fallback 标签的Shader。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;格式如下：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SubShader&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;   [Tags]&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;   [CommonState]&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;   [Pass1]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Tags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RenderSetup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;    [Pass2]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Tags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RenderSetup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;    [Pass3]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Tags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RenderSetup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;    […]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Fallback&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Fallback&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Off&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;SubShader中可以定义了Tag标签，以及与Pass共同拥有的状态(Common State)。&lt;/p&gt;
+
+&lt;p&gt;Pass代表了一个渲染管道，每次通过Pass进行渲染都是通过一次完整渲染管道。&lt;/p&gt;
+
+&lt;p&gt;当一个SubShader被设备选中进行渲染时，定义的每个Pass都会渲染该物体一次，如果有很多灯光相互作用的话可能不止一次。通过Pass渲染一次会承担相当大的代价，所以我们在编写Shader Pass时需要小心，尽量减少Pass的使用，尽量将Pass数量最小化。&lt;/p&gt;
+
+&lt;p&gt;建议只有在我们无法使用单个Pass达到效果时，才启用多个Pass进行Shader编程。&lt;/p&gt;
+
+&lt;p&gt;所有在SubShader块中的渲染状态都可以在Pass中进行特殊化，也就是说定义在SubShader中的渲染状态是所有Pass公有的渲染状态，同时Pass可以定义自己的个性化的渲染状态。&lt;/p&gt;
+
+&lt;p&gt;比如以下例子：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SubShader&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Lighting&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Off&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Cull&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Front&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Cull&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Back&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Fallback&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Diffuse&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;上述例子中 SubShader 设置了一个共同的渲染状态(Common State)就是把灯光影响关掉，灯光不再影响着色，第一个Pass中使用了独立的渲染状态是，裁切模型前半部分，第二个Pass中也使用了独立的渲染状态，裁切模型模型后半部分，然后他们共同拥有Common State是关闭灯光效果，所以第一个Pass就有了两个状态，一个是关闭灯光效果，第二个是裁切前半部分模型，而第二个Pass的也有两个状态，一个是关闭灯光效果，另一个是裁切后半部分模型。&lt;/p&gt;
+
+&lt;p&gt;SubShader最后还有一个Fallback标识，代表了当所有SubShader都对设备无效时，则选择备用的Shader作为替代。而当你认为无法替代，或者无需替代的时候可以关闭Fallback的功能 Facllbck off 。&lt;/p&gt;
+
+&lt;p&gt;在上面的例子中，Fallback “Diffuse”表示了，当所有SubShader都无法起作用的时候漫反射Diffuse替代当前Shader。&lt;/p&gt;
+
+&lt;p&gt;SubShader本身并不复杂，但里有几个重要的模块，以及这些模块中的标签和用途可能会稍微繁琐一些，下面我们要详细讲一讲Pass块的格式和属性内容。&lt;/p&gt;
+
+&lt;h3&gt;渲染管道&lt;/h3&gt;
+
+&lt;p&gt;提到渲染管道，不得不提到渲染管线流程，一整个渲染管线流程分八个阶段。&lt;/p&gt;
+
+&lt;h6&gt;阶段1， 指定几何对象&lt;/h6&gt;
+
+&lt;p&gt;这个阶段引擎在选择某些几何对象作为渲染目标。&lt;/p&gt;
+
+&lt;h6&gt;阶段2，顶点处理&lt;/h6&gt;
+
+&lt;p&gt;主要工作就是“变换三维顶点坐标”和“光照计算”。&lt;/p&gt;
+
+&lt;p&gt;顶点变换或坐标系变换包括：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Object space，模型坐标；
+
+    World space，世界坐标；
+
+    Eye space，视点坐标（视锥裁剪）；
+
+    Clip and Project space，裁剪空间坐标（也叫屏幕坐标，进行投影、剪裁、映射的过程）。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Eye space坐标转换到Clip and Project space坐标的过程其实就是一个投影、剪裁、映射的过程。&lt;/p&gt;
+
+&lt;p&gt;除了坐标转换和光照计算，第2阶段还做了纹理坐标变换(纹理矩阵)，材质状态纹理坐标生成。&lt;/p&gt;
+
+&lt;p&gt;这个阶段所接收到的数据则是每个顶点的属性特征，输出则是变换后的顶点数据。&lt;/p&gt;
+
+&lt;p&gt;这个阶段也是Shader里，vertex fragment着色器编程中 vertex 顶点转换函数的处理阶段，vetex顶点函数就在这个阶段编写顶点的变化。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;h6&gt;阶段3，图元装配&lt;/h6&gt;
+
+&lt;p&gt;在顶点处理之后,顶点的全部属性都已经被确定 在这个阶段顶点将会根据应用程序送往的图元规则.&lt;/p&gt;
+
+&lt;h6&gt;阶段4，图元处理(裁剪 消隐)&lt;/h6&gt;
+
+&lt;p&gt;将图元与用户定义的裁剪平面和模型投影矩阵所建立的视景比较，裁剪且丢弃位于视景和裁剪平面外部的图元，不在予以处理。若是采用透视投影，那么将会对每个顶点的x,y,z坐标分别乘以透视矩阵。&lt;/p&gt;
+
+&lt;p&gt;接着由视口变换将顶点坐标变换至窗口坐标，最后执行消隐操作，把那些被遮挡的部分进行消除。&lt;/p&gt;
+
+&lt;h6&gt;阶段5，栅格化&lt;/h6&gt;
+
+&lt;p&gt;三维模型经过了顶点变换已经投影到了二维平面上，而且被装配成图元了，但是屏幕是一个一个细细小小的像素格子组成的，对于一个图片，电脑是怎么知道应该把它搞到哪几个像素上去显示的呢？这就是光栅化。说白了就是，把想看见的图片，搞成像素能显示的。光栅化工作告诉了显卡，哪个格子是你这个图元应该画上的，哪个不是。&lt;/p&gt;
+
+&lt;p&gt;传递过来的图元数据，在此将会被分解成更小的单元并对应帧缓冲区的各个像素，这些单元被称之为片元。一个片元可能包含窗口大小，深度，颜色，纹理坐标等属性。&lt;/p&gt;
+
+&lt;p&gt;片元的属性是图元上顶点数据等经过插值而确定的，比如颜色，深度等。&lt;/p&gt;
+
+&lt;h6&gt;阶段6，片元处理&lt;/h6&gt;
+
+&lt;p&gt;这个阶段首先对片元上纹理，通过纹理坐标取得纹理内存中相对应的颜色。&lt;/p&gt;
+
+&lt;p&gt;再进行雾化，通过片元距离当前视点位置修改颜色。&lt;/p&gt;
+
+&lt;p&gt;最后颜色汇总，将纹理,主定义的颜色,雾化的颜色,次颜色光照阶段计算的颜色汇总一起。&lt;/p&gt;
+
+&lt;p&gt;这个阶段就是vertex fragment着色器编程中 fragment 片元转换函数的处理阶段，fragment 片元函数通过这个阶段的编程对片元进行修改。&lt;/p&gt;
+
+&lt;h6&gt;阶段7，像素操作（Pixel Operation）&lt;/h6&gt;
+
+&lt;p&gt;所有的片元的测试都在这里进行，包括：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    像素所有权测试-&amp;gt;裁剪测试-&amp;gt;alpha测试-&amp;gt;模板测试-&amp;gt;深度测试-&amp;gt;混合-&amp;gt;抖动显示-&amp;gt;逻辑操作
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;阶段8，帧缓冲区（Frame Buffer）&lt;/h6&gt;
+
+&lt;p&gt;执行帧缓冲的写入等操作，写入帧缓冲区，等待最后产生了显示出来的像素。&lt;/p&gt;
+
+&lt;p&gt;渲染管线的整个过程如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader11.png&quot; alt=&quot;render pipe&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;上图中 vertex框就是可编程部分的 vertex 函数，它可以修改顶点部分的数据来表现个性化的效果，fragment框也是一样，是 fragment 函数的调用点，修改通过这个fragment函数可以修改片元数据达到需要的效果。&lt;/p&gt;
+
+&lt;p&gt;Unity3D在渲染管线各阶段中所用到的功能，和我们前面所描述的阶段有很相似的地方，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader12.png&quot; alt=&quot;render pipe&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;上图所要表达的功能和阶段，正是我们要在Shader章节中讲解和说明的部分。&lt;/p&gt;
+
+&lt;p&gt;参考资料&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，渲染管线流程 作者：不详
+
+    2，【图形学】渲染管道 作者：阵雷
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+               <pubDate>Wed, 08 Aug 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader3.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader3.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第六章，网络层(三) - 实现UDP</title>
                <description>&lt;h3&gt;实现UDP&lt;/h3&gt;
 
@@ -1675,100 +1833,6 @@ MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合
                <pubDate>Fri, 03 Aug 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html</guid>
-            </item>
-        
-            <item>
-               <title>《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范</title>
-               <description>&lt;h3&gt;3D模型大小，面数，贴图大小，骨骼数量在游戏中的规范。&lt;/h3&gt;
-
-&lt;p&gt;为什么说资源的规范在项目中是极其重要的？&lt;/p&gt;
-
-&lt;p&gt;看到过有很多项目都没有重视资源规范，他们奢求高的运行效率，却不懂资源的规范是运行效率的前提。&lt;/p&gt;
-
-&lt;p&gt;有的游戏项目，一个人物模型就有几万个面，一个建筑就有几十万个面，不堪入目。&lt;/p&gt;
-
-&lt;p&gt;贴图也有很糟糕的，到处都是1024和2048大小的贴图。骨骼数量有的甚至到了几百。在这样恶劣的资源环境情况下，项目的运行效率怎么可能高。&lt;/p&gt;
-
-&lt;p&gt;资源的好坏直接导致了项目的好坏，模型太大，面数太多，贴图太大，会导致包体过大，骨骼数量太多，导致CPU在动画上消耗过多。&lt;/p&gt;
-
-&lt;p&gt;资源过大过重，还会导致CPU消耗在资源加载上面的时间过多过长，导致画面帧率下降，卡顿严重等问题。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;我们来简单设想下就能明白这个道理，CPU加载一个文件要花去多少时间呢，打个比方，加载1MB要0.01秒，卸载要0.005秒，那么100MB的加载卸载就要1.5秒，一个项目在10秒内要加载卸载300MB资源会发生什么，你的卡顿时间会达到4.5秒，将近一半的时间在画面卡住状态。&lt;/p&gt;
-
-&lt;p&gt;假如这个项目是手机游戏项目，在这么恶劣的情况下发布出去，将会带来大量差评。花钱打广告去购买流量也是浪费钱，因为可玩性实在太差，没有玩家愿意耐下心来玩你的卡顿感这么糟糕的游戏。&lt;/p&gt;
-
-&lt;p&gt;这里只是打个比方，并没有去验证确切的数据，但为了让大家能够引起足够的重视，我觉得夸大点也无妨。&lt;/p&gt;
-
-&lt;p&gt;对于美术资源来说，模型面数不是越多越好，越细越好，而是在一定数量的限制下，能做到最大限度的美化。同样贴图也不是越大越好，精度越高越好，而是在一定大小的限制下，做到最大限度的不失真。在骨骼动画中也是同样的道理，优化骨骼数量且任然流畅。&lt;/p&gt;
-
-&lt;p&gt;资源规范能有效的限制美术人员在制作美术资源时无度的扩张。&lt;/p&gt;
-
-&lt;p&gt;如何规范3D美术资源？&lt;/p&gt;
-
-&lt;p&gt;关于模型的大小，一般都会按正常的尺寸进行制作，比如规定1个单位空间就是1米。也有例外的时候，不过也是按这个放大缩小的，比如1个单位空间为1厘米，或10米等。&lt;/p&gt;
-
-&lt;h3&gt;如何确定美术资源规范的大小。&lt;/h3&gt;
-
-&lt;h3&gt;1，    根据运用的场景而不同。&lt;/h3&gt;
-
-&lt;p&gt;像汤姆猫这种强调单一主角的场景，主要资源全部投入到主角一个人的，对主角进行精细化的雕琢是很有必要的。&lt;/p&gt;
-
-&lt;p&gt;这种场景的人物模型做到1万面也不为过，主角的骨骼也可以做得很精细，骨骼数量可以达到50-100个，贴图大小也可以在512 x 512左右，如果需要 1024 x 1024 的贴图我觉得问题也不是很大，只是如果需求中有换装时，需要考虑下包体大小。&lt;/p&gt;
-
-&lt;p&gt;如果是第三人称视角的RPG游戏，由于视角与角色的距离有限，同时看到的场景范围有限，可以使用动态场景地图加载的方式控制内存使用量，主要是同屏单位数量会决定模型面数。&lt;/p&gt;
-
-&lt;p&gt;比如人模模型面数控制在3000-4000面，骨骼数量控制在20-30个，至于建筑模型面数因为大小差异太多无法统一，不过我们可以用整体面数统计法来规范资源。&lt;/p&gt;
-
-&lt;p&gt;贴图完全可以控制在 256 x 256 以下，比如主贴图为 256 x 256，副贴图为 128 x 128。&lt;/p&gt;
-
-&lt;p&gt;如果做的是《我的世界》，《魔兽世界》这种超大型的游戏场景，可以从高空俯瞰整个场景的这种，规范的太小会失真，规范的太大就会消耗太多内存和CPU的，这已经不是规范资源能解决的问题了，而是用其他方法手段，比如LOD，只要处理好LOD就能把渲染压力和渲染质量平衡好。后面章节中会具体介绍LOD在优化中的运用。&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = &quot;u3493987&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;h3&gt;2，    使用反推计算来得出规范。&lt;/h3&gt;
-
-&lt;p&gt;对于一些模型物体大小差异很多大的，无法统一模型与贴图面数的，我们可以用全场景总面数来控制。&lt;/p&gt;
-
-&lt;p&gt;比如地形场景控制在6万面左右，然后开始部署，地形模型总共3万面左右，数量多的小件模型在100面以下平均50面，中型建筑在500-1500面平均下1000面好了，大型建筑在2000-5000面以下平均3000面。&lt;/p&gt;
-
-&lt;p&gt;这样除了地形模型，剩下的还有3万面，小件模型可以放100件也就是5千面，中型建筑可以放10件1万面，大型建筑5件，1万面，总共3万面差不多满足了6万面左右的需求。&lt;/p&gt;
-
-&lt;p&gt;贴图大小同样按照这种方法进行规范，比如说总体贴图的大小不得超过100MB，推到出去平均有多少种小件模型在场景内，平均有多少种中型模型在场景内，平均有多少种大型建筑在场景内。&lt;/p&gt;
-
-&lt;p&gt;比如小件平均有30种，中型模型有20种，大型模型有10种，那么小件每个贴图不得超过0.3MB，中型模型每个贴图不得超过1MB，大型模型每个贴图不得超过2MB。&lt;/p&gt;
-
-&lt;p&gt;贴图的规范也可以用大小来进行规范，比如场景的总体贴图大小设置为不得超过 20张 1024 x 1024，那么在小件平均30种，中型模型平均20种，大型模型平均10种的情况下，我们可以规定为小件贴图大小在128 x 128以下，中型模型贴图大小在256 x 256以下，大型模型贴图大小在 512 x 512 以下。&lt;/p&gt;
-
-&lt;p&gt;从上面阐述的反推计算方法来做，一整个地形场景的模型规范就很容易得出来了。&lt;/p&gt;
-
-&lt;h3&gt;3，    实际测试。&lt;/h3&gt;
-
-&lt;p&gt;无论什么方法，都敌不过实际测试。如果可以在项目前加入实际的压力测试环节，或者在项目进行中加入渲染压力测试的环境，会更有利于对美术资源的规范。&lt;/p&gt;
-
-&lt;p&gt;专门有人做渲染压力的实际测试是很奢侈的，因为需要专门派遣一个人来完成这件事情，对于现在情况下，人才缺乏而且成本高的问题，一般很少会有项目能有这实力专门派人去做各种渲染测试。&lt;/p&gt;
-
-&lt;p&gt;所以我们只能边做边测，遇到具体问题寻找自己的答案，比如寻找是否有情况特别恶劣的模型，整体面数是否大大超出预想等，然后再提出自己的方案来个个击破。&lt;/p&gt;
-
-&lt;p&gt;我们可以通过参考其他同类游戏的资源制作规范，比如解包他们的游戏包体，对资源进行解密解压等。也可以从他们具体游戏中观察如何应对面数和贴图问题。毕竟网络信息的开放的，我们可以充分利用起来。&lt;/p&gt;
-</description>
-               <pubDate>Fri, 03 Aug 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB1.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB1.html</guid>
             </item>
         
     </channel>

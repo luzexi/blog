@@ -8,12 +8,12 @@
 
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta content="git 同步多个 repository 仓库" name="description">
+  <meta content="unity3d 高级编程 主程 shader pipe 渲染管道 subshader shaderlab vertex fragment 光栅化 片元 图元" name="description">
 
 
   <title>
     
-      git同步多个repository仓库
+      《Unity3D高级编程之进阶主程》第七章，Shader(二) - 渲染管道
     
   </title>
 
@@ -185,35 +185,89 @@
 
     <div class="content container">
       <div class="post">
-  <h1 class="post-title">git同步多个repository仓库</h1>
-  <span class="post-date">03 Aug 2018</span>
-  <p>由于国内服务器访问GitHub奇慢，所以把仓库复制一份放在了国内。但是苦于要同步两边，所以想有没有办法，同步多个git仓库，是否有办法，只维护一份就可以了。</p>
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第七章，Shader(二) - 渲染管道</h1>
+  <span class="post-date">08 Aug 2018</span>
+  <h3>SubShader模块</h3>
+
+<p>SubShader相当于子Shader的意思，SubShader在Shader中可以有很多个，每个SubShader都可以针对一种设备，但不是所有SubShader都会被采用。当Unity去展示一个模型时，会从第一个SubShader开始寻找是否匹配当前的设备，如果不匹配则与下一个SubShader继续匹配，直到找到能够匹配该设备为止。如果所有的SubShader都没有匹配上，则会使用 Fallback 标签的Shader。</p>
 
 <p>===</p>
 
-<p>网上搜了一下，大都说的是</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git remote add 
+<p>格式如下：</p>
 
-    和 git remote set-url --add ，
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">SubShader</span>
+<span class="p">{</span>
+<span class="na">   [Tags]</span>
+<span class="na">   [CommonState]</span>
+<span class="na">   [Pass1]</span> <span class="n">Pass</span> <span class="p">{</span> <span class="p">[</span><span class="n">Name</span> <span class="n">and</span> <span class="n">Tags</span><span class="p">]</span> <span class="p">[</span><span class="n">RenderSetup</span><span class="p">]</span> <span class="p">}</span>
+<span class="na">    [Pass2]</span> <span class="n">Pass</span> <span class="p">{</span> <span class="p">[</span><span class="n">Name</span> <span class="n">and</span> <span class="n">Tags</span><span class="p">]</span> <span class="p">[</span><span class="n">RenderSetup</span><span class="p">]</span> <span class="p">}</span>
+<span class="na">    [Pass3]</span> <span class="n">Pass</span> <span class="p">{</span> <span class="p">[</span><span class="n">Name</span> <span class="n">and</span> <span class="n">Tags</span><span class="p">]</span> <span class="p">[</span><span class="n">RenderSetup</span><span class="p">]</span> <span class="p">}</span>
+<span class="na">    […]</span>
+<span class="p">}</span>
+<span class="n">Fallback</span> <span class="err">“</span><span class="n">name</span><span class="err">”</span>  <span class="n">or</span> <span class="n">Fallback</span> <span class="n">Off</span></code></pre></figure>
 
-    以及 git push origin --all 的用法。
+<p>SubShader中可以定义了Tag标签，以及与Pass共同拥有的状态(Common State)。</p>
+
+<p>Pass代表了一个渲染管道，每次通过Pass进行渲染都是通过一次完整渲染管道。</p>
+
+<p>当一个SubShader被设备选中进行渲染时，定义的每个Pass都会渲染该物体一次，如果有很多灯光相互作用的话可能不止一次。通过Pass渲染一次会承担相当大的代价，所以我们在编写Shader Pass时需要小心，尽量减少Pass的使用，尽量将Pass数量最小化。</p>
+
+<p>建议只有在我们无法使用单个Pass达到效果时，才启用多个Pass进行Shader编程。</p>
+
+<p>所有在SubShader块中的渲染状态都可以在Pass中进行特殊化，也就是说定义在SubShader中的渲染状态是所有Pass公有的渲染状态，同时Pass可以定义自己的个性化的渲染状态。</p>
+
+<p>比如以下例子：</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">SubShader</span>
+<span class="p">{</span>
+    <span class="n">Lighting</span> <span class="n">Off</span>
+    <span class="n">Pass</span>
+    <span class="p">{</span>
+        <span class="n">Cull</span> <span class="n">Front</span>
+    <span class="p">}</span>
+    <span class="n">Pass</span>
+    <span class="p">{</span>
+        <span class="n">Cull</span> <span class="n">Back</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">Fallback</span> <span class="err">“</span><span class="n">Diffuse</span><span class="err">”</span></code></pre></figure>
+
+<p>上述例子中 SubShader 设置了一个共同的渲染状态(Common State)就是把灯光影响关掉，灯光不再影响着色，第一个Pass中使用了独立的渲染状态是，裁切模型前半部分，第二个Pass中也使用了独立的渲染状态，裁切模型模型后半部分，然后他们共同拥有Common State是关闭灯光效果，所以第一个Pass就有了两个状态，一个是关闭灯光效果，第二个是裁切前半部分模型，而第二个Pass的也有两个状态，一个是关闭灯光效果，另一个是裁切后半部分模型。</p>
+
+<p>SubShader最后还有一个Fallback标识，代表了当所有SubShader都对设备无效时，则选择备用的Shader作为替代。而当你认为无法替代，或者无需替代的时候可以关闭Fallback的功能 Facllbck off 。</p>
+
+<p>在上面的例子中，Fallback “Diffuse”表示了，当所有SubShader都无法起作用的时候漫反射Diffuse替代当前Shader。</p>
+
+<p>SubShader本身并不复杂，但里有几个重要的模块，以及这些模块中的标签和用途可能会稍微繁琐一些，下面我们要详细讲一讲Pass块的格式和属性内容。</p>
+
+<h3>渲染管道</h3>
+
+<p>提到渲染管道，不得不提到渲染管线流程，一整个渲染管线流程分八个阶段。</p>
+
+<h6>阶段1， 指定几何对象</h6>
+
+<p>这个阶段引擎在选择某些几何对象作为渲染目标。</p>
+
+<h6>阶段2，顶点处理</h6>
+
+<p>主要工作就是“变换三维顶点坐标”和“光照计算”。</p>
+
+<p>顶点变换或坐标系变换包括：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Object space，模型坐标；
+
+    World space，世界坐标；
+
+    Eye space，视点坐标（视锥裁剪）；
+
+    Clip and Project space，裁剪空间坐标（也叫屏幕坐标，进行投影、剪裁、映射的过程）。
 </code></pre></div>
-<p>但是自己用了一下，完全用不了。总是拒绝push，说需要先pull，但pull了又说需要merge，我感觉这个坑巨大，于是想找其他法子。自己想了想最土的办法或许可以。试验了下，果然可行。步骤如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1， 两个文件夹，分别装两个仓库，或者多个文件夹装多个仓库，每个不同的仓库一个文件夹。
+<p>Eye space坐标转换到Clip and Project space坐标的过程其实就是一个投影、剪裁、映射的过程。</p>
 
-    2， 把其中一个作为主要维护的仓库，维护完毕后，执行以下步骤。
+<p>除了坐标转换和光照计算，第2阶段还做了纹理坐标变换(纹理矩阵)，材质状态纹理坐标生成。</p>
 
-    3， 写一个shell程序。首先把所有内容全部都复制粘贴到其他仓库去，直接替换掉旧的文件。然后每个仓库一个个的执行
+<p>这个阶段所接收到的数据则是每个顶点的属性特征，输出则是变换后的顶点数据。</p>
 
-        git add .
-
-        git commit -m &#39;sync&#39;
-
-        git push origin master
-
-        每个仓库都执行完毕后，同步完成。
-</code></pre></div>
-<p>也就是，用shell程序把人工手动需要做的事情，让程序去完成，省时省力，一键搞定。</p>
+<p>这个阶段也是Shader里，vertex fragment着色器编程中 vertex 顶点转换函数的处理阶段，vetex顶点函数就在这个阶段编写顶点的变化。</p>
 
 <script type="text/javascript">
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
@@ -230,24 +284,59 @@
     }
 </script>
 
-<h6>举例代码为同步三个仓库，具体的 shell 如下：</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    cp -r ../* /Users/luzexi/Desktop/work/gitee/blog/
-    cd /Users/luzexi/Desktop/work/gitee/blog/
-    git add .
-    git commit -m &#39;sync&#39;
-    git push origin master
+<h6>阶段3，图元装配</h6>
 
-    cp -r ../* /Users/luzexi/Desktop/work/github/blog/
-    cd /Users/luzexi/Desktop/work/github/blog/
-    git add .
-    git commit -m &#39;sync&#39;
-    git push origin master
+<p>在顶点处理之后,顶点的全部属性都已经被确定 在这个阶段顶点将会根据应用程序送往的图元规则.</p>
 
-    cp -r ../* /Users/luzexi/Desktop/work/gitlab/blog/
-    cd /Users/luzexi/Desktop/work/gitlab/blog/
-    git add .
-    git commit -m &#39;sync&#39;
-    git push origin master
+<h6>阶段4，图元处理(裁剪 消隐)</h6>
+
+<p>将图元与用户定义的裁剪平面和模型投影矩阵所建立的视景比较，裁剪且丢弃位于视景和裁剪平面外部的图元，不在予以处理。若是采用透视投影，那么将会对每个顶点的x,y,z坐标分别乘以透视矩阵。</p>
+
+<p>接着由视口变换将顶点坐标变换至窗口坐标，最后执行消隐操作，把那些被遮挡的部分进行消除。</p>
+
+<h6>阶段5，栅格化</h6>
+
+<p>三维模型经过了顶点变换已经投影到了二维平面上，而且被装配成图元了，但是屏幕是一个一个细细小小的像素格子组成的，对于一个图片，电脑是怎么知道应该把它搞到哪几个像素上去显示的呢？这就是光栅化。说白了就是，把想看见的图片，搞成像素能显示的。光栅化工作告诉了显卡，哪个格子是你这个图元应该画上的，哪个不是。</p>
+
+<p>传递过来的图元数据，在此将会被分解成更小的单元并对应帧缓冲区的各个像素，这些单元被称之为片元。一个片元可能包含窗口大小，深度，颜色，纹理坐标等属性。</p>
+
+<p>片元的属性是图元上顶点数据等经过插值而确定的，比如颜色，深度等。</p>
+
+<h6>阶段6，片元处理</h6>
+
+<p>这个阶段首先对片元上纹理，通过纹理坐标取得纹理内存中相对应的颜色。</p>
+
+<p>再进行雾化，通过片元距离当前视点位置修改颜色。</p>
+
+<p>最后颜色汇总，将纹理,主定义的颜色,雾化的颜色,次颜色光照阶段计算的颜色汇总一起。</p>
+
+<p>这个阶段就是vertex fragment着色器编程中 fragment 片元转换函数的处理阶段，fragment 片元函数通过这个阶段的编程对片元进行修改。</p>
+
+<h6>阶段7，像素操作（Pixel Operation）</h6>
+
+<p>所有的片元的测试都在这里进行，包括：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    像素所有权测试-&gt;裁剪测试-&gt;alpha测试-&gt;模板测试-&gt;深度测试-&gt;混合-&gt;抖动显示-&gt;逻辑操作
+</code></pre></div>
+<h6>阶段8，帧缓冲区（Frame Buffer）</h6>
+
+<p>执行帧缓冲的写入等操作，写入帧缓冲区，等待最后产生了显示出来的像素。</p>
+
+<p>渲染管线的整个过程如下图所示：</p>
+
+<p><img src="/assets/book/7/shader11.png" alt="render pipe"></p>
+
+<p>上图中 vertex框就是可编程部分的 vertex 函数，它可以修改顶点部分的数据来表现个性化的效果，fragment框也是一样，是 fragment 函数的调用点，修改通过这个fragment函数可以修改片元数据达到需要的效果。</p>
+
+<p>Unity3D在渲染管线各阶段中所用到的功能，和我们前面所描述的阶段有很相似的地方，如下图所示：</p>
+
+<p><img src="/assets/book/7/shader12.png" alt="render pipe"></p>
+
+<p>上图所要表达的功能和阶段，正是我们要在Shader章节中讲解和说明的部分。</p>
+
+<p>参考资料</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1，渲染管线流程 作者：不详
+
+    2，【图形学】渲染管道 作者：阵雷
 </code></pre></div>
   <p>感谢您的耐心阅读</p>
   <p>Thanks for your reading</p>
@@ -284,8 +373,8 @@
   <li>
 <p>版权申明</p>
 <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">git同步多个repository仓库</a></p> -->
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">git同步多个repository仓库</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader3.html">《Unity3D高级编程之进阶主程》第七章，Shader(二) - 渲染管道</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader3.html">《Unity3D高级编程之进阶主程》第七章，Shader(二) - 渲染管道</a></p> -->
 <p>Copyright attention</p>
 <p>If you would like to reprint this article please write auth's name and link in the page.</p>
 
@@ -369,55 +458,15 @@
       
 
       
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
+        
+          <li>
+            <h3>
+              <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%823.html">
+                《Unity3D高级编程之进阶主程》第六章，网络层(三) - 实现UDP
+                <small>07 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
         
           <li>
             <h3>
@@ -455,15 +504,6 @@
             </h3>
           </li>
         
-          <li>
-            <h3>
-              <a href="/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB3.html">
-                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(三) - 状态机
-                <small>06 Aug 2018</small>
-              </a>
-            </h3>
-          </li>
-        
 
         
   <!-- </ul> -->
@@ -478,90 +518,48 @@
       
 
       
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
         
           <li>
             <h3>
-              <a href="/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">
-                git同步多个repository仓库
-                <small>03 Aug 2018</small>
+              <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%823.html">
+                《Unity3D高级编程之进阶主程》第六章，网络层(三) - 实现UDP
+                <small>07 Aug 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">
-                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型
-                <small>03 Aug 2018</small>
+              <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%822.html">
+                《Unity3D高级编程之进阶主程》第六章，网络层(二) - 实现TCP
+                <small>07 Aug 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB1.html">
-                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范
-                <small>03 Aug 2018</small>
+              <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader2.html">
+                《Unity3D高级编程之进阶主程》第七章，Shader(二) - Property
+                <small>07 Aug 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">
-                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)
-                <small>30 Jul 2018</small>
+              <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader1.html">
+                《Unity3D高级编程之进阶主程》第七章，Shader(一) - 常用的Shader
+                <small>07 Aug 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
-                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
-                <small>30 Jul 2018</small>
+              <a href="/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%821.html">
+                《Unity3D高级编程之进阶主程》第六章，网络层(一) - TCP还是UDP
+                <small>06 Aug 2018</small>
               </a>
             </h3>
           </li>
