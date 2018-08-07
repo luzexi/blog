@@ -64,13 +64,13 @@ Surface Shader编译器最终会将所有代码转换成vertex-fragment类型的
 
 格式：
 
-Shader “name”
-{
-	[Properties属性]
-	Subshaders
-	[Fallback]
-	[CustomEditor]
-}
+        Shader “name”
+        {
+        	[Properties属性]
+        	Subshaders
+        	[Fallback]
+        	[CustomEditor]
+        }
 
 定义了一个Shader后，Shader的Name就会出现在Unity编辑器的材质球视窗的Shader列表里，可供你选择。Shader中定义的属性，供Shader计算使用，并且这些属性会显示在材质球编辑器的视窗中。
 
@@ -82,13 +82,13 @@ Shader中可以自己定义一些属性用来在后面的渲染计算中使用�
 
 Properties格式：
 
-Properties
-{
-	PropertyName1 (“display name名字”，type类型) = value默认值
-	PropertyName2 (“display name名字”，type类型) = value默认值
-	PropertyName3 (“display name名字”，type类型) = value默认值
-	…
-}
+        Properties
+        {
+        	PropertyName1 (“display name名字”，type类型) = value默认值
+        	PropertyName2 (“display name名字”，type类型) = value默认值
+        	PropertyName3 (“display name名字”，type类型) = value默认值
+        	…
+        }
 
 Properties属性格式需要中括号框起来，大括号内都是属性的详细说明。
 
@@ -161,20 +161,19 @@ Properties
 
 如果硬要套个说法，那就只能是”_”代表内部变量。就像我们书写代码变量时会有一些小习惯和规则一样，没有其他影响。
 
-
 ###### Property属性默认值
 
 每个Property属性都有一个默认值，默认值是必须填写的，否则Shader编译器不会通过编译。这里我们说明一下所有属性的默认值。
 
-1，	Number类型。Range，默认值必须在最大和最小值之间，比如Range(0,1)时值为默认值必须为0到1之间。Float，默认值可以为任意浮点数。Int，默认值可以为任意整数，且仅仅只能是整数，不能是浮点数。
+        1，	Number类型。Range，默认值必须在最大和最小值之间，比如Range(0,1)时值为默认值必须为0到1之间。Float，默认值可以为任意浮点数。Int，默认值可以为任意整数，且仅仅只能是整数，不能是浮点数。
 
-2，	Color颜色类型。Color，默认值为4个浮点数，按照RGBA的顺序，第一个代表红色，第二个代表绿色，第三个代表蓝色，第四个代表透明度alpha。
+        2，	Color颜色类型。Color，默认值为4个浮点数，按照RGBA的顺序，第一个代表红色，第二个代表绿色，第三个代表蓝色，第四个代表透明度alpha。
 
-3，	Vector方向坐标类型。Vector，默认值为4个浮点数，按照xyzw的顺序，第一个代表X坐标，第二个代表Y坐标，第三个代表Z坐标，第四个代表角度，深度等其他意义。Vector四个坐标完全可以代表任意值，比如前两个代表2D的X和Y，后面两个代表宽度和长度，再比如，前两个代表uv，后两个代表宽度和长度，或者比如前三个表示x，y，z，最后一个代表透明度alpha。
+        3，	Vector方向坐标类型。Vector，默认值为4个浮点数，按照xyzw的顺序，第一个代表X坐标，第二个代表Y坐标，第三个代表Z坐标，第四个代表角度，深度等其他意义。Vector四个坐标完全可以代表任意值，比如前两个代表2D的X和Y，后面两个代表宽度和长度，再比如，前两个代表uv，后两个代表宽度和长度，或者比如前三个表示x，y，z，最后一个代表透明度alpha。
 
-4，	2D Texture贴图类型。2D Texture，默认值有一个默认的颜色，”white”代表(RGBA:1,1,1,1)白色，”black”代表(RGBA:0,0,0,0)黑色，”gray”代表(RGBA:0.5,0.5,0.5,0.5)灰色，”bump”代表(RGBA:0.5,0.5,1,0.5)灰黄色，”red”代表(RGBA:1,0,0,0)红色。
+        4，	2D Texture贴图类型。2D Texture，默认值有一个默认的颜色，”white”代表(RGBA:1,1,1,1)白色，”black”代表(RGBA:0,0,0,0)黑色，”gray”代表(RGBA:0.5,0.5,0.5,0.5)灰色，”bump”代表(RGBA:0.5,0.5,1,0.5)灰黄色，”red”代表(RGBA:1,0,0,0)红色。
 
-5，	Cube，3D Texture，2DArray非2D贴图类型。默认值为空，当材质球编辑器中没有设置他们的实例时，他们使用灰色(RGBA:0.5,0.5,0.5,0.5)做默认值。
+        5，	Cube，3D Texture，2DArray非2D贴图类型。默认值为空，当材质球编辑器中没有设置他们的实例时，他们使用灰色(RGBA:0.5,0.5,0.5,0.5)做默认值。
 
 每个属性值的值在Material材质上都会被序列化后写入Material材质球的Meta文件。
 
