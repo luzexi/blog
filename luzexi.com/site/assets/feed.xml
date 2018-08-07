@@ -7,8 +7,234 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第六章，网络层(三) - 实现UDP</title>
+               <description>&lt;h3&gt;实现UDP&lt;/h3&gt;
+
+&lt;p&gt;在前面介绍了如何实现TCP socket，下面要介绍下UDP的实现方式。&lt;/p&gt;
+
+&lt;p&gt;其实两者都是长链接的方式，很多地方都有相识之处，比如两者都需要连接和断开事件支撑，都需要做发送和接收队列缓存，都需要定义数据包协议格式，都需要加密和校验。&lt;/p&gt;
+
+&lt;p&gt;我们来说说TCP有而UDP没有的部分，以及需要我们在UDP上实现的功能。UDP和TCP相比，UDP基本就是TCP的阉割版本，很多TCP有的功能UDP都没有。相同的地方有，都是异步发送和接收，都需要多线程操作，发送和接收都需要缓冲队列，并且发送数据时都需要合并数据包。TCP有而UDP没有的地方有，UDP不会自己校验重发，丢包概率大，数据包接收顺序不确定，而且UDP本身没有连接断开检测机制，也没有连接确认机制。&lt;/p&gt;
+
+&lt;p&gt;所以直接使用UDP来做网络连接，会遇到巨大的问题，可以说直接使用而不加修饰，不确定性太大基本用不了UDP。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;h6&gt;连接确认机制&lt;/h6&gt;
+
+&lt;p&gt;TCP有连接的三次握手协议，相当于在连接过程中跟服务器端协商后敲定我们已经建立了连接这个一致预期，而UDP是无状态链接，它并没有三次握手的协议，所以UDP连接其实是一厢情愿的，客户端并不知道是否真正连接成功了。&lt;/p&gt;
+
+&lt;p&gt;所有发送和接受都是建立在连接确认的基础上的，所以我们必须先确认知道我们是否连接成功。能够判断连接是否成功是整个实现UDP的第一步，只有这样才能顺利得进行下面的数据包收发操作。&lt;/p&gt;
+
+&lt;p&gt;怎么确认连接成功呢？&lt;/p&gt;
+
+&lt;p&gt;首先我们来看看TCP连接的三次握手是怎么做的。&lt;/p&gt;
+
+&lt;p&gt;1，  首先客户端向服务器端发送一个数据包，里面包含了Seq=0的变量，表示当前发送数据包的序列号为0，也就是第一个数据包。&lt;/p&gt;
+
+&lt;p&gt;2，  服务器端收到客户端的数据包后，发现Seq=0，说明是第一个包，用来确认连接的，于是给客户端也发送了一个数据包，包含了Seq=0，和Ack=1，表示服务器端已经收到你的连接确认包了，并且回应包Ack序列标记为1。&lt;/p&gt;
+
+&lt;p&gt;3，  客户端收到服务器端给的回应数据包后，知道了服务器端已经知道了我们已经建立连接，于是向服务器端发送了一个数据包，里面包含了Seq=1，Ack=1，表示确认数据包已经收到，连接已经确认，开始发送数据。&lt;/p&gt;
+
+&lt;p&gt;这就是TCP的三次握手来确认连接的流程。&lt;/p&gt;
+
+&lt;p&gt;在UDP下并没有三次握手机制，为了建立更好的确认连接机制，我们可以模仿TCP的形式来确认连接。不过第3次握手有点多余，可以省去最后一次握手的数据包，改为2次握手。步骤如下。&lt;/p&gt;
+
+&lt;p&gt;首先在UDP连接后，在确认连接前不进行任何的其他类型的数据发送并且不接收任何其他数据，我们将这种发送数据包以确认连接成功与否的数据包称为握手包。&lt;/p&gt;
+
+&lt;p&gt;在建立连接后，客户端先向服务器端发送一个握手数据包，代表客户端向服务器端请求连接确认信号的数据包，包内的数据仅仅是一个序列号Seq=0，或者不是序列号也可以，而是一个特殊的字段。当服务器端收到这个握手数据包后，也就是实现了第一次握手。&lt;/p&gt;
+
+&lt;p&gt;服务器端在收到第一次握手数据包后，回应一个握手数据包，里面同样带有客户端能识别的连接确认信号。当客户端接收到时就说明，发出去给服务器端的连接确认数据包有了回应，也就是说第二次握手成功。接收到了第二次握手连接确认响应数据包时，就表明了连接已经成功建立。&lt;/p&gt;
+
+&lt;p&gt;UDP确认连接的整个握手过程，就相当于客户端和服务器端的一次交流，相互认识一下并且示意后面的交流将要开始。&lt;/p&gt;
+
+&lt;p&gt;实现UDP连接确认具体步骤（伪代码）：&lt;/p&gt;
+
+&lt;p&gt;1，  首先使用API建立UDP连接。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SvrEndPoint&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IPEndPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IPAddress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;UdpClient&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UdpClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;UdpClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SvrEndPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;2，  启动接收数据线程。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UdpClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BeginReceive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReceiveCallback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ReceiveCallback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IAsyncResult&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mIPEndPoint&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;UdpClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Receive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ref&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mIPEndPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;UdpClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EndReceive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ref&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mIPEndPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;OnData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mUdpClient&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// try to receive again.&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;mUdpClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BeginReceive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReceiveCallback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;3，  发送连接确认数据包，并屏蔽其他发送和接收功能。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SendConnectRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;StopSendNormalPackage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;StopReceiveNormalPackage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;4，  等待接收连接确认数据包。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;OnData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;n&quot;&gt;If&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsConnected&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;If&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IsConnectResponse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;OnEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ConnectSuccess&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;IsConnected&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ProcessNormalData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;5，  连接确认包收到，确认连接已经成功建立。开启发送和接收数据包的功能。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ProcessNormalData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;If&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsConnected&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;DealNetworkData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;经过与服务器端数据包的来回，UDP完成了2次握手的确认机制，已经可以认定为连接已经成功建立。&lt;/p&gt;
+
+&lt;h6&gt;断开连接判定机制&lt;/h6&gt;
+
+&lt;p&gt;UDP自己不能判断是否断开，因为它是无状态的连接，需要我们自己来做断线检测，检测的方式与TCP的心跳包类似。&lt;/p&gt;
+
+&lt;p&gt;断开连接的判定机制，也是用数据包来回的形式，不过不是单一一个数据包，而是长时间的心跳包的形式来做持续性的判断连接状态。&lt;/p&gt;
+
+&lt;p&gt;首先，我们要与服务器端有个协定，每隔X秒（比如5秒）发送一个心跳数据包给服务器端，这个客户端发送的心跳数据包里包含了一些客户端信息，包括ID，角色状态，设备信息等，包体不能太大，否则会就加重了宽带负担。&lt;/p&gt;
+
+&lt;p&gt;当服务器端收到心跳数据包时，也立刻回复一个心跳数据回应包，里面包含了，服务器端当前时间，服务器端当前状态等信息。&lt;/p&gt;
+
+&lt;p&gt;当客户端收到此数据包时，说明连接尚在，也能同时同步服务器端的时间和一些基础的信息。&lt;/p&gt;
+
+&lt;p&gt;如果客户端很久没有收到心跳数据回应包时，就表明，连接已经断开了，比如30秒没收到心跳包，可以判断连接已经断开。&lt;/p&gt;
+
+&lt;p&gt;服务器端也是一样操作，当没有收到心跳包很久，就表明客户端的连接已经断开。这时客户端就可以开启相应的重连程序，或重连提示以及步骤。&lt;/p&gt;
+
+&lt;p&gt;具体步骤如下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，  每隔X秒向服务器端发送心跳数据包。
+
+    2，  服务器端收到心跳数据包后回复心跳响应数据包。
+
+    3，  如果，客户端和服务器端都很久没有收到心跳数据包，比如30秒，则判定连接断开。
+
+    4，  主动断开连接，客户端提示用户，或者重新创建连接，服务器端则是处理与之相关数据的处理。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;h6&gt;数据包校验与重发机制&lt;/h6&gt;
+
+&lt;p&gt;前面说UDP相当于是TCP的阉割版，而最关键的阉割部分就是校验和重发机制。&lt;/p&gt;
+
+&lt;p&gt;没有校验和重发机制，意味着发送端无法知道数据包的发送是否到达或者丢失，甚至丢失了也无法重新发送的机制来补充丢失的数据包。&lt;/p&gt;
+
+&lt;p&gt;所以我们需要自己编写增加对数据的校验和重发机制，来确保数据的可靠性。&lt;/p&gt;
+
+&lt;p&gt;TCP有校验和重发机制，我们可以模仿它的校验和重发机制在UDP上使用，再在此基础上加以改进。这样我们即有了UDP的速度，又有了TCP的可靠性。&lt;/p&gt;
+
+&lt;p&gt;我们来看TCP是如何做数据包的校验和重发的。&lt;/p&gt;
+
+&lt;p&gt;关于Seq和Ack。Seq即Sequence Number，为源端（source）的发送序列号；Ack即Acknowledgment Number，为目的端（destination）的接收确认序列号。&lt;/p&gt;
+
+&lt;p&gt;1，  首先客户端向服务器端发送数据包，里面包含Seq(sequence number)序列号为1(已经发送的数据包的累计大小)，发送的数据包大小为比如264。&lt;/p&gt;
+
+&lt;p&gt;2，  服务器端收数据包后就知道了当前连接的这个数据包的序号为1，也就是连接后第一个数据包。于是向客户端发送了一个确认包，确认包中包含了的Ack=264(接收到的数据包的累计大小)，告诉客户端我服务器端已经收到了数据包，现在累计大小为264的数据包。如果累计大小错误，就需要启动重传机制，退回到最后一次正确的的数据包位置，进行重传，以保证可靠性。&lt;/p&gt;
+
+&lt;p&gt;3，  当客户端再次发送数据包时，里面包含的Seq序列号为265，意思为发送累计数据大小，这次发送的数据包大小为100，服务器端接收到后向客户端发送确认包，确认包中，包含了Ack=365，意思是已经累计收到数据包大小为365。如果累计大小错误，请启动重传机制，确保可靠性。&lt;/p&gt;
+
+&lt;p&gt;4，  接下来由服务器端向客户端发送数据。服务器端向客户端发送数据也是同样的方法和步骤。数据包中包含了服务器端的Seq(已经发送的数据包大小)，比如累计发送了1，seq=1，这次数据包大小为585，客户端接收到服务器端的数据包后，向服务器端发送确认包，包中包含了服务器端发过来的Ack  =586，服务器端收到确认包后，就知道了累计接收的数据包大小已经到了585，也就是说当前的数据包已经发送成功。&lt;/p&gt;
+
+&lt;p&gt;若在规定的时间内收到响应Seq序列号和Ack，表明该报文发送成功，可以发送下一个报文Seq；否则重传（TCP Retransmitssion）。序列号确认机制是TCP可靠性传输的保障。&lt;/p&gt;
+
+&lt;p&gt;借鉴TCP的方法，UDP也可以用此方法来做检测和重传。但是大小累计的检测方式重传的效率太差，不能准确快速的定位重传的数据包，甚至有些已经到达的数据，因为中间数据包的丢包，导致已经到达的数据也需要重传，来确保可靠性。&lt;/p&gt;
+
+&lt;p&gt;在实现UDP的检测和重传时，我们可以进行如下的改进。&lt;/p&gt;
+
+&lt;p&gt;1，  客户端向服务器端发送数据包，数据包中包含Seq=1(表示数据包的发送序列)，发送后将此数据包推入到已经发送但还没有确认的队列里。&lt;/p&gt;
+
+&lt;p&gt;如果服务器接收到Seq=1的数据包，就回应客户端一个确认包，包中Ack=1，表示Seq=1的包已经确认收到。&lt;/p&gt;
+
+&lt;p&gt;如果服务器端没有接收到数据，客户端X秒后发现并没有收到Seq为1的确认包，判定为Seq=1的数据包传输失败，从已经发送但未确认的数据包队列中取出Seq=1的数据包，重新发送。&lt;/p&gt;
+
+&lt;p&gt;2，  客户端向服务器端发送了10个数据包，分别是Seq=1，2，3，4，5，6，7，8，9，10，服务器收到的序列是，1，3，4，5，7，8，9，10，其中有2，6，没有收到数据包。&lt;/p&gt;
+
+&lt;p&gt;客户端在等待确认包超时后，对2，6进行重传。在服务器端接收到数据包后，在处理数据包时，如果数据包顺序有跳跃的现象就表明数据包丢失，等待客户端重传，这时就在断开的序列处停止处理数据包，进行等待操作。&lt;/p&gt;
+
+&lt;p&gt;3，  加快重传确认时间。客户端向服务器端发送5个数据包，分别是Seq=1，2，3，4，5，服务器端收到的包是1，3，4，5，当收到3时，发现2被跳过1次，当收到4时发现2被跳过2次，立刻启动2的重传，不在等确认超时，加快丢包重传速度。&lt;/p&gt;
+
+&lt;h6&gt;丢包问题分析&lt;/h6&gt;
+
+&lt;p&gt;UDP丢包多是很正常现象，这是UDP牺牲质量而提高速度的代价。UDP丢包的原因很多，我们这里做个分析。&lt;/p&gt;
+
+&lt;p&gt;1，  接收端处理时间过长导致丢包：&lt;/p&gt;
+
+&lt;p&gt;调用recv方法接收端收到数据后，处理数据花了一些时间，处理完后再次调用recv方法，在这二次调用间隔里，发过来的包可能丢失。&lt;/p&gt;
+
+&lt;p&gt;对于这种情况可以修改接收端，将包接收后存入一个缓冲区，然后迅速返回继续recv。或者使用前面提到的双队列机制，来缩短锁队列的时间，从而解放了处理包的时间和接收数据包的线程之间的冲突。&lt;/p&gt;
+
+&lt;p&gt;2，  发送的包巨大丢包：&lt;/p&gt;
+
+&lt;p&gt;虽然Send方法会帮你做大包切割成小包发送的事情，但包太大也不行。&lt;/p&gt;
+
+&lt;p&gt;例如超过50K的一个udp包，不切割直接通过send方法发送也会导致这个包丢失。&lt;/p&gt;
+
+&lt;p&gt;发送的包较大，超过接受者缓存导致丢包：包超过mtu size数倍，几个大的udp包可能会超过接收者的缓冲，导致丢包。&lt;/p&gt;
+
+&lt;p&gt;这种情况需要切割成小包再逐个send。报文过大的问题，可以通过控制报文大小来解决，使得每个报文的长度小于MTU。&lt;/p&gt;
+
+&lt;p&gt;以太网的MTU通常是1500 bytes，其他一些诸如拨号连接的网络MTU值为1280 bytes，如果使用speaking这样很难得到MTU的网络，那么最好将报文长度控制在1280 bytes以下。&lt;/p&gt;
+
+&lt;p&gt;3，  发送的包频率太快：&lt;/p&gt;
+
+&lt;p&gt;虽然每个包的大小都小于mtu size 但是频率太快，例如40多个mut size的包连续发送中间不sleep，也有可能导致丢包。&lt;/p&gt;
+
+&lt;p&gt;这种情况可以通过建立Socket接收缓冲队列解决，和建立发送缓冲队列来解决，并且在发送频率过快的时候考虑Sleep作为时间间隔。&lt;/p&gt;
+
+&lt;p&gt;很多人会不理解发送速度过快为什么会产生丢包，原因就是UDP的SendTo不会造成线程阻塞，也就是说，UDP的SentTo不会像TCP中的SendTo那样，直到数据完全发送才会return回调用函数，它不保证当执行下一条语句时数据是否被发送。（SendTo方法是异步的）&lt;/p&gt;
+
+&lt;p&gt;如果要发送的数据过多或者过大，那么在缓冲区满的那个瞬间要发送的报文就很有可能被丢失。至于对“过快”的解释，作者这样说：“A few packets a second are not an issue; hundreds or thousands may be an issue.”（一秒钟几个数据包不算什么，但是一秒钟成百上千的数据包就不好办了）。 &lt;/p&gt;
+
+&lt;p&gt;要解决接收方丢包的问题很简单，首先要保证程序执行后马上开始监听（如果数据包不确定什么时候发过来的话），其次，要在收到一个数据包后最短的时间内重新回到监听状态，其间要尽量避免复杂的操作（比较好的解决办法是使用多线程回调机制）。&lt;/p&gt;
+
+&lt;p&gt;以上是UDP的实现细节，同时阐述了UDP的实现难点和注意点。&lt;/p&gt;
+
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1， 基于TCp的数据包传输过程
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+               <pubDate>Tue, 07 Aug 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%823.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%823.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第六章，网络层(二) - 实现TCP</title>
-               <description>&lt;h3&gt;Unity3D实现TCP长连接。&lt;/h3&gt;
+               <description>&lt;h3&gt;实现TCP长连接。&lt;/h3&gt;
 
 &lt;p&gt;我们先从整体出发，列一下Unity3D实现TCP连接需要的实现哪些方面：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1， 建立连接
@@ -1869,210 +2095,6 @@ UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来�
                <pubDate>Mon, 30 Jul 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html</guid>
-            </item>
-        
-            <item>
-               <title>《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(二)</title>
-               <description>&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html&quot;&gt;UI(一)&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html&quot;&gt;UI(二)&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI的原理，以及组件使用详解。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html&quot;&gt;UI(三)&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI源码中输入事件模块源码剖析。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html&quot;&gt;UI(四)&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UGUI渲染核心源码剖析。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html&quot;&gt;UI(六)&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    如何在游戏项目中架构UI框架。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;前文回顾 &lt;a href=&quot;http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html&quot;&gt;UI(七)-优化(一)&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这篇我们来继续聊聊优化，UI图集Alpha分离，UI字体拆分，Scroll View 滚屏优化，以及UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;h3&gt;④ UI图集Alpha分离。&lt;/h3&gt;
-
-&lt;p&gt;为什么要对UI图集进行Alpha分离？&lt;/p&gt;
-
-&lt;p&gt;在项目制作完成后，对项目进行打APP包时，会发现包体大小并不适合运营，因为APP包体太大，导致用户下载的意愿减低，首先下载率就会受到影响，其次APP包体太大会导致卸载率的增大，进而导致次日留存，3日留存，7日留存率的降低，所以运营人员时常要求控制APP包体大小到XX 兆以内。&lt;/p&gt;
-
-&lt;p&gt;UI图集的压缩是减少APP包体大小的一部分，也是比较重要的一部分。包内的资源，以UI图集为主要组成部分，压缩UI图集是必要的手段。&lt;/p&gt;
-
-&lt;p&gt;对图集进行压缩后，在屏幕上显示却不尽如人意，模糊，锯齿，线条等劣质的画面出现，这是因为我们在使用压缩模式ECT或PVRTC时将透明通道也一并压缩进去了，导致了渲染的扭曲。所以我们要把透明通道alpha分离出来单独压缩，即压缩了图集，又不失真。&lt;/p&gt;
-
-&lt;p&gt;如何分离UI图集的Alpha呢？&lt;/p&gt;
-
-&lt;p&gt;这里主要是针对NGUI的方案，而UGUI由于是内部集成的，Alpha分离在目前版本的UGUI中已经帮你完成了，所以我们针对NGUI来讲一讲。&lt;/p&gt;
-
-&lt;p&gt;首先，用TexturePacker在打图集时将原来打成2张的图集，改成打成一张RGB888的png和一张Alpha8的png。RGB888的PNG图没有alpha，而所有的alpha通道都在Alpha8的PNG里。&lt;/p&gt;
-
-&lt;p&gt;然后，我们需要改下NGUI的shader，把原来的只绑定一张主图的shader改成需要绑定一张主图和一张Alpha图的shader。&lt;/p&gt;
-
-&lt;p&gt;需要修改哪些呢，需要修改下面这4个内容&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Unlit – Transparent Colored.shader，
-
-    Unlit – Transparent Colored 1.shader，
-
-    Unlit – Transparent Colored 2.shader，
-
-    Unlit – Transparent Colored 3.shader
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;修改的内容很简单，加入_AlphaTex (&amp;quot;Alpha (A)&amp;quot;, 2D) = &amp;quot;black&amp;quot; {}变量，用来可以绑定Alpha图。&lt;/p&gt;
-
-&lt;p&gt;然后在frag函数中，有对alpha与主图alpha操作的内容，都替换成Alpha图的alpha值。&lt;/p&gt;
-
-&lt;p&gt;这样一来，就启用了Alpha图的Alpha，而主图还是承担了主要色彩内容。&lt;/p&gt;
-
-&lt;p&gt;最后，以上都完成后，选中一个创建好的图集prefab会发现Inspector窗口下的预览窗口以及Sprite选择窗口中看到的sprite都是没有alpha通道的，这是因为用于显示的texture是atlas.mainTexture，这个mainTexture就是那张RGB888的图集。&lt;/p&gt;
-
-&lt;p&gt;我们可以在编辑器模式下动态生成一个rgba32的texture来替换它，rgb和alpha通道的值分别取自rgb888图集和alpha8图集。&lt;/p&gt;
-
-&lt;p&gt;这需要修改一下NGUI的编辑类，如下这几个类。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UIAtlas.cs，
-
-    UIAtlasInspector.cs，
-
-    SpriteSelector.cs，
-
-    NGUITools.cs，
-
-    UISpriteInspector.cs
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;修改以上类里，绘制图片时都启用新生成的图，就是上面所说的，用RGB888和Alpha合成的临时图。&lt;/p&gt;
-
-&lt;p&gt;其实修改的部分并不多，修改的方向和原理也简单，一是 Shader 的 alpha 来源修改为新的alpha图，二是 Shader修改导致编辑时有显示问题，需要在编辑器部分生成临时的图来替换原来显示的图。&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = &quot;u3493987&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;h3&gt;⑤ UI字体拆分。&lt;/h3&gt;
-
-&lt;p&gt;为什么要拆分UI字体？&lt;/p&gt;
-
-&lt;p&gt;项目中，字体其实占了很大的空间，如果有几个不同的字体一起展示在屏幕上，会在展示的一瞬间出现比较严重的卡顿现象。&lt;/p&gt;
-
-&lt;p&gt;如果在特定的场景内，我们需要更快的速度，而对字体需求又不是那么严格，那么我们可以拆分字体，让加载字体的速度更快，让场景加载的速度更快。&lt;/p&gt;
-
-&lt;p&gt;如何拆分UI字体？&lt;/p&gt;
-
-&lt;p&gt;因为特殊的原因，某场景中，对字体的需求不是那么严格，但又必须有字体的支持，这时我们就要拆分字体。&lt;/p&gt;
-
-&lt;p&gt;把字体中的常用字拆出来，另外生成一个字体文件，让字体文件变小，加载变快。&lt;/p&gt;
-
-&lt;p&gt;比如在登陆场景中，我们只需要几个数字和字母，所以我们大可以从字体中提取数字和26个字母成立一个新的字体在场景中应用。这样登陆场景就省去了大的字体的加载。&lt;/p&gt;
-
-&lt;p&gt;又比如，注册登陆后，取名字的场景，我们既要对取名字进行限制，也需要对场景加载速度进行控制，这时用拆分UI字体的方法就恰到好处。将字体中常用的3000字拆出来，生成新的字体进而用到场景中去。&lt;/p&gt;
-
-&lt;p&gt;注意，这种拆字体，是为了特殊场景所用的，这其实是一种用空间换时间的方法，增大了总体存储空间大小，使得在读取文件时减少了CPU消耗。&lt;/p&gt;
-
-&lt;h3&gt;⑥ Scroll View 滚屏优化。&lt;/h3&gt;
-
-&lt;p&gt;Scroll View 使用在类似背包的界面中非常常见，会有巨量的元素存在在窗口中进行渲染，所以在生成和滑动时，会消耗巨量的CPU来重构Mesh，进而导致游戏运行缓慢，出现卡顿现象。&lt;/p&gt;
-
-&lt;p&gt;要优化这种情况，就必须对滚屏菜单组件进行改造，将原来的所有元素都必须实例化的问题，改为只实例化需要显示的实例数量。&lt;/p&gt;
-
-&lt;p&gt;然后在拖动滑动的期间，实时判断是否有看不到的UI元素可以重复利用，将他们填补到需要显示的位置的上去，再对该单位元素的属性设置成本该在这个位置上显示的信息，让它显示为在该位置需要显示的元素的样子。&lt;/p&gt;
-
-&lt;p&gt;表现上看起来如同下面所描述的，&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    在窗口中有10排元素显示在那里，其中5排是展示在中央的窗口上的，顶上2排因为超出了窗口无法可见，
-
-    同样的下面3排也是因为超出了窗口无法可见，在整个10排元素，整体向上滑动期间，顶上2排变成了3排，底下变成了2排，
-
-    其中最顶上的1排超过了重置的位置，于是就移动到了下面去了，这样整体10排元素，又变成了顶上2排，底下3排的局面，
-
-    这样不断反复，不断在移动顶上或底下的1排元素，把他们移动到需要补充的位置上去，
-
-    看起来像是，很顺畅地可以上下滚屏整个500个元素，实际上只是对这十几个或者几十个元素在不断重复的利用而已。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这个 Scroll View 自定义组件是项目中必须的，大部分项目都会遇到这类问题，有一个自己优化过的自定义组件，能很快很高效的解决这类问题。&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = &quot;u3493987&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;h3&gt;⑦ UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。&lt;/h3&gt;
-
-&lt;p&gt;首先需要解释下为什么在UGUI的图元素在改变颜色或Alpha后会导致Mesh的重构？&lt;/p&gt;
-
-&lt;p&gt;UGUI的Mesh的合并机制，是拥有相同的材质球的Mesh合并在一起才能达到最佳效果，一个材质球对应一个图集，所以在相同图集内的图片才需要合并在一起。&lt;/p&gt;
-
-&lt;p&gt;当元素需要对颜色进行改变时，UGUI通过改变顶点的颜色来实现颜色的变化，改变当前元素的顶点颜色后，需要合并到整块的Mesh里去，因为不能直接从原来合并好的Mesh上找到当前的顶点位置，所以需要一次整体的合并重构Mesh。&lt;/p&gt;
-
-&lt;p&gt;如果元素改变了 alpha 会更糟糕，改变alpha的效果无法通过改变顶点的颜色来实现，于是需要拆分出一个另外的材质球来进行渲染，通过对材质球的参数改变来实现 alpha 的效果。&lt;/p&gt;
-
-&lt;p&gt;这样做不但重构了Mesh，还多出来个材质球，就相当于多一个Drawcall，效率消耗相当大。&lt;/p&gt;
-
-&lt;p&gt;倘若在动画里，每一帧都对UGUI的颜色和Alpha进行改变，那么UGUI每一帧都会对Mesh进行重构一次，并且每帧都生成新的材质球来实现 alpha 的透明效果。&lt;/p&gt;
-
-&lt;p&gt;这样做消耗了大量的CPU运算，通常使得UI界面在运行动画时效率低下。&lt;/p&gt;
-
-&lt;p&gt;如何对此做优化？&lt;/p&gt;
-
-&lt;p&gt;我们不希望在UI颜色改变时，导致Mesh重构，这样动画中消耗掉太多CPU，&lt;/p&gt;
-
-&lt;p&gt;那么我们就自己建一个材质球，提前告诉UGUI：我们使用自己的特殊的材质球进行渲染。&lt;/p&gt;
-
-&lt;p&gt;然后，当颜色动画对颜色和 alpha 更改时，我们直接对我们自定义的材质球进行颜色和 alpha 的改变。&lt;/p&gt;
-
-&lt;p&gt;这样UGUI就不需要重构Mesh了，因为把渲染的工作交给了新的材质球，而不是通过 UGUI 设置顶点颜色和新材质球来达到效果。&lt;/p&gt;
-
-&lt;p&gt;如何操作？&lt;/p&gt;
-
-&lt;p&gt;首先，我们需要把UGUI的Shader下载下来。&lt;/p&gt;
-
-&lt;p&gt;然后，建立一个自己的材质球，并且材质球里使用下载下来的UGUI的Shader。&lt;/p&gt;
-
-&lt;p&gt;再次，把这个材质球放入Image或RawImage的Material上去，与Image或RawImage绑定。&lt;/p&gt;
-
-&lt;p&gt;接着，写个类比如class ImageColor继承MonoBehaviour，里面有个public 的颜色变量，比如public Color mColor，类里面只干一件事，在update里一直判断是否需要更改颜色，如果颜色被更改，就把颜色赋值给Material。&lt;/p&gt;
-
-&lt;p&gt;最后，把动画文件中的颜色部分从更改Image或RawImage的颜色变为更改 ImageColor 的颜色变量。&lt;/p&gt;
-
-&lt;p&gt;这样UGUI颜色动画在播放时，不会直接去改变 Image 或 RawImage 的颜色，改变的是我们创建的 ImageColor 的颜色。&lt;/p&gt;
-
-&lt;p&gt;通过 ImageColor 来改变材质球属性，最后达到不重构Mesh的效果。&lt;/p&gt;
-
-&lt;p&gt;不过要注意下，因为启用了自定义的材质球，当 alpha 不是1的时候，会与原有的UGUI产生的材质球的透贴形成不同的渲染排序，&lt;/p&gt;
-
-&lt;p&gt;因为当两张透贴放在一起渲染时，会因为Shader的渲染排序错误而前后不一致。&lt;/p&gt;
-
-&lt;p&gt;这个问题是半透明物体的排序问题，归根结底是无法写入深度数据，是3D渲染中无法彻底解决的问题。&lt;/p&gt;
-
-&lt;p&gt;像解决其他半透明排序问题一样，可以通过改变自定义的 Shader 渲染次序(RenderQueue)来解决。&lt;/p&gt;
-
-&lt;h3&gt;下篇将继续聊聊 UI 优化。&lt;/h3&gt;
-</description>
-               <pubDate>Fri, 27 Jul 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html</guid>
             </item>
         
     </channel>
