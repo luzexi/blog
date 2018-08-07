@@ -8,12 +8,12 @@
 
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta content="git 同步多个 repository 仓库" name="description">
+  <meta content="unity3d 高级编程 主程 network tcp udp" name="description">
 
 
   <title>
     
-      git同步多个repository仓库
+      《Unity3D高级编程之进阶主程》第六章，网络层(一) - TCP还是UDP
     
   </title>
 
@@ -185,36 +185,95 @@
 
     <div class="content container">
       <div class="post">
-  <h1 class="post-title">git同步多个repository仓库</h1>
-  <span class="post-date">03 Aug 2018</span>
-  <p>由于国内服务器访问GitHub奇慢，所以把仓库复制一份放在了国内。但是苦于要同步两边，所以想有没有办法，同步多个git仓库，是否有办法，只维护一份就可以了。</p>
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第六章，网络层(一) - TCP还是UDP</h1>
+  <span class="post-date">06 Aug 2018</span>
+  <h3>有哪些网络协议可以用</h3>
+
+<p>TCP（Transmission Control Protocol，传输控制协议）是面向连接的协议，也就是说，在收发数据前，必须和对方建立可靠的连接。</p>
+
+<p>一个TCP连接必须要经过三次“对话”才能建立起来，其中的过程非常复杂，只简单的描述下这三次对话的简单过程：主机A向主机B发出连接请求数据包：“我想给你发数据，可以吗？”，这是第一次对话；主机B向主机A发送同意连接并要求同步的数据包（同步就是两台主机一个在发送，一个在接收，协调工作）：“可以，你什么时候发？”，这是第二次对话；主机A再发出一个数据包确认主机B的要求同步：“我现在就发，你接着吧！”，这是第三次对话。三次“对话”的目的是使数据包的发送和接收同步，经过三次“对话”之后，主机A才向主机B正式发送数据。</p>
 
 <p>===</p>
 
-<p>网上搜了一下，大都说的是</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git remote add 
+<p>TCP建立连接要进行3次握手,而断开连接要进行4次：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1 当主机A完成数据传输后,将控制位FIN置1,提出停止TCP连接的请求
 
-    和 git remote set-url --add ，
+    2 主机B收到FIN后对其作出响应,确认这一方向上的TCP连接将关闭,将ACK置1
 
-    以及 git push origin --all 的用法。
+    3 由B 端再提出反方向的关闭请求,将FIN置1
+
+    4 主机A对主机B的请求进行确认,将ACK置1,双方向的关闭结束.
 </code></pre></div>
-<p>但是自己用了一下，完全用不了。总是拒绝push，说需要先pull，但pull了又说需要merge，我感觉这个坑巨大，于是想找其他法子。自己想了想最土的办法或许可以。试验了下，果然可行。步骤如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1， 两个文件夹，分别装两个仓库，或者多个文件夹装多个仓库，每个不同的仓库一个文件夹。
+<p>由TCP的三次握手和四次断开可以看出，TCP使用面向连接的通信方式，大大提高了数据通信的可靠性，使发送数据端和接收端在数据正式传输前就有了交互，为数据正式传输打下了可靠的基础。</p>
 
-    2， 把其中一个作为主要维护的仓库，维护完毕后，执行以下步骤。
+<p>名词解释：
+        ACK  TCP报头的控制位之一,对数据进行确认.确认由目的端发出,用它来告诉发送端这个序列号之前的数据段都收到了.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    比如,确认号为X,则表示前X-1个数据段都收到了,只有当ACK=1时,确认号才有效,当ACK=0时,确认号无效,这时会要求重传数据,保证数据的完整性.
 
-    3， 写一个shell程序。首先把所有内容全部都复制粘贴到其他仓库去，直接替换掉旧的文件。然后每个仓库一个个的执行
+    SYN  同步序列号,TCP建立连接时将这个位置1
 
-        git add .
-
-        git commit -m &#39;sync&#39;
-
-        git push origin master
-
-        每个仓库都执行完毕后，同步完成。
+    FIN  发送端完成发送任务位,当TCP完成数据传输需要断开时,提出断开连接的一方将这位置1
 </code></pre></div>
-<p>也就是，用shell程序把人工手动需要做的事情，让程序去完成，省时省力，一键搞定。</p>
+<p>TCP的包头结构：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    源端口 16位
 
+    目标端口 16位
+
+    序列号 32位
+
+    回应序号 32位
+
+    TCP头长度 4位
+
+    reserved 6位
+
+    控制代码 6位
+
+    窗口大小 16位
+
+    偏移量 16位
+
+    校验和 16位
+
+    选项  32位(可选)
+</code></pre></div>
+<p>这样我们得出了TCP包头的最小长度，为20字节。</p>
+
+<p>UDP（User Data Protocol，用户数据报协议）</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    （1） UDP是一个非连接的协议，传输数据之前源端和终端不建立连接，当它想传送时就简单地去抓取来自应用程序的数据，并尽可能快地把它扔到网络上。在发送端，UDP传送数据的速度仅仅是受应用程序生成数据的速度、计算机的能力和传输带宽的限制；在接收端，UDP把每个消息段放在队列中，应用程序每次从队列中读一个消息段。
+
+    （2） 由于传输数据不建立连接，因此也就不需要维护连接状态，包括收发状态等，因此一台服务机可同时向多个客户机传输相同的消息。
+
+    （3） UDP信息包的标题很短，只有8个字节，相对于TCP的20个字节信息包的额外开销很小。
+
+    （4） 吞吐量不受拥挤控制算法的调节，只受应用软件生成数据的速率、传输带宽、源端和终端主机性能的限制。
+
+    （5）UDP使用尽最大努力交付，即不保证可靠交付，因此主机不需要维持复杂的链接状态表（这里面有许多参数）。
+
+    （6）UDP是面向报文的。发送方的UDP对应用程序交下来的报文，在添加首部后就向下交付给IP层。既不拆分，也不合并，而是保留这些报文的边界，因此，应用程序需要选择合适的报文大小。
+</code></pre></div>
+<p>我们经常使用“ping”命令来测试两台主机之间TCP/IP通信是否正常，其实“ping”命令的原理就是向对方主机发送UDP数据包，然后对方主机确认收到数据包，如果数据包是否到达的消息及时反馈回来，那么网络就是通的。</p>
+
+<p>UDP的包头结构：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    源端口 16位
+
+    目的端口 16位
+
+    长度 16位
+
+    校验和 16位
+</code></pre></div>
+<p>TCP与UDP的区别：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1，基于连接与无连接；
+
+    2，对系统资源的要求（TCP较多，UDP少）；
+
+    3，UDP程序结构较简单；
+
+    4，流模式与数据报模式 ；
+
+    5，TCP保证数据正确性，UDP可能丢包，TCP保证数据顺序，UDP不保证。
+</code></pre></div>
 <script type="text/javascript">
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
     { //移动端
@@ -230,24 +289,42 @@
     }
 </script>
 
-<h6>举例代码为同步三个仓库，具体的 shell 如下：</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    cp -r ../* /Users/luzexi/Desktop/work/gitee/blog/
-    cd /Users/luzexi/Desktop/work/gitee/blog/
-    git add .
-    git commit -m &#39;sync&#39;
-    git push origin master
+<h3>用TCP，还是用UDP？</h3>
 
-    cp -r ../* /Users/luzexi/Desktop/work/github/blog/
-    cd /Users/luzexi/Desktop/work/github/blog/
-    git add .
-    git commit -m &#39;sync&#39;
-    git push origin master
+<p>从原理上，TCP的优势有，简单直接的长连接，可靠的信息传输，能确保数据到达有确认机制，并且数据到达后是有序的，数据包的大小没有限制，不需要自己切分数据包，网络协议本身就已经帮助你切分。</p>
 
-    cp -r ../* /Users/luzexi/Desktop/work/gitlab/blog/
-    cd /Users/luzexi/Desktop/work/gitlab/blog/
-    git add .
-    git commit -m &#39;sync&#39;
-    git push origin master
+<p>UDP是基于数据包构建，这意味着在某些方面需要你完全颠覆在TCP下的观念。</p>
+
+<p>UDP只使用一个socket进行通信，不像TCP需要为每一个客户端建立一个socket连接，这是UDP还不错的地方。</p>
+
+<p>但是大多数情况下你需要的仅仅是一些连接的概念罢了，一些基本的包序功能，以及所谓的连接可靠性。可惜的是，这些功能UDP都没有办法简单的提供给你，而你使用TCP却都可以免费得到。</p>
+
+<p>这就是人们为什么经常推荐TCP的原因，在用TCP的时候你可以不考虑这些问题，直到你需要同步连接的数量级达到500以上的时候。</p>
+
+<p>所以是的，UDP没有提供所有的解决方法，但是就像你看到的那样，这也正是UDP好用的地方。在某种意义上来说，TCP对UDP就好比是Hibernate和手写SQL的区别。</p>
+
+<p>容易造成巨大的延迟问题是TCP的性质决定的，在发生丢包的时候，会产生巨大的延迟，因为TCP首先会去检测哪些包发生了丢失，然后重发所有丢失的包，直到他们都被接收到。</p>
+
+<p>UDP也是有延迟的，但是由于它是在UDP的基础之上建立的通信协议，所以可以通过多种方式来减少延迟，不像TCP，所有的东西都要依赖于TCP协议本身而无法被更改。</p>
+
+<p>就这一点来讲，一些人要开始提到Nagle算法了，实际上它是你在实现任意一个对延迟敏感的TCP模型时首先需要禁止使用的。</p>
+
+<p>那么为什么魔兽世界采用TCP呢？首先我们需要解释这个问题。这个问题其实是“为什么魔兽世界有的时候1000毫秒以上的延迟还能够运行？”</p>
+
+<p>魔兽世界以及其他的一些游戏是怎么处理延迟问题的呢？</p>
+
+<p>方法也很简单，他们能够隐藏掉延迟带来的影响。</p>
+
+<p>我们看一下魔兽世界的战斗就会发现，玩家的攻击指令发送给服务器的操作，一些类似发起攻击动作和释放技能特效就能够在没有收到服务器确认的情况下就直接执行，比如展现冰冻技能的效果就可以在服务器没有返回数据前在客户端就做出来。</p>
+
+<p>客户端直接开始进行计算而不等待服务端确认是一种典型的隐藏延迟的技术。这也意味着，我们到底是使用TCP还是UDP取决于我们能否隐藏延迟。</p>
+
+<p>那么到底是用UDP还是TCP呢？提供如下参考：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如果是由客户端间歇性的发起无状态的查询，并且偶尔发生延迟是可以容忍，那么使用HTTP/HTTPS吧。
+
+    如果客户端和服务器都可以独立发包，但是偶尔发生延迟可以容忍（比如：在线的纸牌游戏，许多MMO类的游戏），那么使用TCP长连接吧。
+
+    如果客户端和服务器都可以独立发包，而且无法忍受延迟（比如：大多数的多人动作类游戏，一些MMO类游戏），那么使用UDP吧。
 </code></pre></div>
   <p>感谢您的耐心阅读</p>
   <p>Thanks for your reading</p>
@@ -284,8 +361,8 @@
   <li>
 <p>版权申明</p>
 <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">git同步多个repository仓库</a></p> -->
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">git同步多个repository仓库</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%821.html">《Unity3D高级编程之进阶主程》第六章，网络层(一) - TCP还是UDP</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%821.html">《Unity3D高级编程之进阶主程》第六章，网络层(一) - TCP还是UDP</a></p> -->
 <p>Copyright attention</p>
 <p>If you would like to reprint this article please write auth's name and link in the page.</p>
 
@@ -376,20 +453,6 @@
       
 
       
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
         
           <li>
             <h3>
@@ -456,18 +519,24 @@
       
 
       
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
+        
+          <li>
+            <h3>
+              <a href="/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB3.html">
+                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(三) - 状态机
+                <small>06 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/03/%E8%A2%AB%E5%B0%81%E7%BA%AA%E5%BF%B5%E5%B8%96.html">
+                被封纪念帖
+                <small>03 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
         
           <li>
             <h3>
@@ -492,24 +561,6 @@
               <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB1.html">
                 《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范
                 <small>03 Aug 2018</small>
-              </a>
-            </h3>
-          </li>
-        
-          <li>
-            <h3>
-              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">
-                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)
-                <small>30 Jul 2018</small>
-              </a>
-            </h3>
-          </li>
-        
-          <li>
-            <h3>
-              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
-                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
-                <small>30 Jul 2018</small>
               </a>
             </h3>
           </li>
