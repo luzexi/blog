@@ -498,19 +498,19 @@
 
 &lt;p&gt;编写Unity Shader的几种形式：&lt;/p&gt;
 
-&lt;p&gt;1，    fixed-function，这种形式的Shader使用了Unity自己编制的比较简单的图形语言来编写Shader。&lt;/p&gt;
+&lt;h6&gt;1，fixed-function，这种形式的Shader使用了Unity自己编制的比较简单的图形语言来编写Shader。&lt;/h6&gt;
 
 &lt;p&gt;编写完毕后在导入和编译时，Unity内部会将这个fixed-function形式的代码，转化成vertex和fragment编程形式。&lt;/p&gt;
 
 &lt;p&gt;因为fixed-function形式编写起来比较简单易懂，所以一些简单的Shader可以用fixed-function来编写，可以节省很多学习底层图形学的时间也增加了不少效率。缺点是，功能并不是很全，复杂一点的或者说个性化点的Shader就需要用其他的方式实现。&lt;/p&gt;
 
-&lt;p&gt;2，    Surface shaders 是Unity建立的一种新的Shader编程方式，目的是让Shader编程更加简单。&lt;/p&gt;
+&lt;h6&gt;2，Surface shaders 是Unity建立的一种新的Shader编程方式，目的是让Shader编程更加简单。&lt;/h6&gt;
 
 &lt;p&gt;在Surface Shader里没有任何的自定义语言，贴图，或者变量。它会生成所有你需要手写的代码，让你专注于编写渲染部分的规则，其中一个特色是Surface Shader不需要写Pass，它会自动帮你编译成为多个你需要的多个Pass。&lt;/p&gt;
 
 &lt;p&gt;Surface Shader编译器最终会将所有代码转换成vertex-fragment类型的Shader。&lt;/p&gt;
 
-&lt;p&gt;3，    vertex and fragment shaders是ShaderLab Shader包含的几种不同的编写方式中最最底层的编码方式，它使用的HLSL语言编程，我们称之为底层硬件着色器着色编程。&lt;/p&gt;
+&lt;h6&gt;3，vertex and fragment shaders是ShaderLab Shader包含的几种不同的编写方式中最最底层的编码方式，它使用的HLSL语言编程，我们称之为底层硬件着色器着色编程。&lt;/h6&gt;
 
 &lt;p&gt;使用vertex-fragment方式只是ShaderLab的理念中的其中一部分，fixed-function和suface都是其理念的一部分，并不一定说要使用vertex-fragment底层的才好，其他方式也同样能帮助你节省很多时间。&lt;/p&gt;
 
@@ -637,15 +637,15 @@
 &lt;h6&gt;Property属性默认值&lt;/h6&gt;
 
 &lt;p&gt;每个Property属性都有一个默认值，默认值是必须填写的，否则Shader编译器不会通过编译。这里我们说明一下所有属性的默认值。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，    Number类型。Range，默认值必须在最大和最小值之间，比如Range(0,1)时值为默认值必须为0到1之间。Float，默认值可以为任意浮点数。Int，默认值可以为任意整数，且仅仅只能是整数，不能是浮点数。
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，Number类型。Range，默认值必须在最大和最小值之间，比如Range(0,1)时值为默认值必须为0到1之间。Float，默认值可以为任意浮点数。Int，默认值可以为任意整数，且仅仅只能是整数，不能是浮点数。
 
-    2，    Color颜色类型。Color，默认值为4个浮点数，按照RGBA的顺序，第一个代表红色，第二个代表绿色，第三个代表蓝色，第四个代表透明度alpha。
+    2，Color颜色类型。Color，默认值为4个浮点数，按照RGBA的顺序，第一个代表红色，第二个代表绿色，第三个代表蓝色，第四个代表透明度alpha。
 
-    3，    Vector方向坐标类型。Vector，默认值为4个浮点数，按照xyzw的顺序，第一个代表X坐标，第二个代表Y坐标，第三个代表Z坐标，第四个代表角度，深度等其他意义。Vector四个坐标完全可以代表任意值，比如前两个代表2D的X和Y，后面两个代表宽度和长度，再比如，前两个代表uv，后两个代表宽度和长度，或者比如前三个表示x，y，z，最后一个代表透明度alpha。
+    3，Vector方向坐标类型。Vector，默认值为4个浮点数，按照xyzw的顺序，第一个代表X坐标，第二个代表Y坐标，第三个代表Z坐标，第四个代表角度，深度等其他意义。Vector四个坐标完全可以代表任意值，比如前两个代表2D的X和Y，后面两个代表宽度和长度，再比如，前两个代表uv，后两个代表宽度和长度，或者比如前三个表示x，y，z，最后一个代表透明度alpha。
 
-    4，    2D Texture贴图类型。2D Texture，默认值有一个默认的颜色，”white”代表(RGBA:1,1,1,1)白色，”black”代表(RGBA:0,0,0,0)黑色，”gray”代表(RGBA:0.5,0.5,0.5,0.5)灰色，”bump”代表(RGBA:0.5,0.5,1,0.5)灰黄色，”red”代表(RGBA:1,0,0,0)红色。
+    4，2D Texture贴图类型。2D Texture，默认值有一个默认的颜色，”white”代表(RGBA:1,1,1,1)白色，”black”代表(RGBA:0,0,0,0)黑色，”gray”代表(RGBA:0.5,0.5,0.5,0.5)灰色，”bump”代表(RGBA:0.5,0.5,1,0.5)灰黄色，”red”代表(RGBA:1,0,0,0)红色。
 
-    5，    Cube，3D Texture，2DArray非2D贴图类型。默认值为空，当材质球编辑器中没有设置他们的实例时，他们使用灰色(RGBA:0.5,0.5,0.5,0.5)做默认值。
+    5，Cube，3D Texture，2DArray非2D贴图类型。默认值为空，当材质球编辑器中没有设置他们的实例时，他们使用灰色(RGBA:0.5,0.5,0.5,0.5)做默认值。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;每个属性值的值在Material材质上都会被序列化后写入Material材质球的Meta文件。&lt;/p&gt;
 
