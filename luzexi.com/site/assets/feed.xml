@@ -7,10 +7,148 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass</title>
-               <description>&lt;h3&gt;Pass&lt;/h3&gt;
+               <title>《Unity3D高级编程之进阶主程》第七章，Shader(五) - Pass(二)</title>
+               <description>&lt;p&gt;===&lt;/p&gt;
 
-&lt;p&gt;===&lt;/p&gt;
+&lt;p&gt;本文作者为 陆泽西，是作者编写的《Unity3D高级编程之进阶主程》中的章节&lt;/p&gt;
+
+&lt;p&gt;转载请联系博主，留言或者加QQ，未经博主同意不得转载，经同意后转载需注明作者和出处以及链接&lt;/p&gt;
+
+&lt;h3&gt;Render State Command渲染状态指令详解&lt;/h3&gt;
+
+&lt;p&gt;Render State Command 是渲染状态的指令，它在Pass和SubShader都有效，放在Pass就只在当前Pass里有效，放在SubShader中则是多个Pass的共同状态。&lt;/p&gt;
+
+&lt;p&gt;不过不是所有的Render State都可以成为共同拥有的渲染状态的，有些Render State只在Pass中有效，而另一些则可以成为共同渲染状态。&lt;/p&gt;
+
+&lt;p&gt;下面我们来介绍下Pass中的渲染状态Command指令：&lt;/p&gt;
+
+&lt;h3&gt;Cull，前后裁切指令。&lt;/h3&gt;
+
+&lt;p&gt;Cull是种优化的指令，可以让远离屏幕的部分不渲染。所有的物体都有前后两面，比如一个Box箱子你永远都看 不到屏幕另一侧的部分，所以可以对Box箱子后半部分进行裁切不渲染。&lt;/p&gt;
+
+&lt;p&gt;可设置参数如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader20.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    上图为参数 Cull Back，裁切白色Box的后半部分，保留前半部分。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader21.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    上图为参数 Cull Front，裁切白色Box的前半部分，保留后半部分，展示的后半部部分与后面的箱子相交。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader22.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    参数 Cull Off，关闭裁切功能，与Cull Back展示的效果一样，但其实多渲染了后半部分的网格模型。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Cull默认是裁切后半部分的，这样可以达到优化的效果，如果你没有对它进行设置的话。其实裁切后半部分和完全不裁切，在有深度缓存数据时是显示的效果是完全一样的，只是一个做了优化另一个没做而已。&lt;/p&gt;
+
+&lt;h3&gt;ZTest，设置深度缓存测试模式。&lt;/h3&gt;
+
+&lt;p&gt;ZTest的功能是在两个物体相交时渲染绘制中对前后深度进行测试，默认情况下以LEqual小于等于其他物体时测试为不通过，当不通过时就不渲染那部分模型。&lt;/p&gt;
+
+&lt;p&gt;LEqual参数，其实就是测试前面的物体是否挡住了该物体部分，如果挡住了就不渲染的意思，它也是ZTest的默认参数。&lt;/p&gt;
+
+&lt;p&gt;其他参数还包括&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;ZTest Less | Greater | LEqual | GEqual | Equal | NotEqual | Always
+
+参数 小于 | 大于 | 小于 | 小于等于 | 大于等于 | 等于 | 不等于 | 关闭测试
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;参数解释：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader23.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;上图中为参数 Less 该物体上的部分深度在其他物体后面时不渲染。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader24.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;上图中为参数 Greater 该物体上的部分深度在其他物体部分前面时不渲染，也就是被覆盖的显示，没被覆盖的反而不显示。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader25.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;上图中为参数 Equal 该物体上的部分深度与其他一致时才渲染，否则不渲染。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader26.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;上图中为参数 NotEqual 该物体上的部分深度与其他物体不一致时才渲染，否则不渲染。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;ZWrite，设置深度缓存写入开关。&lt;/h3&gt;
+
+&lt;p&gt;Zwrite可以控制物体渲染的像素是否写入depth buffer深度缓存数据中。&lt;/p&gt;
+
+&lt;p&gt;如果没有depth buffer深度缓存数据，物体将无法辨识前后关系也就无法实现阻挡物体不绘制的功能。&lt;/p&gt;
+
+&lt;p&gt;这在大多数不透明物体中都是需要depth buffer深度缓存数据来识别前后遮挡的，但在半透明和透明物体中就不需要depth buffer。&lt;/p&gt;
+
+&lt;p&gt;半透明和透明物体没有depth buffer深度缓存数据，所以没有所谓的写入一说，也就是通常在半透明和透明物体的Shader中，ZWrite是关闭的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader27.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader28.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;如上两个图，图1为ZWrite On时的效果，黄色Box遮挡住了后面的蓝色Box因为有depth buffer深度缓存的写入，前后关系有依据。&lt;/p&gt;
+
+&lt;p&gt;图2为ZWrite Off的效果，后面蓝色的Box被提到了黄色Box的前面显示，这是因为黄色Box的depth buffer没有写入，在渲染时，面片前后关系没有了依据，导致了错乱。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;h3&gt;Offset，设置深度缓存的偏移。&lt;/h3&gt;
+
+&lt;p&gt;Offset允许你设置物体在深度缓冲中的偏移量，这相当于让物体在屏幕显示中提前或者推后显示位置，但实际世界中的位置不变。&lt;/p&gt;
+
+&lt;p&gt;Offset有两个参数，Factor偏移缩放大小和Units偏移量。Factor相当于缓存数据偏移放大的倍数，Units相当于直接偏移的量。&lt;/p&gt;
+
+&lt;p&gt;如果从公式上理解，可以理解为Buffer = (x or y)*Factor + Units。&lt;/p&gt;
+
+&lt;p&gt;举例 Offset 3 , 5，可以理解为偏移放大3倍，并且再偏移5个单位。&lt;/p&gt;
+
+&lt;p&gt;注意，偏移负方向才是离屏幕越近的方向。所以Offset 0 , -1时，两个物体重合部分肯定是拥有Offset 0 , -1的提前显示。&lt;/p&gt;
+
+&lt;p&gt;如果两个物体前后差的比较远，那么想把后面的物体提到前面来显示，那么就要加大偏移量了，比如 Offset 0 , - 1000 或者 Offset -100, -1等。&lt;/p&gt;
+
+&lt;p&gt;下面举例说明Offset的作用：&lt;/p&gt;
+
+&lt;p&gt;对白色的做处理Offset 0 , 0 -------两者重叠，时而显示普通的有贴图的立方体，时而显示白色的立方体，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader29.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;对白色的做处理Offset 0 , -1------两者重叠部分完全被白色覆盖,因为白色立方体做了偏移量的处理，深度缓存中的坐标离屏幕更近，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader30.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;对白色的做处理Offset 0 , 0 ---- 现在把两个立方体的距离拉开，正常情况下按透视的距离进行显示，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader31.png&quot; alt=&quot;cull&quot;&gt; &lt;/p&gt;
+
+&lt;p&gt;对白色的做处理Offset 0 , -1000 ---- 现在加重白色立方体的偏移量，深度缓存数据向屏幕偏移，这时很多有贴图的立方体部分被覆盖，因为偏移量加大，提前量就加大了，但绿色立方体其他部分的深度数据还是比偏移后的大，所以那个部分还是无法覆盖，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader32.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;对白色的做处理Offset -100 , -1000------再次加大偏移量，这次加入了缩放比例的偏移，偏移的更多，使得白色立方体全部覆盖绿色立方体，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader33.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;注意以上所有图中两个立方体的世界坐标一直都没有更改。如果要让物体向后推也是同样方法，负数变正就可以，所有的偏移都是渲染上的偏移，与物体实际坐标无关。&lt;/p&gt;
+</description>
+               <pubDate>Wed, 08 Aug 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader5.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader5.html</guid>
+            </item>
+        
+            <item>
+               <title>《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass</title>
+               <description>&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;本文作者为 陆泽西，是作者编写的《Unity3D高级编程之进阶主程》中的章节&lt;/p&gt;
+
+&lt;p&gt;转载请联系博主，留言或者加QQ，未经博主同意不得转载，经同意后转载需注明作者和出处以及链接&lt;/p&gt;
+
+&lt;h3&gt;Pass&lt;/h3&gt;
 
 &lt;p&gt;Pass块的格式，如下：&lt;/p&gt;
 
@@ -198,11 +336,15 @@
         
             <item>
                <title>《Unity3D高级编程之进阶主程》第七章，Shader(三) - 渲染管道</title>
-               <description>&lt;h3&gt;SubShader模块&lt;/h3&gt;
+               <description>&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;本文作者为 陆泽西，是作者编写的《Unity3D高级编程之进阶主程》中的章节&lt;/p&gt;
+
+&lt;p&gt;转载请联系博主，留言或者加QQ，未经博主同意不得转载，经同意后转载需注明作者和出处以及链接&lt;/p&gt;
+
+&lt;h3&gt;SubShader模块&lt;/h3&gt;
 
 &lt;p&gt;SubShader相当于子Shader的意思，SubShader在Shader中可以有很多个，每个SubShader都可以针对一种设备，但不是所有SubShader都会被采用。当Unity去展示一个模型时，会从第一个SubShader开始寻找是否匹配当前的设备，如果不匹配则与下一个SubShader继续匹配，直到找到能够匹配该设备为止。如果所有的SubShader都没有匹配上，则会使用 Fallback 标签的Shader。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
 
 &lt;p&gt;格式如下：&lt;/p&gt;
 
@@ -266,16 +408,26 @@
 &lt;p&gt;主要工作就是“变换三维顶点坐标”和“光照计算”。&lt;/p&gt;
 
 &lt;p&gt;顶点变换或坐标系变换包括：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Object space，模型坐标；
 
-    World space，世界坐标；
+&lt;p&gt;3D中有以下几种空间：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，Object space，模型坐标
 
-    Eye space，视点坐标（视锥裁剪）；
+    模型空间也叫本地空间或者建模空间，这是我们定义物体三角形的坐标系，当一个建模人员创建一个物体的三维模型的时候，他选择了一个方便的方向、比例和位置来保存模型的组成顶点，当前物体的模型、空间和其他模型没用任何关系。
 
-    Clip and Project space，裁剪空间坐标（也叫屏幕坐标，进行投影、剪裁、映射的过程）。
+    2，World space，世界坐标；
+
+    世界空间的目的就是给你的场景中的物体提供一个绝对的参考。
+
+    3，Eye space，视觉空间（视锥裁剪）
+
+    以摄像机为基准，以摄像机的位置为原点，摄像机朝向Z轴正方向，右边X轴为正方向，上边为Y轴正方向，之所以设置这个坐标系，主要是为了方便投影及裁剪操作。
+
+    ###### 4，Clip and Project space，摄影，裁剪空间坐标（也叫屏幕坐标）
+
+    该空间即世界空间的物体被投影到相应的投影上面之后，继而进行的裁剪操作所在的空间。
+
+    Eye space坐标转换到Clip and Project space坐标的过程其实就是一个投影、剪裁、映射的过程。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Eye space坐标转换到Clip and Project space坐标的过程其实就是一个投影、剪裁、映射的过程。&lt;/p&gt;
-
 &lt;p&gt;除了坐标转换和光照计算，第2阶段还做了纹理坐标变换(纹理矩阵)，材质状态纹理坐标生成。&lt;/p&gt;
 
 &lt;p&gt;这个阶段所接收到的数据则是每个顶点的属性特征，输出则是变换后的顶点数据。&lt;/p&gt;
@@ -303,23 +455,36 @@
 
 &lt;h6&gt;阶段4，图元处理(裁剪 消隐)&lt;/h6&gt;
 
-&lt;p&gt;将图元与用户定义的裁剪平面和模型投影矩阵所建立的视景比较，裁剪且丢弃位于视景和裁剪平面外部的图元，不在予以处理。若是采用透视投影，那么将会对每个顶点的x,y,z坐标分别乘以透视矩阵。&lt;/p&gt;
+&lt;p&gt;将图元与用户定义的裁剪平面和模型投影矩阵所建立的视景比较，裁剪且丢弃位于视景和裁剪平面外部的图元，不再予以处理。&lt;/p&gt;
 
-&lt;p&gt;接着由视口变换将顶点坐标变换至窗口坐标，最后执行消隐操作，把那些被遮挡的部分进行消除。&lt;/p&gt;
+&lt;p&gt;若是采用透视投影，那么将会对每个顶点的x,y,z坐标分别乘以透视矩阵。&lt;/p&gt;
 
+&lt;p&gt;接着由视口变换将顶点坐标变换至窗口坐标。视口变换，即把投影变换后的顶点X,Y坐标，根据用户设定的视口参数，变换到屏幕上对应的坐标。&lt;/p&gt;
+
+&lt;p&gt;最后执行消隐操作，把那些被遮挡的部分进行消除。&lt;/p&gt;
+
+&lt;p&gt;消隐操作，即隐藏面消除，即使经过了裁剪操作，对于每个物体，摄像机只能看到正对着摄像机的一面，对背对着摄像机的一面是看不到的。&lt;/p&gt;
+
+&lt;p&gt;这一步的任务就是把看不到的这一面消除掉，以免继续处理，影响计算机的性能和效率。&lt;/p&gt;
+
+&lt;p&gt;为了确定一个多边形是正对着还是背对着摄像机，就要用到我们在输入集合阶段指定多边形时的顶点顺序了，默认情况下，D3D规定按顺时针指定的三角形属于正面，逆时针为背面。确定顺时针还是逆时针，可以用如下方法：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    给出两个向量：E0=V1-V0 E1=V2-V0 对E0和E1进行叉乘操作N=E0XE1，如果N指向摄像机，则为正面，否则为背面。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6&gt;阶段5，栅格化&lt;/h6&gt;
 
-&lt;p&gt;三维模型经过了顶点变换已经投影到了二维平面上，而且被装配成图元了，但是屏幕是一个一个细细小小的像素格子组成的，对于一个图片，电脑是怎么知道应该把它搞到哪几个像素上去显示的呢？这就是光栅化。说白了就是，把想看见的图片，搞成像素能显示的。光栅化工作告诉了显卡，哪个格子是你这个图元应该画上的，哪个不是。&lt;/p&gt;
+&lt;p&gt;三维模型经过了顶点变换已经投影到了二维平面上，而且被装配成图元了，但是屏幕是一个一个细细小小的像素格子组成的，对于一个图片，电脑是怎么知道应该把它搞到哪几个像素上去显示的呢？这就是光栅化。说白了就是，把想看见的图片，搞成像素能显示的。光栅化工作告诉了显卡，哪个格子是你这个图元应该画上的哪个不是。&lt;/p&gt;
 
 &lt;p&gt;传递过来的图元数据，在此将会被分解成更小的单元并对应帧缓冲区的各个像素，这些单元被称之为片元。一个片元可能包含窗口大小，深度，颜色，纹理坐标等属性。&lt;/p&gt;
 
 &lt;p&gt;片元的属性是图元上顶点数据等经过插值而确定的，比如颜色，深度等。&lt;/p&gt;
 
+&lt;p&gt;顶点属性的插值计算，在输入集合阶段用户指定的一系列的多边形，以三角形为例，每个三角形由三个顶点组成，每个顶点包含一系列的属性，如坐标，法线，纹理坐标等等，在经过顶点着色阶段，视口变换后，这个顶点在屏幕上都有对应的坐标。但为了显示该三角形，仅仅三个顶点显然是不够的，为了计算该三角形所覆盖的屏幕上每个像素的属性，要进行正确的插值计算，计算结果填充到片元中去。&lt;/p&gt;
+
 &lt;h6&gt;阶段6，片元处理&lt;/h6&gt;
 
 &lt;p&gt;这个阶段首先对片元上纹理，通过纹理坐标取得纹理内存中相对应的颜色。&lt;/p&gt;
 
-&lt;p&gt;再进行雾化，通过片元距离当前视点位置修改颜色。&lt;/p&gt;
+&lt;p&gt;再进行雾化，通过片元与当前视点位置的距离修改颜色。&lt;/p&gt;
 
 &lt;p&gt;最后颜色汇总，将纹理,主定义的颜色,雾化的颜色,次颜色光照阶段计算的颜色汇总一起。&lt;/p&gt;
 
@@ -328,7 +493,7 @@
 &lt;h6&gt;阶段7，像素操作（Pixel Operation）&lt;/h6&gt;
 
 &lt;p&gt;所有的片元的测试都在这里进行，包括：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    像素所有权测试-&amp;gt;裁剪测试-&amp;gt;alpha测试-&amp;gt;模板测试-&amp;gt;深度测试-&amp;gt;混合-&amp;gt;抖动显示-&amp;gt;逻辑操作
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    像素所有权测试 -&amp;gt; 裁剪测试 -&amp;gt; alpha测试 -&amp;gt; 模板测试 -&amp;gt; 深度测试 -&amp;gt; 混合 -&amp;gt; 抖动显示 -&amp;gt; 逻辑操作
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6&gt;阶段8，帧缓冲区（Frame Buffer）&lt;/h6&gt;
 
@@ -832,13 +997,17 @@
         
             <item>
                <title>《Unity3D高级编程之进阶主程》第七章，Shader(二) - Property</title>
-               <description>&lt;h3&gt;编写Shader的几种方式&lt;/h3&gt;
+               <description>&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;本文作者为 陆泽西，是作者编写的《Unity3D高级编程之进阶主程》中的章节&lt;/p&gt;
+
+&lt;p&gt;转载请联系博主，留言或者加QQ，未经博主同意不得转载，经同意后转载需注明作者和出处以及链接&lt;/p&gt;
+
+&lt;h3&gt;编写Shader的几种方式&lt;/h3&gt;
 
 &lt;p&gt;着色器部分的编写是客户端的精髓，如果说架构表现了逻辑整合能力，算法展现了数学能力，那么着色器编写展现了表现能力，在游戏项目中三者缺一不可，特别是作为主程或者说资深的U3D人员来说是极其重要的。&lt;/p&gt;
 
 &lt;p&gt;Unity3D使用了自己创造的语言命名为ShaderLab来编写图形Shader。在ShaderLab里模拟了类似CgFX和Direct3D Effects(.FX)的语言，从而可以编写绝大部分的图形渲染材质。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
 
 &lt;p&gt;ShaderLab编写的Shader属性会在Unity的材质球编辑器中显示，ShaderLab可以实现基于多种目标硬件的能力，并且每个ShaderLab完全能够编写图形硬件渲染状态，以及使用vertex和fragment编程。Shader的编写是基于高级Cg/HLSL编程语言基础上的。&lt;/p&gt;
 
@@ -1134,9 +1303,13 @@
         
             <item>
                <title>《Unity3D高级编程之进阶主程》第七章，Shader(一) - 常用的Shader</title>
-               <description>&lt;h3&gt;常用的Shader&lt;/h3&gt;
+               <description>&lt;p&gt;===&lt;/p&gt;
 
-&lt;p&gt;===&lt;/p&gt;
+&lt;p&gt;本文作者为 陆泽西，是作者编写的《Unity3D高级编程之进阶主程》中的章节&lt;/p&gt;
+
+&lt;p&gt;转载请联系博主，留言或者加QQ，未经博主同意不得转载，经同意后转载需注明作者和出处以及链接&lt;/p&gt;
+
+&lt;h3&gt;常用的Shader&lt;/h3&gt;
 
 &lt;h6&gt;1， Standard Shader是Unity5中新加入的一个Shader，它被设计的目的是为了替代很多旧版本里表现“真实世界”的Shader，比如石头，木头，玻璃，塑料，金属等材质。&lt;/h6&gt;
 
@@ -1722,75 +1895,6 @@
                <pubDate>Fri, 03 Aug 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/08/03/%E8%A2%AB%E5%B0%81%E7%BA%AA%E5%BF%B5%E5%B8%96.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/08/03/%E8%A2%AB%E5%B0%81%E7%BA%AA%E5%BF%B5%E5%B8%96.html</guid>
-            </item>
-        
-            <item>
-               <title>git同步多个repository仓库</title>
-               <description>&lt;p&gt;由于国内服务器访问GitHub奇慢，所以把仓库复制一份放在了国内。但是苦于要同步两边，所以想有没有办法，同步多个git仓库，是否有办法，只维护一份就可以了。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;网上搜了一下，大都说的是&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    git remote add 
-
-    和 git remote set-url --add ，
-
-    以及 git push origin --all 的用法。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;但是自己用了一下，完全用不了。总是拒绝push，说需要先pull，但pull了又说需要merge，我感觉这个坑巨大，于是想找其他法子。自己想了想最土的办法或许可以。试验了下，果然可行。步骤如下：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1， 两个文件夹，分别装两个仓库，或者多个文件夹装多个仓库，每个不同的仓库一个文件夹。
-
-    2， 把其中一个作为主要维护的仓库，维护完毕后，执行以下步骤。
-
-    3， 写一个shell程序。首先把所有内容全部都复制粘贴到其他仓库去，直接替换掉旧的文件。然后每个仓库一个个的执行
-
-        git add .
-
-        git commit -m &amp;#39;sync&amp;#39;
-
-        git push origin master
-
-        每个仓库都执行完毕后，同步完成。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;也就是，用shell程序把人工手动需要做的事情，让程序去完成，省时省力，一键搞定。&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = &quot;u3493987&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;h6&gt;举例代码为同步三个仓库，具体的 shell 如下：&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    cp -r ../* /Users/luzexi/Desktop/work/gitee/blog/
-    cd /Users/luzexi/Desktop/work/gitee/blog/
-    git add .
-    git commit -m &amp;#39;sync&amp;#39;
-    git push origin master
-
-    cp -r ../* /Users/luzexi/Desktop/work/github/blog/
-    cd /Users/luzexi/Desktop/work/github/blog/
-    git add .
-    git commit -m &amp;#39;sync&amp;#39;
-    git push origin master
-
-    cp -r ../* /Users/luzexi/Desktop/work/gitlab/blog/
-    cd /Users/luzexi/Desktop/work/gitlab/blog/
-    git add .
-    git commit -m &amp;#39;sync&amp;#39;
-    git push origin master
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-               <pubDate>Fri, 03 Aug 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html</guid>
             </item>
         
     </channel>

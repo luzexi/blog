@@ -39,6 +39,7 @@ copyright_info: true
 tip_info: true
 gongzhonghao: true
 relate_article: true
+unity3d_book_copyright: true
 
 #donation
 paypal_donation: false

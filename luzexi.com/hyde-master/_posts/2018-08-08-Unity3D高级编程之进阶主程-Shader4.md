@@ -11,10 +11,11 @@ tags:
 - 前端技术
 ---
 
+===
+
+{% include unity3d_book_copyright.html %}
 
 ### Pass
-
-===
 
 Pass块的格式，如下：
 
