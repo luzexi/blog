@@ -187,17 +187,13 @@
       <div class="post">
   <h1 class="post-title">《Unity3D高级编程之进阶主程》第七章，Shader(五) - Pass(二)</h1>
   <span class="post-date">08 Aug 2018</span>
-  <p>===</p>
-
-<p>本文作者为 陆泽西，是作者编写的《Unity3D高级编程之进阶主程》中的章节</p>
-
-<p>转载请联系博主，留言或者加QQ，未经博主同意不得转载，经同意后转载需注明作者和出处以及链接</p>
-
-<h3>Render State Command渲染状态指令详解</h3>
+  <h3>Render State Command渲染状态指令详解</h3>
 
 <p>Render State Command 是渲染状态的指令，它在Pass和SubShader都有效，放在Pass就只在当前Pass里有效，放在SubShader中则是多个Pass的共同状态。</p>
 
 <p>不过不是所有的Render State都可以成为共同拥有的渲染状态的，有些Render State只在Pass中有效，而另一些则可以成为共同渲染状态。</p>
+
+<p>===</p>
 
 <p>下面我们来介绍下Pass中的渲染状态Command指令：</p>
 
@@ -231,16 +227,16 @@
 </code></pre></div>
 <p>参数解释：</p>
 
-<p><img src="/assets/book/7/shader23.png" alt="cull"></p>
+<p><img src="/assets/book/7/shader23.png" alt="ztest"></p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>上图中为参数 Less 该物体上的部分深度在其他物体后面时不渲染。
 </code></pre></div>
-<p><img src="/assets/book/7/shader24.png" alt="cull"></p>
+<p><img src="/assets/book/7/shader24.png" alt="ztest"></p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>上图中为参数 Greater 该物体上的部分深度在其他物体部分前面时不渲染，也就是被覆盖的显示，没被覆盖的反而不显示。
 </code></pre></div>
-<p><img src="/assets/book/7/shader25.png" alt="cull"></p>
+<p><img src="/assets/book/7/shader25.png" alt="ztest"></p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>上图中为参数 Equal 该物体上的部分深度与其他一致时才渲染，否则不渲染。
 </code></pre></div>
-<p><img src="/assets/book/7/shader26.png" alt="cull"></p>
+<p><img src="/assets/book/7/shader26.png" alt="ztest"></p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>上图中为参数 NotEqual 该物体上的部分深度与其他物体不一致时才渲染，否则不渲染。
 </code></pre></div>
 <h3>ZWrite，设置深度缓存写入开关。</h3>
@@ -253,9 +249,9 @@
 
 <p>半透明和透明物体没有depth buffer深度缓存数据，所以没有所谓的写入一说，也就是通常在半透明和透明物体的Shader中，ZWrite是关闭的。</p>
 
-<p><img src="/assets/book/7/shader27.png" alt="cull"></p>
+<p><img src="/assets/book/7/shader27.png" alt="zwrite"></p>
 
-<p><img src="/assets/book/7/shader28.png" alt="cull"></p>
+<p><img src="/assets/book/7/shader28.png" alt="zwrite"></p>
 
 <p>如上两个图，图1为ZWrite On时的效果，黄色Box遮挡住了后面的蓝色Box因为有depth buffer深度缓存的写入，前后关系有依据。</p>
 
@@ -294,23 +290,23 @@
 
 <p>对白色的做处理Offset 0 , 0 -------两者重叠，时而显示普通的有贴图的立方体，时而显示白色的立方体，如下图所示：</p>
 
-<p><img src="/assets/book/7/shader29.png" alt="cull"></p>
+<p><img src="/assets/book/7/shader29.png" alt="offset"></p>
 
 <p>对白色的做处理Offset 0 , -1------两者重叠部分完全被白色覆盖,因为白色立方体做了偏移量的处理，深度缓存中的坐标离屏幕更近，如下图所示：</p>
 
-<p><img src="/assets/book/7/shader30.png" alt="cull"></p>
+<p><img src="/assets/book/7/shader30.png" alt="offset"></p>
 
 <p>对白色的做处理Offset 0 , 0 ---- 现在把两个立方体的距离拉开，正常情况下按透视的距离进行显示，如下图所示：</p>
 
-<p><img src="/assets/book/7/shader31.png" alt="cull"> </p>
+<p><img src="/assets/book/7/shader31.png" alt="offset"> </p>
 
 <p>对白色的做处理Offset 0 , -1000 ---- 现在加重白色立方体的偏移量，深度缓存数据向屏幕偏移，这时很多有贴图的立方体部分被覆盖，因为偏移量加大，提前量就加大了，但绿色立方体其他部分的深度数据还是比偏移后的大，所以那个部分还是无法覆盖，如下图所示：</p>
 
-<p><img src="/assets/book/7/shader32.png" alt="cull"></p>
+<p><img src="/assets/book/7/shader32.png" alt="offset"></p>
 
 <p>对白色的做处理Offset -100 , -1000------再次加大偏移量，这次加入了缩放比例的偏移，偏移的更多，使得白色立方体全部覆盖绿色立方体，如下图所示：</p>
 
-<p><img src="/assets/book/7/shader33.png" alt="cull"></p>
+<p><img src="/assets/book/7/shader33.png" alt="offset"></p>
 
 <p>注意以上所有图中两个立方体的世界坐标一直都没有更改。如果要让物体向后推也是同样方法，负数变正就可以，所有的偏移都是渲染上的偏移，与物体实际坐标无关。</p>
 
@@ -405,7 +401,7 @@
       <li>
         <h3>
           <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader4.html">
-            《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass
+            《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass(一)
             <small>08 Aug 2018</small>
           </a>
         </h3>
@@ -438,7 +434,7 @@
           <li>
             <h3>
               <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader4.html">
-                《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass
+                《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass(一)
                 <small>08 Aug 2018</small>
               </a>
             </h3>
@@ -498,7 +494,7 @@
           <li>
             <h3>
               <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader4.html">
-                《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass
+                《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass(一)
                 <small>08 Aug 2018</small>
               </a>
             </h3>

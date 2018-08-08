@@ -11,11 +11,9 @@ tags:
 - 前端技术
 ---
 
-===
-
-{% include unity3d_book_copyright.html %}
-
 ###	常用的Shader
+
+===
 
 ###### 1， Standard Shader是Unity5中新加入的一个Shader，它被设计的目的是为了替代很多旧版本里表现“真实世界”的Shader，比如石头，木头，玻璃，塑料，金属等材质。
 

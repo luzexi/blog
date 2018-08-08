@@ -11,15 +11,13 @@ tags:
 - 前端技术
 ---
 
-===
-
-{% include unity3d_book_copyright.html %}
-
 ### Render State Command渲染状态指令详解
 
 Render State Command 是渲染状态的指令，它在Pass和SubShader都有效，放在Pass就只在当前Pass里有效，放在SubShader中则是多个Pass的共同状态。
 
 不过不是所有的Render State都可以成为共同拥有的渲染状态的，有些Render State只在Pass中有效，而另一些则可以成为共同渲染状态。
+
+===
 
 下面我们来介绍下Pass中的渲染状态Command指令：
 
@@ -57,19 +55,19 @@ LEqual参数，其实就是测试前面的物体是否挡住了该物体部分�
 
 参数解释：
 
-![cull](/assets/book/7/shader23.png)
+![ztest](/assets/book/7/shader23.png)
 
     上图中为参数 Less 该物体上的部分深度在其他物体后面时不渲染。
 
-![cull](/assets/book/7/shader24.png)
+![ztest](/assets/book/7/shader24.png)
 
     上图中为参数 Greater 该物体上的部分深度在其他物体部分前面时不渲染，也就是被覆盖的显示，没被覆盖的反而不显示。
 
-![cull](/assets/book/7/shader25.png)
+![ztest](/assets/book/7/shader25.png)
 
     上图中为参数 Equal 该物体上的部分深度与其他一致时才渲染，否则不渲染。
 
-![cull](/assets/book/7/shader26.png)
+![ztest](/assets/book/7/shader26.png)
 
     上图中为参数 NotEqual 该物体上的部分深度与其他物体不一致时才渲染，否则不渲染。
 
@@ -83,9 +81,9 @@ Zwrite可以控制物体渲染的像素是否写入depth buffer深度缓存数�
 
 半透明和透明物体没有depth buffer深度缓存数据，所以没有所谓的写入一说，也就是通常在半透明和透明物体的Shader中，ZWrite是关闭的。
 
-![cull](/assets/book/7/shader27.png)
+![zwrite](/assets/book/7/shader27.png)
 
-![cull](/assets/book/7/shader28.png)
+![zwrite](/assets/book/7/shader28.png)
 
 如上两个图，图1为ZWrite On时的效果，黄色Box遮挡住了后面的蓝色Box因为有depth buffer深度缓存的写入，前后关系有依据。
 
@@ -111,22 +109,22 @@ Offset有两个参数，Factor偏移缩放大小和Units偏移量。Factor相当
 
 对白色的做处理Offset 0 , 0 -------两者重叠，时而显示普通的有贴图的立方体，时而显示白色的立方体，如下图所示：
  
-![cull](/assets/book/7/shader29.png)
+![offset](/assets/book/7/shader29.png)
 
 对白色的做处理Offset 0 , -1------两者重叠部分完全被白色覆盖,因为白色立方体做了偏移量的处理，深度缓存中的坐标离屏幕更近，如下图所示：
 
-![cull](/assets/book/7/shader30.png)
+![offset](/assets/book/7/shader30.png)
 
 对白色的做处理Offset 0 , 0 ---- 现在把两个立方体的距离拉开，正常情况下按透视的距离进行显示，如下图所示：
 
-![cull](/assets/book/7/shader31.png) 
+![offset](/assets/book/7/shader31.png) 
 
 对白色的做处理Offset 0 , -1000 ---- 现在加重白色立方体的偏移量，深度缓存数据向屏幕偏移，这时很多有贴图的立方体部分被覆盖，因为偏移量加大，提前量就加大了，但绿色立方体其他部分的深度数据还是比偏移后的大，所以那个部分还是无法覆盖，如下图所示：
 
-![cull](/assets/book/7/shader32.png)
+![offset](/assets/book/7/shader32.png)
 
 对白色的做处理Offset -100 , -1000------再次加大偏移量，这次加入了缩放比例的偏移，偏移的更多，使得白色立方体全部覆盖绿色立方体，如下图所示：
  
-![cull](/assets/book/7/shader33.png)
+![offset](/assets/book/7/shader33.png)
 
 注意以上所有图中两个立方体的世界坐标一直都没有更改。如果要让物体向后推也是同样方法，负数变正就可以，所有的偏移都是渲染上的偏移，与物体实际坐标无关。

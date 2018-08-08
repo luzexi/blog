@@ -2,7 +2,7 @@
 layout: post
 status: publish
 published: true
-title: 《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass
+title: 《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass(一)
 description: "unity3d 高级编程 主程 shader pipe 渲染管道 subshader shaderlab vertex fragment pass tag"
 excerpt_separator: ===
 tags:
@@ -11,11 +11,10 @@ tags:
 - 前端技术
 ---
 
-===
-
-{% include unity3d_book_copyright.html %}
 
 ### Pass
+
+===
 
 Pass块的格式，如下：
 

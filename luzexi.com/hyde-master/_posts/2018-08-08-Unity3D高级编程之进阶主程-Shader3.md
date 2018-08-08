@@ -11,13 +11,11 @@ tags:
 - 前端技术
 ---
 
-===
-
-{% include unity3d_book_copyright.html %}
-
 ### SubShader模块
 
 SubShader相当于子Shader的意思，SubShader在Shader中可以有很多个，每个SubShader都可以针对一种设备，但不是所有SubShader都会被采用。当Unity去展示一个模型时，会从第一个SubShader开始寻找是否匹配当前的设备，如果不匹配则与下一个SubShader继续匹配，直到找到能够匹配该设备为止。如果所有的SubShader都没有匹配上，则会使用 Fallback 标签的Shader。
+
+===
 
 格式如下：
 
