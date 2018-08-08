@@ -47,9 +47,9 @@
 
 &lt;p&gt;下面我们来看看Blend的使用方法以及它的参数配置。&lt;/p&gt;
 
-&lt;p&gt;1，    Blend Off，关闭混合，默认是关闭颜色混合的。&lt;/p&gt;
+&lt;h6&gt;1，Blend Off，关闭混合，默认是关闭颜色混合的。&lt;/h6&gt;
 
-&lt;p&gt;2，    Blend SrcFactor DstFactor。&lt;/p&gt;
+&lt;h6&gt;2，Blend SrcFactor DstFactor。&lt;/h6&gt;
 
 &lt;p&gt;当前物体产生的图像上的颜色与ScrFactor(Source Factor)参数相乘，屏幕上的已经存在的颜色与DstFactor(Destination Factor)参数相乘，两者的结果相加的结果放入帧缓存。&lt;/p&gt;
 
@@ -93,7 +93,7 @@ OneMinusDstAlpha,表示1-Destination Alpha，即反转屏幕上的Alpha。
 
 &lt;p&gt;源图片颜色被称作“源颜色”，而屏幕上已存在的图片颜色则被称作“目标颜色”。&lt;/p&gt;
 
-&lt;p&gt;3，    BlendOp Op，此命令可以改变两个颜色结果相加的操作。&lt;/p&gt;
+&lt;h6&gt;3，BlendOp Op，此命令可以改变两个颜色结果相加的操作。&lt;/h6&gt;
 
 &lt;p&gt;颜色混合的最后一步是相加，通过这个命令可以改变最后一步的符号，比如相减，取最小值，取最大值等。&lt;/p&gt;
 
@@ -110,13 +110,13 @@ Max，取最大值，目标结果和源结果中取最大值。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;还有一些只能在特定显卡下使用的操作符，比如LogicalClear，LogicalSet等等只能在DX11.1及以上的版本中使用。&lt;/p&gt;
 
-&lt;p&gt;4，    BlendOp OpColor,  OpAlpha，此命令与上面一样也是改变操作符号的，但此命令可以把颜色和Alpha的操作符号分开来改变。&lt;/p&gt;
+&lt;h6&gt;4，BlendOp OpColor,  OpAlpha，此命令与上面一样也是改变操作符号的，但此命令可以把颜色和Alpha的操作符号分开来改变。&lt;/h6&gt;
 
 &lt;p&gt;OpColor参数代表目标结果和源结果的颜色操作符号，OpAlpha参数代表目标结果和源结果的Alpha操作符号。&lt;/p&gt;
 
 &lt;p&gt;可用的参数与BlendOp Op一样，只是拆分了Color和Alpha。&lt;/p&gt;
 
-&lt;p&gt;5，    当使用Multiple render target(MRT)多管线目标渲染时，还可以针对不同的管线目标进行操作，但仅限于固定级别显卡以上的设备，比如DX11/12, GLCore, Metal, PS4等。&lt;/p&gt;
+&lt;h6&gt;5，当使用Multiple render target(MRT)多管线目标渲染时，还可以针对不同的管线目标进行操作，但仅限于固定级别显卡以上的设备，比如DX11/12, GLCore, Metal, PS4等。&lt;/h6&gt;
 
 &lt;p&gt;下面是可操作的命令格式，N为目标管线索引(0-7)：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Blend N SrcFactor DstFactor
@@ -127,7 +127,7 @@ Max，取最大值，目标结果和源结果中取最大值。
 
     BlendOp N OpColor, OpAlpha
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;6，    AlphaToMask On/Off，此命令为开关Alpha To Coverage(A2C)。&lt;/p&gt;
+&lt;h6&gt;6，AlphaToMask On/Off，此命令为开关Alpha To Coverage(A2C)。&lt;/h6&gt;
 
 &lt;p&gt;Alpha To Coverage(A2C)是一种经由流水线完成的“Alpha Test”。&lt;/p&gt;
 

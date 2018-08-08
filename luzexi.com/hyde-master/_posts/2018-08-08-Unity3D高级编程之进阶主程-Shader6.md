@@ -56,9 +56,9 @@ Shader "Test/Blend" {
 
 下面我们来看看Blend的使用方法以及它的参数配置。
 
-1，	Blend Off，关闭混合，默认是关闭颜色混合的。
+###### 1，Blend Off，关闭混合，默认是关闭颜色混合的。
 
-2，	Blend SrcFactor DstFactor。
+###### 2，Blend SrcFactor DstFactor。
 
 当前物体产生的图像上的颜色与ScrFactor(Source Factor)参数相乘，屏幕上的已经存在的颜色与DstFactor(Destination Factor)参数相乘，两者的结果相加的结果放入帧缓存。
 
@@ -104,7 +104,7 @@ Shader "Test/Blend" {
 
 源图片颜色被称作“源颜色”，而屏幕上已存在的图片颜色则被称作“目标颜色”。
 
-3，	BlendOp Op，此命令可以改变两个颜色结果相加的操作。
+###### 3，BlendOp Op，此命令可以改变两个颜色结果相加的操作。
 
 颜色混合的最后一步是相加，通过这个命令可以改变最后一步的符号，比如相减，取最小值，取最大值等。
 
@@ -122,13 +122,13 @@ Shader "Test/Blend" {
 
 还有一些只能在特定显卡下使用的操作符，比如LogicalClear，LogicalSet等等只能在DX11.1及以上的版本中使用。
 
-4，	BlendOp OpColor,  OpAlpha，此命令与上面一样也是改变操作符号的，但此命令可以把颜色和Alpha的操作符号分开来改变。
+###### 4，BlendOp OpColor,  OpAlpha，此命令与上面一样也是改变操作符号的，但此命令可以把颜色和Alpha的操作符号分开来改变。
 
 OpColor参数代表目标结果和源结果的颜色操作符号，OpAlpha参数代表目标结果和源结果的Alpha操作符号。
 
 可用的参数与BlendOp Op一样，只是拆分了Color和Alpha。
 
-5，	当使用Multiple render target(MRT)多管线目标渲染时，还可以针对不同的管线目标进行操作，但仅限于固定级别显卡以上的设备，比如DX11/12, GLCore, Metal, PS4等。
+###### 5，当使用Multiple render target(MRT)多管线目标渲染时，还可以针对不同的管线目标进行操作，但仅限于固定级别显卡以上的设备，比如DX11/12, GLCore, Metal, PS4等。
 
 下面是可操作的命令格式，N为目标管线索引(0-7)：
 
@@ -140,7 +140,7 @@ OpColor参数代表目标结果和源结果的颜色操作符号，OpAlpha参数
 
         BlendOp N OpColor, OpAlpha
 
-6，	AlphaToMask On/Off，此命令为开关Alpha To Coverage(A2C)。
+###### 6，AlphaToMask On/Off，此命令为开关Alpha To Coverage(A2C)。
 
 Alpha To Coverage(A2C)是一种经由流水线完成的“Alpha Test”。
 
