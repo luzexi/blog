@@ -13,7 +13,7 @@
 
   <title>
     
-      《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型
+      《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 合并3D模型
     
   </title>
 
@@ -185,7 +185,7 @@
 
     <div class="content container">
       <div class="post">
-  <h1 class="post-title">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型</h1>
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 合并3D模型</h1>
   <span class="post-date">03 Aug 2018</span>
   <h3>Animation 和 Animator的选择。</h3>
 
@@ -359,21 +359,18 @@
 
     也就是说 material 和 sharedMaterial 等于 materials[0] 和 sharedMaterials[0]。
 </code></pre></div>
-<ol>
-<li><p>Mesh，MeshFilter，MeshRenderer的关系。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>Mesh是数据资源，它可以有自己的资源文件，比如XXX.FBX。
+<p>4，    Mesh，MeshFilter，MeshRenderer的关系。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Mesh是数据资源，它可以有自己的资源文件，比如XXX.FBX。
 
-Mesh里存储了，顶点，uv，顶点颜色，三角形，切线，法线，骨骼，骨骼权重等提供渲染必要的数据。
+    Mesh里存储了，顶点，uv，顶点颜色，三角形，切线，法线，骨骼，骨骼权重等提供渲染必要的数据。
 
-MeshFilter是一个承载Mesh数据的类，Mesh被实例化后存储在MeshFilter，MeshFilter有两种实力型和共享型的变量，mesh和sharedMesh，对mesh的操作将生成新的mesh实例，而对sharedMesh操作将改变与其他模型共同拥有的那个指定的Mesh数据实例。
+    MeshFilter是一个承载Mesh数据的类，Mesh被实例化后存储在MeshFilter，MeshFilter有两种实力型和共享型的变量，mesh和sharedMesh，对mesh的操作将生成新的mesh实例，而对sharedMesh操作将改变与其他模型共同拥有的那个指定的Mesh数据实例。
 
-MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合自身的materials或者sharedMaterials进行渲染。
-</code></pre></div></li>
-<li><p>CombineInstance合并数据实例。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>合并时我们需要为每个需要合并的 Mesh 创建一个CombineInstance，并往里面放入，mesh，subMesh的索引，lightmap的缩放和偏移，以及realtimeLightmap的缩放和偏移(如果有的话)，和世界坐标矩阵。然后通过Mesh.CombineMeshes接口进行合并。
-</code></pre></div></li>
-</ol>
-
+    MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合自身的materials或者sharedMaterials进行渲染。
+</code></pre></div>
+<p>5，    CombineInstance合并数据实例。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    合并时我们需要为每个需要合并的 Mesh 创建一个CombineInstance，并往里面放入，mesh，subMesh的索引，lightmap的缩放和偏移，以及realtimeLightmap的缩放和偏移(如果有的话)，和世界坐标矩阵。然后通过Mesh.CombineMeshes接口进行合并。
+</code></pre></div>
 <p>理清以上概念后，我们在编写合并3D模型程序时难度会降低很多。下面来看下合并3D模型的具体步骤：</p>
 
 <p>1，建立合并数据数组</p>
@@ -449,8 +446,8 @@ MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合
   <li>
 <p>版权申明</p>
 <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p>
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型</a></p> -->
-<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 合并3D模型</a></p> -->
+<!-- <p>本文为博主原创文章，转载请注明出处: <a href = "http://www.luzexi.com/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 合并3D模型</a></p> -->
 <p>Copyright attention</p>
 <p>If you would like to reprint this article please write auth's name and link in the page.</p>
 
@@ -495,6 +492,15 @@ MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合
     
       <li>
         <h3>
+          <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader6.html">
+            《Unity3D高级编程之进阶主程》第七章，Shader(六) - Pass(三)Blend
+            <small>08 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader5.html">
             《Unity3D高级编程之进阶主程》第七章，Shader(五) - Pass(二)
             <small>08 Aug 2018</small>
@@ -511,15 +517,6 @@ MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合
         </h3>
       </li>
     
-      <li>
-        <h3>
-          <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader3.html">
-            《Unity3D高级编程之进阶主程》第七章，Shader(三) - 渲染管道
-            <small>08 Aug 2018</small>
-          </a>
-        </h3>
-      </li>
-    
 
   </ul>
 
@@ -527,6 +524,13 @@ MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合
 
   <ul class="related-posts">
     
+
+    
+
+      
+      
+
+      
 
     
 
@@ -711,6 +715,12 @@ MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合
       
 
       
+
+    
+
+      
+
+      
         
           <li>
             <h3>
@@ -724,7 +734,7 @@ MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合
           <li>
             <h3>
               <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">
-                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型
+                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 合并3D模型
                 <small>03 Aug 2018</small>
               </a>
             </h3>
