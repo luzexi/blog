@@ -7,6 +7,196 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass</title>
+               <description>&lt;h3&gt;Pass&lt;/h3&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;Pass块的格式，如下：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;    [Name and Tags]&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;    [Render State]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Pass可以定义自己的名字，和Tag标签，以及渲染状态Render State。&lt;/p&gt;
+
+&lt;p&gt;Pass通过Tag标签来变更渲染引擎里的设置。Pass里的这个Tag和SubShader上的Tag是同一种标签，SubShader起到了共享标签的作用，而Pass里的Tag则是独立的个性化的。&lt;/p&gt;
+
+&lt;h3&gt;Tag标签详解&lt;/h3&gt;
+
+&lt;p&gt;Tag的格式很简单，就同Key-Value一样，每个标签都有一个Key，对应一个Value，Key之间用空格隔开。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { “TagKey1” = “Value1” “TagKey2” = “Value2” }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;那么究竟有哪些Tag可以供我们使用？&lt;/p&gt;
+
+&lt;p&gt;我们先介绍SubShader和Pass共用的Tag。&lt;/p&gt;
+
+&lt;h6&gt;Queue 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;Queue是渲染顺序的标签。可以用这个标签决定模型在绘制时所用的顺序。&lt;/p&gt;
+
+&lt;p&gt;Shader会在渲染前决定物体属于哪个渲染顺序，从而确保所有透明或半透明物体的绘制顺都排在不透明物体的后面。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    例子，Tags { &amp;quot;Queue&amp;quot; = &amp;quot;Transparent&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如下为渲染顺序的定义选择。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Background：这种类型的顺序会排在所有物体的前面。
+
+    Geometry(默认)：大多数物体都使用这种方式。所有不透明物体使用这个类型。
+
+    AlphaTest：使用Alpha Test的物体使用这个类型的渲染顺序。它被排在不透明物体的渲染后面。
+
+    Transparent：排在Geometry和AlphaTest后渲染。所有alpha混合的物体都应该选择这个类型（因为Shader不会入depth buffer）。
+
+    Overlay：这个类型是最后渲染的，比前面所有类型都要置后。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在实际的运用过程中，Render Queue是可以有自己的排序状态的，不同的Shader同一种排序类型可以有不同的前后关系。&lt;/p&gt;
+
+&lt;p&gt;比如在两个物体都使用Geometry类型的渲染顺序，第一个物体使用 Geometry+1 比其他的 Geometry 类型物体更加滞后渲染，第二个物体使用 Geometry+2 写法，比第一个物体还要靠后渲染，目的有可能是需要在其他物体渲染完毕后再对周围环境做出反应。&lt;/p&gt;
+
+&lt;p&gt;这种方式在透明和半透明的物体中特别常用，因为透明和半透明物体没有深度缓存测试，所以他们之间的渲染顺序是混乱的，当两个半透明物体放在前后位置进行渲染时，摄像机看到的是一个比较混乱的排序方式。因此在半透明物体的运用中我们时常人工指定某些物体的排序大小，比如如下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;Queue&amp;quot; = &amp;quot;Transparent+1&amp;quot; }
+
+    Tags { &amp;quot;Queue&amp;quot; = &amp;quot;Transparent+2&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;后者比前者在渲染绘制时排在后面，先绘制了+1的半透明物体后，再绘制+2的半透明物体，结果是+2物体会覆盖+1物体而显示得靠前。&lt;/p&gt;
+
+&lt;p&gt;例子中“+1”表达了渲染顺序往后靠一位，+2比+1更往前后，数字越大渲染时越排在后面。&lt;/p&gt;
+
+&lt;p&gt;“Queue”标签在Shader里会提前告诉着色器这个物体的渲染顺序，这样在渲染中就不会因为没有深度缓存数据而导致前后渲染的混乱。&lt;/p&gt;
+
+&lt;p&gt;渲染顺序到2500(“Geometry+500”)是非透明物体和可优化绘制顺序（自动排序）物体最佳的性能位置。&lt;/p&gt;
+
+&lt;p&gt;超过2500是半透明物体和手动排序物体的区间范围。天空盒(Skybox)被排在非透明物体和半透明物体中间。&lt;/p&gt;
+
+&lt;h6&gt;RenderType 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;RenderType 标签是自由识别类标签，他没有自己的标签类型选择，可以为任意字符串。&lt;/p&gt;
+
+&lt;p&gt;RenderType的主要作用是被识别与替代。在Shader替换效果中比较常用，比如场景中有些类型的物体需要在某个时刻替换某种Shader，并且不是真正的替换Shader，而是只针对某个Camera摄像机，其他的Camera摄像机保持原样。这时就需要用到RenderType标签，再用Camera.RenderWithShader或Camera.SetReplacementShader进行替换，因为函数中需要找出某种类型的Shader进而才可以进行替换，所以RenderType就是那个标识记号。&lt;/p&gt;
+
+&lt;p&gt;Camera.RenderWithShader或Camera.SetReplacementShader渲染的规则是，没有RenderType标记的全部替换并渲染，有标记的但跟给定的标记一样的才渲染，否则不渲染。&lt;/p&gt;
+
+&lt;p&gt;Unity内部Shader已经全部标记了RenderType，可以在它的Shader源码内参考。&lt;/p&gt;
+
+&lt;h6&gt;DisableBatching标签&lt;/h6&gt;
+
+&lt;p&gt;DisableBatching可以将该物体上的Draw Call Batching打开或关闭。&lt;/p&gt;
+
+&lt;p&gt;为什么要关闭呢，因为在一些Shader中需要对顶点进行更改达到Mesh变化的目的，而Draw Call Batching会对所有的可合并的模型进行合并后放入场景空间，所以这些对Mesh操作的Shader就不起作用了，需要关闭Draw Call Batching才能重新得到该Shader要的效果。&lt;/p&gt;
+
+&lt;p&gt;DisableBatching有三种类型可以选择。&lt;/p&gt;
+
+&lt;p&gt;第一种是True，标志着Draw Call Batching 功能在这个物体上将被关闭。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;DisableBatching&amp;quot; = &amp;quot;True&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第二种是False，标志着Draw Call Batching 功能在这个物体上不关闭。False是默认值，也就是说如果不去设置它时，Shader模式是不关闭Draw Call Batching的。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;DisableBatching&amp;quot; = &amp;quot;False&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第三种是LODFading，这个比较特殊，只在LOD fading设置被开启时关闭这个物体上的Draw Call Batching功能。一般常用在树上，会动且有LOD功能。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;DisableBatching&amp;quot; = &amp;quot;LODFading&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;这里简单介绍下Draw Call Batching功能，后面章节中会有详细的介绍。&lt;/h6&gt;
+
+&lt;p&gt;每个物体都有一个材质球，每个材质球都有一个Shader，每个Shader都起码有 一个Pass渲染管线，每个物体在渲染时，引擎会抓取模型的顶点，网格，颜色，贴图，UV，法线等数据进行一次渲染操作。&lt;/p&gt;
+
+&lt;p&gt;那么如果每个物体都单独走一次渲染管线，几百几千甚至几万个物体一起渲染时，就会因为渲染引擎工作量过大CPU和GPU负荷过高而导致画面渲染次数减少，也就是帧数下降，因为每一帧一个画面。帧数下降导致画面有卡顿感，不流畅。所以要使用Batching批处理进行优化，于是就有了Draw Call Batching。&lt;/p&gt;
+
+&lt;p&gt;它是怎么优化的呢？把所拥有有相同材质球的模型放在一起走一次渲染管线，不同的材质球对应的模型不能进行Draw Call Batching。&lt;/p&gt;
+
+&lt;p&gt;这样大大加强了处理速度，原来一个一次的处理方式，变成了一批一次，达到了优化的目的，绘制画面的次数上去了，每秒的帧数（FPS）也上就去了。&lt;/p&gt;
+
+&lt;p&gt;Draw Call Batching分两种，一种是动态的，一种是静态的。&lt;/p&gt;
+
+&lt;p&gt;要进行动态的Batching批处理要求有点高，比如它要求模型必须少于900个顶点甚至更少，又比如它要求Batching批处理对象的Scale大小是一模一样的否则不予处理，再比如必须使用同一种材质球而且是同一个实例，不同材质球或者同一材质球而不同实例也不行，还有如果有烘培的模型，它的烘培图必须是同一张，甚至Shader中不能使用多个Pass等等苛刻的条件。所以想要做动态批处理还是比较困难的。&lt;/p&gt;
+
+&lt;p&gt;静态Batching就比较好弄了，只有在编辑器的右上角勾选静态标志就可以了，不过一旦勾上静态标志，物体就再也不能动不能旋转和缩放了。&lt;/p&gt;
+
+&lt;p&gt;当然Draw Call Batching本身有很多的限制，但对优化渲染管线还是有一定好处的，如果想要加大加强加快优化的力度，还有其他很多方法，每个部分的优化方案都写进了各个章节中，特别是针对Draw Call Batching的替代方案，在模型章节中有很深入的讲解。&lt;/p&gt;
+
+&lt;h6&gt;ForceNoShadowCasting 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;ForceNoShadowCasting是针对是否强制关闭阴影投射功能的。&lt;/p&gt;
+
+&lt;p&gt;当ForceNoShadowCasting为True时，物体将不会去绘制阴影部分，着色器也不会把时间浪费在阴影的绘制上了。默认为False的，默认状态下，物体会去绘制阴影部分的渲染图。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;ForceNoShadowCasting&amp;quot; = &amp;quot;True&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;IgnoreProjector 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;IgnoreProjector针对的是投射阴影的开关功能。&lt;/p&gt;
+
+&lt;p&gt;当IgnoreProjector为True时，着色器将关闭Projector投射阴影的绘制功能，这个物体将不会绘制投射阴影部分的渲染。默认状态下是False，默认状态下，物体是能响应Projector投射的阴影绘制的。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;ForceNoShadowCasting&amp;quot; = &amp;quot;True&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;CanUseSpriteAtlas 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;CanUseSpriteAtlas是针对图集里的元素的，它是UGUI中常使用。当CanUseSpriteAtlas为False时，将不会对打进图集里的贴图进行绘制。默认为True。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;CanUseSpriteAtlas&amp;quot; = &amp;quot;False&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;PreviewType 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;PreviewType是展示材质球预览形状的默认选项的。编辑器中Material材质球展示预览效果时，默认是球形，通过这个标签，可以设置为Plane面板形状，也可以设置为Skybox天空盒形状。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;PreviewType&amp;quot; = &amp;quot;Plane&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;h3&gt;以上是SubShader和Pass共享的Tag标签，下面我们介绍一些只有在Pass里使用的Tag标签。&lt;/h3&gt;
+
+&lt;h6&gt;LightMode 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;通过设置LightMode可以在Pass里设置一个光照模型，主要是针对光的相互作用。&lt;/p&gt;
+
+&lt;p&gt;值类型选择范围有：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Always：一直都渲染，不应用光照作用。
+
+    ForwardBase： 使用正向渲染。环境光，主方向光，vertex/SH lights 和 烘培贴图功能被开启。
+
+    ForwardAdd：使用正向渲染。在ForwardBase的基础上，添加像素光的应用，每个Pass（渲染管线）一个灯管。
+
+    Deferred：使用延迟渲染。着色使用g-buffer。
+
+    ShadowCaster：渲染物体depth到阴影图(Shadowmap)或者一张深度贴图(depth texture)。
+
+    MontionVectors：计算每个物体的运动矢量。
+
+    PrepassBase：使用旧的延迟光照。渲染法线和镜面反射。
+
+    PrepassFinal：使用旧的延迟光照。用合并贴图，光照和发散光，来渲染最终颜色。
+
+    Vertex：当物体不使用烘培贴图时，使用旧的顶点灯光渲染模式。所有顶点光都被开启。
+
+    VertexLMRGBM：当物体使用烘培贴图时，使用旧的顶点灯光渲染模式。PC和Console平台上烘培贴图是RGBM编码格式。
+
+    VertexLM：当物体使用烘培贴图时，使用久的顶点灯光渲染模式。在手机平台上烘培贴图是double-LDR编码。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;PassFlags 标签Tag&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    OnlyDirectional：当使用ForwardBase的Pass标签时，这个标签会只让主方向光和环境光数据通过进入Shader。这意味着不重要的灯光数据，不会被通过进入顶点光或球面谐波Shader变量。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;RequireOptions 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;RequrieOptions可以做到，一个Pass申明当有某种外部条件发生的时候才被渲染。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    SoftVegetation：当软植物(Soft Vegetation)在Quality Settings中被设置时，才渲染这个Pass。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+               <pubDate>Wed, 08 Aug 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader4.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader4.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第七章，Shader(三) - 渲染管道</title>
                <description>&lt;h3&gt;SubShader模块&lt;/h3&gt;
 
@@ -68,6 +258,8 @@
 &lt;h6&gt;阶段1， 指定几何对象&lt;/h6&gt;
 
 &lt;p&gt;这个阶段引擎在选择某些几何对象作为渲染目标。&lt;/p&gt;
+
+&lt;p&gt;理论上是一次抓取一个几何对象，但一般引擎都有批处理优化功能，一次抓取一批相同材质球的几何物体进行渲染。&lt;/p&gt;
 
 &lt;h6&gt;阶段2，顶点处理&lt;/h6&gt;
 
@@ -1599,240 +1791,6 @@
                <pubDate>Fri, 03 Aug 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html</guid>
-            </item>
-        
-            <item>
-               <title>《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 为什么要合并3D模型</title>
-               <description>&lt;h3&gt;Animation 和 Animator的选择。&lt;/h3&gt;
-
-&lt;p&gt;首先说明Unity3D引擎已经不再对Animation动画系统进行维护。但不维护也并不是说一定不能用，很多旧的项目任然用的很好，而且Animation系统也基本上是完善好了的。新动画系统 Mecanim 中有了新的动画组件 Animator。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;为什么要用新系统 Mecanim 呢？&lt;/p&gt;
-
-&lt;p&gt;原因如下几个方面，&lt;/p&gt;
-
-&lt;p&gt;1，    Mecanim 系统使用多线程计算，比Animation的单线程性能要高出一点。&lt;/p&gt;
-
-&lt;p&gt;2，    Unity3D本身就自带对 Mecanim 系统的优化选项“Optimize GameObject”。开启该选项，Animator.Update和MeshSkinning.Update的CPU占用均存在一定程度的降低；&lt;/p&gt;
-
-&lt;p&gt;3，    Animator功能更加多，Retargeting功能能让不同角色使用同一套动画资源，比如游戏中的角色的空闲动画，就可以使用同一个动画文件省去了动画资源内存的开销。Animator状态机的接入，让动画可以在不同的条件下自动的切换等。&lt;/p&gt;
-
-&lt;p&gt;Animator缺点:&lt;/p&gt;
-
-&lt;p&gt;1，    如果针对单个模型物体绑定单个动画的话，稍微繁琐了点。比如，场景有一棵树，它只会播放不停的摇的动画，我们需要对这棵树绑定Animator组件，然后创建一个AnimatorController放入Animator，还得在AnimatorController里设置一个State来绑定动画文件，才能完成整个自动播放动画的操作。&lt;/p&gt;
-
-&lt;p&gt;2，    如果从单个动画内存角度来讲，Animator的内存占有量比Animation大一些，因为Animator需要AnimatorController支持，比旧版的Animation多了一个数据文件支撑动画系统。&lt;/p&gt;
-
-&lt;p&gt;Animation因为Unity3D引擎不再维护了，所以大多数人选择了Animator，这是正确的做法。其实我很喜欢Animation，但也不得不抛弃它去投奔新‘主子’(Animator)，因为不再维护意味着从长远看会越来越糟糕。&lt;/p&gt;
-
-&lt;h3&gt;Unity3D 3D模型中SubMesh的意义?&lt;/h3&gt;
-
-&lt;p&gt;Mesh网格的构成可以由多个子Mesh组成也就是SubMesh，一个Mesh里可以有多个SubMesh。&lt;/p&gt;
-
-&lt;p&gt;每个SubMesh对应着一个Material材质球，一个SubMesh本身就是普通的模型有很多个三角形构成。在美术人员制作3D模型过程中，可以将SubMesh拆分成独立的Mesh，也可以并成多个SubMesh。&lt;/p&gt;
-
-&lt;p&gt;那么为什么美术人员在制作3D模型时，要制作成多个SubMesh？&lt;/p&gt;
-
-&lt;p&gt;一种情况是：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    3D模型制作人员在制作模型的时候，希望一个模型中一部分Mesh用一种材质球来表现效果，另一部分用另一种材质球来表现效果时，就需要用到SubMesh了。
-
-    因为一个Mesh只能对应一个材质球，一个材质球只能表现一种效果，当他们需要表现两种效果时就需要拆分了。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;第二种情况时：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    模型的某部分，在众多模型中利用率非常高。为了不重复制作，单独拆分出来作为模型的子模型来拼接。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;与没有SubMesh的Mesh相比，多个SubMesh可以有与Mesh一样的动画，又能针对不同部分的Mesh选择有针对性的材质球来表现效果。&lt;/p&gt;
-
-&lt;p&gt;但SubMesh不是万能的，它有很多也很大的缺点，&lt;/p&gt;
-
-&lt;p&gt;首先SubMesh多出了材质球，也就多出了很多Drawcall渲染次数，SubMesh越多，增加的Drawcall也越多。&lt;/p&gt;
-
-&lt;p&gt;其次Mesh中多个SubMesh在动作和拆分材质球渲染上确实有很好的优势，但无法与其他Mesh合并，导致优化的一个重要环节被阻断。&lt;/p&gt;
-
-&lt;p&gt;SubMesh功能很强大，但对性能的开销也很伤，所以要慎重。有时我们也可以选择用拆分Mesh来代替SubMesh，这样在合并Mesh时就有更多的选择了。下面我们就来聊聊合并3D模型的深入浅出。&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = &quot;u3493987&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;h3&gt;动态合并3D模型。&lt;/h3&gt;
-
-&lt;p&gt;为什么要动态合并3D模型？&lt;/p&gt;
-
-&lt;p&gt;场景中的3D的物体很多，每个3D物体都会有一个材质球，每个材质球导致产生一个Drawcall（也就是一个渲染管线调用），众多的3D模型产生很多Drawcall，CPU消耗在渲染上过多，使得帧率下降画面卡顿感强烈。&lt;/p&gt;
-
-&lt;p&gt;大部分项目都会遇到这样的问题，场景中要摆放的3D物体很多，包括人物，建筑，路标，景观，树木等。这些3D物体，都有自己的材质球，一样的物体使用相同的材质球，不一样的物体使用不同的材质球，有时不一样的物体也有相同的材质球。&lt;/p&gt;
-
-&lt;p&gt;这么多的材质球引起的Drawcall，是否能合并合并成一个呢。这时就是合并3D模型发挥作用的时候了。&lt;/p&gt;
-
-&lt;p&gt;合并3D模型主要的目的就是为了合并材质球，为了能减少材质球，把相同材质球的模型合并起来成为一个模型和一个材质球。&lt;/p&gt;
-
-&lt;p&gt;Unity3D引擎在优化Drawcall批处理上，有动态批处理 和 静态批处理两种，它们的前提条件都是有用只有一个的相同材质球的模型，多个不行。&lt;/p&gt;
-
-&lt;p&gt;来介绍下Unity3D中动态批处理和静态批处理：&lt;/p&gt;
-
-&lt;h6&gt;动态批处理&lt;/h6&gt;
-
-&lt;p&gt;Unity3D可以自动批处理移动中的物体成为同一个drawcall，如果是他们使用的是同一个材质球并且满足一些条件。动态批处理是自动完成的，我们不需要增加额外的操作。&lt;/p&gt;
-
-&lt;p&gt;动态批处理的条件是，&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;1，动态批处理的物体的顶点数目要在一定范围之内，动态批处理只能应用在少于900个顶点的Mesh中。
-
-    如果你的Shader使用顶点坐标，法线，单独的UV，那么只能动态批处理300个顶点内的网格，
-
-    如果你的Shader使用顶点坐标，法线，UV0，UV1和切线，则只能有180个顶点了。
-
-2，物体缩放单位一定要相同，如果物体不在同一个缩放单位上，将不会进行动态批处理（比如物体A的scale是1，物体B的scale是2，他们是不会被一起处理的，除非A的scale改为2，或者B的scale改为1）
-
-3，必须使用相同的材质球，使用不同的材质球是不会被动态批处理的，即使他们看起来一样。
-
-4，多管线(pipeline)Shader会中断动态批处理。
-
-    很多Unity3D里的Shader支持多个灯光的前置渲染，有效增加渲染通道。Drawcall是“额外像素灯光”，是无法批处理渲染的。
-
-    Legacy Deferred(灯光前置通道)传统延迟渲染路径已经被动态处理关闭，因为它必须绘制物体两次。
-
-    多个pass的Shader增加了渲染管道，不会被动态批处理。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;动态批处理的条件是很苛刻的，在项目中很多模型是不符合动态批处理的。&lt;/p&gt;
-
-&lt;p&gt;另外，动态批处理要消耗CPU转换所有物体的顶点到世界空间，所以它唯一的优势是如果它的工作能让Drawcall变少。&lt;/p&gt;
-
-&lt;p&gt;Drawcall的资源需求取决于很多因素，主要被图形API使用。例如一个控制台或流行的API像Apple Metal这样的，Drawcall的开销会普遍很低。所以经常动态批处理在优化方面没有任何优势，甚至没有任何作用。&lt;/p&gt;
-
-&lt;h6&gt;静态批处理&lt;/h6&gt;
-
-&lt;p&gt;静态批处理允许引擎去降低Drawcall，无论模型多大只要使用同一个材质球。他通常比动态批处理有用（它不需要转换顶点到CPU），但静态批处理会消耗更多的内存。&lt;/p&gt;
-
-&lt;p&gt;为了让静态批处理的优势更大，你需要去确认指定的物体是否是静态的不能动，不能旋转或者缩放。最好给这物体在面板上标记一个静态的标记，以确定性告知引擎，此物体时不能动不能缩放的。&lt;/p&gt;
-
-&lt;p&gt;使用静态批处理需要增加内存来存储合并的模型。如果一些物体在静态批处理前共用一个模型，就会复制每个物体的模型，在Editor里或者在实时运行状态下都会做这个操作。&lt;/p&gt;
-
-&lt;p&gt;它可能不总是一个好的，有时你需要减少对物体的静态处理来减少内存的使用量，但牺牲了渲染性能，虽然我觉得内存换CPU是值得的，但是如果100MB换1%的CPu效率还是不划算。&lt;/p&gt;
-
-&lt;p&gt;静态批处理将所有静态物体放入世界空间，并且为他们构建一个大的顶点集合以及索引缓存。然后可见的物体就会被同一批处理，一系列的Drawcall被减少。&lt;/p&gt;
-
-&lt;p&gt;技术上静态批处理并没有节省3D API Drawcall数量，但他节省了他们之间的状态改变导致的消耗。在大多数平台上，批处理被限制在6万4千个顶点和6万4千个索引，所以倘若超过这个数量需要取消一些静态批处理对象。&lt;/p&gt;
-
-&lt;p&gt;现在我们知道动态批处理 和 静态批处理是什么了，我们来做个简单总结：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，    动态批处理条件是，使用同一材质球，顶点数量不超过900个，有法线的不超过300个顶点，有两个UV的不超过150个顶点，缩放大小要一致，Shader不能有多通道。
-
-    2，    静态批处理条件是，必须是点上静态标记的物体，不能动，不能旋转，不能缩放，不能有动画。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;动态批处理的规则是极其严格的，在具体的场景中，很少有能用到的地方，顶点限制太少，缩放比例要相同，渲染管道只能有一个。&lt;/p&gt;
-
-&lt;p&gt;静态批处理的用处多一点，但物体不能移动，旋转，缩放，即使偶尔动一下也不行。这个限制太死，用到的地方也只有完全不动的场景的固定物体了。&lt;/p&gt;
-
-&lt;p&gt;动态批处理限制太大，静态批处理又不满足我们的需求，所以只有我们自己手动合并模型来替代Unity3D的批处理了。&lt;/p&gt;
-
-&lt;p&gt;也只有我自己程序合并的模型才能体现自定义动态批处理的用途。比如构建场景后的动态建筑，动态小件合并，人物模型更换装备，发型，首饰，衣裤等导致多个模型挂载的需要合并模型来优化渲染。&lt;/p&gt;
-
-&lt;h3&gt;编写合并3D模型程序&lt;/h3&gt;
-
-&lt;p&gt;合并3D模型，需要依靠Unity3D的API，需要用到Unity3D的几个接口介绍一下：&lt;/p&gt;
-
-&lt;p&gt;Mesh类，有个CombineMeshes的接口提供了合并3D模型的入口。&lt;/p&gt;
-
-&lt;p&gt;MeshFilter类，是承载Mesh数据的类。&lt;/p&gt;
-
-&lt;p&gt;MeshRenderer类，是绘制Mesh网格的类。&lt;/p&gt;
-
-&lt;p&gt;在使用这几个接口前我们首先需要弄明白几个概念：&lt;/p&gt;
-
-&lt;p&gt;1，    SubMesh的意义。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    前文用专门的一节来解释它的意义。这里简单阐述下，SubMesh是Mesh里拆出来的子模型，SubMesh需要额外多个的材质球，而普通的Mesh只有一个材质球。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;2，    MeshFilter 和 MeshRenderer中的 mesh 和 shareMesh ，material 和 shareMaterial 的区别。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    mesh 和 material 都是实例型的变量，对 mesh 和 material 进行任何操作都会额外复制一份后再进行重新赋值，即使只是get操作也同样会发生复制效果。
-
-    也就是说对 mesh 和 material 进行操作后就会变成另一个实例，虽然看上去一样，但其实已经是同的实例了。
-
-    sharedMesh 和 sharedMaterial 与前面两个变量不同，他们是共享型的。
-
-    多个3D模型可以共用同一个指定的 sharedMesh 和 sharedMaterial，无论你怎么修改sharedMesh或sharedMaterial里面的实例，都不会改变很多3D模型使用同一个指定的 sharedMesh 和 sharedMaterial。
-
-    也就是说 sharedMesh 和 sharedMaterial 被改变后，所有使用sharedMesh 和 sharedMaterial资源的3D模型会有同一个表现效果。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;3，    materials 和 sharedMaterials 的区别。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    与前面 material 和 sharedMaterial 同样的区别， materials 是实例型，sharedMaterials 是共享型，只不过现在他们变成了数组形式。
-
-    materials 只要对它进行任何操作都会复制一份一模一样的来替换，sharedMaterials 操作后所有指向这个材质球的模型都会改变效果。
-
-    而 materials 和 material，与 sharedMaterials 和 sharedMaterial 的区别是，materials和sharedMaterials可以针对不同的subMesh，而material和sharedMaterial只针对主Mesh。
-
-    也就是说 material 和 sharedMaterial 等于 materials[0] 和 sharedMaterials[0]。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Mesh，MeshFilter，MeshRenderer的关系。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;Mesh是数据资源，它可以有自己的资源文件，比如XXX.FBX。
-
-Mesh里存储了，顶点，uv，顶点颜色，三角形，切线，法线，骨骼，骨骼权重等提供渲染必要的数据。
-
-MeshFilter是一个承载Mesh数据的类，Mesh被实例化后存储在MeshFilter，MeshFilter有两种实力型和共享型的变量，mesh和sharedMesh，对mesh的操作将生成新的mesh实例，而对sharedMesh操作将改变与其他模型共同拥有的那个指定的Mesh数据实例。
-
-MeshRenderer具有渲染功能，它会提取MeshFilter中的Mesh数据，结合自身的materials或者sharedMaterials进行渲染。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;CombineInstance合并数据实例。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;合并时我们需要为每个需要合并的 Mesh 创建一个CombineInstance，并往里面放入，mesh，subMesh的索引，lightmap的缩放和偏移，以及realtimeLightmap的缩放和偏移(如果有的话)，和世界坐标矩阵。然后通过Mesh.CombineMeshes接口进行合并。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;理清以上概念后，我们在编写合并3D模型程序时难度会降低很多。下面来看下合并3D模型的具体步骤：&lt;/p&gt;
-
-&lt;p&gt;1，建立合并数据数组&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;2，填入合并数据&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;++)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mesh&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;localToWorldMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subMeshIndex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//标识Material的索引位置，可以为0，1，2等&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;3，合并所有Mesh为单独一个&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_meshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;或者，合并后保留SubMesh&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;new_meshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;4，CombineMeshes接口定义为&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mergeSubMeshes&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;useMatrices&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hasLightmapData&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;完整代码为：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CombineInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Count&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;++)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mesh&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;localToWorldMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subMeshIndex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//标识Material的索引位置，可以为0，1，2等&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;new_meshFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedMesh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CombineMeshes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-</description>
-               <pubDate>Fri, 03 Aug 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html</guid>
             </item>
         
     </channel>
