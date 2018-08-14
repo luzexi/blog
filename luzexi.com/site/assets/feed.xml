@@ -7,7 +7,7 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第七章，Shader(六) - Fixed-function</title>
+               <title>《Unity3D高级编程之进阶主程》第七章，Shader(七) - Fixed Function</title>
                <description>&lt;h3&gt;Fixed-function 是Unity3D官方自己编写的一套API，它与Surface shaders，及vertex and fragment program是区分开来的。Fixed-function，Suface program 和 vertex and fragment programs 三种编写Shader的方法不能同时使用，任何一种方式被编写后，其他两种都将无效。&lt;/h3&gt;
 
 &lt;p&gt;===&lt;/p&gt;
@@ -166,6 +166,21 @@
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
 
 &lt;h6&gt;Alpha Test 透明裁切&lt;/h6&gt;
 
@@ -501,6 +516,21 @@ Max，取最大值，目标结果和源结果中取最大值。
 &lt;h6&gt;5，颜色最小值，可以视为颜色（或者说图像）的最暗状态。&lt;/h6&gt;
 
 &lt;p&gt;与最大值相同因为RGB的所有颜色都做了最小值操作，无论哪个颜色都会更加接近黑色(0,0,0)，所以两个颜色或者图像做最小值操作就是取其最暗(黑)的状态。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
 
 &lt;h3&gt;有了这些颜色操作的常识我们就可以更加深入的了解Blend混合方法了。&lt;/h3&gt;
 

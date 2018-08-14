@@ -1,3 +1,16 @@
+---
+layout: post
+status: publish
+published: true
+title: 《Unity3D高级编程之进阶主程》第七章，Shader(八) - Suferface
+description: "unity3d 高级编程 主程 shader pipe 渲染管道 subshader shaderlab vertex fragment pass"
+excerpt_separator: ===
+tags:
+- 书籍著作
+- Unity3D
+- 前端技术
+---
+
 
 3.	有哪些常用的画面风格。
 卡通风格，次世代风格，素风格，漫反射风格

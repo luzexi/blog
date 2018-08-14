@@ -194,6 +194,7 @@ Alpha To Coverage(A2C)中和了Alpha Test和Alpha Blend的方法，让半透明�
 
 与最大值相同因为RGB的所有颜色都做了最小值操作，无论哪个颜色都会更加接近黑色(0,0,0)，所以两个颜色或者图像做最小值操作就是取其最暗(黑)的状态。
 
+{% include advertisement_content.html %}
 
 ### 有了这些颜色操作的常识我们就可以更加深入的了解Blend混合方法了。
 

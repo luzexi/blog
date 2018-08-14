@@ -2,7 +2,7 @@
 layout: post
 status: publish
 published: true
-title: 《Unity3D高级编程之进阶主程》第七章，Shader(六) - Fixed-function
+title: 《Unity3D高级编程之进阶主程》第七章，Shader(七) - Fixed Function
 description: "unity3d 高级编程 主程 shader pipe 渲染管道 subshader shaderlab vertex fragment pass"
 excerpt_separator: ===
 tags:
@@ -184,6 +184,8 @@ Shader "VertexLit"
     }
 }
 {% endhighlight %}
+
+{% include advertisement_content.html %}
 
 ###### Alpha Test 透明裁切
 
