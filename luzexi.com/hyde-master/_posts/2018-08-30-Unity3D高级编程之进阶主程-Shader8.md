@@ -1,8 +1,4 @@
 
-接下来我们重点讲讲Fixed-function部分的功能
-
-
-
 3.	有哪些常用的画面风格。
 卡通风格，次世代风格，素风格，漫反射风格
 https://www.zhihu.com/question/22530411
