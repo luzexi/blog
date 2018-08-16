@@ -21,14 +21,14 @@ Surface shader 和 vertex fragment shader 一样需要书写 CGPROGRAM..ENDCG，
 
 参数说明：
 
-1，surfaceFunction，是一个有输入输出参数的函数，其格式为
+###### 1，surfaceFunction，是一个有输入输出参数的函数，其格式为
 
 		void surf (Input IN, inout SurfaceOutput o)
 
 Surface通过这个函数来修改渲染细节，下面的程序中必须有这个名字和格式的函数。
 
 
-2，lightModel，选择使用哪种光照模型。在内置的光照模型中，有以物理为基础的 Standard 和 StandardSpecular，和无物理基础的Lambert (diffuse漫反射) and BlinnPhong (specular镜面反射)。还可以定义自己的光照模型。其中内置的光照模型：
+###### 2，lightModel，选择使用哪种光照模型。在内置的光照模型中，有以物理为基础的 Standard 和 StandardSpecular，和无物理基础的Lambert (diffuse漫反射) and BlinnPhong (specular镜面反射)。还可以定义自己的光照模型。其中内置的光照模型：
 
 		Standard 光照模型使用 SurfaceOutputStandard 作为输出结构并且匹配了Unity3D内置的Standard Shader(金属流)。
 
@@ -37,18 +37,26 @@ Surface通过这个函数来修改渲染细节，下面的程序中必须有这�
 		Lambert 和 BlinnPhong 光照模型不以物理为基础，不过使用它们可以在低端设备上运行得更快。
 
 
-3，可选择参数。
+###### 3，可选择参数。
 
-Transparency 和 alpha testing
+###### 透明物体 和 alpha testing 功能参数
 
-		 Transparency 和 alpha testing 是控制alpha和alphaTest也就是alpha裁切 的参数。透明物体可以有两种，一种是传统的alpha混合，另一种是更加物理化的“premultiplied blending”左自乘混合，它能够在半透明上保留适度的镜面反射。
-		 is controlled by alpha and alphatest directives. Transparency can typically be of two kinds: traditional alpha blending (used for fading objects out) or more physically plausible “premultiplied blending” (which allows semitransparent surfaces to retain proper specular reflections). Enabling semitransparency makes the generated surface shader code contain blending commands; whereas enabling alpha cutout will do a fragment discard in the generated pixel shader, based on the given variable.
+透明物体 和 alpha testing 类型的参数可以控制alpha和alphaTest也就是alpha混合和alpha裁切 的功能。
 
-alpha or alpha:auto - Will pick fade-transparency (same as alpha:fade) for simple lighting functions, and premultiplied transparency (same as alpha:premul) for physically based lighting functions.
-alpha:blend - Enable alpha blending.
-alpha:fade - Enable traditional fade-transparency.
-alpha:premul - Enable premultiplied alpha transparency.
-alphatest:VariableName - Enable alpha cutout transparency. Cutoff value is in a float variable with VariableName. You’ll likely also want to use addshadow directive to generate proper shadow caster pass.
+透明物体分为两种，一种是传统的alpha混合，另一种是更加物理化的“premultiplied blending”左自乘混合，它能够在半透明上保留适度的镜面反射。
+
+启用半透明使得surface shader包含了alpha混合功能。而启用alpha cutout 将根据alpha值在生成像素时中裁切不符合的部分片段。
+
+		alpha 或者 alpha:auto，选择渐进透明也就是 alpha:fade 作为简单光照函数，并且选择左自乘透明方式也就是 alpha:premul 作为物理基础的光照函数。
+
+		alpha:blend，开启alpha混合。
+
+		alpha:fade，开启传统的渐进透明函数。
+
+		alpha:premul，开启左自乘alpha透明度。
+
+		alphatest:VariableName，开启alpha cutout裁切功能。将根据跟定的值裁切不符合的alpha片段。你可以You’ll likely also want to use addshadow directive to generate proper shadow caster pass.
+
 keepalpha - By default opaque surface shaders write 1.0 (white) into alpha channel, no matter what’s output in the Alpha of output struct or what’s returned by the lighting function. Using this option allows keeping lighting function’s alpha value even for opaque surface shaders.
 decal:add - Additive decal shader (e.g. terrain AddPass). This is meant for objects that lie atop of other surfaces, and use additive blending. See Surface Shader Examples
 decal:blend - Semitransparent decal shader. This is meant for objects that lie atop of other surfaces, and use alpha blending. See Surface Shader Examples
