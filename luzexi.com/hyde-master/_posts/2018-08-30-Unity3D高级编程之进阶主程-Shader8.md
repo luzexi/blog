@@ -47,6 +47,8 @@ Surface通过这个函数来修改渲染细节，下面的程序中必须有这�
 
 启用半透明使得surface shader包含了alpha混合功能。而启用alpha cutout 将根据alpha值在生成像素时中裁切不符合的部分片段。
 
+透明物体和alpha testing的功能指令如下：
+
 		alpha 或者 alpha:auto，选择渐进透明也就是 alpha:fade 作为简单光照函数，并且选择左自乘透明方式也就是 alpha:premul 作为物理基础的光照函数。
 
 		alpha:blend，开启alpha混合。
@@ -55,11 +57,16 @@ Surface通过这个函数来修改渲染细节，下面的程序中必须有这�
 
 		alpha:premul，开启左自乘alpha透明度。
 
-		alphatest:VariableName，开启alpha cutout裁切功能。将根据跟定的值裁切不符合的alpha片段。你可以You’ll likely also want to use addshadow directive to generate proper shadow caster pass.
+		alphatest:VariableName，开启alpha cutout裁切功能。将根据跟定的值裁切不符合的alpha片段。裁切后你可以通过 addshadow 指令生成阴影。
 
-keepalpha - By default opaque surface shaders write 1.0 (white) into alpha channel, no matter what’s output in the Alpha of output struct or what’s returned by the lighting function. Using this option allows keeping lighting function’s alpha value even for opaque surface shaders.
-decal:add - Additive decal shader (e.g. terrain AddPass). This is meant for objects that lie atop of other surfaces, and use additive blending. See Surface Shader Examples
-decal:blend - Semitransparent decal shader. This is meant for objects that lie atop of other surfaces, and use alpha blending. See Surface Shader Examples
+		keepalpha，保持alpha值，让那些不透明的物体也有alpha通道为1.0的值。这个操作使得灯光函数在不透明物体上也起到alpha的作用。
+
+		decal:add，开启叠加贴花功能，让贴花贴图使用叠加混合。
+
+		decal:blend，开启半透明贴花功能，让贴花贴图使用alpha混合。
+
+###### 
+
 Custom modifier functions can be used to alter or compute incoming vertex data, or to alter final computed fragment color.
 
 vertex:VertexFunction - Custom vertex modification function. This function is invoked at start of generated vertex shader, and can modify or compute per-vertex data. See Surface Shader Examples.
