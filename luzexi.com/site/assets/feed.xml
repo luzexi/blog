@@ -7,6 +7,230 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第七章，Shader(八) - Suferface</title>
+               <description>&lt;h6&gt;Surface Shaders 是Unity3D创建的，用来简化手动编写Shader的一种方式。&lt;/h6&gt;
+
+&lt;h6&gt;Surface 能帮我们生成HLSL，不过Surface并不是种语言，可以用开关和指令集来形容Surface，并且我们依然要关注HLSL如何编写。&lt;/h6&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;Surface shader 和 vertex fragment shader 一样需要书写 CGPROGRAM..ENDCG，并且写入#pragma surface 来表明使用Surface，不同的是：Surface 它不能有Pass，所有的Surface编码都写在SubShader中，然后再由shader编译器编译成多个Pass。&lt;/p&gt;
+
+&lt;h6&gt;#pragma surface 的格式如下：&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    #pragma surface surfaceFunction lightModel [可选择参数]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;参数说明：&lt;/p&gt;
+
+&lt;h6&gt;1，surfaceFunction，是一个有输入输出参数的函数，其格式为&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    void surf (Input IN, inout SurfaceOutput o)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Surface通过这个函数来修改渲染细节，Shader中必须写有这个名字和格式的函数。&lt;/p&gt;
+
+&lt;h6&gt;2，lightModel，选择光照模型。在内置的光照模型中，有以物理为基础的 Standard 和 StandardSpecular，和无物理基础的Lambert (diffuse漫反射) and BlinnPhong (specular镜面反射)。除此之外，还可以定义自己的光照模型。&lt;/h6&gt;
+
+&lt;p&gt;其中内置的光照模型：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Standard 光照模型使用 SurfaceOutputStandard 作为输出结构并且匹配了Unity3D内置的Standard Shader(金属流)。
+
+    StandardSpecular 光照模型使用 SurfaceOutputStandardSpecular 作为输出结构并且匹配了Unity3D内置的Standard Shader(镜面反射)。
+
+    Lambert 和 BlinnPhong 光照模型则不以物理为基础，使用它们时可以在低端设备上运行得更快。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;SurfaceOutputStandard 和 SurfaceOutputStandardSpecular 在 UnityPBSLighting.cginc 中有定义。&lt;/p&gt;
+
+&lt;p&gt;Lambert 和 BlinnPhong 在 Lighting.cginc 中有定义，分别是 UnityLambertLight 和 UnityBlinnPhongLight。&lt;/p&gt;
+
+&lt;h6&gt;3，可选择指令。&lt;/h6&gt;
+
+&lt;h6&gt;透明物体 和 alpha testing 功能指令&lt;/h6&gt;
+
+&lt;p&gt;透明物体 和 alpha testing 类型的参数可以控制alpha和alphaTest也就是alpha混合和alpha裁切 的功能。&lt;/p&gt;
+
+&lt;p&gt;透明物体分为两种，一种是传统的alpha混合，另一种是更加物理化的“premultiplied blending”左自乘混合，它能够在半透明上保留适度的镜面反射。&lt;/p&gt;
+
+&lt;p&gt;启用半透明使得surface shader包含了alpha混合功能。而启用alpha cutout 将根据alpha值在生成像素时中裁切掉不符合的片段。&lt;/p&gt;
+
+&lt;p&gt;透明物体和alpha testing的功能指令如下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    alpha 或者 alpha:auto，指令意思为，选择渐进透明也就是 alpha:fade 作为简单光照函数，并且选择左自乘透明方式也就是 alpha:premul 作为物理基础的光照函数。
+
+    alpha:blend，开启alpha混合。
+
+    alpha:fade，开启传统的渐进透明函数。
+
+    alpha:premul，开启左自乘alpha透明度。
+
+    alphatest:VariableName，开启alpha cutout裁切功能。将根据跟定的值裁切不符合的alpha片段。裁切后可以通过 addshadow 指令生成阴影。
+
+    keepalpha，保持alpha值，让那些不透明的物体也有alpha通道为1.0的值。这个操作使得灯光函数在不透明物体上也起到alpha的作用。
+
+    decal:add，开启叠加贴花功能，让贴花贴图使用叠加混合。
+
+    decal:blend，开启半透明贴花功能，让贴花贴图使用alpha混合。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;自定义函数，自定义函数可以计算和修改顶点数据，或者计算和修改最终的片元颜色。&lt;/h6&gt;
+
+&lt;p&gt;vertex:VertexFunctionName，自定义修改顶点函数。这个函数被调用来计算和修改模型的每个顶点的数据。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    函数的格式如下：
+
+    void VertexFunctionName(inout appdata_full v, out Input o)
+
+    函数中必须带有两个类型的参数，inout appdata_full 和 out Input。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;其中 appdata_full 在Unity内置的UnityCG.cginc文件中，结构为如下：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;appdata_full&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vertex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;POSITION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tangent&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TANGENT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;float3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;normal&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NORMAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texcoord&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TEXCOORD0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texcoord1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TEXCOORD1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texcoord2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TEXCOORD2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texcoord3&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TEXCOORD3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fixed4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;COLOR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;UNITY_VERTEX_INPUT_INSTANCE_ID&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;其中 Input 的结构为如下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Input结构里当使用某张纹理的uv时，可以使用“uv”加变量名来提取该纹理坐标，或者“uv2”加变量名使用第二纹理uv。（uv2一般用于lightmap）
+
+    float3 viewDir - 视图方向（view direction）。
+
+    float4 with COLOR semantic - 每个顶点插值后的颜色。
+
+    float4 screenPos - 屏幕空间中的位置。
+
+    float3 worldPos - 世界空间中的位置。
+
+    float3 worldRefl - 世界空间中的反射向量。 如果surface 
+    shader没有赋值o.Normal，将会包含世界反射向量。
+
+    float3 worldNormal - 世界空间中的法线向量。如果surface 
+    shader没有赋值o.Normal，将会包含世界法向量。
+
+    float3 worldRefl; INTERNAL_DATA - 世界空间中的反射向量。如果surface 
+    shader没有赋值o.Normal，将会包含这个参数。为了获得逐像素法线贴图的反射向量，请使用WorldReflectionVector 
+    (IN, o.Normal)。参见例子： Reflect-Bumped shader。
+
+    float3 worldNormal; INTERNAL_DATA -世界空间中的法线向量。如果surface 
+    shader没有赋值o.Normal，将会包含世界法向量。为了获得逐像素法线贴图的法向量，请使用WorldNormalVector 
+    (IN, o.Normal)。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;finalcolor:ColorFunctionName，设置自定义函数修改最终颜色。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    函数格式如下：
+
+    void ColorFunctionName(Input IN, SurfaceOutput o, inout fixed4 color)
+
+    函数中必须带有Input IN, SurfaceOutput o, inout fixed4 color，这三个参数。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;finalgbuffer:ColorFunctionName，自定义修改延迟路径gbuffer内容。&lt;/p&gt;
+
+&lt;p&gt;finalprepass:ColorFunctionName，自定义修改旧有的延迟渲染前的路径。&lt;/p&gt;
+
+&lt;h6&gt;阴影和网格细化指令&lt;/h6&gt;
+
+&lt;p&gt;阴影和网格细化这两种指令，可以用来控制处理阴影渲染和网格细分。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    addshadow，生成一个阴影渲染管线。addshadow 经常会与顶点修改函数一起使用，让阴影有一定的动画效果。通常shader不需要任何特殊的方法处理阴影，他们可以用shader caster作为后备方案。
+
+    fullforwardshadows，支持所有正向渲染路径下的灯光阴影。默认情况下shader在正向渲染中只支持1个方向光的阴影渲染。如果你需要在正向渲染中对点光源进行阴影渲染，就得使用这个指令。
+
+    tessellate:TessFunctionName，使用DX11 GPU 网格细化。自定义函数中计算了三角形的边和里面的细分因素。
+
+    网格细分化功能，需要使用Shader Model 4.6 target进行编译，所以只能在 DX11/12, OpenGL Core and PS4/XB1 上使用。
+
+    TessFunctionName的格式为：
+
+    float4 TessFunctionName(appdata v0, appdata v1, appdata v2)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;代码生成操作指令&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    exclude_path:deferred, exclude_path:forward, exclude_path:prepass，不生成指定的渲染路径。
+
+    三个指令分别代表延迟渲染, 正向渲染 和 旧式延迟渲染。
+
+    noshadow，关闭所有阴影渲染支持。
+
+    noambient，不使用环境光或者光探测。
+
+    novertexlights，在正向渲染中不使用任何光探测或顶点光照。
+
+    nolightmap，关闭所有烘培光照图。
+
+    nodynlightmap，关闭实时动态全局自发光的支持。
+
+    nodirlightmap，关闭方向光的支持。
+
+    nofog，关闭内置迷雾效果。
+
+    nometa，不生成meta渲染管线。
+
+    noforwardadd，关闭正向渲染增加的渲染管线。
+
+    nolppv，关闭 Light Probe Proxy Volume。
+
+    noshadowmask，关闭 Shadowmask。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;其他指令&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    softvegetation，Suface shader只在 Soft Vegetation 开启时渲染。
+
+    interpolateview，对视向上的做插值操作，替换像素shader里的计算。
+
+    halfasview，替换观察向量为一半方向向量传给光照函数。
+
+    dualforward，在正向渲染中使用双重光照图。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;自定义光照模型&lt;/h3&gt;
+
+&lt;p&gt;光照模型是用来计算光照的，包括，光照影响，阴影，漫反射，镜面反射，环境光等。&lt;/p&gt;
+
+&lt;p&gt;Unity3D内置的光照模型有 Lambert (漫反射光照) 和 BlinnPhong (镜面反射光照) 两种，这两种光照模型被写在Unity3D内置文件 Lighting.cginc 中，可以前往查看，window上的地址为(unity install path)/Data/CGIncludes/Lighting.cginc，Mac上的地址为 /Applications/Unity/Unity.app/Contents/CGIncludes/Lighting.cginc。&lt;/p&gt;
+
+&lt;p&gt;除了这两种光照模型，我们还可以定义自己的光照模型。&lt;/p&gt;
+
+&lt;p&gt;所有自定义的光照模型函数都必须以 Lighting 作为开头定义在Shader文件的 Surface块中。函数定义可以如下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    half4 Lighting&amp;lt;Name&amp;gt; (SurfaceOutput s, UnityGI gi); 这种方式使用正向渲染，且没有视向的依赖。
+
+    half4 Lighting&amp;lt;Name&amp;gt; (SurfaceOutput s, half3 viewDir, UnityGI gi); 这种方式使用正向渲染，且依赖视向。
+
+    half4 Lighting&amp;lt;Name&amp;gt;_Deferred (SurfaceOutput s, UnityGI gi, out half4 outDiffuseOcclusion, out half4 outSpecSmoothness, out half4 outNormal); 这种方式使用的是光照延迟渲染。
+
+    half4 Lighting&amp;lt;Name&amp;gt;_PrePass (SurfaceOutput s, half4 light); 这种方式使用的是旧的光照延迟渲染。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;自定义GI模型：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    half4 Lighting&amp;lt;Name&amp;gt;_GI (SurfaceOutput s, UnityGIInput data, inout UnityGI gi);
+
+    如果你想使用内置的GI模型，有 DecodeLightmap 和 ShadeSHPerPixel 两种。他们都写在 UnityGlobalIllumination.cginc 的 UnityGI_Base 里。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Tessellation 网格细分&lt;/h3&gt;
+
+&lt;p&gt;在模型渲染时很容易有锯齿感，Tessellation 网格细分可以改善这种锯齿感，Surface支持Tessellation 网格细分的功能，但只在DirectX 11 / OpenGL Core GPU上有效。&lt;/p&gt;
+
+&lt;p&gt;Tessellation 功能指令为&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    tessellate:FunctionName 这个方法计算三角形的边和里面的细分因素。
+
+    它是在 vertex:FunctionName 之后才被调用的，所以每个顶点都会被替换映射。
+
+    Surface 可以选择使用 phong tessellation 平滑模型表面，而不用替换顶点映射。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;tessellate 有如下限制：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，只计算三角形，没有方形，没有等值线细分。
+
+    2，当tessellation被使用时，Shader 自动被编译成 Shader Model 4.6 target，意味着这个Shader只在 DX11/12, OpenGL Core and PS4/XB1 下工作。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;tessellate Function 的格式如下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    float4 tessellateFunction(appdata v0, appdata v1, appdata v2);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;开启 phong tessellation 功能，需要加入指令：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    tessphong:VariableName
+
+    VariableName 为Phong变量强度。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Unity3D：Writing Surface Shaders
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+               <pubDate>Tue, 21 Aug 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/08/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader8.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/08/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader8.html</guid>
+            </item>
+        
+            <item>
                <title>中国，顶住！！</title>
                <description>&lt;h6&gt;在美国主导的加息和减税的政策下，美元强势回流，全球汇率大幅度波动，很多新兴国家混乱不堪，陷入经济危机，金融危机中，国家经济陷入倒退。&lt;/h6&gt;
 
@@ -75,7 +299,7 @@
 
 &lt;p&gt;Diffuse color，漫反射颜色，这是物体的基础颜色。&lt;/p&gt;
 
-&lt;p&gt;Ambient color，环境颜色，被光照到后反应出来的颜色。&lt;/p&gt;
+&lt;p&gt;Ambient color，环境光颜色，被光照到后反应出来的颜色。&lt;/p&gt;
 
 &lt;p&gt;Specular color，镜面反射的高光颜色。&lt;/p&gt;
 
@@ -1633,308 +1857,6 @@ Max，取最大值，目标结果和源结果中取最大值。
                <pubDate>Tue, 07 Aug 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%822.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%822.html</guid>
-            </item>
-        
-            <item>
-               <title>《Unity3D高级编程之进阶主程》第七章，Shader(二) - Property</title>
-               <description>&lt;h3&gt;编写Shader的几种方式&lt;/h3&gt;
-
-&lt;p&gt;着色器部分的编写是客户端的精髓，如果说架构表现了逻辑整合能力，算法展现了数学能力，那么着色器编写展现了表现能力，在游戏项目中三者缺一不可，特别是作为主程或者说资深的U3D人员来说是极其重要的。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;Unity3D使用了自己创造的语言命名为ShaderLab来编写图形Shader。在ShaderLab里模拟了类似CgFX和Direct3D Effects(.FX)的语言，从而可以编写绝大部分的图形渲染材质。&lt;/p&gt;
-
-&lt;p&gt;ShaderLab编写的Shader属性会在Unity的材质球编辑器中显示，ShaderLab可以实现基于多种目标硬件的能力，并且每个ShaderLab完全能够编写图形硬件渲染状态，以及使用vertex和fragment编程。Shader的编写是基于高级Cg/HLSL编程语言基础上的。&lt;/p&gt;
-
-&lt;p&gt;下面几节中，我们会详细的讲解，如何用ShaderLab去写Unity Shader，包括Surface Shader, fixed-function Shader,vertex和fragment的Shader编程。&lt;/p&gt;
-
-&lt;p&gt;Shader编程需要一些基本的OpenGL或Direct3D渲染状态的知识，还有一些HLSL,Cg,GLSL或者Metal Shader编程语言的知识。如果并没有掌握也没有关系，我们将以通俗易懂的语言解释大部分的图形渲染知识。&lt;/p&gt;
-
-&lt;p&gt;编写Unity Shader的几种形式：&lt;/p&gt;
-
-&lt;h6&gt;1，fixed-function，这种形式的Shader使用了Unity自己编制的比较简单的图形语言来编写Shader。&lt;/h6&gt;
-
-&lt;p&gt;编写完毕后在导入和编译时，Unity内部会将这个fixed-function形式的代码，转化成vertex和fragment编程形式。&lt;/p&gt;
-
-&lt;p&gt;因为fixed-function形式编写起来比较简单易懂，所以一些简单的Shader可以用fixed-function来编写，可以节省很多学习底层图形学的时间也增加了不少效率。缺点是，功能并不是很全，复杂一点的或者说个性化点的Shader就需要用其他的方式实现。&lt;/p&gt;
-
-&lt;h6&gt;2，Surface shaders 是Unity建立的一种新的Shader编程方式，目的是让Shader编程更加简单。&lt;/h6&gt;
-
-&lt;p&gt;在Surface Shader里没有任何的自定义语言，贴图，或者变量。它会生成所有你需要手写的代码，让你专注于编写渲染部分的规则，其中一个特色是Surface Shader不需要写Pass，它会自动帮你编译成为多个你需要的多个Pass。&lt;/p&gt;
-
-&lt;p&gt;Surface Shader编译器最终会将所有代码转换成vertex-fragment类型的Shader。&lt;/p&gt;
-
-&lt;h6&gt;3，vertex and fragment shaders是ShaderLab Shader包含的几种不同的编写方式中最最底层的编码方式，它使用的HLSL语言编程，我们称之为底层硬件着色器着色编程。&lt;/h6&gt;
-
-&lt;p&gt;使用vertex-fragment方式只是ShaderLab的理念中的其中一部分，fixed-function和suface都是其理念的一部分，并不一定说要使用vertex-fragment底层的才好，其他方式也同样能帮助你节省很多时间。&lt;/p&gt;
-
-&lt;p&gt;比如你想对灯光作用进行着色编程，你完全可以使用Surface Shader去实现你的想法，如果只想对贴图上色和混合，你使用fixed-function更为简单省事，如果你想对顶点颜色，或对顶点坐标进行更改，或者片元的着色需要更改等一些更复杂的图形操作，那你就需要使用vertex-fragment Shader进行编程。&lt;/p&gt;
-
-&lt;p&gt;针对不同的复杂度，不同的项目，不同领域的着色渲染，我们完全可以选择不同的方式来编写Shader。&lt;/p&gt;
-
-&lt;p&gt;无论你用哪种方式编写Shader，其实都是在ShaderLab语言结构下的，前面说过ShaderLab是Unity指定的组织Shader的官方编程语言，所以在Unity编写Shader首先要学会如何使用ShaderLab。&lt;/p&gt;
-
-&lt;p&gt;了解了基本的ShaderLab语言结构和语法，再去学习surface和vertex-fragment就会相对比较容易。而fixed-function是完全基于ShaderLab语法结构编写的，所以fixed-function形式的写法完全可以参照ShaderLab的使用方法来编写。&lt;/p&gt;
-
-&lt;h3&gt;ShaderLab语法与参数详解&lt;/h3&gt;
-
-&lt;p&gt;我们需要着重介绍下ShaderLab的格式，Unity3D中所有的Shader编程方式都是基于ShaderLab的，因此ShaderLab语法是基础。&lt;/p&gt;
-
-&lt;h6&gt;Shader的开头&lt;/h6&gt;
-
-&lt;p&gt;“Shader” 是Shader文件的根命令。每个文件必须定义一个且只有一个Shade命令，它可以定义一个Shader的名字，是一个Shader的开头。&lt;/p&gt;
-
-&lt;p&gt;在“Shader”里面你才可以表达有哪些属性，有哪些渲染模式被开启和关闭，有多少条渲染管线等等那些你需要的定义以及变化。&lt;/p&gt;
-
-&lt;p&gt;格式：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Shader “name”
-    {
-        [Properties属性]
-        Subshaders
-        [Fallback]
-        [CustomEditor]
-    }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;定义了一个Shader后，Shader的Name就会出现在Unity编辑器的材质球视窗的Shader列表里，可供你选择。Shader中定义的属性，供Shader计算使用，并且这些属性会显示在材质球编辑器的视窗中。&lt;/p&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = &quot;u3493987&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;h6&gt;Properties属性&lt;/h6&gt;
-
-&lt;p&gt;Shader中可以自己定义一些属性用来在后面的渲染计算中使用。比如数字，颜色，方向，坐标，贴图。&lt;/p&gt;
-
-&lt;p&gt;Properties格式：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Properties
-    {
-        PropertyName1 (“display name名字”，type类型) = value默认值
-        PropertyName2 (“display name名字”，type类型) = value默认值
-        PropertyName3 (“display name名字”，type类型) = value默认值
-        …
-    }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Properties属性格式需要中括号框起来，大括号内都是属性的详细说明。&lt;/p&gt;
-
-&lt;p&gt;其中PropertyName和 display name是不一样的，Property Name是属性的真正名字，可以用来通过材质球才程序中更改和赋值，或者在后面的渲染计算中使用。而display name 只是在编辑器中显示该属性名的名字，没有其他用途。&lt;/p&gt;
-
-&lt;p&gt;下面举例来说明各种类型的书写方式。&lt;/p&gt;
-
-&lt;p&gt;数字&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Name属性名 (“display name显示名”, Range(最小值,最大值)) = 默认值
-
-    上述属性块定义了一个数字，起始有一个默认值，该值可以在最大值和最小值范围内，不得超出最大和最小值，定义后可以在材质球的编辑器中滑动的来选择值的大小。
-
-    Name属性名 (“display name显示名”, Float) = 默认值
-
-    上述属性块定义了一个浮点数数值，具有一个默认值，同样定义后，可以在材质球的编辑器中输入浮点数来重新赋值。
-
-    Name属性名 (“display name显示名”, Int) = 默认值
-
-    上述属性块定义了一个整数数值，具有一个默认值，同样定义后，可以在材质球的编辑器中输入整数来重新赋值。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;颜色&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Name属性名 (“display name显示名”, Color) = (R,G,B,A)
-
-    上述属性块定义了一个颜色，具有一个RGBA(红，绿，黑，alpha)的默认值，定义后可以在材质球的编辑器中选择一个颜色来重新赋值。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;方向和坐标&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Name属性名 (“display name显示名”, Vector) = (0,0,0,0)
-
-    上述属性块定义了一个方向或者坐标，具有一个默认值，定义后可以在材质球的编辑器中填写4个值来重新赋值。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;贴图&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Name属性名 (“display name显示名”, 2D) = “white” {}
-
-    上述属性块定义了一个2D贴图，具有一个纯白色的默认贴图，定义后可以在材质球的编辑器中选择新的贴图来重新赋值。
-
-    Name属性名 (“display name显示名”, Cube) = {}
-
-    上述属性块定义了一个Cube镜面盒子，空的默认值，定义后可以在材质球的编辑器中选择新的Cube镜面盒子来重新赋值。
-
-    Name属性名 (“display name显示名”, 3D) = “white” {}
-
-    上述属性块定义了一个3D贴图，具有一个纯白色的默认贴图，定义后可以在材质球的编辑器中选择新的3D贴图来重新赋值。这个3D Texture不是普通的3D模型的贴图，而是图像后处理形成的3D颜色校正效果贴图。3D Texture由脚本或者着色器产生，而非手绘制造的。可参考Unity API中的Texture3D类。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;综合上面的表述，我们可以制作一个全属性Properties例子。&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Properties&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;_Scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Scale&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Range&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.02&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.07&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;_PahLength&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Path Length&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;_OrderNumber&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Order Number&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;53&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;_RefrColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Refraction color&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.34&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.85&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.92&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;_Direction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Direction&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;4.5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;3.3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;_RefractionTex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Environment Refraction&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2D&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;white&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;_RefractionMap&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Refraction Map&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Cube&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;black&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;这个全属性例子包含了上面所有属性，在编辑器上展示的属性如下。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader9.png&quot; alt=&quot;shader全属性&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;注意，这里为什么属性前都要加一个”_”，这是个习惯性写法，没有任何强制性，只是大部分程序员在书写Shader属性变量的习惯，逐渐形成了一个传统。&lt;/p&gt;
-
-&lt;p&gt;如果硬要套个说法，那就只能是”_”代表内部变量。就像我们书写代码变量时会有一些小习惯和规则一样，没有其他影响。&lt;/p&gt;
-
-&lt;h6&gt;Property属性默认值&lt;/h6&gt;
-
-&lt;p&gt;每个Property属性都有一个默认值，默认值是必须填写的，否则Shader编译器不会通过编译。这里我们说明一下所有属性的默认值。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，Number类型。Range，默认值必须在最大和最小值之间，比如Range(0,1)时值为默认值必须为0到1之间。Float，默认值可以为任意浮点数。Int，默认值可以为任意整数，且仅仅只能是整数，不能是浮点数。
-
-    2，Color颜色类型。Color，默认值为4个浮点数，按照RGBA的顺序，第一个代表红色，第二个代表绿色，第三个代表蓝色，第四个代表透明度alpha。
-
-    3，Vector方向坐标类型。Vector，默认值为4个浮点数，按照xyzw的顺序，第一个代表X坐标，第二个代表Y坐标，第三个代表Z坐标，第四个代表角度，深度等其他意义。Vector四个坐标完全可以代表任意值，比如前两个代表2D的X和Y，后面两个代表宽度和长度，再比如，前两个代表uv，后两个代表宽度和长度，或者比如前三个表示x，y，z，最后一个代表透明度alpha。
-
-    4，2D Texture贴图类型。2D Texture，默认值有一个默认的颜色，”white”代表(RGBA:1,1,1,1)白色，”black”代表(RGBA:0,0,0,0)黑色，”gray”代表(RGBA:0.5,0.5,0.5,0.5)灰色，”bump”代表(RGBA:0.5,0.5,1,0.5)灰黄色，”red”代表(RGBA:1,0,0,0)红色。
-
-    5，Cube，3D Texture，2DArray非2D贴图类型。默认值为空，当材质球编辑器中没有设置他们的实例时，他们使用灰色(RGBA:0.5,0.5,0.5,0.5)做默认值。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;每个属性值的值在Material材质上都会被序列化后写入Material材质球的Meta文件。&lt;/p&gt;
-
-&lt;p&gt;Shader里实际上可以有很多参数，比如矩阵，数组等，但这些都需要在Shader实时运行中设置和获取的变量，不能成为Property的一部分，因为他们不是Property属性的一部分，也不会被记录存储在Mate文件里。&lt;/p&gt;
-
-&lt;p&gt;在Mate文件里的属性，我们不但可以通过Unity编辑器视窗中来赋值和变更，也可以通过脚本程序来赋值和改变，例如Material.SetFloat可以用来设置Shader中Float类型的属性，Material.SetColor用来设置Color类型的属性，Material. SetTexture可以用来设置 Texture类型的属性。&lt;/p&gt;
-
-&lt;p&gt;没有在Property中的属性类型或变量也同样可以使用Material.SetXXX(“PropertyName”,value)来设置，比如我们可以通过Material. SetMatrix设置矩阵类型在Shader中的变量，虽然矩阵没有在属性块中，我们照样可以设置，只要它在Shader程序变量中声明过就可以。&lt;/p&gt;
-
-&lt;p&gt;下面代码就是一个很好的例子：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ExampleClass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MonoBehaviour&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rotateSpeed&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;30f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Quaternion&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rot&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Quaternion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Euler&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rotateSpeed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Matrix4x4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Matrix4x4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TRS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zero&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;one&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;GetComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Renderer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;material&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SetMatrix&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;_TextureRotation&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;///// Shader部分&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Shader&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;RotatingTexture&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Properties&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Base (RGB)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;white&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;SubShader&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;CGPROGRAM&lt;/span&gt;
-            &lt;span class=&quot;cp&quot;&gt;#pragma vertex vert&lt;/span&gt;
-            &lt;span class=&quot;cp&quot;&gt;#pragma fragment frag&lt;/span&gt;
-
-            &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;v2f&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;float2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TEXCOORD0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SV_POSITION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-            &lt;span class=&quot;n&quot;&gt;float4x4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_TextureRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-            &lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;vert&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;POSITION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;float2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TEXCOORD0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UnityObjectToClipPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_TextureRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-            &lt;span class=&quot;n&quot;&gt;sampler2D&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;fixed4&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;frag&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SV_Target&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;tex2D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;ENDCG&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;上述代码中，_TextureRotation 并不是Property属性块中的变量，SetMatrix也同样可以通过材质球实例在程序运行时进行设置。&lt;/p&gt;
-
-&lt;p&gt;这就告诉我们，程序运行时设置Shader中的变量，并不是一定要在Property属性块中声明的。&lt;/p&gt;
-
-&lt;p&gt;其他比如获取Material中的变量可以通过Material.GetXXX(“PropertyName”)来获得，比如Material. GetTexture，Material.GetColor，Material.GetFloat等等。关于Material的很多功能可以通过查看Material的API来了解，这里不再详细介绍。&lt;/p&gt;
-
-&lt;h6&gt;属性的Attributes特性和Drawers绘制工具&lt;/h6&gt;
-
-&lt;p&gt;在书写属性时可以加入一些特性来让属性的用途更加明显，属性的特性有如下：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    [HideInInspector] 在视窗中隐藏。
-
-    [NoScaleOffse] 不显示贴图的tiling/offset属性。
-
-    [Normal] 表明这张贴图是张法线贴图。
-
-    [HDR] 表明这贴图是张高动态范围贴图。
-
-    [Gamma] 表明这个Float或者Vector属性是个RGB类型的颜色，可能会需要转换成以符合的格式使用。
-
-    [PerRendererData] 表明这张贴图每帧都会被MaterialPropertyBlock重新设置。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;书写方式就是在属性前加入这些特性，如下：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Properties&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;    [HideInInspector]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_Scale&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Scale&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Range&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.02&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.07&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;_PahLength&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Path Length&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1.5&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;_OrderNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Order Number&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;    [Gamma]&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;_RefrColor&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Refraction color&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.34&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.85&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.92&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;_Direction&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Direction&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1.2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-&lt;span class=&quot;na&quot;&gt;    [NoScaleOffse]&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;_RefractionTex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Environment Refraction&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;white&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;_RefractionMap&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Refraction Map&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Cube&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;black&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Drawers绘制特性列举：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Drawer和Attribute的区别就是Drawer主要关注点在工具的绘制上，而不是对属性的限制。
-
-    [Toggle] 表明此数字为开关类型，只有0，或1的选择。
-
-    [Enum] 表明此变量只能从几个选项中选择。
-
-    [KeywordEnum] 表明只能在选项中选择关键字，这个特性通常用在开关Shader的部分功能。
-
-    [PowerSlider] 显示一个非线性的属性选择范围。
-
-    [IntRange] 显示一个数字范围，这个数字范围内必须是整数。
-
-    [Space] 在视窗中的属性前创建一个垂直的空隙。
-
-    [Header] 在视窗的属性前展示一个文字说明。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;例如下面的属性绘制特性&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Properties&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;        [PowerSlider]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_Scale&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Scale&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Range&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.02&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.07&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;        [Space(100)]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_PahLength&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Path Length&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1.5&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;        [Toggle]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_OrderNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Order Number&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;        [Enum(small,1,big,2,huge,10)]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_Size&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;size&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_Direction&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Direction&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Vector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1.2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-&lt;span class=&quot;na&quot;&gt;        [Header(ok head)]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_RefractionTex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Environment Refraction&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;white&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_RefractionMap&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Refraction Map&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Cube&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;black&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;绘制结果截图&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader10.png&quot; alt=&quot;Drawer绘制&quot;&gt; &lt;/p&gt;
-</description>
-               <pubDate>Tue, 07 Aug 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader2.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader2.html</guid>
             </item>
         
     </channel>

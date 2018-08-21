@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta content="unity3d 高级编程 主程 shader pipe 渲染管道 subshader shaderlab vertex fragment pass" name="description">
+
+
+  <title>
+    
+      《Unity3D高级编程之进阶主程》第七章，Shader(八) - Suferface
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css?version=20180701">
+  <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"> -->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+  	<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          技术人生
+        </a>
+      </h1>
+      <p class="lead">漫漫人生,记录点滴技术,始于2013</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      <a class="sidebar-nav-item" href="/书籍著作/index.html">书籍著作</a>
+      <a class="sidebar-nav-item" href="/Unity3D/index.html">Unity3D</a>
+      <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
+      <a class="sidebar-nav-item" href="/金融投资/index.html">金融投资</a>
+      <a class="sidebar-nav-item" href="/life/index.html">Life</a>
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">About Me</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/engineer-shopping.html">程序员必需品</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/friendlink.html">友情链接</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+      
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <a href="http://www.luzexi.com/assets/feed.xml">RSS feed</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+    </nav>
+
+    <p>&copy; 2018. All rights reserved.</p>
+    <p>浙ICP备13028172号-1</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第七章，Shader(八) - Suferface</h1>
+  <span class="post-date">21 Aug 2018</span>
+  <h6>Surface Shaders 是Unity3D创建的，用来简化手动编写Shader的一种方式。</h6>
+
+<h6>Surface 能帮我们生成HLSL，不过Surface并不是种语言，可以用开关和指令集来形容Surface，并且我们依然要关注HLSL如何编写。</h6>
+
+<p>===</p>
+
+<p>Surface shader 和 vertex fragment shader 一样需要书写 CGPROGRAM..ENDCG，并且写入#pragma surface 来表明使用Surface，不同的是：Surface 它不能有Pass，所有的Surface编码都写在SubShader中，然后再由shader编译器编译成多个Pass。</p>
+
+<h6>#pragma surface 的格式如下：</h6>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    #pragma surface surfaceFunction lightModel [可选择参数]
+</code></pre></div>
+<p>参数说明：</p>
+
+<h6>1，surfaceFunction，是一个有输入输出参数的函数，其格式为</h6>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    void surf (Input IN, inout SurfaceOutput o)
+</code></pre></div>
+<p>Surface通过这个函数来修改渲染细节，Shader中必须写有这个名字和格式的函数。</p>
+
+<h6>2，lightModel，选择光照模型。在内置的光照模型中，有以物理为基础的 Standard 和 StandardSpecular，和无物理基础的Lambert (diffuse漫反射) and BlinnPhong (specular镜面反射)。除此之外，还可以定义自己的光照模型。</h6>
+
+<p>其中内置的光照模型：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Standard 光照模型使用 SurfaceOutputStandard 作为输出结构并且匹配了Unity3D内置的Standard Shader(金属流)。
+
+    StandardSpecular 光照模型使用 SurfaceOutputStandardSpecular 作为输出结构并且匹配了Unity3D内置的Standard Shader(镜面反射)。
+
+    Lambert 和 BlinnPhong 光照模型则不以物理为基础，使用它们时可以在低端设备上运行得更快。
+</code></pre></div>
+<p>SurfaceOutputStandard 和 SurfaceOutputStandardSpecular 在 UnityPBSLighting.cginc 中有定义。</p>
+
+<p>Lambert 和 BlinnPhong 在 Lighting.cginc 中有定义，分别是 UnityLambertLight 和 UnityBlinnPhongLight。</p>
+
+<h6>3，可选择指令。</h6>
+
+<h6>透明物体 和 alpha testing 功能指令</h6>
+
+<p>透明物体 和 alpha testing 类型的参数可以控制alpha和alphaTest也就是alpha混合和alpha裁切 的功能。</p>
+
+<p>透明物体分为两种，一种是传统的alpha混合，另一种是更加物理化的“premultiplied blending”左自乘混合，它能够在半透明上保留适度的镜面反射。</p>
+
+<p>启用半透明使得surface shader包含了alpha混合功能。而启用alpha cutout 将根据alpha值在生成像素时中裁切掉不符合的片段。</p>
+
+<p>透明物体和alpha testing的功能指令如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    alpha 或者 alpha:auto，指令意思为，选择渐进透明也就是 alpha:fade 作为简单光照函数，并且选择左自乘透明方式也就是 alpha:premul 作为物理基础的光照函数。
+
+    alpha:blend，开启alpha混合。
+
+    alpha:fade，开启传统的渐进透明函数。
+
+    alpha:premul，开启左自乘alpha透明度。
+
+    alphatest:VariableName，开启alpha cutout裁切功能。将根据跟定的值裁切不符合的alpha片段。裁切后可以通过 addshadow 指令生成阴影。
+
+    keepalpha，保持alpha值，让那些不透明的物体也有alpha通道为1.0的值。这个操作使得灯光函数在不透明物体上也起到alpha的作用。
+
+    decal:add，开启叠加贴花功能，让贴花贴图使用叠加混合。
+
+    decal:blend，开启半透明贴花功能，让贴花贴图使用alpha混合。
+</code></pre></div>
+<h6>自定义函数，自定义函数可以计算和修改顶点数据，或者计算和修改最终的片元颜色。</h6>
+
+<p>vertex:VertexFunctionName，自定义修改顶点函数。这个函数被调用来计算和修改模型的每个顶点的数据。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    函数的格式如下：
+
+    void VertexFunctionName(inout appdata_full v, out Input o)
+
+    函数中必须带有两个类型的参数，inout appdata_full 和 out Input。
+</code></pre></div>
+<p>其中 appdata_full 在Unity内置的UnityCG.cginc文件中，结构为如下：</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">struct</span> <span class="nc">appdata_full</span> <span class="p">{</span>
+    <span class="n">float4</span> <span class="n">vertex</span> <span class="p">:</span> <span class="n">POSITION</span><span class="p">;</span>
+    <span class="n">float4</span> <span class="n">tangent</span> <span class="p">:</span> <span class="n">TANGENT</span><span class="p">;</span>
+    <span class="n">float3</span> <span class="n">normal</span> <span class="p">:</span> <span class="n">NORMAL</span><span class="p">;</span>
+    <span class="n">float4</span> <span class="n">texcoord</span> <span class="p">:</span> <span class="n">TEXCOORD0</span><span class="p">;</span>
+    <span class="n">float4</span> <span class="n">texcoord1</span> <span class="p">:</span> <span class="n">TEXCOORD1</span><span class="p">;</span>
+    <span class="n">float4</span> <span class="n">texcoord2</span> <span class="p">:</span> <span class="n">TEXCOORD2</span><span class="p">;</span>
+    <span class="n">float4</span> <span class="n">texcoord3</span> <span class="p">:</span> <span class="n">TEXCOORD3</span><span class="p">;</span>
+    <span class="n">fixed4</span> <span class="n">color</span> <span class="p">:</span> <span class="n">COLOR</span><span class="p">;</span>
+    <span class="n">UNITY_VERTEX_INPUT_INSTANCE_ID</span>
+<span class="p">};</span></code></pre></figure>
+
+<p>其中 Input 的结构为如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Input结构里当使用某张纹理的uv时，可以使用“uv”加变量名来提取该纹理坐标，或者“uv2”加变量名使用第二纹理uv。（uv2一般用于lightmap）
+
+    float3 viewDir - 视图方向（view direction）。
+
+    float4 with COLOR semantic - 每个顶点插值后的颜色。
+
+    float4 screenPos - 屏幕空间中的位置。
+
+    float3 worldPos - 世界空间中的位置。
+
+    float3 worldRefl - 世界空间中的反射向量。 如果surface 
+    shader没有赋值o.Normal，将会包含世界反射向量。
+
+    float3 worldNormal - 世界空间中的法线向量。如果surface 
+    shader没有赋值o.Normal，将会包含世界法向量。
+
+    float3 worldRefl; INTERNAL_DATA - 世界空间中的反射向量。如果surface 
+    shader没有赋值o.Normal，将会包含这个参数。为了获得逐像素法线贴图的反射向量，请使用WorldReflectionVector 
+    (IN, o.Normal)。参见例子： Reflect-Bumped shader。
+
+    float3 worldNormal; INTERNAL_DATA -世界空间中的法线向量。如果surface 
+    shader没有赋值o.Normal，将会包含世界法向量。为了获得逐像素法线贴图的法向量，请使用WorldNormalVector 
+    (IN, o.Normal)。
+</code></pre></div>
+<p>finalcolor:ColorFunctionName，设置自定义函数修改最终颜色。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    函数格式如下：
+
+    void ColorFunctionName(Input IN, SurfaceOutput o, inout fixed4 color)
+
+    函数中必须带有Input IN, SurfaceOutput o, inout fixed4 color，这三个参数。
+</code></pre></div>
+<p>finalgbuffer:ColorFunctionName，自定义修改延迟路径gbuffer内容。</p>
+
+<p>finalprepass:ColorFunctionName，自定义修改旧有的延迟渲染前的路径。</p>
+
+<h6>阴影和网格细化指令</h6>
+
+<p>阴影和网格细化这两种指令，可以用来控制处理阴影渲染和网格细分。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    addshadow，生成一个阴影渲染管线。addshadow 经常会与顶点修改函数一起使用，让阴影有一定的动画效果。通常shader不需要任何特殊的方法处理阴影，他们可以用shader caster作为后备方案。
+
+    fullforwardshadows，支持所有正向渲染路径下的灯光阴影。默认情况下shader在正向渲染中只支持1个方向光的阴影渲染。如果你需要在正向渲染中对点光源进行阴影渲染，就得使用这个指令。
+
+    tessellate:TessFunctionName，使用DX11 GPU 网格细化。自定义函数中计算了三角形的边和里面的细分因素。
+
+    网格细分化功能，需要使用Shader Model 4.6 target进行编译，所以只能在 DX11/12, OpenGL Core and PS4/XB1 上使用。
+
+    TessFunctionName的格式为：
+
+    float4 TessFunctionName(appdata v0, appdata v1, appdata v2)
+</code></pre></div>
+<h6>代码生成操作指令</h6>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    exclude_path:deferred, exclude_path:forward, exclude_path:prepass，不生成指定的渲染路径。
+
+    三个指令分别代表延迟渲染, 正向渲染 和 旧式延迟渲染。
+
+    noshadow，关闭所有阴影渲染支持。
+
+    noambient，不使用环境光或者光探测。
+
+    novertexlights，在正向渲染中不使用任何光探测或顶点光照。
+
+    nolightmap，关闭所有烘培光照图。
+
+    nodynlightmap，关闭实时动态全局自发光的支持。
+
+    nodirlightmap，关闭方向光的支持。
+
+    nofog，关闭内置迷雾效果。
+
+    nometa，不生成meta渲染管线。
+
+    noforwardadd，关闭正向渲染增加的渲染管线。
+
+    nolppv，关闭 Light Probe Proxy Volume。
+
+    noshadowmask，关闭 Shadowmask。
+</code></pre></div>
+<h6>其他指令</h6>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    softvegetation，Suface shader只在 Soft Vegetation 开启时渲染。
+
+    interpolateview，对视向上的做插值操作，替换像素shader里的计算。
+
+    halfasview，替换观察向量为一半方向向量传给光照函数。
+
+    dualforward，在正向渲染中使用双重光照图。
+</code></pre></div>
+<h3>自定义光照模型</h3>
+
+<p>光照模型是用来计算光照的，包括，光照影响，阴影，漫反射，镜面反射，环境光等。</p>
+
+<p>Unity3D内置的光照模型有 Lambert (漫反射光照) 和 BlinnPhong (镜面反射光照) 两种，这两种光照模型被写在Unity3D内置文件 Lighting.cginc 中，可以前往查看，window上的地址为(unity install path)/Data/CGIncludes/Lighting.cginc，Mac上的地址为 /Applications/Unity/Unity.app/Contents/CGIncludes/Lighting.cginc。</p>
+
+<p>除了这两种光照模型，我们还可以定义自己的光照模型。</p>
+
+<p>所有自定义的光照模型函数都必须以 Lighting 作为开头定义在Shader文件的 Surface块中。函数定义可以如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    half4 Lighting&lt;Name&gt; (SurfaceOutput s, UnityGI gi); 这种方式使用正向渲染，且没有视向的依赖。
+
+    half4 Lighting&lt;Name&gt; (SurfaceOutput s, half3 viewDir, UnityGI gi); 这种方式使用正向渲染，且依赖视向。
+
+    half4 Lighting&lt;Name&gt;_Deferred (SurfaceOutput s, UnityGI gi, out half4 outDiffuseOcclusion, out half4 outSpecSmoothness, out half4 outNormal); 这种方式使用的是光照延迟渲染。
+
+    half4 Lighting&lt;Name&gt;_PrePass (SurfaceOutput s, half4 light); 这种方式使用的是旧的光照延迟渲染。
+</code></pre></div>
+<p>自定义GI模型：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    half4 Lighting&lt;Name&gt;_GI (SurfaceOutput s, UnityGIInput data, inout UnityGI gi);
+
+    如果你想使用内置的GI模型，有 DecodeLightmap 和 ShadeSHPerPixel 两种。他们都写在 UnityGlobalIllumination.cginc 的 UnityGI_Base 里。
+</code></pre></div>
+<h3>Tessellation 网格细分</h3>
+
+<p>在模型渲染时很容易有锯齿感，Tessellation 网格细分可以改善这种锯齿感，Surface支持Tessellation 网格细分的功能，但只在DirectX 11 / OpenGL Core GPU上有效。</p>
+
+<p>Tessellation 功能指令为</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    tessellate:FunctionName 这个方法计算三角形的边和里面的细分因素。
+
+    它是在 vertex:FunctionName 之后才被调用的，所以每个顶点都会被替换映射。
+
+    Surface 可以选择使用 phong tessellation 平滑模型表面，而不用替换顶点映射。
+</code></pre></div>
+<p>tessellate 有如下限制：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1，只计算三角形，没有方形，没有等值线细分。
+
+    2，当tessellation被使用时，Shader 自动被编译成 Shader Model 4.6 target，意味着这个Shader只在 DX11/12, OpenGL Core and PS4/XB1 下工作。
+</code></pre></div>
+<p>tessellate Function 的格式如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    float4 tessellateFunction(appdata v0, appdata v1, appdata v2);
+</code></pre></div>
+<p>开启 phong tessellation 功能，需要加入指令：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    tessphong:VariableName
+
+    VariableName 为Phong变量强度。
+</code></pre></div>
+<p>参考资料：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Unity3D：Writing Surface Shaders
+</code></pre></div>
+  <p>感谢您的耐心阅读</p>
+  <p>Thanks for your reading</p>
+</div>
+<div>
+  
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+<!-- <div id="cyReward" role="cylabs" data-use="reward" align="center" ></div> -->
+
+<script type="text/javascript" src="/assets/js/tctip-1.0.3.min.js"></script>
+<script>
+  new tctip({
+    top: '50%',
+    button: {
+      id: 9,
+      type: 'zanzhu'
+    },
+    list: [
+      {
+        type: 'alipay',
+        qrImg: '/assets/common/alipay.jpg'
+      }, {
+        type: 'wechat',
+        qrImg: '/assets/common/wechatpay.jpg'
+      }, {
+        type: 'bitcoin',
+        qrContent: '1ErCFmtoQY2KDctjgPALZri3USsMqdSvqh'
+      }
+    ]
+  }).init()
+</script>
+
+  <li>
+<p><strong><font color="red">版权申明</font></strong></p>
+<!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p> -->
+<p><strong><font color="red">本文为博主原创文章，未经允许不得转载:</font></strong></p>
+<p><a href = "http://www.luzexi.com/2018/08/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader8.html">《Unity3D高级编程之进阶主程》第七章，Shader(八) - Suferface</a></p>
+<!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com/2018/08/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader8.html">《Unity3D高级编程之进阶主程》第七章，Shader(八) - Suferface</a></p> -->
+<p><strong><font color="red">Copyright attention</font></strong></p>
+<p><strong><font color="red">Please don't reprint without authorize.</font></strong></p>
+
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
+</li>
+</div>
+<div class="related">
+    
+<div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+
+
+
+
+
+<div class="related">
+  <h2>最新发表的文章</h2>
+  <ul class="related-posts">
+
+    
+      <li>
+        <h3>
+          <a href="/2018/08/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader8.html">
+            《Unity3D高级编程之进阶主程》第七章，Shader(八) - Suferface
+            <small>21 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/08/17/%E4%B8%AD%E5%9B%BD%E9%A1%B6%E4%BD%8F.html">
+            中国，顶住！！
+            <small>17 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2018/08/14/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader7.html">
+            《Unity3D高级编程之进阶主程》第七章，Shader(七) - Fixed Function
+            <small>14 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+
+  </ul>
+
+  <h2>之后发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2018/08/17/%E4%B8%AD%E5%9B%BD%E9%A1%B6%E4%BD%8F.html">
+                中国，顶住！！
+                <small>17 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/14/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader7.html">
+                《Unity3D高级编程之进阶主程》第七章，Shader(七) - Fixed Function
+                <small>14 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/13/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A84.html">
+                白领投资探讨(四)
+                <small>13 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader6.html">
+                《Unity3D高级编程之进阶主程》第七章，Shader(六) - Pass(三)Blend
+                <small>08 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader5.html">
+                《Unity3D高级编程之进阶主程》第七章，Shader(五) - Pass(二)
+                <small>08 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  <!-- </ul> -->
+
+  <h2>之前发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2018/08/17/%E4%B8%AD%E5%9B%BD%E9%A1%B6%E4%BD%8F.html">
+                中国，顶住！！
+                <small>17 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/14/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader7.html">
+                《Unity3D高级编程之进阶主程》第七章，Shader(七) - Fixed Function
+                <small>14 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/13/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A84.html">
+                白领投资探讨(四)
+                <small>13 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader6.html">
+                《Unity3D高级编程之进阶主程》第七章，Shader(六) - Pass(三)Blend
+                <small>08 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader5.html">
+                《Unity3D高级编程之进阶主程》第七章，Shader(五) - Pass(二)
+                <small>08 Aug 2018</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  </ul>
+</div>
+
+
+
+
+<div id="SOHUCS" ></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cys17tiy3',
+conf: 'prod_3b20e80a06c760385d4781c30f8ebf5c'
+});
+</script>
+
+
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-悬浮20:3*/
+    	var cpro_id = "u3495898";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+ 
+
+
+
+    </div>
+
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </body>
+  
+</html>

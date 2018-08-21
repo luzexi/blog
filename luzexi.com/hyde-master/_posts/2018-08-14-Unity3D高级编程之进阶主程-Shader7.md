@@ -40,7 +40,7 @@ Material标签，可以用来定义材质球的各种光属性的颜色。格式
 
 Diffuse color，漫反射颜色，这是物体的基础颜色。
 
-Ambient color，环境颜色，被光照到后反应出来的颜色。
+Ambient color，环境光颜色，被光照到后反应出来的颜色。
 
 Specular color，镜面反射的高光颜色。
 
