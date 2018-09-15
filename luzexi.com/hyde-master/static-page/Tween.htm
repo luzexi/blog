@@ -15,7 +15,7 @@
   </div>
 </div>
 <div>
-  <p> TweenÀàÐÍ£º <br />
+  <p> Tween Type<br />
     <label>
       <input name="vTween" type="radio" value="Linear" checked="checked" />
       Linear </label>
@@ -51,7 +51,7 @@
       <input name="vTween" type="radio" value="Bounce" />
       Bounce </label>
   </p>
-  <p> easeÀàÐÍ£º <br />
+  <p> ease Type<br />
     <label>
       <input name="vEase" type="radio" value="easeIn" checked="checked" />
       easeIn </label>
@@ -62,7 +62,7 @@
       <input name="vEase" type="radio" value="easeInOut" />
       easeInOut </label>
   </p>
-  <input id="idSpeed" type="button" value="¼õÂýËÙ¶È" />
+  <input id="idSpeed" type="button" value="Slow down" />
   <input id="idRun" type="button" value=" Run " />
 </div>
 
@@ -279,7 +279,7 @@ $("idRun").onclick = function(){ SetFun(); Chart(); Move(); }
 
 $("idSpeed").onclick = function(){
 	if(iDuration == 100){
-		iDuration = 500; this.value = "Speed Down";
+		iDuration = 500; this.value = "Slow Down";
 	}else{
 		iDuration = 100; this.value = "Speed Up";
 	}
