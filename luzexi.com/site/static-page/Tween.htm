@@ -15,7 +15,7 @@
   </div>
 </div>
 <div>
-  <p> TweenÀàĞÍ£º <br />
+  <p> TweenÃ€Ã ÃÃÂ£Âº <br />
     <label>
       <input name="vTween" type="radio" value="Linear" checked="checked" />
       Linear </label>
@@ -51,7 +51,7 @@
       <input name="vTween" type="radio" value="Bounce" />
       Bounce </label>
   </p>
-  <p> easeÀàĞÍ£º <br />
+  <p> easeÃ€Ã ÃÃÂ£Âº <br />
     <label>
       <input name="vEase" type="radio" value="easeIn" checked="checked" />
       easeIn </label>
@@ -62,19 +62,19 @@
       <input name="vEase" type="radio" value="easeInOut" />
       easeInOut </label>
   </p>
-  <input id="idSpeed" type="button" value="¼õÂıËÙ¶È" />
+  <input id="idSpeed" type="button" value="Â¼ÃµÃ‚Ã½Ã‹Ã™Â¶Ãˆ" />
   <input id="idRun" type="button" value=" Run " />
 </div>
 
 <div>
-<a href="http://www.luzexi.com">»¶Ó­À´ÎÒµÄblog½»Á÷</a><br>
-<a href="http://www.luzexi.com">ÕâÀïÌá¹©ÓÑÇéÏÂÔØ</a>
+<a href="http://www.luzexi.com">Â»Â¶Ã“Â­Ã€Â´ÃÃ’ÂµÃ„blogÂ½Â»ÃÃ·</a><br>
+<a href="http://www.luzexi.com">Ã•Ã¢Ã€Ã¯ÃŒÃ¡Â¹Â©Ã“Ã‘Ã‡Ã©ÃÃ‚Ã”Ã˜</a>
 
 </div>
 
 <script>
 /*
-Ëã·¨À´Ô´£ºhttp://www.robertpenner.com/easing/
+Ã‹Ã£Â·Â¨Ã€Â´Ã”Â´Â£Âºhttp://www.robertpenner.com/easing/
 */
 var Tween = {
 	Linear: function(t,b,c,d){ return c*t/d + b; },
@@ -281,11 +281,25 @@ $("idRun").onclick = function(){ SetFun(); Chart(); Move(); }
 
 $("idSpeed").onclick = function(){
 	if(iDuration == 100){
-		iDuration = 500; this.value = "¼Ó¿ìËÙ¶È";
+		iDuration = 500; this.value = "Â¼Ã“Â¿Ã¬Ã‹Ã™Â¶Ãˆ";
 	}else{
-		iDuration = 100; this.value = "¼õÂıËÙ¶È";
+		iDuration = 100; this.value = "Â¼ÃµÃ‚Ã½Ã‹Ã™Â¶Ãˆ";
 	}
 }
+</script>
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //ç§»åŠ¨ç«¯
+        /*mobile-20:5*/
+        var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 åˆ›å»ºäº 2016-02-02*/
+        var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
 </script>
 </body>
 <script type="text/javascript">
