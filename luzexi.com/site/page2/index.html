@@ -198,6 +198,51 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader5.html">
+        《Unity3D高级编程之进阶主程》第七章，Shader(五) - Pass(二)
+      </a>
+    </h1>
+
+    <span class="post-date">08 Aug 2018</span>
+
+    <h3>Render State Command渲染状态指令详解</h3>
+
+<p>Render State Command 是渲染状态的指令，它在Pass和SubShader都有效，放在Pass就只在当前Pass里有效，放在SubShader中则是多个Pass的共同状态。</p>
+
+<p>不过不是所有的Render State都可以成为共同拥有的渲染状态的，有些Render State只在Pass中有效，而另一些则可以成为共同渲染状态。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader4.html">
+        《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass(一)
+      </a>
+    </h1>
+
+    <span class="post-date">08 Aug 2018</span>
+
+    <h3>Pass</h3>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader3.html">
+        《Unity3D高级编程之进阶主程》第七章，Shader(三) - 渲染管道
+      </a>
+    </h1>
+
+    <span class="post-date">08 Aug 2018</span>
+
+    <h3>SubShader模块</h3>
+
+<p>SubShader相当于子Shader的意思，SubShader在Shader中可以有很多个，每个SubShader都可以针对一种设备，但不是所有SubShader都会被采用。当Unity去展示一个模型时，会从第一个SubShader开始寻找是否匹配当前的设备，如果不匹配则与下一个SubShader继续匹配，直到找到能够匹配该设备为止。如果所有的SubShader都没有匹配上，则会使用 Fallback 标签的Shader。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%823.html">
         《Unity3D高级编程之进阶主程》第六章，网络层(三) - 实现UDP
       </a>
@@ -335,59 +380,6 @@
 <p>放个连接吧，总不至于白写。</p>
 
 <p><a href="https://github.com/luzexi/blog/blob/master/luzexi.com/hyde-master/_posts/2018-08-01-%E8%A2%AB%E5%B0%81%E7%9A%84%E5%B8%96%E5%AD%90.md">被封的说明书</a></p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">
-        git同步多个repository仓库
-      </a>
-    </h1>
-
-    <span class="post-date">03 Aug 2018</span>
-
-    <p>由于国内服务器访问GitHub奇慢，所以把仓库复制一份放在了国内。但是苦于要同步两边，所以想有没有办法，同步多个git仓库，是否有办法，只维护一份就可以了。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">
-        《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 合并3D模型
-      </a>
-    </h1>
-
-    <span class="post-date">03 Aug 2018</span>
-
-    <h3>Animation 和 Animator的选择。</h3>
-
-<p>首先说明Unity3D引擎已经不再对Animation动画系统进行维护。但不维护也并不是说一定不能用，很多旧的项目任然用的很好，而且Animation系统也基本上是完善好了的。新动画系统 Mecanim 中有了新的动画组件 Animator。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB1.html">
-        《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范
-      </a>
-    </h1>
-
-    <span class="post-date">03 Aug 2018</span>
-
-    <h3>3D模型大小，面数，贴图大小，骨骼数量在游戏中的规范。</h3>
-
-<p>为什么说资源的规范在项目中是极其重要的？</p>
-
-<p>看到过有很多项目都没有重视资源规范，他们奢求高的运行效率，却不懂资源的规范是运行效率的前提。</p>
-
-<p>有的游戏项目，一个人物模型就有几万个面，一个建筑就有几十万个面，不堪入目。</p>
-
-<p>贴图也有很糟糕的，到处都是1024和2048大小的贴图。骨骼数量有的甚至到了几百。在这样恶劣的资源环境情况下，项目的运行效率怎么可能高。</p>
-
-<p>资源的好坏直接导致了项目的好坏，模型太大，面数太多，贴图太大，会导致包体过大，骨骼数量太多，导致CPU在动画上消耗过多。</p>
-
-<p>资源过大过重，还会导致CPU消耗在资源加载上面的时间过多过长，导致画面帧率下降，卡顿严重等问题。</p>
 
   </div>
   
