@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2018-10-14T20:56:35+08:00</updated>
+ <updated>2018-10-15T15:42:28+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -100,59 +100,6 @@
 &lt;p&gt;人无压力轻飘飘，有压力不一定是坏事，适度的紧张感对于一个单位、一个团队、一个组织、一个人的健康等方方面面都有好处。&lt;/p&gt;
 
 &lt;p&gt;它能使我们不忘“初心”，远离职业倦怠，激发工作热情，始终让思维和行动保持在平均水准以上，甚至可以迸发出超出想象的能力。&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Unity3d高级编程之进阶主程 Lua1</title>
-   <link href="http://www.luzexi.com/2018/09/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Lua1.html"/>
-   <updated>2018-09-30T00:00:00+08:00</updated>
-   <id>http://www.luzexi.com/2018/09/30/Unity3D高级编程之进阶主程-Lua1</id>
-   <content type="html">&lt;p&gt;Lua作为插件脚本模式&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt; 优化：
-    配置表默认值优化
-    类继承
-    meta配置&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;metatable&lt;/p&gt;
-
-&lt;p&gt;类原理与继承，metatable和__index&lt;/p&gt;
-
-&lt;p&gt;https://blog.csdn.net/fishe_r/article/details/77530369&lt;/p&gt;
-
-&lt;p&gt;lua 加密&lt;/p&gt;
-
-&lt;p&gt;http://www.waitingfy.com/archives/1464&lt;/p&gt;
-
-&lt;p&gt;font字体精简
-http://gulu-dev.com/post/2017/2017-09-15-font-pruner-intro/content&lt;/p&gt;
-
-&lt;p&gt;Unity lua内存泄漏与性能检测
-https://blog.csdn.net/tj134679258/article/details/71087630?locationNum=10&amp;amp;fps=1&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Unity3d高级编程之进阶主程 Ai1</title>
-   <link href="http://www.luzexi.com/2018/09/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-AI1.html"/>
-   <updated>2018-09-30T00:00:00+08:00</updated>
-   <id>http://www.luzexi.com/2018/09/30/Unity3D高级编程之进阶主程-AI1</id>
-   <content type="html">&lt;p&gt;1，状态机AI&lt;/p&gt;
-
-&lt;p&gt;2，行为树AI&lt;/p&gt;
-
-&lt;p&gt;http://www.luzexi.com/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/01/26/%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E6%A0%91(Behavior-Tree)%E5%AE%9E%E7%8E%B0%E6%B8%B8%E6%88%8FAI.html&lt;/p&gt;
-
-&lt;p&gt;行为树和决策树的区别&lt;/p&gt;
-
-&lt;p&gt;https://blog.csdn.net/ecidevilin/article/details/78061693&lt;/p&gt;
-
-&lt;p&gt;3，战斗回放 -- 时间点卡位，时间轴控制，帧同步的输入序列与纠正回撤。&lt;/p&gt;
-
-&lt;p&gt;4，AI编辑器&lt;/p&gt;
 </content>
  </entry>
  

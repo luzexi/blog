@@ -98,59 +98,6 @@
             </item>
         
             <item>
-               <title>Unity3d高级编程之进阶主程 Lua1</title>
-               <description>&lt;p&gt;Lua作为插件脚本模式&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt; 优化：
-    配置表默认值优化
-    类继承
-    meta配置&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;metatable&lt;/p&gt;
-
-&lt;p&gt;类原理与继承，metatable和__index&lt;/p&gt;
-
-&lt;p&gt;https://blog.csdn.net/fishe_r/article/details/77530369&lt;/p&gt;
-
-&lt;p&gt;lua 加密&lt;/p&gt;
-
-&lt;p&gt;http://www.waitingfy.com/archives/1464&lt;/p&gt;
-
-&lt;p&gt;font字体精简
-http://gulu-dev.com/post/2017/2017-09-15-font-pruner-intro/content&lt;/p&gt;
-
-&lt;p&gt;Unity lua内存泄漏与性能检测
-https://blog.csdn.net/tj134679258/article/details/71087630?locationNum=10&amp;amp;fps=1&lt;/p&gt;
-</description>
-               <pubDate>Sun, 30 Sep 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/09/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Lua1.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/09/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Lua1.html</guid>
-            </item>
-        
-            <item>
-               <title>Unity3d高级编程之进阶主程 Ai1</title>
-               <description>&lt;p&gt;1，状态机AI&lt;/p&gt;
-
-&lt;p&gt;2，行为树AI&lt;/p&gt;
-
-&lt;p&gt;http://www.luzexi.com/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/01/26/%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E6%A0%91(Behavior-Tree)%E5%AE%9E%E7%8E%B0%E6%B8%B8%E6%88%8FAI.html&lt;/p&gt;
-
-&lt;p&gt;行为树和决策树的区别&lt;/p&gt;
-
-&lt;p&gt;https://blog.csdn.net/ecidevilin/article/details/78061693&lt;/p&gt;
-
-&lt;p&gt;3，战斗回放 -- 时间点卡位，时间轴控制，帧同步的输入序列与纠正回撤。&lt;/p&gt;
-
-&lt;p&gt;4，AI编辑器&lt;/p&gt;
-</description>
-               <pubDate>Sun, 30 Sep 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/09/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-AI1.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/09/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-AI1.html</guid>
-            </item>
-        
-            <item>
                <title>白领投资探讨(六)</title>
                <description>&lt;h3&gt;为什么不要做逆向投资，和，为什么坚决要做逆向投资的探讨&lt;/h3&gt;
 
@@ -1166,6 +1113,326 @@ Max，取最大值，目标结果和源结果中取最大值。
                <pubDate>Wed, 08 Aug 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader6.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader6.html</guid>
+            </item>
+        
+            <item>
+               <title>《Unity3D高级编程之进阶主程》第七章，Shader(五) - Pass(二)</title>
+               <description>&lt;h3&gt;Render State Command渲染状态指令详解&lt;/h3&gt;
+
+&lt;p&gt;Render State Command 是渲染状态的指令，它在Pass和SubShader都有效，放在Pass就只在当前Pass里有效，放在SubShader中则是多个Pass的共同状态。&lt;/p&gt;
+
+&lt;p&gt;不过不是所有的Render State都可以成为共同拥有的渲染状态的，有些Render State只在Pass中有效，而另一些则可以成为共同渲染状态。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;下面我们来介绍下Pass中的渲染状态Command指令：&lt;/p&gt;
+
+&lt;h3&gt;Cull，前后裁切指令。&lt;/h3&gt;
+
+&lt;p&gt;Cull是种优化的指令，可以让远离屏幕的部分不渲染。所有的物体都有前后两面，比如一个Box箱子你永远都看 不到屏幕另一侧的部分，所以可以对Box箱子后半部分进行裁切不渲染。&lt;/p&gt;
+
+&lt;p&gt;可设置参数如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader20.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    上图为参数 Cull Back，裁切白色Box的后半部分，保留前半部分。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader21.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    上图为参数 Cull Front，裁切白色Box的前半部分，保留后半部分，展示的后半部部分与后面的箱子相交。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader22.png&quot; alt=&quot;cull&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    参数 Cull Off，关闭裁切功能，与Cull Back展示的效果一样，但其实多渲染了后半部分的网格模型。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Cull默认是裁切后半部分的，这样可以达到优化的效果，如果你没有对它进行设置的话。其实裁切后半部分和完全不裁切，在有深度缓存数据时是显示的效果是完全一样的，只是一个做了优化另一个没做而已。&lt;/p&gt;
+
+&lt;h3&gt;ZTest，设置深度缓存测试模式。&lt;/h3&gt;
+
+&lt;p&gt;ZTest的功能是在两个物体相交时渲染绘制中对前后深度进行测试，默认情况下以LEqual小于等于其他物体时测试为不通过，当不通过时就不渲染那部分模型。&lt;/p&gt;
+
+&lt;p&gt;LEqual参数，其实就是测试前面的物体是否挡住了该物体部分，如果挡住了就不渲染的意思，它也是ZTest的默认参数。&lt;/p&gt;
+
+&lt;p&gt;其他参数还包括&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;ZTest Less | Greater | LEqual | GEqual | Equal | NotEqual | Always
+
+参数 小于 | 大于 | 小于 | 小于等于 | 大于等于 | 等于 | 不等于 | 关闭测试
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;参数解释：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader23.png&quot; alt=&quot;ztest&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;上图中为参数 Less 该物体上的部分深度在其他物体后面时不渲染。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader24.png&quot; alt=&quot;ztest&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;上图中为参数 Greater 该物体上的部分深度在其他物体部分前面时不渲染，也就是被覆盖的显示，没被覆盖的反而不显示。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader25.png&quot; alt=&quot;ztest&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;上图中为参数 Equal 该物体上的部分深度与其他一致时才渲染，否则不渲染。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader26.png&quot; alt=&quot;ztest&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;上图中为参数 NotEqual 该物体上的部分深度与其他物体不一致时才渲染，否则不渲染。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;ZWrite，设置深度缓存写入开关。&lt;/h3&gt;
+
+&lt;p&gt;Zwrite可以控制物体渲染的像素是否写入depth buffer深度缓存数据中。&lt;/p&gt;
+
+&lt;p&gt;如果没有depth buffer深度缓存数据，物体将无法辨识前后关系也就无法实现阻挡物体不绘制的功能。&lt;/p&gt;
+
+&lt;p&gt;这在大多数不透明物体中都是需要depth buffer深度缓存数据来识别前后遮挡的，但在半透明和透明物体中就不需要depth buffer。&lt;/p&gt;
+
+&lt;p&gt;半透明和透明物体没有depth buffer深度缓存数据，所以没有所谓的写入一说，也就是通常在半透明和透明物体的Shader中，ZWrite是关闭的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader27.png&quot; alt=&quot;zwrite&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader28.png&quot; alt=&quot;zwrite&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;如上两个图，图1为ZWrite On时的效果，黄色Box遮挡住了后面的蓝色Box因为有depth buffer深度缓存的写入，前后关系有依据。&lt;/p&gt;
+
+&lt;p&gt;图2为ZWrite Off的效果，后面蓝色的Box被提到了黄色Box的前面显示，这是因为黄色Box的depth buffer没有写入，在渲染时，面片前后关系没有了依据，导致了错乱。&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;h3&gt;Offset，设置深度缓存的偏移。&lt;/h3&gt;
+
+&lt;p&gt;Offset允许你设置物体在深度缓冲中的偏移量，这相当于让物体在屏幕显示中提前或者推后显示位置，但实际世界中的位置不变。&lt;/p&gt;
+
+&lt;p&gt;Offset有两个参数，Factor偏移缩放大小和Units偏移量。Factor相当于缓存数据偏移放大的倍数，Units相当于直接偏移的量。&lt;/p&gt;
+
+&lt;p&gt;如果从公式上理解，可以理解为Buffer = (x or y)*Factor + Units。&lt;/p&gt;
+
+&lt;p&gt;举例 Offset 3 , 5，可以理解为偏移放大3倍，并且再偏移5个单位。&lt;/p&gt;
+
+&lt;p&gt;注意，偏移负方向才是离屏幕越近的方向。所以Offset 0 , -1时，两个物体重合部分肯定是拥有Offset 0 , -1的提前显示。&lt;/p&gt;
+
+&lt;p&gt;如果两个物体前后差的比较远，那么想把后面的物体提到前面来显示，那么就要加大偏移量了，比如 Offset 0 , - 1000 或者 Offset -100, -1等。&lt;/p&gt;
+
+&lt;p&gt;下面举例说明Offset的作用：&lt;/p&gt;
+
+&lt;p&gt;对白色的做处理Offset 0 , 0 -------两者重叠，时而显示普通的有贴图的立方体，时而显示白色的立方体，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader29.png&quot; alt=&quot;offset&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;对白色的做处理Offset 0 , -1------两者重叠部分完全被白色覆盖,因为白色立方体做了偏移量的处理，深度缓存中的坐标离屏幕更近，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader30.png&quot; alt=&quot;offset&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;对白色的做处理Offset 0 , 0 ---- 现在把两个立方体的距离拉开，正常情况下按透视的距离进行显示，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader31.png&quot; alt=&quot;offset&quot;&gt; &lt;/p&gt;
+
+&lt;p&gt;对白色的做处理Offset 0 , -1000 ---- 现在加重白色立方体的偏移量，深度缓存数据向屏幕偏移，这时很多有贴图的立方体部分被覆盖，因为偏移量加大，提前量就加大了，但绿色立方体其他部分的深度数据还是比偏移后的大，所以那个部分还是无法覆盖，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader32.png&quot; alt=&quot;offset&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;对白色的做处理Offset -100 , -1000------再次加大偏移量，这次加入了缩放比例的偏移，偏移的更多，使得白色立方体全部覆盖绿色立方体，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader33.png&quot; alt=&quot;offset&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;注意以上所有图中两个立方体的世界坐标一直都没有更改。如果要让物体向后推也是同样方法，负数变正就可以，所有的偏移都是渲染上的偏移，与物体实际坐标无关。&lt;/p&gt;
+</description>
+               <pubDate>Wed, 08 Aug 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader5.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader5.html</guid>
+            </item>
+        
+            <item>
+               <title>《Unity3D高级编程之进阶主程》第七章，Shader(四) - Pass(一)</title>
+               <description>&lt;h3&gt;Pass&lt;/h3&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;Pass块的格式，如下：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;    [Name and Tags]&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;    [Render State]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Pass可以定义自己的名字，和Tag标签，以及渲染状态Render State。&lt;/p&gt;
+
+&lt;p&gt;Pass通过Tag标签来变更渲染引擎里的设置。Pass里的这个Tag和SubShader上的Tag是同一种标签，SubShader起到了共享标签的作用，而Pass里的Tag则是独立的个性化的。&lt;/p&gt;
+
+&lt;h3&gt;Tag标签详解&lt;/h3&gt;
+
+&lt;p&gt;Tag的格式很简单，就同Key-Value一样，每个标签都有一个Key，对应一个Value，Key之间用空格隔开。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { “TagKey1” = “Value1” “TagKey2” = “Value2” }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;那么究竟有哪些Tag可以供我们使用？&lt;/p&gt;
+
+&lt;p&gt;我们先介绍SubShader和Pass共用的Tag。&lt;/p&gt;
+
+&lt;h6&gt;Queue 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;Queue是渲染顺序的标签。可以用这个标签决定模型在绘制时所用的顺序。&lt;/p&gt;
+
+&lt;p&gt;Shader会在渲染前决定物体属于哪个渲染顺序，从而确保所有透明或半透明物体的绘制顺都排在不透明物体的后面。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    例子，Tags { &amp;quot;Queue&amp;quot; = &amp;quot;Transparent&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如下为渲染顺序的定义选择。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Background：这种类型的顺序会排在所有物体的前面。
+
+    Geometry(默认)：大多数物体都使用这种方式。所有不透明物体使用这个类型。
+
+    AlphaTest：使用Alpha Test的物体使用这个类型的渲染顺序。它被排在不透明物体的渲染后面。
+
+    Transparent：排在Geometry和AlphaTest后渲染。所有alpha混合的物体都应该选择这个类型（因为Shader不会入depth buffer）。
+
+    Overlay：这个类型是最后渲染的，比前面所有类型都要置后。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在实际的运用过程中，Render Queue是可以有自己的排序状态的，不同的Shader同一种排序类型可以有不同的前后关系。&lt;/p&gt;
+
+&lt;p&gt;比如在两个物体都使用Geometry类型的渲染顺序，第一个物体使用 Geometry+1 比其他的 Geometry 类型物体更加滞后渲染，第二个物体使用 Geometry+2 写法，比第一个物体还要靠后渲染，目的有可能是需要在其他物体渲染完毕后再对周围环境做出反应。&lt;/p&gt;
+
+&lt;p&gt;这种方式在透明和半透明的物体中特别常用，因为透明和半透明物体没有深度缓存测试，所以他们之间的渲染顺序是混乱的，当两个半透明物体放在前后位置进行渲染时，摄像机看到的是一个比较混乱的排序方式。因此在半透明物体的运用中我们时常人工指定某些物体的排序大小，比如如下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;Queue&amp;quot; = &amp;quot;Transparent+1&amp;quot; }
+
+    Tags { &amp;quot;Queue&amp;quot; = &amp;quot;Transparent+2&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;后者比前者在渲染绘制时排在后面，先绘制了+1的半透明物体后，再绘制+2的半透明物体，结果是+2物体会覆盖+1物体而显示得靠前。&lt;/p&gt;
+
+&lt;p&gt;例子中“+1”表达了渲染顺序往后靠一位，+2比+1更往前后，数字越大渲染时越排在后面。&lt;/p&gt;
+
+&lt;p&gt;“Queue”标签在Shader里会提前告诉着色器这个物体的渲染顺序，这样在渲染中就不会因为没有深度缓存数据而导致前后渲染的混乱。&lt;/p&gt;
+
+&lt;p&gt;渲染顺序到2500(“Geometry+500”)是非透明物体和可优化绘制顺序（自动排序）物体最佳的性能位置。&lt;/p&gt;
+
+&lt;p&gt;超过2500是半透明物体和手动排序物体的区间范围。天空盒(Skybox)被排在非透明物体和半透明物体中间。&lt;/p&gt;
+
+&lt;h6&gt;RenderType 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;RenderType 标签是自由识别类标签，他没有自己的标签类型选择，可以为任意字符串。&lt;/p&gt;
+
+&lt;p&gt;RenderType的主要作用是被识别与替代。在Shader替换效果中比较常用，比如场景中有些类型的物体需要在某个时刻替换某种Shader，并且不是真正的替换Shader，而是只针对某个Camera摄像机，其他的Camera摄像机保持原样。这时就需要用到RenderType标签，再用Camera.RenderWithShader或Camera.SetReplacementShader进行替换，因为函数中需要找出某种类型的Shader进而才可以进行替换，所以RenderType就是那个标识记号。&lt;/p&gt;
+
+&lt;p&gt;Camera.RenderWithShader或Camera.SetReplacementShader渲染的规则是，没有RenderType标记的全部替换并渲染，有标记的但跟给定的标记一样的才渲染，否则不渲染。&lt;/p&gt;
+
+&lt;p&gt;Unity内部Shader已经全部标记了RenderType，可以在它的Shader源码内参考。&lt;/p&gt;
+
+&lt;h6&gt;DisableBatching标签&lt;/h6&gt;
+
+&lt;p&gt;DisableBatching可以将该物体上的Draw Call Batching打开或关闭。&lt;/p&gt;
+
+&lt;p&gt;为什么要关闭呢，因为在一些Shader中需要对顶点进行更改达到Mesh变化的目的，而Draw Call Batching会对所有的可合并的模型进行合并后放入场景空间，所以这些对Mesh操作的Shader就不起作用了，需要关闭Draw Call Batching才能重新得到该Shader要的效果。&lt;/p&gt;
+
+&lt;p&gt;DisableBatching有三种类型可以选择。&lt;/p&gt;
+
+&lt;p&gt;第一种是True，标志着Draw Call Batching 功能在这个物体上将被关闭。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;DisableBatching&amp;quot; = &amp;quot;True&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第二种是False，标志着Draw Call Batching 功能在这个物体上不关闭。False是默认值，也就是说如果不去设置它时，Shader模式是不关闭Draw Call Batching的。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;DisableBatching&amp;quot; = &amp;quot;False&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第三种是LODFading，这个比较特殊，只在LOD fading设置被开启时关闭这个物体上的Draw Call Batching功能。一般常用在树上，会动且有LOD功能。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;DisableBatching&amp;quot; = &amp;quot;LODFading&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;这里简单介绍下Draw Call Batching功能，后面章节中会有详细的介绍。&lt;/h6&gt;
+
+&lt;p&gt;每个物体都有一个材质球，每个材质球都有一个Shader，每个Shader都起码有 一个Pass渲染管线，每个物体在渲染时，引擎会抓取模型的顶点，网格，颜色，贴图，UV，法线等数据进行一次渲染操作。&lt;/p&gt;
+
+&lt;p&gt;那么如果每个物体都单独走一次渲染管线，几百几千甚至几万个物体一起渲染时，就会因为渲染引擎工作量过大CPU和GPU负荷过高而导致画面渲染次数减少，也就是帧数下降，因为每一帧一个画面。帧数下降导致画面有卡顿感，不流畅。所以要使用Batching批处理进行优化，于是就有了Draw Call Batching。&lt;/p&gt;
+
+&lt;p&gt;它是怎么优化的呢？把所拥有有相同材质球的模型放在一起走一次渲染管线，不同的材质球对应的模型不能进行Draw Call Batching。&lt;/p&gt;
+
+&lt;p&gt;这样大大加强了处理速度，原来一个一次的处理方式，变成了一批一次，达到了优化的目的，绘制画面的次数上去了，每秒的帧数（FPS）也上就去了。&lt;/p&gt;
+
+&lt;p&gt;Draw Call Batching分两种，一种是动态的，一种是静态的。&lt;/p&gt;
+
+&lt;p&gt;要进行动态的Batching批处理要求有点高，比如它要求模型必须少于900个顶点甚至更少，又比如它要求Batching批处理对象的Scale大小是一模一样的否则不予处理，再比如必须使用同一种材质球而且是同一个实例，不同材质球或者同一材质球而不同实例也不行，还有如果有烘培的模型，它的烘培图必须是同一张，甚至Shader中不能使用多个Pass等等苛刻的条件。所以想要做动态批处理还是比较困难的。&lt;/p&gt;
+
+&lt;p&gt;静态Batching就比较好弄了，只有在编辑器的右上角勾选静态标志就可以了，不过一旦勾上静态标志，物体就再也不能动不能旋转和缩放了。&lt;/p&gt;
+
+&lt;p&gt;当然Draw Call Batching本身有很多的限制，但对优化渲染管线还是有一定好处的，如果想要加大加强加快优化的力度，还有其他很多方法，每个部分的优化方案都写进了各个章节中，特别是针对Draw Call Batching的替代方案，在模型章节中有很深入的讲解。&lt;/p&gt;
+
+&lt;h6&gt;ForceNoShadowCasting 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;ForceNoShadowCasting是针对是否强制关闭阴影投射功能的。&lt;/p&gt;
+
+&lt;p&gt;当ForceNoShadowCasting为True时，物体将不会去绘制阴影部分，着色器也不会把时间浪费在阴影的绘制上了。默认为False的，默认状态下，物体会去绘制阴影部分的渲染图。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;ForceNoShadowCasting&amp;quot; = &amp;quot;True&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;IgnoreProjector 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;IgnoreProjector针对的是投射阴影的开关功能。&lt;/p&gt;
+
+&lt;p&gt;当IgnoreProjector为True时，着色器将关闭Projector投射阴影的绘制功能，这个物体将不会绘制投射阴影部分的渲染。默认状态下是False，默认状态下，物体是能响应Projector投射的阴影绘制的。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;ForceNoShadowCasting&amp;quot; = &amp;quot;True&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;CanUseSpriteAtlas 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;CanUseSpriteAtlas是针对图集里的元素的，它是UGUI中常使用。当CanUseSpriteAtlas为False时，将不会对打进图集里的贴图进行绘制。默认为True。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;CanUseSpriteAtlas&amp;quot; = &amp;quot;False&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;PreviewType 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;PreviewType是展示材质球预览形状的默认选项的。编辑器中Material材质球展示预览效果时，默认是球形，通过这个标签，可以设置为Plane面板形状，也可以设置为Skybox天空盒形状。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Tags { &amp;quot;PreviewType&amp;quot; = &amp;quot;Plane&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
+&lt;h3&gt;以上是SubShader和Pass共享的Tag标签，下面我们介绍一些只有在Pass里使用的Tag标签。&lt;/h3&gt;
+
+&lt;h6&gt;LightMode 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;通过设置LightMode可以在Pass里设置一个光照模型，主要是针对光的相互作用。&lt;/p&gt;
+
+&lt;p&gt;值类型选择范围有：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Always：一直都渲染，不应用光照作用。
+
+    ForwardBase： 使用正向渲染。环境光，主方向光，vertex/SH lights 和 烘培贴图功能被开启。
+
+    ForwardAdd：使用正向渲染。在ForwardBase的基础上，添加像素光的应用，每个Pass（渲染管线）一个灯管。
+
+    Deferred：使用延迟渲染。着色使用g-buffer。
+
+    ShadowCaster：渲染物体depth到阴影图(Shadowmap)或者一张深度贴图(depth texture)。
+
+    MontionVectors：计算每个物体的运动矢量。
+
+    PrepassBase：使用旧的延迟光照。渲染法线和镜面反射。
+
+    PrepassFinal：使用旧的延迟光照。用合并贴图，光照和发散光，来渲染最终颜色。
+
+    Vertex：当物体不使用烘培贴图时，使用旧的顶点灯光渲染模式。所有顶点光都被开启。
+
+    VertexLMRGBM：当物体使用烘培贴图时，使用旧的顶点灯光渲染模式。PC和Console平台上烘培贴图是RGBM编码格式。
+
+    VertexLM：当物体使用烘培贴图时，使用久的顶点灯光渲染模式。在手机平台上烘培贴图是double-LDR编码。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;PassFlags 标签Tag&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    OnlyDirectional：当使用ForwardBase的Pass标签时，这个标签会只让主方向光和环境光数据通过进入Shader。这意味着不重要的灯光数据，不会被通过进入顶点光或球面谐波Shader变量。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;RequireOptions 标签Tag&lt;/h6&gt;
+
+&lt;p&gt;RequrieOptions可以做到，一个Pass申明当有某种外部条件发生的时候才被渲染。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    SoftVegetation：当软植物(Soft Vegetation)在Quality Settings中被设置时，才渲染这个Pass。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+               <pubDate>Wed, 08 Aug 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader4.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/08/08/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader4.html</guid>
             </item>
         
     </channel>
