@@ -8,12 +8,12 @@
 
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta content="git 同步多个 repository 仓库" name="description">
+  <meta content="股市 投资 金融 理念 逻辑 a股 人生哲学" name="description">
 
 
   <title>
     
-      git同步多个repository仓库
+      思路探讨(十)
     
   </title>
 
@@ -195,70 +195,46 @@
 
     <div class="content container">
       <div class="post">
-  <h1 class="post-title">git同步多个repository仓库</h1>
-  <span class="post-date">03 Aug 2018</span>
-  <p>由于国内服务器访问GitHub奇慢，所以把仓库复制一份放在了国内。但是苦于要同步两边，所以想有没有办法，同步多个git仓库，是否有办法，只维护一份就可以了。</p>
+  <h1 class="post-title">思路探讨(十)</h1>
+  <span class="post-date">11 Nov 2018</span>
+  <h3>成与败，得与失</h3>
+
+<p>人生海海，都是起起落落的，失意时给别人捧捧场，得意时听听别人掌声，这样很好也很正常，激励了自己也鼓励了别人。</p>
 
 <p>===</p>
 
-<p>网上搜了一下，大都说的是</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git remote add 
+<p>失败和成功都是一个陷阱的开始，失败的人容易陷入更多的困惑，成功的人容易陷入自我陶醉与傲慢，最后都将发生更多的失败和更大的挫折。</p>
 
-    和 git remote set-url --add ，
+<h6>这是人性弱点的体现，失落中难以站起来，高兴时却想要飞起来。</h6>
 
-    以及 git push origin --all 的用法。
-</code></pre></div>
-<p>但是自己用了一下，完全用不了。总是拒绝push，说需要先pull，但pull了又说需要merge，我感觉这个坑巨大，于是想找其他法子。自己想了想最土的办法或许可以。试验了下，果然可行。步骤如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1， 两个文件夹，分别装两个仓库，或者多个文件夹装多个仓库，每个不同的仓库一个文件夹。
+<p>所以，我们要反人性操作，失败时不要太在意，相信努力最终会成功，黎明终会到来，而成功时不要太骄傲，要明白如果没有大趋势的推动着整个事件发生，我们是不可能成功的，敬畏大自然大世界大趋势。</p>
 
-    2， 把其中一个作为主要维护的仓库，维护完毕后，执行以下步骤。
+<p>实际生活中失败的困惑最常发生，我们每天都发生着不同级别的失败。</p>
 
-    3， 写一个shell程序。首先把所有内容全部都复制粘贴到其他仓库去，直接替换掉旧的文件。然后每个仓库一个个的执行
+<p>在失败面前不要太在意，因为，从整个人生70年寿命角度来看，当下所发生的事情都是一时的得与失，结果并不是我们唯一追求的东西，努力拼搏奋斗的过程才是。</p>
 
-        git add .
+<p>面对失败，就是不要在意它，就是要从中提取总结后忘记失败这件事，继续向前进。</p>
 
-        git commit -m &#39;sync&#39;
+<p>要明白，杀不死我的，终将使我更加强大。秉持这个理念时就会明白，失败的好处，大大的有。</p>
 
-        git push origin master
+<h6>偶尔回头看看，这些拼搏的过程和痕迹，觉得精彩才是真的精彩。至于得与失，太在意，就太短视了，太不在意，就太无知了，我们追求的应该是常反思得与失，又常故意忘记得与失，对困境无谓无惧，对荣耀又不留恋，从而形成大视野，长远见，短目标，立刻做的行为习惯和思维逻辑。</h6>
 
-        每个仓库都执行完毕后，同步完成。
-</code></pre></div>
-<p>也就是，用shell程序把人工手动需要做的事情，让程序去完成，省时省力，一键搞定。</p>
+<p>题外话。</p>
 
-<script type="text/javascript">
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = "u3493987";
-        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = "u3469788";
-        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
-    }
-</script>
+<p>积极乐观的心态带给我光明的世界，主动出击掌握主动权，以攻为守。主动进攻虽然代价大，但被动的代价可能更大，取舍之间不如奋勇向前。</p>
 
-<h6>举例代码为同步三个仓库，具体的 shell 如下：</h6>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    cp -r ../* /Users/luzexi/Desktop/work/gitee/blog/
-    cd /Users/luzexi/Desktop/work/gitee/blog/
-    git add .
-    git commit -m &#39;sync&#39;
-    git push origin master
+<p>我曾经以为我懂得越多就能赚到越多钱，就能坐拥金字塔顶尖。错了，认知度和财富和权力是极难匹配，财富靠的是年复年的积累，而不是爆发，权力也是，爆发其实就是运气，无其他原因。</p>
 
-    cp -r ../* /Users/luzexi/Desktop/work/github/blog/
-    cd /Users/luzexi/Desktop/work/github/blog/
-    git add .
-    git commit -m &#39;sync&#39;
-    git push origin master
+<p>那些一直梦想着暴富的人，通常一生都没有任何建树，郁郁寡欢，认为自己不得志，上天不给我恩赐，其实上天凭什么就给我恩赐，世界上60亿人，没有理由给我恩赐，我又懒又黑暗，还见不得别人成功，一辈子在底层被压迫那是理所当然，顺理成章的事。</p>
 
-    cp -r ../* /Users/luzexi/Desktop/work/gitlab/blog/
-    cd /Users/luzexi/Desktop/work/gitlab/blog/
-    git add .
-    git commit -m &#39;sync&#39;
-    git push origin master
-</code></pre></div>
+<p>现实中很多人认为因为自己聪明才赚到了钱，殊不知没有大趋势刚好在那个点推动了他，他什么都不是。如果没有认清这个现实问题，后面将很大概率遭遇危机。不敬畏世界和大自然，总会吃亏的，成功并不是一个人的事，而是一个集体日积月累的综合性事件。</p>
+
+<h6>说到底，这个世界是辩证的世界，没有绝对的对，也没有绝对的错，在不同环境下就会产生不同的效果或结果。</h6>
+
+<p>我要做的是把自己变成，辩证的人，从不同角度，不同世界观，不同级别的视野中看当下的问题。</p>
+
+<p>随着时间的推移，演变出不同的情况，用不同的方法应对，做最合适的选择，虽然外在的变化多但心中要保持一颗纯洁的信仰，牢牢记住，是金子总会发光的，光明总会战胜黑暗的，良币总会驱逐劣币的，黎明总会到来的，努力总会有回报。</p>
+
   <p>感谢您的耐心阅读</p>
   <p>Thanks for your reading</p>
 </div>
@@ -295,8 +271,8 @@
 <p><strong><font color="red">版权申明</font></strong></p>
 <!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p> -->
 <p><strong><font color="red">本文为博主原创文章，未经允许不得转载:</font></strong></p>
-<p><a href = "http://www.luzexi.com/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">git同步多个repository仓库</a></p>
-<!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">git同步多个repository仓库</a></p> -->
+<p><a href = "http://www.luzexi.com/2018/11/11/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A810.html">思路探讨(十)</a></p>
+<!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com/2018/11/11/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A810.html">思路探讨(十)</a></p> -->
 <p><strong><font color="red">Copyright attention</font></strong></p>
 <p><strong><font color="red">Please don't reprint without authorize.</font></strong></p>
 
@@ -380,188 +356,48 @@
       
 
       
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
         
           <li>
             <h3>
-              <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%822.html">
-                《Unity3D高级编程之进阶主程》第六章，网络层(二) - 实现TCP
-                <small>07 Aug 2018</small>
+              <a href="/2018/11/03/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A89.html">
+                思路探讨(九)
+                <small>03 Nov 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader2.html">
-                《Unity3D高级编程之进阶主程》第七章，Shader(二) - Property
-                <small>07 Aug 2018</small>
+              <a href="/2018/10/20/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A88.html">
+                思路探讨(八)
+                <small>20 Oct 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader1.html">
-                《Unity3D高级编程之进阶主程》第七章，Shader(一) - 常用的Shader
-                <small>07 Aug 2018</small>
+              <a href="/2018/10/14/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A87.html">
+                白领投资探讨(七)
+                <small>14 Oct 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%821.html">
-                《Unity3D高级编程之进阶主程》第六章，网络层(一) - TCP还是UDP
-                <small>06 Aug 2018</small>
+              <a href="/2018/09/23/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A86.html">
+                白领投资探讨(六)
+                <small>23 Sep 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB3.html">
-                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(三) - 状态机
-                <small>06 Aug 2018</small>
+              <a href="/2018/09/08/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A85.html">
+                白领投资探讨(五)
+                <small>08 Sep 2018</small>
               </a>
             </h3>
           </li>
@@ -580,168 +416,48 @@
       
 
       
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
         
           <li>
             <h3>
-              <a href="/2018/08/03/git%E5%90%8C%E6%AD%A5%E5%A4%9A%E4%B8%AArepository%E4%BB%93%E5%BA%93.html">
-                git同步多个repository仓库
-                <small>03 Aug 2018</small>
+              <a href="/2018/11/03/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A89.html">
+                思路探讨(九)
+                <small>03 Nov 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB2.html">
-                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(二) - 合并3D模型
-                <small>03 Aug 2018</small>
+              <a href="/2018/10/20/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A88.html">
+                思路探讨(八)
+                <small>20 Oct 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB1.html">
-                《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范
-                <small>03 Aug 2018</small>
+              <a href="/2018/10/14/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A87.html">
+                白领投资探讨(七)
+                <small>14 Oct 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">
-                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)
-                <small>30 Jul 2018</small>
+              <a href="/2018/09/23/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A86.html">
+                白领投资探讨(六)
+                <small>23 Sep 2018</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
-                《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
-                <small>30 Jul 2018</small>
+              <a href="/2018/09/08/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A85.html">
+                白领投资探讨(五)
+                <small>08 Sep 2018</small>
               </a>
             </h3>
           </li>
