@@ -7,6 +7,37 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>思路探讨(十二) 思维突破</title>
+               <description>&lt;p&gt;人很难突破自己的思维，因为我们自己很难知道自己的思维是否固化，也很难从其他人口中了解到。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;我们都认为他人对我们的评价是片面的不合理的评价，所以即使收到批评或指正的信息时也很难有效认识到自己的问题。&lt;/p&gt;
+
+&lt;p&gt;即使认识到自己的问题，也无法改正。有趣的人类，明知道错误，想改也改不过来。&lt;/p&gt;
+
+&lt;p&gt;这种问题通常是长年累月积累的结果，习惯成了自然。所有习惯性的动作，思考方式，语调，语句，都进了肌肉记忆里，在肌肉记忆里根本不需要思考，一到某个相似情景的点，自然而然的触发。形成良好的肌肉记忆很难，想去掉恶劣的肌肉记忆也同样很难，这把双刃剑弄得我很受伤。&lt;/p&gt;
+
+&lt;p&gt;另一方面，思维的突破需要自己主动折腾（受虐）。这种受虐是精神上的，通常我们去接触一些自己不喜欢的事物，去接触一些自己从来没有接触过的人和事，能形成有效的突破。&lt;/p&gt;
+
+&lt;p&gt;未知的事物，令我们恐惧的事物，我们讨厌的事物，这些对我们来说，难以理解的事物，都是绝佳的突破点。&lt;/p&gt;
+
+&lt;p&gt;越害怕，越恐惧，越不知道，越讨厌的事物，越是思维固化的关键点，通常这些事物的真实情况完全和我们理解的不一样。&lt;/p&gt;
+
+&lt;p&gt;让自己主动陷入这样的“困境”，大部分人都会望而怯步，人都是向着舒服的一个方向走的，自己怎么舒服怎么走，让自己主动去陷入“困境”这种事，人类很难接受。&lt;/p&gt;
+
+&lt;p&gt;不过我们要明白，主动陷入“困境”，比被动陷入“困境”要好的多，被动承受“困境”会把人摧毁，而主动挑战“困境”却能成就自己。看起来差不多的“困境”情景，其实在人内心的状态是完全两个样子的。&lt;/p&gt;
+
+&lt;p&gt;不只是主动折腾，还要主动吃亏，舍小取大。&lt;/p&gt;
+
+&lt;p&gt;大多数人也很难想明白，自己付出的努力为什么要和别人共享结果，我赚到的钱为什么要和别人分享，我建立的公司为什么要分给别人股份，我做出来的项目为什么要和别人分成。这种主动丢掉当前的小利益而寻求更长远的利益，以及宏观意义上的大格局，少数几个人才能做得到，通常这种人都是人中龙凤，短时间是体现不出价值来的，只有从长时间来看才能懂得其精华所在。人毕竟是短视的动物，能理解舍小取大的就不多，就更别说共赢和分享了。&lt;/p&gt;
+</description>
+               <pubDate>Thu, 22 Nov 2018 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2018/11/22/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A812.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2018/11/22/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A812.html</guid>
+            </item>
+        
+            <item>
                <title>思路探讨(十一) 活在当下</title>
                <description>&lt;p&gt;人在不同的阶层，不同的位置思考的内容不同，所以屁股决定脑袋，你坐什么位置站在什么阶层决定了你担忧什么内容，想的是什么事。&lt;/p&gt;
 
@@ -682,295 +713,6 @@
                <pubDate>Fri, 17 Aug 2018 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2018/08/17/%E4%B8%AD%E5%9B%BD%E9%A1%B6%E4%BD%8F.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2018/08/17/%E4%B8%AD%E5%9B%BD%E9%A1%B6%E4%BD%8F.html</guid>
-            </item>
-        
-            <item>
-               <title>《Unity3D高级编程之进阶主程》第七章，Shader(七) - Fixed Function</title>
-               <description>&lt;h3&gt;Fixed-function 是Unity3D官方自己编写的一套API，它与Surface shaders，及vertex and fragment program是区分开来的。Fixed-function，Suface program 和 vertex and fragment programs 三种编写Shader的方法不能同时使用，任何一种方式被编写后，其他两种都将无效。&lt;/h3&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;Fixed-function 相对于Suface 和 Vertex and fragment 来说简单很多，它是由一些简单的开关的函数组成的。我们可以用 Fixed-function 来做一些简单的灯光，贴图的变化。&lt;/p&gt;
-
-&lt;p&gt;下面我们来了解一下这些开关和函数的语法。&lt;/p&gt;
-
-&lt;h6&gt;Pass的第一个指令如果是Fixed-function的命令，则认为是Pass开启Fixed-function program。&lt;/h6&gt;
-
-&lt;p&gt;顶点和灯光的颜色计算在模型渲染中被最先执行，它们在顶点转换上操作，并且计算的基础颜色在贴图使用前就被应用到了顶点上。&lt;/p&gt;
-
-&lt;h6&gt;Material块&lt;/h6&gt;
-
-&lt;p&gt;Material标签，可以用来定义材质球的各种光属性的颜色。格式如下：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Material
-    {
-        Diffuse [_Color]
-        Ambient [_Color]
-        Shininess [_Shininess]
-        Specular [_SpecColor]
-        Emission [_Emission]
-    }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;参数如下：&lt;/p&gt;
-
-&lt;p&gt;Diffuse color，漫反射颜色，这是物体的基础颜色。&lt;/p&gt;
-
-&lt;p&gt;Ambient color，环境光颜色，被光照到后反应出来的颜色。&lt;/p&gt;
-
-&lt;p&gt;Specular color，镜面反射的高光颜色。&lt;/p&gt;
-
-&lt;p&gt;Shininess number，高光圈的大小，也就是尖锐度，数值范围在0-1之间。为0时高光圈很大覆盖整个物体，为1时高光圈很小，几乎缩小成一个点。&lt;/p&gt;
-
-&lt;p&gt;Emission color，自身发出的颜色，当没有光照到的时候。&lt;/p&gt;
-
-&lt;p&gt;整个光照颜色的公式为：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;color = Ambient * 设置中的Ambient强度 + (灯光颜色 * Diffuse + 灯光颜色 * Specular) + Emission
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;其中灯光颜色，当多个灯光照射时会叠加多次。&lt;/p&gt;
-
-&lt;h6&gt;Color颜色&lt;/h6&gt;
-
-&lt;p&gt;Color颜色设置不透明物体的颜色。格式如下：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Color color
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;Lighting 开关&lt;/h6&gt;
-
-&lt;p&gt;Lighting 是一个灯光的开关，Material块, ColorMaterial 和 SeparateSpecular都受到它的影响，如果Lighting 关掉的话，它们都将失效。&lt;/p&gt;
-
-&lt;p&gt;格式如下：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Lighting On | Off
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;SeparateSpecular 镜面反射开关&lt;/h6&gt;
-
-&lt;p&gt;SeparateSpecular 选项开启后会在最后一个pass后加上一个镜面反射光的pass，这使得镜面放射光不受到贴图的影响。&lt;/p&gt;
-
-&lt;p&gt;格式如下：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    SeparateSpecular On | Off
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;ColorMaterial Material块中的颜色&lt;/h6&gt;
-
-&lt;p&gt;ColorMaterial可以在每个顶点上替换Material中的颜色，其中AmbientAndDiffuse 替换Material块中的 Ambient 和 Diffuse 的颜色，Emission 替换Material块中 Emission 的颜色。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    ColorMaterial AmbientAndDiffuse | Emission
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;SetTexture 设置贴图&lt;/h6&gt;
-
-&lt;p&gt;Fixed function 的贴图功能可以替换旧有的合并效果。我们可以写很多个 SetTexture 命令在 Pass里，所有的贴图都会依次被应用，就像绘制程序里的层级一样。&lt;/p&gt;
-
-&lt;p&gt;另外，SetTexture 命令必须放在Pass的最后部分。&lt;/p&gt;
-
-&lt;p&gt;SetTexture 格式为：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    SetTexture [TextureName] {Texture Block}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;其中 TextureName 为贴图的变量名，{Texture Block} 里面的有两种操作，一种是 combine 为主要操作命令，另一个是 constantColor 命令用来设置一个常量颜色。&lt;/p&gt;
-
-&lt;p&gt;combine 命令在SetTexture里最为重要，它的格式可以为：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    combine src1 * src2，src1 与 src2 相乘，颜色叠加。
-
-    combine src1 + src2，src1 与 src2 相加，颜色加白加量。
-
-    combine src1 - src2，src1 减去 src2，获得色差。
-
-    combine src1 lerp (src2) src3，使用src2的alpha值计算src1到src3的插值。
-
-    注意src2的alpha为1时结果为src1，src2的alpha为0时结果为src3。
-
-    combine src1 * src2 + src3，src1 与 src2的alpha相乘，然后加上src3。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;上面所有的 src 属性可以是texture，或者previous，或者constant，或者primary。这几个变量分别是如下意思：&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    texture 是贴图变量TextureName贴图上的颜色。
-
-    previous 是前面计算结果的颜色。
-
-    primary 是顶点经过灯光计算后的颜色。也就是前面Material块中diffuse, ambient and specular colors与灯光的计算结果。
-
-    constant 是常量颜色，可以使用 ConstantColor 在 combine 前设置。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;src变量后面可以跟的参数有&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Double 和 Quad 参数。src后面可以跟随double和quad，分别表示2x，4x的亮度，相当于乘2，乘4的效果。
-
-    lerp 插值，所有src变量都可以使用 lerp 做插值操作。
-
-    alpha 透明通道，src后面跟着alpha参数的话，就表示只使用src的alpha通道。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;合并时对Color和Alpha分开处理&lt;/h6&gt;
-
-&lt;p&gt;有时我们需要对颜色和透明通道分开处理，可以在SetTextue时在颜色处理后面加逗号表示分开处理color和alpha。&lt;/p&gt;
-
-&lt;p&gt;具体处理格式为：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    SetTexture [_MainTex] { combine previous * texture, previous + texture }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;其中 previous * texture 为颜色处理部分，previous + texture 为alpha处理部分。&lt;/p&gt;
-
-&lt;h6&gt;Fixed function 所有功能的完整示例&lt;/h6&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Shader&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;VertexLit&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Properties&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_Color&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Main Color&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_SpecColor&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Spec Color&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_Emission&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Emmisive Color&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_Shininess&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Shininess&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Range&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.7&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Base (RGB)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;white&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_ConstantColor&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Main Color&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;SubShader&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;Material&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;Diffuse&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;Ambient&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;Shininess&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Shininess&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;Specular&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_SpecColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;Emission&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Emission&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;Lighting&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;On&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;SeparateSpecular&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;On&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;SetTexture&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;constantColor&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ConstantColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;Combine&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texture&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;primary&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DOUBLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texture&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;primary&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;SetTexture&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;ConstantColor&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;constant&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;lerp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;texture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;previous&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;SetTexture&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;previous&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texture&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = &quot;u3493987&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = &quot;u3469788&quot;;
-        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
-    }
-&lt;/script&gt;
-
-&lt;h6&gt;Alpha Test 透明裁切&lt;/h6&gt;
-
-&lt;p&gt;Alpha Test 是像素即将要输出到屏幕前的最后一步处理，它通过比较像素的alpha值来决定是否展示。&lt;/p&gt;
-
-&lt;p&gt;格式如下：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    AlphaTest Off | On
-
-    AlphaTest 操作符号 AlphaValue
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;其中AlphaValue可以是0-1之间的任何浮点数，也可以是给定的变量。&lt;/p&gt;
-
-&lt;p&gt;操作符号可以为：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Greater 只有alpha值 大于 给出的AlphaValue的像素才会被渲染。
-
-    GEqual  只有alpha值 大于等于 给出的AlphaValue的像素才会被渲染。
-
-    Less    只有alpha值 小于 给出的AlphaValue的像素才会被渲染。
-
-    LEqual  只有alpha值 小于等于 给出的AlphaValue的像素才会被渲染。
-
-    Equal   只有alpha值 等于 给出的AlphaValue的像素才会被渲染。
-
-    NotEqual    只有alpha值 不等于 给出的AlphaValue的像素才会被渲染。
-
-    Always  渲染所有像素，相当于AlphaTest Off，关闭了AlphaTest的功能。
-
-    Never   不渲染任何像素。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;AlphaTest 根据Alpha值进行像素的裁切，而不是走alpha混合的路，所以没有深度数据问题，在渲染时不会造成前后渲染排序错乱问题。&lt;/h6&gt;
-
-&lt;p&gt;在使用AlphaTest 制作树和枝叶时，由于AlphaTest裁切过于生硬导致画面上有锯齿感，我们可以采用AlphaTest和Alpha Blend混合使用的方式让画面更加平滑。如下代码：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Shader&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Vegetation&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Properties&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_Color&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Main Color&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Base (RGB) Alpha (A)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;white&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_Cutoff&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Base Alpha cutoff&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Range&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;SubShader&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// Set up basic lighting&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Material&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;Diffuse&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;Ambient&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Lighting&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;On&lt;/span&gt;
-
-        &lt;span class=&quot;c1&quot;&gt;// Render both front and back facing polygons.&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Cull&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Off&lt;/span&gt;
-
-        &lt;span class=&quot;c1&quot;&gt;// first pass:&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// render any pixels that are more than [_Cutoff] opaque&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;AlphaTest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Greater&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Cutoff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;SetTexture&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texture&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;primary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texture&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;c1&quot;&gt;// Second pass:&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// render in the semitransparent details.&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;c1&quot;&gt;// Dont write to the depth buffer&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;ZWrite&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;off&lt;/span&gt;
-            &lt;span class=&quot;c1&quot;&gt;// Don&amp;#39;t write pixels we have already written.&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;ZTest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Less&lt;/span&gt;
-            &lt;span class=&quot;c1&quot;&gt;// Only render pixels less or equal to the value&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;AlphaTest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LEqual&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Cutoff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-            &lt;span class=&quot;c1&quot;&gt;// Set up alpha blending&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;Blend&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SrcAlpha&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OneMinusSrcAlpha&lt;/span&gt;
-
-            &lt;span class=&quot;n&quot;&gt;SetTexture&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;combine&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texture&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;primary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texture&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;上述代码中两个Pass来渲染树和枝叶，第一Pass对Alpha进行硬裁切，第二个Pass将前面其余没有被裁切的部分进行Alpha混合，这样就能让画面更加平滑，虽然alpha混合会导致渲染排序问题，但主要枝干能够正常排序，剩下的边缘部分只起到平滑作用，牺牲一点排序错位让画面更加柔和。&lt;/p&gt;
-
-&lt;h6&gt;Fog 迷雾颜色&lt;/h6&gt;
-
-&lt;p&gt;Fog 命令可以设置雾颜色，根据与摄像机的不同距离，可以叠加不同的颜色。&lt;/p&gt;
-
-&lt;p&gt;格式如下：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Fog {Fog Commands}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Fog Commands 有：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    Mode Off | Global | Linear | Exp | Exp2
-
-    Mode 可以设置计算公式，Off为关闭，Global为全局，Linear为线性插值计算颜色，Exp为指数公式计算颜色，Exp2为以2 为底的指数公式计算。
-
-    Color ColorValue
-
-    Color 用来设置迷雾颜色。
-
-    Density FloatValue
-
-    Density 用来设置迷雾密度。
-
-    Range FloatValue, FloatValue
-
-    Range 用来设置迷雾的显示范围。近圈距离，外圈距离，他们之间的用线性的方式展示迷雾。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;Fog命令不会与 Vertex Fragment program 和 Surface program 冲突，它是独立于他们之外的功能。&lt;/h6&gt;
-
-&lt;h6&gt;在没有设置Fog的默认情况下，Fog会根据 Lighting Window(Window &amp;gt; Lighting &amp;gt; Settings) 里的设置进行渲染。&lt;/h6&gt;
-</description>
-               <pubDate>Tue, 14 Aug 2018 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2018/08/14/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader7.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2018/08/14/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader7.html</guid>
             </item>
         
     </channel>
