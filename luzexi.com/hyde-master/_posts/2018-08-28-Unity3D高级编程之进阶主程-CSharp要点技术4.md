@@ -11,7 +11,7 @@ tags:
 - 前端技术
 ---
 
-委托(delegate)与事件(Event)的实质
+### 委托(delegate)与事件(Event)的实质
 
 使用过C或C++的同学都对指针很清楚，指针是个需要谨慎对待的东西，它不仅仅可以指向变量的地址，还可以指向函数的地址。
 
@@ -21,11 +21,29 @@ tags:
 
 创建委托其实就是创建了一个delegate类实例，这个类继承了System.MulticastDelegate类，类实例里有，BeginInvoke、EndInvoke、Invoke三个函数，分别表示，异步开始调用，结束调用，直接调用。
 
-delegate实例中有个变量用来存储函数地址，当变量操作 =(等号) 时，把函数地址赋值给变量存起来。其实这个存储函数地址的变量是个可变数组，你可以认为是个List，每次直接赋值时会换一个List。
+不过我们不能直接写个类来继承System.MulticastDelegate类，因为它不能被继承在明文上，它的父类Delegate类也同样有这个规则，官方文档中就是这么个规则：
 
-委托类还重写了 +=，-= 操作符，当对函数操作 += 和 -= 时，相当于把函数地址推入了List列表，或者移出了List列表。
+		MulticastDelegate is a special class. Compilers and other tools can derive from this class, but you cannot derive from it explicitly. The same is true of the Delegate class.
 
-当委托调用时，委托实例会把所有List列表里的函数依次用传进来的参数调用一遍。
+delegate实例中其实有个变量用来存储函数地址，当变量操作 =(等号) 时，把函数地址赋值给变量存起来。其实这个存储函数地址的变量是个可变数组，你可以认为是个链表，每次直接赋值时会换一个链表。
+
+委托类还重写了 +=，-= 操作符，当对函数操作 += 和 -= 时，相当于把函数地址推入了链表尾部，或者移出了链表。
+
+当委托被调用时，委托实例会把所有链表里的函数依次按顺序用传进来的参数调用一遍。官方文档中就如上述所说：
+
+	A MulticastDelegate has a linked list of delegates, called an invocation list, consisting of one or more elements. When a multicast delegate is invoked, the delegates in the invocation list are called synchronously in the order in which they appear. If an error occurs during execution of the list then an exception is thrown.
+
+所以说，delegate关键字其实只是个修饰用的单词，背后都是由C#编译器来重写代码的，就相当于编译时把那一句换掉，变成继承System.MulticastDelegate的类，并带入参数。
+
+那么什么是event？
+
+event 很简单，它会在delegate继承上，
+
+
+
+### 开箱和装箱
+
+
 
 
 ugui 字体不能叠加，否则无法合并mesh，因为半透明。
