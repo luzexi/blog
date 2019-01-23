@@ -1,3 +1,2 @@
-#blog
-[http://www.luzexi.com](www.luzexi.com)
+#blog www.luzexi.com
 
