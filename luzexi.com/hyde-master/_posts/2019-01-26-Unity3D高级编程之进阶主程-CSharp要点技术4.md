@@ -2,7 +2,7 @@
 layout: post
 status: publish
 published: true
-title: 《Unity3D高级编程之进阶主程》第一章，C#要点技术(四)
+title: 《Unity3D高级编程之进阶主程》第一章，C#要点技术(四) 委托、事件、装箱、拆箱
 description: "unity3d 高级编程 c# 主程 算法 设计模式 动态库 底层算法"
 excerpt_separator: ===
 tags:

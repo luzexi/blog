@@ -2,7 +2,7 @@
 layout: post
 status: publish
 published: true
-title: 《Unity3D高级编程之进阶主程》第一章，C#要点技术(三)
+title: 《Unity3D高级编程之进阶主程》第一章，C#要点技术(三) 浮点数的精度问题
 description: "unity3d 高级编程 c# 主程 算法 设计模式 动态库 底层算法"
 excerpt_separator: ===
 tags:

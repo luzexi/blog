@@ -7,7 +7,7 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(四)</title>
+               <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(四) 委托、事件、装箱、拆箱</title>
                <description>&lt;h3&gt;委托(delegate)与事件(Event)的实质&lt;/h3&gt;
 
 &lt;p&gt;===&lt;/p&gt;
@@ -123,7 +123,7 @@
             </item>
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(三)</title>
+               <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(三) 浮点数的精度问题</title>
                <description>&lt;p&gt;直接开门见山了。&lt;/p&gt;
 
 &lt;h3&gt;浮点数的精度问题&lt;/h3&gt;

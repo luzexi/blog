@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-01-26T17:00:17+08:00</updated>
+ <updated>2019-01-26T17:01:06+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -13,7 +13,7 @@
 
  
  <entry>
-   <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(四)</title>
+   <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(四) 委托、事件、装箱、拆箱</title>
    <link href="http://www.luzexi.com/2019/01/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF4.html"/>
    <updated>2019-01-26T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2019/01/26/Unity3D高级编程之进阶主程-CSharp要点技术4</id>
@@ -129,7 +129,7 @@
  </entry>
  
  <entry>
-   <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(三)</title>
+   <title>《Unity3D高级编程之进阶主程》第一章，C#要点技术(三) 浮点数的精度问题</title>
    <link href="http://www.luzexi.com/2019/01/19/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF3.html"/>
    <updated>2019-01-19T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2019/01/19/Unity3D高级编程之进阶主程-CSharp要点技术3</id>
