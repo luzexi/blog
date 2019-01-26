@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-01-26T16:58:14+08:00</updated>
+ <updated>2019-01-26T17:00:17+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -18,6 +18,8 @@
    <updated>2019-01-26T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2019/01/26/Unity3D高级编程之进阶主程-CSharp要点技术4</id>
    <content type="html">&lt;h3&gt;委托(delegate)与事件(Event)的实质&lt;/h3&gt;
+
+&lt;p&gt;===&lt;/p&gt;
 
 &lt;p&gt;使用过C或C++的同学都对指针很清楚，指针是个需要谨慎对待的东西，它不仅仅可以指向变量的地址，还可以指向函数的地址，本质上它是指向内存的地址。&lt;/p&gt;
 
