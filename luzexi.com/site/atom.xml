@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-02-17T18:46:27+08:00</updated>
+ <updated>2019-02-17T18:46:58+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -24,6 +24,8 @@
 &lt;p&gt;好的搜索算法，大部分需要有数据结构的支撑，在数据结构里记录了信息的特征，搜索的记录，和当前搜索内容的环境，以达到裁剪优化的目的。&lt;/p&gt;
 
 &lt;p&gt;搜索的目的一般有，一个数组中找出某元素，一个数组中找出某个范围的所有元素，一个2D或3D空间中找出某元素，2D或3D空间中找出某一个范围的所有元素，以及一堆相互连接的结构中找出两点的最短路径等等等。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
 
 &lt;h6&gt;二分查找算法&lt;/h6&gt;
 
