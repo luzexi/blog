@@ -7,19 +7,8 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
-               <title>You Can Live Your Dream</title>
-               <description>&lt;hr&gt;
-
-&lt;p&gt;layout: post
-status: publish
-published: true
-title: YOU CAN LIVE YOUR DREAM!
-description: &amp;quot;live your dream&amp;quot;
-excerpt_separator: ===
-tags:
-- life&lt;/p&gt;
-
-&lt;p&gt;I don’t know what that dream is that you have.&lt;/p&gt;
+               <title>YOU CAN LIVE YOUR DREAM!</title>
+               <description>&lt;p&gt;I don’t know what that dream is that you have.&lt;/p&gt;
 
 &lt;p&gt;I don’t care how disappointing it might have been, as you’ve been working towards that dream.&lt;/p&gt;
 
