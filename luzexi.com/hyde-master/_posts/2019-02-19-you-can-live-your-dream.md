@@ -1,13 +1,12 @@
 ---
 layout: post
 status: publish
-published: false
-title: 思路探讨(二十一) 一根长红线改变信仰
-description: "股市 投资 金融 理念 逻辑 a股 人生哲学"
+published: true
+title: YOU CAN LIVE YOUR DREAM!
+description: "live your dream"
 excerpt_separator: ===
 tags:
-- 金融投资
----
+- life
 
 I don’t know what that dream is that you have.
 
@@ -16,6 +15,8 @@ I don’t care how disappointing it might have been, as you’ve been working to
 That the dream that you’re holding in your mind … that it’s possible.
 
 That some of you already know that its hard… it’s not easy. Its hard changing your life.
+
+===
 
 That in the process of working on your dreams you are going to incur a lot of disappointment … a lot of failure … a lot of pain … there are moments when you’re going to doubt yourself … and say “ God why? why is this happening to me? I’m just trying to take care of my children and my mother I’m not trying to steal or rob from anybody. How did this have to happen to me ?”
 
@@ -69,4 +70,5 @@ YOU CAN LIVE YOUR DREAM!
 
 
 
+### Copy from google
 
