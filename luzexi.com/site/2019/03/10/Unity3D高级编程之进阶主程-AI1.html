@@ -204,7 +204,7 @@
     <div class="content container">
       <div class="post">
   <h1 class="post-title">《Unity3D高级编程之进阶主程》AI(1)-状态机构架机器人行为</h1>
-  <span class="post-date">30 Sep 2018</span>
+  <span class="post-date">10 Mar 2019</span>
   <p>AI机器人在游戏中非常普遍，它们常以模仿人类的行为在游戏中活动。游戏中的怪物的自动行为比较普遍，这种简单的人工智能方式可以用几种不同的方式进行编写，这里我们介绍两种方式，一种为容易被人类思维接受的状态机AI编程，另一种为特别为机器人思考方式编写的行为树AI编程。其实还有很多方式来编写AI，比如和行为树差不多的决策树，以及相对比较复杂的神经网络，以及更复杂的机器学习，在此不多做介绍，由于过于复杂甚至超过了项目的周期，研发和维护成本太高，所以在游戏中的应用并不太多，很少有人尝试。</p>
 
 <p>===</p>
@@ -291,8 +291,8 @@
 <p><strong><font color="red">版权申明</font></strong></p>
 <!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p> -->
 <p><strong><font color="red">本文为博主原创文章，未经允许不得转载:</font></strong></p>
-<p><a href = "http://www.luzexi.com/2018/09/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-AI1.html">《Unity3D高级编程之进阶主程》AI(1)-状态机构架机器人行为</a></p>
-<!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com/2018/09/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-AI1.html">《Unity3D高级编程之进阶主程》AI(1)-状态机构架机器人行为</a></p> -->
+<p><a href = "http://www.luzexi.com/2019/03/10/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-AI1.html">《Unity3D高级编程之进阶主程》AI(1)-状态机构架机器人行为</a></p>
+<!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com/2019/03/10/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-AI1.html">《Unity3D高级编程之进阶主程》AI(1)-状态机构架机器人行为</a></p> -->
 <p><strong><font color="red">Copyright attention</font></strong></p>
 <p><strong><font color="red">Please don't reprint without authorize.</font></strong></p>
 
@@ -337,6 +337,15 @@
     
       <li>
         <h3>
+          <a href="/2019/03/10/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-AI1.html">
+            《Unity3D高级编程之进阶主程》AI(1)-状态机构架机器人行为
+            <small>10 Mar 2019</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/2019/02/19/you-can-live-your-dream.html">
             YOU CAN LIVE YOUR DREAM!
             <small>19 Feb 2019</small>
@@ -349,15 +358,6 @@
           <a href="/2019/02/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF6.html">
             《Unity3D高级编程之进阶主程》第一章，C#要点技术(六) 搜索算法
             <small>17 Feb 2019</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/2019/02/04/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A820.html">
-            思路探讨(二十) 如何将你的家庭与普通人拉开差距
-            <small>04 Feb 2019</small>
           </a>
         </h3>
       </li>
@@ -376,181 +376,48 @@
       
 
       
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
-
-    
-
-      
-      
-
-      
         
           <li>
             <h3>
-              <a href="/2018/11/18/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A811.html">
-                思路探讨(十一) 活在当下
-                <small>18 Nov 2018</small>
+              <a href="/2019/02/19/you-can-live-your-dream.html">
+                YOU CAN LIVE YOUR DREAM!
+                <small>19 Feb 2019</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/11/11/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A810.html">
-                思路探讨(十) 成与败，得与失
-                <small>11 Nov 2018</small>
+              <a href="/2019/02/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF6.html">
+                《Unity3D高级编程之进阶主程》第一章，C#要点技术(六) 搜索算法
+                <small>17 Feb 2019</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/11/03/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A89.html">
-                思路探讨(九) 实业，和，金融业
-                <small>03 Nov 2018</small>
+              <a href="/2019/02/04/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A820.html">
+                思路探讨(二十) 如何将你的家庭与普通人拉开差距
+                <small>04 Feb 2019</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/10/20/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A88.html">
-                思路探讨(八) 谁在掌控世界
-                <small>20 Oct 2018</small>
+              <a href="/2019/02/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF5.html">
+                《Unity3D高级编程之进阶主程》第一章，C#要点技术(五) 排序算法
+                <small>03 Feb 2019</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/10/14/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A87.html">
-                白领投资探讨(七) 实干方法
-                <small>14 Oct 2018</small>
+              <a href="/2019/01/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF4.html">
+                《Unity3D高级编程之进阶主程》第一章，C#要点技术(四) 委托、事件、装箱、拆箱
+                <small>26 Jan 2019</small>
               </a>
             </h3>
           </li>
@@ -569,162 +436,48 @@
       
 
       
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
-
-    
-
-      
-
-      
         
           <li>
             <h3>
-              <a href="/2018/09/23/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A86.html">
-                白领投资探讨(六) 为什么不要做逆向投资，和，为什么坚决要做逆向投资的探讨
-                <small>23 Sep 2018</small>
+              <a href="/2019/02/19/you-can-live-your-dream.html">
+                YOU CAN LIVE YOUR DREAM!
+                <small>19 Feb 2019</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/09/08/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A85.html">
-                白领投资探讨(五) 金融知识到底带给我了什么？
-                <small>08 Sep 2018</small>
+              <a href="/2019/02/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF6.html">
+                《Unity3D高级编程之进阶主程》第一章，C#要点技术(六) 搜索算法
+                <small>17 Feb 2019</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/08/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader8.html">
-                《Unity3D高级编程之进阶主程》第七章，Shader(八) - Surface
-                <small>21 Aug 2018</small>
+              <a href="/2019/02/04/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A820.html">
+                思路探讨(二十) 如何将你的家庭与普通人拉开差距
+                <small>04 Feb 2019</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/08/17/%E4%B8%AD%E5%9B%BD%E9%A1%B6%E4%BD%8F.html">
-                中国，顶住！！
-                <small>17 Aug 2018</small>
+              <a href="/2019/02/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF5.html">
+                《Unity3D高级编程之进阶主程》第一章，C#要点技术(五) 排序算法
+                <small>03 Feb 2019</small>
               </a>
             </h3>
           </li>
         
           <li>
             <h3>
-              <a href="/2018/08/14/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-Shader7.html">
-                《Unity3D高级编程之进阶主程》第七章，Shader(七) - Fixed Function
-                <small>14 Aug 2018</small>
+              <a href="/2019/01/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF4.html">
+                《Unity3D高级编程之进阶主程》第一章，C#要点技术(四) 委托、事件、装箱、拆箱
+                <small>26 Jan 2019</small>
               </a>
             </h3>
           </li>
