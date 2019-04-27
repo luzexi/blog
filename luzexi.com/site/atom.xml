@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-04-27T21:57:57+08:00</updated>
+ <updated>2019-04-27T22:04:04+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -117,6 +117,8 @@
    <updated>2019-04-21T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2019/04/21/Unity3D高级编程之进阶主程-3D模型与动画4</id>
    <content type="html">&lt;p&gt;3D模型是3D游戏中的基础单位，除了在游戏中那些静止的一动不动的3D模型外，还有许许多多动来动去的，这些3D模型除了骨骼动画，顶点动画外，很多时候为了画面效果的表现，我们还需要：切割，简化，变形，捏脸，飘动等等。那么它们是怎么实现的呢？我们今天就来讲讲这蕴含其中的技术与原理。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
 
 &lt;p&gt;一个3D模型是如何显示到屏幕中去的，这整个过程详细讲解下来有点长，所以将它们放在了OpenGL渲染管道章节中，这里我们先来做个不太深入的了解。&lt;/p&gt;
 
