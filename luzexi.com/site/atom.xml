@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-05-12T22:52:19+08:00</updated>
+ <updated>2019-05-12T22:53:36+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -43,7 +43,7 @@
 
 &lt;p&gt;整个骨骼动画的呈现流程清晰了，我们来用Unity3D的API来整理下，让我们理解的更加透彻。&lt;/p&gt;
 
-&lt;p&gt;代码和解释如下：&lt;/p&gt;
+&lt;p&gt;举例代码和解释如下，重点在注释的解释：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    //新建个动画组件和蒙皮组件
     gameObject.AddComponent&amp;lt;Animation&amp;gt;();
     gameObject.AddComponent&amp;lt;SkinnedMeshRenderer&amp;gt;();
