@@ -210,6 +210,19 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2018/09/23/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A86.html">
+        白领投资探讨(六) 为什么不要做逆向投资，和，为什么坚决要做逆向投资的探讨
+      </a>
+    </h1>
+
+    <span class="post-date">23 Sep 2018</span>
+
+    <h3>为什么不要做逆向投资，和，为什么坚决要做逆向投资的探讨</h3>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2018/09/08/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A85.html">
         白领投资探讨(五) 金融知识到底带给我了什么？
       </a>
@@ -340,27 +353,6 @@
     <h3>SubShader模块</h3>
 
 <p>SubShader相当于子Shader的意思，SubShader在Shader中可以有很多个，每个SubShader都可以针对一种设备，但不是所有SubShader都会被采用。当Unity去展示一个模型时，会从第一个SubShader开始寻找是否匹配当前的设备，如果不匹配则与下一个SubShader继续匹配，直到找到能够匹配该设备为止。如果所有的SubShader都没有匹配上，则会使用 Fallback 标签的Shader。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%823.html">
-        《Unity3D高级编程之进阶主程》第六章，网络层(三) - 实现UDP
-      </a>
-    </h1>
-
-    <span class="post-date">07 Aug 2018</span>
-
-    <h3>实现UDP</h3>
-
-<p>在前面介绍了如何实现TCP socket，下面要介绍下UDP的实现方式。</p>
-
-<p>其实两者都是长链接的方式，很多地方都有相识之处，比如两者都需要连接和断开事件支撑，都需要做发送和接收队列缓存，都需要定义数据包协议格式，都需要加密和校验。</p>
-
-<p>我们来说说TCP有而UDP没有的部分，以及需要我们在UDP上实现的功能。UDP和TCP相比，UDP基本就是TCP的阉割版本，很多TCP有的功能UDP都没有。相同的地方有，都是异步发送和接收，都需要多线程操作，发送和接收都需要缓冲队列，并且发送数据时都需要合并数据包。TCP有而UDP没有的地方有，UDP不会自己校验重发，丢包概率大，数据包接收顺序不确定，而且UDP本身没有连接断开检测机制，也没有连接确认机制。</p>
-
-<p>所以直接使用UDP来做网络连接，会遇到巨大的问题，可以说直接使用而不加修饰，不确定性太大基本用不了UDP。</p>
 
   </div>
   
