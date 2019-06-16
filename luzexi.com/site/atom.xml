@@ -4,13 +4,484 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-06-02T21:17:14+08:00</updated>
+ <updated>2019-06-16T18:34:13+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>《Unity3D高级编程之进阶主程》第六章，网络层(五) - 剖析数据协议原理</title>
+   <link href="http://www.luzexi.com/2019/06/16/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%825.html"/>
+   <updated>2019-06-16T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2019/06/16/Unity3D高级编程之进阶主程-网络层5</id>
+   <content type="html">&lt;h6&gt;协议包的格式，json, msgpack, protobuf 以及自定义格式&lt;/h6&gt;
+
+&lt;p&gt;项目的网路层在建设中，除了选择长短连接TCP，UDP，HTTP方式外，还需要选择在传输过程中使用什么样的协议格式。&lt;/p&gt;
+
+&lt;p&gt;前面分析了TCP，UDP，HTTP的原理与应用，现在我们来了解下在传输层和应用层之上的逻辑层中，信息传递格式的选择与利弊。&lt;/p&gt;
+
+&lt;p&gt;我们以最常见的JSON格式作为切入点，一步步深入了解更加有效却复杂的传递格式。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;h6&gt;JSON&lt;/h6&gt;
+
+&lt;p&gt;JSON：JavaScript 对象表示法（JavaScript Object Notation）。它是存储和交换文本信息的语法。类似 XML，但比 XML 更小、更快，更易解析。&lt;/p&gt;
+
+&lt;p&gt;JSON 是轻量级的文本数据交换格式，它独立于语言，具有自我描述性，更易理解。&lt;/p&gt;
+
+&lt;p&gt;JSON 是属于纯文本，具有“自我描述性”（人类可读），具有层级结构（值中存在值）&lt;/p&gt;
+
+&lt;p&gt;JSON与同时纯文本类型格式的XML相比较，JSON不需要结束标签，JSON更短，JSON解析和读写的速度更快，在JavaScript中能够使用内建的 JavaScript eval() 方法进行解析，JSON还可以使用数组，切不使用保留字（&amp;amp;，&amp;lt;，&amp;gt;，&amp;#39;，&amp;quot;）。&lt;/p&gt;
+
+&lt;p&gt;JSON 语法规则：&lt;/p&gt;
+
+&lt;p&gt;JSON 数据的书写格式是：名称/值对。&lt;/p&gt;
+
+&lt;p&gt;名称/值对包括字段名称（在双引号中），后面写一个冒号，然后是值：&lt;/p&gt;
+
+&lt;p&gt;&amp;quot;firstName&amp;quot; : &amp;quot;John&amp;quot;&lt;/p&gt;
+
+&lt;p&gt;JSON数据由逗号分隔，它的值可以是：&lt;/p&gt;
+
+&lt;p&gt;数字（整数或浮点数）&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
+  &amp;quot;number&amp;quot; : 1,
+  &amp;quot;number2&amp;quot; : 11.5
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;字符串（在双引号中）&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
+  &amp;quot;str1&amp;quot; : &amp;quot;1&amp;quot;,
+  &amp;quot;str2&amp;quot; : &amp;quot;11&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;逻辑值（true 或 false）&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
+  &amp;quot;logic1&amp;quot; : true,
+  &amp;quot;logic2&amp;quot; : false
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;数组（在方括号中）&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
+   &amp;quot;array1&amp;quot; : [1,2,3],
+   &amp;quot;array2&amp;quot; : [{&amp;quot;str1&amp;quot;,1},{&amp;quot;str2&amp;quot;,2},{33,44}]
+ }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;对象（在花括号中）&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
+  &amp;quot;obj1&amp;quot; : {1, &amp;quot;str1&amp;quot;, true},
+  &amp;quot;obj2&amp;quot; : {&amp;quot;str2&amp;quot;, 2, false},
+  &amp;quot;obj3&amp;quot; : null
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;JSON 对象在花括号中书写：&lt;/p&gt;
+
+&lt;p&gt;对象可以包含多个名称/值对：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{ &amp;quot;firstName&amp;quot;:&amp;quot;John&amp;quot; , &amp;quot;lastName&amp;quot;:&amp;quot;Doe&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;JSON 数组在方括号中书写：&lt;/p&gt;
+
+&lt;p&gt;数组可包含多个对象：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
+    &amp;quot;employees&amp;quot;: [
+        { &amp;quot;firstName&amp;quot;:&amp;quot;John&amp;quot; , &amp;quot;lastName&amp;quot;:&amp;quot;Doe&amp;quot; },
+        { &amp;quot;firstName&amp;quot;:&amp;quot;Anna&amp;quot; , &amp;quot;lastName&amp;quot;:&amp;quot;Smith&amp;quot; },
+        { &amp;quot;firstName&amp;quot;:&amp;quot;Peter&amp;quot; , &amp;quot;lastName&amp;quot;:&amp;quot;Jones&amp;quot; }
+    ]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;JSON 文件的文件类型通常是 &amp;quot;xxx.json&amp;quot; 用来扩展名用来说明是json格式的文本文件&lt;/p&gt;
+
+&lt;p&gt;JSON 文本的 MIME 类型是 &amp;quot;application/json&amp;quot; (MIME (Multipurpose Internet Mail Extensions) 是描述消息内容类型的因特网标准。MIME 消息能包含文本、图像、音频、视频以及其他应用程序专用的数据。)&lt;/p&gt;
+
+&lt;p&gt;JSON 解析器可以用些比较常用的，比如simpleJson，MiniJson，DataContractJsonSerializer，JArray，JObject等等，都是非常通用高效的插件。&lt;/p&gt;
+
+&lt;h6&gt;自定义二进制流协议格式&lt;/h6&gt;
+
+&lt;p&gt;大部分的网络协议都具有一定的通用性，JSON是最典型的案例，XML，MessagePack，Protobuf都具有一定的通用性，但自定义二进制流协议格式则不是，它完全不通用，因为它不需要顾及通用性。&lt;/p&gt;
+
+&lt;p&gt;我们在存储一串数据的时候，无论这串数据里包含了哪些数据以及哪些数据类型，当我们拿到这串数据在解析的时候能够知道该怎么解析，这是定义协议格式的目标。&lt;/p&gt;
+
+&lt;p&gt;简单的来说就是，当你传给我一串数据的时候，我是用什么样的规则知道这串数据里的内容的。JSON就制定了这么一个规则，这个规则以字符串KEY-VALUE，以及一些辅助的符号‘{’,&amp;#39;}&amp;#39;,&amp;#39;[&amp;#39;,&amp;#39;]&amp;#39;组合而成，这个规则非常通用，以至于任何人拿到任何JSON数据都能知道里面有什么数据。&lt;/p&gt;
+
+&lt;p&gt;自定义二进制流协议格式则不具有通用性，不是任何人拿到数据都能知道里面装的是什么的，有且只有两端在私下协定的双方才知道该如何解析收到的数据，对于破解自定义二进制流的内容也只有靠猜，虽然猜的难度也不是非常大。&lt;/p&gt;
+
+&lt;p&gt;一个自定义二进制流协议格式，分成三部分：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;数据大小|协议编号|具体数据
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;数据大小、协议编号、具体数据，这三者构成了一个完整的协议内容，这一整个协议内容少了谁都不成，不过有时数据大小和协议编号的前后顺序可以交换。&lt;/p&gt;
+
+&lt;p&gt;我们举例来描述这个协议格式，假设我们客户端有这样一个数据结构需要传输到服务端去：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;struct test
+{
+  int test1;
+  float test2;
+  bool test3;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;服务端拿到数据时，其实完全不知道当前拿到的数据是什么，也不知道数据是否完整，有可能只拿到一半的数据，或者一部分的数据。&lt;/p&gt;
+
+&lt;p&gt;首先我们要确定的是，我们收到的数据包它的完整的大小有多大，只有知道完整的包体大小才能确定我当前收到的数据在大小上是否完整，我们是要等待继续接受后面的数据，还是现在就可以进行解析操作了。&lt;/p&gt;
+
+&lt;p&gt;为了确定包的完整性，我们必须先向二进制流中读取4个比特，组合成一个无符号整数，这个整数总共32位，也就是说我们的数据包的大小最大为2的32次减1个byte，然后再用来确定接下来的完整包体大小。&lt;/p&gt;
+
+&lt;p&gt;例如我现在接受到了20个byte，读取前4个，组成一个整数后为24，说明我接受到的后面16个byte是一个不完整的包体，我应该继续等待后续的数据到来。&lt;/p&gt;
+
+&lt;p&gt;其次我们要确定的是收到的数据包是属于哪个格式的协议。&lt;/p&gt;
+
+&lt;p&gt;于是再读取4个byte大小的数据，组成一个无符号整数，用来确定协议号。比如这个无符号整数位为1002，就代表是编号为1002的协议。&lt;/p&gt;
+
+&lt;p&gt;假设我们上面这个test结构的协议号就是1002，那么接下来连着这个协议号的所有数据直到包体大小的末尾，都是这个test结构的数据。&lt;/p&gt;
+
+&lt;p&gt;在解析这个具体数据的时候，要根据生成这个数据的顺序来解析。&lt;/p&gt;
+
+&lt;p&gt;假设在生成这个二进制流数据时，我们的顺序是，先推入test1，再推入test2，再推入test3。test1是4个byte的整数，test2是4个byte的浮点数，test3是1个byte的布尔值，于是就有了&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;xxxx|xxxx|x
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样一个形状的二进制流，每个‘x’为一个byte，‘|’只是为了解释说明用的分隔符不存在于数据内，这个数据其实就是由9个byte组成，其中前4个为test1，中间4ge为test2，后面1个为test3。&lt;/p&gt;
+
+&lt;p&gt;我们在解析的时候也需要按照生成时的顺序来解析，先读取前4个byte组成一个整数赋值给test1，接着再读取4个byte组成一个浮点数赋值给test2，接着再读取1个byte赋值给test3，完成数据解析。&lt;/p&gt;
+
+&lt;p&gt;对于数组形式的数据则要在原来的基础上多增加一个长度标志，比如 int[]类型数据，在生成时先推入一个长度，再连续推入所有内容，在解析的时候做同样的反向操作，先读取4个byte的长度标志，再对连续读取N个具体数据，这个N为长度标志。&lt;/p&gt;
+
+&lt;p&gt;举例int[]为3个整数数组则二进制为如下效果：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;xxxx|xxxx|xxxx|xxxx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前4个byte为长度，接着3次4个byte为数组内的整数数据。&lt;/p&gt;
+
+&lt;p&gt;自定义二进制流协议格式为最不通用的格式，但也是最节省流量的协议，因为每个数据都可以用最小的方式进行定义，比如协议号不需要4个byte，2个byte大小2的16次-1就够用了，长度有可能也不需要4个byte，只要2个甚至1个byte就够用了，有些数据不需要4个byte组成int整数，只需要2个byte数组short就够用了，甚至有些可以组合起来使用，比如协议结构中有4个bool，可以拼成一个byte来传递，这些都可以完全由我们来控制包体的大小不受到任何规则的限制，这也是自定义二进制协议格式最吸引人的地方。&lt;/p&gt;
+
+&lt;p&gt;自定义二进制流协议格式最大的缺点是不通用，当我们需要更换一个协议格式的时候，旧的协议格式就无法解析了，特别是当新的协议解析旧的协议时就会报错。我们也可以做些补救这种问题的措施，为了能让旧的协议格式还能继续使用，我们在每个数据头部都加入一个2个byte的整数代表版本号，由版本号来决定该读取哪个版本的协议，这样旧的协议也照样可以兼容新的协议，只是处理起来的时候需要注意些初始化问题，那些旧协议没有的而新协议有的数据则要尽可能的初始化成默认值以免造成逻辑报错。&lt;/p&gt;
+
+&lt;h6&gt;MessagePack&lt;/h6&gt;
+
+&lt;p&gt;MessagePack 是一个介乎于JSON和自定义二进制流之间的协议格式，他的理念是 ‘It’s like JSON. but fast and small.’ 。&lt;/p&gt;
+
+&lt;p&gt;与JSON相同的是MessagePack也有采用Key-Value形式的Map映射类型，不同的是MessagePack用byte形式存储整数、浮点数、布尔值，并且在Map映射类型外加入了更多单独类型（非KEY-VALUE形式）的数据类型，其中也包括了自定义二进制流的数据类型。&lt;/p&gt;
+
+&lt;p&gt;其中map映射类型是比较常用，也是比较通用的存储形式类型，也因为它的通用性被很多程序员所喜爱。&lt;/p&gt;
+
+&lt;p&gt;使用起来能和JSON用起来一样，并且数据大小比JSON小，解析速度又比JSON快，是MessagePack最大的特点。&lt;/p&gt;
+
+&lt;p&gt;非map类型的数据，其实和自定义二进制流的存储方式差不多，只是把原来的‘数据大小|数据’的形式改为了‘类型|数据’，比如存储一个4个byte也就是32位的整数：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+--------+--------+--------+--------+--------+
+|  0xd2  |ZZZZZZZZ|ZZZZZZZZ|ZZZZZZZZ|ZZZZZZZZ|
++--------+--------+--------+--------+--------+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第一个byte的值0xd2代表32位整数类型，它表示后面4个byte组合起来是整数类型的数据。&lt;/p&gt;
+
+&lt;p&gt;再举个列子，32位的浮点数：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+--------+--------+--------+--------+--------+
+|  0xca  |XXXXXXXX|XXXXXXXX|XXXXXXXX|XXXXXXXX|
++--------+--------+--------+--------+--------+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第一个byte的值0xca代表32位浮点数类型，它表示后面4个byte组合起来是浮点数类型的数据。&lt;/p&gt;
+
+&lt;p&gt;以此类推，nil，bool，8位无符号整数，16位无符号整数，32位无符号整数，64位无符号整数，8位有符号整数，16位有符号整数，32位有符号整数，64位有符号整数等，以及32位浮点数，64位浮点数，都用这种类似的方式表示。&lt;/p&gt;
+
+&lt;p&gt;其实用MessagePack并不是冲着这些单独的数据类型去的，因为这些单独的数据类型完全可以用自定义二进制流代替，我们最关心的其实是它的map类型数据。&lt;/p&gt;
+
+&lt;p&gt;我们专门来看看，MessagePack的map类型的存储机制，为什么就比JSON快，为什么就比JSON小，它是如何存储和解析的。&lt;/p&gt;
+
+&lt;p&gt;在map之前我们看看数组类型的格式：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+--------+--------+--------+~~~~~~~~~~~~~~~~~+
+|  0xdc  |YYYYYYYY|YYYYYYYY|    N objects    |
++--------+--------+--------+~~~~~~~~~~~~~~~~~+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第一个byte的值0xdc代表是个总共可以存储16位长度的数组，也就是最大为2的16次-1个元素的数组，后面2个byte组合起来成为一个无符号的整数代表后面有多少个元素，接着后面N个为相同类型的元素的数据。&lt;/p&gt;
+
+&lt;p&gt;假设说这N个为32位整数类型，那么就是如下格式&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+--------+--------+--------+~~~~~~~~~~~~~~~~~+
+|  0xdc  |00000000|00000011|  0xd2|00001001|0xd2|00001101|...(3 objects)
++--------+--------+--------+~~~~~~~~~~~~~~~~~+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;一个数组中指定了数组类型，以及数组元素的个数，接下来的数据就是单个元素的数据了，每个数据都包含了‘类型|数据’格式。&lt;/p&gt;
+
+&lt;p&gt;其实map类型就是Array数组类型的变种，在数组类型上每个元素，多加了个KEY字符串，我们来看下map的格式：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+--------+--------+--------+~~~~~~~~~~~~~~~~~+
+|  0xde  |YYYYYYYY|YYYYYYYY|   N*2 objects   |
++--------+--------+--------+~~~~~~~~~~~~~~~~~+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第一个byte的值0xde代表是最大个数为16位的map类型数据，接着2个byte组合起来表示有多少个元素，再接着N乘2个元素为数据元素，其中以2个元素为一个组合，第一元素一定是字符串KEY，第二个元素为单独的任意的数据类型。&lt;/p&gt;
+
+&lt;p&gt;我们用官方的例子来分析下：&lt;/p&gt;
+
+&lt;p&gt;一个JSON类型的数据：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{&amp;quot;compact&amp;quot;:true, &amp;quot;schema&amp;quot;:0}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在MessagePack中的map格式为：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;82|A7|&amp;#39;c&amp;#39;|&amp;#39;o&amp;#39;|&amp;#39;m&amp;#39;|&amp;#39;p&amp;#39;|&amp;#39;a&amp;#39;|&amp;#39;c&amp;#39;|&amp;#39;t&amp;#39;|C3|A6|&amp;#39;s&amp;#39;|&amp;#39;c&amp;#39;|&amp;#39;h&amp;#39;|&amp;#39;e&amp;#39;|&amp;#39;m&amp;#39;|&amp;#39;a&amp;#39;|00|
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;其中8位前半个byte的值代表是个15个以内的map类型数据，8后面的2是后半个byte的值，代表总共有2个元素。&lt;/p&gt;
+
+&lt;p&gt;接着A为前半个byte的值，代表是是个31个以内的字符串，A后面的7代表这个字符串拥有7个字符。&lt;/p&gt;
+
+&lt;p&gt;接着7个元素都是字符。&lt;/p&gt;
+
+&lt;p&gt;接着C3是KEY-VALUE的VALUE，这个VALUE是一个bool型的ture值。&lt;/p&gt;
+
+&lt;p&gt;接着A6，A为前半个byte代表是31个以内的字符串，A后面的6代表这个字符串有6个字符。&lt;/p&gt;
+
+&lt;p&gt;接着6个元素都是字符。&lt;/p&gt;
+
+&lt;p&gt;最后00，前面0为前半个byte，表示类型为7位以内的整数，接着的0位后半个byte，代表数据为0。&lt;/p&gt;
+
+&lt;p&gt;MessagePack整个map就是以这种“类型|数据”或者&amp;quot;类型|大小|数据&amp;quot;的方式存储。由于存储的方式是顺序，所以在解析的时候不需要排序，不需要解析符号和类型，数据的类型直接可以用byte来表示，能用byte存储绝不用字符串形式存储，能减少byte使用个数的尽量减少byte的使用个数，能合并的尽量合并为一个byte。&lt;/p&gt;
+
+&lt;p&gt;因此MessagePack对于JSON来说，比JSON减少了大量的解析，比JSON减少了更多的数据空间，使得MessagePack能比起JSON来更快并且更小，就像它自己所说的那样 ‘It’s like JSON. but fast and small.’。&lt;/p&gt;
+
+&lt;h3&gt;Protocol Buffer&lt;/h3&gt;
+
+&lt;p&gt;MessagePack在JSON之上做了优化，其实可以看做是，把JSON和自定义二进制的合并做法，既汲取了JSON这种KEY-VALUE(键值对)通用性的优点，又汲取了自定义二进制流格式无需解析和存储空间小的特点。&lt;/p&gt;
+
+&lt;p&gt;不过MessagePack的Map毕竟是kEY-VALUE形式的KEY值还是使用了字符串类型，它的KEY还是逃脱不了字符串string占用太多存储空间的弊端。&lt;/p&gt;
+
+&lt;p&gt;Google Protocol Buffer 的出现就弥补了MessagePack的这个缺点，但是Google Protocol Buffer也有自身不可忽视的缺点，我们来看究竟Google Protocol Buffer是怎么的一种数据协议。&lt;/p&gt;
+
+&lt;p&gt;Google Protocol Buffer( 简称 Protobuf) 是 Google 公司内部的混合语言数据标准，它们用于 RPC 系统和持续数据存储系统。&lt;/p&gt;
+
+&lt;p&gt;Protobuf 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。&lt;/p&gt;
+
+&lt;p&gt;常有人推崇说 Protocol Buffer 比JSON、MessagePack要好，那么它究竟好在哪里呢？我们就来分析下，为什么有这么多人推崇它。&lt;/p&gt;
+
+&lt;p&gt;我们选择数据协议的目的主要关注的点是，它是否能更简单上手，解析数据是否能更快，存储空间是否能更小，通用性是否能更强。对于这些特点，Protocol Buffer 是否能都做到，还是说它只是在部分几个方面做到了，下面我们来透彻的对它剖析。&lt;/p&gt;
+
+&lt;h6&gt;Protocol Buffer消息定义&lt;/h6&gt;
+
+&lt;p&gt;创建扩展名为.proto的文件，如：MyMessage.proto，并将以下内容存入该文件中。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;message LoginReqMessage {
+  required int64 acct_id = 1;
+  required string passwd = 2;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;message是消息定义的关键字，等同于C#中的struct/class。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;LoginReqMessage为消息的名字，等同于结构体名或类名。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;required前缀表示该字段为必要字段。即在序列化和反序列化之前该字段必须已经被赋值。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;与required相似的功能还存在另外两个类似的关键字，optional和repeated。&lt;/p&gt;
+
+&lt;p&gt;optional表示该字段为可选字段，即在序列化和反序列化前可以不进行赋值。&lt;/p&gt;
+
+&lt;p&gt;相比于optional，repeated主要用于表示数组字段。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;int64和string分别表示64位长整型和字符串型的消息字段。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;在Protocol Buffer中存在一张类型对照表，既Protocol Buffer中的数据类型与其他编程语言(C#/Java/C++)中所用类型的对照。&lt;/p&gt;
+
+&lt;p&gt;该对照表中还将给出在不同的数据场景下，哪种类型更为高效。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;acct_id 和 passwd 分别表示消息字段名，等同于C#中的域变量名。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;标签数字 1 和 2 表示不同的字段在序列化后的二进制数据中的布局位置。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;在该例中，passwd 字段编码后的数据一定位于 acct_id 之后。需要注意的是该值在同一message中不能重复。&lt;/p&gt;
+
+&lt;p&gt;对于Protocol Buffer而言，标签值为 1 到 15 的字段在编码时可以得到优化，即标签值和类型信息仅占有一个byte，标签范围是 16 到 2047 的将占有两个bytes，而Protocol Buffer可以支持的字段数量则为2的29次方减1。有鉴于此，我们在设计消息结构时，可以尽可能考虑让repeated类型的字段标签位于1到15之间，这样便可以有效的节省编码后的字节数量。&lt;/p&gt;
+
+&lt;h6&gt;嵌套Protocol Buffer&lt;/h6&gt;
+
+&lt;p&gt;我们可以在同一个.proto文件中定义多个message，这样便可以很容易的实现嵌套消息的定义。如：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int32&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;optional&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+      &lt;span class=&quot;kd&quot;&gt;enum&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PhoneType&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;MOBILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;HOME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;WORK&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+      &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PhoneNumber&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;optional&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PhoneType&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+      &lt;span class=&quot;n&quot;&gt;repeated&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PhoneNumber&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phones&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;repeated&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight_recent_months&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AddressBook&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;repeated&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;people&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;AddressBook消息的定义中包含另外一个消息类型作为其字段Person，Person又包含了另一个消息类型作为字段PhoneNumber。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;其中的 AddressBook 和 Person 被定义在同一个.proto文件中，也可以被分开来定义在各自的.proto文件中。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Protocol Buffer提供了另外一个关键字import，相当于 C++ 的Include，这样我们便可以将很多通用的message定义在同一个.proto文件中，而其他各模块功能的消息体定义在其他文件中，再通过import的方式将需要的结构体文件中定义的消息包含进来，如：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;import &amp;quot;myproject/CommonMessages.proto&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;限定符 required、optional、repeated 的规则&lt;/h6&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;在每个消息中必须至少有一个required类型的字段，保证数据中一定有至少一个数据。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;required限定符表示该字段为必要字段。即在序列化和反序列化之前该字段必须已经被赋值。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;每个消息中可以包含0个或多个optional类型的字段。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;optional表示该字段为可选字段，即在序列化和反序列化前可以不进行赋值，如果没有赋值则表示该数据为空。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;repeated表示的字段可以包含0个或多个重复的数据。注意，是重复的数据，可以等价于我们常使用的数组和列表，并且可以不赋值，则表示0个数据。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h5&gt;Protocol Buffer 原理-序列化和反序列化&lt;/h5&gt;
+
+&lt;p&gt;Protocol Buffer 是怎么识别和存储数据的，是序列化和反序列的关键。&lt;/p&gt;
+
+&lt;p&gt;JSON 和 MessagePack 都使用了字符串的KEY作为映射到程序变量的关键字，变量和字符串用比较字符串的是否相等来判断是否为该变量，避免不了字符串太多而浪费空间。&lt;/p&gt;
+
+&lt;p&gt;Protocol Buffer 则用数字编号来作为KEY的关键字，每个变量都必须有个不能重复的标签号(即数字编号)，用变量后面跟着的数字编号来映射到数据中的数字编号，进而读取数据。&lt;/p&gt;
+
+&lt;p&gt;Protocol Buffer为每个变量都定义了一个标签号(即数字编号)，这个数字编号就代表了程序变量与指定编号数据的映射关系。&lt;/p&gt;
+
+&lt;p&gt;有了这个规则还不够，因为程序在读取的时候，是不知道某个变量到底对应哪个标签号的，比如上面的Person的 name 变量，在程序里的 name 变量是不知道到底该读取哪个编号的数据的，除非在程序里写死。&lt;/p&gt;
+
+&lt;p&gt;Protocol Buffer 就是使用了这种简单粗暴的方法，‘在程序里写死’的这种方式让事情变得更简单。&lt;/p&gt;
+
+&lt;p&gt;‘在程序里写死’这种粗暴的方式最讲究周边工具了，Protocol Buffer就为很多种语言定制了生成序列化和反序列化程序代码的工具。只需要通过提供.proto文件就能生成相应语音的程序代码，在代码中把编号‘写死’，这一切代码都是自动生成的，我们只需要关心.proto文件中的结构。&lt;/p&gt;
+
+&lt;p&gt;以就是说，当Protocol Buffer生成的解析代码在读数据的时候，一旦读取到编号为1的数据时，就把数据解析给 name 这个程序变量，这些都写死在代码中，而代码由Protocol Buffer工具生成。&lt;/p&gt;
+
+&lt;h6&gt;我们使用上面提到的 AddressBook 数据结构来序列化一个 Protocol Buffer 数据。&lt;/h6&gt;
+
+&lt;p&gt;加入数据的伪代码：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddressBook&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;address_book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;person&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;address_book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add_people&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Jack&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_email&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Jack@qq.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;PhoneNumber&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_phones&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;123456&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add_phones&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;234567&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MOBILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_weight_recent_months&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_weight_recent_months&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;52&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_weight_recent_months&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;54&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;生成出来的二进制数据流如下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (1 &amp;lt;&amp;lt; 3) + 2 = 0a，1为people的标签号,2为嵌入结构对应的类型号&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// 0x3c = 60，表示接下来60个字节为Person的数据&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// 下面进入到 repeated Person 数组的数据结构&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (1 &amp;lt;&amp;lt; 3) + 2 = 0a，Person的第一个字段name的标签号为1，2为string(字符串)对应的类型号&lt;/span&gt;
+&lt;span class=&quot;mo&quot;&gt;04&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// name字段的字符串长度为4&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;61&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;63&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// &amp;quot;Jack&amp;quot; 的ascii编码&lt;/span&gt;
+
+&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (2 &amp;lt;&amp;lt; 3) + 0 = 10，字段id的标签号为2，0为int32对应的类型号&lt;/span&gt;
+&lt;span class=&quot;mo&quot;&gt;01&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// id的整型数据为1&lt;/span&gt;
+
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (3 &amp;lt;&amp;lt; 3) + 2 = 1a，字段email的标签号为3，2为string对应的类型号&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// 0x0b = 11 email字段的字符串长度为11&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;61&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;63&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;71&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;71&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;63&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;6f&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;6d&lt;/span&gt;        &lt;span class=&quot;c1&quot;&gt;// &amp;quot;Jack@qq.com&amp;quot;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;//第1个PhoneNumber，嵌套message&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (4 &amp;lt;&amp;lt; 3) + 2 = 22，phones字段，标签号为4，2为嵌套结构对应的类型号&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// 0a = 10，接下来10个字节为PhoneNumber的数据&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (1 &amp;lt;&amp;lt; 3) + 2 =  0a, PhoneNumber的number，标签号为1，2为string对应的类型号&lt;/span&gt;
+    &lt;span class=&quot;mo&quot;&gt;06&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// number字段的字符串长度为6&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;31&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;33&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;34&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;35&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;36&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// &amp;quot;123456&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// (2 &amp;lt;&amp;lt; 3) + 0 = 10，PhoneType type字段，0为enum对应的类型号&lt;/span&gt;
+    &lt;span class=&quot;mo&quot;&gt;01&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// HOME，enum被视为整数&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// 第2个PhoneNumber，嵌套message&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;06&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;33&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;34&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;35&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;36&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;37&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//信息解读同上，最后的00为MOBILE&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;a2&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;06&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// 1010 0010 0000 0110 varint方式，weight_recent_months的key&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//  010 0010  000 0110 → 000 0110 0100 010 little-endian存储&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// (100 &amp;lt;&amp;lt; 3) + 2 = a2 06，100为weight_recent_months的标签号&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//  2为 packed repeated field的类型号&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// 0c = 12，后面12个字节为float的数据，每4个字节一个数据&lt;/span&gt;
+&lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// float 50&lt;/span&gt;
+&lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// float 52&lt;/span&gt;
+&lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;58&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// float 54&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;整个数据看下来都是遵循了简单的规则，即，标签号 + 类型号，最为头部标识，数据大小标识，作为可选标识，最后放入具体数据：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;标签号 + 类型号|数据大小|具体数据
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;具体数据中再嵌套不同种类的数据，也同样遵循 ‘标签号 + 类型号|数据大小|具体数据’ 这样的规则。&lt;/p&gt;
+
+&lt;h6&gt;二进制数据流中反序列化为程序对象数据，我们重点看看其中 Person 结构的反序列过程：&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MergeFrom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CodedInputStream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;uint&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ReadTag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;switch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;_unknownFields&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UnknownFieldSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MergeFieldFrom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_unknownFields&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ReadInt32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;phones_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;AddEntriesFrom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_repeated_phones_codec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;weight_recent_months_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;AddEntriesFrom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_repeated_weight_recent_months_codec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;通过上述Protocol Buffer生成的代码我们了解到，所有的对象变量都通过.proto文件中的标签号来识别数据是否与该变量有映射关系的，当拿到具体数据时，先判定属于哪个变量，再针对该变量的类型读取数据。&lt;/p&gt;
+
+&lt;h6&gt;Protocol Buffer 不同版本消息的兼容问题&lt;/h6&gt;
+
+&lt;p&gt;在实际的开发中会存在这样一种应用场景，即消息格式因为某些需求的变化而不得不进行必要的修改或者说升级，但是有些使用原有消息格式的应用程序暂时又不能被立刻升级，这便要求我们在升级消息格式时要遵守一定的规则，从而可以保证基于新老消息格式的新老程序能够同时运行。规则如下：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;不要修改已经存在字段的标签号，即变量后面的数字，保证旧数据协议能够继续从数据中读取指定标签号的正确数据。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;任何新添加的字段必须是optional和repeated限定符，保证在旧数据无法加入新数据的情况下，新的协议还能够在旧数据协议之下继续顺利解析，否则无法保证新老程序在互相传递消息时的消息兼容性。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在原有的消息中，不能移除已经存在的required字段，虽然optional和repeated类型的字段可以被移除，但是他们之前使用的标签号必须被保留，不能被新的字段重用。因为旧协议在执行时还是会在旧的标签号中加入自己的数据，新协议如果使用了旧的标签号，就会导致新旧协议数据解析错误的问题。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;int32、uint32、int64、uint64和bool等类型之间是兼容的，sint32和sint64是兼容的，string和bytes是兼容的，fixed32和sfixed32，以及fixed64和sfixed64之间是兼容的，这意味着如果想修改原有字段的类型时，为了保证兼容性，只能将其修改为与其原有类型兼容的类型，否则就将打破新老消息格式的兼容性。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h6&gt;Protocol Buffer 的优点&lt;/h6&gt;
+
+&lt;p&gt;Protobuf 全程使用二进制流形式，用整数代替了KEY来映射变量，比 XML、Json、MessagePack它们更小、更快、也更简单。&lt;/p&gt;
+
+&lt;p&gt;我们可以定义自己的数据结构，然后使用Protobuf代码生成器生成的代码来读写这个数据结构。甚至可以在无需重新部署程序的情况下更新数据结构。只需使用 Protobuf 对数据结构进行一次描述，即可利用各种不同语言或从各种不同数据流中对你的结构化数据轻松读写。&lt;/p&gt;
+
+&lt;p&gt;使用 Protobuf 无需学习复杂的文档对象模型，Protobuf 的编程模式比较友好，简单易学，同时它拥有良好的文档和示例，对于喜欢简单事物的人们而言，Protobuf 比其他的技术更加有吸引力。&lt;/p&gt;
+
+&lt;p&gt;Protobuf 语义更清晰，无需类似 XML，JSON 解析器的东西，简化了解析的操作，减少了解析的消耗。&lt;/p&gt;
+
+&lt;p&gt;Protobuf 数据使用二进制形式，把原来在JSON,XML里用字符串存储的数字换成用byte存储，大量减少了浪费的存储空间。与MessagePack相比，Protobuf减少了Key的存储空间，让原本用字符串来表达Key的方式换成了用整数表达，不但减少了存储空间也加快了反序列化的速度。&lt;/p&gt;
+
+&lt;h6&gt;Protocol Buffer 的不足&lt;/h6&gt;
+
+&lt;p&gt;Protbuf 与 XML 相比也有不足之处。它功能简单无法用来表示复杂的概念。&lt;/p&gt;
+
+&lt;p&gt;XML 已经成为多种行业标准的编写工具，Protobuf 只是运用在数据传输与存储上，在通用性上还差很多。&lt;/p&gt;
+
+&lt;p&gt;由于 XML 具有某种程度上的自解释性，它可以被人直接读取编辑，在这一点上 Protobuf 不行，它以二进制的方式存储，除非你有 .proto 定义，否则你没法直接读出 Protobuf 的任何内容。&lt;/p&gt;
+
+&lt;p&gt;参考资料：&lt;/p&gt;
+
+&lt;p&gt;《Protocol Buffers：阅读一个二进制文件》&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第六章，网络层(四) - 封装HTTP</title>
