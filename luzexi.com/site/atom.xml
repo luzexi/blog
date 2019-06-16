@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-06-16T18:34:13+08:00</updated>
+ <updated>2019-06-16T19:16:47+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -135,14 +135,19 @@
 
 &lt;p&gt;于是再读取4个byte大小的数据，组成一个无符号整数，用来确定协议号。比如这个无符号整数位为1002，就代表是编号为1002的协议。&lt;/p&gt;
 
-&lt;p&gt;假设我们上面这个test结构的协议号就是1002，那么接下来连着这个协议号的所有数据直到包体大小的末尾，都是这个test结构的数据。&lt;/p&gt;
+&lt;p&gt;假设我们上面这个test结构的协议号是1002，那么接下来连着这个协议号的所有数据直到包体大小的末尾，都是这个test结构的数据。&lt;/p&gt;
 
 &lt;p&gt;在解析这个具体数据的时候，要根据生成这个数据的顺序来解析。&lt;/p&gt;
 
 &lt;p&gt;假设在生成这个二进制流数据时，我们的顺序是，先推入test1，再推入test2，再推入test3。test1是4个byte的整数，test2是4个byte的浮点数，test3是1个byte的布尔值，于是就有了&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;xxxx|xxxx|x
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这样一个形状的二进制流，每个‘x’为一个byte，‘|’只是为了解释说明用的分隔符不存在于数据内，这个数据其实就是由9个byte组成，其中前4个为test1，中间4ge为test2，后面1个为test3。&lt;/p&gt;
+&lt;p&gt;这样一个形状的二进制流，每个‘x’为一个byte，这里4个byte组成一个int或float数据，1个byte组成布尔数据，‘|’只是为了解释说明用的分隔符不存在于数据内，这个数据其实就是由9个byte组成，其中前4个为test1，中间4个为test2，后面1个为test3。&lt;/p&gt;
+
+&lt;p&gt;那么在网络传输过程中整个test结构的数据包格式为如下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;13|1002|test1|test2|test3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;13为接下来的数据大小，1002位协议编号，test1|test2|test3为具体数据。&lt;/p&gt;
 
 &lt;p&gt;我们在解析的时候也需要按照生成时的顺序来解析，先读取前4个byte组成一个整数赋值给test1，接着再读取4个byte组成一个浮点数赋值给test2，接着再读取1个byte赋值给test3，完成数据解析。&lt;/p&gt;
 
