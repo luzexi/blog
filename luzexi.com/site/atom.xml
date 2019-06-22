@@ -4,13 +4,207 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-06-16T19:54:03+08:00</updated>
+ <updated>2019-06-22T20:44:17+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>《Unity3D高级编程之进阶主程》第十章，地图与寻路(一) A星算法及优化</title>
+   <link href="http://www.luzexi.com/2019/06/22/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF1.html"/>
+   <updated>2019-06-22T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2019/06/22/Unity3D高级编程之进阶主程-地图与寻路1</id>
+   <content type="html">&lt;p&gt;寻路一直是游戏项目中的热门功能，寻路算法用的最多的就是A星算法，其他也有，比如 Dijkstra算法 与 Floyd 算法，但是他们的在时间和空间上的复杂度都太高，Dijkstra算法时间复杂度为O(N^2)，空间复杂度也是O(N^2)，Floyd的时间复杂度更高有O(N^3)，空间复杂度也在O(N^2)，这种复杂度的算法寻路算法如果应用在游戏中稍微大一点的范围、大面积、稍微高一点的频率的寻路需求是CPU是无法承受的。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;A星算法其实并不是最短路径算法，它找到的路径并不是最短的，它的目标首先是能以最快的速度找到通往目的地的路，它的时间复杂度为O(NLogN)，最差的情况是从起点出发把所有的格子都走了一遍，最后才找到目的地。&lt;/p&gt;
+
+&lt;h6&gt;用一句话概括A星：用最贪婪的方法寻找目的地的路径。&lt;/h6&gt;
+
+&lt;p&gt;怎么个贪婪法呢，我们要拿方格来描述A星算法，因为用方格描述A星寻路的方式很容易理解。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;[][][][][]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[][][][][]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][][][]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[][][][][]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[][][][][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上图中s为start起点(3,2)，e为end终点(5,5)。&lt;/p&gt;
+
+&lt;p&gt;用最贪婪的方法去找目的地：在所有得到的点中，找到与目的地e距离最短的那个，就是离目的地e最接近的，继续用这个点向前探索，直到找到目的地。&lt;/p&gt;
+
+&lt;p&gt;简单来说从s点开始取出它周围的4个点，上，下，左，右，计算下它们与终点e的距离，哪个离e的距离最短，就取那个点的周围4个元素继续进行同样的操作，直到找到目的地e。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;[-][-][-][-][-]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[-][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][-]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[-][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[-][-][-][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如上图中，s开始取到周围的4个点标记为1，计算距离，并推入到一个队列，把这个队列按到e点距离值从小到大排序一下，取出离e点距离最短的点，再从该元素周围取出4个元素标记为2，推入到队列，并对它们计算与e的最短距离，再排序一下，取出离e点距离最近的那个标记为3，依次重复这种操作，直到找到e目的地。所有被标记过的都不能再被重复标记。&lt;/p&gt;
+
+&lt;p&gt;我们来看看复杂点的A星寻路例子：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;[-][-][-][-][-]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][+][+][-][-]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[-][+][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][-][-]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[-][+][-][-][-]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[-][-][-][-][-]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;从s出发到e，图中‘+’为障碍物，用贪婪的A星寻路会怎么找到e呢，如下图：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][-][-][-][-]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][+][+][-][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][+][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][+][+][+][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;1.先取s周围的点标记1&lt;/p&gt;
+
+&lt;p&gt;2.取标记里最近的且没被取过的点，即下面这个1点，取它周围点标记为2&lt;/p&gt;
+
+&lt;p&gt;3.取标记里最近的且没被取过的点，即点3也可以是上面的1，但我们定个规则一样的距离以下面为标准，取它周围的点标记为点4&lt;/p&gt;
+
+&lt;p&gt;4.离e点最近的还是4，继续取它周围的标记为5&lt;/p&gt;
+
+&lt;p&gt;5.离e点最近的还是5，继续取周围点标记为6&lt;/p&gt;
+
+&lt;p&gt;6.离e点最近的还是6，取它周围的点标记为7&lt;/p&gt;
+
+&lt;p&gt;7.离e点最近的还是7，取它最近的点标记为8&lt;/p&gt;
+
+&lt;p&gt;8.离e点最近的是8，取它周围的点标记为9&lt;/p&gt;
+
+&lt;p&gt;9.离e点最近的是9，取它周围的点标记为10&lt;/p&gt;
+
+&lt;p&gt;10.离e点最近的为左边的10，取它周围的点时发现到达目的地e，结束。&lt;/p&gt;
+
+&lt;p&gt;上述过程明晰的阐述了A星算法贪婪的全过程，即只选择当前的最优选择，因为只关注当前的最优解，就忽视了对全局的最优解，走‘弯路’是常有的事。&lt;/p&gt;
+
+&lt;p&gt;体现在代码上为如下伪代码：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;        function find_path(s,e)
+        {
+            open = new list(); //没有被取到过的点
+            close = new list(); //已经被取过的点
+
+            open.add(s); //从s点开始
+
+            for(!open.IsEmpty()) //重复遍历直到没有点可以取
+            {
+                open.sort(); //排序一下
+
+                p = open.pop(); //把最近的点推出来
+
+                if(p == e)
+                {
+                    //找到终点
+                    break;
+                }
+
+                p1 = p.left(); //取左边的点
+                p2 = p.right(); //取右边的点
+                p3 = p.top(); //取上边的点
+                p4 = p.down(); //取下边的点
+
+                //是否已经被取过
+                if(p1 != null &amp;amp;&amp;amp; p1.IsNotInClose())
+                {
+                    //加入到没被取过的列表里
+                    open.add(p1);
+                }
+
+                //是否已经被取过
+                if(p2 != null &amp;amp;&amp;amp; p2.IsNotInClose())
+                {
+                    //加入到没被取过的列表里
+                    open.add(p2);
+                }
+
+                //是否已经被取过
+                if(p3 != null &amp;amp;&amp;amp; p3.IsNotInClose())
+                {
+                    //加入到没被取过的列表里
+                    open.add(p3);
+                }
+
+                //是否已经被取过
+                if(p4 != null &amp;amp;&amp;amp; p4.IsNotInClose())
+                {
+                    //加入到没被取过的列表里
+                    open.add(p4);
+                }
+
+                //p点已经被取过了
+                p.setClose(false);
+                close.add(p);
+            }
+        }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上述伪代码完整的诠释了A星寻路的全过程。&lt;/p&gt;
+
+&lt;p&gt;当地图很大的时候，或者使用A星算法的寻路频率很高的时候，普通的A星算法就会消耗大量的CPU性能急剧下降，普通的A星性能还是不过关。接下来我们讲讲A星寻路在遇到性能瓶颈时的优化方案。&lt;/p&gt;
+
+&lt;h3&gt;一、长距离导航&lt;/h3&gt;
+
+&lt;p&gt;当距离很大，中间有很多障碍物时，A星的算法就会遇到瓶颈，不断加入的可行走点使得排序速度越来越慢，最后可能造成CPU阻塞无法动弹。&lt;/p&gt;
+
+&lt;p&gt;当寻路距离太大时怎么办？&lt;/p&gt;
+
+&lt;p&gt;其实路径不是非得实时计算出来才好，我们可以把一些常用的路径，在离线下算好放在数据文件中，游戏开启时放在内存里，当需要寻路到那个节点或者那个节点附近时，就可以取出来直接使用，而不再需要计算。&lt;/p&gt;
+
+&lt;p&gt;比如 A到B 我们已经算法路径并存放在了内存里，当我们在A附近，要寻路到B附近时，就可以先寻路到A，再调出A到B的路径，再计算B到目的的路径。&lt;/p&gt;
+
+&lt;p&gt;以这种方式来规避一些计算量特别大，或者计算频率特别高的寻路算法调用，在大型世界的RPG游戏里特别常用。&lt;/p&gt;
+
+&lt;h3&gt;二、A星的排序算法优化&lt;/h3&gt;
+
+&lt;p&gt;每次插入open列表的点后，open就不再是有序的队列了，所以每次去拿最小值时都需要重新排序。排序的时间消耗随着队列长度的增大而增大，其实有很大一部分A星的性能消耗都在排序上。&lt;/p&gt;
+
+&lt;p&gt;那么是不是可以不排序，其实可以不排序，而使用找到插入位置并插入的方法，让队列永远保持有序状态。&lt;/p&gt;
+
+&lt;p&gt;因为open队列在插入前是有序的，所以我们可以选用二分查找算法来找到插入的位置。&lt;/p&gt;
+
+&lt;p&gt;每次插入时都使用二分查找算法查找插入点，那么每次的插入复杂度为O(logN)，比快排一次的O(NlogN)要快很多。&lt;/p&gt;
+
+&lt;h3&gt;三、优化排序判断依据的预测值计算方法&lt;/h3&gt;
+
+&lt;p&gt;前面用图所举的例子中，都是以当前点p与终点e之间的距离来作为预测值，这种方法简单但也不科学，导致A星寻找更好的点位时总是要绕很大的弯路。&lt;/p&gt;
+
+&lt;p&gt;我们可以改变一下这个策略，选用一个更科学的方法， F 预测值= G 当前最近步数 + H 预测当前点到终点的步数 的方法。&lt;/p&gt;
+
+&lt;p&gt;F 为预测值，G为起点s到当前点p的最近步数，H为当前点p到终点e的预测值，它们相加为F预测值。其中G应该是已经计算好并放入节点中的值，该值就是计算过程中起点s到当前点的步数。&lt;/p&gt;
+
+&lt;p&gt;这个方法相当于，原来只关注当前点到终点的距离，变为关注起点s经过当前点p路径到终点e的距离，虽然还是贪婪的简单预测算法，但比起原来只关注当前点p与终点e的距离，更加科学化，能更快的找到更好更近的点位。&lt;/p&gt;
+
+&lt;p&gt;为什么要改善这个预测值，改善预测值有什么意义呢？&lt;/p&gt;
+
+&lt;p&gt;其实预测值的计算方法代表了在寻路过程中的走法，如果预测值只关注在于终点距离最近的点上，那么在寻路过程中的选择点位的顺序就会偏向于与终点更近的点。而如果预测值计算公式，关注的是整个距离较近的点位上，那么在寻路过程中在选择点位上也就会偏向整条路径短的方向上去靠。&lt;/p&gt;
+
+&lt;h3&gt;四、多次频繁A星寻路的优化&lt;/h3&gt;
+
+&lt;p&gt;多次频繁寻路中，对A星算法中每个运算，每行代码的运算细节都会有比较重大的考验。&lt;/p&gt;
+
+&lt;p&gt;比如我们在查看一个节点是否为被取过的节点，即是否为Close，很多人都会在Close里取寻找该节点是否存在，这个操作明显就没有考虑到性能的消耗，要在Close列表中找节点，就相当于遍历一遍所有已经找过的节点，Close里的节点越多，越浪费CPU，而且是不只一次浪费，每个循环都会浪费一次，性能消耗巨大。&lt;/p&gt;
+
+&lt;p&gt;因此我们通常的做法是把节点作为一个实例，在实例中添加IsClose的变量，来判断是否被取过，或者说是否Close。&lt;/p&gt;
+
+&lt;p&gt;但这种方法还是不够，因为IsClose变量是要初始化的，每次寻路都要将前面寻路过的痕迹抹去才能开始全新的寻路过程。&lt;/p&gt;
+
+&lt;p&gt;这就是又一个被很多人忽视的初始化的性能消耗，每次在A星寻路开始前，需要将IsClose的变量初始化为false，就需要遍历整个数据来初始化。&lt;/p&gt;
+
+&lt;p&gt;每次都要遍历整个数据的话，A星算法无论优化的多快都无济于事了，因为初始化的性能消耗就已经将A星的性能消耗完全盖掉了。如果初始化的性能消耗需要遍历整个数据，那么优化A星算法的意义何在。&lt;/p&gt;
+
+&lt;p&gt;其实可以用一个变量就能判断IsClose的方法，无需初始化。&lt;/p&gt;
+
+&lt;p&gt;我们可以在寻路类中设置一个属性变量FindIndex，或者专门为寻路服务的静态变量也可以，而每个寻路节点中也存有一个变量FindIndex，每次寻路前都对FindIndex++，在判断IsClose时，当节点中的FindIndex与寻路类中FindIndex一致时说明已经被当次寻路算法取出过，否则两者不一样，说明这个节点没有被取出过，当节点被取出时，节点里的FindIndex则设置为当前寻路类中的FindIndex值，以表明该节点已经被这次寻路算法取出过。&lt;/p&gt;
+
+&lt;p&gt;用一个变量和整数的比较就能知道IsClose的结果，省去了巨量的初始化操作。&lt;/p&gt;
+
+&lt;h6&gt;在A星算法这种经常用频繁用的算法中，一个小小的性能消耗就能放大很多倍，特别注意调用的函数的复杂度，公式的复杂度，以及运算的优化，尽量做到能不调用函数的不调用函数，能简化公式的尽量简化公式，能用&amp;amp;|&amp;lt;&amp;gt;位运算符号代替加减乘除的尽量用位运算代替，节省A星算法的性能开销。&lt;/h6&gt;
+
+&lt;h6&gt;我也看过所谓的B星算法过程，其实世上没有B星，所谓的B星其实就是我们A星的优化版本。&lt;/h6&gt;
+</content>
+ </entry>
  
  <entry>
    <title>《Unity3D高级编程之进阶主程》第六章，网络层(五) - 剖析数据协议原理</title>
