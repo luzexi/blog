@@ -226,9 +226,9 @@
 </code></pre></div>
 <p>上图中s为start起点(3,2)，e为end终点(5,5)。</p>
 
-<p>用最贪婪的方法去找目的地：在所有得到的点中，找到与目的地e距离最短的那个，就是离目的地e最接近的，继续用这个点向前探索，直到找到目的地。</p>
+<h6>用最贪婪的方法去找目的地：在所有得到的点中，找到与目的地e距离最短的那个，就是离目的地e最接近的，继续用这个点向前探索，直到找到目的地。</h6>
 
-<p>简单来说从s点开始取出它周围的4个点，上，下，左，右，计算下它们与终点e的距离，哪个离e的距离最短，就取那个点的周围4个元素继续进行同样的操作，直到找到目的地e。</p>
+<h6>简单来说从s点开始取出它周围的4个点，上，下，左，右，计算下它们与终点e的距离，哪个离e的距离最短，就取那个点的周围4个元素继续进行同样的操作，直到找到目的地e。</h6>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span></span>        <span class="o">[-][-][-][-][-]</span>
         <span class="o">[-][</span><span class="mi">1</span><span class="o">][</span><span class="mi">2</span><span class="o">][</span><span class="mi">3</span><span class="o">][-]</span>
         <span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="n">s</span><span class="o">][</span><span class="mi">1</span><span class="o">][</span><span class="mi">2</span><span class="o">][</span><span class="mi">3</span><span class="o">]</span>
@@ -251,25 +251,25 @@
         <span class="o">[</span><span class="mi">2</span><span class="o">][+][+][+][</span><span class="mi">8</span><span class="o">]</span>
         <span class="o">[</span><span class="mi">3</span><span class="o">][</span><span class="mi">4</span><span class="o">][</span><span class="mi">5</span><span class="o">][</span><span class="mi">6</span><span class="o">][</span><span class="mi">7</span><span class="o">]</span>
 </code></pre></div>
-<p>1.先取s周围的点标记1</p>
+<h6>1.先取s周围的点标记1</h6>
 
-<p>2.取标记里最近的且没被取过的点，即下面这个1点，取它周围点标记为2</p>
+<h6>2.取标记里最近的且没被取过的点，即下面这个1点，取它周围点标记为2</h6>
 
-<p>3.取标记里最近的且没被取过的点，即点3也可以是上面的1，但我们定个规则一样的距离以下面为标准，取它周围的点标记为点4</p>
+<h6>3.取标记里最近的且没被取过的点，即点3也可以是上面的1，但我们定个规则一样的距离以下面为标准，取它周围的点标记为点4</h6>
 
-<p>4.离e点最近的还是4，继续取它周围的标记为5</p>
+<h6>4.离e点最近的还是4，继续取它周围的标记为5</h6>
 
-<p>5.离e点最近的还是5，继续取周围点标记为6</p>
+<h6>5.离e点最近的还是5，继续取周围点标记为6</h6>
 
-<p>6.离e点最近的还是6，取它周围的点标记为7</p>
+<h6>6.离e点最近的还是6，取它周围的点标记为7</h6>
 
-<p>7.离e点最近的还是7，取它最近的点标记为8</p>
+<h6>7.离e点最近的还是7，取它最近的点标记为8</h6>
 
-<p>8.离e点最近的是8，取它周围的点标记为9</p>
+<h6>8.离e点最近的是8，取它周围的点标记为9</h6>
 
-<p>9.离e点最近的是9，取它周围的点标记为10</p>
+<h6>9.离e点最近的是9，取它周围的点标记为10</h6>
 
-<p>10.离e点最近的为左边的10，取它周围的点时发现到达目的地e，结束。</p>
+<h6>10.离e点最近的为左边的10，取它周围的点时发现到达目的地e，结束。</h6>
 
 <p>上述过程明晰的阐述了A星算法贪婪的全过程，即只选择当前的最优选择，因为只关注当前的最优解，就忽视了对全局的最优解，走‘弯路’是常有的事。</p>
 

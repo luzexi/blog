@@ -25,9 +25,9 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;上图中s为start起点(3,2)，e为end终点(5,5)。&lt;/p&gt;
 
-&lt;p&gt;用最贪婪的方法去找目的地：在所有得到的点中，找到与目的地e距离最短的那个，就是离目的地e最接近的，继续用这个点向前探索，直到找到目的地。&lt;/p&gt;
+&lt;h6&gt;用最贪婪的方法去找目的地：在所有得到的点中，找到与目的地e距离最短的那个，就是离目的地e最接近的，继续用这个点向前探索，直到找到目的地。&lt;/h6&gt;
 
-&lt;p&gt;简单来说从s点开始取出它周围的4个点，上，下，左，右，计算下它们与终点e的距离，哪个离e的距离最短，就取那个点的周围4个元素继续进行同样的操作，直到找到目的地e。&lt;/p&gt;
+&lt;h6&gt;简单来说从s点开始取出它周围的4个点，上，下，左，右，计算下它们与终点e的距离，哪个离e的距离最短，就取那个点的周围4个元素继续进行同样的操作，直到找到目的地e。&lt;/h6&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;[-][-][-][-][-]&lt;/span&gt;
         &lt;span class=&quot;o&quot;&gt;[-][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][-]&lt;/span&gt;
         &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
@@ -50,25 +50,25 @@
         &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][+][+][+][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
         &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;1.先取s周围的点标记1&lt;/p&gt;
+&lt;h6&gt;1.先取s周围的点标记1&lt;/h6&gt;
 
-&lt;p&gt;2.取标记里最近的且没被取过的点，即下面这个1点，取它周围点标记为2&lt;/p&gt;
+&lt;h6&gt;2.取标记里最近的且没被取过的点，即下面这个1点，取它周围点标记为2&lt;/h6&gt;
 
-&lt;p&gt;3.取标记里最近的且没被取过的点，即点3也可以是上面的1，但我们定个规则一样的距离以下面为标准，取它周围的点标记为点4&lt;/p&gt;
+&lt;h6&gt;3.取标记里最近的且没被取过的点，即点3也可以是上面的1，但我们定个规则一样的距离以下面为标准，取它周围的点标记为点4&lt;/h6&gt;
 
-&lt;p&gt;4.离e点最近的还是4，继续取它周围的标记为5&lt;/p&gt;
+&lt;h6&gt;4.离e点最近的还是4，继续取它周围的标记为5&lt;/h6&gt;
 
-&lt;p&gt;5.离e点最近的还是5，继续取周围点标记为6&lt;/p&gt;
+&lt;h6&gt;5.离e点最近的还是5，继续取周围点标记为6&lt;/h6&gt;
 
-&lt;p&gt;6.离e点最近的还是6，取它周围的点标记为7&lt;/p&gt;
+&lt;h6&gt;6.离e点最近的还是6，取它周围的点标记为7&lt;/h6&gt;
 
-&lt;p&gt;7.离e点最近的还是7，取它最近的点标记为8&lt;/p&gt;
+&lt;h6&gt;7.离e点最近的还是7，取它最近的点标记为8&lt;/h6&gt;
 
-&lt;p&gt;8.离e点最近的是8，取它周围的点标记为9&lt;/p&gt;
+&lt;h6&gt;8.离e点最近的是8，取它周围的点标记为9&lt;/h6&gt;
 
-&lt;p&gt;9.离e点最近的是9，取它周围的点标记为10&lt;/p&gt;
+&lt;h6&gt;9.离e点最近的是9，取它周围的点标记为10&lt;/h6&gt;
 
-&lt;p&gt;10.离e点最近的为左边的10，取它周围的点时发现到达目的地e，结束。&lt;/p&gt;
+&lt;h6&gt;10.离e点最近的为左边的10，取它周围的点时发现到达目的地e，结束。&lt;/h6&gt;
 
 &lt;p&gt;上述过程明晰的阐述了A星算法贪婪的全过程，即只选择当前的最优选择，因为只关注当前的最优解，就忽视了对全局的最优解，走‘弯路’是常有的事。&lt;/p&gt;
 
