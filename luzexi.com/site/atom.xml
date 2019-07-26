@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-07-26T18:39:07+08:00</updated>
+ <updated>2019-07-26T18:51:59+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -73,15 +73,15 @@
 &lt;p&gt;路点系统弥补了一些二维数组形式的缺点。路点系统也是一个易于理解的系统，它由很多个点构成，这些点我们称它们为路点，即路上的点，这些路点需要我们手动在地图上放进去，每个路点中都存储了坐标，ID，以及与哪些路点相连的数据。&lt;/p&gt;
 
 &lt;p&gt;我们在地图中，放入了很多个路点，并且为这些路点配置了连线，于是就有了这幅画面：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片脑补
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片暂时脑补
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;地图中每个路点都会有与其他某些路点相连接的线，我们可以称它们为路线，由路点与路点之间连线而成。&lt;/p&gt;
 
 &lt;p&gt;如果把地图里的路点和路线铺设的更加复杂一点时，所有的点和线都拼成了一张网：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片脑补
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片暂时脑补
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这张网中，只要我们得到某个点，就能根据这些路点和路线，用A星的算法来寻路到目的地。即，起点为，与起点最近的路点，寻路到，与终点最近的路点，的一条路径。如图：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片脑补
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片暂时脑补
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;路点系统很容易理解，但也需要一些可视化的编辑器的支撑，因为所有的路点都需要在既有的地图上编辑，所以编写一个专门的地图编辑器是必不可少的，没有地图编辑器至少也需要路点编辑器，可保存路点数据到文件，和从文件加载路点数据，以及增加路点，减少路点，添加和减少路点连接信息。&lt;/p&gt;
 
@@ -136,7 +136,7 @@
     第三，直到剩下最后3个点形成一个三角形并记录下来，把所有记录的三角形拼接起来就形成了三角化网格。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;经过这三个步骤的计算，所有的耳点都被切掉后，再把所有记录的三角形拼装成三角形网格，就完成了整个三角形剖分步骤。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片脑补
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片暂时脑补
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6&gt;多边形含‘洞’的情况&lt;/h6&gt;
 
@@ -150,10 +150,10 @@
 &lt;p&gt;也就是说，最终计算的还是一个单独的简单多边形，只是在计算之前，将‘洞’以凹形形态并入最外围的简单多边形。&lt;/p&gt;
 
 &lt;p&gt;我们以图为例，可以看的更加清楚一点：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片脑补
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片暂时脑补
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;图中展示了，如何将一个‘洞’以凹形形态的方式并入外围简单多边形的，就如同从外围简单多边形上，修了一条小小的通路到‘洞’中那样，其实我们完全可以理解为，下图那样：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片脑补
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图片暂时脑补
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;图中从外围简单多边形的点上延伸出一条路径来连接‘洞’，使得‘洞’的空白与外围的空白联通，就像贴膜里的气泡开了个口把空气放出去了那样。&lt;/p&gt;
 
