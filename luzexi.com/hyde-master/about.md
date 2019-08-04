@@ -4,9 +4,11 @@ title: About Me
 ---
 姓名：陆泽西 (Jesse Lu)
 
-Company ：盛趣游戏(原名盛大游戏)，曾就职：动视Activision，谷米Gumi，百游Baiyou
+公司 ：盛趣游戏(原名盛大游戏)
 
-Position ：Shanghai
+曾就职：动视Activision，谷米Gumi，百游Baiyou
+
+坐标 ：上海
 
 ### Game Project：
 
