@@ -3,7 +3,7 @@
 <p>layout: post
 status: publish
 published: false
-title: 《Unity3D高级编程之进阶主程》第十章，地图与寻路(三) 地图编辑器
+title: 《Unity3D高级编程之进阶主程》第十章，地图与寻路(四) 地图的制作与优化
 description: &quot;unity3d 高级编程 主程 地图 navmesh 寻路&quot;
 excerpt_separator: ===
 tags:
@@ -12,10 +12,9 @@ tags:
 
 <h2>- 前端技术</h2>
 
-<p>4，地图编辑器。</p>
+<h3>场景的制作与优化</h3>
 
-<p>8，地形场景的制作与优化。
-9，地形地图烘培</p>
+<h3>烘培</h3>
 
 <p>10，场景优化技巧
     2.  LOD优化方案。
@@ -29,18 +28,7 @@ tags:
 
 <p>二维数组中的寻路最容易做动态障碍，因为每个格子都代表了一个寻路点，只要填上一个障碍数据就能</p>
 
-<p>1，Navmesh算法。</p>
-
-<p>2，生成Navmesh网格，多层网格数据输出。</p>
-
-<p>http://blianchen.blog.163.com/blog/static/13105629920103211052958/
-http://blianchen.blog.163.com/blog/static/13105629920103614613291/
-http://blianchen.blog.163.com/blog/static/131056299201037102315211/
-http://blianchen.blog.163.com/blog/static/13105629920103811451196/
-http://blianchen.blog.163.com/blog/static/13105629920103911258517/
-http://blianchen.blog.163.com/blog/static/131056299201031293039882/</p>
-
-<p>3，导入导出，自动生成Navmesh网格，再手工调节。</p>
+<p>三角网格寻路则使用物理检测碰撞辅助寻路。</p>
 
 <p>RecastNavigation-NavMesh生成原理
 https://blog.csdn.net/you<em>lan</em>hai/article/details/77428858</p>
@@ -52,6 +40,8 @@ http://critterai.org/projects/cainav/doc/html/6fb3041b-e9be-4f03-868b-dcac944df1
 http://www.cnblogs.com/yaukey/p/3585226.html</p>
 
 <p>可以用路点+navmesh的形式做图。因为路点消耗少，在城市道路上，在没有怪物的情况下可以做到很少的消耗。而在战斗中则需要整个地面有寻路路线，就需要navmesh的作用。</p>
+
+<h3>资源加载的多种方式</h3>
 
 <h3>8.人物技能编辑器</h3>
 
