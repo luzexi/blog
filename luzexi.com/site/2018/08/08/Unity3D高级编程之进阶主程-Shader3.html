@@ -213,6 +213,7 @@
       <div class="post">
   <h1 class="post-title">《Unity3D高级编程之进阶主程》第七章，Shader(三) - 渲染管道</h1>
   <span class="post-date">08 Aug 2018</span>
+
   <h3>SubShader模块</h3>
 
 <p>SubShader相当于子Shader的意思，SubShader在Shader中可以有很多个，每个SubShader都可以针对一种设备，但不是所有SubShader都会被采用。当Unity去展示一个模型时，会从第一个SubShader开始寻找是否匹配当前的设备，如果不匹配则与下一个SubShader继续匹配，直到找到能够匹配该设备为止。如果所有的SubShader都没有匹配上，则会使用 Fallback 标签的Shader。</p>
