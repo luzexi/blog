@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-08-11T19:23:49+08:00</updated>
+ <updated>2019-08-12T10:04:48+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -4462,7 +4462,7 @@ tags:
 
 &lt;p&gt;地图离不开地形，地形其实是地图的关键，地形的制作分为几种：&lt;/p&gt;
 
-&lt;p&gt;一种是手动拼接的地形。&lt;/p&gt;
+&lt;h3&gt;一种是手动拼接的地形。&lt;/h3&gt;
 
 &lt;p&gt;手动拼接的地形比较常见，由3D人员制作出来的3D模型作为地面的地形放置在场景中，相当于是一个模型落在场景上一样，只是这个3D模型很可能是有碰撞体的，碰撞体Mesh Collider 可以根据项目的需要进行测试碰撞。也有可能会使用Unity3D内置的地形，也一样相当于一个3D模型放置在场景中，只是我们并不建议使用Unity3D内置的地形罢了。其他3D物体也是用同种方式来放置到场景中，只是放置的手法可能不同，有的可能通过嵌入到prefab的方式，而有的可能通过地图编辑器加入到地图数据文件中，再从加载的地图文件数据的过程中实例化出来。&lt;/p&gt;
 
@@ -4470,13 +4470,13 @@ tags:
 
 &lt;p&gt;能自由发挥当然是好事，但也带来了诸多不可控性，由于场景内物件没有统一的标准，因此在场景制作时常常会大量使用，小块的地形，甚至带有动画的地形，特效，以及半透明效果来增强画面的效果，画面效果增强的同时导致性能急剧降低。&lt;/p&gt;
 
-&lt;p&gt;另一种是地图地形的程序拼接方式。&lt;/p&gt;
+&lt;h3&gt;另一种是地图地形的程序拼接方式。&lt;/h3&gt;
 
 &lt;p&gt;用程序拼接地图，这样所有的地图都由程序而生成了一个或者几个模型的结构，进而铺满整个地面。&lt;/p&gt;
 
 &lt;p&gt;这种方式来制作地图最常见的要属2D的RPG游戏了，2D角色扮演类游戏中，几乎整个屏幕的地形都需要用地图编辑器来建立和拼合的，当需要这类地图出现时时，程序会将地图数据加载进来后，对每一块的地图都进行动态的拼合，这样一来，整个地图就只有一个drawcall，因为它只是同一个模型。&lt;/p&gt;
 
-&lt;p&gt;2D角色扮演类游戏中，动态拼合整个地图怎么做到的呢，其实很简单。&lt;/p&gt;
+&lt;h6&gt;2D角色扮演类游戏中，动态拼合整个地图怎么做到的呢，其实很简单。&lt;/h6&gt;
 
 &lt;p&gt;整个地图就是一个矩形，每个地图的地形方块就是这个大矩形中的一个格子，而每个格子都由2个三角形构成，既然我们能计算出每个方块的位置，我们就能计算每个三角的顶点和位置。&lt;/p&gt;
 
@@ -4484,8 +4484,93 @@ tags:
 
 &lt;p&gt;拼接完三角形，再把地图的UV接上去，因为每块地形的图都不一样，所以我们需要在离线时就把所有的地形图都拼成一张图，即以图集的方式存储地图的方块。当我们需要将图接到网格上时，读取那个方块的UV点赋值给顶点就可以了。&lt;/p&gt;
 
-&lt;p&gt;地形合并&lt;/p&gt;
+&lt;p&gt;伪代码：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    //生成地图
+    void Generate_map()
+    {
+        //遍历每块矩形的方块位置
+        for i to width_count then
+            for j to height_count then
+                mesh = generate_trangle_by_rectangle(i,j,_type, texture_info)
+                CombineAdd(mesh)
+            end
+        end
+    }
 
+    //生成矩形方块所需要的，4个顶点，4个索引，2个三角形，2个三角形的顶点索引，以及三角形的uv位置。
+    void generate_trangle_by_rectangle(int _x, int _y, int _type, texture_info _tex)
+    {
+        //矩形的4个顶点
+        point1 = vector2( (_x - 0.5) * width, (_y + 0.5) * height)
+        point2 = vector2( (_x + 0.5) * width, (_y + 0.5) * height)
+        point3 = vector2( (_x + 0.5) * width, (_y - 0.5) * height)
+        point4 = vector2( (_x - 0.5) * width, (_y - 0.5) * height)
+
+        //顶点增加后的索引位置
+        point_index1 = add_point(point1)
+        point_index2 = add_point(point2)
+        point_index3 = add_point(point3)
+        point_index4 = add_point(point4)
+
+        //三角形的生成时的顶点
+        trangle1 = [point1, point2, point3]
+        trangle2 = [point3, point4, point1]
+
+        //三角形顶点的索引信息
+        trangle_index1 = [point_index1, point_index2, point_index3]
+        trangle_index2 = [point_index3, point_index4, point_index1]
+
+        //4个uv点位的信息
+        point_uv1 = vector2(_tex.uv_x, _tex.uv_y)
+        point_uv2 = vector2(_tex.uv_x + _tex.width, _tex.uv_y)
+        point_uv3 = vector2(_tex.uv_x + _tex.width, _tex.uv_y + _tex.height)
+        point_uv4 = vector2(_tex.uv_x, _tex.uv_y + _tex.height)
+
+        Mesh mesh = new Mesh()
+        mesh.trangles = [trangle1 , tangle2]
+        mesh.trangles_index = [trangle_index1 , trangle_index2]
+        mesh.uvs = [point_uv1, point_uv2, point_uv3, point_uv4]
+
+        return mesh
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上述代码中，对所有地图中的方块都进行遍历，在遍历中生成了每个方块所需要的顶点，顶点索引，uv点，进而生成三角形，三角形的索引。在生成完毕后，将这些生成的数据，与前面生成的数据进行合并，使得整个地图是一个一体化的网格，只产生一个drawcall。&lt;/p&gt;
+
+&lt;p&gt;用程序拼接地图的好处是可以任意的通过地图编辑器来改变地形地貌，拼接完成的地图在渲染上的代价也相当的小，而且假如想换个地图的地形，只要更换贴图就可以了，什么样的贴图就可以产生什么样的地图。&lt;/p&gt;
+
+&lt;p&gt;同时也带来了很多弊端，必须要有成形的地图编辑器支撑，前期工具的工作量比较大，稍微提高了一点点门槛，并且地图元素仅限于贴图中的元素，当地图元素增加到一定范围，就要扩大地图的贴图时就要重新排列地图信息。&lt;/p&gt;
+
+&lt;h6&gt;3D RPG角色扮演类游戏中，也时常常使用这种技巧来绘制游戏地图，曾经在日本风靡一时的《白猫计划》就是这样做的。&lt;/h6&gt;
+
+&lt;p&gt;这种程序拼合的地图，策划设计师、关卡设计师可以在地图编辑器上，任意的绘制、拼接、同种类型的不同样式的地图（即在同一张贴图内容中的模型和地图元素），因此大大缩短了大量的场景试错时间。它能大量的生成出不同样式的地图，而不需要制作大量的不同类型的3D模型，大大缩短了项目时间进度，深受游戏制作人的喜爱。&lt;/p&gt;
+
+&lt;p&gt;那么在3D地图中是怎么拼接方块地形的呢？看上去比2D更加复杂的事情，其实更加简单。&lt;/p&gt;
+
+&lt;p&gt;首先，在3D地形模型制作时需要规范的一下，3D模型的长宽必须和地图方块的长宽是一致的。3D地图中，不需要我们自己来拼接三角形了，因为已经有了固定的地形模型，但对每个地形模型就需要有规范。假如规定每块地形都是 1 x 1，那么在制作和拆分地形模型时就要按规定来，每个3D地形模型都必须以 1 x 1 的标准来定制，否则不可用。当然并不一定要 1 x 1，也可以是2 x 2、 3 x 3等等，只是当标准制定完毕后，地形模型的制作必须要按照标准来做，每个元素都相当于一个地图块。&lt;/p&gt;
+
+&lt;p&gt;其次，所有地形模型的贴图都必须并在一张贴图上制作。因为只有这样才能在合并模型后让这么多 1 x 1 的小方块只需要1个drawcall渲染调用就可以了绘制所有的地图。也只有这样，才能解决太多模型需要渲染导致的爆量drawcall问题。&lt;/p&gt;
+
+&lt;p&gt;最后，在3D地形模型制作时也是相当考量的，因为这个地图都被拆分成了N种类型的地形方块，所以在制作的初期需要对整个地形有哪些类型的需求，需要有一个交流探讨的过程。&lt;/p&gt;
+
+&lt;p&gt;并且在读取地图编辑器编辑的数据后，生成地图时也时常需要增加些许逻辑，比如当左边是某个模型时，为了能与它完美的拼接，当前这个格子上的模型必须是迎合它的那个，就像我们在制作和拆分城墙时那样，当城墙处于拐角处时，我们需要用拐角模型代替，还要判断它的左右前后有没有城墙，这4种情况都有不同的4种拐角城墙所代替，就是为了完美契合周围的环境而进行的额外的处理。&lt;/p&gt;
+
+&lt;h3&gt;常规场景的性能优化&lt;/h3&gt;
+
+&lt;p&gt;上面几节阐述了地图的拼接方式，其中程序拼接的方式确实大大降低了drawcall的数量，提升了渲染的性能，但只针对可拆分的地图类型项目，对大多数游戏类型来说地图是不可拆分成小块的。因此我们还是需要更多的针对常规场景讲解优化的方法和技巧。&lt;/p&gt;
+
+&lt;p&gt;首先我们要清楚的是，是什么造成了场景的低渲染效率。我们在这里罗列一下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1.渲染面数太多，计算量压力太大
+
+    2.渲染管线太多，即drawcall太多，渲染管线太多
+
+    3.实时阴影消耗太多，也即drawcall太多，渲染管线太多
+
+    4.贴图太多太大，现存的带宽负荷太重
+
+    5.动画太多，蒙皮的计算量太大
+
+    6.后处理效果的计算量太大
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;LOD在场景中发挥的优势&lt;/p&gt;
 
 &lt;p&gt;为什么不用Unity3D的静态批处理，而选用手动合并模型。&lt;/p&gt;

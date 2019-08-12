@@ -9,6 +9,8 @@ title: 友情链接
 
 [赵青青的博客](http://www.cnblogs.com/zhaoqingqing)
 
+[技术博客](https://www.d1blog.com/)
+
 ### 加友情链接的请留言
 
 {% include comments.html %}
