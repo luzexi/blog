@@ -516,9 +516,6 @@
 <loc>http://www.luzexi.com/</loc>
 </url>
 <url>
-<loc>http://www.luzexi.com/%E9%87%91%E8%9E%8D%E6%8A%95%E8%B5%84/</loc>
-</url>
-<url>
 <loc>http://www.luzexi.com/%E4%B9%A6%E7%B1%8D%E8%91%97%E4%BD%9C/</loc>
 </url>
 <url>
@@ -526,6 +523,9 @@
 </url>
 <url>
 <loc>http://www.luzexi.com/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/</loc>
+</url>
+<url>
+<loc>http://www.luzexi.com/%E9%87%91%E8%9E%8D%E6%8A%95%E8%B5%84/</loc>
 </url>
 <url>
 <loc>http://www.luzexi.com/life/</loc>

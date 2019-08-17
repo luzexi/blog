@@ -7,22 +7,8 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
-               <title>Unity3d高级编程之进阶主程 地图与寻路4</title>
-               <description>&lt;hr&gt;
-
-&lt;p&gt;layout: post
-status: publish
-published: true
-title: 《Unity3D高级编程之进阶主程》第十章，地图与寻路(四) 地图的制作与优化
-description: &amp;quot;unity3d 高级编程 主程 地图 navmesh 寻路&amp;quot;
-excerpt_separator: ===
-tags:
-- 书籍著作
-- Unity3D&lt;/p&gt;
-
-&lt;h2&gt;- 前端技术&lt;/h2&gt;
-
-&lt;h3&gt;地图的制作与优化&lt;/h3&gt;
+               <title>《Unity3D高级编程之进阶主程》第十章，地图与寻路(四) 地图的制作与优化</title>
+               <description>&lt;h3&gt;地图的制作与优化&lt;/h3&gt;
 
 &lt;p&gt;场景的制作占到所有项目制作中非常大的一块工作内容，这里我们不说场景制作在美术层面上的制作技巧，我们来说说技术层面的。上节把地图编辑器说了一遍，这节我们就在地图编辑器之外说说，地图场景的制作与优化。&lt;/p&gt;
 
