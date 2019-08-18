@@ -171,7 +171,7 @@
 
 &lt;p&gt;世上没有免费的午餐，想降低GPU的消耗，就得用增大内存来换。&lt;/p&gt;
 
-&lt;p&gt;LOD，即Level of detail，就是此道。用内存换CPU。&lt;/p&gt;
+&lt;p&gt;LOD，即Level of detail，就是此道。用内存换GPU。&lt;/p&gt;
 
 &lt;p&gt;我们把每个3D模型，做成多个不同细节级别的模型，当摄像头拉远时，启用形状相似面数更少细节的模型，当摄像头拉近时，则启用形状相似面数更多细节的模型。&lt;/p&gt;
 

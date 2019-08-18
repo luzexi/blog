@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-08-17T20:24:40+08:00</updated>
+ <updated>2019-08-18T15:14:29+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -180,7 +180,7 @@
 
 &lt;p&gt;世上没有免费的午餐，想降低GPU的消耗，就得用增大内存来换。&lt;/p&gt;
 
-&lt;p&gt;LOD，即Level of detail，就是此道。用内存换CPU。&lt;/p&gt;
+&lt;p&gt;LOD，即Level of detail，就是此道。用内存换GPU。&lt;/p&gt;
 
 &lt;p&gt;我们把每个3D模型，做成多个不同细节级别的模型，当摄像头拉远时，启用形状相似面数更少细节的模型，当摄像头拉近时，则启用形状相似面数更多细节的模型。&lt;/p&gt;
 
@@ -4747,8 +4747,6 @@ tags:
 &lt;h3&gt;烘培&lt;/h3&gt;
 
 &lt;h3&gt;Overdraw&lt;/h3&gt;
-
-&lt;h3&gt;人物动作技能编辑器&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt; 阴影与优化。 -- 假阴影面片，阴影绘制区域管理&lt;/li&gt;
