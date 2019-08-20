@@ -190,10 +190,6 @@
         
       
         
-          
-        
-      
-        
       
         
       
@@ -211,113 +207,6 @@
 
     <div class="content container">
       <div class="posts">
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/05/21/Unity3D-Texture%E5%9B%BE%E7%89%87%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html">
-        Unity3D--Texture图片空间和内存占用分析
-      </a>
-    </h1>
-
-    <span class="post-date">21 May 2014</span>
-
-    <p>Texture图片空间和内存占用分析。由于U3D并没有很好的诠释对于图片的处理方式，所以很多人一直对于图集的大小和内存的占用情况都不了解。在此对于U3D的图片问题做一个实际数据的分析。此前的项目都会存在这样或者那样的打包后包大小与内存占用情况的问题，所以这次所以彻彻底底得分析下U3D对于Texture的处理方式。程序里的内存优化请参考<a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/02/22/Unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF.html">《unity3d优化之路》</a>。减少U3D包大小请参考<a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/06/06/Unity3D%E4%B9%8B%E5%A6%82%E4%BD%95%E5%B0%86%E5%8C%85%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91%E5%88%B0%E6%9E%81%E8%87%B4.html">《unity3d之如何将包大小减少到极致》</a>。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2014/04/18/WEB%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E6%9E%84(HTTP).html">
-        WEB游戏服务器架构(HTTP)
-      </a>
-    </h1>
-
-    <span class="post-date">18 Apr 2014</span>
-
-    <p>WEB游戏服务器架构(HTTP)。在如今游戏中，越来越多使用WEB架构方式来做游戏，《临兵斗者三国志》也是其中一个。我使用了PHP来做WEB服务器主逻辑语言，原因为他的开发速度快，并且容易招人容易上手。
-接下来主要来介绍下WEB服务器游戏架构的方式。(本文以PHP+MYSQL+MEMCACHE+NGINX为例)</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/04/16/Unity3D%E4%B9%8BAssetBundle%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E5%B0%81%E8%A3%85.html">
-        Unity3D之AssetBundle资源加载封装
-      </a>
-    </h1>
-
-    <span class="post-date">16 Apr 2014</span>
-
-    <p>Unity3D之AssetBundle资源加载封装。在《临兵斗者三国志》中我使用了U3D的AssetBundle资源动态加载机制，原因是某些画面资源太多，IO阻塞过慢会造成游戏奔溃。在开发过程中，遇到点问题:</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/02/22/Unity3d%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF.html">
-        Unity3d优化之路
-      </a>
-    </h1>
-
-    <span class="post-date">22 Feb 2014</span>
-
-    <p>U3D的架构部分已经讲了很多了，这里我想讲讲对于U3D优化的亲身体验。从渲染优化，包体大小，再到内存，深入分析与解释如何进行游戏优化。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/02/15/Unity3D-HTTP%E7%BD%91%E7%BB%9C%E5%B1%82%E5%B0%81%E8%A3%85.html">
-        Unity3D-HTTP网络层封装
-      </a>
-    </h1>
-
-    <span class="post-date">15 Feb 2014</span>
-
-    <p>Unity3D-HTTP网络层封装。短连接的C#封装在这里做些分享。我把网络层封装成DLL在项目中使用，所以在设计时要将接口封装的很好。 我又对HTTP部分进行了改造不再使用DDL封装了（所以去除文章部分暂时用横线做标记），所有源码都以git的submodule形式作为项目的模块。源码会再文章的最后给出来。这次改装主要是针对程序员是否能快速理解，快速上手的方面来进行的。随着对HTTP网络层不断的理解加深，我将给出更加全面的HTTP源码模块，我还对本HTTP模块写了测试案例，你们可以看测试案例，进行使用。谢谢各位的关注，再次感谢不断得支持。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/02/15/Unity3D-AssetBundle-%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.html">
-        Unity3D AssetBundle 资源加载注意事项
-      </a>
-    </h1>
-
-    <span class="post-date">15 Feb 2014</span>
-
-    <p>Unity3D AssetBundle 资源加载注意事项.U3d资源打包以及加载出过很多问题，在这里把所有该注意的东西列出来分享下。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/12/31/%E6%B8%B8%E6%88%8F%E7%89%A9%E5%93%81%E7%B3%BB%E7%BB%9F%E9%80%9A%E7%94%A8%E6%9E%B6%E6%9E%84.html">
-        游戏物品系统通用架构
-      </a>
-    </h1>
-
-    <span class="post-date">31 Dec 2013</span>
-
-    <p>游戏物品系统通用架构，物品系统是游戏中最最常用的功能之一，面对各种纷繁复杂的游戏物品系统，在具体项目中如何顺手拈来、驾驭自如？请容我一一到来。在内容前我有必要说明几点，所有内容都是基于我最大的架构思想之下，其中 客户端U3D架构思想的文章地址为 <a href="/unity3d/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF//2013/10/29/Unity3D%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84.html">Unity3D游戏架构</a> ，以及服务器架构：<a href="%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/08/24/%E7%8E%8B%E9%80%94%E9%9C%B8%E4%B8%9A-%E6%88%98%E4%BA%89%E7%AD%96%E7%95%A5%E6%B8%B8%E6%88%8F%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1.html">《王图霸业》战争策略游戏服务器架构</a>。</p>
-
-<p>直入主题</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/12/14/Unity3D-%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90NGUI%E7%9A%84%E6%B8%B8%E6%88%8FUI%E6%9E%B6%E6%9E%84.html">
-        Unity3D-深入剖析NGUI的游戏UI架构
-      </a>
-    </h1>
-
-    <span class="post-date">14 Dec 2013</span>
-
-    <p>Unity3D-NGUI分析，使用NGUI做UI需要注意的几个要点在此我想罗列一下，对我在U3D上做UI的一些总结，最后解剖一下NGUI的源代码，它是如果架构和运作的。</p>
-
-  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -345,11 +234,81 @@
 
   </div>
   
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2013/10/06/Unity3D%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1NavMesh%E5%AF%BB%E8%B7%AF.html">
+        Unity3D架构设计NavMesh寻路
+      </a>
+    </h1>
+
+    <span class="post-date">06 Oct 2013</span>
+
+    <p>国庆闲来没事把NavMesh巩固一下。以Unity3D引擎为例写一个底层c# NavMesh寻路。因为Unity3D中本身自带的NavMesh寻路不能很好的融入到游戏项目当中，所以重写一个NavMesh寻路是个必经之路。NavMesh在很多游戏中应用广泛，不同种类的框架下NavMesh寻路发挥的淋漓尽致。与传统的A星寻路相比，NavMesh不仅减少了内存空间占有量，加快了寻路速度，还可以加入寻路角色的宽高限制，以及动态物体寻路等功能，基本上适应了大部分项目变化多端的需求。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/09/04/%E8%B5%8C%E5%8D%9A%E6%B8%B8%E6%88%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%90%E7%94%A8%E6%95%B0%E5%AD%A6%E6%A6%82%E7%8E%87%E8%AE%BA.html">
+        赌博游戏程序设计中如何运用数学概率论
+      </a>
+    </h1>
+
+    <span class="post-date">04 Sep 2013</span>
+
+    <p>我们在《王途霸业》中加入了一个非常有特色的系统，叫做&quot;通吃谷&quot;，它是一个类似于街机中的水果机那样的游戏系统。每盘玩家可以押注8个元素中任意个数，按开始后，轮盘开始转动，一旦停下来，停在某个元素上，该元素就算中奖，奖励的倍数由所在的元素显示的倍数决定。这种类似的押宝游戏我一直想做，但一直没有机会，所以这个押宝系统一直对我笼罩着一层神秘感。随着研究的深入，这层神秘感渐渐消除。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/08/24/%E7%8E%8B%E9%80%94%E9%9C%B8%E4%B8%9A-%E6%88%98%E4%BA%89%E7%AD%96%E7%95%A5%E6%B8%B8%E6%88%8F%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1.html">
+        《王途霸业》战争策略游戏的服务器架构设计
+      </a>
+    </h1>
+
+    <span class="post-date">24 Aug 2013</span>
+
+    <p>王途霸业的服务器架构设计从2012年11月份开始历时10个月从6月份的V1.0.0第一次于玩家见面，到现在V1.1.5版本，这10个月里《王途霸业》经历了很多次架构的调整，客户端和服务端都已经有成型的架构体系，特别是服务器的架构，似乎从一个无知的少年经过1年的时间成长为了一个成熟的白领，可以正式抗起整个家庭的重担。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/%E6%B8%B8%E6%88%8F%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97/2013/01/26/%E4%BD%BF%E7%94%A8%E8%A1%8C%E4%B8%BA%E6%A0%91(Behavior-Tree)%E5%AE%9E%E7%8E%B0%E6%B8%B8%E6%88%8FAI.html">
+        使用行为树(Behavior Tree)实现游戏AI
+      </a>
+    </h1>
+
+    <span class="post-date">26 Jan 2013</span>
+
+    <p>使用行为树(Behavior Tree)实现游戏AI</p>
+
+<h1>by AKara 2010-12-09 @ http://blog.csdn.net/akara @ akaras@163.com</h1>
+
+<p>谈到游戏AI，很明显智能体拥有的知识条目越多，便显得更智能，但维护庞大数量的知识条目是个噩梦：使用有限状态机(FSM)，分层有限状态机(HFSM)，
+决策树(Decision Tree)来实现游戏AI总有那么些不顺意。试试Next-Gen AI的行为树(Behavior Tree)吧。虽说Next-Gen AI，但距其原型提出已有约10年时间，而微软Halo系列估计已用了超过8年了，Spore和一些著名游戏也早已使用行为树作为它们的AI结构。如从未接触，那wikipedia(http://en.wikipedia.org/wiki/Behavior_Trees) 绝对是入门好资料。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2013/01/26/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%9E%B6%E6%9E%84.html">
+        游戏服务端架构
+      </a>
+    </h1>
+
+    <span class="post-date">26 Jan 2013</span>
+
+    <p>本文引用自网络.这里讨论的游戏服务器架构大概是目前国内乃至世界上的网游通用的一种架构了：</p>
+
+  </div>
+  
 </div>
 
 <div class="pagination">
   
-    <a class="pagination-item older" href="/page13">下一页</a>
+    <span class="pagination-item older">下一页</span>
   
   
     

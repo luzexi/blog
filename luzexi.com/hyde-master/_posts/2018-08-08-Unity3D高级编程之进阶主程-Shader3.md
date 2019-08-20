@@ -1,7 +1,7 @@
 ---
 layout: post
 status: publish
-published: true
+published: false
 title: 《Unity3D高级编程之进阶主程》第七章，Shader(三) - 渲染管道
 description: "unity3d 高级编程 主程 shader pipe 渲染管道 subshader shaderlab vertex fragment 光栅化 片元 图元"
 excerpt_separator: ===

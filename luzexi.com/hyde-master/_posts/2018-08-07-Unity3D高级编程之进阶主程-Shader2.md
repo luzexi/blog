@@ -1,7 +1,7 @@
 ---
 layout: post
 status: publish
-published: true
+published: false
 title: 《Unity3D高级编程之进阶主程》第七章，Shader(二) - Property
 description: "unity3d 高级编程 主程 shader Property shaderlab vertex fragment"
 excerpt_separator: ===

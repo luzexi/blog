@@ -1,7 +1,7 @@
 ---
 layout: post
 status: publish
-published: true
+published: false
 title: 《Unity3D高级编程之进阶主程》第七章，Shader(一) - 常用的Shader
 description: "unity3d 高级编程 主程 shader 漫反射 镜面反射 自发光 球面反射"
 excerpt_separator: ===

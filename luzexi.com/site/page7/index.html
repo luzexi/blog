@@ -190,10 +190,6 @@
         
       
         
-          
-        
-      
-        
       
         
       
@@ -211,227 +207,6 @@
 
     <div class="content container">
       <div class="posts">
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/08/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB1.html">
-        《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范
-      </a>
-    </h1>
-
-    <span class="post-date">03 Aug 2018</span>
-
-    <h3>3D模型大小，面数，贴图大小，骨骼数量在游戏中的规范。</h3>
-
-<p>为什么说资源的规范在项目中是极其重要的？</p>
-
-<p>看到过有很多项目都没有重视资源规范，他们奢求高的运行效率，却不懂资源的规范是运行效率的前提。</p>
-
-<p>有的游戏项目，一个人物模型就有几万个面，一个建筑就有几十万个面，不堪入目。</p>
-
-<p>贴图也有很糟糕的，到处都是1024和2048大小的贴图。骨骼数量有的甚至到了几百。在这样恶劣的资源环境情况下，项目的运行效率怎么可能高。</p>
-
-<p>资源的好坏直接导致了项目的好坏，模型太大，面数太多，贴图太大，会导致包体过大，骨骼数量太多，导致CPU在动画上消耗过多。</p>
-
-<p>资源过大过重，还会导致CPU消耗在资源加载上面的时间过多过长，导致画面帧率下降，卡顿严重等问题。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">
-        《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(三)
-      </a>
-    </h1>
-
-    <span class="post-date">30 Jul 2018</span>
-
-    <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">UI(六)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如何在游戏项目中架构UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">UI(七)-优化(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html">UI(七)-优化(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI图集Alpha分离，UI字体拆分，Scroll View 滚屏优化，以及UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。
-</code></pre></div>
-<p>这篇我们来继续聊聊，UI展示与关闭的优化，对象池的运用，UI贴图设置的优化，内存泄露排查与预防。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
-        《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
-      </a>
-    </h1>
-
-    <span class="post-date">30 Jul 2018</span>
-
-    <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">UI(六)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如何在游戏项目中架构UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">UI(七)-优化(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html">UI(七)-优化(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI图集Alpha分离，UI字体拆分，Scroll View 滚屏优化，以及UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">UI(七)-优化(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI展示与关闭的优化，对象池的运用，UI贴图设置的优化，内存泄露排查与预防。
-</code></pre></div>
-<p>这篇我们继续聊UI优化，这篇讲，区别针对高低端机型的优化，UI图集拼接的优化，GC的优化。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html">
-        《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(二)
-      </a>
-    </h1>
-
-    <span class="post-date">27 Jul 2018</span>
-
-    <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">UI(六)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如何在游戏项目中架构UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">UI(七)-优化(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载
-</code></pre></div>
-<p>这篇我们来继续聊聊优化，UI图集Alpha分离，UI字体拆分，Scroll View 滚屏优化，以及UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">
-        《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(一)
-      </a>
-    </h1>
-
-    <span class="post-date">27 Jul 2018</span>
-
-    <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">UI(六)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如何在游戏项目中架构UI框架。
-</code></pre></div>
-<p>这篇我们来聊聊，优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">
-        《Unity3D高级编程之进阶主程》第四章，UI(四) - UGUI核心源码剖析
-      </a>
-    </h1>
-
-    <span class="post-date">27 Jul 2018</span>
-
-    <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
-</code></pre></div>
-<p>此篇我们来讲解下，UGUI渲染部分的核心源码。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/26/jekyll-related-page.html">
-        重写Jekyll的Relate功能
-      </a>
-    </h1>
-
-    <span class="post-date">26 Jul 2018</span>
-
-    <p>Jekyll 的 ‘Relate-相关文章’的功能，写的真的不好用。完全表达不了相关文章的含义。</p>
-
-<p>于是打算修一下 Relate 部分的功能。</p>
-
-<p>网上查了很久，很多人在抱怨，但没人把写好的 Relate 放到网上。</p>
-
-<p>唯一一个Jekyll 的 Relate 插件都是渣的要命的那种，根本没法用。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">
-        《Unity3D高级编程之进阶主程》第四章，UI(六) - 如何架构UI框架
-      </a>
-    </h1>
-
-    <span class="post-date">26 Jul 2018</span>
-
-    <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析
-</code></pre></div>
-<p>这篇我们来讲讲，如何在Unity3D游戏项目中架构UI框架。</p>
-
-  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -465,6 +240,138 @@
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    前文对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
 </code></pre></div>
 <p>这篇我们来讲讲，UGUI的原理，以及UGUI的组件使用详解。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">
+        《Unity3D高级编程之进阶主程》第四章，UI(一) - NGUI和UGUI比较
+      </a>
+    </h1>
+
+    <span class="post-date">25 Jul 2018</span>
+
+    <p>UI是游戏项目中重要的组成部分，面对一个从零开始的项目，首先要确立的就是选用哪个UI系统作为主框架。</p>
+
+<p>现在主流项目中基本上都是NGUI和UGUI，那么到底选哪个。我们先来做个比较。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/07/24/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%843.html">
+        《Unity3D高级编程之进阶主程》第二章，架构(三) - 架构的误区，如何做前端架构，以及如何架构Unity3D项目
+      </a>
+    </h1>
+
+    <span class="post-date">24 Jul 2018</span>
+
+    <p>前文回顾 <a href="http://www.luzexi.com/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html">架构(一)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对软件系统架构进行一个彻头彻尾的解释。什么是软件系统架构，为什么需要软件系统架构，以及什么样的软件系统架构才是好的。还包括介绍了，抽象构建架构的思维方式。
+</code></pre></div>
+<p>前文回顾 <a href="http://www.luzexi.com/2018/07/24/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%842.html">架构(二)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对软件系统架构抽象的思维方式进行了一番详细介绍，包括了分层，分治，演化。
+</code></pre></div>
+<p>这篇我们将来具体介绍下，架构的误区，如何做前端架构，以及如何架构Unity3D项目。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/07/24/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%842.html">
+        《Unity3D高级编程之进阶主程》第二章，架构(二) - 软件系统架构思维方式
+      </a>
+    </h1>
+
+    <span class="post-date">24 Jul 2018</span>
+
+    <p>前文回顾 <a href="http://www.luzexi.com/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html">架构，第一篇</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    前面对软件系统架构进行一个彻头彻尾的解释。什么是软件系统架构，为什么需要软件系统架构，以及什么样的软件系统架构才是好的。还包括介绍了，抽象构建架构的思维方式。
+</code></pre></div>
+<p>这篇我们来讲讲，软件系统架构思维方式有哪些？</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/07/23/have-fun-in-watch-video.html">
+        Have fun in watch video
+      </a>
+    </h1>
+
+    <span class="post-date">23 Jul 2018</span>
+
+    <p>This is a funy video I would like to share with you. Learn english should be more funy than u think. I prefer to find out the funy way to keep, not only the boring thing as learn words or do homework on paper.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/07/20/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A83.html">
+        白领投资探讨(三)
+      </a>
+    </h1>
+
+    <span class="post-date">20 Jul 2018</span>
+
+    <p>最近P2P雷爆很多，据统计平均每天有2家网贷平台倒闭和跑路，据说把所有倒闭跑路的网贷平台资金总量加起来有2万亿，倒霉的都是老百姓，很多家庭的财富顷刻间灰飞烟灭。我们今天就来说说，用钱赚钱这事。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%9E%B6%E6%9E%841.html">
+        《Unity3D高级编程之进阶主程》第二章，架构(一) - 架构的意义
+      </a>
+    </h1>
+
+    <span class="post-date">18 Jul 2018</span>
+
+    <p>什么是架构?</p>
+
+<p>架构每天都有人在耳边提起。架构到底是什么，却很少有人说的清楚。</p>
+
+<p>网络上解释的，比如，软件架构是一个系统的草图，又比如，软件体系结构是构建计算机软件实践的基础，还有，软件系统架构是一系列相关的抽象模式，用于指导大型软件系统各个方面的设计。说的都对，但是阐述还是过于模糊，懂的人本来就懂不用看，不懂的人还是一头雾水。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/07/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF2.html">
+        《Unity3D高级编程之进阶主程》第一章，C#要点技术(二) - Dictionary 底层源码剖析
+      </a>
+    </h1>
+
+    <span class="post-date">18 Jul 2018</span>
+
+    <p>前文回顾 <a href="http://www.luzexi.com/2018/07/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF1.html">《Unity3D高级编程之进阶主程》第一章，C#要点技术(一)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    前文剖析了 List 的源码，我们明白了 List 是用数组构建而成的，增加，减少，插入的操作，都在数组中进行。我们还分析了大部分 List 的接口，包括Add，Remove，Insert，IndexOf，Find，Sort，ToArray，等等。我们还得出了一个结论，那就是 List 是一个兼容性比较好的组件，但线程并不安全，需要加锁机制来保证线程的安全性，而且 List 在效率方面并没有做优化。
+</code></pre></div>
+<p>这次我们来对常用的另一个组件Dictionary进行底层源码的分析，看看我们常用的字典树是如何构造而成的，它的优缺点如何。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html">
+        《Unity3D高级编程之进阶主程》第三章，数据表(三) - 多语言的实现
+      </a>
+    </h1>
+
+    <span class="post-date">17 Jul 2018</span>
+
+    <p>前文介绍了关于数据表的几种形式。<a href="http://www.luzexi.com/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html">《Unity3D高级编程之进阶主程》第三章，数据表(一)</a></p>
+
+<p>以及如何让数据表运用更加简单高效。<a href="http://www.luzexi.com/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html">《Unity3D高级编程之进阶主程》第三章，数据表(二)</a></p>
+
+<p>这篇我们来讲讲多语言在数据表中的实现方式。</p>
+
+<p>游戏项目中文字显示本身就是件比较头疼的事，再加上多语言，更多的问题将待需解决。很多时候项目起初，文本是写进代码里的，但是当项目中后期，文字又需要由策划来修改和添加，这个导致了大量的程序员的重复工作。所以文字的数据还是放在表里比较好些，就让改考虑文字内容的人去考虑文字内容吧。</p>
+
+<p>文字放在表里一般都会以Key-Value形式存放，就比如，Key为&quot;RoleName&quot;,Value为&quot;角色名字&quot;，或者Key为1101,Value为&quot;好友分享&quot;等。</p>
+
+<p>这种Key-Value形式，一般会以Int-String形式存在，或者string-string形式存在。</p>
 
   </div>
   
