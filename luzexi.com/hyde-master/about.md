@@ -1,12 +1,14 @@
 ---
 layout: page
-title: About Me
+title: 我的简介
 ---
 姓名：陆泽西 (Jesse Lu)
 
 公司 ：盛趣游戏(原名盛大游戏)
 
-曾就职：动视Activision，谷米Gumi，百游Baiyou
+职位 ：主程++
+
+曾就职：动视暴雪Activision，谷米Gumi日本，百游Baiyou
 
 坐标 ：上海
 
@@ -50,6 +52,6 @@ EMAIL：jesse_luzexi@163.com
 
 QQ:16008977 (请标注为什么要加)
 
-主程群: 334097846 (只有主程以上级别才会被审核通过)
+主程群: 334097846 (请如实申报自己的公司和职位，会核实一下真实性再通过，只有主程以上级别才会被审核通过)
 
 {% include paypal_donation.html %}
