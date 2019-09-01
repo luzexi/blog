@@ -210,6 +210,31 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">
+        《Unity3D高级编程之进阶主程》第四章，UI(六) - 如何架构UI框架
+      </a>
+    </h1>
+
+    <span class="post-date">26 Jul 2018</span>
+
+    <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
+</code></pre></div>
+<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析
+</code></pre></div>
+<p>这篇我们来讲讲，如何在Unity3D游戏项目中架构UI框架。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">
         《Unity3D高级编程之进阶主程》第四章，UI(三) - 剖析UGUI源码中的输入与事件模块
       </a>
@@ -349,29 +374,6 @@
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    前文剖析了 List 的源码，我们明白了 List 是用数组构建而成的，增加，减少，插入的操作，都在数组中进行。我们还分析了大部分 List 的接口，包括Add，Remove，Insert，IndexOf，Find，Sort，ToArray，等等。我们还得出了一个结论，那就是 List 是一个兼容性比较好的组件，但线程并不安全，需要加锁机制来保证线程的安全性，而且 List 在效率方面并没有做优化。
 </code></pre></div>
 <p>这次我们来对常用的另一个组件Dictionary进行底层源码的分析，看看我们常用的字典树是如何构造而成的，它的优缺点如何。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A83.html">
-        《Unity3D高级编程之进阶主程》第三章，数据表(三) - 多语言的实现
-      </a>
-    </h1>
-
-    <span class="post-date">17 Jul 2018</span>
-
-    <p>前文介绍了关于数据表的几种形式。<a href="http://www.luzexi.com/2018/07/09/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A81.html">《Unity3D高级编程之进阶主程》第三章，数据表(一)</a></p>
-
-<p>以及如何让数据表运用更加简单高效。<a href="http://www.luzexi.com/2018/07/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%95%B0%E6%8D%AE%E8%A1%A82.html">《Unity3D高级编程之进阶主程》第三章，数据表(二)</a></p>
-
-<p>这篇我们来讲讲多语言在数据表中的实现方式。</p>
-
-<p>游戏项目中文字显示本身就是件比较头疼的事，再加上多语言，更多的问题将待需解决。很多时候项目起初，文本是写进代码里的，但是当项目中后期，文字又需要由策划来修改和添加，这个导致了大量的程序员的重复工作。所以文字的数据还是放在表里比较好些，就让改考虑文字内容的人去考虑文字内容吧。</p>
-
-<p>文字放在表里一般都会以Key-Value形式存放，就比如，Key为&quot;RoleName&quot;,Value为&quot;角色名字&quot;，或者Key为1101,Value为&quot;好友分享&quot;等。</p>
-
-<p>这种Key-Value形式，一般会以Int-String形式存在，或者string-string形式存在。</p>
 
   </div>
   
