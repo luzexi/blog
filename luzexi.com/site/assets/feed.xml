@@ -7,6 +7,330 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2</title>
+               <description>&lt;h3&gt;理解矩阵表达缩放的几何意义&lt;/h3&gt;
+
+&lt;p&gt;缩放矩阵和旋转矩阵在几何意义上有着异曲同工之妙，我们同样用二维坐标系来表达缩放矩阵的两个 a,b 向量。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;举例来说，二维标准轴的旋转矩阵：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    [1.5,  0]  等  [a]
+    [0, 0.75]  于  [b]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;我们把 a和b 表现在二维坐标系中，即如图：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;图中a，b两个向量可以形成了一个矩形，我们就假设这个矩形图像表达了a，b向量的缩放关系。当a，b被拉长时，这个矩形图像被也同样被拉长。&lt;/p&gt;
+
+&lt;p&gt;其原理为向量与矩阵的乘法，我们知道&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    二维向量与二维矩阵相乘 = (x * m11 + y * m21, x * m12 + y * m22)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;对于我们上图中标准坐标系上的缩放矩阵来说的到的结果是 (1.5&lt;em&gt;x, 0.75&lt;/em&gt;y)，即：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    (x*m11 + y*m21, x*m12 + y*m22) = (x*1.5 + y*0, x*0 + y*0.75) = (1.5*x, 0.75*y)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这个结果表达了，缩放矩阵对向量缩放时非常直观易懂，因为除了对角线上的数字，其他位置的数字都是0。&lt;/p&gt;
+
+&lt;p&gt;不过这种简单易懂的旋转矩阵，也仅限于标准坐标系中对标准轴的缩放。如果只有标准坐标系上的缩放计算，是远远满足不了我们的需求的。&lt;/p&gt;
+
+&lt;p&gt;那么怎么计算对任意轴方向上的缩放呢？我们来看如下图所示：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;沿 N 方向缩放 v 向量，其实和前一节中绕 N 轴旋转 v 向量有异曲同工之妙。&lt;/p&gt;
+
+&lt;p&gt;我们需要根据所知道的推导这个公式，即我们已知v，已知 N，已知缩放因子k (k是一个单纯的数字) ，要求得v’。&lt;/p&gt;
+
+&lt;p&gt;可以通过 N 和 v 求得投影 v1，通过 v 和 v1 求得他们的垂直向量 v2，再通过缩放因子 k 求得v1和v2缩放后的向量 v1‘ 和 v2’，最后通过 v1‘ 和 v2’ 求得缩放后的结果向量 v‘，即如下图公式。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;同样的，三维空间中，如果是标准坐标系上缩放，则缩放矩阵可以是很简单的对角线矩阵，即。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    [scale-x, 0, 0]
+    [0, scale-y, 0]
+    [0, 0, scale-z]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;也同样的，这种标准坐标系上的缩放完全满足不了我们的需求，我们需要沿任意向量上的缩放矩阵。&lt;/p&gt;
+
+&lt;p&gt;同样的向量，同样的变化，同样的推导，最终结果为：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;最终我们获得了，沿任意方向缩放的矩阵。&lt;/p&gt;
+
+&lt;p&gt;这里不再重复叙述推导的过程，我们只要理解缩放矩阵的由来和推导的方式就可以了，我们最终的目的通过是解释原理来理解缩放矩阵的几何意义。&lt;/p&gt;
+
+&lt;h3&gt;平行投影，镜像，切变的理解和几何意义&lt;/h3&gt;
+
+&lt;h6&gt;平行投影&lt;/h6&gt;
+
+&lt;p&gt;在上述几节中我们了解到了可以用矩阵去缩放任意点和向量，那么如果在缩放时某个轴上的缩放因子为零会变成是什么样的呢，如图所示：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;图中模型所有的点都被’挤‘到了一个平面上，这种所有点都被拉平至垂直轴或平面上的做法就叫，平行投影，或者也可以叫正交投影。&lt;/p&gt;
+
+&lt;p&gt;在标准坐标轴上的平行投影是一个很简单的矩阵，只要把那个投影轴上的缩放因子置零就可以，即：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    二维上x轴平行投影
+
+    [1, 0]
+    [0, 0]
+
+    二维上y轴平行投影
+
+    [0, 0]
+    [0, 1]
+
+    三维上xy平面上的平行投影
+
+    [1, 0, 0]
+    [0, 1, 0]
+    [0, 0, 0]
+
+    三维上xz平面上的平行投影
+
+    [1, 0, 0]
+    [0, 0, 0]
+    [0, 0, 1]
+
+    三维上yz平面上的平行投影
+
+    [0, 0, 0]
+    [0, 1, 0]
+    [0, 0, 1]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;当然只是标准坐标轴上的平行投影还不够用，我们也需要任意直线或任意平面的投影矩阵，不过这次我们不需要再次计算任意轴上的平行投影，只需要通过前面计算过的缩放矩阵在任意方向或任意轴上的缩放矩阵就可以得到平行投影的矩阵，即如下图：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;通过使缩放方向上的缩放因子变为零的方式，来获得平行投影矩阵。三维中也是一样，只是在三维中要 N 方向为垂直平面的方向而不是平行于平面的方向。&lt;/p&gt;
+
+&lt;h6&gt;镜像&lt;/h6&gt;
+
+&lt;p&gt;镜像其实挺容易理解的，平行投影是将某个轴上的缩放因子变为零，镜像就是在某个轴上将缩放因子变为负1，这样在缩放时就形成了‘翻转’的局面。如图所示：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;坐标轴的四个象限，右上角的图为正常的图案，左边为对x轴翻转后的图案，下边为y轴翻转后的图案，右下角为x轴和y轴同时翻转的图案。&lt;/p&gt;
+
+&lt;p&gt;镜像矩阵也和平行投影矩阵一样，可以用任意缩放矩阵来计算出对任意方向和轴的镜像矩阵，如图所示：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;图中为任意方向的缩放矩阵在当缩放因子为-1时的公式，我们很容易就明白，镜像不过是缩放的一种特殊形式。&lt;/p&gt;
+
+&lt;h6&gt;切变&lt;/h6&gt;
+
+&lt;p&gt;切变非常特殊和有趣，它其实是一种坐标系‘扭曲’变换。这种坐标系的‘扭曲’变换将会被运用到对次级空间的坐标平移上。切变的形式如图：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;图中y轴方向的向量中的x坐标被平移了。这是切变在x轴上的变化，我们也可以让切变在y轴上发生变化，如图：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这两种形式的切变都是通过位移x轴方向上的坐标或y轴方向上的坐标来达到的，其实我们可以理解为对次级维度坐标系的‘扭曲’。&lt;/p&gt;
+
+&lt;p&gt;为什么要这么理解呢，因为它在仿射变化中起到了非常关键的作用，我们将在下面几节内容中介绍。&lt;/p&gt;
+
+&lt;p&gt;切变的矩阵为：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    二维x轴方向的‘扭曲’
+    [1, 0]
+    [s, 1]
+
+    二维y轴方向的‘扭曲’
+    [1, s]
+    [0, 1]
+
+    三维x,y轴方向的的切变
+    [1, 0, 0]
+    [0, 1, 0]
+    [s, t, 1]
+
+    三维x,z轴方向的切变
+    [1, 0, 0]
+    [s, 1, t]
+    [0, 0, 1]
+
+    三维y,z轴方向的切变
+    [1, s, t]
+    [0, 1, 0]
+    [0, 0, 1]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这几个矩阵看起来好像很简单，具体代表什么意思呢。我们用向量与矩阵的乘法表示就知道了：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    向量p与3x3矩阵M的乘法 p * M = [x * M11 + y * M21 + z * M31, x * M12 + y * M22 + z * M32, x * M13 + y * M23 + z * M33]
+
+    由向量与矩阵的乘法得知上面5个矩阵，当向量乘以他们时：
+
+    第一个切变矩阵为向量x轴方向的偏移，(x + y * s, y)
+
+    第二个切变矩阵为向量y轴方向的偏移，(x, x * s + y)
+
+    第三个切变矩阵为向量x、y轴方向的起偏移，(x + s * z, y + t * z, z)
+
+    第四个切变矩阵为向量x、z轴方向的起偏移，(x + s * y, y, t * y + z)
+
+    第五个切变矩阵为向量y、z轴方向的起偏移，(x, s * x + y, t * x + z)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上述经过矩阵乘法后，向量得到了切变的偏移，如果乘的是矩阵的话，则会对矩阵产生切变。下面一节平移中就会应用到切变的变化。&lt;/p&gt;
+
+&lt;h6&gt;齐次坐标的平移矩阵&lt;/h6&gt;
+
+&lt;p&gt;我们知道了3x3矩阵的线性变换中不包括平移这个操作，为什么呢？&lt;/p&gt;
+
+&lt;p&gt;因为矩阵乘法的性质，零向量乘法总是变换成零向量，任何相同维度的矩阵乘法都表达不了零偏移。&lt;/p&gt;
+
+&lt;p&gt;矩阵乘法其实很强大，经过我们上面的介绍我们已经知道了矩阵乘法可以表达旋转，缩放，投影，镜像，切变，可惜的是无法表达平移，怎么办？&lt;/p&gt;
+
+&lt;p&gt;齐次矩阵就恰好满足了我们的需求，齐次矩阵它在原来的维度上增加了一个维度，用多出来的那个维度来表达了平移操作。即如下图：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    [1, 0, 0, 0]
+    [0, 1, 0, 0]
+    [0, 0, 1, 0]
+    [x, y, z, 1]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上图中用增加一个维度的方式用x，y，z分别表示了在x，y，z轴上的偏移。&lt;/p&gt;
+
+&lt;p&gt;为什么这种方式就能表达平移操作？&lt;/p&gt;
+
+&lt;p&gt;我们回忆下上一节说的切变的原理和过程，在某个轴不变的情况下对其他轴进行偏移，这就是切变。&lt;/p&gt;
+
+&lt;p&gt;我们无法对当前空间的矩阵进行偏移，却可以通过增加一个维度，用不动新增的维度情况下，再用切变的方式来偏移次级维度，这其实就是个用切变解决平移问题的解决方案。&lt;/p&gt;
+
+&lt;p&gt;在上述的图中描述了4维矩阵在第四维空间上的切变。有了平移矩阵，我们可以通过用3x3矩阵增加一个维度的方式，把原来无法表达的操作全都可以表达出来了。&lt;/p&gt;
+
+&lt;p&gt;比如，我们需要一个将向量 v 旋转后再平移得到 v‘ ，旋转矩阵为R，平移矩阵为T，就可以用向量与矩阵的乘法，以及矩阵与矩阵的乘法来表达：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    v&amp;#39; = vRT
+
+    R为：
+    [r11, r12, r13, 0]
+    [r21, r22, r23, 0]
+    [r31, r32, r33, 0]
+    [0,     0,   0, 1]
+
+    T为：
+    [1, 0, 0, 0]
+    [0, 1, 0, 0]
+    [0, 0, 1, 0]
+    [x, y, z, 1]
+
+    通过结合律 v&amp;#39; = vRT = v(RT)
+
+    R与T相乘的结果为
+    [r11, r12, r13, 0]
+    [r21, r22, r23, 0]
+    [r31, r32, r33, 0]
+    [x,     y,   z, 1]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上图中通过乘以旋转矩阵和平移矩阵就可以得到最终结果，或者使用结合律先将矩阵相乘。对于矩阵结合的方式，如果这种系列操作方式比较频繁，可以建立一个固定的常量矩阵，通过常量矩阵来计算结果，这样就省去了很多频繁的重复计算矩阵的过程，顶点着色器中的顶点坐标空间转换就是这样做的，它在整个程序开始执行前就已经计算好了一个变化的矩阵，这个变化的矩阵就叫做 MVP，即Model，View，Projection，它是由模型空间矩阵、观察者空间矩阵、投影空间矩阵相乘得到的结果，乘以此矩阵就会从模型坐标系变换为世界坐标系，再变换为观察者坐标系，最后变化为视锥体的裁剪空间。&lt;/p&gt;
+
+&lt;p&gt;有了平移矩阵我们能做的事更加多了，能运用的地方也更加多了。这次我们用到了齐次矩阵，即通过增加一个维度的方式来表达当前维度无法表达的计算，用高一个维度的切变来表达操作次级维度的平移。&lt;/p&gt;
+
+&lt;h3&gt;如何理解 Quaternion 四元数&lt;/h3&gt;
+
+&lt;h6&gt;为什么不是欧拉角&lt;/h6&gt;
+
+&lt;p&gt;欧拉角的定义是，x,y,z 分别表达了x轴上的旋转角度，y轴上的旋转角度，z轴上的旋转角度，即(20,40,50) 表达了在x轴上旋转20度，y轴上旋转40度，z轴上旋转50度。&lt;/p&gt;
+
+&lt;p&gt;看起来很简单易懂就能定义坐标系上的旋转角度，为什么就不能使用它来表达所有的旋转角度，却还要使用四元数呢？其实是有原因的。&lt;/p&gt;
+
+&lt;p&gt;首先欧拉角存在别名，100度的旋转角度可以用-260度来表示，370度角与10度角以及-350度角是相同的旋转角度，这种表达方式在计算上特别难统一。&lt;/p&gt;
+
+&lt;p&gt;其次欧拉角在插值上存在些问题，一个-260度的角度和一个50度的角度进行插值是需要先进行转换的，先将-260度转换成100度，再进行插值才可以得到正确的结果。简单的别名问题虽然讨厌，但是可以转换角度的方式解决，但转换角度这种方式并不是一个靠谱的方式，在计算过程中会遇到相当多的麻烦。&lt;/p&gt;
+
+&lt;p&gt;欧拉角这种周期性和旋转之间的不独立性造成了欧拉角在线性变化的计算中比较困难。因此我们需要寻找在计算过程中更加便捷的方法，不需要转换，没有别名，统一规格。&lt;/p&gt;
+
+&lt;p&gt;四元数恰好就满足了这些需求，它在线性变换中非常统一而且灵活。不过它有一个致命的缺陷，就是在表现上让你人比较难理解，普通人一眼看不出一个四元数想要表达的旋转的方向和角度。&lt;/p&gt;
+
+&lt;h6&gt;四元数的由来&lt;/h6&gt;
+
+&lt;p&gt;四元数其实是一个我们生活中的“异次元”，这也是为什么普通人难以理解它的原因，为什么说它是一个“异次元”呢？&lt;/p&gt;
+
+&lt;p&gt;我们所有的向量，坐标，矩阵，旋转，缩放，平移，都是建立在使用坐标系和空间矩阵计算的那一套计算体系上的，而四元数则不是，它特立独行，它计算所用的公式，并不是建立在传统的坐标系矩阵上，而是拥有自己一套“自有”的公式体系，即复数体系。&lt;/p&gt;
+
+&lt;p&gt;四元数有两种记法即：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    向量v 加 w分量 (v, w) 和 四个分量都分开 (x, y, z, w)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;某些情况下v分量更方便，而在另一些情况下分开记会更清楚。但其实这个w分量和x,y,z的相关度有但不是很大，因此不要被迷惑了，以为他们的值越大或者越小会怎样怎样的，其实和我们肉眼看到的是有所差别的。&lt;/p&gt;
+
+&lt;p&gt;最早数学家们是用复数系统来表达二维中的旋转的。&lt;/p&gt;
+
+&lt;p&gt;我们来回忆下什么是复数？&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    我们把形如z=a+bi（a,b均为实数）的数称为复数，其中a称为实部，b称为虚部，i称为虚数单位。
+    其中虚数 i * i = -1；
+    当z的虚部等于零时，常称z为实数；
+    当z的虚部不等于零时，实部等于零时，常称z为纯虚数。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;数学家使用复数对(a, b)来表达二维平面中的旋转，他们把向量也定义为复数对，如果(a,b)为向量的话，那么就定义了 a + b * i，i为虚数，满足 i * i = -1，a为实轴的坐标，b为虚轴坐标，我们可以理解为x，y轴上的坐标。&lt;/p&gt;
+
+&lt;p&gt;对于定义一个旋转复数，则为 (cos(β), sin(β)) 表达式为 cos(β) + sin(β) * i，i为虚数，β为旋转的角度。&lt;/p&gt;
+
+&lt;p&gt;他们发现从平面上求得某个向量旋转 β 的结果，可以用向量复数对乘以旋转复数对的方式来获得，即&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
+
+    v = x + y * i
+    r = cos(β) + sin(β) * i
+    v&amp;#39; = vr = (x + y * i)(cos(β) + sin(β) * i)
+       = (x * cos(β) - y * sin(β)) + (x * sin(β) + y * cos(β)) * i
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上述图中的公式推导，乘法的运算看起来是不是跟传统的计算有点差异。因为我们使用的是复数做运算，其中i满足 i * i = -1。&lt;/p&gt;
+
+&lt;p&gt;这是最早发明的二维向量旋转运算法则，由十六世纪被意大利米兰学者卡当提出复数后，经过达朗贝尔、棣莫弗、欧拉、高斯等人的工作，最后成形的数学体系。&lt;/p&gt;
+
+&lt;p&gt;不过二维的上的旋转公式很快就不够用，无法对三维的旋转操作，旋转复数局限性太大。爱尔兰数学家 William Hamilton 终于在1843年找到了一种表达三维旋转的复数表达方式，即四元数就此诞生。&lt;/p&gt;
+
+&lt;h6&gt;四元数的几何意义&lt;/h6&gt;
+
+&lt;p&gt;四元数扩展了复数系统，它使用了三个虚部，即i，j，k，因此四元数的表达复数表达方式为&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    q = w + i * x + j * y + k * z
+    其中i，j，k为虚数，即满足
+    i*i = j*j = k*k = -1
+    i*j=k, ji=-k
+    j*k=i, k*j=-i
+    k*i=j, i*k=-j
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;和复数能用来旋转二维中的向量类似，四元数也能用来旋转三维中的向量。&lt;/p&gt;
+
+&lt;p&gt;四元数被解释为角位移的轴一角方式。什么是轴一角？&lt;/p&gt;
+
+&lt;p&gt;就是绕某个单一轴旋转一个角位移就能表达旋转的方式就叫轴一角，这个角位移其实就是一个和向量类似的表达方式，即(x,y,z)，只不过四元组用4个元素来表达罢了。&lt;/p&gt;
+
+&lt;p&gt;再通俗点，四元组可以理解为绕 某个轴N 旋转的角位移，和欧拉角用x,y,z表达绕标准坐标轴旋转是同样的道理，只不过这个轴不再是标准轴，而是任意轴。&lt;/p&gt;
+
+&lt;p&gt;这也就说明了，四元组不再受到标准轴的限制，它可以表达绕任意轴旋转的角位移。&lt;/p&gt;
+
+&lt;p&gt;四元组表示为对任意轴 N 的角位移即：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    q = [cos(β/2), sin(β/2) * N]
+      = [cos(β/2), sin(β/2) * Nx, sin(β/2) * Ny, sin(β/2) * Nz]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;利用上图的四元组表达方式，假设我们绕的是某个单轴旋转，也就是在x轴上旋转 A 度，或者在y轴上旋转 B 度，或者在z轴上旋转 C 度，根据上述的公式，我们可以得到三个供旋转的四元数，即：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    A&amp;#39; = [cos(-A/2), sin(-A/2) * 1, 0, 0]
+
+    B&amp;#39; = [cos(-B/2), 0, sin(-B/2) * 1, 0]
+
+    C&amp;#39; = [cos(-C/2), 0, 0, sin(-C/2) * 1]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上图中的角度为什么是负的，因为我们在旋转点时的角度，和在旋转坐标系时的角度恰恰是相反的，因此操作旋转点的角度，其实就是旋转坐标系反方向的角度，即负的角度。&lt;/p&gt;
+
+&lt;p&gt;现在我们要计算绕x轴上旋转A角度，并且绕y轴上旋转B角度，并且绕z轴上旋转C角度的四元组时，可以把 A‘，B’，C‘，这三个四元组乘起来，即：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    A&amp;#39;B&amp;#39;C&amp;#39; = (A&amp;#39;B&amp;#39;C&amp;#39;) 最终计算得到
+
+    [x,]
+    [y,]
+    [z,]
+    [w]
+
+    等于
+
+    [cos(B/2)sin(A/2)cos(C/2) + sin(B/2)cos(A/2)sin(C/2),]
+    [sin(B/2)cos(A/2)cos(C/2) - cos(B/2)sin(A/2)sin(C/2),]
+    [cos(B/2)cos(A/2)sin(C/2) - sin(B/2)sin(A/2)cos(C/2),]
+    [cos(B/2)cos(A/2)cos(C/2) + sin(B/2)sin(A/2)sin(C/2)]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上图中得到的最后公式就是从欧拉角转换到四元数的计算公式。&lt;/p&gt;
+
+&lt;p&gt;四元数的虽然在计算上很方便且通用，但在辨识度上却存在着严重的缺陷，人肉眼很难分辨某个四元数的旋转情况。但是没关系，我们只要理解它的原理，并且已经知道了四元数的几何意义，我们在运用四元数过程中将更加自如。&lt;/p&gt;
+
+&lt;p&gt;参考资料：&lt;/p&gt;
+
+&lt;p&gt;《3D数学基础:图形与游戏开发》&lt;/p&gt;
+</description>
+               <pubDate>Sat, 07 Sep 2019 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2019/09/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A62.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2019/09/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A62.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础1</title>
                <description>&lt;p&gt;游戏项目除了逻辑，模块，框架，架构，算法，还需要图形学的支撑，很多人在业务层面打拼了很多年也始终无法突破的原因就是对图形学研究还不够深。&lt;/p&gt;
 
@@ -68,6 +392,8 @@
 &lt;p&gt;除了方向判断外，我们还可以用点乘来计算出β的角度，即：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    β = arcos( (a·b) / (|a|*|b|) )
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;// todo Unity3D里的Vector3点乘API&lt;/p&gt;
+
 &lt;h3&gt;Vector3叉乘的几何意义&lt;/h3&gt;
 
 &lt;p&gt;与Vector3点乘一样，Vector3的叉乘也是类似的向量与向量之间的计算公式，不同的是，叉乘的结果不再是一个数值，而是一个同样维度的向量。即：&lt;/p&gt;
@@ -91,6 +417,8 @@
     =&amp;gt; 四边形面积 = |b| * |a| * sin(β) = |a x b|
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;经过几个公式的转换，我们得到向量叉乘后的模就是四边形的面积。在3D中也是同样适用，因为两个向量确定一个平面，所以两个向量可以确定给一个对等边四边形的平面，从而可以用叉乘可以算出他们的面积。&lt;/p&gt;
+
+&lt;p&gt;// todo Unity3D里的Vector3叉乘API&lt;/p&gt;
 
 &lt;h3&gt;向量之间的投影&lt;/h3&gt;
 
@@ -116,6 +444,8 @@
     投影向量c =&amp;gt; c = a * (a · b) / |a|^2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;至此经历了几个公式的转换，得到了b向量向a向量投影，得到c向量的公式。&lt;/p&gt;
+
+&lt;p&gt;// todo Unity3D里的Vector3投影API，以及其他API&lt;/p&gt;
 
 &lt;h3&gt;矩阵的意义&lt;/h3&gt;
 
@@ -154,7 +484,7 @@
 
 &lt;p&gt;最后我们了解一下齐次矩阵，齐次矩阵也并没有什么神秘的，只不过是从我们认知的角度上划分了矩阵分量和w分量。&lt;/p&gt;
 
-&lt;p&gt;齐次矩阵由齐次空间而来，我们由浅入深来理解齐次矩阵会更加容易。&lt;/p&gt;
+&lt;p&gt;齐次坐标就是将一个原本是n维的向量用一个n+1维向量来表示，齐次矩阵也是同样的道理，n维表达不了的事情用n+1维来表达，我们由浅入深来理解齐次矩阵会更加容易。&lt;/p&gt;
 
 &lt;p&gt;在二维空间中，(x,y)只能代表平面上的一个点，或平面上的向量，无法表达不同平面的点和向量，当如果需要表达不同平面的点就需要扩容维度，齐次向量就起到了这个作用。&lt;/p&gt;
 
@@ -165,6 +495,8 @@
 &lt;p&gt;当w不是1时，就是不同平面的上的点，如果想要将坐标投影到w = 1的平面上去，就需要除以w分量，即齐次坐标(x, y, w)映射在二维平面中标准坐标系中时为(x/w, y/w)。&lt;/p&gt;
 
 &lt;p&gt;同样的道理，在三维空间中(x, y, z)只能代表标准坐标系中的点和向量，无法表达非标准坐标系，齐次向量补充了它的缺陷，齐次向量坐标为(x, y, z, w)，当w = 1时，我们可以认为xyz坐标是在标准三维空间中，当w != 1时，则认为xyz是在其他空间当中的点，如果想要将它们坐标映射到标准三维空间中去，则只要除以w，即(x/w, y/w, z/w)，就是实际在标准空间上的点。那么当 w = 0时怎么办，我们则认为它是‘无限远的点’，它描述的是一个方向而不是一个坐标位置。&lt;/p&gt;
+
+&lt;p&gt;向量在空间中的运用还不够广泛，矩阵可以表达空间中的缩放、旋转、切变，但无法表达偏移，因此我们需要增加一个维度的矩阵叫做齐次矩阵来表达当下维度的偏移，即齐次矩阵。&lt;/p&gt;
 
 &lt;h3&gt;由矩阵带来的旋转，缩放，投影，镜像，和仿射。&lt;/h3&gt;
 
@@ -268,7 +600,9 @@
 &lt;p&gt;其中用到的计算方式有，向量投影计算公式，向量旋转计算公式，垂直向量计算公式，最后结果为：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    脑补图片
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;一个看起来很复杂的，其实只要一步步推导就能得到的结果矩阵。&lt;/p&gt;
+&lt;p&gt;一个看起来很复杂的，只要一步步推导就能得到的结果矩阵。&lt;/p&gt;
+
+&lt;p&gt;其实结果并不重要，我们也记不住，但推导的过程是比较重要的，因为推导的过程运用到了很多其他方面的知识，加深了理解，虽然’用进废退‘的我们也很容易忘记这些公式，但只要心里知道有这个公式的存在，只要模糊记忆依然存在，在需要用到时搜索一下很快就能进入状态了。&lt;/p&gt;
 
 &lt;p&gt;参考资料：&lt;/p&gt;
 
@@ -1507,486 +1841,6 @@
                <pubDate>Sat, 22 Jun 2019 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2019/06/22/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF1.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2019/06/22/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF1.html</guid>
-            </item>
-        
-            <item>
-               <title>《Unity3D高级编程之进阶主程》第六章，网络层(五) - 剖析数据协议原理</title>
-               <description>&lt;h6&gt;协议包的格式，json, msgpack, protobuf 以及自定义格式&lt;/h6&gt;
-
-&lt;p&gt;项目的网路层在建设中，除了选择长短连接TCP，UDP，HTTP方式外，还需要选择在传输过程中使用什么样的协议格式。&lt;/p&gt;
-
-&lt;p&gt;前面分析了TCP，UDP，HTTP的原理与应用，现在我们来了解下在传输层和应用层之上的逻辑层中，信息传递格式的选择与利弊。&lt;/p&gt;
-
-&lt;p&gt;我们将深入剖析JSON，MessagePack，Protobuf的原理，包括它们都是由什么组成的，怎么序列化的，怎么反序列化的，数据格式究竟是由哪些元素构成的，使我们对网络数据协议的理解更加透彻清晰。&lt;/p&gt;
-
-&lt;p&gt;我们以最常见的JSON格式作为切入点，一步步深入了解更加有效却复杂的传递格式。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;h6&gt;JSON&lt;/h6&gt;
-
-&lt;p&gt;JSON：JavaScript 对象表示法（JavaScript Object Notation）。它是存储和交换文本信息的语法。类似 XML，但比 XML 更小、更快，更易解析。&lt;/p&gt;
-
-&lt;p&gt;JSON 是轻量级的文本数据交换格式，它独立于语言，具有自我描述性，更易理解。&lt;/p&gt;
-
-&lt;p&gt;JSON 是属于纯文本，具有“自我描述性”（人类可读），具有层级结构（值中存在值）&lt;/p&gt;
-
-&lt;p&gt;JSON与同时纯文本类型格式的XML相比较，JSON不需要结束标签，JSON更短，JSON解析和读写的速度更快，在JavaScript中能够使用内建的 JavaScript eval() 方法进行解析，JSON还可以使用数组，切不使用保留字（&amp;amp;，&amp;lt;，&amp;gt;，&amp;#39;，&amp;quot;）。&lt;/p&gt;
-
-&lt;p&gt;JSON 语法规则：&lt;/p&gt;
-
-&lt;p&gt;JSON 数据的书写格式是：名称/值对。&lt;/p&gt;
-
-&lt;p&gt;名称/值对包括字段名称（在双引号中），后面写一个冒号，然后是值：&lt;/p&gt;
-
-&lt;p&gt;&amp;quot;firstName&amp;quot; : &amp;quot;John&amp;quot;&lt;/p&gt;
-
-&lt;p&gt;JSON数据由逗号分隔，它的值可以是：&lt;/p&gt;
-
-&lt;p&gt;数字（整数或浮点数）&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
-  &amp;quot;number&amp;quot; : 1,
-  &amp;quot;number2&amp;quot; : 11.5
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;字符串（在双引号中）&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
-  &amp;quot;str1&amp;quot; : &amp;quot;1&amp;quot;,
-  &amp;quot;str2&amp;quot; : &amp;quot;11&amp;quot;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;逻辑值（true 或 false）&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
-  &amp;quot;logic1&amp;quot; : true,
-  &amp;quot;logic2&amp;quot; : false
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;数组（在方括号中）&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
-   &amp;quot;array1&amp;quot; : [1,2,3],
-   &amp;quot;array2&amp;quot; : [{&amp;quot;str1&amp;quot;,1},{&amp;quot;str2&amp;quot;,2},{33,44}]
- }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;对象（在花括号中）&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
-  &amp;quot;obj1&amp;quot; : {1, &amp;quot;str1&amp;quot;, true},
-  &amp;quot;obj2&amp;quot; : {&amp;quot;str2&amp;quot;, 2, false},
-  &amp;quot;obj3&amp;quot; : null
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;JSON 对象在花括号中书写：&lt;/p&gt;
-
-&lt;p&gt;对象可以包含多个名称/值对：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{ &amp;quot;firstName&amp;quot;:&amp;quot;John&amp;quot; , &amp;quot;lastName&amp;quot;:&amp;quot;Doe&amp;quot; }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;JSON 数组在方括号中书写：&lt;/p&gt;
-
-&lt;p&gt;数组可包含多个对象：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{
-    &amp;quot;employees&amp;quot;: [
-        { &amp;quot;firstName&amp;quot;:&amp;quot;John&amp;quot; , &amp;quot;lastName&amp;quot;:&amp;quot;Doe&amp;quot; },
-        { &amp;quot;firstName&amp;quot;:&amp;quot;Anna&amp;quot; , &amp;quot;lastName&amp;quot;:&amp;quot;Smith&amp;quot; },
-        { &amp;quot;firstName&amp;quot;:&amp;quot;Peter&amp;quot; , &amp;quot;lastName&amp;quot;:&amp;quot;Jones&amp;quot; }
-    ]
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;JSON 文件的文件类型通常是 &amp;quot;xxx.json&amp;quot; 用来扩展名用来说明是json格式的文本文件&lt;/p&gt;
-
-&lt;p&gt;JSON 文本的 MIME 类型是 &amp;quot;application/json&amp;quot; (MIME (Multipurpose Internet Mail Extensions) 是描述消息内容类型的因特网标准。MIME 消息能包含文本、图像、音频、视频以及其他应用程序专用的数据。)&lt;/p&gt;
-
-&lt;p&gt;JSON 解析器可以用些比较常用的，比如simpleJson，MiniJson，DataContractJsonSerializer，JArray，JObject等等，都是非常通用高效的插件。&lt;/p&gt;
-
-&lt;h6&gt;自定义二进制流协议格式&lt;/h6&gt;
-
-&lt;p&gt;大部分的网络协议都具有一定的通用性，JSON是最典型的案例，XML，MessagePack，Protobuf都具有一定的通用性，但自定义二进制流协议格式则不是，它完全不通用，因为它不需要顾及通用性。&lt;/p&gt;
-
-&lt;p&gt;我们在存储一串数据的时候，无论这串数据里包含了哪些数据以及哪些数据类型，当我们拿到这串数据在解析的时候能够知道该怎么解析，这是定义协议格式的目标。&lt;/p&gt;
-
-&lt;p&gt;简单的来说就是，当你传给我一串数据的时候，我是用什么样的规则知道这串数据里的内容的。JSON就制定了这么一个规则，这个规则以字符串KEY-VALUE，以及一些辅助的符号‘{’,&amp;#39;}&amp;#39;,&amp;#39;[&amp;#39;,&amp;#39;]&amp;#39;组合而成，这个规则非常通用，以至于任何人拿到任何JSON数据都能知道里面有什么数据。&lt;/p&gt;
-
-&lt;p&gt;自定义二进制流协议格式则不具有通用性，不是任何人拿到数据都能知道里面装的是什么的，有且只有两端在私下协定的双方才知道该如何解析收到的数据，对于破解自定义二进制流的内容也只有靠猜，虽然猜的难度也不是非常大。&lt;/p&gt;
-
-&lt;p&gt;一个自定义二进制流协议格式，分成三部分：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;数据大小|协议编号|具体数据
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;数据大小、协议编号、具体数据，这三者构成了一个完整的协议内容，这一整个协议内容少了谁都不成，不过有时数据大小和协议编号的前后顺序可以交换。&lt;/p&gt;
-
-&lt;p&gt;我们举例来描述这个协议格式，假设我们客户端有这样一个数据结构需要传输到服务端去：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;struct test
-{
-  int test1;
-  float test2;
-  bool test3;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;服务端拿到数据时，其实完全不知道当前拿到的数据是什么，也不知道数据是否完整，有可能只拿到一半的数据，或者一部分的数据。&lt;/p&gt;
-
-&lt;p&gt;首先我们要确定的是，我们收到的数据包它的完整的大小有多大，只有知道完整的包体大小才能确定我当前收到的数据在大小上是否完整，我们是要等待继续接受后面的数据，还是现在就可以进行解析操作了。&lt;/p&gt;
-
-&lt;p&gt;为了确定包的完整性，我们必须先向二进制流中读取4个比特，组合成一个无符号整数，这个整数总共32位，也就是说我们的数据包的大小最大为2的32次减1个byte，然后再用来确定接下来的完整包体大小。&lt;/p&gt;
-
-&lt;p&gt;例如我现在接受到了20个byte，读取前4个，组成一个整数后为24，说明我接受到的后面16个byte是一个不完整的包体，我应该继续等待后续的数据到来。&lt;/p&gt;
-
-&lt;p&gt;其次我们要确定的是收到的数据包是属于哪个格式的协议。&lt;/p&gt;
-
-&lt;p&gt;于是再读取4个byte大小的数据，组成一个无符号整数，用来确定协议号。比如这个无符号整数位为1002，就代表是编号为1002的协议。&lt;/p&gt;
-
-&lt;p&gt;假设我们上面这个test结构的协议号是1002，那么接下来连着这个协议号的所有数据直到包体大小的末尾，都是这个test结构的数据。&lt;/p&gt;
-
-&lt;p&gt;在解析这个具体数据的时候，要根据生成这个数据的顺序来解析。&lt;/p&gt;
-
-&lt;p&gt;假设在生成这个二进制流数据时，我们的顺序是，先推入test1，再推入test2，再推入test3。test1是4个byte的整数，test2是4个byte的浮点数，test3是1个byte的布尔值，于是就有了&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;xxxx|xxxx|x
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这样一个形状的二进制流，每个‘x’为一个byte，这里4个byte组成一个int或float数据，1个byte组成布尔数据，‘|’只是为了解释说明用的分隔符不存在于数据内，这个数据其实就是由9个byte组成，其中前4个为test1，中间4个为test2，后面1个为test3。&lt;/p&gt;
-
-&lt;p&gt;那么在网络传输过程中整个test结构的数据包格式为如下：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;13|1002|test1|test2|test3
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;13为接下来的数据大小，1002位协议编号，test1|test2|test3为具体数据。&lt;/p&gt;
-
-&lt;p&gt;我们在解析的时候也需要按照生成时的顺序来解析，先读取前4个byte组成一个整数赋值给test1，接着再读取4个byte组成一个浮点数赋值给test2，接着再读取1个byte赋值给test3，完成数据解析。&lt;/p&gt;
-
-&lt;p&gt;对于数组形式的数据则要在原来的基础上多增加一个长度标志，比如 int[]类型数据，在生成时先推入一个长度，再连续推入所有内容，在解析的时候做同样的反向操作，先读取4个byte的长度标志，再对连续读取N个具体数据，这个N为长度标志。&lt;/p&gt;
-
-&lt;p&gt;举例int[]为3个整数数组则二进制为如下效果：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;xxxx|xxxx|xxxx|xxxx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;前4个byte为长度，接着3次4个byte为数组内的整数数据。&lt;/p&gt;
-
-&lt;p&gt;自定义二进制流协议格式为最不通用的格式，但也是最节省流量的协议，因为每个数据都可以用最小的方式进行定义，比如协议号不需要4个byte，2个byte大小2的16次-1就够用了，长度有可能也不需要4个byte，只要2个甚至1个byte就够用了，有些数据不需要4个byte组成int整数，只需要2个byte数组short就够用了，甚至有些可以组合起来使用，比如协议结构中有4个bool，可以拼成一个byte来传递，这些都可以完全由我们来控制包体的大小不受到任何规则的限制，这也是自定义二进制协议格式最吸引人的地方。&lt;/p&gt;
-
-&lt;p&gt;自定义二进制流协议格式最大的缺点是不通用，当我们需要更换一个协议格式的时候，旧的协议格式就无法解析了，特别是当新的协议解析旧的协议时就会报错。我们也可以做些补救这种问题的措施，为了能让旧的协议格式还能继续使用，我们在每个数据头部都加入一个2个byte的整数代表版本号，由版本号来决定该读取哪个版本的协议，这样旧的协议也照样可以兼容新的协议，只是处理起来的时候需要注意些初始化问题，那些旧协议没有的而新协议有的数据则要尽可能的初始化成默认值以免造成逻辑报错。&lt;/p&gt;
-
-&lt;h6&gt;MessagePack&lt;/h6&gt;
-
-&lt;p&gt;MessagePack 是一个介乎于JSON和自定义二进制流之间的协议格式，他的理念是 ‘It’s like JSON. but fast and small.’ 。&lt;/p&gt;
-
-&lt;p&gt;与JSON相同的是MessagePack也有采用Key-Value形式的Map映射类型，不同的是MessagePack用byte形式存储整数、浮点数、布尔值，并且在Map映射类型外加入了更多单独类型（非KEY-VALUE形式）的数据类型，其中也包括了自定义二进制流的数据类型。&lt;/p&gt;
-
-&lt;p&gt;其中map映射类型是比较常用，也是比较通用的存储形式类型，也因为它的通用性被很多程序员所喜爱。&lt;/p&gt;
-
-&lt;p&gt;使用起来能和JSON用起来一样，并且数据大小比JSON小，解析速度又比JSON快，是MessagePack最大的特点。&lt;/p&gt;
-
-&lt;p&gt;非map类型的数据，其实和自定义二进制流的存储方式差不多，只是把原来的‘数据大小|数据’的形式改为了‘类型|数据’，比如存储一个4个byte也就是32位的整数：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+--------+--------+--------+--------+--------+
-|  0xd2  |ZZZZZZZZ|ZZZZZZZZ|ZZZZZZZZ|ZZZZZZZZ|
-+--------+--------+--------+--------+--------+
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;第一个byte的值0xd2代表32位整数类型，它表示后面4个byte组合起来是整数类型的数据。&lt;/p&gt;
-
-&lt;p&gt;再举个列子，32位的浮点数：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+--------+--------+--------+--------+--------+
-|  0xca  |XXXXXXXX|XXXXXXXX|XXXXXXXX|XXXXXXXX|
-+--------+--------+--------+--------+--------+
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;第一个byte的值0xca代表32位浮点数类型，它表示后面4个byte组合起来是浮点数类型的数据。&lt;/p&gt;
-
-&lt;p&gt;以此类推，nil，bool，8位无符号整数，16位无符号整数，32位无符号整数，64位无符号整数，8位有符号整数，16位有符号整数，32位有符号整数，64位有符号整数等，以及32位浮点数，64位浮点数，都用这种类似的方式表示。&lt;/p&gt;
-
-&lt;p&gt;其实用MessagePack并不是冲着这些单独的数据类型去的，因为这些单独的数据类型完全可以用自定义二进制流代替，我们最关心的其实是它的map类型数据。&lt;/p&gt;
-
-&lt;p&gt;我们专门来看看，MessagePack的map类型的存储机制，为什么就比JSON快，为什么就比JSON小，它是如何存储和解析的。&lt;/p&gt;
-
-&lt;p&gt;在map之前我们看看数组类型的格式：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+--------+--------+--------+~~~~~~~~~~~~~~~~~+
-|  0xdc  |YYYYYYYY|YYYYYYYY|    N objects    |
-+--------+--------+--------+~~~~~~~~~~~~~~~~~+
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;第一个byte的值0xdc代表是个总共可以存储16位长度的数组，也就是最大为2的16次-1个元素的数组，后面2个byte组合起来成为一个无符号的整数代表后面有多少个元素，接着后面N个为相同类型的元素的数据。&lt;/p&gt;
-
-&lt;p&gt;假设说这N个为32位整数类型，那么就是如下格式&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+--------+--------+--------+~~~~~~~~~~~~~~~~~+
-|  0xdc  |00000000|00000011|  0xd2|00001001|0xd2|00001101|...(3 objects)
-+--------+--------+--------+~~~~~~~~~~~~~~~~~+
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;一个数组中指定了数组类型，以及数组元素的个数，接下来的数据就是单个元素的数据了，每个数据都包含了‘类型|数据’格式。&lt;/p&gt;
-
-&lt;p&gt;其实map类型就是Array数组类型的变种，在数组类型上每个元素，多加了个KEY字符串，我们来看下map的格式：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;+--------+--------+--------+~~~~~~~~~~~~~~~~~+
-|  0xde  |YYYYYYYY|YYYYYYYY|   N*2 objects   |
-+--------+--------+--------+~~~~~~~~~~~~~~~~~+
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;第一个byte的值0xde代表是最大个数为16位的map类型数据，接着2个byte组合起来表示有多少个元素，再接着N乘2个元素为数据元素，其中以2个元素为一个组合，第一元素一定是字符串KEY，第二个元素为单独的任意的数据类型。&lt;/p&gt;
-
-&lt;p&gt;我们用官方的例子来分析下：&lt;/p&gt;
-
-&lt;p&gt;一个JSON类型的数据：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;{&amp;quot;compact&amp;quot;:true, &amp;quot;schema&amp;quot;:0}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;在MessagePack中的map格式为：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;82|A7|&amp;#39;c&amp;#39;|&amp;#39;o&amp;#39;|&amp;#39;m&amp;#39;|&amp;#39;p&amp;#39;|&amp;#39;a&amp;#39;|&amp;#39;c&amp;#39;|&amp;#39;t&amp;#39;|C3|A6|&amp;#39;s&amp;#39;|&amp;#39;c&amp;#39;|&amp;#39;h&amp;#39;|&amp;#39;e&amp;#39;|&amp;#39;m&amp;#39;|&amp;#39;a&amp;#39;|00|
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;其中8位前半个byte的值代表是个15个以内的map类型数据，8后面的2是后半个byte的值，代表总共有2个元素。&lt;/p&gt;
-
-&lt;p&gt;接着A为前半个byte的值，代表是是个31个以内的字符串，A后面的7代表这个字符串拥有7个字符。&lt;/p&gt;
-
-&lt;p&gt;接着7个元素都是字符。&lt;/p&gt;
-
-&lt;p&gt;接着C3是KEY-VALUE的VALUE，这个VALUE是一个bool型的ture值。&lt;/p&gt;
-
-&lt;p&gt;接着A6，A为前半个byte代表是31个以内的字符串，A后面的6代表这个字符串有6个字符。&lt;/p&gt;
-
-&lt;p&gt;接着6个元素都是字符。&lt;/p&gt;
-
-&lt;p&gt;最后00，前面0为前半个byte，表示类型为7位以内的整数，接着的0位后半个byte，代表数据为0。&lt;/p&gt;
-
-&lt;p&gt;MessagePack整个map就是以这种“类型|数据”或者&amp;quot;类型|大小|数据&amp;quot;的方式存储。由于存储的方式是顺序，所以在解析的时候不需要排序，不需要解析符号和类型，数据的类型直接可以用byte来表示，能用byte存储绝不用字符串形式存储，能减少byte使用个数的尽量减少byte的使用个数，能合并的尽量合并为一个byte。&lt;/p&gt;
-
-&lt;p&gt;因此MessagePack对于JSON来说，比JSON减少了大量的解析，比JSON减少了更多的数据空间，使得MessagePack能比起JSON来更快并且更小，就像它自己所说的那样 ‘It’s like JSON. but fast and small.’。&lt;/p&gt;
-
-&lt;h3&gt;Protocol Buffer&lt;/h3&gt;
-
-&lt;p&gt;虽然Proto3在Proto2之上又做了更多的改进，但我们这里以Proto2为基准来讲解Protocal buffer的内在机制。&lt;/p&gt;
-
-&lt;p&gt;MessagePack在JSON之上做了优化，其实可以看做是，把JSON和自定义二进制的合并做法，既汲取了JSON这种KEY-VALUE(键值对)通用性的优点，又汲取了自定义二进制流格式无需解析和存储空间小的特点。&lt;/p&gt;
-
-&lt;p&gt;不过MessagePack的Map毕竟是kEY-VALUE形式的KEY值还是使用了字符串类型，它的KEY还是逃脱不了字符串string占用太多存储空间的弊端。&lt;/p&gt;
-
-&lt;p&gt;Google Protocol Buffer 的出现就弥补了MessagePack的这个缺点，但是Google Protocol Buffer也有自身不可忽视的缺点，我们来看究竟Google Protocol Buffer是怎么的一种数据协议。&lt;/p&gt;
-
-&lt;p&gt;Google Protocol Buffer( 简称 Protobuf) 是 Google 公司内部的混合语言数据标准，它们用于 RPC 系统和持续数据存储系统。&lt;/p&gt;
-
-&lt;p&gt;Protobuf 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。&lt;/p&gt;
-
-&lt;p&gt;常有人推崇说 Protocol Buffer 比JSON、MessagePack要好，那么它究竟好在哪里呢？我们就来分析下，为什么有这么多人推崇它。&lt;/p&gt;
-
-&lt;p&gt;我们选择数据协议的目的主要关注的点是，它是否能更简单上手，解析数据是否能更快，存储空间是否能更小，通用性是否能更强。对于这些特点，Protocol Buffer 是否能都做到，还是说它只是在部分几个方面做到了，下面我们来透彻的对它剖析。&lt;/p&gt;
-
-&lt;h6&gt;Protocol Buffer消息定义&lt;/h6&gt;
-
-&lt;p&gt;创建扩展名为.proto的文件，如：MyMessage.proto，并将以下内容存入该文件中。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;message LoginReqMessage {
-  required int64 acct_id = 1;
-  required string passwd = 2;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;message是消息定义的关键字，等同于C#中的struct/class。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;LoginReqMessage为消息的名字，等同于结构体名或类名。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;required前缀表示该字段为必要字段。即在序列化和反序列化之前该字段必须已经被赋值。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;与required相似的功能还存在另外两个类似的关键字，optional和repeated。&lt;/p&gt;
-
-&lt;p&gt;optional表示该字段为可选字段，即在序列化和反序列化前可以不进行赋值。&lt;/p&gt;
-
-&lt;p&gt;相比于optional，repeated主要用于表示数组字段。&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;int64和string分别表示64位长整型和字符串型的消息字段。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;在Protocol Buffer中存在一张类型对照表，既Protocol Buffer中的数据类型与其他编程语言(C#/Java/C++)中所用类型的对照。&lt;/p&gt;
-
-&lt;p&gt;该对照表中还将给出在不同的数据场景下，哪种类型更为高效。&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;acct_id 和 passwd 分别表示消息字段名，等同于C#中的域变量名。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;标签数字 1 和 2 表示不同的字段在序列化后的二进制数据中的布局位置。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;在该例中，passwd 字段编码后的数据一定位于 acct_id 之后。需要注意的是该值在同一message中不能重复。&lt;/p&gt;
-
-&lt;p&gt;对于Protocol Buffer而言，标签值为 1 到 15 的字段在编码时可以得到优化，即标签值和类型信息仅占有一个byte，标签范围是 16 到 2047 的将占有两个bytes，而Protocol Buffer可以支持的字段数量则为2的29次方减1。有鉴于此，我们在设计消息结构时，可以尽可能考虑让repeated类型的字段标签位于1到15之间，这样便可以有效的节省编码后的字节数量。&lt;/p&gt;
-
-&lt;h6&gt;嵌套Protocol Buffer&lt;/h6&gt;
-
-&lt;p&gt;我们可以在同一个.proto文件中定义多个message，这样便可以很容易的实现嵌套消息的定义。如：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int32&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;optional&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-      &lt;span class=&quot;kd&quot;&gt;enum&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PhoneType&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;MOBILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;HOME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;WORK&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-      &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PhoneNumber&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;optional&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PhoneType&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-      &lt;span class=&quot;n&quot;&gt;repeated&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PhoneNumber&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phones&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;repeated&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight_recent_months&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AddressBook&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;repeated&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;people&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;AddressBook消息的定义中包含另外一个消息类型作为其字段Person，Person又包含了另一个消息类型作为字段PhoneNumber。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;其中的 AddressBook 和 Person 被定义在同一个.proto文件中，也可以被分开来定义在各自的.proto文件中。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Protocol Buffer提供了另外一个关键字import，相当于 C++ 的Include，这样我们便可以将很多通用的message定义在同一个.proto文件中，而其他各模块功能的消息体定义在其他文件中，再通过import的方式将需要的结构体文件中定义的消息包含进来，如：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;import &amp;quot;myproject/CommonMessages.proto&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6&gt;限定符 required、optional、repeated 的规则&lt;/h6&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;在每个消息中必须至少有一个required类型的字段，保证数据中一定有至少一个数据。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;required限定符表示该字段为必要字段。即在序列化和反序列化之前该字段必须已经被赋值。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;每个消息中可以包含0个或多个optional类型的字段。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;optional表示该字段为可选字段，即在序列化和反序列化前可以不进行赋值，如果没有赋值则表示该数据为空。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;repeated表示的字段可以包含0个或多个重复的数据。注意，是重复的数据，可以等价于我们常使用的数组和列表，并且可以不赋值，则表示0个数据。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h5&gt;Protocol Buffer 原理-序列化和反序列化&lt;/h5&gt;
-
-&lt;p&gt;Protocol Buffer 是怎么识别和存储数据的，是序列化和反序列的关键。&lt;/p&gt;
-
-&lt;p&gt;JSON 和 MessagePack 都使用了字符串的KEY作为映射到程序变量的关键字，变量和字符串用比较字符串的是否相等来判断是否为该变量，避免不了字符串太多而浪费空间。&lt;/p&gt;
-
-&lt;p&gt;Protocol Buffer 则用数字编号来作为KEY的关键字，每个变量都必须有个不能重复的标签号(即数字编号)，用变量后面跟着的数字编号来映射到数据中的数字编号，进而读取数据。&lt;/p&gt;
-
-&lt;p&gt;Protocol Buffer为每个变量都定义了一个标签号(即数字编号)，这个数字编号就代表了程序变量与指定编号数据的映射关系。&lt;/p&gt;
-
-&lt;p&gt;有了这个规则还不够，因为程序在读取的时候，是不知道某个变量到底对应哪个标签号的，比如上面的Person的 name 变量，在程序里的 name 变量是不知道到底该读取哪个编号的数据的，除非在程序里写死。&lt;/p&gt;
-
-&lt;p&gt;Protocol Buffer 就是使用了这种简单粗暴的方法，‘在程序里写死’的这种方式让事情变得更简单。&lt;/p&gt;
-
-&lt;p&gt;‘在程序里写死’这种粗暴的方式最讲究周边工具了，Protocol Buffer就为很多种语言定制了生成序列化和反序列化程序代码的工具。只需要通过提供.proto文件就能生成相应语音的程序代码，在代码中把编号‘写死’，这一切代码都是自动生成的，我们只需要关心.proto文件中的结构。&lt;/p&gt;
-
-&lt;p&gt;以就是说，当Protocol Buffer生成的解析代码在读数据的时候，一旦读取到编号为1的数据时，就把数据解析给 name 这个程序变量，这些都写死在代码中，而代码由Protocol Buffer工具生成。&lt;/p&gt;
-
-&lt;h6&gt;我们使用上面提到的 AddressBook 数据结构来序列化一个 Protocol Buffer 数据。&lt;/h6&gt;
-
-&lt;p&gt;加入数据的伪代码：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddressBook&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;address_book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;person&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;address_book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add_people&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Jack&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_email&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Jack@qq.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;PhoneNumber&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_phones&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;123456&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add_phones&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;234567&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;phone_number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set_type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MOBILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_weight_recent_months&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_weight_recent_months&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;52&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_weight_recent_months&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;54&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;生成出来的二进制数据流如下：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (1 &amp;lt;&amp;lt; 3) + 2 = 0a，1为people的标签号,2为嵌入结构对应的类型号&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// 0x3c = 60，表示接下来60个字节为Person的数据&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// 下面进入到 repeated Person 数组的数据结构&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (1 &amp;lt;&amp;lt; 3) + 2 = 0a，Person的第一个字段name的标签号为1，2为string(字符串)对应的类型号&lt;/span&gt;
-&lt;span class=&quot;mo&quot;&gt;04&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// name字段的字符串长度为4&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;61&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;63&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// &amp;quot;Jack&amp;quot; 的ascii编码&lt;/span&gt;
-
-&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (2 &amp;lt;&amp;lt; 3) + 0 = 10，字段id的标签号为2，0为int32对应的类型号&lt;/span&gt;
-&lt;span class=&quot;mo&quot;&gt;01&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// id的整型数据为1&lt;/span&gt;
-
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (3 &amp;lt;&amp;lt; 3) + 2 = 1a，字段email的标签号为3，2为string对应的类型号&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// 0x0b = 11 email字段的字符串长度为11&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;61&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;63&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;71&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;71&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;63&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;6f&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;6d&lt;/span&gt;        &lt;span class=&quot;c1&quot;&gt;// &amp;quot;Jack@qq.com&amp;quot;&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;//第1个PhoneNumber，嵌套message&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (4 &amp;lt;&amp;lt; 3) + 2 = 22，phones字段，标签号为4，2为嵌套结构对应的类型号&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// 0a = 10，接下来10个字节为PhoneNumber的数据&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// (1 &amp;lt;&amp;lt; 3) + 2 =  0a, PhoneNumber的number，标签号为1，2为string对应的类型号&lt;/span&gt;
-    &lt;span class=&quot;mo&quot;&gt;06&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// number字段的字符串长度为6&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;31&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;33&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;34&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;35&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;36&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// &amp;quot;123456&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// (2 &amp;lt;&amp;lt; 3) + 0 = 10，PhoneType type字段，0为enum对应的类型号&lt;/span&gt;
-    &lt;span class=&quot;mo&quot;&gt;01&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// HOME，enum被视为整数&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// 第2个PhoneNumber，嵌套message&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;06&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;33&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;34&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;35&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;36&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;37&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//信息解读同上，最后的00为MOBILE&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;a2&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;06&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// 1010 0010 0000 0110 varint方式，weight_recent_months的key&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;//  010 0010  000 0110 → 000 0110 0100 010 little-endian存储&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// (100 &amp;lt;&amp;lt; 3) + 2 = a2 06，100为weight_recent_months的标签号&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;//  2为 packed repeated field的类型号&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// 0c = 12，后面12个字节为float的数据，每4个字节一个数据&lt;/span&gt;
-&lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// float 50&lt;/span&gt;
-&lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// float 52&lt;/span&gt;
-&lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;58&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// float 54&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;整个数据看下来都是遵循了简单的规则，即，标签号 + 类型号，最为头部标识，数据大小标识，作为可选标识，最后放入具体数据：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;标签号 + 类型号|数据大小|具体数据
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;具体数据中再嵌套不同种类的数据，也同样遵循 ‘标签号 + 类型号|数据大小|具体数据’ 这样的规则。&lt;/p&gt;
-
-&lt;h6&gt;二进制数据流中反序列化为程序对象数据，我们重点看看其中 Person 结构的反序列过程：&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MergeFrom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CodedInputStream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;uint&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ReadTag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;switch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_unknownFields&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UnknownFieldSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MergeFieldFrom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_unknownFields&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ReadInt32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ReadString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;phones_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;AddEntriesFrom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_repeated_phones_codec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;weight_recent_months_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;AddEntriesFrom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_repeated_weight_recent_months_codec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;通过上述Protocol Buffer生成的代码我们了解到，所有的对象变量都通过.proto文件中的标签号来识别数据是否与该变量有映射关系的，当拿到具体数据时，先判定属于哪个变量，再针对该变量的类型读取数据。&lt;/p&gt;
-
-&lt;h6&gt;Protocol Buffer 不同版本消息的兼容问题&lt;/h6&gt;
-
-&lt;p&gt;在实际的开发中会存在这样一种应用场景，即消息格式因为某些需求的变化而不得不进行必要的修改或者说升级，但是有些使用原有消息格式的应用程序暂时又不能被立刻升级，这便要求我们在升级消息格式时要遵守一定的规则，从而可以保证基于新老消息格式的新老程序能够同时运行。规则如下：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;不要修改已经存在字段的标签号，即变量后面的数字，保证旧数据协议能够继续从数据中读取指定标签号的正确数据。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;任何新添加的字段必须是optional和repeated限定符，保证在旧数据无法加入新数据的情况下，新的协议还能够在旧数据协议之下继续顺利解析，否则无法保证新老程序在互相传递消息时的消息兼容性。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;在原有的消息中，不能移除已经存在的required字段，虽然optional和repeated类型的字段可以被移除，但是他们之前使用的标签号必须被保留，不能被新的字段重用。因为旧协议在执行时还是会在旧的标签号中加入自己的数据，新协议如果使用了旧的标签号，就会导致新旧协议数据解析错误的问题。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;int32、uint32、int64、uint64和bool等类型之间是兼容的，sint32和sint64是兼容的，string和bytes是兼容的，fixed32和sfixed32，以及fixed64和sfixed64之间是兼容的，这意味着如果想修改原有字段的类型时，为了保证兼容性，只能将其修改为与其原有类型兼容的类型，否则就将打破新老消息格式的兼容性。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h6&gt;Protocol Buffer 的优点&lt;/h6&gt;
-
-&lt;p&gt;Protobuf 全程使用二进制流形式，用整数代替了KEY来映射变量，比 XML、Json、MessagePack它们更小、更快、也更简单。&lt;/p&gt;
-
-&lt;p&gt;我们可以定义自己的数据结构，然后使用Protobuf代码生成器生成的代码来读写这个数据结构。甚至可以在无需重新部署程序的情况下更新数据结构。只需使用 Protobuf 对数据结构进行一次描述，即可利用各种不同语言或从各种不同数据流中对你的结构化数据轻松读写。&lt;/p&gt;
-
-&lt;p&gt;使用 Protobuf 无需学习复杂的文档对象模型，Protobuf 的编程模式比较友好，简单易学，同时它拥有良好的文档和示例，对于喜欢简单事物的人们而言，Protobuf 比其他的技术更加有吸引力。&lt;/p&gt;
-
-&lt;p&gt;Protobuf 语义更清晰，无需类似 XML，JSON 解析器的东西，简化了解析的操作，减少了解析的消耗。&lt;/p&gt;
-
-&lt;p&gt;Protobuf 数据使用二进制形式，把原来在JSON,XML里用字符串存储的数字换成用byte存储，大量减少了浪费的存储空间。与MessagePack相比，Protobuf减少了Key的存储空间，让原本用字符串来表达Key的方式换成了用整数表达，不但减少了存储空间也加快了反序列化的速度。&lt;/p&gt;
-
-&lt;h6&gt;Protocol Buffer 的不足&lt;/h6&gt;
-
-&lt;p&gt;Protbuf 与 XML 相比也有不足之处。它功能简单无法用来表示复杂的概念。&lt;/p&gt;
-
-&lt;p&gt;XML 已经成为多种行业标准的编写工具，Protobuf 只是运用在数据传输与存储上，在通用性上还差很多。&lt;/p&gt;
-
-&lt;p&gt;由于 XML 具有某种程度上的自解释性，它可以被人直接读取编辑，在这一点上 Protobuf 不行，它以二进制的方式存储，除非你有 .proto 定义，否则你没法直接读出 Protobuf 的任何内容。&lt;/p&gt;
-
-&lt;p&gt;参考资料：&lt;/p&gt;
-
-&lt;p&gt;《Protocol Buffers：阅读一个二进制文件》&lt;/p&gt;
-</description>
-               <pubDate>Sun, 16 Jun 2019 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2019/06/16/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%825.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2019/06/16/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%825.html</guid>
             </item>
         
     </channel>
