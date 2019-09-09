@@ -266,15 +266,15 @@
 <p>路点系统弥补了一些二维数组形式的缺点。路点系统也是一个易于理解的系统，它由很多个点构成，这些点我们称它们为路点，即路上的点，这些路点需要我们手动在地图上放进去，每个路点中都存储了坐标，ID，以及与哪些路点相连的数据。</p>
 
 <p>我们在地图中，放入了很多个路点，并且为这些路点配置了连线，于是就有了这幅画面：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    图片暂时脑补
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>地图中每个路点都会有与其他某些路点相连接的线，我们可以称它们为路线，由路点与路点之间连线而成。</p>
 
 <p>如果把地图里的路点和路线铺设的更加复杂一点时，所有的点和线都拼成了一张网：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    图片暂时脑补
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>这张网中，只要我们得到某个点，就能根据这些路点和路线，用A星的算法来寻路到目的地。即，起点为，与起点最近的路点，寻路到，与终点最近的路点，的一条路径。如图：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    图片暂时脑补
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>路点系统很容易理解，但也需要一些可视化的编辑器的支撑，因为所有的路点都需要在既有的地图上编辑，所以编写一个专门的地图编辑器是必不可少的，没有地图编辑器至少也需要路点编辑器，可保存路点数据到文件，和从文件加载路点数据，以及增加路点，减少路点，添加和减少路点连接信息。</p>
 
@@ -329,7 +329,7 @@
     第三，直到剩下最后3个点形成一个三角形并记录下来，把所有记录的三角形拼接起来就形成了三角化网格。
 </code></pre></div>
 <p>经过这三个步骤的计算，所有的耳点都被切掉后，再把所有记录的三角形拼装成三角形网格，就完成了整个三角形剖分步骤。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    图片暂时脑补
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <h6>多边形含‘洞’的情况</h6>
 
@@ -343,10 +343,10 @@
 <p>也就是说，最终计算的还是一个单独的简单多边形，只是在计算之前，将‘洞’以凹形形态并入最外围的简单多边形。</p>
 
 <p>我们以图为例，可以看的更加清楚一点：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    图片暂时脑补
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>图中展示了，如何将一个‘洞’以凹形形态的方式并入外围简单多边形的，就如同从外围简单多边形上，修了一条小小的通路到‘洞’中那样，其实我们完全可以理解为，下图那样：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    图片暂时脑补
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>图中从外围简单多边形的点上延伸出一条路径来连接‘洞’，使得‘洞’的空白与外围的空白联通，就像贴膜里的气泡开了个口把空气放出去了那样。</p>
 
@@ -445,19 +445,19 @@
     8.当寻路达到最后一个多边形，直接判断终点和上一个路径点的向量是否在上一个边两点的中间，假如不是，再增加一个拐点
 </code></pre></div>
 <p>举例说明：从右边的开始点往左边的结束点寻路</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片1
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片1
 </code></pre></div>
 <p>line3，line4在line1，line2夹角内，左右都缩进。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片2
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片2
 </code></pre></div>
 <p>v4在外面，左边缩进。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片3
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片3
 </code></pre></div>
 <p>v3,v4都在line1 左边，v1成为拐点</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片4
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片4
 </code></pre></div>
 <p>从v1出发继续按上面步骤计算拐点</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片5
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片5
 </code></pre></div>
 <p>最后到达终点，收集所有拐点，加上起点和终点后就是正条经过优化后的路径节点。这种射线算法或者说拐点算法能将原本在三角形网格寻路后诡异的路径转化为更加平滑的直线路径。</p>
 
@@ -553,6 +553,15 @@
     
       <li>
         <h3>
+          <a href="/2019/09/09/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A828.html">
+            思路探讨(二十八) 如何应对彷徨
+            <small>09 Sep 2019</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/2019/09/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A62.html">
             《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2
             <small>07 Sep 2019</small>
@@ -565,15 +574,6 @@
           <a href="/2019/09/01/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A61.html">
             《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础1
             <small>01 Sep 2019</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/2019/08/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF4.html">
-            《Unity3D高级编程之进阶主程》第十章，地图与寻路(四) 地图的制作与优化
-            <small>17 Aug 2019</small>
           </a>
         </h3>
       </li>
@@ -627,6 +627,22 @@
       
 
       
+
+    
+
+      
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2019/09/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A62.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2
+                <small>07 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
         
           <li>
             <h3>
@@ -664,15 +680,6 @@
             </h3>
           </li>
         
-          <li>
-            <h3>
-              <a href="/2019/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF2.html">
-                《Unity3D高级编程之进阶主程》第十章，地图与寻路(二) 寻路网格的构建
-                <small>26 Jul 2019</small>
-              </a>
-            </h3>
-          </li>
-        
 
         
   <!-- </ul> -->
@@ -681,6 +688,12 @@
 
   <ul class="related-posts">
     
+
+    
+
+      
+
+      
 
     
 

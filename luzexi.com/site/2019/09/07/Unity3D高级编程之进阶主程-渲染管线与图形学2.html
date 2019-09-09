@@ -221,7 +221,7 @@
     [0, 0.75]  于  [b]
 </code></pre></div>
 <p>我们把 a和b 表现在二维坐标系中，即如图：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>图中a，b两个向量可以形成了一个矩形，我们就假设这个矩形图像表达了a，b向量的缩放关系。当a，b被拉长时，这个矩形图像被也同样被拉长。</p>
 
@@ -236,14 +236,14 @@
 <p>不过这种简单易懂的旋转矩阵，也仅限于标准坐标系中对标准轴的缩放。如果只有标准坐标系上的缩放计算，是远远满足不了我们的需求的。</p>
 
 <p>那么怎么计算对任意轴方向上的缩放呢？我们来看如下图所示：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>沿 N 方向缩放 v 向量，其实和前一节中绕 N 轴旋转 v 向量有异曲同工之妙。</p>
 
 <p>我们需要根据所知道的推导这个公式，即我们已知v，已知 N，已知缩放因子k (k是一个单纯的数字) ，要求得v’。</p>
 
 <p>可以通过 N 和 v 求得投影 v1，通过 v 和 v1 求得他们的垂直向量 v2，再通过缩放因子 k 求得v1和v2缩放后的向量 v1‘ 和 v2’，最后通过 v1‘ 和 v2’ 求得缩放后的结果向量 v‘，即如下图公式。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>同样的，三维空间中，如果是标准坐标系上缩放，则缩放矩阵可以是很简单的对角线矩阵，即。</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    [scale-x, 0, 0]
@@ -253,7 +253,7 @@
 <p>也同样的，这种标准坐标系上的缩放完全满足不了我们的需求，我们需要沿任意向量上的缩放矩阵。</p>
 
 <p>同样的向量，同样的变化，同样的推导，最终结果为：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>最终我们获得了，沿任意方向缩放的矩阵。</p>
 
@@ -264,7 +264,7 @@
 <h6>平行投影</h6>
 
 <p>在上述几节中我们了解到了可以用矩阵去缩放任意点和向量，那么如果在缩放时某个轴上的缩放因子为零会变成是什么样的呢，如图所示：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>图中模型所有的点都被’挤‘到了一个平面上，这种所有点都被拉平至垂直轴或平面上的做法就叫，平行投影，或者也可以叫正交投影。</p>
 
@@ -298,29 +298,29 @@
     [0, 0, 1]
 </code></pre></div>
 <p>当然只是标准坐标轴上的平行投影还不够用，我们也需要任意直线或任意平面的投影矩阵，不过这次我们不需要再次计算任意轴上的平行投影，只需要通过前面计算过的缩放矩阵在任意方向或任意轴上的缩放矩阵就可以得到平行投影的矩阵，即如下图：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>通过使缩放方向上的缩放因子变为零的方式，来获得平行投影矩阵。三维中也是一样，只是在三维中要 N 方向为垂直平面的方向而不是平行于平面的方向。</p>
 
 <h6>镜像</h6>
 
 <p>镜像其实挺容易理解的，平行投影是将某个轴上的缩放因子变为零，镜像就是在某个轴上将缩放因子变为负1，这样在缩放时就形成了‘翻转’的局面。如图所示：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>坐标轴的四个象限，右上角的图为正常的图案，左边为对x轴翻转后的图案，下边为y轴翻转后的图案，右下角为x轴和y轴同时翻转的图案。</p>
 
 <p>镜像矩阵也和平行投影矩阵一样，可以用任意缩放矩阵来计算出对任意方向和轴的镜像矩阵，如图所示：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>图中为任意方向的缩放矩阵在当缩放因子为-1时的公式，我们很容易就明白，镜像不过是缩放的一种特殊形式。</p>
 
 <h6>切变</h6>
 
 <p>切变非常特殊和有趣，它其实是一种坐标系‘扭曲’变换。这种坐标系的‘扭曲’变换将会被运用到对次级空间的坐标平移上。切变的形式如图：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>图中y轴方向的向量中的x坐标被平移了。这是切变在x轴上的变化，我们也可以让切变在y轴上发生变化，如图：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 </code></pre></div>
 <p>这两种形式的切变都是通过位移x轴方向上的坐标或y轴方向上的坐标来达到的，其实我们可以理解为对次级维度坐标系的‘扭曲’。</p>
 
@@ -458,7 +458,7 @@
 <p>对于定义一个旋转复数，则为 (cos(β), sin(β)) 表达式为 cos(β) + sin(β) * i，i为虚数，β为旋转的角度。</p>
 
 <p>他们发现从平面上求得某个向量旋转 β 的结果，可以用向量复数对乘以旋转复数对的方式来获得，即</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    脑补图片
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 
     v = x + y * i
     r = cos(β) + sin(β) * i
@@ -609,6 +609,15 @@
     
       <li>
         <h3>
+          <a href="/2019/09/09/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A828.html">
+            思路探讨(二十八) 如何应对彷徨
+            <small>09 Sep 2019</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/2019/09/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A62.html">
             《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2
             <small>07 Sep 2019</small>
@@ -621,15 +630,6 @@
           <a href="/2019/09/01/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A61.html">
             《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础1
             <small>01 Sep 2019</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/2019/08/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF4.html">
-            《Unity3D高级编程之进阶主程》第十章，地图与寻路(四) 地图的制作与优化
-            <small>17 Aug 2019</small>
           </a>
         </h3>
       </li>
@@ -648,6 +648,22 @@
       
 
       
+
+    
+
+      
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2019/09/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A62.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2
+                <small>07 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
         
           <li>
             <h3>
@@ -685,15 +701,6 @@
             </h3>
           </li>
         
-          <li>
-            <h3>
-              <a href="/2019/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF2.html">
-                《Unity3D高级编程之进阶主程》第十章，地图与寻路(二) 寻路网格的构建
-                <small>26 Jul 2019</small>
-              </a>
-            </h3>
-          </li>
-        
 
         
   <!-- </ul> -->
@@ -702,6 +709,12 @@
 
   <ul class="related-posts">
     
+
+    
+
+      
+
+      
 
     
 
