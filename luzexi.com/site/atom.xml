@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-10-13T14:49:37+08:00</updated>
+ <updated>2019-10-13T14:50:44+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -18,6 +18,8 @@
    <updated>2019-10-13T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2019/10/13/Unity3D高级编程之进阶主程-渲染管线与图形学6</id>
    <content type="html">&lt;p&gt;前面的几篇非常详尽的讲述了渲染管线的整个流程以及渲染管线上的每个节点的来龙去脉。这节我们来说说，一些渲染概念和原理，以及上几章中对渲染管线上没有说到的细节，或者在现代GPU中已经被优化的流程。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
 
 &lt;h3&gt;为什么要有渲染顺序&lt;/h3&gt;
 
