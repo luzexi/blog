@@ -8,12 +8,12 @@
 
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta content="" name="description">
+  <meta content="unity3d 高级编程 主程 shader 漫反射 镜面反射 自发光 球面反射" name="description">
 
 
   <title>
     
-      技术人生 &middot; www.luzexi.com
+      《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识1
     
   </title>
 
@@ -46,7 +46,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item active" href="/">Home</a>
+      <a class="sidebar-nav-item" href="/">Home</a>
 
       
 
@@ -210,18 +210,11 @@
 
 
     <div class="content container">
-      <div class="posts">
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2019/10/13/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A66.html">
-        《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识1
-      </a>
-    </h1>
+      <div class="post">
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识1</h1>
+  <span class="post-date">13 Oct 2019</span>
 
-    <span class="post-date">13 Oct 2019</span>
-
-    <p>前面的几篇非常详尽的讲述了渲染管线的整个流程以及渲染管线上的每个节点的来龙去脉。这节我们来说说，一些渲染概念和原理，以及上几章中对渲染管线上没有说到的细节，或者在现代GPU中已经被优化的流程。</p>
+  <p>前面的几篇非常详尽的讲述了渲染管线的整个流程以及渲染管线上的每个节点的来龙去脉。这节我们来说说，一些渲染概念和原理，以及上几章中对渲染管线上没有说到的细节，或者在现代GPU中已经被优化的流程。</p>
 
 <h3>为什么要有渲染顺序</h3>
 
@@ -407,149 +400,267 @@
 
 <p>手机端没有独立显存，因此OpenGL ES就设计了映射缓冲区对象，它在不需要拷贝内存的前提下可以通过共享内存来实现数据的提取。如果贴图或顶点数据是只读状态的话完全没有必要为渲染而重新拷贝一份，而是可以选择建立起映射缓冲区对象，直接读取内存来获取数据。不过也有不做建立映射缓冲区对象的时候，当数据、纹理被开启可写状态时则必须重新拷贝一份在GPU独立内存中，因为原数据随时会被CPU更改，而当时可能GPU还在渲染中，如果仍然并行处理同一个数据则会造成显示问题，因此两个并行的脑袋不能共享一份可写的数据。</p>
 
-  </div>
+  <p>感谢您的耐心阅读</p>
+  <p>Thanks for your reading</p>
+</div>
+<div>
   
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2019/09/28/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A65.html">
-        《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线2
-      </a>
-    </h1>
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+<!-- <div id="cyReward" role="cylabs" data-use="reward" align="center" ></div> -->
 
-    <span class="post-date">28 Sep 2019</span>
+<script type="text/javascript" src="/assets/js/tctip-1.0.3.min.js"></script>
+<script>
+  new tctip({
+    top: '50%',
+    button: {
+      id: 9,
+      type: 'zanzhu'
+    },
+    list: [
+      {
+        type: 'alipay',
+        qrImg: '/assets/common/alipay.jpg'
+      }, {
+        type: 'wechat',
+        qrImg: '/assets/common/wechatpay.jpg'
+      }, {
+        type: 'bitcoin',
+        qrContent: '1ErCFmtoQY2KDctjgPALZri3USsMqdSvqh'
+      }
+    ]
+  }).init()
+</script>
 
-    <p>继上篇讲解了渲染管线的应用阶段、几何阶段和光栅化阶段，这一节我们来讲讲最后的逐片元操作阶段，以及着色器中我们常见的一些概念和原理。</p>
+  <li>
+<p><strong><font color="red">版权申明</font></strong></p>
+<!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p> -->
+<p><strong><font color="red">本文为博主原创文章，未经允许不得转载:</font></strong></p>
+<p><a href = "http://www.luzexi.com/2019/10/13/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A66.html">《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识1</a></p>
+<!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com/2019/10/13/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A66.html">《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识1</a></p> -->
+<p><strong><font color="red">Copyright attention</font></strong></p>
+<p><strong><font color="red">Please don't reprint without authorize.</font></strong></p>
 
-<h6>逐片元操作(Per-Fragment Operations)是OpenGL的说法，在DirectX称为输出合并阶段(Output-Merger)，其实只是说法不同而已包含的内容都是相同的，包括了，剪切测试(Scissor test)，多重采样的片元操作，模板测试(Stencil Test)、深度测试(Depth Test)、混合(blending)、以及最后的逻辑操作。</h6>
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
+</li>
+</div>
+<div class="related">
+    
+<div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
 
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2019/09/21/%E6%9D%AD%E5%B7%9E%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html">
-        杭州景点体验概览
-      </a>
-    </h1>
 
-    <span class="post-date">21 Sep 2019</span>
-
-    <p>1.西湖--西湖音乐喷泉--三潭印月--断桥残雪--苏堤--白堤--西湖游船--曲院风荷--六和塔--花港观鱼--梅家坞--云栖竹径--龙井路与满觉陇路--孤山公园--虎跑公园--杨公堤</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2019/09/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A64.html">
-        《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线1
-      </a>
-    </h1>
-
-    <span class="post-date">21 Sep 2019</span>
-
-    <p>计算机的世界里其实是很纯粹的，没有什么高深的技术，无非就是进程、线程、内存、硬盘、CPU。</p>
-
-<p>在现代社会的实际编程中，很多时候引擎或者框架帮我们屏蔽了底层上的操作使得程序员只需要将所有精力放在上层应用就可以了，因此数学和算法很多时候成了重点，这是符合社会进步规律的，我们需要站在巨人的肩膀上才能走得比巨人更快更远。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2019/09/09/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A828.html">
-        思路探讨(二十八) 如何应对彷徨
-      </a>
-    </h1>
-
-    <span class="post-date">09 Sep 2019</span>
-
-    <p>人时不时的总会彷徨的，每个人都一样。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2019/09/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A62.html">
-        《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2
-      </a>
-    </h1>
-
-    <span class="post-date">07 Sep 2019</span>
-
-    <h3>理解矩阵表达缩放的几何意义</h3>
-
-<p>缩放矩阵和旋转矩阵在几何意义上有着异曲同工之妙，我们同样用二维坐标系来表达缩放矩阵的两个 a,b 向量。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2019/09/01/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A61.html">
-        《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础1
-      </a>
-    </h1>
-
-    <span class="post-date">01 Sep 2019</span>
-
-    <p>游戏项目除了逻辑，模块，框架，架构，算法，还需要图形学的支撑，很多人在业务层面打拼了很多年也始终无法突破的原因就是对图形学研究还不够深。</p>
-
-<p>最终我们还是要面对图形的绘制和计算的，所以这块也是非常重要的部分，只是在使用了现代图形引擎之后，特别是使用了Unity3D之后，它为我们包装了很多工具和接口，用起来很方便，但就因为方便往往忘了图形学知识的重大意义。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2019/08/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF4.html">
-        《Unity3D高级编程之进阶主程》第十章，地图与寻路(四) 地图的制作与优化
-      </a>
-    </h1>
-
-    <span class="post-date">17 Aug 2019</span>
-
-    <h3>地图的制作与优化</h3>
-
-<p>场景的制作占到所有项目制作中非常大的一块工作内容，这里我们不说场景制作在美术层面上的制作技巧，我们来说说技术层面的。上节把地图编辑器说了一遍，这节我们就在地图编辑器之外说说，地图场景的制作与优化。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2019/08/10/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A827.html">
-        思路探讨(二十七) 如何应对30岁的躁动
-      </a>
-    </h1>
-
-    <span class="post-date">10 Aug 2019</span>
-
-    <p><img src="/assets/%E9%87%91%E8%9E%8D/idea-talk-27.jpeg" alt="idea-talk 27"></p>
-
-<p>最近对自己影响比较深的一段话。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2019/08/05/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF3.html">
-        《Unity3D高级编程之进阶主程》第十章，地图与寻路(三) 地图编辑器
-      </a>
-    </h1>
-
-    <span class="post-date">05 Aug 2019</span>
-
-    <p>对于任何游戏来说，地图与场景的是比较重要的，特别是对于中大型游戏来说，在地图和场景上花费的时间和精力占去了大部分。而对于大部分游戏类型来说，布置场景，优化场景，甚至为场景写个编辑器是必不可少的，我们通常称他们为‘地图编辑器’。</p>
-
-<p>地图编辑器有哪几种实现方式，该如何实现，顺便讲一讲从哪些方面下手优化场景，我们这节就来讲讲关于地图的事。</p>
-
-  </div>
-  
 </div>
 
-<div class="pagination">
-  
-    <a class="pagination-item older" href="/page2">下一页</a>
-  
-  
-    <span class="pagination-item newer">上一页</span>
-  
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+
+
+
+
+
+<div class="related">
+  <h2>最新发表的文章</h2>
+  <ul class="related-posts">
+
+    
+      <li>
+        <h3>
+          <a href="/2019/10/13/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A66.html">
+            《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识1
+            <small>13 Oct 2019</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2019/09/28/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A65.html">
+            《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线2
+            <small>28 Sep 2019</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2019/09/21/%E6%9D%AD%E5%B7%9E%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html">
+            杭州景点体验概览
+            <small>21 Sep 2019</small>
+          </a>
+        </h3>
+      </li>
+    
+
+  </ul>
+
+  <h2>之后发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2019/09/28/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A65.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线2
+                <small>28 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/21/%E6%9D%AD%E5%B7%9E%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html">
+                杭州景点体验概览
+                <small>21 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A64.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线1
+                <small>21 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/09/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A828.html">
+                思路探讨(二十八) 如何应对彷徨
+                <small>09 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A62.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2
+                <small>07 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  <!-- </ul> -->
+
+  <h2>之前发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2019/09/28/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A65.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线2
+                <small>28 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/21/%E6%9D%AD%E5%B7%9E%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html">
+                杭州景点体验概览
+                <small>21 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A64.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线1
+                <small>21 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/09/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A828.html">
+                思路探讨(二十八) 如何应对彷徨
+                <small>09 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A62.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2
+                <small>07 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  </ul>
 </div>
+
+
+
+
+
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-悬浮20:3*/
+    	var cpro_id = "u3495898";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+ 
+
+
+
     </div>
 
     
