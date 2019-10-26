@@ -128,7 +128,7 @@
 &lt;p&gt;&lt;img src=&quot;/assets/book/7/LightingGiUvs-4.png&quot; alt=&quot;UV Chart1&quot;&gt;&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/book/7/LightingGiUvs-1.png&quot; alt=&quot;UV Chart1&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/LightingGiUvs-0.png&quot; alt=&quot;UV Chart1&quot;&gt;&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    图3
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;图中1描述了，当一个场景只有1个正方形物体时，这个正方体网格物体被烘培后，6个面上的UV Chart是如何映射到烘培纹理上的。图2描述了场景中当有多个简单的立方体时，每个物体被扫描后制成UV Chart的情况。图3描述了当烘培场景更加复杂时，扫描后UV Chart被制作的情况，不同规格的模型UV被映射到Lightmap纹理贴图上。&lt;/p&gt;
