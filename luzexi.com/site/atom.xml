@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-10-26T21:26:38+08:00</updated>
+ <updated>2019-10-26T21:28:34+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -189,6 +189,10 @@
 &lt;p&gt;Progressive Lightmapper主要的优势是能随着时间的推移逐步细化输出画面，及时逐步的看到画面效果，这样能够实现更完善的交互式照明工作流。另外Progressive Lightmapper还提供了一个预估的时间，所以烘焙时间更加可预测。&lt;/p&gt;
 
 &lt;p&gt;参考资料：&lt;/p&gt;
+
+&lt;p&gt;《OpenGL编程指南》&lt;/p&gt;
+
+&lt;p&gt;《OpenGL ES 3.0编程指南》&lt;/p&gt;
 
 &lt;p&gt;《Unity移动平台下的烘焙使用及优化》&lt;/p&gt;
 
