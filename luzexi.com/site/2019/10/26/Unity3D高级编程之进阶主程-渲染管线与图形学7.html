@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta content="unity3d 高级编程 主程 shader 漫反射 镜面反射 自发光 球面反射" name="description">
+
+
+  <title>
+    
+      《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识2
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css?version=20180701">
+  <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"> -->
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+  	<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          技术人生
+        </a>
+      </h1>
+      <p class="lead">漫漫人生,记录点滴技术,始于2013</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      <a class="sidebar-nav-item" href="/书籍著作/index.html">书籍著作</a>
+      <a class="sidebar-nav-item" href="/Unity3D/index.html">Unity3D</a>
+      <a class="sidebar-nav-item" href="/游戏通用模块/index.html">游戏通用模块</a>
+      <a class="sidebar-nav-item" href="/前端技术/index.html">前端技术</a>
+      <a class="sidebar-nav-item" href="/后端技术/index.html">后端技术</a>
+      <a class="sidebar-nav-item" href="/其他技术/index.html">其他技术</a>
+      <a class="sidebar-nav-item" href="/金融投资/index.html">金融投资</a>
+      <a class="sidebar-nav-item" href="/life/index.html">Life</a>
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/Util-page.html">常用页面工具</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about.html">我的简介</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/engineer-shopping.html">程序员必需品</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/friendlink.html">友情链接</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+      
+      <a class="sidebar-nav-item" href="https://github.com/luzexi">GitHub project</a>
+      <a href="http://www.luzexi.com/assets/feed.xml">RSS feed</a>
+      <!-- <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+    </nav>
+
+    <p>&copy; 2019. All rights reserved.</p>
+    <p>浙ICP备13028172号-1</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识2</h1>
+  <span class="post-date">26 Oct 2019</span>
+
+  <p>这节我们将继续补充前面渲染管线中没有讲到的渲染知识和原理。</p>
+
+<h3>Filter 滤波方式</h3>
+
+<p>Filter滤波其实在图形引擎中被用到的地方有很多，我们在做项目时却很少察觉到，它的重要性不容忽视。Filter 滤波到底是什么呢？下面我们来讲讲它的来龙去脉。</p>
+
+<p>===</p>
+
+<p>一张纹理贴图可以是线性的，正方形的，长方形，甚至三维形式的，当它们被映射到网格表面，再变换到屏幕坐标系之后，纹理上的独立纹素(纹素)几乎不可能直接和屏幕上的最终画面像素直接对应起来。为什么呢？</p>
+
+<p>因为屏幕上的物体可能是放大后的效果，或者离摄像机很近导致物体需要被放大在屏幕上，这样就导致是屏幕上的一个像素只是对应纹理贴图上一个纹素的一部分（因为被放大了），或者也有可能物体被缩小了，或者离摄像机很远，这时一个像素可能包含很多纹素（因为被缩小了）。因此一个纹素与一个像素通常都是无法一一对应的。</p>
+
+<p>无论哪种情况我们都无法精确的知道应该使用哪些纹素值，以及如何对它们求平均值或插值。OpenGL就为我们提高了多种Filter 滤波方式，不同的滤波方式在速度和画质上做出了不同的权衡。</p>
+
+<p>滤波一般分两种，一种是最近采样即Nearest，一种是线性采样即Linear。在Unity3D中Point类型的采样就是最近采样(Nearest Point Sampling)，线性采样在Unity3D中又分为双线性采样(Bilinear)和三线性采样(Trilinear)。</p>
+
+<p>最近采样，即当纹素与像素大小不一致时，取最接近的纹素进行采样。虽然使用了Mipmap技术，但像素点与纹素仍然没有得到很好的匹配，所以这种方法在纹理需要进行放大或缩小时，结果会变形难看。于是就有了更好的双线性采样算法。</p>
+
+<p>双线性采样，是取离纹素最近的4个纹素，取得的纹素与中心点的纹素的距离就是参与计算的权重值，把所有采样得到的纹素进行加权平均后得到最终的像素颜色。</p>
+
+<p>双线性过滤是怎么计算的这4个纹素呢？假设源图像大小为m x n，目标图像为a x b。那么两幅图像的边长比分别为：m/a和n/b。目标图像的第（i,j）个像素点（i行j列）可以通过边长比对应到源图像。其对应坐标应该为（i<em>m/a,j</em>n/b）。显然这个对应坐标一般来说不是整数，而非整数的坐标是无法在图像中使用。双线性插值通过寻找距离这个对应坐标最近的四个像素点，来计算该点的像素值。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    映射点计算方法:
+
+    srcX=dstX* (srcWidth/dstWidth)+0.5*(srcWidth/dstWidth-1)
+
+    srcY=dstY* (srcWidth/dstWidth)+0.5*(srcWidth/dstWidth-1)
+</code></pre></div>
+<p><img src="/assets/book/7/g1.png" alt="双线性过滤"></p>
+
+<p>双线性过滤像素之间的过渡更加平滑，但是它只作用于一个MipMap Level,它选取纹素和像素之间大小最接近的那一层MipMap进行采样。当和像素大小匹配的纹素大小在两层Mipmap Level之间时，双线性过滤在有些情况效果就不太好。于是就有了三线性过滤。</p>
+
+<p>三线性过滤以双线性过滤为基础。对像素大小与纹素大小最接近的两层Mipmap Level分别再进行一次双线性过滤，然后再对两层得到的结果进行线性插值。</p>
+
+<p>上面的几种线性过滤外，还有各向异性过滤(Anisotropic Filtering)。什么是各向异性和同性呢：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    各向同性，当需要贴图的三维表面平行于屏幕就是各向同性。
+
+    各向异性，当要贴图的三维表面与屏幕有一定角度的倾斜则是各向异性。
+</code></pre></div>
+<p>各向异性过滤，除了会把Mipmap因素考虑进去外，还会把纹理与屏幕空间的角度这个因素考虑时去。它会考滤一个像素对应到纹理空间中在u和v方向上与u和v的比例关系，如果u:v不是1:1时，将会按比例在各方向上采样不同数量的点来计算最终的结果。</p>
+
+<p>各向异性采样的多少取决于Anisotropic Filtering的X值，所以在Unity3D的纹理图片设置上有一个Aniso Level的设置选项，用来设置Anisotropic Filtering的级别。</p>
+
+<p>采样方式从，最近采样，到双线性过滤，到三线性过滤，再到各向异性过滤，采样次数一级级提高，最近采样1次，双线性采样4次，三线性采样8次，各向异性采样随着等级不同各有不同，效果也是一级级的提高，随着采样次数的提高需要消耗的GPU也会逐级提高(这些都是在OpenGL或DirectX中完成的)，因此我们在设置图片过滤时需要权衡画质与性能。</p>
+
+<h3>光照阴影是如何生成的</h3>
+
+<p>前面讲了很多关于Mipmap和纹理采样的知识，对Mipmap和纹理采样的理解对底层画面渲染的理解有很大的帮助。这些所讲的内容也同样具有重大意义，阴影涉及到实际生活中的知识在渲染中是如何模拟的，让原本虚拟的计算机画面更加拟真现实生活。</p>
+
+<p>为了能让场景和人物看起来更加真实，光影效果是不可或缺的。我们经常能在画面中看到阴影跟随着物体摆动而变动，并且物体被光照遮挡的阴影投射在其他物体上，这样的效果十分动人，那么阴影是如何产生的呢？我们来细致的解析一下，通过解析我们能够更加深刻的理解阴影的生成原理，还可以通过对阴影原理的理解来有针对性的优化阴影对性能的消耗。</p>
+
+<p>我们可以首先考虑真实生活中阴影的产生流程，当一个光源发射一条光线遇到一个不透明物体时，这条光想不能再继续照亮它背后的物体。因此这个物体背后的物体就会产生阴影，这些阴影区域的产生是因为光线无法到达这些区域。</p>
+
+<p>在计算机的实时渲染中我们无法用表达出每条光照的射线，我们是如何做到阴影的投射的呢？</p>
+
+<p>其实可以很简单，假设，我们将摄像机放在光源的位置上，方向与光源照射的方向重合，那些看不到的地方就成了阴影产生的地方。不过，我们不可能真的将摄像机放在那里，但却可以用这种形式的方式，单独渲染一次在摄像机在该位置的图像。只有图像不行，我们需要的是阴影，刚好物体从该位置渲染出来的片元的深度值提供了我们需要的数据，将所有片元的深度值都写入深度缓存中后，我们就可以利用这个深度缓存做阴影的计算了，深度值越大的片元被遮挡的可能性越大，深度值最小的片元不会被遮挡。</p>
+
+<p>这就是阴影映射纹理(Shadow Map)技术，即在渲染中第一个渲染流程(pass)负责在光源点位置计算得到深度值，输出像素到阴影映射纹理(Shadow Map)。我们实质上得到是一张深度图，它记录了从该光源的位置出发，能看到的场景中距离它最近的表面位置的深度信息。</p>
+
+<p>只是这张阴影映射纹理对于我们人类来说不够直观，如果想要更好更直观的看到当前摄像机屏幕上的阴影图就更好了。屏幕空间的阴影投影技术(Screenspace Shadow Map)就产生了这种直观的效果，性能和效率也更高，不过它需要显卡支持MRT(Multiple Render Targets)，有些移动平台并不支持这种特性。</p>
+
+<p>当使用了屏幕空间阴影投射技术(Screenspace Shadow Map)时，Unity3D会让从光源出发的深度图与摄像机产生的深度图做比较，如果摄像机的深度图中记录的点的表面深度大于转化到光源出发生成的深度图的点的深度，那么就说明表面虽然是可见的但却处于该光源的阴影中。通过这样的方式，屏幕空间阴影投射技术(Screenspace Shadow Map)得到了当前摄像机屏幕空间中的阴影区域，即得到了当前摄像机屏幕的阴影图。</p>
+
+<p>到这里，我们已经得到了阴影映射纹理，不管是传统的阴影图还是屏幕空间阴影图，我们都可以根据这张阴影图来计算出投射到物体的阴影了，那么阴影图有了，应该怎么投射呢？</p>
+
+<p>主动计算投射到其他物体产生阴影是比较难的，但反过来，根据阴影图主动计算当前渲染物体上的片元是否被阴影是相对比较容易。我们会看到Unity3D在渲染物体上看到有生成阴影和接受阴影两个选项，即Cast Shadows 和 Receive Shadows。</p>
+
+<p>传统的接受阴影的方式，是将当前顶点的位置变换到光源点的空间下得到它在光源空间中的位置，再根据xy轴分量对阴影映射纹理(Shadow Map)进行采样，从而得到阴影映射纹理中该位置的深度值，如果这个深度值小于该顶点的深度值即z轴分量，那么说明该点位于阴影中，于是在片元颜色输出上加深阴影颜色，反之则没有被阴影遮盖。</p>
+
+<p>在屏幕空间阴影映射技术中(Screenspace Shadow Map)则可以更加方便一点，因为已经得到了当前摄像机整个屏幕的阴影图，不需要再进行额外的计算，只需要在当前屏幕位置对阴影图进行采样便能知道是否在阴影下，即将当前顶点坐标从模型空间变换到屏幕空间后使用这个坐标对阴影图进行采样即可。相对于传统的阴影渲染来说，屏幕空间阴影映射技术提高了更多的GPU性能效率。</p>
+
+<p>在Unity3D中使用 LightMode 为 ShadowCaster 的Pass标记为阴影生成管线。当Unity3D在渲染时会首先在当前Shader中找到LightMode为ShadowCaster的Pass，如果没有则会在Fallback指定的Shader中继续寻找，如果没有则无法产生阴影，无论传统的阴影投射还是屏幕空间阴影投射都需要第一步先产生阴影纹理图(Shadow Map)。当找到LightMode为ShadowCaster的Pass后，Unity3D会使用该Pass来制作光源的阴影映射纹理(Shadow Map)。</p>
+
+<h3>Lightmap烘培原理</h3>
+
+<p>随着硬件技术的发展，人们对场景的画质效果越来越高，实时光照早已经满足不了人们对画质的需求，想要更加细腻真实光照效果，只能通过离线的烘培技术才能达到理想画质的效果。</p>
+
+<p>全局光照，简称GI(Global Illumination)，是在真实的大自然中，光从太阳照射到物体和地面再经过无数次的反射和折射，使得地面的任何物体和地面都叠加着直接照射的光和许许多多物体反射过来的间接光(反射光)，导致我们从眼睛里看到画面是光亮又丰富的。</p>
+
+<p>这种无数次反射和折射形成的高质量画面，才是人们在3D游戏画面中真正想要看到的。但是即使今天硬件技术发展的如此迅速，也无法做到实时的进行全局光照(Realtime Global Illumination)，这样计算量太大，CPU和GPU都无法负担起这个重任。</p>
+
+<p>离线全局光照就担负起了这个丰富画面光照效果的重任，它不再需要这么多的实时计算的CPU和GPU算力，只要1张或几张光照图(Lightmap)就能将全局光照的效果复原到物体上，不过也仅限于场景静态物体的光照烘培。</p>
+
+<p>其实烘培这趟水很深，如果要具体深入到工程上的实现，涉及到的算法和图形学知识非常多，这里并不打算深究，而是讲讲我们能相对容易获得的关于Lightmap的原理和知识。根据这个原理，我们在项目的制作和优化中能起到很好的作用。</p>
+
+<p>什么是烘焙？个人认为从英文‘Bake’翻译过来有点偏差，导致很多工具按钮用‘Bake’表示时，很多人都同样把它理解成了烘培，其实更应该理解为‘制作’。</p>
+
+<p>烘培简单地说, 就是把物体光照的明暗信息保存到纹理上, 实时绘制时不再需要进行光照计算, 而是采用预先生成的光照纹理(Lightmap)来表示明暗效果。</p>
+
+<p>我们在渲染3D模型时用到的基本都是顶点，UV，纹理贴图等(这里不多展开)，在顶点上设置UV，形成片元后就成了顶点间的插值UV，用这个UV坐标去纹理贴图上取得颜色值，再填充到帧缓存中最后显示到画面上。</p>
+
+<p>光照纹理(Lightmap)的显示也是同样道理，用UV坐标来取得光照纹理(Lightmap)上的颜色，最后叠加到片元颜色上输出给缓存。</p>
+
+<p>这其中的UV有一点讲究。我们在制作模型时的UV数据可以有很多个，其中UV0主要是为了映射贴图纹理而用，在模型制作过程就在模型数据中制作好了，而UV1也就是我们程序中的uv2或俗称的2u，主要是为Lightmap做准备的，还有UV2即程序中的uv3，是为实时全局光照准备的，只有UV3即程序中的uv4开始才是我们程序可以自定义使用的UV数据，其实uv可以有很多个uv5，uv6，不过Unity3D的网格类(Mesh)暂时只提供到uv4的获取接口。</p>
+
+<p>既然光照纹理(Lightmap)存储的是光照信息，那么它到底存了哪些信息呢？我们先来看下这幅图：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺图
+</code></pre></div>
+<p>这幅图解释了烘培的简单模型，它分为三个部分，第一部分为光线射到墙壁后反射过来照到模型上，第二部分为光线照射过来时被其他模型挡住，导致当前的模型没有被光线照射到并且有阴影产生，第三部分为光线直接照射到模型上产生的颜色信息。</p>
+
+<p>这三者之和最终形成了完全的光照颜色。可以用一个简单的公式来说明这三者的结合方式：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    光照颜色 = 间接光照颜色 + 直接光照颜色 * 阴影系数(0到1)
+</code></pre></div>
+<p>由于直接光的计算代价比较少，在一些光照并不复杂的场景中不记录直接光信息，而是由Shader自己计算直接光照。因此我们能看到，很多项目并没有记录直接光，而只是记录间接光，即光照纹理中只记录了从其他物体反射过来的光产生颜色的总和，加上另一张阴影纹理记录产生阴影部位的信息。如果你希望记录在光照纹理中主要光的方向，则可以开启Directional Model的Directional来获得，这个文素上主要光的方向信息可以被用在Shader中作为计算的变量。</p>
+
+<p>现在我们知道了烘培(Bake)会最多产生3种贴图，一种是光照纹理图(可能是间接光照纹理图，也可能是间接光照+直接光照+阴影合并的纹理图，取决于你在Unity3D中Lighting Mode的设置)，一种是阴影纹理图，一种是主要光方向纹理图，以及模型的UV2数据。</p>
+
+<p>其中UV1(不是UV2，因为uv对应UV0，uv2对应UV1)会被加载到模型网格信息中去，也就是烘培后模型prefab的mesh.uv2的数据会被改写。因此我们在制作和导出模型时要注意，烘培需要用到模型的uv2数据，在导出模型时如果没有导出uv2数据，则无法得到正确的烘培。</p>
+
+<h6>那么烘培器是如何生成uv和贴图的呢？我们需要理解下UV Chart</h6>
+
+<p>在烘培时，烘培器会对所有场景中的静态物体上的Mesh网格进行扫描，按块大小和折线角度大小来制作和拆分Mesh上的对应的UV块，这个UV块就是UV Chart。</p>
+
+<p>UV Chart是静态物件在光照纹理(Lightmap)上某块Mesh的对应的UV区块，一个物体在烘培器预计算后会有很多个UV Chart。因此每个物件的UV Charts是由很多个UV Chart组成，每个UV Chart为一段连续的UV片段，UV Chart之间预留了0.5个像素的边缘来防止纹理的溢出。如下图：</p>
+
+<p><img src="/assets/book/7/LightingGiUvs-2.png" alt="UV Chart1"></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    图1
+</code></pre></div>
+<p><img src="/assets/book/7/LightingGiUvs-4.png" alt="UV Chart1"></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    图2
+</code></pre></div>
+<p><img src="/assets/book/7/LightingGiUvs-1.png" alt="UV Chart1"></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    图3
+</code></pre></div>
+<p>图中1描述了，当一个场景只有1个正方形物体时，这个正方体网格物体被烘培后，6个面上的UV Chart是如何映射到烘培纹理上的。图2描述了场景中当有多个简单的立方体时，每个物体被扫描后制成UV Chart的情况。图3描述了当烘培场景更加复杂时，扫描后UV Chart被制作的情况，不同规格的模型UV被映射到Lightmap纹理贴图上。</p>
+
+<p>我们很清晰的能从图中了解到，在烘培时，每个场景中的静态物体都会被扫描网格，并且将计算出来的UV Chart合起来制作成一张或几张(可能场景太大一张不够用)光照纹理贴图。</p>
+
+<h6>那么什么决定了烘培中扫描网格时形成的UV Chart大小和数量呢？相邻顶点间的最大简化距离和最大夹角值。</h6>
+
+<p>烘培器为了能更加快速的计算制作出UV Chart，烘培器需要对模型面的顶点扫描进行简化。简化方式为，将相邻顶点间距离小于某个数值的顶点归入一个UV Chart，当这个数值设置相对比较大时，UV Chart生成的速度就会加快。但是只是距离上的简化往往会出现很多问题，我们需要从相邻面的角度上进行约束，即当相邻面间的角度大于某个值时，不能简化成同一个UV Chart。这两个参数在Unity3D中都有设置，点击静态物体在右边的版面上就能看到。如图位置：</p>
+
+<p><img src="/assets/book/7/LightingGiUvs-3.png" alt="UV Chart1"></p>
+
+<p>图中展示了静态物体Mesh Renderer中设置Lightmap UV生成参数，参数包括最大简化顶点距离，最大邻接面角度。</p>
+
+<p>当设置的最大简化距离和邻接面最大角度数值比较大时，计算生成UV Chart的数量就会比较少，相反如果设置的最大简化距离和最大邻接面角度比较少，则需要计算和生成的UV Chart会比较多，烘培的速度也会比较慢，因为在预计算实时全局光照(GI)时，每个UV Chart上的像素都会计算灯光，预计算的时间跟Chart的数量有很大关系。</p>
+
+<h6>上述描述了烘培的前置制作中Lightmap纹理分布和场景中物体的UV映射的原理，那么绘制Lightmap纹理贴图时纹理上颜色是怎么生成的呢？</h6>
+
+<p>我们知道如果不用烘培，在实时渲染中，因为算力的原因我们只能计算直接光对物体的明暗影响，如果想要在实时渲染中计算间接光的影响是非常消耗GPU的算力的，即使有足够强大的显卡支撑使用光线跟踪计算，也只能在带有RTX的显卡计算机上使用。暂时还没有做到普及的程度，因此离线烘培成了我们解决间接光的主要手段。</p>
+
+<p>在一个场景中如果这些物体只考虑直接光的影响，则会缺乏很多光影细节，导致视觉效果很“平”。而间接光则描述了光子在物体表面之间的反弹，增加了场景中明暗变化以及光线折射的细节，提高了真实感。</p>
+
+<p>光照纹理贴图的颜色主要是根据光的折射与反射现象来计算的，这里我们需要了解一下Unity3D中采用的Enlighten和Progressive Lightmapper算法解决方案。</p>
+
+<p>全局照明可以用一个称为渲染方程的复杂方程来描述：</p>
+
+<p><img src="/assets/book/7/LightingGi-1.png" alt="渲染方程"></p>
+
+<p>这个渲染方程定义了光线是如何离开表面上某个点的。但是这个积分方程太复杂以至于无法快速计算出结果，Unity3D中Enlighten采用的近似方法即辐射算法，可以大大提高计算渲染方程式的速度。</p>
+
+<p>辐射算法假设了场景中存在一组有限的静态元素，以及仅有漫射光传输来简化计算。在计算过程中它把场景拆分成很细很细的面片，分别计算它们接受和发出的光能，逐次迭代直到每个面片的光能数据不再变化(或者到一定的阀值)为止，得到最终的光照图。</p>
+
+<p>场景拆分后的以及每个面片之间的作用，如下图所示：</p>
+
+<p><img src="/assets/book/7/LightingGi-2.png" alt="渲染方程"></p>
+
+<p>Enlighten将场景切割成很多个面片我们称它们为Cluster(Cluster大小可以通过Unity3D的烘培设置数值大小)，这些Cluster会对其映射的静态物体的纹理中的反射系数进行采样，然后计算Cluster之间的关系，使得光在Cluster之间传递。</p>
+
+<p>Enlighten将渲染方程简化成了迭代公式即：</p>
+
+<p><img src="/assets/book/7/LightingGi-3.png" alt="渲染方程"></p>
+
+<h6>其中Bi指的是在i点最终的光，Le是i点本身的光，而两个Cluster之间光的反弹系数有Fij来决定，Lj则是J点的光。这也是为什么Enlighten能够支持场景物体不变的情况下允许光源发生变化的原因：因为几何体素化和辐射系数计算代价比较大，需要离线计算，而迭代每个Cluster形成最终结果则计算量相对比较小可以实时进行。</h6>
+
+<p>Progressive Lightmapper即渐进式光照贴图，是Unity3D 2018版本后才能使用的烘培算法。</p>
+
+<p>Progressive Lightmapper是一种基于路径追踪（fast path-tracing-based）的光照贴图系统，它能在编辑器中逐步刷新的烘焙光照贴图（baked lightmaps）和光照探针（Light Probes）。</p>
+
+<p>Progressive Lightmapper主要的优势是能随着时间的推移逐步细化输出画面，及时逐步的看到画面效果，这样能够实现更完善的交互式照明工作流。另外Progressive Lightmapper还提供了一个预估的时间，所以烘焙时间更加可预测。</p>
+
+<p>参考资料：</p>
+
+<p>《Unity移动平台下的烘焙使用及优化》</p>
+
+<p>《浅析Unity中的Enlighten与混合光照》</p>
+
+<p>《Progressive CPU Lightmapper》</p>
+
+<p>《光照贴图Lightmap初探》</p>
+
+<p>《辐射度算法(radiosity)原理》</p>
+
+  <p>感谢您的耐心阅读</p>
+  <p>Thanks for your reading</p>
+</div>
+<div>
+  
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+<!-- <div id="cyReward" role="cylabs" data-use="reward" align="center" ></div> -->
+
+<script type="text/javascript" src="/assets/js/tctip-1.0.3.min.js"></script>
+<script>
+  new tctip({
+    top: '50%',
+    button: {
+      id: 9,
+      type: 'zanzhu'
+    },
+    list: [
+      {
+        type: 'alipay',
+        qrImg: '/assets/common/alipay.jpg'
+      }, {
+        type: 'wechat',
+        qrImg: '/assets/common/wechatpay.jpg'
+      }, {
+        type: 'bitcoin',
+        qrContent: '1ErCFmtoQY2KDctjgPALZri3USsMqdSvqh'
+      }
+    ]
+  }).init()
+</script>
+
+  <li>
+<p><strong><font color="red">版权申明</font></strong></p>
+<!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com">http://www.luzexi.com</a></p> -->
+<p><strong><font color="red">本文为博主原创文章，未经允许不得转载:</font></strong></p>
+<p><a href = "http://www.luzexi.com/2019/10/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A67.html">《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识2</a></p>
+<!-- <p>本文为博主原创文章，未经允许不得转载: <a href = "http://www.luzexi.com/2019/10/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A67.html">《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识2</a></p> -->
+<p><strong><font color="red">Copyright attention</font></strong></p>
+<p><strong><font color="red">Please don't reprint without authorize.</font></strong></p>
+
+</li>
+  <li>
+<p><strong>微信公众号</strong></p>
+<p><image src="/public/qrcode_for_gzh.jpg" /></p>
+</li>
+</div>
+<div class="related">
+    
+<div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+    	var cpro_id = "u3493987";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*760*90 创建于 2016-02-02*/
+    	var cpro_id = "u2514412";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+
+
+
+
+
+<div class="related">
+  <h2>最新发表的文章</h2>
+  <ul class="related-posts">
+
+    
+      <li>
+        <h3>
+          <a href="/2019/10/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A67.html">
+            《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识2
+            <small>26 Oct 2019</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2019/10/13/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A829.html">
+            思路探讨(二十九) 有没有可能是我们理解错了
+            <small>13 Oct 2019</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2019/10/13/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A66.html">
+            《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识1
+            <small>13 Oct 2019</small>
+          </a>
+        </h3>
+      </li>
+    
+
+  </ul>
+
+  <h2>之后发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2019/10/13/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A829.html">
+                思路探讨(二十九) 有没有可能是我们理解错了
+                <small>13 Oct 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/10/13/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A66.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识1
+                <small>13 Oct 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/28/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A65.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线2
+                <small>28 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/21/%E6%9D%AD%E5%B7%9E%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html">
+                杭州景点体验概览
+                <small>21 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A64.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线1
+                <small>21 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  <!-- </ul> -->
+
+  <h2>之前发表的文章</h2>
+
+  <ul class="related-posts">
+    
+
+    
+
+      
+
+      
+        
+          <li>
+            <h3>
+              <a href="/2019/10/13/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A829.html">
+                思路探讨(二十九) 有没有可能是我们理解错了
+                <small>13 Oct 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/10/13/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A66.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识1
+                <small>13 Oct 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/28/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A65.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线2
+                <small>28 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/21/%E6%9D%AD%E5%B7%9E%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html">
+                杭州景点体验概览
+                <small>21 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+          <li>
+            <h3>
+              <a href="/2019/09/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A64.html">
+                《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线1
+                <small>21 Sep 2019</small>
+              </a>
+            </h3>
+          </li>
+        
+
+        
+  </ul>
+</div>
+
+
+
+
+
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cys17tiy3"></script>
+
+
+<script type="text/javascript">
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-悬浮20:3*/
+    	var cpro_id = "u3495898";
+		document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
+    }
+    else
+    {
+        /*500*200-1*/
+        var cpro_id = "u3486033";
+        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
+	}
+</script>
+ 
+
+
+
+    </div>
+
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </body>
+  
+</html>
