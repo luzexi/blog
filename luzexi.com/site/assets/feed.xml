@@ -7,6 +7,241 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识3</title>
+               <description>&lt;h3&gt;GPU Instancing 的来龙去脉&lt;/h3&gt;
+
+&lt;p&gt;GPU Instancing 初次听到这个名词时还有点疑惑，其实翻译过来应该是GPU多实例化渲染，它本身是GPU的一个功能接口，Unity3D将它变得更简单实用。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;前面讲过一些关于Unity3D的动态合批(Dynamic batching)与静态合批(Static batching)的功能，GPU Instancing 实际上与他们一样都是为了减少Drawcall而存在。&lt;/p&gt;
+
+&lt;p&gt;有了动态合批和静态合批为什么还需要 GPU Instancing 呢，究竟他们之间有什么区别呢，我们不妨来简单回顾一下Unity3D动态合批(Dynamic batching)与静态合批(Static batching)。&lt;/p&gt;
+
+&lt;h6&gt;开启动态合批(Dynamic batching)时，Unity3D引擎检测视野范围内的非动画物体(通过遍历所有渲染模型，计算包围盒在视锥体中的位置，如果完全不在视锥体中则抛弃)，如果在视锥体内并且符合条件的就进行合批操作，将他们的网格合并后与材质球一并传给GPU去绘制。&lt;/h6&gt;
+
+&lt;p&gt;需要符合什么条件呢：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    1，900个顶点以下的模型。
+
+    2，如果我们使用了顶点坐标，法线，UV，那么就只能最多300个顶点。
+
+    3，如果我们使用了UV0，UV1，和切线，又更少了，只能最多150个顶点。
+
+    4，如果两个模型缩放大小不同，不能被合批的，即模型之间的缩放必须一致。
+
+    5，如果是不同的材质球实例同样不能被合批，即使他们一模一样。即材质球属性不能被修改，材质球对象实例必须是同一个。
+
+    6，如果他们有lightmap的数据，必须是相同的才有机会合批。
+
+    7，多个pass的Shader是绝对不会被合批。
+
+    8，延迟渲染是无法被合批。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;条件比较苛刻，一不小心就无法达到合并条件。为什么它要使用这么苛刻的条件呢，我们来了解下设计动态合批这个功能的意图。&lt;/p&gt;
+
+&lt;h6&gt;动态合批(Dynamic batching)这个功能的目标是以最小的代价合并小型网格模型，减少Drawcall调用。&lt;/h6&gt;
+
+&lt;p&gt;很多人会想既然合并了为什么不把所有的模型都合并呢，这样不是更减少Drawcall的开销。如果把各种情况的中大型网格都合并进来，就需要消耗巨大的CPU资源，而且在摄像机移动过程中，每帧都要进行合并网格的消耗，CPU算力消耗太大，得不偿失。于是Unity3D就对这种极其消耗CPU算力的功能做了如此多的的限制，就是为了让它在运作时性价比更高。&lt;/p&gt;
+
+&lt;p&gt;与动态合批不同，静态合批(Static batching)并不实时合并网格，而是会在离线状态下生成合并的网格，所有被标记为静态物体的模型，只要拥有相同实例的材质球都会被一并合并成网格。&lt;/p&gt;
+
+&lt;p&gt;静态合批有诸多优点，但也存在不少弊端。被合批的是静态物体，它们是不能被移动旋转和缩放的，也只有这样我们在离线状态下生成的网格才是有效的（离线的网格数据不需要重新计算），生成的离线数据被放在Vertex buffer和Index buffer中。&lt;/p&gt;
+
+&lt;h6&gt;静态合批生成的离线网格将导致存放在内存的网格数据量剧增，因为在静态合批中每个模型都会独立生成一份网格数据，无论他们所使用的网格是否相同，也就是说场景中有多少个静态模型就有多少个网格，与原本只需要一个网格就能渲染所有相同模型的情况不一样了。&lt;/h6&gt;
+
+&lt;p&gt;好处是静态合批后同一材质球实例(材质球实例必须相同，因为材质球的参数要一致)调用Drawcall的数量合并了，另外合批也不会额外消耗CPU算力因为它们是在离线时生成的合批数据(也就是网格数据)，在实时渲染时如果该模型在视锥体范围内，三角形索引被部分提取出来合并后提交，而那些早就被生成的网格将被整体提交(整体网格过大时则会导致CPU和GPU的带宽消耗过大)，最后再一并发送给GPU进行渲染。&lt;/p&gt;
+
+&lt;h6&gt;简而言之，动态合批为了平衡CPU消耗和GPU性能优化，将实时合批条件限制在比较狭窄的范围内。静态合批则牺牲了大量的内存和带宽，以使得合批工作能够快速有效的进行。&lt;/h6&gt;
+
+&lt;p&gt;GPU Instancing 没有动态合批对网格数量的限制，也没有静态网格需要这么大的内存，很好的弥补了这两者的缺陷，但也有存在着比较大的优缺点，我们下面来逐一阐述。&lt;/p&gt;
+
+&lt;p&gt;GPU Instancing 并不像动态和静态合批那样通过对网格的合并操作进行优化，GPU Instancing 的目标是只用一个模型网格绘制很多个地方，这些地方绘制的网格缩放大小，旋转角度和坐标可以不一样，材质球虽然相同但材质球属性可以各自有各自的区别。&lt;/p&gt;
+
+&lt;p&gt;本质上来说 GPU Instancing 调用的是 OpenGL 和 DirectX 里的多实例渲染接口。我们拿 OpenGL 来说:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;glDrawArraysInstanced&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GLenum&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLint&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLsizei&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Glsizei&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;primCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;glDrawElementsInstanced&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GLenum&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLsizei&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLenum&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;indices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLsizei&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;primCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;glDrawElementsInstancedBaseVertex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GLenum&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLsizei&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLenum&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;indices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLsizei&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;instanceCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLuint&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;baseVertex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这三个接口正是 GPU Instancing 调用多实例渲染的接口，第一个是无索引的顶点网格集多实例渲染，第二个是索引网格的多实例渲染，第三个是索引基于偏移的网格多实例渲染。调用这三个接口会向GPU传入渲染数据并开启渲染，与平时渲染多次要多次执行整个渲染管线不同的是，这三个接口会分别将模型渲染多次，并且是在一个渲染管线内。&lt;/p&gt;
+
+&lt;p&gt;如果只是一个坐标上渲染多次模型是没有意义的，我们需要将一个模型渲染到不同的多个地方，并且以不同的缩放大小和旋转角度，以及不同的材质球参数，这才是我们真正需要的。&lt;/p&gt;
+
+&lt;p&gt;GPU Instancing 正我们提供这个功能，上面三个渲染接口告知Shader着色器传开启一个叫 InstancingID 的变量，这个变量可以确定在着色计算时使用哪个实例的属性。&lt;/p&gt;
+
+&lt;p&gt;有了这个 InstancingID 就能使得我们在多实例渲染中，辨识到底使用哪个属性参数。Shader的顶点着色器和片元着色器可以通过这个变量来获取模型矩阵、颜色等不同变化的参数。&lt;/p&gt;
+
+&lt;p&gt;我们来看看Unity3D是怎么做的:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Shader&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;SimplestInstancedShader&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Properties&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;_Color&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Color&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;SubShader&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Tags&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;RenderType&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Opaque&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;LOD&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;CGPROGRAM&lt;/span&gt;
+            &lt;span class=&quot;cp&quot;&gt;#pragma vertex vert&lt;/span&gt;
+            &lt;span class=&quot;cp&quot;&gt;#pragma fragment frag&lt;/span&gt;
+            &lt;span class=&quot;cp&quot;&gt;#pragma multi_compile_instancing&lt;/span&gt;
+            &lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;quot;UnityCG.cginc&amp;quot;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&lt;/span&gt;
+
+            &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;appdata&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vertex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;POSITION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;UNITY_VERTEX_INPUT_INSTANCE_ID&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//顶点着色器的 InstancingID定义&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+            &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vertex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SV_POSITION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;UNITY_VERTEX_INPUT_INSTANCE_ID&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//片元着色器的 InstancingID定义&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+            &lt;span class=&quot;n&quot;&gt;UNITY_INSTANCING_BUFFER_START&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 定义多实例变量数组&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;UNITY_DEFINE_INSTANCED_PROP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;UNITY_INSTANCING_BUFFER_END&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+            &lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;appdata&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+                &lt;span class=&quot;n&quot;&gt;UNITY_SETUP_INSTANCE_ID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//装配 InstancingID&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;UNITY_TRANSFER_INSTANCE_ID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//输入到结构中传给片元着色器&lt;/span&gt;
+
+                &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vertex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UnityObjectToClipPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vertex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+            &lt;span class=&quot;n&quot;&gt;fixed4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SV_Target&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;UNITY_SETUP_INSTANCE_ID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//装配 InstancingID&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;UNITY_ACCESS_INSTANCED_PROP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//提取多实例中的当前实例的Color属性变量值&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;ENDCG&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上述是一个很普通的调用 Instancing 的Shader，其中&lt;em&gt;Color 和 unity&lt;/em&gt;ObjectToWorld (模型矩阵)是多实例化的，他们通过 InstancingID 索引来确定取数组中的哪个变量。&lt;/p&gt;
+
+&lt;p&gt;为什么这么说呢？我们来看看Shader中这些包含有 INSTANCE 字样的宏定义。&lt;/p&gt;
+
+&lt;p&gt;首先编译命令 multi&lt;em&gt;compile&lt;/em&gt;instancing 会告知着色器我们将会使用多实例变量。&lt;/p&gt;
+
+&lt;p&gt;其次在顶点着色器和片元着色的输入输出结构中，加入 UNITY&lt;em&gt;VERTEX&lt;/em&gt;INPUT&lt;em&gt;INSTANCE&lt;/em&gt;ID 告知结构中多一个变量即：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    uint instanceID : SV_InstanceID;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;每个顶点和片元数据结构中都定义了 instanceID 这个变量，这个变量将被用于确定使用多实例数据数组中的哪个实例参数，很关键。&lt;/p&gt;
+
+&lt;p&gt;接着Shader中要把需要用到的多实例变量参数定义起来:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;UNITY_INSTANCING_BUFFER_START&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;UNITY_DEFINE_INSTANCED_PROP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;UNITY_INSTANCING_BUFFER_END&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上述中的宏很容易从字面看出它们为&amp;quot;开始多实例宏定义&amp;quot;，&amp;quot;对多实例宏属性定义参数&amp;quot;，以及&amp;quot;结束多实例宏定义&amp;quot;。&lt;/p&gt;
+
+&lt;p&gt;这三个宏定义我们可以在 UnityInstancing.cginc 中看到，即:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;        &lt;span class=&quot;cp&quot;&gt;#define UNITY_INSTANCING_BUFFER_START(buf)      UNITY_INSTANCING_CBUFFER_SCOPE_BEGIN(UnityInstancing_##buf)&lt;/span&gt;
+        &lt;span class=&quot;cp&quot;&gt;#define UNITY_INSTANCING_BUFFER_END(arr)        UNITY_INSTANCING_CBUFFER_SCOPE_END&lt;/span&gt;
+        &lt;span class=&quot;cp&quot;&gt;#define UNITY_DEFINE_INSTANCED_PROP(type, var)  type var[UNITY_INSTANCED_ARRAY_SIZE];&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;我们可以上述的宏定义中理解到，这三个宏可以对多实例的多属性数组进行定义。&lt;/p&gt;
+
+&lt;p&gt;于是在顶点着色器与片元着色中，我们对 InstancingID 进行装配，即宏定义：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    UNITY_SETUP_INSTANCE_ID(v) 和 UNITY_SETUP_INSTANCE_ID(i);
+
+    装配过程其实就是从基数偏移的过程 unity_InstanceID = inputInstanceID + unity_BaseInstanceID;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;最终我们通过 UNITY&lt;em&gt;SETUP&lt;/em&gt;INSTANCE&lt;em&gt;ID 装配得到了 unity&lt;/em&gt;InstanceID 即当前渲染的多实例索引ID。&lt;/p&gt;
+
+&lt;p&gt;有了多实例的索引ID，我们就可以通过这个变量获取对应的当前实例的属性值，于是就有了以下的宏定义 UNITY&lt;em&gt;ACCESS&lt;/em&gt;INSTANCED_PROP 以及通过这个宏定义获取变量的代码。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;#define UNITY_ACCESS_INSTANCED_PROP(arr, var)   var[unity_InstanceID]&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;UNITY_ACCESS_INSTANCED_PROP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//提取多实例中的当前实例的Color属性变量值&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;有了类似_Color的多实例属性操作，在模型矩阵变化中也需要具备同样的操作，我们没看到模型矩阵多实例是因为Unity在Shader编写时用宏定义把它们隐藏起来了，它就是 UnityObjectToClipPos。&lt;/h6&gt;
+
+&lt;p&gt;UnityObjectToClipPos 其实是一个宏定义，当多实例渲染开启时，它被定义成了如下:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;#define unity_ObjectToWorld     UNITY_ACCESS_INSTANCED_PROP(unity_Builtins0, unity_ObjectToWorldArray)&lt;/span&gt;
+
+&lt;span class=&quot;kr&quot;&gt;inline&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;UnityObjectToClipPosInstanced&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;float3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UNITY_MATRIX_VP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unity_ObjectToWorld&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;inline&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;UnityObjectToClipPosInstanced&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UnityObjectToClipPosInstanced&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xyz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define UnityObjectToClipPos UnityObjectToClipPosInstanced&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这个定义也同样可以在 UnityInstancing.cginc 中找到，其中unity_ObjectToWorld是关键，它从多实例数组中取出了当前实例的模型矩阵，再与坐标相乘后计算投影空间的坐标。也就是说当开启 Instancing 多实例渲染时，UnityObjectToClipPos 会从多实例数据数组中取模型矩阵来做模型到投影空间的转换。而当不开启 Instancing 时，UnityObjectToClipPos 则只是用当前独有的模型矩阵来计算顶点坐标投影空间的位置。&lt;/p&gt;
+
+&lt;p&gt;到此我们就从着色器中获取了多实例的属性变量，根据不同实例的不同索引获取不同属性变量包括模型矩阵，从而渲染不同位置，不同的旋转角度，不同的缩放大小，以及更多比如_Color的其他属性，整个过程都是围绕着 InstancingID 来做索引操作。&lt;/p&gt;
+
+&lt;h6&gt;知道了 GPU Instancing 是如何渲染还不够，我们还要知道数据是怎么传进去的。&lt;/h6&gt;
+
+&lt;p&gt;我们还是拿 OpenGL 接口编程来分析。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//获取各属性的索引&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;position_loc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;glGetAttribLocation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;position&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;normal_loc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;glGetAttribLocation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;normal&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color_loc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;glGetAttribLocation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;color&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matrix_loc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;glGetAttribLocation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;model_matrix&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//按正常流程配置顶点和法线&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glBindBuffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_ARRAY_BUFFER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;position_buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//绑定顶点数组&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glVertexAttribPointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position_loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GL_FLOAT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GL_FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//定义顶点数据规范&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glEnableVertexAttribArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position_loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//按上述规范，将坐标数组应用到顶点属性中去&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glBindBuffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_ARRAY_BUFFER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;normal_buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//绑定发现数组&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glBertexAttribPointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;normal_loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GL_FLOAT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GL_FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//定义发现数据规范&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glEnableVertexAttribArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;normal_loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//按上述规范，将法线数组应用到顶点属性中去&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//开始多实例化配置&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//设置颜色的数组。我们希望几何体的每个实例都有一个不同的颜色，&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//将颜色值置入缓存对象中，然后设置一个实例化的顶点属性&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glBindBuffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_ARRAY_BUFFER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color_buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//绑定颜色数组&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glVertexAttribPointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color_loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GL_FLOAT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GL_FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//定义颜色数据在color_loc索引位置的数据规范&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glEnableVertexAttribArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color_loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//按照上述的规范，将color_loc数据应用到顶点属性上去&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;glVertexattribDivisor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color_loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//开启颜色属性的多实例化，1表示每隔1个实例时共用一个数据&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;glBindBuffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_ARRAY_BUFFER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model_matrix_buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//绑定矩阵数组&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//设置矩阵第一行的数据规范&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;glVertexAttribPointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matrix_loc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GL_FLOAT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GL_FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mat4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vec4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;//将第一行的矩阵数据应用到顶点属性上去&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;glEnableVertexAttribArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matrix_loc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;//开启第一行矩阵数据的多实例化，1表示每隔1个实例时共用一个数据&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;glVertexattribDivisor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matrix_loc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这个示例很精准的表达了数据是如何从CPU应用层传输到GPU上再进行实例化的过程。&lt;/p&gt;
+
+&lt;p&gt;我在代码上做了比较详尽的注释，首先获取需要推入顶点属性的数据的索引，再将数组数据与OpenGL
+缓存进行绑定，这样才能注入到OpenGL里去，接着告诉 OpenGL 每个数据对应的格式，然后再根据前一步描述的格式应用到顶点属性中去，最后如果做的是 GPU Instancing 多实例的属性数据则开启多实例化属性接口，让 InstancingID 起效。&lt;/p&gt;
+
+&lt;p&gt;总结，我们解析了 GPU Instancing 在 Unity3D 中的工作方式，得知了它能用同一个模型同一个材质球渲染不同的位置、角度、缩放大小、以及不同颜色等属性。这种没有对模型网格数量限制，没有占用大量内存的性能优化来说，很好的弥补了动态合批(Dynamic batching)与静态合批(Static batching)的不足。&lt;/p&gt;
+
+&lt;p&gt;但是它毕竟是只能围绕一个模型来操作，只有相同网格(Mesh)和相同的材质球实例(参数可以不同，但必须使用API来设置不同参数)的情况下才能做到多个实例在同一个渲染管线中一次性渲染的优化操作，而动态合批和静态合批却只需要材质球实例一致，网格是可以有差别的。&lt;/p&gt;
+
+&lt;p&gt;三者利弊各不同，有互相弥补的地方，各自本身也存在着不同程度的限制和优缺点。从整体上来看，GPU Instancing 更适合同一个模型渲染多次的情况，而动态合批(Dynamic batching)更适合同一个材质球并且模型面数小的情况，静态合批(Static batching)更适合当我们能容忍内存扩大的情况。&lt;/p&gt;
+</description>
+               <pubDate>Wed, 20 Nov 2019 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2019/11/20/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A68.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2019/11/20/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A68.html</guid>
+            </item>
+        
+            <item>
                <title>思路探讨(三十一) 钱、才、运</title>
                <description>&lt;p&gt;最近几年一直在突破自己的认知，可能是我本身从小对世界的认知水平就比较狭小的缘故，努力了好几年才只是普通人的水平，但对我来说已经是很厉害了，我很满足，山外有山，人外有人，一山还有一山高，一水还有一水深，做好自己最重要。&lt;/p&gt;
 
@@ -1263,73 +1498,6 @@
                <pubDate>Sat, 21 Sep 2019 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2019/09/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A64.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2019/09/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A64.html</guid>
-            </item>
-        
-            <item>
-               <title>思路探讨(二十八) 如何应对彷徨</title>
-               <description>&lt;p&gt;人时不时的总会彷徨的，每个人都一样。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;经常性的会迷失方向，看不清未来。无论我们前面有过多少清晰的认识，或者说多少深刻的觉悟，总是会在某个时刻感受到无法言语的痛苦。&lt;/p&gt;
-
-&lt;p&gt;痛苦从何而来？是前面未知的道路吗，有可能，是疲劳吗，也有，是周遭向我们袭来的负能量吗，肯定有的，是因为没有计划使得自己总感觉是在胡乱的东奔西跑吗，是的。&lt;/p&gt;
-
-&lt;p&gt;精神上和身体上的疲惫，说实在的无论怎么样都会累的，疲劳了就休息一下么，可能太久没有回家了，好想家，那就回家，感受下家的温暖。&lt;/p&gt;
-
-&lt;p&gt;不工作也会累，工作也会累，说实在的其实很多时候精神力是要运作的，我们怎么运作有限的精力和时间，让最饱满的精力用在最重要的事情上，让零星的时间能变得更加充实，这是门学问，这一年多时间我一直在学习时间管理和自律，现在顿悟到精力管理也很重要。&lt;/p&gt;
-
-&lt;p&gt;周遭的负能量能不能屏蔽掉，可以的，人很容易被周遭的环境打乱自己的节奏，我们需要更强大屏蔽能力，闭屏掉所有负能量。这一点我认为明星们做的很好，作为大众的明星，对他/她褒贬不一的评价从全国四面八方袭来，如果没有强大的屏蔽负能量的能力，人很容易就崩溃，但他们做的很好，可以做到自然的屏蔽掉负能量全力做自己。&lt;/p&gt;
-
-&lt;p&gt;能不能为自己提早制定计划，计划确实赶不上变化，至少制定了计划可以让自己知道后面会遇到哪些困难，我需要制定每周的计划，每个月的计划，这样才能有效预知未来前进过程中可能遇到的问题、瓶颈、障碍、困难。&lt;/p&gt;
-
-&lt;p&gt;彷徨无法避免，但我想能不能减少彷徨的频率？怎样才能减少彷徨的频率呢，我可不可以，自己给自己一点多一些安全感，这样就会少一点彷徨。&lt;/p&gt;
-
-&lt;p&gt;怎么给自己多一些安全感？&lt;/p&gt;
-
-&lt;p&gt;为未来优秀的自己积累知识、能力、财富。如果我足够优秀，知识量足够多，能力足够强大，财富足够多，我彷徨的频率肯定就少一些，对未来和当前肯定更加坚定一些，专注力也会更加好一些。&lt;/p&gt;
-
-&lt;p&gt;我要怎样才能达到这个目标？&lt;/p&gt;
-
-&lt;p&gt;关键在于，’积累‘！每天几页书，每天抽出时间学习一下，每天运动一下保持精力充沛，少一些娱乐把精力用在更加重要的事情上，每天这样做，每天。&lt;/p&gt;
-
-&lt;p&gt;只有你肯执行下去、坚持下去，无论现在处于什么样的状态，5年后你一定就是人才，10年后你将是名人，20年后你将是巨星。&lt;/p&gt;
-
-&lt;p&gt;有一次看到一个公众号发的一个消息，上面标题写着“如果一个人20岁开始自律20年会如何”，好奇的点进去一看，三个大字刻进我心中，“曾国藩”。&lt;/p&gt;
-
-&lt;p&gt;于是我阅读了曾国藩的书，我并没有要成为曾国藩，但我明白了自律的重要性。&lt;/p&gt;
-
-&lt;p&gt;从那一刻开始，我想，他自律20年，我能不能自律10年，我想试试，我要挑战自己，要突破自己的瓶颈。&lt;/p&gt;
-
-&lt;h6&gt;良好的心态是人生的重要组成部分&lt;/h6&gt;
-
-&lt;p&gt;保持一种辛苦的感觉才是正确的，辛苦表明你正在努力突破自己，当你感觉不到辛苦时，很有可能你正在慢慢向下滑坡，只是现在外在表象还没发生任何变化，所以无法让你引起足够的重视，一旦表象上发生了什么变化，说明量变已经造成了质变，这时已经来不及了，能做的也只有补救，如果也没有做什么及时补救的行动那么可能前面自己所建立的优势也就会像过往云烟那样消散而去，自己重新回到了被动和劣势的位置。&lt;/p&gt;
-
-&lt;p&gt;不过只有辛苦的感觉其实是还不够的，在辛苦的基础上，每天都要感觉自己活得很充实，活得很对得起昨天的感觉，只有这样一步步往前走下去才是正确的道路。&lt;/p&gt;
-
-&lt;p&gt;人在生命中的道路上行走，犹如在黑暗中行走那样，是看不到前方清楚的道路的，只有当你主动积极的去做一些事情时才能看清前面几米距离的道路，就这样每次看见的都只是前方几米距离的道路，永远都是这种状况。&lt;/p&gt;
-
-&lt;h6&gt;如果不努力我们会一直处于这种看不清前方道路的处境中。&lt;/h6&gt;
-
-&lt;p&gt;只有当你很努力并且持续不断的努力，其实也只有持续不断的努力才能让你渐渐的看清前方的道路，让你更少的时间处于焦虑之中，也只有在我们不断努力下才能强大自我，才能在如此残酷的社会竞争中找到自己的定位。&lt;/p&gt;
-
-&lt;p&gt;我们自己是很难找到自己的问题的，愚蠢的人是不知道自己愚蠢的，但其实我们自己也不知道自己是不是愚蠢。&lt;/p&gt;
-
-&lt;p&gt;有没这种可能，其实我们是愚蠢的，但在自己看自己是聪明的，自己看别人是愚蠢的。每个人确实是这样认为的。&lt;/p&gt;
-
-&lt;p&gt;几乎所有人都这么认为，’我是聪明的，别人是愚蠢的‘，就因为这种盲目乐观的思维方式根深蒂固，我们才难以察觉和发现自己的问题。&lt;/p&gt;
-
-&lt;h6&gt;不努力，我们是看不到自己的问题的。我很确信。不努力学习，不努力工作，不努力地去克制自己，我们可能永远都无法发现自己的问题。所谓的突破自我，也是因为在努力很久的情况下看清了自己的问题，从而解决了自己身上的问题，才最终得到了进阶和升华。&lt;/h6&gt;
-
-&lt;h6&gt;人永远都是处于‘坏’环境下&lt;/h6&gt;
-
-&lt;p&gt;刚工作那几年我一直以为是因为我个人的命途多舛才造就的这么多阻碍和困境，也一直以抱怨的态度对待环境，但渐渐的我发现，其实不只是我，天底下所有的人都处于这种‘坏’环境下，我们永远都感觉被束缚，被阻碍，被捆绑，被遏制，无论这个环境在外人看来有多好有多向往有多羡慕。&lt;/p&gt;
-
-&lt;p&gt;其实最理智的方法是不去抱怨环境，环境永远是受限的，资源永远是缺少的，做好自己，解决自己身上的毛病才是最重要的。如果环境实在差的离谱，有更好的环境就直接去更好的环境，那里会更专注，努力的效果可能会更好，如果没有机会去更好的环境，那么就做好自己。&lt;/p&gt;
-</description>
-               <pubDate>Mon, 09 Sep 2019 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2019/09/09/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A828.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2019/09/09/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A828.html</guid>
             </item>
         
     </channel>
