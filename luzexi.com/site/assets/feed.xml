@@ -7,6 +7,141 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(四) - 多重采样以及着色器编译原理</title>
+               <description>&lt;h3&gt;GPU上的多重采样(Multisampling)与反走样(Antialiasing)&lt;/h3&gt;
+
+&lt;p&gt;多重采样(Multisampling)是一种对几何图元的边缘进行平滑处理的技术，也称为反走样技术之一。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;OpenGL支持几种不同的反走样技术，比如线段反走样，多边形反走样，纹理图像压缩的质量以及导数精度设置。实时上这几个反走样技术都是以开关的形式在OpenGL中存在，算法大致是将原本单一的线条或像素块周围填充更多的像素块，具体的填充算法细节比我们想象的要复杂的多，而且不同OpenGL是现在的算法中也有细微的差异，我们在这里不进行深入讨论。&lt;/p&gt;
+
+&lt;p&gt;多重采样的工作方式是对每个像素的几何图元进行多次采样。在多次采样后，每个像素点不仅仅只是单个颜色(以及除了颜色外的深度值、模板值等信息)，还记录了许多样本值。&lt;/p&gt;
+
+&lt;p&gt;这些样本值类似于将一个像素分拆成了更小型的像素，每个像素都存储着颜色、深度值、模板值等信息，当我们需要呈现最终图像的内容时，这个像素的所有样本值会被解析为最终像素的颜色。&lt;/p&gt;
+
+&lt;p&gt;在Unity3D中对这方面的反走样功能也提供了支持，可以通过Quality Settings中的AntiAliasing来设置，它将启用图形接口(OpenGL或DirectX)中的多边形的反走样算法，并且开启多重采样，根据多重采样信息对多边形边缘进行像素填充。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    AntiAliasing 可以设置3档采样质量分别是 2倍, 4倍 and 8倍的多重采样。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;GPU上的反走样代价是消耗更多的GPU算力和显存，庆幸的它并不消耗CPU算力。&lt;/p&gt;
+
+&lt;h3&gt;着色器编译过程与变体&lt;/h3&gt;
+
+&lt;p&gt;我们在知道GPU渲染管线如何运作后，对着色器编译过程仍然需要知晓，我们还是以使用OpenGL为例来学习着色器在Unity3D中从编译到执行的全过程。&lt;/p&gt;
+
+&lt;p&gt;着色程序的编译过程与C语言等编译语言的编译过程非常类似，只是C语言在编译时是以离线的方式进行，而着色器程序的编译则是当引擎需要时，通过引擎调用图形接口(OpenGL或DirectX)的方式来进行编译，整个应用程序只需要编译一次后面可以重复利用，这和我们通常所说的JIT(Just in time 即时编译)有点相似。&lt;/p&gt;
+
+&lt;h6&gt;上面所说的这些都是图形引擎控制和执行的，也就是当需要某个着色器程序时Unity3D引擎通过判断是否存在已经编译好的着色器程序，来决定是否编译着色器代码或是重用已经编译好的着色器程序。&lt;/h6&gt;
+
+&lt;p&gt;那么着色程序从编译到执行过程到底是怎样的呢？让我们来讲一讲。&lt;/p&gt;
+
+&lt;p&gt;首先当引擎得知渲染需要用到的Shader不曾被编译过时，就会调用图形接口 glCreateShader 为着色器创建一个新的着色器对象。&lt;/p&gt;
+
+&lt;p&gt;然后通过程序从Shader文件中获取Shader内容(字符串)并调用 glShaderSource 将源代码(字符串)关联到刚刚创建的着色器对象上。&lt;/p&gt;
+
+&lt;h6&gt;这时着色器对象已经关联了源代码，我们可以通过调用图形接口的编译接口 glCompileShader 对这个着色器对象进行编译。&lt;/h6&gt;
+
+&lt;p&gt;编译完成后，我们可以通过 glGetShaderInfoLog 来获得编译信息以及是否成功的结果。&lt;/p&gt;
+
+&lt;p&gt;到此仅仅是某个着色器对象编译完成，这个着色器对象可能是顶点着色器，也可能是片元着色器，或也许是细分着色器或几何着色器。&lt;/p&gt;
+
+&lt;p&gt;通常情况下，有好几个着色器需要编译，顶点着色器和片元着色器通常都成对出现，则会创建相应的着色器对象来分别编译它们的源代码。&lt;/p&gt;
+
+&lt;p&gt;有了着色器对象还不够，我们需要把这些着色器关联起来。&lt;/p&gt;
+
+&lt;p&gt;首先引擎会使用 glCreateProgram 需要创建一个空的着色器程序。&lt;/p&gt;
+
+&lt;p&gt;然后多次调用 glAttachShader 来一个个地绑定着色器对象。&lt;/p&gt;
+
+&lt;h6&gt;当所有必要的着色器对象关联到着色器程序之后，就可以链接对象来生成可执行程序了，调用 glLinkProgram 将所有关联的着色器对象生成一个完整的着色器程序。&lt;/h6&gt;
+
+&lt;p&gt;当然，着色器对象也可能存在某些问题，因此在链接过程中依然可能失败，引擎通过 glGetProgramiv 来查询链接操作的结果，以及通过 glGetProgramInfoLog 接口来获取程序链接的日志信息，由此我们就可以判断错误原因。&lt;/p&gt;
+
+&lt;p&gt;成功完成了着色器程序的链接后，引擎就可以通过调用 glUseProgram 来运行着色器程序。&lt;/p&gt;
+
+&lt;p&gt;我们平常在Unity3D中用到的Shader中的Pass，每个Pass中都有着色器需要编译，因此每次在绘制不同的Pass时都会对Pass中的顶点着色器和片元着色器进行编译。也就是说，Unity引擎会为每个Pass标签生成一个着色器程序，生成这些着色器程序后，执行顺序仍然按照Pass的先后次序来。&lt;/p&gt;
+
+&lt;h6&gt;除了着色器的编译流程外，Unity3D中的Shader Varant(变体)在实际开发中也是比较严重的问题&lt;/h6&gt;
+
+&lt;p&gt;那么什么是“变体”呢。其实它是由Unity3D自身的宏编译指令引起的，它为不同情况而编译生成不同的着色器程序。从引擎端的说法来看，Unity3D把不同的编译版本拆分成了不同的着色器源代码，在运行时再通过图形接口将这些着色器源代码编译成不同的着色器程序。&lt;/p&gt;
+
+&lt;p&gt;为什么要使用宏编译指令导致生成这么多的着色器程序呢？因为要简化Shader，让同一个Shader在不同材质球上的应用不同的效果时更加便捷，修改和完善起来也更加高效。&lt;/p&gt;
+
+&lt;h6&gt;假如编写很多同一个风格但不同效果的Shader，在使用和维护过程中会造成诸多的麻烦和不便，为了统一风格，为了提高效率，也为了能更好的打通各部门之间的沟通渠道，以及能让美术同学能更好的发挥对画面效果的调整，将同一个风格不同效果的Shader写在同一个Shader文件里是必不可少的，这样能更加容易的统一美术风格和制作流程，目的就是为了让风格更加统一，沟通更加便捷，效率更加高。&lt;/h6&gt;
+
+&lt;p&gt;那么我们来看看Unity3D是怎么通过编译指令来编写宏以及它是怎么生成着色器源代码的。&lt;/p&gt;
+
+&lt;p&gt;Unity3D的Shader中使用&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;#pragma multi_compile&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#pragma shader_feature&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;两个指令来实现着色器程序的自定义宏，它既适用于顶点片元着色器也适用于表面着色器。&lt;/p&gt;
+
+&lt;p&gt;在运行时，Unity3D会根据材质(Material)的关键字(Material的对象方法EnableKeyword和DisableKeyword)或者全局着色器关键字(Shader的类方法EnableKeyword和DisableKeyword)&lt;/p&gt;
+
+&lt;p&gt;我们通过 multi_compile 指令编写例如：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;#pragma multi_compile A_ON B_ON&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;这样会生成并编译两个Shader(变体)，一个是A&lt;em&gt;ON的版本，一个是B&lt;/em&gt;ON的版本。&lt;/h6&gt;
+
+&lt;p&gt;运行的时候Unity3D会根据材质(Material)的关键字或者Shader全局关键字判断应该使用哪个Shader，如果两个关键字都为false，那么会使用第一个(A_ON)Shader变体。&lt;/p&gt;
+
+&lt;p&gt;我们也可以创建多个组合关键字例如:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;#pragma multi_compile A B C&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#pragma multi_compile D E&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样会使得Shader的变体成倍的增加，例如上述的预编译方式，会生成 3x2 = 6 个变体，分别是 A+D、 B+D、 C+D、 A+E、 B+E、 C+E 六种。&lt;/p&gt;
+
+&lt;p&gt;假如multi_compile组合多到10行，每行2个，就是2的10次方个Shader(变体)就是1024个，这样生成这1024个Shader(变体)，在打包时会耗费很长在变体的生成上的打包时间。&lt;/p&gt;
+
+&lt;h6&gt;除了 multi&lt;em&gt;compile 之外，另外一个指令 shader&lt;/em&gt;feature 也可以设置预编译宏，与 multi&lt;em&gt;compile 的区别是 shader&lt;/em&gt;feature 不会将没有被使用到的Shader(变体)打包进包内，因此 shader&lt;em&gt;feature 更适合材质球的关键字指定预编译内容，因为Unity3D只生成和编译被使用的预编译情况，而 multi&lt;/em&gt;compile 更适合全局Shader指定关键字，因为它会把所有组合都编译一遍，无论有没有用到。&lt;/h6&gt;
+
+&lt;p&gt;除了这两个自定义预编译指令，Unity3D 本身自带的一些内建的 multi_compile 的快捷写法也会导致Shader变体的产生：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    multi_compile_fwdbase 为前向渲染编译多个变体，不同的变体处理不同的光照贴图的计算，并且控制了主平行光的阴影的开关。
+
+    multi_compile_fwdadd 为前向渲染额外的光照部分编译多个变体，不同的变体处理不同灯光类型，平行光，聚光灯，点光，以及他们附带的cookie纹理版本。
+
+    multi_compile_fwdadd_fullshadows 和 multi_compile_fwdadd 一样，并且包含了灯光的实时阴影功能。
+
+    multi_compile_fog 为处理不同的雾效类型（off/linear/exp/exp2）扩展了多个变体。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;总的来说，无论是 multi&lt;em&gt;compile 还是 shader&lt;/em&gt;feature 亦或内建预编译指令，都会造成 Shader(变体)数量的增多，使得打包时间增加，运行时编译次数增多。当Unity3D在运行时检测到需要渲染的材质球里是不曾被编译的Shader时，则会将与自己匹配的Shader变体拎出来编译一下生成一个着色器程序，因此为了应对变体在运行时的编译消耗，通常会在运行时提前将所有Shader变体编译一下，使得运行中不再有Shader编译的CPU消耗。&lt;/h6&gt;
+
+&lt;p&gt;参考资料:&lt;/p&gt;
+
+&lt;p&gt;《OpenGL编程指南》
+《Unit3D Documentation》 https://docs.unity3d.com/Manual/SL-MultipleProgramVariants.html&lt;/p&gt;
+</description>
+               <pubDate>Wed, 04 Dec 2019 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2019/12/04/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A69.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2019/12/04/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A69.html</guid>
+            </item>
+        
+            <item>
+               <title>思路探讨32</title>
+               <description>&lt;hr&gt;
+
+&lt;p&gt;layout: post
+status: publish
+published: false
+title: 思路探讨(三十二) 
+description: &amp;quot;股市 投资 金融 理念 逻辑 a股 人生哲学&amp;quot;
+excerpt_separator: ===
+tags:
+- 金融投资&lt;/p&gt;
+
+&lt;h2&gt;- life&lt;/h2&gt;
+
+&lt;p&gt;站在金字塔顶尖才能看到别人看不到的画面，所以很多时候，我们在做教育时不是为了赢在起跑线那么简单，而是为了让孩子看到别人看不到的那一面，才能真正做到与别人在层级上的差别，如果一直能在层级上做到差别化，那么视角、视野、眼光、思维方式就会大不一样，于是会从根本上与其他人拉开一个距离。&lt;/p&gt;
+
+&lt;p&gt;平级上的竞争基本都是苦涩的忍耐，如果差距到了层级上的距离，那么超越将变得异常困难。&lt;/p&gt;
+</description>
+               <pubDate>Sun, 01 Dec 2019 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2019/12/01/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A832.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2019/12/01/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A832.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识3</title>
                <description>&lt;h3&gt;GPU Instancing 的来龙去脉&lt;/h3&gt;
 
@@ -68,7 +203,7 @@
 
 &lt;p&gt;如果只是一个坐标上渲染多次模型是没有意义的，我们需要将一个模型渲染到不同的多个地方，并且以不同的缩放大小和旋转角度，以及不同的材质球参数，这才是我们真正需要的。&lt;/p&gt;
 
-&lt;p&gt;GPU Instancing 正我们提供这个功能，上面三个渲染接口告知Shader着色器传开启一个叫 InstancingID 的变量，这个变量可以确定在着色计算时使用哪个实例的属性。&lt;/p&gt;
+&lt;p&gt;GPU Instancing 正我们提供这个功能，上面三个渲染接口告知Shader着色器开启一个叫 InstancingID 的变量，这个变量可以确定在着色计算时使用哪个实例的属性。&lt;/p&gt;
 
 &lt;p&gt;有了这个 InstancingID 就能使得我们在多实例渲染中，辨识到底使用哪个属性参数。Shader的顶点着色器和片元着色器可以通过这个变量来获取模型矩阵、颜色等不同变化的参数。&lt;/p&gt;
 
@@ -230,11 +365,11 @@
 &lt;p&gt;我在代码上做了比较详尽的注释，首先获取需要推入顶点属性的数据的索引，再将数组数据与OpenGL
 缓存进行绑定，这样才能注入到OpenGL里去，接着告诉 OpenGL 每个数据对应的格式，然后再根据前一步描述的格式应用到顶点属性中去，最后如果做的是 GPU Instancing 多实例的属性数据则开启多实例化属性接口，让 InstancingID 起效。&lt;/p&gt;
 
-&lt;p&gt;总结，我们解析了 GPU Instancing 在 Unity3D 中的工作方式，得知了它能用同一个模型同一个材质球渲染不同的位置、角度、缩放大小、以及不同颜色等属性。这种没有对模型网格数量限制，没有占用大量内存的性能优化来说，很好的弥补了动态合批(Dynamic batching)与静态合批(Static batching)的不足。&lt;/p&gt;
+&lt;h6&gt;总结，我们解析了 GPU Instancing 在 Unity3D 中的工作方式，得知了它能用同一个模型同一个材质球渲染不同的位置、角度、缩放大小、以及不同颜色等属性。这种没有对模型网格数量限制，没有占用大量内存的性能优化来说，很好的弥补了动态合批(Dynamic batching)与静态合批(Static batching)的不足。&lt;/h6&gt;
 
 &lt;p&gt;但是它毕竟是只能围绕一个模型来操作，只有相同网格(Mesh)和相同的材质球实例(参数可以不同，但必须使用API来设置不同参数)的情况下才能做到多个实例在同一个渲染管线中一次性渲染的优化操作，而动态合批和静态合批却只需要材质球实例一致，网格是可以有差别的。&lt;/p&gt;
 
-&lt;p&gt;三者利弊各不同，有互相弥补的地方，各自本身也存在着不同程度的限制和优缺点。从整体上来看，GPU Instancing 更适合同一个模型渲染多次的情况，而动态合批(Dynamic batching)更适合同一个材质球并且模型面数小的情况，静态合批(Static batching)更适合当我们能容忍内存扩大的情况。&lt;/p&gt;
+&lt;h6&gt;三者利弊各不同，有互相弥补的地方，各自本身也存在着不同程度的限制和优缺点。从整体上来看，GPU Instancing 更适合同一个模型渲染多次的情况，而动态合批(Dynamic batching)更适合同一个材质球并且模型面数小的情况，静态合批(Static batching)更适合当我们能容忍内存扩大的情况。&lt;/h6&gt;
 </description>
                <pubDate>Wed, 20 Nov 2019 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2019/11/20/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A68.html</link>
@@ -1218,286 +1353,6 @@
                <pubDate>Sat, 28 Sep 2019 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2019/09/28/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A65.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2019/09/28/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A65.html</guid>
-            </item>
-        
-            <item>
-               <title>杭州景点体验概览</title>
-               <description>&lt;p&gt;1.西湖--西湖音乐喷泉--三潭印月--断桥残雪--苏堤--白堤--西湖游船--曲院风荷--六和塔--花港观鱼--梅家坞--云栖竹径--龙井路与满觉陇路--孤山公园--虎跑公园--杨公堤&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;2.灵隐寺（飞来峰）景区----北高峰索道&lt;/p&gt;
-
-&lt;p&gt;3.宋城景区--宋城千古情演出&lt;/p&gt;
-
-&lt;p&gt;4.杭州动物园&lt;/p&gt;
-
-&lt;p&gt;5.吴山广场，河坊街&lt;/p&gt;
-
-&lt;p&gt;6.雷峰塔&lt;/p&gt;
-
-&lt;p&gt;7.杭州长乔极地海洋公园 -- 好，贵，大&lt;/p&gt;
-
-&lt;p&gt;8.杭州野生动物世界 -- 良好，停车难，略贵，不大&lt;/p&gt;
-
-&lt;p&gt;9.西溪国家湿地公园 -- 差，管理无章法，太大以至于找不到重点&lt;/p&gt;
-
-&lt;p&gt;10.九溪&lt;/p&gt;
-
-&lt;p&gt;11.南宋御街&lt;/p&gt;
-
-&lt;p&gt;12.杭州乐园&lt;/p&gt;
-
-&lt;p&gt;13.太子湾公园&lt;/p&gt;
-
-&lt;p&gt;14.千岛湖中心湖区--千岛湖景区--千岛湖森林氧吧--千岛湖东南湖区景区--千岛湖游船&lt;/p&gt;
-
-&lt;p&gt;16.大明山景区&lt;/p&gt;
-
-&lt;p&gt;17.杭州烂苹果乐园 -- 游乐园&lt;/p&gt;
-
-&lt;p&gt;18.杭州海底世界&lt;/p&gt;
-
-&lt;p&gt;19.浙西大峡谷&lt;/p&gt;
-
-&lt;p&gt;20.钱塘江观赏堤坝&lt;/p&gt;
-
-&lt;p&gt;21.浙江省科技馆--西湖文化广场&lt;/p&gt;
-
-&lt;p&gt;22.杭州浪浪浪水公园&lt;/p&gt;
-
-&lt;p&gt;23.杭州Hello Kitty乐园&lt;/p&gt;
-
-&lt;p&gt;24.桐庐县雅鲁激流探险漂流----临安市龙井峡漂流----淳安县九龙溪漂流----桐庐县虎啸峡激流探险漂流----余杭区双溪漂流景区&lt;/p&gt;
-
-&lt;p&gt;25.桐庐县瑶琳仙境，垂云通天河景区&lt;/p&gt;
-
-&lt;p&gt;26.杭州DO都城，亚洲最大的少年儿童体验类教育场馆&lt;/p&gt;
-
-&lt;p&gt;27.桐庐县大奇山国家森林公园&lt;/p&gt;
-
-&lt;p&gt;28.临安太湖源&lt;/p&gt;
-
-&lt;p&gt;29.良渚，彻天彻地童玩中心，让孩子训练协调能力，培养冒险精神&lt;/p&gt;
-
-&lt;p&gt;30.江干区江和美海洋公园&lt;/p&gt;
-
-&lt;p&gt;31.临安大明山景区&lt;/p&gt;
-
-&lt;p&gt;32.慈溪杭州湾国家湿地公园&lt;/p&gt;
-
-&lt;p&gt;33.胡雪岩故居&lt;/p&gt;
-
-&lt;p&gt;34.京杭大运河，余杭塘栖&lt;/p&gt;
-
-&lt;p&gt;35.杭州国际博览中心，萧山区&lt;/p&gt;
-
-&lt;p&gt;36.多乐岛蹦床公园杭州馆，江干区&lt;/p&gt;
-
-&lt;p&gt;37.桐庐县大奇山疯狂森林主题乐园，冒险探险&lt;/p&gt;
-
-&lt;p&gt;38.城西银泰，娱乐场--滑冰--玩具店 -- 逛买逛买&lt;/p&gt;
-
-&lt;p&gt;39.浙江大学紫金港校区 -- 好风景好环境&lt;/p&gt;
-
-&lt;p&gt;40.塘西古镇  -- 逛吃逛吃，小&lt;/p&gt;
-
-&lt;p&gt;41.杭州北高峰 -- 交通不方便&lt;/p&gt;
-
-&lt;p&gt;42.良储遗址 -- 大，美，便宜，自带食物，能游览大半天&lt;/p&gt;
-
-&lt;p&gt;43.井山湖农耕文化公园(塘子堰，中小学生实践基地) -- 免费，向日葵基地，大片草地，搭帐篷，风景美，自带食物&lt;/p&gt;
-</description>
-               <pubDate>Sat, 21 Sep 2019 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2019/09/21/%E6%9D%AD%E5%B7%9E%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2019/09/21/%E6%9D%AD%E5%B7%9E%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html</guid>
-            </item>
-        
-            <item>
-               <title>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(二) - 渲染管线1</title>
-               <description>&lt;p&gt;计算机的世界里其实是很纯粹的，没有什么高深的技术，无非就是进程、线程、内存、硬盘、CPU。&lt;/p&gt;
-
-&lt;p&gt;在现代社会的实际编程中，很多时候引擎或者框架帮我们屏蔽了底层上的操作使得程序员只需要将所有精力放在上层应用就可以了，因此数学和算法很多时候成了重点，这是符合社会进步规律的，我们需要站在巨人的肩膀上才能走得比巨人更快更远。&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;Unity3D就是帮助我们快速建立程序结构的好引擎，有了Unity3D我们才能在较低门槛的情况下，创造出自己的想法和创意，让’我‘里面有的内在才能快速和有效的得到放大。&lt;/p&gt;
-
-&lt;p&gt;除了进程、线程、内存、硬盘、CPU这些通常我们程序员在编程时都要接触的因素外，对于我们前端程序员来说又多了一个GPU的技术范畴，因此我们需要学习和考虑的问题比其他程序员会更加多一些也更加高阶一些，Unity3D虽然封装了所有引擎需要的GPU接口功能但我们还是必须要了解渲染管线是如何处理的，最终是如何将渲染数据渲染要屏幕上的等等这些底层的知识和原理。&lt;/p&gt;
-
-&lt;h3&gt;OpenGL、DirectX究竟是什么&lt;/h3&gt;
-
-&lt;p&gt;OpenGL 和 DirectX 其实是一回事，它们都是图形渲染的应用程序编程接口，它们都是一种可以对图形硬件设备特性进行访问的软件库。它们的区别只是接口名字不一样，并且，分别由不同的两个开发群体开发出来的两套程序。&lt;/p&gt;
-
-&lt;p&gt;为什么会是两个不同群体开发出来的两套差不多功能的软件，并且还同时运行在现有的世界中呢？&lt;/p&gt;
-
-&lt;p&gt;OpenGL是由SGI(Silicon Graphics 美国硅图公司)开发的，而DirectX是由微软开发的，由于市场竞争的关系两家公司做了同样的事，最后导致现在的局面。从现在的局面看，我们可以想象的到，在当初还没有形成统一的硬件渲染接口时，各家公司的编程方式有多混乱，情况有多复杂，对标准统一接口的标准竞争有多激烈。在这种严峻的情况下才使得两家公司为了各自的利益，一直在不断维护和升级着各自的驱动接口直到今天。&lt;/p&gt;
-
-&lt;p&gt;幸运的是 Unity3D 已经帮我们封装好了 OpenGL 和 DirectX 的接口，我们无需关心到底是调用 OpenGL 还是 DirectX。我们这里会以OpenGL为例来讲解Unity3D与OpenGL的关系，暂时免去DirectX的麻烦。&lt;/p&gt;
-
-&lt;h6&gt;OpenGL究竟处在哪个位置&lt;/h6&gt;
-
-&lt;p&gt;Unity3D通过调用 OpenGL 来渲染图像，OpenGL 定义各种标准接口就是为了让像 Unity3D 这样的应用程序在面对不同类型的显卡硬件时可以不必慌张，也就是说由于 OpenGL 的存在，Unity3D完全不需要去关心硬件到底是哪个厂家生产的，它的驱动是什么。其实与其说OpenGL在标准接口中适配了硬件厂商的驱动程序，不如说硬件厂商的驱动程序适配了OpenGL，事实上确实是这样。&lt;/p&gt;
-
-&lt;p&gt;当Unity3D在渲染调用时去设置OpenGL的渲染状态，OpenGL就会去检查显卡驱动程序里是否有该功能，如果有就会调用，如果是那些比较特殊的渲染接口，有些硬件驱动是没有的则不调用。&lt;/p&gt;
-
-&lt;p&gt;如果把GPU硬件看做是最底层的那个模块的话，显卡驱动就是在硬件之上的模块，它是用来将指令翻译成机器语言并调用硬件的那个程序。&lt;/p&gt;
-
-&lt;p&gt;显然OpenGL是在驱动程序之上的应用程序，我们可以把它看做是适配不同驱动程序的中间件。如下图：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/book/7/render-pipeline1.png&quot; alt=&quot;opengl&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;上图中很清晰的表达OpenGL所处的位置，应用程序(如Unity3D)向OpenGL发送渲染指令，告诉OpenGL我的某个模型数据需要渲染或者说某个状态要设置，OpenGL发送指令给显卡驱动程序，显卡驱动程序将指令翻译为机器码后，将指令机器码发送到GPU，GPU先从显存中获得需要的数据再根据指令做处理。&lt;/p&gt;
-
-&lt;p&gt;我们看到这个过程中显卡驱动程序只是做了传递指令消息的工作，指令从OpenGL那里发起到GPU接受到指令，显卡驱动只是起到了翻译的作用。因此我们在平常的讨论中，常常将显卡驱动程序的工作忽略掉，而用 OpenGL 与 GPU 的互动代替之。甚至有时会将OpenGL也忽略掉用GPU代替，或把GPU忽略掉用OpenGL代替，因为GPU的工作是机械式的它俩的工作完全可以看做一个整体。&lt;/p&gt;
-
-&lt;p&gt;当然这里GPU不只会处理一次，OpenGL会通过显卡驱动发送很多次指令给GPU，让它处理一连串的操作，每次指令都有可能不一样，经过一系列的处理过程后，最终形成了一张屏幕大小的图像存放在缓存中，这时GPU才向屏幕输出最终画面。&lt;/p&gt;
-
-&lt;p&gt;下面我们就来详细介绍一下渲染管线。&lt;/p&gt;
-
-&lt;h3&gt;究竟渲染管线是什么？&lt;/h3&gt;
-
-&lt;p&gt;上面所说的 OpenGL 通过驱动程序向 GPU 发送很多个指令，其实为了渲染很多个模型每一帧都会发送很多个指令，这一系列指令加起来，才形成一整个渲染过程，拥有完整的一个画面。&lt;/p&gt;
-
-&lt;p&gt;渲染管线就是指令中完成一个绘制命令(drawcall)的流水线。这条流水线中有很多个环节，每个环节都自己干自己的事，就像工厂里的流水作业一样，每个节点的工人都会拧属于自己的螺丝，完全不会去管前面节点发生了什么事情，不过在现代GPU中也会做些流程上的优化，比如调整节点的顺序，但节点还是自顾自的工作，这部分会在后面的文章中提到。&lt;/p&gt;
-
-&lt;p&gt;从严肃的理论描述来说渲染管线：是一系列数据处理的过程，这个过程最终的目的是将应用程序的数据转换到最终输出的缓存上最后输出到屏幕。&lt;/p&gt;
-
-&lt;p&gt;我们说的再白话一点。渲染管线从接受到渲染命令后开始，分几个阶段处理了这些数据，这几个阶段分别是应用阶段，几何阶段，光栅化阶段，经过这几个阶段处理最终输出到屏幕上。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    缺图片
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;图中每个阶段都有各自细分的流程，我们来一一讲述下。&lt;/p&gt;
-
-&lt;h6&gt;应用阶段&lt;/h6&gt;
-
-&lt;p&gt;应用阶段其实就是我们执行Unity3D引擎和代码的过程，在逻辑代码过程中，我们实例化了很多个模型或者UI（UGUI的UI也是网格，跟渲染场景中的3d模型从根本上是没有区别的），这些模型有贴图，有材质球，有网格，对于引擎来说，这个阶段在代码执行完毕后它知道了哪些模型需要被渲染，有哪些光源存在，摄像头的位置大小，于是就知道该如何通知GPU去渲染，总的来说这个阶段是准备渲染数据的阶段，为调用渲染准备。&lt;/p&gt;
-
-&lt;p&gt;引擎除了知道有哪些东西(数据)需要被提交到GPU渲染外，在提交前还会对这些数据做很多优化工作，从而提高渲染性能。&lt;/p&gt;
-
-&lt;p&gt;优化工作有很多种，从具体业务逻辑上做优化的方案，前面的章节中我们也讲到了很多很多关于在逻辑端上优化的工作，现在我们来重点说一下引擎的‘剔除’优化部分。&lt;/p&gt;
-
-&lt;p&gt;Unity3D引擎会对不需要渲染的物体进行剔除，原本这是在GPU中做的事搬到了CPU上做。为什么要搬到CPU上做呢？因为在引擎端掌握的是第一手数据信息，如果从粗颗粒上下手做剔除工作，CPU会更快更方便，如果放到GPU去剔除，则更可能是三角形级别的裁剪，会浪费很多计算同时降低了功效。&lt;/p&gt;
-
-&lt;p&gt;引擎在粗颗粒上是怎么剔除的呢，引擎当然不会像GPU那样去计算每个面是否可展示，因为这个操作对GPU来说更快，而是去计算更粗的颗粒，即整个模型的包围盒是否需要被剔除。&lt;/p&gt;
-
-&lt;h6&gt;引擎会计算一个模型的包围盒，这个包围盒就是Unity3D的Mesh.bounds变量，这个包围盒为AABB包围盒，即一个顶点与最大最小长宽高，我们可以理解为包围盒是个立方体有8个顶点，这8个顶点决定了这个模型是否会被剔除，即只要有一个顶点在摄像机可视范围内(锥视体内或正交范围)，就不会被剔除，否则将被剔除。&lt;/h6&gt;
-
-&lt;p&gt;引擎通过这种快速的判断包围盒与锥视体的关系来剔除不需要渲染的物体，以达到对粗颗粒的渲染优化。&lt;/p&gt;
-
-&lt;p&gt;除此之外，对粗颗粒的剔除判断还有 occlusion culling 即遮挡剔除，也是属于应用阶段的优化剔除，它其实也是属于业务逻辑层的优化方案并不是所有项目都会使用，而通常只在第一人称视角的游戏上使用这种剔除方式，即被遮挡的物体不进入渲染队列。&lt;/p&gt;
-
-&lt;p&gt;除了得到和优化需要渲染的数据外，应用阶段的最后时刻就是向GPU提交需要渲染的数据，即拷贝数据到显存中、设置渲染状态、渲染调用(Draw call)。&lt;/p&gt;
-
-&lt;p&gt;在PC端中显存是最接近GPU的内存设备，将数据拷贝到显存中会加速GPU的工作效率，但在移动端里并没有显存，安卓和IOS的架构决定了它们只能用内存来为GPU提供服务，因此在手机端中没有拷贝数据到显存的这个说法，使用的都是同一个内存地址，除非我们需要读写这块内存内容才将它们另外复制一份。&lt;/p&gt;
-
-&lt;h6&gt;那么什么是渲染状态？很多人都很困惑，其实就是一连串的开关或方法以及方法的地址指向。&lt;/h6&gt;
-
-&lt;p&gt;比如：要不要开启混合，使用哪张纹理，使用哪个顶点着色器，使用哪个片元着色器，剔除背面还是剔除前面亦或都不剔除，使用哪些光源等等。&lt;/p&gt;
-
-&lt;p&gt;通俗的来说，设置渲染状态，就是设置并决定接下来的网格如何渲染，有了渲染的具体方法，至于具体的渲染工作则是由GPU来执行。&lt;/p&gt;
-
-&lt;p&gt;有了渲染的具体方法，就要调用渲染的具体对象，这就是渲染调用即 Draw call 做的工作。实际上 Draw call 就是一个命令，它的发起方是CPU，接收方是GPU，这个命令仅仅指向了一连串的图元（即点,线,面，我们可以理解为网格被拆分后的状态），并不会包含其他任何材质信息。&lt;/p&gt;
-
-&lt;p&gt;每个 Draw call 前面都伴随着一个渲染状态的设置，因此整个渲染命令队列中都是一对对出现的，并且都是由CPU向GPU提交。&lt;/p&gt;
-
-&lt;h6&gt;那么为什么要有这个渲染命令队列呢？&lt;/h6&gt;
-
-&lt;p&gt;因为CPU和GPU相当于是两个大脑，它们是分离的，如果没有很好的协调机制，它们无法正常梳理自己的工作。一个命令缓冲队列就是用来协调CPU与GPU的，CPU只管向命令缓冲队列中推数据，GPU只管取数据并且处理数据，取一个处理一个，其他时间的都自顾自的忙自己的事。这个命令缓冲队列成了CPU与GPU的关系纽带。&lt;/p&gt;
-
-&lt;p&gt;这条关系纽带(命令缓冲队列)很好的连接了CPU与GPU，但也成了它们之间交互的瓶颈，即我们通常所说的 Draw call 太多时GPU的工作效率比较差。其根本原因就是 CPU 发送了很多渲染命令后，只是空转的等待GPU完成这些渲染操作。&lt;/p&gt;
-
-&lt;h6&gt;几何阶段&lt;/h6&gt;
-
-&lt;p&gt;CPU准备好数据后，向GPU发送了渲染状态的设置命令和渲染调用命令后，接下来的工作就完全属于GPU了。&lt;/p&gt;
-
-&lt;p&gt;接下来进入的是几何阶段的工作。几何阶段最终的工作目标是将需要绘制的图元转化到屏幕空间中，所以它决定了哪些图元要绘制，怎么绘制。&lt;/p&gt;
-
-&lt;p&gt;图元即点、线、面。我们可以理解为网格的拆分状态，是着色器中的基础数据，在几何阶段作用最大。&lt;/p&gt;
-
-&lt;h6&gt;几何阶段会经过几个节点，按顺序排列为，顶点着色器，曲面细分着色器，细分计算着色器，几何着色器，图元装配，裁减和剪切。如下图所示：&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    缺图
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;图中几何阶段分拆成了，顶点着色器、曲面细分着色器、细分计算着色器、几何着色器、图元装配、裁剪和剪切，6个节点。&lt;/p&gt;
-
-&lt;p&gt;顶点着色器会对每个顶点进行逐一的计算，OpenGL会调用一个顶点处理函数来处理顶点数据。&lt;/p&gt;
-
-&lt;p&gt;这个顶点处理函数就是我们可编程的部分，它可以很简单，只是数据复制并传递到下一个节点，也可以很复杂，例如变换矩阵的方式来得到顶点在屏幕上的位置，或者通过光照计算来判断顶点的颜色，或者记录和计算其他下一个阶段需要的信息。具体我们将在后面的章节中详细讲解。&lt;/p&gt;
-
-&lt;p&gt;曲面细分着色器，细分计算着色器，几何着色器，都是可选的着色器。细分着色器包括曲面细分着色器和细分计算着色器会使用面片来描述一个物体的形状，并且增加面片数量使得模型外观更加平顺。几何着色器则允许增加和创建新的图元，这是唯一一个能自定义增加新图元的着色器。&lt;/p&gt;
-
-&lt;p&gt;前面几个着色器节点处理的都是顶点数据，到了图元装配节点，它将这些顶点与相关的几何图元之间组织起来为下一步的裁剪和剪切工作做准备。&lt;/p&gt;
-
-&lt;h6&gt;经历过前面几个阶段的变换，特别是在顶点着色器中的顶点空间转换，从模型空间到世界空间再到视口空间再到投影空间，Unity3D的Shader中常见的UNITY_MVP就是这个坐标空间转换的矩阵，再经过硬件上透视除法后得到了归一化的设备坐标，这使得到裁剪和剪切节点时，这个归一化的设备坐标使得裁剪会更加容易，不仅如此还对后面的深度缓冲和测试有很大的帮助。&lt;/h6&gt;
-
-&lt;p&gt;归一化后的设备坐标(Normalized Device Coordinates, NDC)可以看做是一个矩形内的坐标体系，这个坐标体系是一个立方体的坐标体系，所有在这个坐标体系内的顶点的坐标都不会超过1到-1之间，无论x、y、z。&lt;/p&gt;
-
-&lt;p&gt;为了能更好的理解经过空间转换后的顶点在后面几个阶段上应用的数据，有必要在这里来理解一下空间坐标系转换前后的样子，如下图：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    缺图1
-
-    缺图2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;上述图1中我们看到原本在视锥体上的物体，在经过空间矩阵转换后，视口从锥体变为了立方体，而原本在视锥体中的物体则从长方体变成了锥体，这是空间坐标系转化后的结果。&lt;/p&gt;
-
-&lt;h6&gt;其中需要特别注意的是原本在视锥体坐标系上向前方向(forward)的X坐标轴变为了Z轴方向，整个立方体平面由x、y组成二维坐标体系。&lt;/h6&gt;
-
-&lt;h6&gt;相当于，x、y坐标成为了可以映射到屏幕上的相对坐标，z坐标则被用来作为离屏幕有多远的数值参考，这是因为归一化后的NDC坐标系与原本视锥体坐标系相比其Z轴方向发生了翻转。&lt;/h6&gt;
-
-&lt;p&gt;归一化坐标让坐标范围固定在1到-1之间，使得后续对图元数据的处理变得更加简单。不过归一化坐标范围在OpenGL和DirectX上有所不同，在OpenGL上x、y、z坐标范围在[-1,1]之间，而在DirectX上则是[0,1]之间，但这并不影响最终在屏幕上的表达，只是规则不同而已。最终他们都会进行简单的线性变换映射到屏幕的平面矩形范围内。虽然在屏幕映射时，OpenGL和DirectX两者的差异有出现了，OpenGL以左下角为(0,0)点，而DirectX则以左上角为(0,0)点，显然是两个商家因为竞争而故意造成的，还好主流的图形编程接口并不多，不管怎样差异已经存在了我们只能小心留意。&lt;/p&gt;
-
-&lt;p&gt;说了这么多就是为了更好的理解几何阶段最后一步裁剪和剪切。我们将顶点转化到了归一化的坐标空间后，裁剪就容易多了，再通过图元装配，又有了线段和三角形数据，剪切就可以开始了。&lt;/p&gt;
-
-&lt;p&gt;一个图元和可视范围关系，要么完全在范围内，要么完全在范围外，要么就是部分在里面部分在外面。完全在范围内的图元继续向下传递，不做任何操作，完全在范围外的图元则被剔除掉不再进入到后面的阶段，部分在视野内的图元则需要进一步剪切处理，把在范围外的部分剔除掉并在边界处生成新的顶点来连接没有被剔除的顶点。如下图：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    缺图
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;图中一个完整的三角形两个顶点在范围内，一个顶点在范围外，剪切后在边界上增加了两个顶点，这是比较复杂的情况，另一个中比较简单的情况时一个顶点在范围里，两个顶点在范围外，剪切后形成新的两个顶点与范围内的顶点结合后替换了原来的三角形。&lt;/p&gt;
-
-&lt;h6&gt;我们来分析下那种复杂的情况，因为经过裁剪后三角形由3个顶点变成了4个顶点，成为了4边形，所以需要对这个四边形进行切割。切割的方法其实很简单，选一个新增的顶点与原本的两个顶点替换原来的三角形，另一个新增的顶点与前一个新增的顶点再加上一个旧顶点(这个旧顶点一定是剪切后新增的这个顶点的线段里的)形成新的三角形。&lt;/h6&gt;
-
-&lt;p&gt;不仅如此，裁剪不仅仅是视口的裁剪，还有会有背面裁剪(Back-Face Culling)，即剔除面朝视口反方向的面片，将在后面的Shader编写中详细讲述。&lt;/p&gt;
-
-&lt;p&gt;至此所有几何阶段的操作都结束了，总体来说几何阶段处理的是顶点，以及计算和准备下一个阶段需要用到的数据。&lt;/p&gt;
-
-&lt;h6&gt;光栅化阶段&lt;/h6&gt;
-
-&lt;p&gt;光栅化阶段分为三个节点，光栅化、片元着色器、逐片元操作。&lt;/p&gt;
-
-&lt;p&gt;其中光栅化可以分成，三角形设置、三角形遍历两个节点。&lt;/p&gt;
-
-&lt;p&gt;三角形设置即Triangle Setup，由于前面阶段都是空间意义上的顶点和三角形，到了光栅化阶段我们更加需要的屏幕上的像素，于是三角形设置可以认为是将所有三角形都铺在屏幕坐标平面上，这样就知道了每个三角形片面在屏幕上的范围，它用三角形边界的形式表达了这个覆盖面。&lt;/p&gt;
-
-&lt;p&gt;知道覆盖面还不够，因为屏幕中展示的画面都是以像素为单位计算的，所以一个三角形覆盖哪些像素需要依靠扫描变换(Scan Conversion)得到，这个像素扫描阶段就是三角形遍历(Triangle Traversal)。如下图：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    缺图
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;图中，在三角形遍历节点中像素依据三角形三条边计算得到像素覆盖范围，即哪些像素被认为是这个三角形内的覆盖范围，再通过三个顶点中信息的插值得到每个像素的信息，信息包括坐标，深度，颜色，法线，纹理坐标等都是顶点上的信息经过插值得到。&lt;/p&gt;
-
-&lt;h6&gt;经过光栅化的节点，我们得到了三角形内每个像素上的信息，我们称它们为片元，每个片元包含了诸多信息。这个片元将被传递到下一个阶段即片元着色器。&lt;/h6&gt;
-
-&lt;p&gt;片元着色器(Fragment Shader)就如字面意思那样，是处理片元的地方，它是可编程的阶段，我们在这里可以编写很多我们喜欢操作来改变片元的颜色，或者也可以丢弃该片元(discard 或者 clip)。&lt;/p&gt;
-
-&lt;p&gt;每个片元就相当于一个像素，只是比起像素，片元装载了很多的信息，这些信息都是通过前面三角形遍历时对三个顶点中的信息插值得到的。&lt;/p&gt;
-
-&lt;p&gt;经过片元着色器的处理，也就是我们编写的片元着色程序的处理后，最终输出的也是片元，我们通常都在片元着色器中计算改变片元的颜色，最终得到一个我们想要的输出到屏幕的片元。&lt;/p&gt;
-
-&lt;h6&gt;这里有一个重点，每次片元着色器处理片元的只是单个片元，也就是单个一个像素，对于片元着色器来说它并不知道相邻的片元是什么样，因此每个片元在处理时无法得到邻近的片元的信息。&lt;/h6&gt;
-
-&lt;p&gt;得不到邻近的片元信息不代表我们就不可以受到邻近的片元影响，虽然每次片元着色器传入的和处理的都是单个片元，但GPU在跑片元着色器时并不是只跑一个片元着色器，而是将其组织成2x2的一组片元块同时跑4个片元着色器。如下图：&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    缺图
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;上图中，描绘了4个片元组成的片元组，以及偏导数函数对它们的计算过程。我们可以通过ddx和ddy这两个偏导数函数来求得邻近片元的差值。偏导数函数可以用于片元着色器中的任何变量。对于向量和矩阵类型的变量，该函数会计算变量的每一个元素的偏导数。&lt;/p&gt;
-
-&lt;p&gt;偏导数函数是纹理Mipmaps实现的基础，我们将在后面的章节中详细讲解。&lt;/p&gt;
-
-&lt;p&gt;除了计算片元的颜色，我们还可以在片元着色器中丢弃某些片元(discard 或者 clip)，我们常说的Alpha Test就是一个应用丢弃片元来实现的效果，我们将在后面的章节中详细讲解 Alpha Test的原理与利弊。&lt;/p&gt;
-
-&lt;h6&gt;片元着色器和顶点着色器是我们在着色器编程时最重要的两个节点，如果我们想要更通俗简单的理解顶点着色器和片元着色器的区别的话，可以认为：顶点着色器(包括细分着色器和几何着色器)决定了一个三角形应该放在屏幕的什么位置，而片元着色器则用这个三角形包括它的顶点和线段来决定三角形范围内的像素拥有什么样的颜色。&lt;/h6&gt;
-
-&lt;p&gt;片元着色器输出片元后，进入了逐片元操作阶段，也是渲染管线的最后一步。&lt;/p&gt;
-
-&lt;h6&gt;下一节继续讲解剩余的逐片元操作阶段。&lt;/h6&gt;
-</description>
-               <pubDate>Sat, 21 Sep 2019 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2019/09/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A64.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2019/09/21/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A64.html</guid>
             </item>
         
     </channel>
