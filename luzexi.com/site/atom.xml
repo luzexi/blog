@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-12-04T23:54:09+08:00</updated>
+ <updated>2019-12-04T23:55:29+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -118,8 +118,9 @@
 
 &lt;p&gt;参考资料:&lt;/p&gt;
 
-&lt;p&gt;《OpenGL编程指南》
-《Unit3D Documentation》 https://docs.unity3d.com/Manual/SL-MultipleProgramVariants.html&lt;/p&gt;
+&lt;p&gt;《OpenGL编程指南》&lt;/p&gt;
+
+&lt;p&gt;《Unit3D Documentation》 https://docs.unity3d.com/Manual/SL-MultipleProgramVariants.html&lt;/p&gt;
 </content>
  </entry>
  
