@@ -238,7 +238,7 @@
 
 <p>投影Shader中，通常会结合传入的投影矩阵，将顶点转为 Projector 投影空间中，并以此为投影贴图的UV来渲染模型。</p>
 
-<p>例如最简单的投影着色器：</p>
+<p>例如这个简单的投影着色器：</p>
 <div class="highlight"><pre><code class="language-c" data-lang="c"><span></span><span class="n">sampler2D</span> <span class="n">_MainTex</span><span class="p">;</span>
 <span class="n">float4x4</span> <span class="n">unity_Projector</span><span class="p">;</span>
 <span class="k">struct</span> <span class="n">v2f</span><span class="p">{</span>
@@ -264,7 +264,7 @@
 
 <p>用 unity_Projector 矩阵计算出vertex(顶点)在投影空间中的坐标后，我们就可以以此坐标为uv坐标绘制物体了。</p>
 
-<p>为什么可以将顶点坐标视为uv坐标呢？当坐标变换到投影空间后，其坐标空间，就变成了一个立方体的空间形式，在这个空间形式中如果我们将其扁平化为平面坐标，就能一一匹配上顶点的uv坐标。</p>
+<p>为什么可以将顶点坐标视为uv坐标呢？当坐标变换到投影空间后，其坐标空间就变成了投影平面视角，在这个视角中如果我们将平面视为纹理大小，就相当于一一匹配上顶点的uv坐标。</p>
 
 <p>这个转化后的投影空间中的坐标，也就是我们常说的&quot;投影纹理坐标&quot;。</p>
 
@@ -282,11 +282,16 @@
 <p>效果如下图：</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>缺图
 </code></pre></div>
+<p>​###### 投影的技巧还有很多，我们下面介绍几种投影技巧在游戏项目中的运用。</p>
+
 <h6>平面阴影</h6>
 
-<p>平面阴影则稍微需要运用些图形计算，主要的原理是在着色渲染模型时，另外做一个Pass将模型上顶点转换到平面上再渲染一次，以此作为平面的阴影，无论地上有没地形，都以平面呈现。</p>
+<p>平面阴影也是投影技巧的一种，它稍微需要运用些图形计算，主要的原理是在着色渲染模型时，另外做一个Pass将模型上顶点转换到平面上再渲染一次，以此作为平面的阴影，无论地上有没地形，都以平面呈现。如下图:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺图
+</code></pre></div>
+<p>要计算这个平面阴影需要我们从光源点，顶点，法线，平面这些已知数据出发计算顶点转换到平面上的点。</p>
 
-<p>于是我们首先已知的是地面法线向量 TerrainNormal，和平面上随便一个初始点点的坐标 TerrainPos，我们假设我们需要计算的点为p点</p>
+<p>我们首先已知的是地面法线向量 TerrainNormal，和平面上随便一个初始点点的坐标 TerrainPos，我们假设我们需要计算的点为p点</p>
 
 <p>由平面表达公式得知，平面上的任意向量与该平面的点乘所得值为0，因此地面上的方向向量 TerrainNormal 与 要投影的坐标与初始点所形成的方向向量点乘为零，即：</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    (p - TerrainPos) 点乘 TerrainNormal = 0
