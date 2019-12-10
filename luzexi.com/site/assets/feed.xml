@@ -7,6 +7,171 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(五) - Projector投影原理以及PBR原理</title>
+               <description>&lt;h3&gt;Projector 投影的原理与应用&lt;/h3&gt;
+
+&lt;p&gt;Unity3D中的 Projector 投影像是一个很神秘的组件，但其实它依然运用的是以着色器为基准的渲染流程，和普通的3D模型渲染从本质上来看并没有实质上的区别，唯一的区别是它从它自己的视体(视锥体或平视体)中检测到的模型，并根据默认或者自定义的材质球与Shader着色器，将这些物体又重新绘制了一遍。&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;从Unity3D引擎上来讲，可以这样解释 Projector：&lt;/p&gt;
+
+&lt;p&gt;根据 Projector 自身的视体的范围，平视体或视锥体，遍历并计算出视体范围内与视体占边的所有物体。&lt;/p&gt;
+
+&lt;p&gt;接着 Projector 取得这些物体模型数据，并计算投影矩阵。&lt;/p&gt;
+
+&lt;p&gt;这个投影矩阵是什么呢，其实就是前面说的 Projector 视体空间的投影矩阵。&lt;/p&gt;
+
+&lt;p&gt;最后将投影矩阵传入Shader中，根据这个投影矩阵，对这些物体再渲染一次。&lt;/p&gt;
+
+&lt;p&gt;投影中的Shader着色器是投影绘制的主要手段，Projector 的工作只是检测了所有范围内的模型，并传递了投影空间的矩阵而已。&lt;/p&gt;
+
+&lt;p&gt;投影Shader中，通常会结合传入的投影矩阵，将顶点转为 Projector 投影空间中，并以此为投影贴图的UV来渲染模型。&lt;/p&gt;
+
+&lt;p&gt;例如最简单的投影着色器：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sampler2D&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;float4x4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;unity_Projector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SV_POSITION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;texc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TEXCOORD0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;appdata_base&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UNITY_MAXTRIX_MVP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vertex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;texc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unity_Projector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vertex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;COLOR&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tex2Dproj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_MainTex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;texc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;其中 unity&lt;em&gt;Projector 变量就是由 Projector 传入投影矩阵。在顶点着色器中 unity&lt;/em&gt;Projector 矩阵被用来构造投影坐标，和普通的空间投影转换矩阵MVP(Model View Project)不同的是，其中的V是 Projector 空间的相关矩阵，即 Projector 组件所属的 Transform 的 worldToLocalMatrix变量，而P则是和Projector远近裁切相关的矩阵。&lt;/p&gt;
+
+&lt;p&gt;用 unity_Projector 矩阵计算出vertex(顶点)在投影空间中的坐标后，我们就可以以此坐标为uv坐标绘制物体了。&lt;/p&gt;
+
+&lt;p&gt;为什么可以将顶点坐标视为uv坐标呢？当坐标变换到投影空间后，其坐标空间，就变成了一个立方体的空间形式，在这个空间形式中如果我们将其扁平化为平面坐标，就能一一匹配上顶点的uv坐标。&lt;/p&gt;
+
+&lt;p&gt;这个转化后的投影空间中的坐标，也就是我们常说的&amp;quot;投影纹理坐标&amp;quot;。&lt;/p&gt;
+
+&lt;p&gt;&amp;quot;投影纹理坐标&amp;quot;不能直接当作uv来作为纹理坐标来使用，需要调用 tex2Dproj 方法来获取纹理坐标:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    tex2Dproj(texture,uvproj);
+
+    这个纹理投影函数，其实就是在使用之前会将该投影纹理坐标除以透视值
+
+    可以等价于按如下方法使用普通二维纹理查询函数
+
+    float4 uvproj = uvproj/uvproj.w;
+
+    tex2D(texture,uvproj);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果如下图：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;缺图
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6&gt;平面阴影&lt;/h6&gt;
+
+&lt;p&gt;平面阴影则稍微需要运用些图形计算，主要的原理是在着色渲染模型时，另外做一个Pass将模型上顶点转换到平面上再渲染一次，以此作为平面的阴影，无论地上有没地形，都以平面呈现。&lt;/p&gt;
+
+&lt;p&gt;于是我们首先已知的是地面法线向量 TerrainNormal，和平面上随便一个初始点点的坐标 TerrainPos，我们假设我们需要计算的点为p点&lt;/p&gt;
+
+&lt;p&gt;由平面表达公式得知，平面上的任意向量与该平面的点乘所得值为0，因此地面上的方向向量 TerrainNormal 与 要投影的坐标与初始点所形成的方向向量点乘为零，即：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    (p - TerrainPos) 点乘 TerrainNormal = 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;又由于平面映射的P点是由光射到顶点延伸到平面而得到的，所以&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    p = d*L + L0 其中L0为顶点，的l为光到顶点的射线方向，d为L0射到p点的距离。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;因此根据这两个公式，代入得到:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    (dL + L0 - TerrainPos) 点乘 TerrainNormal = 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;解析后为&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    dL 点乘 TerrainNormal + (L0 - TerrainPos) 点乘 TerrainNormal = 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;于是再得到d为:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    d = ((TerrainPos - L0) 点乘 TerrainNormal) / (l 点乘 TerrainNormal)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;再代入进 p = d * l + L0 这个公式得到p，即如下Shader中的顶点函数所写&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pass&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;CGPROGRAM&lt;/span&gt;
+
+    &lt;span class=&quot;cp&quot;&gt;#pragma vertex vert&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;#pragma fragment frag&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;quot;UnityCG.cginc&amp;quot;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;appdata&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vertex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;POSITION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vertex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SV_POSITION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;            
+
+    &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TerrainPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TerrainNormal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;vert&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;appdata&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;float4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wPos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unity_ObjectToWorld&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vertex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 光的方向&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;float3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_WorldSpaceLightPos0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xyz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// d 值的计算&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TerrainPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xyz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xyz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TerrainNormal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xyz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TerrainNormal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xyz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 代入 p = d * l + L0 公式&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;wPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xyz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xyz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 空间顶点转换&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vertex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unity_MatrixVP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;fixed4&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;frag&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v2f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SV_Target&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fixed4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ENDCG&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上述Shader中，利用了_WorldSpaceLightPos0来确定光的反向，也可以用一个光的坐标与顶点的差值来得到一个光的方向。计算过程的公式转换可以以这张手绘的图作为参考。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/pingmianyinying.png&quot; alt=&quot;平面阴影&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;图中清晰的标明了所有已知向量，和可计算向量，以及最终需要结算的点，上述所说的这些公式的转换都是基于这个图来做的。&lt;/p&gt;
+
+&lt;h6&gt;利用深度信息计算图片投影&lt;/h6&gt;
+
+&lt;p&gt;图片投影其实就是贴花的动态版，其做法也有很多种，我们在这里简单讲讲其中一种方法为:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;    绘制一个box，其纹理的展示方式则以深度信息为依据，纹理贴近其绘制的模型上。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这种方式可以随着这个box的移动贴到不同物体上。&lt;/p&gt;
+
+&lt;p&gt;大致的方向是，以一个BOX为渲染对象，渲染时在片元着色器中重新判定渲染纹理与渲染坐标。怎么判定呢？&lt;/p&gt;
+
+&lt;p&gt;先从顶点着色器上获得顶点坐标的屏幕坐标，在片元着色器中传入的屏幕坐标时成了片元在屏幕上的坐标，用屏幕坐标获取对应的深度值，再让深度值作为z坐标来形成一个三维坐标，这时三维坐标只是屏幕空间上的坐标，我们让其屏幕空间转换到相机空间，再从相机空间转换到世界空间，再转换到投影空间，这样坐标就到了投影空间，再除以透视值，就得到坐标在0-1范围的坐标值，用这个值去提取纹理上的颜色，最后用这个颜色绘制片元。&lt;/p&gt;
+
+&lt;p&gt;这个方法比较费的点为片元着色器中重新计算渲染坐标，这个坐标会以深度信息为z轴信息需要经过几个空间的转换，导致计算量比较大，不能放在顶点着色器中的原因是因为只有在片元着色器中才能得到片元深度信息。&lt;/p&gt;
+
+&lt;h6&gt;贴花(喷图)&lt;/h6&gt;
+
+&lt;p&gt;贴花的制作，可以以摄像机为节点向外计算一个长方体，所有与长方体有交集的模型上的面上的顶点都被存储起来，另外如果有顶点里外都有的面，则计算与长方体的面相交的新节点并加入进来，最后把所有得到的顶点和三角面制作成一个新的模型，这个模型的顶点转换到立方体空间再除以透视值，则成为了uv点，以此来呈现一个贴花(喷图)的效果。&lt;/p&gt;
+
+&lt;p&gt;参考资料：&lt;/p&gt;
+
+&lt;p&gt;《Unity3D ShaderLab 开发实战详解》&lt;/p&gt;
+
+&lt;p&gt;《维基百科 Line–plane intersection》 https://en.wikipedia.org/wiki/Line%E2%80%93plane_intersection&lt;/p&gt;
+
+&lt;p&gt;Planar Shadow http://qiankanglai.me/2016/12/23/planar-shadow/&lt;/p&gt;
+</description>
+               <pubDate>Tue, 10 Dec 2019 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com//2019/12/10/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A610.html</link>
+               <guid isPermaLink="true">http://www.luzexi.com//2019/12/10/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A610.html</guid>
+            </item>
+        
+            <item>
                <title>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(四) - 多重采样以及着色器编译原理</title>
                <description>&lt;h3&gt;GPU上的多重采样(Multisampling)与反走样(Antialiasing)&lt;/h3&gt;
 
@@ -14,7 +179,7 @@
 
 &lt;p&gt;===&lt;/p&gt;
 
-&lt;p&gt;OpenGL支持几种不同的反走样技术，比如线段反走样，多边形反走样，纹理图像压缩的质量以及导数精度设置。实时上这几个反走样技术都是以开关的形式在OpenGL中存在，算法大致是将原本单一的线条或像素块周围填充更多的像素块，具体的填充算法细节比我们想象的要复杂的多，而且不同OpenGL是现在的算法中也有细微的差异，我们在这里不进行深入讨论。&lt;/p&gt;
+&lt;p&gt;OpenGL支持几种不同的反走样技术，比如线段反走样，多边形反走样，纹理图像压缩的质量以及导数精度设置。事实上这几个反走样技术都是以开关的形式在OpenGL中存在，算法大致是将原本单一的线条或像素块周围填充更多的像素块，具体的填充算法细节比我们想象的要复杂的多，而且不同OpenGL是现在的算法中也有细微的差异，我们在这里不进行深入讨论。&lt;/p&gt;
 
 &lt;p&gt;多重采样的工作方式是对每个像素的几何图元进行多次采样。在多次采样后，每个像素点不仅仅只是单个颜色(以及除了颜色外的深度值、模板值等信息)，还记录了许多样本值。&lt;/p&gt;
 
@@ -1330,99 +1495,6 @@
                <pubDate>Sat, 28 Sep 2019 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com//2019/09/28/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A65.html</link>
                <guid isPermaLink="true">http://www.luzexi.com//2019/09/28/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8E%E5%9B%BE%E5%BD%A2%E5%AD%A65.html</guid>
-            </item>
-        
-            <item>
-               <title>杭州景点体验概览</title>
-               <description>&lt;p&gt;1.西湖--西湖音乐喷泉--三潭印月--断桥残雪--苏堤--白堤--西湖游船--曲院风荷--六和塔--花港观鱼--梅家坞--云栖竹径--龙井路与满觉陇路--孤山公园--虎跑公园--杨公堤&lt;/p&gt;
-
-&lt;p&gt;===&lt;/p&gt;
-
-&lt;p&gt;2.灵隐寺（飞来峰）景区----北高峰索道&lt;/p&gt;
-
-&lt;p&gt;3.宋城景区--宋城千古情演出&lt;/p&gt;
-
-&lt;p&gt;4.杭州动物园&lt;/p&gt;
-
-&lt;p&gt;5.吴山广场，河坊街&lt;/p&gt;
-
-&lt;p&gt;6.雷峰塔&lt;/p&gt;
-
-&lt;p&gt;7.杭州长乔极地海洋公园 -- 好，贵，大&lt;/p&gt;
-
-&lt;p&gt;8.杭州野生动物世界 -- 良好，停车难，略贵，不大&lt;/p&gt;
-
-&lt;p&gt;9.西溪国家湿地公园 -- 差，管理无章法，太大以至于找不到重点&lt;/p&gt;
-
-&lt;p&gt;10.九溪&lt;/p&gt;
-
-&lt;p&gt;11.南宋御街&lt;/p&gt;
-
-&lt;p&gt;12.杭州乐园&lt;/p&gt;
-
-&lt;p&gt;13.太子湾公园&lt;/p&gt;
-
-&lt;p&gt;14.千岛湖中心湖区--千岛湖景区--千岛湖森林氧吧--千岛湖东南湖区景区--千岛湖游船&lt;/p&gt;
-
-&lt;p&gt;16.大明山景区&lt;/p&gt;
-
-&lt;p&gt;17.杭州烂苹果乐园 -- 游乐园&lt;/p&gt;
-
-&lt;p&gt;18.杭州海底世界&lt;/p&gt;
-
-&lt;p&gt;19.浙西大峡谷&lt;/p&gt;
-
-&lt;p&gt;20.钱塘江观赏堤坝&lt;/p&gt;
-
-&lt;p&gt;21.浙江省科技馆--西湖文化广场&lt;/p&gt;
-
-&lt;p&gt;22.杭州浪浪浪水公园&lt;/p&gt;
-
-&lt;p&gt;23.杭州Hello Kitty乐园&lt;/p&gt;
-
-&lt;p&gt;24.桐庐县雅鲁激流探险漂流----临安市龙井峡漂流----淳安县九龙溪漂流----桐庐县虎啸峡激流探险漂流----余杭区双溪漂流景区&lt;/p&gt;
-
-&lt;p&gt;25.桐庐县瑶琳仙境，垂云通天河景区&lt;/p&gt;
-
-&lt;p&gt;26.杭州DO都城，亚洲最大的少年儿童体验类教育场馆&lt;/p&gt;
-
-&lt;p&gt;27.桐庐县大奇山国家森林公园&lt;/p&gt;
-
-&lt;p&gt;28.临安太湖源&lt;/p&gt;
-
-&lt;p&gt;29.良渚，彻天彻地童玩中心，让孩子训练协调能力，培养冒险精神&lt;/p&gt;
-
-&lt;p&gt;30.江干区江和美海洋公园&lt;/p&gt;
-
-&lt;p&gt;31.临安大明山景区&lt;/p&gt;
-
-&lt;p&gt;32.慈溪杭州湾国家湿地公园&lt;/p&gt;
-
-&lt;p&gt;33.胡雪岩故居&lt;/p&gt;
-
-&lt;p&gt;34.京杭大运河，余杭塘栖&lt;/p&gt;
-
-&lt;p&gt;35.杭州国际博览中心，萧山区&lt;/p&gt;
-
-&lt;p&gt;36.多乐岛蹦床公园杭州馆，江干区&lt;/p&gt;
-
-&lt;p&gt;37.桐庐县大奇山疯狂森林主题乐园，冒险探险&lt;/p&gt;
-
-&lt;p&gt;38.城西银泰，娱乐场--滑冰--玩具店 -- 逛买逛买&lt;/p&gt;
-
-&lt;p&gt;39.浙江大学紫金港校区 -- 好风景好环境&lt;/p&gt;
-
-&lt;p&gt;40.塘西古镇  -- 逛吃逛吃，小&lt;/p&gt;
-
-&lt;p&gt;41.杭州北高峰 -- 交通不方便&lt;/p&gt;
-
-&lt;p&gt;42.良储遗址 -- 大，美，便宜，自带食物，能游览大半天&lt;/p&gt;
-
-&lt;p&gt;43.井山湖农耕文化公园(塘子堰，中小学生实践基地) -- 免费，向日葵基地，大片草地，搭帐篷，风景美，自带食物&lt;/p&gt;
-</description>
-               <pubDate>Sat, 21 Sep 2019 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com//2019/09/21/%E6%9D%AD%E5%B7%9E%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html</link>
-               <guid isPermaLink="true">http://www.luzexi.com//2019/09/21/%E6%9D%AD%E5%B7%9E%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html</guid>
             </item>
         
     </channel>
