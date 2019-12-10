@@ -7,7 +7,7 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
-               <title>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(五) - Projector投影原理以及PBR原理</title>
+               <title>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(五) - Projector投影原理</title>
                <description>&lt;h3&gt;Projector 投影的原理与应用&lt;/h3&gt;
 
 &lt;p&gt;Unity3D中的 Projector 投影像是一个很神秘的组件，但其实它依然运用的是以着色器为基准的渲染流程，和普通的3D模型渲染从本质上来看并没有实质上的区别，唯一的区别是它从它自己的视体(视锥体或平视体)中检测到的模型，并根据默认或者自定义的材质球与Shader着色器，将这些物体又重新绘制了一遍。&lt;/p&gt;
