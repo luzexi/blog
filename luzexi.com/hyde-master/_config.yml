@@ -28,7 +28,7 @@ plugins:
 
 
 # plugins
-comments: 		  false
+comments: 		  true
 analytics : 	  true
 share: true
 advertisement_image: true
