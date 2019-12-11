@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2019-12-11T16:08:03+08:00</updated>
+ <updated>2019-12-11T19:35:21+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -239,6 +239,8 @@
 &lt;p&gt;成功完成了着色器程序的链接后，引擎就可以通过调用 glUseProgram 来运行着色器程序。&lt;/p&gt;
 
 &lt;p&gt;我们平常在Unity3D中用到的Shader中的Pass，每个Pass中都有着色器需要编译，因此每次在绘制不同的Pass时都会对Pass中的顶点着色器和片元着色器进行编译。也就是说，Unity引擎会为每个Pass标签生成一个着色器程序，生成这些着色器程序后，执行顺序仍然按照Pass的先后次序来。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader_compile.jpg&quot; alt=&quot;着色器编译流程&quot;&gt;&lt;/p&gt;
 
 &lt;h6&gt;除了着色器的编译流程外，Unity3D中的Shader Varant(变体)在实际开发中也是比较严重的问题&lt;/h6&gt;
 

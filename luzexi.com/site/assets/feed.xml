@@ -231,6 +231,8 @@
 
 &lt;p&gt;我们平常在Unity3D中用到的Shader中的Pass，每个Pass中都有着色器需要编译，因此每次在绘制不同的Pass时都会对Pass中的顶点着色器和片元着色器进行编译。也就是说，Unity引擎会为每个Pass标签生成一个着色器程序，生成这些着色器程序后，执行顺序仍然按照Pass的先后次序来。&lt;/p&gt;
 
+&lt;p&gt;&lt;img src=&quot;/assets/book/7/shader_compile.jpg&quot; alt=&quot;着色器编译流程&quot;&gt;&lt;/p&gt;
+
 &lt;h6&gt;除了着色器的编译流程外，Unity3D中的Shader Varant(变体)在实际开发中也是比较严重的问题&lt;/h6&gt;
 
 &lt;p&gt;那么什么是“变体”呢。其实它是由Unity3D自身的宏编译指令引起的，它为不同情况而编译生成不同的着色器程序。从引擎端的说法来看，Unity3D把不同的编译版本拆分成了不同的着色器源代码，在运行时再通过图形接口将这些着色器源代码编译成不同的着色器程序。&lt;/p&gt;
