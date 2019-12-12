@@ -12,7 +12,7 @@ title: 我的简介
 
 坐标 ：上海
 
-<!-- ### Game Project：
+### Game Project：
 
 		《代号:南海》 3D 战略+模拟经营 2018 - 至今
 
@@ -32,7 +32,7 @@ title: 我的简介
 
 		《星月精灵》3D MMO RPG游戏  2010
 
-		《汽车使命》3D 赛车竞技游戏  2009 -->
+		《汽车使命》3D 赛车竞技游戏  2009
 
 
 ### Keep moving, Never stop.
