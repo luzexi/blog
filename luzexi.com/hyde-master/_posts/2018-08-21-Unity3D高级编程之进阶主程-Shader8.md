@@ -247,6 +247,6 @@ tessellate Function 的格式如下：
 
 		VariableName 为Phong变量强度。
 
-参考资料：
+参考文献：
 
 		Unity3D：Writing Surface Shaders
