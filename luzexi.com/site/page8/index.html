@@ -223,6 +223,27 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB3.html">
+        《Unity3D高级编程之进阶主程》第五章，3D模型与动画(三) - 状态机
+      </a>
+    </h1>
+
+    <span class="post-date">06 Aug 2018</span>
+
+    <h2>如何用状态机模拟人物行为动作。</h2>
+
+<p>什么是状态机？</p>
+
+<p>状态机有两种，一种是有限状态机，一种是无限状态机。有限状态机运用的地方比较多，而无限状态机我还没看见过有在游戏项目中运用的。我们这里讲的状态机都是有限状态机。</p>
+
+<p>有限状态机简单描述下，实例本身有很多种状态，实例从一种状态切换到另一种状态的动作就是状态机转换，而转换是有条件的，这个条件就是状态机之间的连线。</p>
+
+<p>打个比方，人有三个状态健康，感冒，康复中。触发的条件有淋雨（t1），吃药（t2），打针（t3），休息（t4）。状态机的连接图可以是这样，健康-（t4休息）-&gt;健康；健康-（t1淋雨）-&gt;感冒；感冒-（t3打针）-&gt;健康；感冒-（t2吃药）-&gt;康复中；康复中-（t4休息）-&gt;健康，等等。状态在不同的条件下跳转到自己或不同状态中去。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2018/08/03/%E8%A2%AB%E5%B0%81%E7%BA%AA%E5%BF%B5%E5%B8%96.html">
         被封纪念帖
       </a>
@@ -452,25 +473,6 @@
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
 </code></pre></div>
 <p>此篇我们来讲解下，UGUI渲染部分的核心源码。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/26/jekyll-related-page.html">
-        重写Jekyll的Relate功能
-      </a>
-    </h1>
-
-    <span class="post-date">26 Jul 2018</span>
-
-    <p>Jekyll 的 ‘Relate-相关文章’的功能，写的真的不好用。完全表达不了相关文章的含义。</p>
-
-<p>于是打算修一下 Relate 部分的功能。</p>
-
-<p>网上查了很久，很多人在抱怨，但没人把写好的 Relate 放到网上。</p>
-
-<p>唯一一个Jekyll 的 Relate 插件都是渣的要命的那种，根本没法用。</p>
 
   </div>
   
