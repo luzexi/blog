@@ -203,6 +203,10 @@
         
       
         
+          
+        
+      
+        
       
         
       
@@ -220,6 +224,85 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/08/13/%E7%99%BD%E9%A2%86%E6%8A%95%E8%B5%84%E6%8E%A2%E8%AE%A84.html">
+        白领投资探讨(四) 流动性探讨
+      </a>
+    </h1>
+
+    <span class="post-date">13 Aug 2018</span>
+
+    <h1>白领投资探讨(四)</h1>
+
+<p>流动性探讨</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%823.html">
+        《Unity3D高级编程之进阶主程》第六章，网络层(三) - 实现UDP
+      </a>
+    </h1>
+
+    <span class="post-date">07 Aug 2018</span>
+
+    <h3>实现UDP</h3>
+
+<p>在前面介绍了如何实现TCP socket，下面要介绍下UDP的实现方式。</p>
+
+<p>其实两者都是长链接的方式，很多地方都有相识之处，比如两者都需要连接和断开事件支撑，都需要做发送和接收队列缓存，都需要定义数据包协议格式，都需要加密和校验。</p>
+
+<p>我们来说说TCP有而UDP没有的部分，以及需要我们在UDP上实现的功能。UDP和TCP相比，UDP基本就是TCP的阉割版本，很多TCP有的功能UDP都没有。相同的地方有，都是异步发送和接收，都需要多线程操作，发送和接收都需要缓冲队列，并且发送数据时都需要合并数据包。TCP有而UDP没有的地方有，UDP不会自己校验重发，丢包概率大，数据包接收顺序不确定，而且UDP本身没有连接断开检测机制，也没有连接确认机制。</p>
+
+<p>所以直接使用UDP来做网络连接，会遇到巨大的问题，可以说直接使用而不加修饰，不确定性太大基本用不了UDP。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/08/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%822.html">
+        《Unity3D高级编程之进阶主程》第六章，网络层(二) - 实现TCP
+      </a>
+    </h1>
+
+    <span class="post-date">07 Aug 2018</span>
+
+    <h3>实现TCP长连接。</h3>
+
+<p>我们先从整体出发，列一下Unity3D实现TCP连接需要的实现哪些方面：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1， 建立连接
+
+    2， 断线检测
+
+    3， 网络协议
+
+    4， 发送和接收队列缓冲
+
+    5， 发送数据合并
+
+    6， 线程死锁策略
+</code></pre></div>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2018/08/06/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%821.html">
+        《Unity3D高级编程之进阶主程》第六章，网络层(一) - TCP还是UDP
+      </a>
+    </h1>
+
+    <span class="post-date">06 Aug 2018</span>
+
+    <h3>有哪些网络协议可以用</h3>
+
+<p>TCP（Transmission Control Protocol，传输控制协议）是面向连接的协议，也就是说，在收发数据前，必须和对方建立可靠的连接。</p>
+
+<p>一个TCP连接必须要经过三次“对话”才能建立起来，其中的过程有点复杂，只简单的描述下这三次对话的简单过程：主机A向主机B发出连接请求数据包：“我想给你发数据，可以吗？”，这是第一次对话；主机B向主机A发送同意连接并要求同步的数据包（同步就是两台主机一个在发送，一个在接收，协调工作）：“可以，你什么时候发？”，这是第二次对话；主机A再发出一个数据包确认主机B的要求同步：“我现在就发，你接着吧！”，这是第三次对话。三次“对话”的目的是使数据包的发送和接收同步，经过三次“对话”之后，主机A才向主机B正式发送数据。</p>
+
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -355,124 +438,6 @@
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI图集Alpha分离，UI字体拆分，Scroll View 滚屏优化，以及UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。
 </code></pre></div>
 <p>这篇我们来继续聊聊，UI展示与关闭的优化，对象池的运用，UI贴图设置的优化，内存泄露排查与预防。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI10.html">
-        《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(四)
-      </a>
-    </h1>
-
-    <span class="post-date">30 Jul 2018</span>
-
-    <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">UI(六)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如何在游戏项目中架构UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">UI(七)-优化(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html">UI(七)-优化(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI图集Alpha分离，UI字体拆分，Scroll View 滚屏优化，以及UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/30/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI9.html">UI(七)-优化(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI展示与关闭的优化，对象池的运用，UI贴图设置的优化，内存泄露排查与预防。
-</code></pre></div>
-<p>这篇我们继续聊UI优化，这篇讲，区别针对高低端机型的优化，UI图集拼接的优化，GC的优化。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI8.html">
-        《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(二)
-      </a>
-    </h1>
-
-    <span class="post-date">27 Jul 2018</span>
-
-    <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">UI(六)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如何在游戏项目中架构UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">UI(七)-优化(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载
-</code></pre></div>
-<p>这篇我们来继续聊聊优化，UI图集Alpha分离，UI字体拆分，Scroll View 滚屏优化，以及UGUI图在改变颜色或Alpha后，导致对Mesh重构的优化。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI7.html">
-        《Unity3D高级编程之进阶主程》第四章，UI(七) - UI优化(一)
-      </a>
-    </h1>
-
-    <span class="post-date">27 Jul 2018</span>
-
-    <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">UI(四)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI渲染核心源码剖析
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI6.html">UI(六)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如何在游戏项目中架构UI框架。
-</code></pre></div>
-<p>这篇我们来聊聊，优化UI的几种方法，UI动静分离，拆分过大的UI，UI预加载。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2018/07/27/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI4.html">
-        《Unity3D高级编程之进阶主程》第四章，UI(四) - UGUI核心源码剖析
-      </a>
-    </h1>
-
-    <span class="post-date">27 Jul 2018</span>
-
-    <p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI1.html">UI(一)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    对NGUI和UGUI进行了比较，讲述了如何选择UI系统作为项目的UI框架。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/25/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI2.html">UI(二)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI的原理，以及组件使用详解。
-</code></pre></div>
-<p>前文回顾 <a href="http://luzexi.com/2018/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-UI3.html">UI(三)</a></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UGUI源码中输入事件模块源码剖析。
-</code></pre></div>
-<p>此篇我们来讲解下，UGUI渲染部分的核心源码。</p>
 
   </div>
   
