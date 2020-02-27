@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2020-02-23T21:44:06+08:00</updated>
+ <updated>2020-02-27T20:13:46+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -60,6 +60,21 @@
 
 &lt;h6&gt;3.下载防骚扰大师，或者手机管家等app，录入允许拨通的电话，比如快递等。这个只能防住被录入的骚扰电话，没有被录入的无法拦截&lt;/h6&gt;
 
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
+
 &lt;h6&gt;4.开通移动的高频骚扰电话防护措施。拨打10086人工服务器要求开通。这个是针对高频次电话的号码进行屏蔽的，感觉不是很有用。&lt;/h6&gt;
 
 &lt;h6&gt;5.开启移动电话服务公众号，“机伶”，防御各种骚扰。她里面有个服务是开启国外电话防骚扰，但也不能完全屏蔽呼死你的商家，他们会利用一些漏洞，用模拟普通手机的电话来骚扰你。所以呼死你服务是防不胜防，开启陌生人屏蔽是必要的手段。‘机伶’可能只有移动服务商才提供，联通或电信的暂时不清楚需要问下客服。&lt;/h6&gt;
@@ -67,6 +82,21 @@
 &lt;h6&gt;6.开通移动的电话验证业务，需要拨号验证才能打通电话。(有效期3天)可在移动app中开通，也可以在‘机伶’这个微信小程序中开通，只有3天有效期，我们可以设个闹钟，每三天去打开一下就可以。开启电话验证的服务功能后，计算机自动拨打的电话是进不来了，但人工手动骚扰还是可以通过的，所以只是提高了骚扰的时间成本和精力成本。提高了骚扰的时间成本和精力成本就足够了，因为对方为了购买这个防骚扰服务还需要付出金钱成本，所以三重成本会增加他撒气的困难。&lt;/h6&gt;
 
 &lt;h6&gt;7.最后还是要与对方拼意志力，会使用这种下三烂手段的人意志力通常都不强，所以即使没能完全能防住对方骚扰，也可以耐心等待对方意志力耗尽，不停的骚扰我们的同时，他的意志力也同时以比较快的速度在消耗，对他的日常生活会有很不利的影响，设想谁会在负面情绪的生活中活得开心呢，越不开心意志力越薄弱。&lt;/h6&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+    { //移动端
+        /*mobile-20:5*/
+        var cpro_id = &quot;u3493987&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text\/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/cm.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+    else
+    {
+         /*700*200信息流*/
+        var cpro_id = &quot;u3469788&quot;;
+        document.write(&quot;\&lt;script type=\&quot;text/javascript\&quot; src=\&quot;//cpro.baidustatic.com/cpro/ui/c.js\&quot;\&gt;\&lt;\/script\&gt;&quot;);
+    }
+&lt;/script&gt;
 
 &lt;h6&gt;最后总结下，因为网络电话可以模拟任何电话号码，所以要防住‘呼死你’电话骚扰，首先要开启陌生人电话屏蔽，取消境外电话提醒业务，然后开启移动服务器提供商的防骚扰服务让其需要手动拨号才能骚扰，再下载一个防骚扰软件，比如防骚扰大师或腾讯手机管家，最后用类似‘机伶’这样的服务，屏蔽国外电话。这些方式和手段的目标都是提高骚扰者的成本，时间成本，精力成本和金钱成本。&lt;/h6&gt;
 </content>
@@ -2057,9 +2087,11 @@ that were not given to us, for the purpose of accomplishing those particular dre
    <link href="http://www.luzexi.com/2019/09/21/%E6%9D%AD%E5%B7%9E%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html"/>
    <updated>2019-09-21T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2019/09/21/杭州景点体验概览</id>
-   <content type="html">&lt;p&gt;1.西湖--西湖音乐喷泉--三潭印月--断桥残雪--苏堤--白堤--西湖游船--曲院风荷--六和塔--花港观鱼--梅家坞--云栖竹径--龙井路与满觉陇路--孤山公园--虎跑公园--杨公堤&lt;/p&gt;
+   <content type="html">&lt;p&gt;杭州景点体验概览&lt;/p&gt;
 
 &lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;1.西湖--西湖音乐喷泉--三潭印月--断桥残雪--苏堤--白堤--西湖游船--曲院风荷--六和塔--花港观鱼--梅家坞--云栖竹径--龙井路与满觉陇路--孤山公园--虎跑公园--杨公堤&lt;/p&gt;
 
 &lt;p&gt;2.灵隐寺（飞来峰）景区----北高峰索道&lt;/p&gt;
 
@@ -2142,6 +2174,125 @@ that were not given to us, for the purpose of accomplishing those particular dre
 &lt;p&gt;42.良储遗址 -- 大，美，便宜，自带食物，能游览大半天&lt;/p&gt;
 
 &lt;p&gt;43.井山湖农耕文化公园(塘子堰，中小学生实践基地) -- 免费，向日葵基地，大片草地，搭帐篷，风景美，自带食物&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>上海景点体验概览</title>
+   <link href="http://www.luzexi.com/2019/09/21/%E4%B8%8A%E6%B5%B7%E6%99%AF%E7%82%B9%E4%BD%93%E9%AA%8C%E6%A6%82%E8%A7%88.html"/>
+   <updated>2019-09-21T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2019/09/21/上海景点体验概览</id>
+   <content type="html">&lt;p&gt;上海景点体验概览&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;1.理工大学  大草坪，小溪流，小森林，运动场，食堂，能玩半天。 !!&lt;/p&gt;
+
+&lt;p&gt;2.理工大学边上商场游乐场  儿童游乐设施，能玩半天 !!&lt;/p&gt;
+
+&lt;p&gt;3.上海植物园  各类植物，大众活动区，能野餐，有风景，有花有草，有大草坪，玩半天-1天。 !!&lt;/p&gt;
+
+&lt;p&gt;4.上海动物园  自带食物和水。各类动物，游乐设施，大草坪，能玩一天。 !!&lt;/p&gt;
+
+&lt;p&gt;5.上海野生动物园  自带食物和水。各类动物，野生动物，动物喂食(喂鸽子，喂鱼比较人性化，其他没试过)，游乐设施，能玩一整天。 !!&lt;/p&gt;
+
+&lt;p&gt;6.上海长风海洋公园  自带食物和水。各类海洋动物，能玩半天。 !!&lt;/p&gt;
+
+&lt;p&gt;7.宜山路博库书城周边包括光启城  各类书籍，玩具，旁边有商场，有好东西吃，有逛有吃。对面有85度c，停车到对面写字楼便宜。里面有小孩子的补习班，兴趣班。 !!&lt;/p&gt;
+
+&lt;p&gt;8.南京路步行街  商场，人群多，路开阔，有玩有吃，就是贵。 !!&lt;/p&gt;
+
+&lt;p&gt;9.东方明珠塔  175元/人(携程），自带食物和水。263米主观光层 + 259米透明悬空走廊 + 78米“更上·海”环动多媒体秀 + 0米上海城市历史发展陈列馆 + 0米魔法光影欢乐园。能玩半天-1天。可订旋转餐厅自助餐，需要提前1个工作日订。电梯排队人多，很多时间会浪费在排队进电梯上。 !!&lt;/p&gt;
+
+&lt;p&gt;10.上海海洋水族馆 &lt;/p&gt;
+
+&lt;p&gt;11.上海科技馆  不错的科学知识普及地点 !!&lt;/p&gt;
+
+&lt;p&gt;12.上海博物馆  免费，但人多要排队，11点半左右去人最少，因为出来的人多了。空调很冷，因为要给文物降温。自带食物和水。&lt;/p&gt;
+
+&lt;p&gt;13.上海自然博物馆&lt;/p&gt;
+
+&lt;p&gt;14.中国航海博物馆&lt;/p&gt;
+
+&lt;p&gt;15.上海汽车博物馆&lt;/p&gt;
+
+&lt;p&gt;16.上海电影博物馆&lt;/p&gt;
+
+&lt;p&gt;17.银行博物馆&lt;/p&gt;
+
+&lt;p&gt;18.宋庆龄故居纪念馆&lt;/p&gt;
+
+&lt;p&gt;19.上海邮政博物馆&lt;/p&gt;
+
+&lt;p&gt;20.上海外滩美术馆&lt;/p&gt;
+
+&lt;p&gt;21.上海当代艺术馆&lt;/p&gt;
+
+&lt;p&gt;22.上海当代艺术博物馆&lt;/p&gt;
+
+&lt;p&gt;23.上海琉璃艺术博物馆&lt;/p&gt;
+
+&lt;p&gt;24.BUS TOUR 上海观光游 自带食物和水。50/人(携程)。携程上购买半价，需提前1个工作日购买，1.3米以下儿童免费，能够观光一整天。&lt;/p&gt;
+
+&lt;p&gt;25.上海儿童博物馆&lt;/p&gt;
+
+&lt;p&gt;26.上海工艺美术博物馆&lt;/p&gt;
+
+&lt;p&gt;27.龙美术馆西岸馆&lt;/p&gt;
+
+&lt;p&gt;28.钟书阁&lt;/p&gt;
+
+&lt;p&gt;29.上海环球金融中心观光天阁&lt;/p&gt;
+
+&lt;p&gt;30.上海天文博物馆&lt;/p&gt;
+
+&lt;p&gt;31.上海图书馆&lt;/p&gt;
+
+&lt;p&gt;32.chi K11美术馆&lt;/p&gt;
+
+&lt;p&gt;33.上海老相机制造博物馆&lt;/p&gt;
+
+&lt;p&gt;34.外滩历史纪念馆&lt;/p&gt;
+
+&lt;p&gt;35.上海电信博物馆&lt;/p&gt;
+
+&lt;p&gt;36.打字机博物馆&lt;/p&gt;
+
+&lt;p&gt;37.上海观复博物馆&lt;/p&gt;
+
+&lt;p&gt;38.上海少年儿童图书馆&lt;/p&gt;
+
+&lt;p&gt;39.复旦大学博物馆&lt;/p&gt;
+
+&lt;p&gt;40.多伦现代美术馆&lt;/p&gt;
+
+&lt;p&gt;41.星空错觉艺术馆&lt;/p&gt;
+
+&lt;p&gt;42.闵行区博物馆&lt;/p&gt;
+
+&lt;p&gt;43.浦东图书馆少儿馆&lt;/p&gt;
+
+&lt;p&gt;44.上海浦东展览馆&lt;/p&gt;
+
+&lt;p&gt;45.上海历史收藏馆&lt;/p&gt;
+
+&lt;p&gt;46.科学节能展示馆&lt;/p&gt;
+
+&lt;p&gt;47.天空画画水族馆&lt;/p&gt;
+
+&lt;p&gt;48.民生现代美术馆&lt;/p&gt;
+
+&lt;p&gt;49.上海木文化博物馆&lt;/p&gt;
+
+&lt;p&gt;50.上海杜莎夫人蜡像馆&lt;/p&gt;
+
+&lt;p&gt;51.朱家角古镇景区&lt;/p&gt;
+
+&lt;p&gt;52.宜山路中山西路，宜家家居。可购物，可逛街，可吃饭。 //早上10点才开门，早餐可以在里面吃。里面路很长，有上下两层，能逛半天。中午吃饭人多，价格适中。 !!&lt;/p&gt;
+
+&lt;p&gt;53.安徒生童话乐园  //孩子的乐园，自带食物，门票贵的，一大一小200元。 !!&lt;/p&gt;
+
+&lt;p&gt;54.锦江乐园  //孩子的乐园100元多玩几次，小吃多，吃的贵。可以自带食物。 !!&lt;/p&gt;
 </content>
  </entry>
  
