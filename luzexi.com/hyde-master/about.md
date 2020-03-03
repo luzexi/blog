@@ -48,10 +48,10 @@ title: 我的简介
 
 开源地址: [https://github.com/luzexi](https://github.com/luzexi)
 
-EMAIL：jesse_luzexi@163.com
+<!-- EMAIL：jesse_luzexi@163.com -->
 
 QQ:16008977 (请标注为什么要加)
 
-主程群: 334097846 (请如实申报自己的公司和职位，会核实一下真实性再通过，只有主程及以上级别才会被审核通过)
+<!-- 主程群: 334097846 (请如实申报自己的公司和职位，会核实一下真实性再通过，只有主程及以上级别才会被审核通过) -->
 
 {% include paypal_donation.html %}
