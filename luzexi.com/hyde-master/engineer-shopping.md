@@ -21,9 +21,7 @@ Cambly中的教师都是纯正的英语母语口音的本地人，而且几乎�
 
 从这里可以获取免费对话时间，方式如下：
 
-###### 1。 点击连接并立即注册， [老外一对一英语交流，免费获取15分钟对话时间](https://www.cambly.com/en?&lang=zh_CN&referralCode=jesseenglish#referral)
-
-###### 2。 [Cambly老外一对一英语交流](http://cambly.com/invite/JESSEENGLISH) 点击链接注册账号后，在推荐码中输入 JesseEnglish 后，点击确定(可能是’应用‘)按钮。
+###### 点击连接并立即注册， [老外一对一英语交流，免费获取15分钟对话时间](https://www.cambly.com/en?&lang=zh_CN&referralCode=jesseenglish#referral)
 
 ![cambly-setting](/assets/engineer-shopping/cambly/cambly4.png)
 
