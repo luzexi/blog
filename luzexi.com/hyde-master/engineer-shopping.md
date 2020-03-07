@@ -23,7 +23,7 @@ Cambly中的教师都是纯正的英语母语口音的本地人，而且几乎�
 
 ###### 点击连接并立即注册， [老外一对一英语交流，免费获取15分钟对话时间](https://www.cambly.com/en?&lang=zh_CN&referralCode=jesseenglish#referral)
 
-![cambly-setting](/assets/engineer-shopping/cambly/cambly4.png)
+<!-- ![cambly-setting](/assets/engineer-shopping/cambly/cambly4.png) -->
 
 注册完成设置后就能获得免费的15分钟的在线与老外交流的时间了，回到Cambly的主页，就能选择自己喜欢的老外进行在线交流或上课啦。
 
