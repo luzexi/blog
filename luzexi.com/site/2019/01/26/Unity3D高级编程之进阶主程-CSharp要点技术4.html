@@ -275,12 +275,12 @@ MulticastDelegate 中有一个已经连接好delegate的列表，被称为调用
 <p>针对这个解释继而又发出了疑问，什么是值类型，什么是引用类型。值类型的变量会直接存储数据，如byte，short，int，long，float，double，decimal，char，bool 和 struct 统称为值类型，而引用类型的变量持有的是数据的引用，其真实数据存储在数据堆中，如所有的class实例的变量，string 和 class统称为引用类型。当声明一个类时，只在堆栈(堆或栈)中分配一小片内存用于容纳一个地址，而此时并没有为其分配堆上的内存空间，因此它是空的为null，直到使用 new 创建一个类的实例时，分配了一个堆上的空间，并把堆上空间的地址保存给这个引用变量，这时这个引用变量才有真正指向内存空间。</p>
 
 <p>我们可以解释的再通俗点，举个例子来说明：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="kt">int</span> <span class="n">a</span> <span class="p">=</span> <span class="m">5</span><span class="p">;</span>
 
-<span class="n">object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+<span class="kt">object</span> <span class="n">obj</span> <span class="p">=</span> <span class="n">a</span><span class="p">;</span>
 </code></pre></div>
 <p>就是装箱，因为a 是值类型是直接有数据的变量，obj为引用类型是指针与内存是拆分开来的，把 a 赋值给 b 实际上就是 b 为自己创建了一个指针并指向了a的数据空间，然后继续上面代码:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">a</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">obj</span><span class="o">;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">a</span> <span class="p">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">obj</span><span class="p">;</span>
 </code></pre></div>
 <p>就是拆箱，相当于把 obj 指向的内存空间复制一份交给了a，因为 a 是值类型，它不允许指向某个内存空间只能靠复制数据来传递数据。</p>
 

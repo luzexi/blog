@@ -324,20 +324,20 @@
 <p>我们再加一个规则，让字段名字与程序对应的规则。用程序生成一群变量定义与每个数据表字段名对应，将每个要导出的sheet里的头行的列名作为变量名字写入程序变量定义中，以方便程序在读取数据表时，列名与数据表对齐，无形中校验做好了。</p>
 
 <p>举个例子，在role.xls文件中，role这个sheet(工作簿)中的第一列字段为ID，第二列字段为Name，第三列字段为Age，那么程序变量自动生成后就成了以下这种格式：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="n">Class</span> <span class="n">ExcelDefine</span>
-<span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">const</span> <span class="kt">int</span> <span class="n">role_role_ID</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="kd">const</span> <span class="kt">int</span> <span class="n">role_role_Name</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="kd">const</span> <span class="kt">int</span> <span class="n">role_role_Age</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="n">Class</span> <span class="n">ExcelDefine</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">role_role_ID</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">role_role_Name</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">role_role_Age</span> <span class="p">=</span> <span class="m">3</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>当策划设计人员更改字段后，新增字段，删除字段后，会如何呢，比如第一列ID更改为Identifier,第二列插入School，第三列Age删除后，生成了如下的代码：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="n">Class</span> <span class="n">ExcelDefine</span>
-<span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">const</span> <span class="kt">int</span> <span class="n">role_role_Identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="kd">const</span> <span class="kt">int</span> <span class="n">role_role_School</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="kd">const</span> <span class="kt">int</span> <span class="n">role_role_Name</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="n">Class</span> <span class="n">ExcelDefine</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">role_role_Identifier</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">role_role_School</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">role_role_Name</span> <span class="p">=</span> <span class="m">3</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>如此一来，在转换数据表后，原来在程序中使用的ExcelDefine.role<em>role</em>ID，ExcelDefine.role<em>role</em>Age，将失效报错，而 ExcelDefine.role<em>role</em>Name则自动转入读取第三列无需修改。</p>
 

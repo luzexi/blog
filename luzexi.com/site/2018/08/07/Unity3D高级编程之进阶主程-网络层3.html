@@ -273,63 +273,63 @@
 <p>实现UDP连接确认具体步骤（伪代码）：</p>
 
 <p>1.首先使用API建立UDP连接：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">SvrEndPoint</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IPEndPoint</span><span class="o">(</span><span class="n">IPAddress</span><span class="o">.</span><span class="na">Parse</span><span class="o">(</span><span class="n">host</span><span class="o">),</span> <span class="n">port</span><span class="o">);</span>
-<span class="n">UdpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UdpClient</span><span class="o">(</span><span class="n">host</span><span class="o">,</span> <span class="n">port</span><span class="o">);</span>
-<span class="n">UdpClient</span><span class="o">.</span><span class="na">Connect</span><span class="o">(</span><span class="n">SvrEndPoint</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">SvrEndPoint</span> <span class="p">=</span> <span class="k">new</span> <span class="n">IPEndPoint</span><span class="p">(</span><span class="n">IPAddress</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">host</span><span class="p">),</span> <span class="n">port</span><span class="p">);</span>
+<span class="n">UdpClient</span> <span class="p">=</span> <span class="k">new</span> <span class="n">UdpClient</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">);</span>
+<span class="n">UdpClient</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">SvrEndPoint</span><span class="p">);</span>
 </code></pre></div>
 <p>上述代码为使用C#的UDP接口对指定的IP和端口打开链接。</p>
 
 <p>2.启动接收数据线程：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">UdpClient</span><span class="o">.</span><span class="na">BeginReceive</span><span class="o">(</span><span class="n">ReceiveCallback</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
-<span class="kt">void</span> <span class="nf">ReceiveCallback</span><span class="o">(</span><span class="n">IAsyncResult</span> <span class="n">ar</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="n">Byte</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="o">(</span><span class="n">mIPEndPoint</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">?</span>
-        <span class="n">UdpClient</span><span class="o">.</span><span class="na">Receive</span><span class="o">(</span><span class="n">ref</span> <span class="n">mIPEndPoint</span><span class="o">)</span> <span class="o">:</span>
-        <span class="n">UdpClient</span><span class="o">.</span><span class="na">EndReceive</span><span class="o">(</span><span class="n">ar</span><span class="o">,</span> <span class="n">ref</span> <span class="n">mIPEndPoint</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">UdpClient</span><span class="p">.</span><span class="n">BeginReceive</span><span class="p">(</span><span class="n">ReceiveCallback</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+<span class="k">void</span> <span class="nf">ReceiveCallback</span><span class="p">(</span><span class="n">IAsyncResult</span> <span class="n">ar</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Byte</span><span class="p">[]</span> <span class="n">data</span> <span class="p">=</span> <span class="p">(</span><span class="n">mIPEndPoint</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">?</span>
+        <span class="n">UdpClient</span><span class="p">.</span><span class="n">Receive</span><span class="p">(</span><span class="k">ref</span> <span class="n">mIPEndPoint</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">UdpClient</span><span class="p">.</span><span class="n">EndReceive</span><span class="p">(</span><span class="n">ar</span><span class="p">,</span> <span class="k">ref</span> <span class="n">mIPEndPoint</span><span class="p">);</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">data</span><span class="o">)</span>
-        <span class="n">OnData</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">null</span> <span class="p">!=</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">OnData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">mUdpClient</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-    <span class="o">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mUdpClient</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
         <span class="c1">// try to receive again.</span>
-        <span class="n">mUdpClient</span><span class="o">.</span><span class="na">BeginReceive</span><span class="o">(</span><span class="n">ReceiveCallback</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+        <span class="n">mUdpClient</span><span class="p">.</span><span class="n">BeginReceive</span><span class="p">(</span><span class="n">ReceiveCallback</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>UPD是无状态连接，打开连接就相当于只是一厢情愿的自我意识，因此可以立刻开始接收数据的接口并开启线程。</p>
 
 <p>3.发送连接确认数据包，并屏蔽其他发送和接收功能。</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">SendConnectRequest</span><span class="o">();</span>
-<span class="n">StopSendNormalPackage</span><span class="o">();</span>
-<span class="n">StopReceiveNormalPackage</span><span class="o">();</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">SendConnectRequest</span><span class="p">();</span>
+<span class="n">StopSendNormalPackage</span><span class="p">();</span>
+<span class="n">StopReceiveNormalPackage</span><span class="p">();</span>
 </code></pre></div>
 <p>这三个函数是自定义的，第一个表示发送握手包，可以认为是为握手包特意定制的数据装载函数，第二个和第三个只是把普通的接收数据包的开关给关了，在连接还没确认前不接收任何其他形式的数据包，实际上接收数据包仍在继续，只是不加入到数据处理队列且也不处理数据的具体句柄。</p>
 
 <p>4.等待接收连接确认数据包：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">Void</span> <span class="nf">OnData</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">data</span><span class="o">)</span>
-<span class="o">{</span>
-     <span class="n">If</span><span class="o">(</span> <span class="o">!</span><span class="n">IsConnected</span> <span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">If</span><span class="o">(</span> <span class="n">IsConnectResponse</span><span class="o">(</span><span class="n">data</span><span class="o">)</span> <span class="o">)</span>
-        <span class="o">{</span>
-            <span class="n">OnEvent</span><span class="o">(</span> <span class="n">Event</span><span class="o">.</span><span class="na">ConnectSuccess</span> <span class="o">);</span>
-            <span class="n">IsConnected</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="n">Return</span><span class="o">;</span>
-    <span class="o">}</span>
-    <span class="n">ProcessNormalData</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">Void</span> <span class="nf">OnData</span><span class="p">(</span><span class="kt">byte</span><span class="p">[]</span> <span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="n">If</span><span class="p">(</span> <span class="p">!</span><span class="n">IsConnected</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">If</span><span class="p">(</span> <span class="n">IsConnectResponse</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">OnEvent</span><span class="p">(</span> <span class="n">Event</span><span class="p">.</span><span class="n">ConnectSuccess</span> <span class="p">);</span>
+            <span class="n">IsConnected</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">Return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">ProcessNormalData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>这是接收到数据的处理过程，先判断是否当前是否已经处于连接状态，再判断该数据包是否为握手数据包，如果确认是握手数据包的话，那意味着服务器收到了握手数据包并且做出了回应，连接可以确认了。因此在这里发出了连接确认事件，并且标记连接为确认状态。</p>
 
 <p>5.连接握手数据包收到后，说明确认连接已经成功建立，于是就可以开启正常发送和接收数据包的功能。</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">Void</span> <span class="nf">ProcessNormalData</span><span class="o">(</span><span class="n">data</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="n">If</span><span class="o">(</span> <span class="o">!</span><span class="n">IsConnected</span> <span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">Void</span> <span class="nf">ProcessNormalData</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">If</span><span class="p">(</span> <span class="p">!</span><span class="n">IsConnected</span> <span class="p">)</span> <span class="k">return</span><span class="p">;</span>
 
-    <span class="n">DealNetworkData</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
-<span class="o">}</span>
+    <span class="n">DealNetworkData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>经过与服务器端数据包的来回，UDP完成了2次握手的确认机制，已经可以认定为连接已经成功建立，这里是正常数据包处理过程，包括识别，装载，推入队列，检测是否丢失，是否需要重发等。</p>
 

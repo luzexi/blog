@@ -271,27 +271,27 @@
 <h6>在 Dictionary 中究竟是如何实现的呢，我们来剖析一下源码。</h6>
 
 <p>首先我们来看看源码中对 Dictionary 的变量定义部分，如下:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Dictionary</span><span class="o">&lt;</span><span class="n">TKey</span><span class="o">,</span><span class="n">TValue</span><span class="o">&gt;:</span> <span class="n">IDictionary</span><span class="o">&lt;</span><span class="n">TKey</span><span class="o">,</span><span class="n">TValue</span><span class="o">&gt;,</span> <span class="n">IDictionary</span><span class="o">,</span> <span class="n">IReadOnlyDictionary</span><span class="o">&lt;</span><span class="n">TKey</span><span class="o">,</span> <span class="n">TValue</span><span class="o">&gt;,</span> <span class="n">ISerializable</span><span class="o">,</span> <span class="n">IDeserializationCallback</span> 
-<span class="o">{</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">Dictionary</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">,</span><span class="n">TValue</span><span class="p">&gt;:</span> <span class="n">IDictionary</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">,</span><span class="n">TValue</span><span class="p">&gt;,</span> <span class="n">IDictionary</span><span class="p">,</span> <span class="n">IReadOnlyDictionary</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">,</span> <span class="n">TValue</span><span class="p">&gt;,</span> <span class="n">ISerializable</span><span class="p">,</span> <span class="n">IDeserializationCallback</span> 
+<span class="p">{</span>
 
-    <span class="kd">private</span> <span class="n">struct</span> <span class="n">Entry</span> <span class="o">{</span>
-        <span class="kd">public</span> <span class="kt">int</span> <span class="n">hashCode</span><span class="o">;</span>    <span class="c1">// Lower 31 bits of hash code, -1 if unused</span>
-        <span class="kd">public</span> <span class="kt">int</span> <span class="n">next</span><span class="o">;</span>        <span class="c1">// Index of next entry, -1 if last</span>
-        <span class="kd">public</span> <span class="n">TKey</span> <span class="n">key</span><span class="o">;</span>           <span class="c1">// Key of entry</span>
-        <span class="kd">public</span> <span class="n">TValue</span> <span class="n">value</span><span class="o">;</span>         <span class="c1">// Value of entry</span>
-    <span class="o">}</span>
+    <span class="k">private</span> <span class="k">struct</span> <span class="nc">Entry</span> <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">hashCode</span><span class="p">;</span>    <span class="c1">// Lower 31 bits of hash code, -1 if unused</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">next</span><span class="p">;</span>        <span class="c1">// Index of next entry, -1 if last</span>
+        <span class="k">public</span> <span class="n">TKey</span> <span class="n">key</span><span class="p">;</span>           <span class="c1">// Key of entry</span>
+        <span class="k">public</span> <span class="n">TValue</span> <span class="k">value</span><span class="p">;</span>         <span class="c1">// Value of entry</span>
+    <span class="p">}</span>
 
-    <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">buckets</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">Entry</span><span class="o">[]</span> <span class="n">entries</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">version</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">freeList</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">freeCount</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">IEqualityComparer</span><span class="o">&lt;</span><span class="n">TKey</span><span class="o">&gt;</span> <span class="n">comparer</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">KeyCollection</span> <span class="n">keys</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">ValueCollection</span> <span class="n">values</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">Object</span> <span class="n">_syncRoot</span><span class="o">;</span>
-<span class="o">}</span>
+    <span class="k">private</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">buckets</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">Entry</span><span class="p">[]</span> <span class="n">entries</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">version</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">freeList</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">freeCount</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">IEqualityComparer</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">&gt;</span> <span class="n">comparer</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">KeyCollection</span> <span class="n">keys</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">ValueCollection</span> <span class="n">values</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">Object</span> <span class="n">_syncRoot</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>从继承的类和接口看，Dictionary 主要继承了 IDictionary 接口，和 ISerializable 接口。IDictionary 和 ISerializable 在使用过程中，其主要的接口为，Add, Remove, ContainsKey, Clear, TryGetValue, Keys, Values, 以及[]数组符号形式作为返回值的接口。也包括了常用库 Collection 中的接口，Count, Contains等。</p>
 
@@ -302,95 +302,95 @@
 <h6>了解Add是最直接了解底层数据结构如何运作的途径，我们来看下Add接口的实现。</h6>
 
 <p>源代码如下：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">Add</span><span class="o">(</span><span class="n">TKey</span> <span class="n">key</span><span class="o">,</span> <span class="n">TValue</span> <span class="n">value</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="n">Insert</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">void</span> <span class="nf">Add</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">,</span> <span class="n">TValue</span> <span class="k">value</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Insert</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="k">value</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="kd">private</span> <span class="kt">void</span> <span class="nf">Initialize</span><span class="o">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">HashHelpers</span><span class="o">.</span><span class="na">GetPrime</span><span class="o">(</span><span class="n">capacity</span><span class="o">);</span>
-    <span class="n">buckets</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">size</span><span class="o">];</span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">buckets</span><span class="o">.</span><span class="na">Length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="n">buckets</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
-    <span class="n">entries</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Entry</span><span class="o">[</span><span class="n">size</span><span class="o">];</span>
-    <span class="n">freeList</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
-<span class="o">}</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">Initialize</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">size</span> <span class="p">=</span> <span class="n">HashHelpers</span><span class="p">.</span><span class="n">GetPrime</span><span class="p">(</span><span class="n">capacity</span><span class="p">);</span>
+    <span class="n">buckets</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">size</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="n">buckets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+    <span class="n">entries</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Entry</span><span class="p">[</span><span class="n">size</span><span class="p">];</span>
+    <span class="n">freeList</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="kd">private</span> <span class="kt">void</span> <span class="nf">Insert</span><span class="o">(</span><span class="n">TKey</span> <span class="n">key</span><span class="o">,</span> <span class="n">TValue</span> <span class="n">value</span><span class="o">,</span> <span class="n">bool</span> <span class="n">add</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="k">if</span><span class="o">(</span> <span class="n">key</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">)</span> <span class="o">{</span>
-        <span class="n">ThrowHelper</span><span class="o">.</span><span class="na">ThrowArgumentNullException</span><span class="o">(</span><span class="n">ExceptionArgument</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
-    <span class="o">}</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">Insert</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">,</span> <span class="n">TValue</span> <span class="k">value</span><span class="p">,</span> <span class="kt">bool</span> <span class="k">add</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">key</span> <span class="p">==</span> <span class="k">null</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentNullException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">key</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">buckets</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="n">Initialize</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
-    <span class="kt">int</span> <span class="n">hashCode</span> <span class="o">=</span> <span class="n">comparer</span><span class="o">.</span><span class="na">GetHashCode</span><span class="o">(</span><span class="n">key</span><span class="o">)</span> <span class="o">&amp;</span> <span class="mh">0x7FFFFFFF</span><span class="o">;</span>
-    <span class="kt">int</span> <span class="n">targetBucket</span> <span class="o">=</span> <span class="n">hashCode</span> <span class="o">%</span> <span class="n">buckets</span><span class="o">.</span><span class="na">Length</span><span class="o">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">buckets</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="n">Initialize</span><span class="p">(</span><span class="m">0</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">hashCode</span> <span class="p">=</span> <span class="n">comparer</span><span class="p">.</span><span class="n">GetHashCode</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="p">&amp;</span> <span class="m">0</span><span class="n">x7FFFFFFF</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">targetBucket</span> <span class="p">=</span> <span class="n">hashCode</span> <span class="p">%</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
 
-<span class="err">#</span><span class="k">if</span> <span class="n">FEATURE_RANDOMIZED_STRING_HASHING</span>
-    <span class="kt">int</span> <span class="n">collisionCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-<span class="err">#</span><span class="n">endif</span>
+<span class="cp">#if FEATURE_RANDOMIZED_STRING_HASHING</span>
+    <span class="kt">int</span> <span class="n">collisionCount</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+<span class="cp">#endif</span>
 
-    <span class="nf">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">[</span><span class="n">targetBucket</span><span class="o">];</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">next</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">hashCode</span> <span class="o">==</span> <span class="n">hashCode</span> <span class="o">&amp;&amp;</span> <span class="n">comparer</span><span class="o">.</span><span class="na">Equals</span><span class="o">(</span><span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">key</span><span class="o">,</span> <span class="n">key</span><span class="o">))</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">add</span><span class="o">)</span> <span class="o">{</span> 
-                <span class="n">ThrowHelper</span><span class="o">.</span><span class="na">ThrowArgumentException</span><span class="o">(</span><span class="n">ExceptionResource</span><span class="o">.</span><span class="na">Argument_AddingDuplicate</span><span class="o">);</span>
-            <span class="o">}</span>
-            <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
-            <span class="n">version</span><span class="o">++;</span>
-            <span class="k">return</span><span class="o">;</span>
-        <span class="o">}</span> 
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">];</span> <span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">==</span> <span class="n">hashCode</span> <span class="p">&amp;&amp;</span> <span class="n">comparer</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="k">add</span><span class="p">)</span> <span class="p">{</span> 
+                <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentException</span><span class="p">(</span><span class="n">ExceptionResource</span><span class="p">.</span><span class="n">Argument_AddingDuplicate</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="k">value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+            <span class="n">version</span><span class="p">++;</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span> 
 
-<span class="err">#</span><span class="k">if</span> <span class="n">FEATURE_RANDOMIZED_STRING_HASHING</span>
-        <span class="n">collisionCount</span><span class="o">++;</span>
-<span class="err">#</span><span class="n">endif</span>
-    <span class="o">}</span>
-    <span class="kt">int</span> <span class="n">index</span><span class="o">;</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">freeCount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">freeList</span><span class="o">;</span>
-        <span class="n">freeList</span> <span class="o">=</span> <span class="n">entries</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="na">next</span><span class="o">;</span>
-        <span class="n">freeCount</span><span class="o">--;</span>
-    <span class="o">}</span>
-    <span class="k">else</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">entries</span><span class="o">.</span><span class="na">Length</span><span class="o">)</span>
-        <span class="o">{</span>
-            <span class="n">Resize</span><span class="o">();</span>
-            <span class="n">targetBucket</span> <span class="o">=</span> <span class="n">hashCode</span> <span class="o">%</span> <span class="n">buckets</span><span class="o">.</span><span class="na">Length</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">count</span><span class="o">;</span>
-        <span class="n">count</span><span class="o">++;</span>
-    <span class="o">}</span>
+<span class="cp">#if FEATURE_RANDOMIZED_STRING_HASHING</span>
+        <span class="n">collisionCount</span><span class="p">++;</span>
+<span class="cp">#endif</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">index</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">freeCount</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">index</span> <span class="p">=</span> <span class="n">freeList</span><span class="p">;</span>
+        <span class="n">freeList</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">next</span><span class="p">;</span>
+        <span class="n">freeCount</span><span class="p">--;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="p">==</span> <span class="n">entries</span><span class="p">.</span><span class="n">Length</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Resize</span><span class="p">();</span>
+            <span class="n">targetBucket</span> <span class="p">=</span> <span class="n">hashCode</span> <span class="p">%</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">index</span> <span class="p">=</span> <span class="n">count</span><span class="p">;</span>
+        <span class="n">count</span><span class="p">++;</span>
+    <span class="p">}</span>
 
-    <span class="n">entries</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="na">hashCode</span> <span class="o">=</span> <span class="n">hashCode</span><span class="o">;</span>
-    <span class="n">entries</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="na">next</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">[</span><span class="n">targetBucket</span><span class="o">];</span>
-    <span class="n">entries</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="na">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
-    <span class="n">entries</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
-    <span class="n">buckets</span><span class="o">[</span><span class="n">targetBucket</span><span class="o">]</span> <span class="o">=</span> <span class="n">index</span><span class="o">;</span>
-    <span class="n">version</span><span class="o">++;</span>
+    <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">=</span> <span class="n">hashCode</span><span class="p">;</span>
+    <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">next</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">];</span>
+    <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">key</span> <span class="p">=</span> <span class="n">key</span><span class="p">;</span>
+    <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="k">value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+    <span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">]</span> <span class="p">=</span> <span class="n">index</span><span class="p">;</span>
+    <span class="n">version</span><span class="p">++;</span>
 
-<span class="err">#</span><span class="k">if</span> <span class="n">FEATURE_RANDOMIZED_STRING_HASHING</span>
+<span class="cp">#if FEATURE_RANDOMIZED_STRING_HASHING</span>
 
-<span class="err">#</span><span class="k">if</span> <span class="n">FEATURE_CORECLR</span>
+<span class="cp">#if FEATURE_CORECLR</span>
     <span class="c1">// In case we hit the collision threshold we&#39;ll need to switch to the comparer which is using randomized string hashing</span>
     <span class="c1">// in this case will be EqualityComparer&lt;string&gt;.Default.</span>
     <span class="c1">// Note, randomized string hashing is turned on by default on coreclr so EqualityComparer&lt;string&gt;.Default will </span>
     <span class="c1">// be using randomized string hashing</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">collisionCount</span> <span class="o">&gt;</span> <span class="n">HashHelpers</span><span class="o">.</span><span class="na">HashCollisionThreshold</span> <span class="o">&amp;&amp;</span> <span class="n">comparer</span> <span class="o">==</span> <span class="n">NonRandomizedStringEqualityComparer</span><span class="o">.</span><span class="na">Default</span><span class="o">)</span> 
-    <span class="o">{</span>
-        <span class="n">comparer</span> <span class="o">=</span> <span class="o">(</span><span class="n">IEqualityComparer</span><span class="o">&lt;</span><span class="n">TKey</span><span class="o">&gt;)</span> <span class="n">EqualityComparer</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;.</span><span class="na">Default</span><span class="o">;</span>
-        <span class="n">Resize</span><span class="o">(</span><span class="n">entries</span><span class="o">.</span><span class="na">Length</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="err">#</span><span class="k">else</span>
-    <span class="k">if</span><span class="o">(</span><span class="n">collisionCount</span> <span class="o">&gt;</span> <span class="n">HashHelpers</span><span class="o">.</span><span class="na">HashCollisionThreshold</span> <span class="o">&amp;&amp;</span> <span class="n">HashHelpers</span><span class="o">.</span><span class="na">IsWellKnownEqualityComparer</span><span class="o">(</span><span class="n">comparer</span><span class="o">))</span> 
-    <span class="o">{</span>
-        <span class="n">comparer</span> <span class="o">=</span> <span class="o">(</span><span class="n">IEqualityComparer</span><span class="o">&lt;</span><span class="n">TKey</span><span class="o">&gt;)</span> <span class="n">HashHelpers</span><span class="o">.</span><span class="na">GetRandomizedEqualityComparer</span><span class="o">(</span><span class="n">comparer</span><span class="o">);</span>
-        <span class="n">Resize</span><span class="o">(</span><span class="n">entries</span><span class="o">.</span><span class="na">Length</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="err">#</span><span class="n">endif</span> <span class="c1">// FEATURE_CORECLR</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">collisionCount</span> <span class="p">&gt;</span> <span class="n">HashHelpers</span><span class="p">.</span><span class="n">HashCollisionThreshold</span> <span class="p">&amp;&amp;</span> <span class="n">comparer</span> <span class="p">==</span> <span class="n">NonRandomizedStringEqualityComparer</span><span class="p">.</span><span class="n">Default</span><span class="p">)</span> 
+    <span class="p">{</span>
+        <span class="n">comparer</span> <span class="p">=</span> <span class="p">(</span><span class="n">IEqualityComparer</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">&gt;)</span> <span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;.</span><span class="n">Default</span><span class="p">;</span>
+        <span class="n">Resize</span><span class="p">(</span><span class="n">entries</span><span class="p">.</span><span class="n">Length</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#else</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">collisionCount</span> <span class="p">&gt;</span> <span class="n">HashHelpers</span><span class="p">.</span><span class="n">HashCollisionThreshold</span> <span class="p">&amp;&amp;</span> <span class="n">HashHelpers</span><span class="p">.</span><span class="n">IsWellKnownEqualityComparer</span><span class="p">(</span><span class="n">comparer</span><span class="p">))</span> 
+    <span class="p">{</span>
+        <span class="n">comparer</span> <span class="p">=</span> <span class="p">(</span><span class="n">IEqualityComparer</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">&gt;)</span> <span class="n">HashHelpers</span><span class="p">.</span><span class="n">GetRandomizedEqualityComparer</span><span class="p">(</span><span class="n">comparer</span><span class="p">);</span>
+        <span class="n">Resize</span><span class="p">(</span><span class="n">entries</span><span class="p">.</span><span class="n">Length</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#endif // FEATURE_CORECLR</span>
 
-<span class="err">#</span><span class="n">endif</span>
+<span class="cp">#endif</span>
 
-<span class="o">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>展示的代码稍稍多了点，我们摘出其中的要点，通过要点来了解重点，再通过重点了解全局。</p>
 
@@ -407,50 +407,50 @@
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>int size = HashHelpers.GetPrime(capacity);
 </code></pre></div>
 <p>它们有专门的方法来计算到底该使用多大的数组，我们查出源码 HashHelpers 中，primes数值是这样定义的:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span> <span class="kd">public</span> <span class="kd">static</span> <span class="n">readonly</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">primes</span> <span class="o">=</span> <span class="o">{</span>
-        <span class="mi">3</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">11</span><span class="o">,</span> <span class="mi">17</span><span class="o">,</span> <span class="mi">23</span><span class="o">,</span> <span class="mi">29</span><span class="o">,</span> <span class="mi">37</span><span class="o">,</span> <span class="mi">47</span><span class="o">,</span> <span class="mi">59</span><span class="o">,</span> <span class="mi">71</span><span class="o">,</span> <span class="mi">89</span><span class="o">,</span> <span class="mi">107</span><span class="o">,</span> <span class="mi">131</span><span class="o">,</span> <span class="mi">163</span><span class="o">,</span> <span class="mi">197</span><span class="o">,</span> <span class="mi">239</span><span class="o">,</span> <span class="mi">293</span><span class="o">,</span> <span class="mi">353</span><span class="o">,</span> <span class="mi">431</span><span class="o">,</span> <span class="mi">521</span><span class="o">,</span> <span class="mi">631</span><span class="o">,</span> <span class="mi">761</span><span class="o">,</span> <span class="mi">919</span><span class="o">,</span>
-        <span class="mi">1103</span><span class="o">,</span> <span class="mi">1327</span><span class="o">,</span> <span class="mi">1597</span><span class="o">,</span> <span class="mi">1931</span><span class="o">,</span> <span class="mi">2333</span><span class="o">,</span> <span class="mi">2801</span><span class="o">,</span> <span class="mi">3371</span><span class="o">,</span> <span class="mi">4049</span><span class="o">,</span> <span class="mi">4861</span><span class="o">,</span> <span class="mi">5839</span><span class="o">,</span> <span class="mi">7013</span><span class="o">,</span> <span class="mi">8419</span><span class="o">,</span> <span class="mi">10103</span><span class="o">,</span> <span class="mi">12143</span><span class="o">,</span> <span class="mi">14591</span><span class="o">,</span>
-        <span class="mi">17519</span><span class="o">,</span> <span class="mi">21023</span><span class="o">,</span> <span class="mi">25229</span><span class="o">,</span> <span class="mi">30293</span><span class="o">,</span> <span class="mi">36353</span><span class="o">,</span> <span class="mi">43627</span><span class="o">,</span> <span class="mi">52361</span><span class="o">,</span> <span class="mi">62851</span><span class="o">,</span> <span class="mi">75431</span><span class="o">,</span> <span class="mi">90523</span><span class="o">,</span> <span class="mi">108631</span><span class="o">,</span> <span class="mi">130363</span><span class="o">,</span> <span class="mi">156437</span><span class="o">,</span>
-        <span class="mi">187751</span><span class="o">,</span> <span class="mi">225307</span><span class="o">,</span> <span class="mi">270371</span><span class="o">,</span> <span class="mi">324449</span><span class="o">,</span> <span class="mi">389357</span><span class="o">,</span> <span class="mi">467237</span><span class="o">,</span> <span class="mi">560689</span><span class="o">,</span> <span class="mi">672827</span><span class="o">,</span> <span class="mi">807403</span><span class="o">,</span> <span class="mi">968897</span><span class="o">,</span> <span class="mi">1162687</span><span class="o">,</span> <span class="mi">1395263</span><span class="o">,</span>
-        <span class="mi">1674319</span><span class="o">,</span> <span class="mi">2009191</span><span class="o">,</span> <span class="mi">2411033</span><span class="o">,</span> <span class="mi">2893249</span><span class="o">,</span> <span class="mi">3471899</span><span class="o">,</span> <span class="mi">4166287</span><span class="o">,</span> <span class="mi">4999559</span><span class="o">,</span> <span class="mi">5999471</span><span class="o">,</span> <span class="mi">7199369</span><span class="o">};</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span> <span class="k">public</span> <span class="k">static</span> <span class="k">readonly</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">primes</span> <span class="p">=</span> <span class="p">{</span>
+        <span class="m">3</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">17</span><span class="p">,</span> <span class="m">23</span><span class="p">,</span> <span class="m">29</span><span class="p">,</span> <span class="m">37</span><span class="p">,</span> <span class="m">47</span><span class="p">,</span> <span class="m">59</span><span class="p">,</span> <span class="m">71</span><span class="p">,</span> <span class="m">89</span><span class="p">,</span> <span class="m">107</span><span class="p">,</span> <span class="m">131</span><span class="p">,</span> <span class="m">163</span><span class="p">,</span> <span class="m">197</span><span class="p">,</span> <span class="m">239</span><span class="p">,</span> <span class="m">293</span><span class="p">,</span> <span class="m">353</span><span class="p">,</span> <span class="m">431</span><span class="p">,</span> <span class="m">521</span><span class="p">,</span> <span class="m">631</span><span class="p">,</span> <span class="m">761</span><span class="p">,</span> <span class="m">919</span><span class="p">,</span>
+        <span class="m">1103</span><span class="p">,</span> <span class="m">1327</span><span class="p">,</span> <span class="m">1597</span><span class="p">,</span> <span class="m">1931</span><span class="p">,</span> <span class="m">2333</span><span class="p">,</span> <span class="m">2801</span><span class="p">,</span> <span class="m">3371</span><span class="p">,</span> <span class="m">4049</span><span class="p">,</span> <span class="m">4861</span><span class="p">,</span> <span class="m">5839</span><span class="p">,</span> <span class="m">7013</span><span class="p">,</span> <span class="m">8419</span><span class="p">,</span> <span class="m">10103</span><span class="p">,</span> <span class="m">12143</span><span class="p">,</span> <span class="m">14591</span><span class="p">,</span>
+        <span class="m">17519</span><span class="p">,</span> <span class="m">21023</span><span class="p">,</span> <span class="m">25229</span><span class="p">,</span> <span class="m">30293</span><span class="p">,</span> <span class="m">36353</span><span class="p">,</span> <span class="m">43627</span><span class="p">,</span> <span class="m">52361</span><span class="p">,</span> <span class="m">62851</span><span class="p">,</span> <span class="m">75431</span><span class="p">,</span> <span class="m">90523</span><span class="p">,</span> <span class="m">108631</span><span class="p">,</span> <span class="m">130363</span><span class="p">,</span> <span class="m">156437</span><span class="p">,</span>
+        <span class="m">187751</span><span class="p">,</span> <span class="m">225307</span><span class="p">,</span> <span class="m">270371</span><span class="p">,</span> <span class="m">324449</span><span class="p">,</span> <span class="m">389357</span><span class="p">,</span> <span class="m">467237</span><span class="p">,</span> <span class="m">560689</span><span class="p">,</span> <span class="m">672827</span><span class="p">,</span> <span class="m">807403</span><span class="p">,</span> <span class="m">968897</span><span class="p">,</span> <span class="m">1162687</span><span class="p">,</span> <span class="m">1395263</span><span class="p">,</span>
+        <span class="m">1674319</span><span class="p">,</span> <span class="m">2009191</span><span class="p">,</span> <span class="m">2411033</span><span class="p">,</span> <span class="m">2893249</span><span class="p">,</span> <span class="m">3471899</span><span class="p">,</span> <span class="m">4166287</span><span class="p">,</span> <span class="m">4999559</span><span class="p">,</span> <span class="m">5999471</span><span class="p">,</span> <span class="m">7199369</span><span class="p">};</span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">GetPrime</span><span class="o">(</span><span class="kt">int</span> <span class="n">min</span><span class="o">)</span> 
-<span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">min</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="n">ArgumentException</span><span class="o">(</span><span class="n">Environment</span><span class="o">.</span><span class="na">GetResourceString</span><span class="o">(</span><span class="s">&quot;Arg_HTCapacityOverflow&quot;</span><span class="o">));</span>
-    <span class="n">Contract</span><span class="o">.</span><span class="na">EndContractBlock</span><span class="o">();</span>
+<span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">GetPrime</span><span class="p">(</span><span class="kt">int</span> <span class="n">min</span><span class="p">)</span> 
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">min</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentException</span><span class="p">(</span><span class="n">Environment</span><span class="p">.</span><span class="n">GetResourceString</span><span class="p">(</span><span class="s">&quot;Arg_HTCapacityOverflow&quot;</span><span class="p">));</span>
+    <span class="n">Contract</span><span class="p">.</span><span class="n">EndContractBlock</span><span class="p">();</span>
 
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">primes</span><span class="o">.</span><span class="na">Length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> 
-    <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">prime</span> <span class="o">=</span> <span class="n">primes</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">prime</span> <span class="o">&gt;=</span> <span class="n">min</span><span class="o">)</span> <span class="k">return</span> <span class="n">prime</span><span class="o">;</span>
-    <span class="o">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">primes</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> 
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">prime</span> <span class="p">=</span> <span class="n">primes</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">prime</span> <span class="p">&gt;=</span> <span class="n">min</span><span class="p">)</span> <span class="k">return</span> <span class="n">prime</span><span class="p">;</span>
+    <span class="p">}</span>
 
     <span class="c1">//outside of our predefined table. </span>
     <span class="c1">//compute the hard way. </span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="o">(</span><span class="n">min</span> <span class="o">|</span> <span class="mi">1</span><span class="o">);</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">Int32</span><span class="o">.</span><span class="na">MaxValue</span><span class="o">;</span><span class="n">i</span><span class="o">+=</span><span class="mi">2</span><span class="o">)</span> 
-    <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">IsPrime</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">((</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">%</span> <span class="n">Hashtable</span><span class="o">.</span><span class="na">HashPrime</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">))</span>
-            <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
-    <span class="o">}</span>
-    <span class="k">return</span> <span class="n">min</span><span class="o">;</span>
-<span class="o">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="p">(</span><span class="n">min</span> <span class="p">|</span> <span class="m">1</span><span class="p">);</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">Int32</span><span class="p">.</span><span class="n">MaxValue</span><span class="p">;</span><span class="n">i</span><span class="p">+=</span><span class="m">2</span><span class="p">)</span> 
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">IsPrime</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="p">((</span><span class="n">i</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span> <span class="p">%</span> <span class="n">Hashtable</span><span class="p">.</span><span class="n">HashPrime</span> <span class="p">!=</span> <span class="m">0</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">min</span><span class="p">;</span>
+<span class="p">}</span>
 
 <span class="c1">// Returns size of hashtable to grow to.</span>
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">ExpandPrime</span><span class="o">(</span><span class="kt">int</span> <span class="n">oldSize</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="kt">int</span> <span class="n">newSize</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">oldSize</span><span class="o">;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">ExpandPrime</span><span class="p">(</span><span class="kt">int</span> <span class="n">oldSize</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">newSize</span> <span class="p">=</span> <span class="m">2</span> <span class="p">*</span> <span class="n">oldSize</span><span class="p">;</span>
 
     <span class="c1">// Allow the hashtables to grow to maximum possible size (~2G elements) before encoutering capacity overflow.</span>
     <span class="c1">// Note that this check works even when _items.Length overflowed thanks to the (uint) cast</span>
-    <span class="k">if</span> <span class="o">((</span><span class="n">uint</span><span class="o">)</span><span class="n">newSize</span> <span class="o">&gt;</span> <span class="n">MaxPrimeArrayLength</span> <span class="o">&amp;&amp;</span> <span class="n">MaxPrimeArrayLength</span> <span class="o">&gt;</span> <span class="n">oldSize</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">Contract</span><span class="o">.</span><span class="na">Assert</span><span class="o">(</span> <span class="n">MaxPrimeArrayLength</span> <span class="o">==</span> <span class="n">GetPrime</span><span class="o">(</span><span class="n">MaxPrimeArrayLength</span><span class="o">),</span> <span class="s">&quot;Invalid MaxPrimeArrayLength&quot;</span><span class="o">);</span>
-        <span class="k">return</span> <span class="n">MaxPrimeArrayLength</span><span class="o">;</span>
-    <span class="o">}</span>
+    <span class="k">if</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span><span class="n">newSize</span> <span class="p">&gt;</span> <span class="n">MaxPrimeArrayLength</span> <span class="p">&amp;&amp;</span> <span class="n">MaxPrimeArrayLength</span> <span class="p">&gt;</span> <span class="n">oldSize</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Contract</span><span class="p">.</span><span class="n">Assert</span><span class="p">(</span> <span class="n">MaxPrimeArrayLength</span> <span class="p">==</span> <span class="n">GetPrime</span><span class="p">(</span><span class="n">MaxPrimeArrayLength</span><span class="p">),</span> <span class="s">&quot;Invalid MaxPrimeArrayLength&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">MaxPrimeArrayLength</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    <span class="k">return</span> <span class="n">GetPrime</span><span class="o">(</span><span class="n">newSize</span><span class="o">);</span>
-<span class="o">}</span>
+    <span class="k">return</span> <span class="nf">GetPrime</span><span class="p">(</span><span class="n">newSize</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>上述代码为 HashHelpers 部分的源码，其中 GetPrime 会返回一个需要的 size 最小的数值，从 GetPrime 函数的代码中，我们可以知道这个 size 是由数组 primes 里的值与当前需要的数量大小有关，当需要的数量小于 primes 某个单元格的数字时返回该数字，而 ExpandPrime 则更加简单粗暴，直接返回原来size的2倍作为扩展数量。</p>
 
@@ -463,45 +463,45 @@
 <p>当调用函数获得Hash哈希值后，还需要对哈希地址做余操作，以确定地址落在 Dictionary 数组长度范围内不会溢出。</p>
 
 <p>紧接着对指定数组单元格内的链表元素做遍历操作，找出空出来的位置将值填入。</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">[</span><span class="n">targetBucket</span><span class="o">];</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">next</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">hashCode</span> <span class="o">==</span> <span class="n">hashCode</span> <span class="o">&amp;&amp;</span> <span class="n">comparer</span><span class="o">.</span><span class="na">Equals</span><span class="o">(</span><span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">key</span><span class="o">,</span> <span class="n">key</span><span class="o">))</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">add</span><span class="o">)</span> <span class="o">{</span> 
-            <span class="n">ThrowHelper</span><span class="o">.</span><span class="na">ThrowArgumentException</span><span class="o">(</span><span class="n">ExceptionResource</span><span class="o">.</span><span class="na">Argument_AddingDuplicate</span><span class="o">);</span>
-        <span class="o">}</span>
-        <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
-        <span class="n">version</span><span class="o">++;</span>
-        <span class="k">return</span><span class="o">;</span>
-    <span class="o">}</span> 
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">];</span> <span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">==</span> <span class="n">hashCode</span> <span class="p">&amp;&amp;</span> <span class="n">comparer</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">add</span><span class="p">)</span> <span class="p">{</span> 
+            <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentException</span><span class="p">(</span><span class="n">ExceptionResource</span><span class="p">.</span><span class="n">Argument_AddingDuplicate</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="k">value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+        <span class="n">version</span><span class="p">++;</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span> 
 
-<span class="err">#</span><span class="k">if</span> <span class="n">FEATURE_RANDOMIZED_STRING_HASHING</span>
-    <span class="n">collisionCount</span><span class="o">++;</span>
-<span class="err">#</span><span class="n">endif</span>
-<span class="o">}</span>
+<span class="cp">#if FEATURE_RANDOMIZED_STRING_HASHING</span>
+    <span class="n">collisionCount</span><span class="p">++;</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>这一步就是前面我们所说的拉链法的链表推入动作。当获得Hash值的数组索引后，我们知道了该将数据存放在哪个数组位置上，如果该位置已经有元素被推入，则需要将其推入到链表的尾部。从for循环开始，检查是否到达链表的末尾，最后将数据放入尾部，并结束函数。</p>
 
 <p>如果数组的空间不够了怎么办？源码中体现了这一点:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kt">int</span> <span class="n">index</span><span class="o">;</span>
-<span class="k">if</span> <span class="o">(</span><span class="n">freeCount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="n">freeList</span><span class="o">;</span>
-    <span class="n">freeList</span> <span class="o">=</span> <span class="n">entries</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="na">next</span><span class="o">;</span>
-    <span class="n">freeCount</span><span class="o">--;</span>
-<span class="o">}</span>
-<span class="k">else</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">entries</span><span class="o">.</span><span class="na">Length</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">Resize</span><span class="o">();</span>
-        <span class="n">targetBucket</span> <span class="o">=</span> <span class="n">hashCode</span> <span class="o">%</span> <span class="n">buckets</span><span class="o">.</span><span class="na">Length</span><span class="o">;</span>
-    <span class="o">}</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span><span class="o">;</span>
-    <span class="n">count</span><span class="o">++;</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="kt">int</span> <span class="n">index</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">freeCount</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">index</span> <span class="p">=</span> <span class="n">freeList</span><span class="p">;</span>
+    <span class="n">freeList</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">next</span><span class="p">;</span>
+    <span class="n">freeCount</span><span class="p">--;</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="p">==</span> <span class="n">entries</span><span class="p">.</span><span class="n">Length</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Resize</span><span class="p">();</span>
+        <span class="n">targetBucket</span> <span class="p">=</span> <span class="n">hashCode</span> <span class="p">%</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">index</span> <span class="p">=</span> <span class="n">count</span><span class="p">;</span>
+    <span class="n">count</span><span class="p">++;</span>
+<span class="p">}</span>
 
-<span class="n">entries</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="na">hashCode</span> <span class="o">=</span> <span class="n">hashCode</span><span class="o">;</span>
-<span class="n">entries</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="na">next</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">[</span><span class="n">targetBucket</span><span class="o">];</span>
-<span class="n">entries</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="na">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
-<span class="n">entries</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
-<span class="n">buckets</span><span class="o">[</span><span class="n">targetBucket</span><span class="o">]</span> <span class="o">=</span> <span class="n">index</span><span class="o">;</span>
+<span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">=</span> <span class="n">hashCode</span><span class="p">;</span>
+<span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">next</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">];</span>
+<span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">key</span> <span class="p">=</span> <span class="n">key</span><span class="p">;</span>
+<span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="k">value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+<span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">]</span> <span class="p">=</span> <span class="n">index</span><span class="p">;</span>
 </code></pre></div>
 <p>当被用来记录剩余单元格数量的变量 freeCount 等于0时，则进行扩容，扩容后的大小就是我们前面提到的 调用 ExpandPrime 后的数量，即通常情况下为原来的2倍，再根据这个空间大小数字调用 GetPrime 来得到真正的新数组的大小。</p>
 
@@ -510,145 +510,145 @@
 <p>删除的过程和插入的过程比较相似，因为要查找到Key元素所在位置，所以再次将Key值做哈希操作也是难免的，然后类似沿着拉链法的模式寻找与关键字匹配的元素。</p>
 
 <h6>Remove 用关键字删除元素的接口源码：</h6>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="n">bool</span> <span class="nf">Remove</span><span class="o">(</span><span class="n">TKey</span> <span class="n">key</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="k">if</span><span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">ThrowHelper</span><span class="o">.</span><span class="na">ThrowArgumentNullException</span><span class="o">(</span><span class="n">ExceptionArgument</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
-    <span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="kt">bool</span> <span class="nf">Remove</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">key</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentNullException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">key</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">buckets</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">hashCode</span> <span class="o">=</span> <span class="n">comparer</span><span class="o">.</span><span class="na">GetHashCode</span><span class="o">(</span><span class="n">key</span><span class="o">)</span> <span class="o">&amp;</span> <span class="mh">0x7FFFFFFF</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">hashCode</span> <span class="o">%</span> <span class="n">buckets</span><span class="o">.</span><span class="na">Length</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">last</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">[</span><span class="n">bucket</span><span class="o">];</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">last</span> <span class="o">=</span> <span class="n">i</span><span class="o">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">next</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">hashCode</span> <span class="o">==</span> <span class="n">hashCode</span> <span class="o">&amp;&amp;</span> <span class="n">comparer</span><span class="o">.</span><span class="na">Equals</span><span class="o">(</span><span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">key</span><span class="o">,</span> <span class="n">key</span><span class="o">))</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">last</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">buckets</span><span class="o">[</span><span class="n">bucket</span><span class="o">]</span> <span class="o">=</span> <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">next</span><span class="o">;</span>
-                <span class="o">}</span>
-                <span class="k">else</span> <span class="o">{</span>
-                    <span class="n">entries</span><span class="o">[</span><span class="n">last</span><span class="o">].</span><span class="na">next</span> <span class="o">=</span> <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">next</span><span class="o">;</span>
-                <span class="o">}</span>
-                <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">hashCode</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
-                <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">next</span> <span class="o">=</span> <span class="n">freeList</span><span class="o">;</span>
-                <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">key</span> <span class="o">=</span> <span class="k">default</span><span class="o">(</span><span class="n">TKey</span><span class="o">);</span>
-                <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">value</span> <span class="o">=</span> <span class="k">default</span><span class="o">(</span><span class="n">TValue</span><span class="o">);</span>
-                <span class="n">freeList</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
-                <span class="n">freeCount</span><span class="o">++;</span>
-                <span class="n">version</span><span class="o">++;</span>
-                <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-<span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">buckets</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">hashCode</span> <span class="p">=</span> <span class="n">comparer</span><span class="p">.</span><span class="n">GetHashCode</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="p">&amp;</span> <span class="m">0</span><span class="n">x7FFFFFFF</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">bucket</span> <span class="p">=</span> <span class="n">hashCode</span> <span class="p">%</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">last</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">bucket</span><span class="p">];</span> <span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span> <span class="n">last</span> <span class="p">=</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">==</span> <span class="n">hashCode</span> <span class="p">&amp;&amp;</span> <span class="n">comparer</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">last</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">buckets</span><span class="p">[</span><span class="n">bucket</span><span class="p">]</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">entries</span><span class="p">[</span><span class="n">last</span><span class="p">].</span><span class="n">next</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+                <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span> <span class="p">=</span> <span class="n">freeList</span><span class="p">;</span>
+                <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">TKey</span><span class="p">);</span>
+                <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="k">value</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">TValue</span><span class="p">);</span>
+                <span class="n">freeList</span> <span class="p">=</span> <span class="n">i</span><span class="p">;</span>
+                <span class="n">freeCount</span><span class="p">++;</span>
+                <span class="n">version</span><span class="p">++;</span>
+                <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>我们注意到 Remove 接口相对 Add 接口简单的多，同样用哈希函数 comparer.GetHashCode 再除余后得到范围内的地址索引，再做余操作确定地址落在数组范围内，从哈希索引地址开始，查找冲突的元素的Key是否与需要移除的Key值相同，相同则进行移除操作并退出。</p>
 
 <p>注意源码中，Remove 的移除操作并没有对内存进行删减，而只是将其单元格置空，这是位了减少了内存的频繁操作。</p>
 
 <h6>我们继续剖析另一个重要的接口 ContainsKey 检测是否包含关键字的接口。源码如下：</h6>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="n">bool</span> <span class="nf">ContainsKey</span><span class="o">(</span><span class="n">TKey</span> <span class="n">key</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="k">return</span> <span class="n">FindEntry</span><span class="o">(</span><span class="n">key</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="kt">bool</span> <span class="nf">ContainsKey</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nf">FindEntry</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="kd">private</span> <span class="kt">int</span> <span class="nf">FindEntry</span><span class="o">(</span><span class="n">TKey</span> <span class="n">key</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="k">if</span><span class="o">(</span> <span class="n">key</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">ThrowHelper</span><span class="o">.</span><span class="na">ThrowArgumentNullException</span><span class="o">(</span><span class="n">ExceptionArgument</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
-    <span class="o">}</span>
+<span class="k">private</span> <span class="kt">int</span> <span class="nf">FindEntry</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">key</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentNullException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">key</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">buckets</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">hashCode</span> <span class="o">=</span> <span class="n">comparer</span><span class="o">.</span><span class="na">GetHashCode</span><span class="o">(</span><span class="n">key</span><span class="o">)</span> <span class="o">&amp;</span> <span class="mh">0x7FFFFFFF</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">[</span><span class="n">hashCode</span> <span class="o">%</span> <span class="n">buckets</span><span class="o">.</span><span class="na">Length</span><span class="o">];</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">next</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">hashCode</span> <span class="o">==</span> <span class="n">hashCode</span> <span class="o">&amp;&amp;</span> <span class="n">comparer</span><span class="o">.</span><span class="na">Equals</span><span class="o">(</span><span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">key</span><span class="o">,</span> <span class="n">key</span><span class="o">))</span> <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
-<span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">buckets</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">hashCode</span> <span class="p">=</span> <span class="n">comparer</span><span class="p">.</span><span class="n">GetHashCode</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="p">&amp;</span> <span class="m">0</span><span class="n">x7FFFFFFF</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">hashCode</span> <span class="p">%</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">];</span> <span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">==</span> <span class="n">hashCode</span> <span class="p">&amp;&amp;</span> <span class="n">comparer</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>从源码中看到 ContainsKey 是一个查找Key位置的过程。它调用了 FindEntry 函数，FindEntry 查找Key值位置的方法跟我们前面提到的相同。从用Key值得到的哈希值地址开始查找，查看所有冲突链表中，是否有与Key值相同的值，找到即刻返回该索引地址。</p>
 
 <h6>有了前面对几个核心接口理解的基础，其他接口相对比较就简单多了，我们快速的看过去。</h6>
 
 <h6>TryGetValue 尝试获取值的接口:</h6>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="n">bool</span> <span class="nf">TryGetValue</span><span class="o">(</span><span class="n">TKey</span> <span class="n">key</span><span class="o">,</span> <span class="n">out</span> <span class="n">TValue</span> <span class="n">value</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">FindEntry</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">value</span><span class="o">;</span>
-        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="o">}</span>
-    <span class="n">value</span> <span class="o">=</span> <span class="k">default</span><span class="o">(</span><span class="n">TValue</span><span class="o">);</span>
-    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="kt">bool</span> <span class="nf">TryGetValue</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">,</span> <span class="k">out</span> <span class="n">TValue</span> <span class="k">value</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">FindEntry</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">value</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="k">value</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">value</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">TValue</span><span class="p">);</span>
+    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>与 ContainsKey 同样，他调用的也是FindEntry的接口，来获取Key对应的Value值。</p>
 
 <h6>对[]操作符的重定义，源码:</h6>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="n">TValue</span> <span class="k">this</span><span class="o">[</span><span class="n">TKey</span> <span class="n">key</span><span class="o">]</span> <span class="o">{</span>
-    <span class="n">get</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">FindEntry</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="k">return</span> <span class="n">entries</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">value</span><span class="o">;</span>
-        <span class="n">ThrowHelper</span><span class="o">.</span><span class="na">ThrowKeyNotFoundException</span><span class="o">();</span>
-        <span class="k">return</span> <span class="k">default</span><span class="o">(</span><span class="n">TValue</span><span class="o">);</span>
-    <span class="o">}</span>
-    <span class="n">set</span> <span class="o">{</span>
-        <span class="n">Insert</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="n">TValue</span> <span class="k">this</span><span class="p">[</span><span class="n">TKey</span> <span class="n">key</span><span class="p">]</span> <span class="p">{</span>
+    <span class="k">get</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">FindEntry</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="k">value</span><span class="p">;</span>
+        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowKeyNotFoundException</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nf">default</span><span class="p">(</span><span class="n">TValue</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">set</span> <span class="p">{</span>
+        <span class="n">Insert</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="k">value</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>在重新定义[]符号的代码中，获取元素时也同样使用 FindEntry 函数，而 Set 设置元素时则使用与 Add 调用相同的 Insert函数，它们都是同一套方法，即哈希拉链冲突解决方案。</p>
 
 <h6>从源码剖析来看，哈希冲突的拉链法贯穿了整个底层数据结构。因此哈希函数是关键了，哈希函数的好坏直接决定了效率高低。</h6>
 
 <p>既然这么重要，我们来看看哈希函数的创建过程，比较函数的创建的源码：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">private</span> <span class="kd">static</span> <span class="n">EqualityComparer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">CreateComparer</span><span class="o">()</span>
-<span class="o">{</span>
-    <span class="n">Contract</span><span class="o">.</span><span class="na">Ensures</span><span class="o">(</span><span class="n">Contract</span><span class="o">.</span><span class="na">Result</span><span class="o">&lt;</span><span class="n">EqualityComparer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">private</span> <span class="k">static</span> <span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">CreateComparer</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Contract</span><span class="p">.</span><span class="n">Ensures</span><span class="p">(</span><span class="n">Contract</span><span class="p">.</span><span class="n">Result</span><span class="p">&lt;</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;&gt;()</span> <span class="p">!=</span> <span class="k">null</span><span class="p">);</span>
 
-    <span class="n">RuntimeType</span> <span class="n">t</span> <span class="o">=</span> <span class="o">(</span><span class="n">RuntimeType</span><span class="o">)</span><span class="n">typeof</span><span class="o">(</span><span class="n">T</span><span class="o">);</span>
+    <span class="n">RuntimeType</span> <span class="n">t</span> <span class="p">=</span> <span class="p">(</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
     <span class="c1">// Specialize type byte for performance reasons</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">t</span> <span class="o">==</span> <span class="n">typeof</span><span class="o">(</span><span class="kt">byte</span><span class="o">))</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="o">(</span><span class="n">EqualityComparer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)(</span><span class="n">object</span><span class="o">)(</span><span class="k">new</span> <span class="n">ByteEqualityComparer</span><span class="o">());</span>
-    <span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="p">==</span> <span class="k">typeof</span><span class="p">(</span><span class="kt">byte</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)(</span><span class="kt">object</span><span class="p">)(</span><span class="k">new</span> <span class="n">ByteEqualityComparer</span><span class="p">());</span>
+    <span class="p">}</span>
     <span class="c1">// If T implements IEquatable&lt;T&gt; return a GenericEqualityComparer&lt;T&gt;</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">typeof</span><span class="o">(</span><span class="n">IEquatable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;).</span><span class="na">IsAssignableFrom</span><span class="o">(</span><span class="n">t</span><span class="o">))</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="o">(</span><span class="n">EqualityComparer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="o">.</span><span class="na">CreateInstanceForAnotherGenericParameter</span><span class="o">((</span><span class="n">RuntimeType</span><span class="o">)</span><span class="n">typeof</span><span class="o">(</span><span class="n">GenericEqualityComparer</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;),</span> <span class="n">t</span><span class="o">);</span>
-    <span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">IEquatable</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;).</span><span class="n">IsAssignableFrom</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">GenericEqualityComparer</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;),</span> <span class="n">t</span><span class="p">);</span>
+    <span class="p">}</span>
     <span class="c1">// If T is a Nullable&lt;U&gt; where U implements IEquatable&lt;U&gt; return a NullableEqualityComparer&lt;U&gt;</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">t</span><span class="o">.</span><span class="na">IsGenericType</span> <span class="o">&amp;&amp;</span> <span class="n">t</span><span class="o">.</span><span class="na">GetGenericTypeDefinition</span><span class="o">()</span> <span class="o">==</span> <span class="n">typeof</span><span class="o">(</span><span class="n">Nullable</span><span class="o">&lt;&gt;))</span> <span class="o">{</span>
-        <span class="n">RuntimeType</span> <span class="n">u</span> <span class="o">=</span> <span class="o">(</span><span class="n">RuntimeType</span><span class="o">)</span><span class="n">t</span><span class="o">.</span><span class="na">GetGenericArguments</span><span class="o">()[</span><span class="mi">0</span><span class="o">];</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">typeof</span><span class="o">(</span><span class="n">IEquatable</span><span class="o">&lt;&gt;).</span><span class="na">MakeGenericType</span><span class="o">(</span><span class="n">u</span><span class="o">).</span><span class="na">IsAssignableFrom</span><span class="o">(</span><span class="n">u</span><span class="o">))</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="o">(</span><span class="n">EqualityComparer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="o">.</span><span class="na">CreateInstanceForAnotherGenericParameter</span><span class="o">((</span><span class="n">RuntimeType</span><span class="o">)</span><span class="n">typeof</span><span class="o">(</span><span class="n">NullableEqualityComparer</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;),</span> <span class="n">u</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">IsGenericType</span> <span class="p">&amp;&amp;</span> <span class="n">t</span><span class="p">.</span><span class="n">GetGenericTypeDefinition</span><span class="p">()</span> <span class="p">==</span> <span class="k">typeof</span><span class="p">(</span><span class="n">Nullable</span><span class="p">&lt;&gt;))</span> <span class="p">{</span>
+        <span class="n">RuntimeType</span> <span class="n">u</span> <span class="p">=</span> <span class="p">(</span><span class="n">RuntimeType</span><span class="p">)</span><span class="n">t</span><span class="p">.</span><span class="n">GetGenericArguments</span><span class="p">()[</span><span class="m">0</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">IEquatable</span><span class="p">&lt;&gt;).</span><span class="n">MakeGenericType</span><span class="p">(</span><span class="n">u</span><span class="p">).</span><span class="n">IsAssignableFrom</span><span class="p">(</span><span class="n">u</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">NullableEqualityComparer</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;),</span> <span class="n">u</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
     <span class="c1">// See the METHOD__JIT_HELPERS__UNSAFE_ENUM_CAST and METHOD__JIT_HELPERS__UNSAFE_ENUM_CAST_LONG cases in getILIntrinsicImplementation</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">t</span><span class="o">.</span><span class="na">IsEnum</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">TypeCode</span> <span class="n">underlyingTypeCode</span> <span class="o">=</span> <span class="n">Type</span><span class="o">.</span><span class="na">GetTypeCode</span><span class="o">(</span><span class="n">Enum</span><span class="o">.</span><span class="na">GetUnderlyingType</span><span class="o">(</span><span class="n">t</span><span class="o">));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">IsEnum</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">TypeCode</span> <span class="n">underlyingTypeCode</span> <span class="p">=</span> <span class="n">Type</span><span class="p">.</span><span class="n">GetTypeCode</span><span class="p">(</span><span class="n">Enum</span><span class="p">.</span><span class="n">GetUnderlyingType</span><span class="p">(</span><span class="n">t</span><span class="p">));</span>
 
         <span class="c1">// Depending on the enum type, we need to special case the comparers so that we avoid boxing</span>
         <span class="c1">// Note: We have different comparers for Short and SByte because for those types we need to make sure we call GetHashCode on the actual underlying type as the </span>
         <span class="c1">// implementation of GetHashCode is more complex than for the other types.</span>
-        <span class="k">switch</span> <span class="o">(</span><span class="n">underlyingTypeCode</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="o">.</span><span class="na">Int16</span><span class="o">:</span> <span class="c1">// short</span>
-                <span class="k">return</span> <span class="o">(</span><span class="n">EqualityComparer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="o">.</span><span class="na">CreateInstanceForAnotherGenericParameter</span><span class="o">((</span><span class="n">RuntimeType</span><span class="o">)</span><span class="n">typeof</span><span class="o">(</span><span class="n">ShortEnumEqualityComparer</span><span class="o">&lt;</span><span class="kt">short</span><span class="o">&gt;),</span> <span class="n">t</span><span class="o">);</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="o">.</span><span class="na">SByte</span><span class="o">:</span>
-                <span class="k">return</span> <span class="o">(</span><span class="n">EqualityComparer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="o">.</span><span class="na">CreateInstanceForAnotherGenericParameter</span><span class="o">((</span><span class="n">RuntimeType</span><span class="o">)</span><span class="n">typeof</span><span class="o">(</span><span class="n">SByteEnumEqualityComparer</span><span class="o">&lt;</span><span class="n">sbyte</span><span class="o">&gt;),</span> <span class="n">t</span><span class="o">);</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="o">.</span><span class="na">Int32</span><span class="o">:</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="o">.</span><span class="na">UInt32</span><span class="o">:</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="o">.</span><span class="na">Byte</span><span class="o">:</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="o">.</span><span class="na">UInt16</span><span class="o">:</span> <span class="c1">//ushort</span>
-                <span class="k">return</span> <span class="o">(</span><span class="n">EqualityComparer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="o">.</span><span class="na">CreateInstanceForAnotherGenericParameter</span><span class="o">((</span><span class="n">RuntimeType</span><span class="o">)</span><span class="n">typeof</span><span class="o">(</span><span class="n">EnumEqualityComparer</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;),</span> <span class="n">t</span><span class="o">);</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="o">.</span><span class="na">Int64</span><span class="o">:</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="o">.</span><span class="na">UInt64</span><span class="o">:</span>
-                <span class="k">return</span> <span class="o">(</span><span class="n">EqualityComparer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="o">.</span><span class="na">CreateInstanceForAnotherGenericParameter</span><span class="o">((</span><span class="n">RuntimeType</span><span class="o">)</span><span class="n">typeof</span><span class="o">(</span><span class="n">LongEnumEqualityComparer</span><span class="o">&lt;</span><span class="kt">long</span><span class="o">&gt;),</span> <span class="n">t</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">underlyingTypeCode</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">Int16</span><span class="p">:</span> <span class="c1">// short</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">ShortEnumEqualityComparer</span><span class="p">&lt;</span><span class="kt">short</span><span class="p">&gt;),</span> <span class="n">t</span><span class="p">);</span>
+            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">SByte</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">SByteEnumEqualityComparer</span><span class="p">&lt;</span><span class="kt">sbyte</span><span class="p">&gt;),</span> <span class="n">t</span><span class="p">);</span>
+            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">Int32</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">UInt32</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">Byte</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">UInt16</span><span class="p">:</span> <span class="c1">//ushort</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">EnumEqualityComparer</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;),</span> <span class="n">t</span><span class="p">);</span>
+            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">Int64</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">UInt64</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">LongEnumEqualityComparer</span><span class="p">&lt;</span><span class="kt">long</span><span class="p">&gt;),</span> <span class="n">t</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
     <span class="c1">// Otherwise return an ObjectEqualityComparer&lt;T&gt;</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="n">ObjectEqualityComparer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
-<span class="o">}</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">ObjectEqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;();</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>我们看到源码中，对数字，byte，有‘比较’接口(IEquatable<T>)，和没有‘比较’接口，四种方式进行了区分对待。</p>
 
@@ -661,15 +661,15 @@
 <p>如果什么都不是，就只能使用 ObjectEqualityComparer<T> 默认的对象比较方式来做比较了。</p>
 
 <p>在C#里所有类都继承了 Object 类，所以即使没有特别的重写 Equals 函数，都会使用 Object 类的 Equals 函数:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="n">virtual</span> <span class="n">bool</span> <span class="nf">Equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="k">return</span> <span class="n">RuntimeHelpers</span><span class="o">.</span><span class="na">Equals</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">obj</span><span class="o">);</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">virtual</span> <span class="kt">bool</span> <span class="nf">Equals</span><span class="p">(</span><span class="n">Object</span> <span class="n">obj</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">RuntimeHelpers</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">obj</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="o">[</span><span class="n">System</span><span class="o">.</span><span class="na">Security</span><span class="o">.</span><span class="na">SecuritySafeCritical</span><span class="o">]</span>  <span class="c1">// auto-generated</span>
-<span class="o">[</span><span class="n">ResourceExposure</span><span class="o">(</span><span class="n">ResourceScope</span><span class="o">.</span><span class="na">None</span><span class="o">)]</span>
-<span class="o">[</span><span class="n">MethodImplAttribute</span><span class="o">(</span><span class="n">MethodImplOptions</span><span class="o">.</span><span class="na">InternalCall</span><span class="o">)]</span>
-<span class="kd">public</span> <span class="k">new</span> <span class="kd">static</span> <span class="n">extern</span> <span class="n">bool</span> <span class="nf">Equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">o1</span><span class="o">,</span> <span class="n">Object</span> <span class="n">o2</span><span class="o">);</span>
+<span class="na">[System.Security.SecuritySafeCritical]</span>  <span class="c1">// auto-generated</span>
+<span class="na">[ResourceExposure(ResourceScope.None)]</span>
+<span class="na">[MethodImplAttribute(MethodImplOptions.InternalCall)]</span>
+<span class="k">public</span> <span class="k">new</span> <span class="k">static</span> <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">Equals</span><span class="p">(</span><span class="n">Object</span> <span class="n">o1</span><span class="p">,</span> <span class="n">Object</span> <span class="n">o2</span><span class="p">);</span>
 </code></pre></div>
 <p>而这个 Equals 两个对象的比较，是以内存地址为基准的。</p>
 

@@ -384,23 +384,23 @@
 <p>x轴上的偏导就是 2x2 像素块中 x轴方向上附近的数值之差。同理，y轴上的偏导就是 2x2 像素块中 y轴方向上附近的数值之差。</p>
 
 <p>因此MipMap层级的计算可以描述为</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kt">float</span> <span class="nf">MipmapLevel</span><span class="o">(</span><span class="n">float2</span> <span class="n">uv</span><span class="o">,</span> <span class="n">float2</span> <span class="n">textureSize</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="kt">float</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">ddx</span><span class="o">(</span><span class="n">uv</span> <span class="o">*</span> <span class="n">textureSize</span><span class="o">.</span><span class="na">x</span><span class="o">);</span>
-    <span class="kt">float</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">ddy</span><span class="o">(</span><span class="n">uv</span> <span class="o">*</span> <span class="n">textureSize</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
-    <span class="kt">float</span> <span class="n">d</span> <span class="o">=</span> <span class="n">max</span><span class="o">(</span><span class="n">dot</span><span class="o">(</span><span class="n">dx</span><span class="o">,</span> <span class="n">dx</span><span class="o">),</span> <span class="n">dot</span><span class="o">(</span><span class="n">dy</span><span class="o">,</span> <span class="n">dy</span><span class="o">));</span>  
-    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">log2</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
-<span class="o">}</span> 
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="kt">float</span> <span class="nf">MipmapLevel</span><span class="p">(</span><span class="n">float2</span> <span class="n">uv</span><span class="p">,</span> <span class="n">float2</span> <span class="n">textureSize</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">float</span> <span class="n">dx</span> <span class="p">=</span> <span class="n">ddx</span><span class="p">(</span><span class="n">uv</span> <span class="p">*</span> <span class="n">textureSize</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">dy</span> <span class="p">=</span> <span class="n">ddy</span><span class="p">(</span><span class="n">uv</span> <span class="p">*</span> <span class="n">textureSize</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">d</span> <span class="p">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dx</span><span class="p">),</span> <span class="n">dot</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span> <span class="n">dy</span><span class="p">));</span>  
+    <span class="k">return</span> <span class="m">0.5</span> <span class="p">*</span> <span class="n">log2</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
+<span class="p">}</span> 
 </code></pre></div>
 <p>求出x轴和y轴方向上的覆盖率后，取最大值d(dot(dx,dx)其实就是dx的平方)，再log2后获得Mipmap层级，这里0.5是技巧，本来应该是d的平方。</p>
 
 <p>大部分时候OpenGL已经帮我们做了Mipmap层级的计算，也就是说我们在Shader中使用tex2D(tex, uv)获取颜色的时候就相当于在GPU内部展开成了如下面所示：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">tex2D</span><span class="o">(</span><span class="n">sampler2D</span> <span class="n">tex</span><span class="o">,</span> <span class="n">float4</span> <span class="n">uv</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="kt">float</span> <span class="n">lod</span> <span class="o">=</span> <span class="n">CalcLod</span><span class="o">(</span><span class="n">ddx</span><span class="o">(</span><span class="n">uv</span><span class="o">),</span> <span class="n">ddy</span><span class="o">(</span><span class="n">uv</span><span class="o">));</span>
-    <span class="n">uv</span><span class="o">.</span><span class="na">w</span><span class="o">=</span> <span class="n">lod</span><span class="o">;</span>
-    <span class="k">return</span> <span class="n">tex2Dlod</span><span class="o">(</span><span class="n">tex</span><span class="o">,</span> <span class="n">uv</span><span class="o">);</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">tex2D</span><span class="p">(</span><span class="n">sampler2D</span> <span class="n">tex</span><span class="p">,</span> <span class="n">float4</span> <span class="n">uv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">float</span> <span class="n">lod</span> <span class="p">=</span> <span class="n">CalcLod</span><span class="p">(</span><span class="n">ddx</span><span class="p">(</span><span class="n">uv</span><span class="p">),</span> <span class="n">ddy</span><span class="p">(</span><span class="n">uv</span><span class="p">));</span>
+    <span class="n">uv</span><span class="p">.</span><span class="n">w</span><span class="p">=</span> <span class="n">lod</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nf">tex2Dlod</span><span class="p">(</span><span class="n">tex</span><span class="p">,</span> <span class="n">uv</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>这里的意思是uv所求的导数越大，在屏幕中占用的纹理范围就越大。简单来说就是我们在片元计算中发现uv导数很大时，就说明这个片元离摄像机很远，从这个方面来理解uv的在片元着色器中的求偏导就可以明白，我们只需要通过uv的求偏导就能间接计算出x轴和y轴方向的覆盖率。</p>
 

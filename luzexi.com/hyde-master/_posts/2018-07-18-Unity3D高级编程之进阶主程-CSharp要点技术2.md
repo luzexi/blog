@@ -55,7 +55,7 @@ Hash函数可以有很多种算法，最简单的可以认为是余操作，比�
 
 首先我们来看看源码中对 Dictionary 的变量定义部分，如下:
 
-``` java
+``` c#
 
 public class Dictionary<TKey,TValue>: IDictionary<TKey,TValue>, IDictionary, IReadOnlyDictionary<TKey, TValue>, ISerializable, IDeserializationCallback 
 {
@@ -91,7 +91,7 @@ public class Dictionary<TKey,TValue>: IDictionary<TKey,TValue>, IDictionary, IRe
 
 源代码如下：
 
-``` java
+``` c#
 
 public void Add(TKey key, TValue value)
 {
@@ -203,7 +203,7 @@ private void Insert(TKey key, TValue value, bool add)
 
 它们有专门的方法来计算到底该使用多大的数组，我们查出源码 HashHelpers 中，primes数值是这样定义的:
 
-``` java
+``` c#
 
  public static readonly int[] primes = {
         3, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919,
@@ -265,7 +265,7 @@ public static int ExpandPrime(int oldSize)
 
 紧接着对指定数组单元格内的链表元素做遍历操作，找出空出来的位置将值填入。
 
-``` java
+``` c#
 for (int i = buckets[targetBucket]; i >= 0; i = entries[i].next) {
     if (entries[i].hashCode == hashCode && comparer.Equals(entries[i].key, key)) {
         if (add) { 
@@ -286,7 +286,7 @@ for (int i = buckets[targetBucket]; i >= 0; i = entries[i].next) {
 
 如果数组的空间不够了怎么办？源码中体现了这一点:
 
-``` java
+``` c#
 int index;
 if (freeCount > 0) {
     index = freeList;
@@ -318,7 +318,7 @@ buckets[targetBucket] = index;
 
 ###### Remove 用关键字删除元素的接口源码：
 
-``` java
+``` c#
 
 public bool Remove(TKey key)
 {
@@ -360,7 +360,7 @@ public bool Remove(TKey key)
 
 ###### 我们继续剖析另一个重要的接口 ContainsKey 检测是否包含关键字的接口。源码如下：
 
-``` java
+``` c#
 
 public bool ContainsKey(TKey key)
 {
@@ -390,7 +390,7 @@ private int FindEntry(TKey key)
 
 ###### TryGetValue 尝试获取值的接口:
 
-``` java
+``` c#
 
 public bool TryGetValue(TKey key, out TValue value)
 {
@@ -409,7 +409,7 @@ public bool TryGetValue(TKey key, out TValue value)
 
 ###### 对[]操作符的重定义，源码:
 
-``` java
+``` c#
 
 public TValue this[TKey key] {
     get {
@@ -431,7 +431,7 @@ public TValue this[TKey key] {
 
 既然这么重要，我们来看看哈希函数的创建过程，比较函数的创建的源码：
 
-``` java
+``` c#
 
 private static EqualityComparer<T> CreateComparer()
 {
@@ -494,7 +494,7 @@ private static EqualityComparer<T> CreateComparer()
 
 在C#里所有类都继承了 Object 类，所以即使没有特别的重写 Equals 函数，都会使用 Object 类的 Equals 函数:
 
-``` java
+``` c#
 
 public virtual bool Equals(Object obj)
 {

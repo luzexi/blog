@@ -514,29 +514,29 @@
 <h6>嵌套Protocol Buffer</h6>
 
 <p>我们可以在同一个.proto文件中定义多个message，这样便可以很容易的实现嵌套消息的定义。如：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span>    <span class="n">message</span> <span class="n">Person</span> <span class="o">{</span>
-      <span class="n">required</span> <span class="n">string</span> <span class="n">name</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-      <span class="n">required</span> <span class="n">int32</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
-      <span class="n">optional</span> <span class="n">string</span> <span class="n">email</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span>    <span class="n">message</span> <span class="n">Person</span> <span class="p">{</span>
+      <span class="n">required</span> <span class="kt">string</span> <span class="n">name</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+      <span class="n">required</span> <span class="n">int32</span> <span class="n">id</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+      <span class="n">optional</span> <span class="kt">string</span> <span class="n">email</span> <span class="p">=</span> <span class="m">3</span><span class="p">;</span>
 
-      <span class="kd">enum</span> <span class="n">PhoneType</span> <span class="o">{</span>
-        <span class="n">MOBILE</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="n">HOME</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-        <span class="n">WORK</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
-      <span class="o">}</span>
+      <span class="k">enum</span> <span class="n">PhoneType</span> <span class="p">{</span>
+        <span class="n">MOBILE</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="n">HOME</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+        <span class="n">WORK</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+      <span class="p">}</span>
 
-      <span class="n">message</span> <span class="n">PhoneNumber</span> <span class="o">{</span>
-        <span class="n">required</span> <span class="n">string</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-        <span class="n">optional</span> <span class="n">PhoneType</span> <span class="n">type</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">[</span><span class="k">default</span> <span class="o">=</span> <span class="n">HOME</span><span class="o">];</span>
-      <span class="o">}</span>
+      <span class="n">message</span> <span class="n">PhoneNumber</span> <span class="p">{</span>
+        <span class="n">required</span> <span class="kt">string</span> <span class="n">number</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+        <span class="n">optional</span> <span class="n">PhoneType</span> <span class="n">type</span> <span class="p">=</span> <span class="m">2</span> <span class="p">[</span><span class="k">default</span> <span class="p">=</span> <span class="n">HOME</span><span class="p">];</span>
+      <span class="p">}</span>
 
-      <span class="n">repeated</span> <span class="n">PhoneNumber</span> <span class="n">phones</span> <span class="o">=</span> <span class="mi">4</span><span class="o">;</span>
-      <span class="n">repeated</span> <span class="kt">float</span> <span class="n">weight_recent_months</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">[</span><span class="n">packed</span> <span class="o">=</span> <span class="kc">true</span><span class="o">];</span>
-    <span class="o">}</span>
+      <span class="n">repeated</span> <span class="n">PhoneNumber</span> <span class="n">phones</span> <span class="p">=</span> <span class="m">4</span><span class="p">;</span>
+      <span class="n">repeated</span> <span class="kt">float</span> <span class="n">weight_recent_months</span> <span class="p">=</span> <span class="m">100</span> <span class="p">[</span><span class="n">packed</span> <span class="p">=</span> <span class="k">true</span><span class="p">];</span>
+    <span class="p">}</span>
 
-    <span class="n">message</span> <span class="n">AddressBook</span> <span class="o">{</span>
-      <span class="n">repeated</span> <span class="n">Person</span> <span class="n">people</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-    <span class="o">}</span>
+    <span class="n">message</span> <span class="n">AddressBook</span> <span class="p">{</span>
+      <span class="n">repeated</span> <span class="n">Person</span> <span class="n">people</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+    <span class="p">}</span>
 </code></pre></div>
 <ol>
 <li><p>AddressBook消息的定义中包含另外一个消息类型作为其字段Person，Person又包含了另一个消息类型作为字段PhoneNumber。</p></li>
@@ -577,58 +577,58 @@
 <h6>我们使用上面提到的 AddressBook 数据结构来序列化一个 Protocol Buffer 数据。</h6>
 
 <p>加入数据的伪代码：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">AddressBook</span> <span class="n">address_book</span><span class="o">;</span>
-<span class="n">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="n">address_book</span><span class="o">.</span><span class="na">add_people</span><span class="o">();</span>
-<span class="n">person</span><span class="o">.</span><span class="na">set_id</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-<span class="n">person</span><span class="o">.</span><span class="na">set_name</span><span class="o">(</span><span class="s">&quot;Jack&quot;</span><span class="o">);</span>
-<span class="n">person</span><span class="o">.</span><span class="na">set_email</span><span class="o">(</span><span class="s">&quot;Jack@qq.com&quot;</span><span class="o">);</span>
-<span class="n">Person</span><span class="o">.</span><span class="na">PhoneNumber</span> <span class="n">phone_number</span> <span class="o">=</span> <span class="n">person</span><span class="o">-&gt;</span><span class="n">add_phones</span><span class="o">();</span>
-<span class="n">phone_number</span><span class="o">.</span><span class="na">set_number</span><span class="o">(</span><span class="s">&quot;123456&quot;</span><span class="o">);</span>
-<span class="n">phone_number</span><span class="o">.</span><span class="na">set_type</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">HOME</span><span class="o">);</span>
-<span class="n">phone_number</span> <span class="o">=</span> <span class="n">person</span><span class="o">.</span><span class="na">add_phones</span><span class="o">();</span>
-<span class="n">phone_number</span><span class="o">.</span><span class="na">set_number</span><span class="o">(</span><span class="s">&quot;234567&quot;</span><span class="o">);</span>
-<span class="n">phone_number</span><span class="o">.</span><span class="na">set_type</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">MOBILE</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">AddressBook</span> <span class="n">address_book</span><span class="p">;</span>
+<span class="n">Person</span> <span class="n">person</span> <span class="p">=</span> <span class="n">address_book</span><span class="p">.</span><span class="n">add_people</span><span class="p">();</span>
+<span class="n">person</span><span class="p">.</span><span class="n">set_id</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+<span class="n">person</span><span class="p">.</span><span class="n">set_name</span><span class="p">(</span><span class="s">&quot;Jack&quot;</span><span class="p">);</span>
+<span class="n">person</span><span class="p">.</span><span class="n">set_email</span><span class="p">(</span><span class="s">&quot;Jack@qq.com&quot;</span><span class="p">);</span>
+<span class="n">Person</span><span class="p">.</span><span class="n">PhoneNumber</span> <span class="n">phone_number</span> <span class="p">=</span> <span class="n">person</span><span class="p">-&gt;</span><span class="n">add_phones</span><span class="p">();</span>
+<span class="n">phone_number</span><span class="p">.</span><span class="n">set_number</span><span class="p">(</span><span class="s">&quot;123456&quot;</span><span class="p">);</span>
+<span class="n">phone_number</span><span class="p">.</span><span class="n">set_type</span><span class="p">(</span><span class="n">Person</span><span class="p">.</span><span class="n">HOME</span><span class="p">);</span>
+<span class="n">phone_number</span> <span class="p">=</span> <span class="n">person</span><span class="p">.</span><span class="n">add_phones</span><span class="p">();</span>
+<span class="n">phone_number</span><span class="p">.</span><span class="n">set_number</span><span class="p">(</span><span class="s">&quot;234567&quot;</span><span class="p">);</span>
+<span class="n">phone_number</span><span class="p">.</span><span class="n">set_type</span><span class="p">(</span><span class="n">Person</span><span class="p">.</span><span class="n">MOBILE</span><span class="p">);</span>
 
-<span class="n">person</span><span class="o">-&gt;</span><span class="n">add_weight_recent_months</span><span class="o">(</span><span class="mi">50</span><span class="o">);</span>
-<span class="n">person</span><span class="o">-&gt;</span><span class="n">add_weight_recent_months</span><span class="o">(</span><span class="mi">52</span><span class="o">);</span>
-<span class="n">person</span><span class="o">-&gt;</span><span class="n">add_weight_recent_months</span><span class="o">(</span><span class="mi">54</span><span class="o">);</span>
+<span class="n">person</span><span class="p">-&gt;</span><span class="n">add_weight_recent_months</span><span class="p">(</span><span class="m">50</span><span class="p">);</span>
+<span class="n">person</span><span class="p">-&gt;</span><span class="n">add_weight_recent_months</span><span class="p">(</span><span class="m">52</span><span class="p">);</span>
+<span class="n">person</span><span class="p">-&gt;</span><span class="n">add_weight_recent_months</span><span class="p">(</span><span class="m">54</span><span class="p">);</span>
 </code></pre></div>
 <p>生成出来的二进制数据流如下：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="mi">0</span><span class="n">a</span>    <span class="c1">// (1 &lt;&lt; 3) + 2 = 0a，1为people的标签号,2为嵌入结构对应的类型号</span>
-<span class="mi">3</span><span class="n">c</span>    <span class="c1">// 0x3c = 60，表示接下来60个字节为Person的数据</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="m">0</span><span class="n">a</span>    <span class="c1">// (1 &lt;&lt; 3) + 2 = 0a，1为people的标签号,2为嵌入结构对应的类型号</span>
+<span class="m">3</span><span class="n">c</span>    <span class="c1">// 0x3c = 60，表示接下来60个字节为Person的数据</span>
 
 <span class="c1">// 下面进入到 repeated Person 数组的数据结构</span>
-<span class="mi">0</span><span class="n">a</span>    <span class="c1">// (1 &lt;&lt; 3) + 2 = 0a，Person的第一个字段name的标签号为1，2为string(字符串)对应的类型号</span>
-<span class="mo">04</span>    <span class="c1">// name字段的字符串长度为4</span>
-<span class="mi">4</span><span class="n">a</span> <span class="mi">61</span> <span class="mi">63</span> <span class="mi">6</span><span class="n">b</span>    <span class="c1">// &quot;Jack&quot; 的ascii编码</span>
+<span class="m">0</span><span class="n">a</span>    <span class="c1">// (1 &lt;&lt; 3) + 2 = 0a，Person的第一个字段name的标签号为1，2为string(字符串)对应的类型号</span>
+<span class="m">04</span>    <span class="c1">// name字段的字符串长度为4</span>
+<span class="m">4</span><span class="n">a</span> <span class="m">61</span> <span class="m">63</span> <span class="m">6</span><span class="n">b</span>    <span class="c1">// &quot;Jack&quot; 的ascii编码</span>
 
-<span class="mi">10</span>    <span class="c1">// (2 &lt;&lt; 3) + 0 = 10，字段id的标签号为2，0为int32对应的类型号</span>
-<span class="mo">01</span>    <span class="c1">// id的整型数据为1</span>
+<span class="m">10</span>    <span class="c1">// (2 &lt;&lt; 3) + 0 = 10，字段id的标签号为2，0为int32对应的类型号</span>
+<span class="m">01</span>    <span class="c1">// id的整型数据为1</span>
 
-<span class="mi">1</span><span class="n">a</span>    <span class="c1">// (3 &lt;&lt; 3) + 2 = 1a，字段email的标签号为3，2为string对应的类型号</span>
-<span class="mi">0</span><span class="n">b</span>    <span class="c1">// 0x0b = 11 email字段的字符串长度为11</span>
-<span class="mi">4</span><span class="n">a</span> <span class="mi">61</span> <span class="mi">63</span> <span class="mi">6</span><span class="n">b</span> <span class="mi">40</span> <span class="mi">71</span> <span class="mi">71</span> <span class="mi">2</span><span class="n">e</span> <span class="mi">63</span> <span class="mf">6f</span> <span class="mf">6d</span>        <span class="c1">// &quot;Jack@qq.com&quot;</span>
+<span class="m">1</span><span class="n">a</span>    <span class="c1">// (3 &lt;&lt; 3) + 2 = 1a，字段email的标签号为3，2为string对应的类型号</span>
+<span class="m">0</span><span class="n">b</span>    <span class="c1">// 0x0b = 11 email字段的字符串长度为11</span>
+<span class="m">4</span><span class="n">a</span> <span class="m">61</span> <span class="m">63</span> <span class="m">6</span><span class="n">b</span> <span class="m">40</span> <span class="m">71</span> <span class="m">71</span> <span class="m">2</span><span class="n">e</span> <span class="m">63</span> <span class="m">6f</span> <span class="m">6d</span>        <span class="c1">// &quot;Jack@qq.com&quot;</span>
 
     <span class="c1">//第1个PhoneNumber，嵌套message</span>
-    <span class="mi">22</span>    <span class="c1">// (4 &lt;&lt; 3) + 2 = 22，phones字段，标签号为4，2为嵌套结构对应的类型号</span>
-    <span class="mi">0</span><span class="n">a</span>    <span class="c1">// 0a = 10，接下来10个字节为PhoneNumber的数据</span>
-    <span class="mi">0</span><span class="n">a</span>    <span class="c1">// (1 &lt;&lt; 3) + 2 =  0a, PhoneNumber的number，标签号为1，2为string对应的类型号</span>
-    <span class="mo">06</span>    <span class="c1">// number字段的字符串长度为6</span>
-    <span class="mi">31</span> <span class="mi">32</span> <span class="mi">33</span> <span class="mi">34</span> <span class="mi">35</span> <span class="mi">36</span>    <span class="c1">// &quot;123456&quot;</span>
-    <span class="mi">10</span>   <span class="c1">// (2 &lt;&lt; 3) + 0 = 10，PhoneType type字段，0为enum对应的类型号</span>
-    <span class="mo">01</span>   <span class="c1">// HOME，enum被视为整数</span>
+    <span class="m">22</span>    <span class="c1">// (4 &lt;&lt; 3) + 2 = 22，phones字段，标签号为4，2为嵌套结构对应的类型号</span>
+    <span class="m">0</span><span class="n">a</span>    <span class="c1">// 0a = 10，接下来10个字节为PhoneNumber的数据</span>
+    <span class="m">0</span><span class="n">a</span>    <span class="c1">// (1 &lt;&lt; 3) + 2 =  0a, PhoneNumber的number，标签号为1，2为string对应的类型号</span>
+    <span class="m">06</span>    <span class="c1">// number字段的字符串长度为6</span>
+    <span class="m">31</span> <span class="m">32</span> <span class="m">33</span> <span class="m">34</span> <span class="m">35</span> <span class="m">36</span>    <span class="c1">// &quot;123456&quot;</span>
+    <span class="m">10</span>   <span class="c1">// (2 &lt;&lt; 3) + 0 = 10，PhoneType type字段，0为enum对应的类型号</span>
+    <span class="m">01</span>   <span class="c1">// HOME，enum被视为整数</span>
 
     <span class="c1">// 第2个PhoneNumber，嵌套message</span>
-    <span class="mi">22</span> <span class="mi">0</span><span class="n">a</span> <span class="mi">0</span><span class="n">a</span> <span class="mo">06</span> <span class="mi">32</span> <span class="mi">33</span> <span class="mi">34</span> <span class="mi">35</span> <span class="mi">36</span> <span class="mi">37</span> <span class="mi">10</span> <span class="mo">00</span>  <span class="c1">//信息解读同上，最后的00为MOBILE</span>
+    <span class="m">22</span> <span class="m">0</span><span class="n">a</span> <span class="m">0</span><span class="n">a</span> <span class="m">06</span> <span class="m">32</span> <span class="m">33</span> <span class="m">34</span> <span class="m">35</span> <span class="m">36</span> <span class="m">37</span> <span class="m">10</span> <span class="m">00</span>  <span class="c1">//信息解读同上，最后的00为MOBILE</span>
 
-<span class="n">a2</span> <span class="mo">06</span>   <span class="c1">// 1010 0010 0000 0110 varint方式，weight_recent_months的key</span>
+<span class="n">a2</span> <span class="m">06</span>   <span class="c1">// 1010 0010 0000 0110 varint方式，weight_recent_months的key</span>
         <span class="c1">//  010 0010  000 0110 → 000 0110 0100 010 little-endian存储</span>
         <span class="c1">// (100 &lt;&lt; 3) + 2 = a2 06，100为weight_recent_months的标签号</span>
         <span class="c1">//  2为 packed repeated field的类型号</span>
-<span class="mi">0</span><span class="n">c</span>    <span class="c1">// 0c = 12，后面12个字节为float的数据，每4个字节一个数据</span>
-<span class="mo">00</span> <span class="mo">00</span> <span class="mi">48</span> <span class="mi">42</span> <span class="c1">// float 50</span>
-<span class="mo">00</span> <span class="mo">00</span> <span class="mi">50</span> <span class="mi">42</span> <span class="c1">// float 52</span>
-<span class="mo">00</span> <span class="mo">00</span> <span class="mi">58</span> <span class="mi">42</span> <span class="c1">// float 54</span>
+<span class="m">0</span><span class="n">c</span>    <span class="c1">// 0c = 12，后面12个字节为float的数据，每4个字节一个数据</span>
+<span class="m">00</span> <span class="m">00</span> <span class="m">48</span> <span class="m">42</span> <span class="c1">// float 50</span>
+<span class="m">00</span> <span class="m">00</span> <span class="m">50</span> <span class="m">42</span> <span class="c1">// float 52</span>
+<span class="m">00</span> <span class="m">00</span> <span class="m">58</span> <span class="m">42</span> <span class="c1">// float 54</span>
 </code></pre></div>
 <p>整个数据看下来都是遵循了简单的规则，即，标签号 + 类型号，最为头部标识，数据大小标识，作为可选标识，最后放入具体数据：</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>标签号 + 类型号|数据大小|具体数据
@@ -636,37 +636,37 @@
 <p>具体数据中再嵌套不同种类的数据，也同样遵循 ‘标签号 + 类型号|数据大小|具体数据’ 这样的规则。</p>
 
 <h6>二进制数据流中反序列化为程序对象数据，我们重点看看其中 Person 结构的反序列过程：</h6>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">MergeFrom</span><span class="o">(</span><span class="n">pb</span><span class="o">::</span><span class="n">CodedInputStream</span> <span class="n">input</span><span class="o">)</span> <span class="o">{</span>
-  <span class="n">uint</span> <span class="n">tag</span><span class="o">;</span>
-  <span class="k">while</span> <span class="o">((</span><span class="n">tag</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">ReadTag</span><span class="o">())</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">switch</span><span class="o">(</span><span class="n">tag</span><span class="o">)</span> <span class="o">{</span>
-      <span class="k">default</span><span class="o">:</span>
-        <span class="n">_unknownFields</span> <span class="o">=</span> <span class="n">pb</span><span class="o">::</span><span class="n">UnknownFieldSet</span><span class="o">.</span><span class="na">MergeFieldFrom</span><span class="o">(</span><span class="n">_unknownFields</span><span class="o">,</span> <span class="n">input</span><span class="o">);</span>
-        <span class="k">break</span><span class="o">;</span>
-      <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="o">{</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">ReadString</span><span class="o">();</span>
-        <span class="k">break</span><span class="o">;</span>
-      <span class="o">}</span>
-      <span class="k">case</span> <span class="mi">2</span><span class="o">:</span> <span class="o">{</span>
-        <span class="n">id</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">ReadInt32</span><span class="o">();</span>
-        <span class="k">break</span><span class="o">;</span>
-      <span class="o">}</span>
-      <span class="k">case</span> <span class="mi">3</span><span class="o">:</span> <span class="o">{</span>
-        <span class="n">email</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">ReadString</span><span class="o">();</span>
-        <span class="k">break</span><span class="o">;</span>
-      <span class="o">}</span>
-      <span class="k">case</span> <span class="mi">4</span><span class="o">:</span> <span class="o">{</span>
-        <span class="n">phones_</span><span class="o">.</span><span class="na">AddEntriesFrom</span><span class="o">(</span><span class="n">input</span><span class="o">,</span> <span class="n">_repeated_phones_codec</span><span class="o">);</span>
-        <span class="k">break</span><span class="o">;</span>
-      <span class="o">}</span>
-      <span class="k">case</span> <span class="mi">100</span><span class="o">:</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">void</span> <span class="nf">MergeFrom</span><span class="p">(</span><span class="n">pb</span><span class="p">::</span><span class="n">CodedInputStream</span> <span class="n">input</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">uint</span> <span class="n">tag</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">((</span><span class="n">tag</span> <span class="p">=</span> <span class="n">input</span><span class="p">.</span><span class="n">ReadTag</span><span class="p">())</span> <span class="p">!=</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">default</span><span class="p">:</span>
+        <span class="n">_unknownFields</span> <span class="p">=</span> <span class="n">pb</span><span class="p">::</span><span class="n">UnknownFieldSet</span><span class="p">.</span><span class="n">MergeFieldFrom</span><span class="p">(</span><span class="n">_unknownFields</span><span class="p">,</span> <span class="n">input</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="m">1</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">name</span> <span class="p">=</span> <span class="n">input</span><span class="p">.</span><span class="n">ReadString</span><span class="p">();</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">case</span> <span class="m">2</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">id</span> <span class="p">=</span> <span class="n">input</span><span class="p">.</span><span class="n">ReadInt32</span><span class="p">();</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">case</span> <span class="m">3</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">email</span> <span class="p">=</span> <span class="n">input</span><span class="p">.</span><span class="n">ReadString</span><span class="p">();</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">case</span> <span class="m">4</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">phones_</span><span class="p">.</span><span class="n">AddEntriesFrom</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">_repeated_phones_codec</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">case</span> <span class="m">100</span><span class="p">:</span> <span class="p">{</span>
 
-        <span class="n">weight_recent_months_</span><span class="o">.</span><span class="na">AddEntriesFrom</span><span class="o">(</span><span class="n">input</span><span class="o">,</span> <span class="n">_repeated_weight_recent_months_codec</span><span class="o">);</span>
-        <span class="k">break</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-<span class="o">}</span>
+        <span class="n">weight_recent_months_</span><span class="p">.</span><span class="n">AddEntriesFrom</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">_repeated_weight_recent_months_codec</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>通过上述Protocol Buffer生成的代码我们了解到，所有的对象变量都通过.proto文件中的标签号来识别数据是否与该变量有映射关系的，当拿到具体数据时，先判定属于哪个变量，再针对该变量的类型读取数据。</p>
 

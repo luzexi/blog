@@ -253,41 +253,41 @@
 <p>里面四个文件，其中一个是静态类，一个是接口类。</p>
 
 <p>代码不多，但其中Clipping 类中有2个函数比较重要，常常被用在Mask的裁剪上，如下：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">Rect</span> <span class="nf">FindCullAndClipWorldRect</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">RectMask2D</span><span class="o">&gt;</span> <span class="n">rectMaskParents</span><span class="o">,</span> <span class="n">out</span> <span class="n">bool</span> <span class="n">validRect</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">rectMaskParents</span><span class="o">.</span><span class="na">Count</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">validRect</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">Rect</span><span class="o">();</span>
-    <span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">static</span> <span class="n">Rect</span> <span class="nf">FindCullAndClipWorldRect</span><span class="p">(</span><span class="n">List</span><span class="p">&lt;</span><span class="n">RectMask2D</span><span class="p">&gt;</span> <span class="n">rectMaskParents</span><span class="p">,</span> <span class="k">out</span> <span class="kt">bool</span> <span class="n">validRect</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rectMaskParents</span><span class="p">.</span><span class="n">Count</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">validRect</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Rect</span><span class="p">();</span>
+    <span class="p">}</span>
 
-    <span class="n">var</span> <span class="n">compoundRect</span> <span class="o">=</span> <span class="n">rectMaskParents</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">canvasRect</span><span class="o">;</span>
-    <span class="k">for</span> <span class="o">(</span><span class="n">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">rectMaskParents</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span>
-        <span class="n">compoundRect</span> <span class="o">=</span> <span class="n">RectIntersect</span><span class="o">(</span><span class="n">compoundRect</span><span class="o">,</span> <span class="n">rectMaskParents</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">canvasRect</span><span class="o">);</span>
+    <span class="kt">var</span> <span class="n">compoundRect</span> <span class="p">=</span> <span class="n">rectMaskParents</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">canvasRect</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">var</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">rectMaskParents</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">compoundRect</span> <span class="p">=</span> <span class="n">RectIntersect</span><span class="p">(</span><span class="n">compoundRect</span><span class="p">,</span> <span class="n">rectMaskParents</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">canvasRect</span><span class="p">);</span>
 
-    <span class="n">var</span> <span class="n">cull</span> <span class="o">=</span> <span class="n">compoundRect</span><span class="o">.</span><span class="na">width</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">compoundRect</span><span class="o">.</span><span class="na">height</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">;</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">cull</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">validRect</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">Rect</span><span class="o">();</span>
-    <span class="o">}</span>
+    <span class="kt">var</span> <span class="n">cull</span> <span class="p">=</span> <span class="n">compoundRect</span><span class="p">.</span><span class="n">width</span> <span class="p">&lt;=</span> <span class="m">0</span> <span class="p">||</span> <span class="n">compoundRect</span><span class="p">.</span><span class="n">height</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">cull</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">validRect</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Rect</span><span class="p">();</span>
+    <span class="p">}</span>
 
-    <span class="n">Vector3</span> <span class="n">point1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="o">(</span><span class="n">compoundRect</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">compoundRect</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="mf">0.0f</span><span class="o">);</span>
-    <span class="n">Vector3</span> <span class="n">point2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="o">(</span><span class="n">compoundRect</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">compoundRect</span><span class="o">.</span><span class="na">width</span><span class="o">,</span> <span class="n">compoundRect</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">compoundRect</span><span class="o">.</span><span class="na">height</span><span class="o">,</span> <span class="mf">0.0f</span><span class="o">);</span>
-    <span class="n">validRect</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="n">Rect</span><span class="o">(</span><span class="n">point1</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">point1</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">point2</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">point1</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">point2</span><span class="o">.</span><span class="na">y</span> <span class="o">-</span> <span class="n">point1</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
-<span class="o">}</span>
+    <span class="n">Vector3</span> <span class="n">point1</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">compoundRect</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">compoundRect</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="m">0.0f</span><span class="p">);</span>
+    <span class="n">Vector3</span> <span class="n">point2</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">compoundRect</span><span class="p">.</span><span class="n">x</span> <span class="p">+</span> <span class="n">compoundRect</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">compoundRect</span><span class="p">.</span><span class="n">y</span> <span class="p">+</span> <span class="n">compoundRect</span><span class="p">.</span><span class="n">height</span><span class="p">,</span> <span class="m">0.0f</span><span class="p">);</span>
+    <span class="n">validRect</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">Rect</span><span class="p">(</span><span class="n">point1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">point1</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">point2</span><span class="p">.</span><span class="n">x</span> <span class="p">-</span> <span class="n">point1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">point2</span><span class="p">.</span><span class="n">y</span> <span class="p">-</span> <span class="n">point1</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="kd">private</span> <span class="kd">static</span> <span class="n">Rect</span> <span class="nf">RectIntersect</span><span class="o">(</span><span class="n">Rect</span> <span class="n">a</span><span class="o">,</span> <span class="n">Rect</span> <span class="n">b</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="kt">float</span> <span class="n">xMin</span> <span class="o">=</span> <span class="n">Mathf</span><span class="o">.</span><span class="na">Max</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">x</span><span class="o">);</span>
-    <span class="kt">float</span> <span class="n">xMax</span> <span class="o">=</span> <span class="n">Mathf</span><span class="o">.</span><span class="na">Min</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">width</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="na">width</span><span class="o">);</span>
-    <span class="kt">float</span> <span class="n">yMin</span> <span class="o">=</span> <span class="n">Mathf</span><span class="o">.</span><span class="na">Max</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
-    <span class="kt">float</span> <span class="n">yMax</span> <span class="o">=</span> <span class="n">Mathf</span><span class="o">.</span><span class="na">Min</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">height</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="na">height</span><span class="o">);</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">xMax</span> <span class="o">&gt;=</span> <span class="n">xMin</span> <span class="o">&amp;&amp;</span> <span class="n">yMax</span> <span class="o">&gt;=</span> <span class="n">yMin</span><span class="o">)</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">Rect</span><span class="o">(</span><span class="n">xMin</span><span class="o">,</span> <span class="n">yMin</span><span class="o">,</span> <span class="n">xMax</span> <span class="o">-</span> <span class="n">xMin</span><span class="o">,</span> <span class="n">yMax</span> <span class="o">-</span> <span class="n">yMin</span><span class="o">);</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="n">Rect</span><span class="o">(</span><span class="mf">0f</span><span class="o">,</span> <span class="mf">0f</span><span class="o">,</span> <span class="mf">0f</span><span class="o">,</span> <span class="mf">0f</span><span class="o">);</span>
-<span class="o">}</span>
+<span class="k">private</span> <span class="k">static</span> <span class="n">Rect</span> <span class="nf">RectIntersect</span><span class="p">(</span><span class="n">Rect</span> <span class="n">a</span><span class="p">,</span> <span class="n">Rect</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">float</span> <span class="n">xMin</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Max</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">xMax</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Min</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="p">+</span> <span class="n">a</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span> <span class="p">+</span> <span class="n">b</span><span class="p">.</span><span class="n">width</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">yMin</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Max</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">yMax</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Min</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="p">+</span> <span class="n">a</span><span class="p">.</span><span class="n">height</span><span class="p">,</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span> <span class="p">+</span> <span class="n">b</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">xMax</span> <span class="p">&gt;=</span> <span class="n">xMin</span> <span class="p">&amp;&amp;</span> <span class="n">yMax</span> <span class="p">&gt;=</span> <span class="n">yMin</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Rect</span><span class="p">(</span><span class="n">xMin</span><span class="p">,</span> <span class="n">yMin</span><span class="p">,</span> <span class="n">xMax</span> <span class="p">-</span> <span class="n">xMin</span><span class="p">,</span> <span class="n">yMax</span> <span class="p">-</span> <span class="n">yMin</span><span class="p">);</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">Rect</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>上述中，Clipping 类的函数里，第一个函数 FindCullAndClipWorldRect 的意义是，将很多 RectMask2D 重叠部分，计算出它们的重叠部分的区域。第二个函数 RectIntersect 为第一函数提供了计算服务，其意义是计算两个矩阵的重叠部分。</p>
 
@@ -306,42 +306,42 @@
 <p>另外 CanvasScaler 做的功能非常重要，它操作的是 Canvas 整个画布针对不同屏幕进行的自适应调整。</p>
 
 <p>我们着重来看看 CanvasScaler 里的代码，其CanvasScaler的核心函数:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">protected</span> <span class="n">virtual</span> <span class="kt">void</span> <span class="nf">HandleScaleWithScreenSize</span><span class="o">()</span>
-<span class="o">{</span>
-    <span class="n">Vector2</span> <span class="n">screenSize</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="o">(</span><span class="n">Screen</span><span class="o">.</span><span class="na">width</span><span class="o">,</span> <span class="n">Screen</span><span class="o">.</span><span class="na">height</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">protected</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">HandleScaleWithScreenSize</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Vector2</span> <span class="n">screenSize</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">Screen</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">Screen</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
 
-    <span class="kt">float</span> <span class="n">scaleFactor</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-    <span class="k">switch</span> <span class="o">(</span><span class="n">m_ScreenMatchMode</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="k">case</span> <span class="n">ScreenMatchMode</span><span class="o">.</span><span class="na">MatchWidthOrHeight</span><span class="o">:</span>
-        <span class="o">{</span>
+    <span class="kt">float</span> <span class="n">scaleFactor</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">m_ScreenMatchMode</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">case</span> <span class="n">ScreenMatchMode</span><span class="p">.</span><span class="n">MatchWidthOrHeight</span><span class="p">:</span>
+        <span class="p">{</span>
             <span class="c1">// We take the log of the relative width and height before taking the average.</span>
             <span class="c1">// Then we transform it back in the original space.</span>
             <span class="c1">// the reason to transform in and out of logarithmic space is to have better behavior.</span>
             <span class="c1">// If one axis has twice resolution and the other has half, it should even out if widthOrHeight value is at 0.5.</span>
             <span class="c1">// In normal space the average would be (0.5 + 2) / 2 = 1.25</span>
             <span class="c1">// In logarithmic space the average is (-1 + 1) / 2 = 0</span>
-            <span class="kt">float</span> <span class="n">logWidth</span> <span class="o">=</span> <span class="n">Mathf</span><span class="o">.</span><span class="na">Log</span><span class="o">(</span><span class="n">screenSize</span><span class="o">.</span><span class="na">x</span> <span class="o">/</span> <span class="n">m_ReferenceResolution</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">kLogBase</span><span class="o">);</span>
-            <span class="kt">float</span> <span class="n">logHeight</span> <span class="o">=</span> <span class="n">Mathf</span><span class="o">.</span><span class="na">Log</span><span class="o">(</span><span class="n">screenSize</span><span class="o">.</span><span class="na">y</span> <span class="o">/</span> <span class="n">m_ReferenceResolution</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">kLogBase</span><span class="o">);</span>
-            <span class="kt">float</span> <span class="n">logWeightedAverage</span> <span class="o">=</span> <span class="n">Mathf</span><span class="o">.</span><span class="na">Lerp</span><span class="o">(</span><span class="n">logWidth</span><span class="o">,</span> <span class="n">logHeight</span><span class="o">,</span> <span class="n">m_MatchWidthOrHeight</span><span class="o">);</span>
-            <span class="n">scaleFactor</span> <span class="o">=</span> <span class="n">Mathf</span><span class="o">.</span><span class="na">Pow</span><span class="o">(</span><span class="n">kLogBase</span><span class="o">,</span> <span class="n">logWeightedAverage</span><span class="o">);</span>
-            <span class="k">break</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="k">case</span> <span class="n">ScreenMatchMode</span><span class="o">.</span><span class="na">Expand</span><span class="o">:</span>
-        <span class="o">{</span>
-            <span class="n">scaleFactor</span> <span class="o">=</span> <span class="n">Mathf</span><span class="o">.</span><span class="na">Min</span><span class="o">(</span><span class="n">screenSize</span><span class="o">.</span><span class="na">x</span> <span class="o">/</span> <span class="n">m_ReferenceResolution</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">screenSize</span><span class="o">.</span><span class="na">y</span> <span class="o">/</span> <span class="n">m_ReferenceResolution</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
-            <span class="k">break</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="k">case</span> <span class="n">ScreenMatchMode</span><span class="o">.</span><span class="na">Shrink</span><span class="o">:</span>
-        <span class="o">{</span>
-            <span class="n">scaleFactor</span> <span class="o">=</span> <span class="n">Mathf</span><span class="o">.</span><span class="na">Max</span><span class="o">(</span><span class="n">screenSize</span><span class="o">.</span><span class="na">x</span> <span class="o">/</span> <span class="n">m_ReferenceResolution</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">screenSize</span><span class="o">.</span><span class="na">y</span> <span class="o">/</span> <span class="n">m_ReferenceResolution</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
-            <span class="k">break</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
+            <span class="kt">float</span> <span class="n">logWidth</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="n">screenSize</span><span class="p">.</span><span class="n">x</span> <span class="p">/</span> <span class="n">m_ReferenceResolution</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">kLogBase</span><span class="p">);</span>
+            <span class="kt">float</span> <span class="n">logHeight</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="n">screenSize</span><span class="p">.</span><span class="n">y</span> <span class="p">/</span> <span class="n">m_ReferenceResolution</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">kLogBase</span><span class="p">);</span>
+            <span class="kt">float</span> <span class="n">logWeightedAverage</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Lerp</span><span class="p">(</span><span class="n">logWidth</span><span class="p">,</span> <span class="n">logHeight</span><span class="p">,</span> <span class="n">m_MatchWidthOrHeight</span><span class="p">);</span>
+            <span class="n">scaleFactor</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Pow</span><span class="p">(</span><span class="n">kLogBase</span><span class="p">,</span> <span class="n">logWeightedAverage</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">case</span> <span class="n">ScreenMatchMode</span><span class="p">.</span><span class="n">Expand</span><span class="p">:</span>
+        <span class="p">{</span>
+            <span class="n">scaleFactor</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Min</span><span class="p">(</span><span class="n">screenSize</span><span class="p">.</span><span class="n">x</span> <span class="p">/</span> <span class="n">m_ReferenceResolution</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">screenSize</span><span class="p">.</span><span class="n">y</span> <span class="p">/</span> <span class="n">m_ReferenceResolution</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">case</span> <span class="n">ScreenMatchMode</span><span class="p">.</span><span class="n">Shrink</span><span class="p">:</span>
+        <span class="p">{</span>
+            <span class="n">scaleFactor</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Max</span><span class="p">(</span><span class="n">screenSize</span><span class="p">.</span><span class="n">x</span> <span class="p">/</span> <span class="n">m_ReferenceResolution</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">screenSize</span><span class="p">.</span><span class="n">y</span> <span class="p">/</span> <span class="n">m_ReferenceResolution</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    <span class="n">SetScaleFactor</span><span class="o">(</span><span class="n">scaleFactor</span><span class="o">);</span>
-    <span class="n">SetReferencePixelsPerUnit</span><span class="o">(</span><span class="n">m_ReferencePixelsPerUnit</span><span class="o">);</span>
-<span class="o">}</span>
+    <span class="n">SetScaleFactor</span><span class="p">(</span><span class="n">scaleFactor</span><span class="p">);</span>
+    <span class="n">SetReferencePixelsPerUnit</span><span class="p">(</span><span class="n">m_ReferencePixelsPerUnit</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>不同 ScreenMathMode 模式下 CanvasScaler 对屏幕的适应算法，包括优先匹配长或宽的，最小化固定拉伸的，以及最大化固定拉伸三种数学计算方式。其中代码中在优先匹配长或宽算法中，介绍了使用Log和Pow来计算缩放比例可以表现的更好。</p>
 
@@ -376,30 +376,30 @@
 <p>IMeshModifier 是关键接口，在下面的渲染核心类 Graphic 中会获取所有拥有这个接口的组件，然后依次遍历并调用 ModifyMesh 接口来触发改变图像网格的效果。</p>
 
 <p>当前在源码中拥有的二次效果包括，Outline(包边框)，Shadow(阴影)，PositionAsUV1(位置UV) 都继承了 BaseMeshEffect 基类，并实现了关键接口 ModifyMesh。其中 Outline 继承自 Shadow， 他们的共同的关键代码，我们可以重点看一下：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">ApplyShadowZeroAlloc</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">UIVertex</span><span class="o">&gt;</span> <span class="n">verts</span><span class="o">,</span> <span class="n">Color32</span> <span class="n">color</span><span class="o">,</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">end</span><span class="o">,</span> <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="n">UIVertex</span> <span class="n">vt</span><span class="o">;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">protected</span> <span class="k">void</span> <span class="nf">ApplyShadowZeroAlloc</span><span class="p">(</span><span class="n">List</span><span class="p">&lt;</span><span class="n">UIVertex</span><span class="p">&gt;</span> <span class="n">verts</span><span class="p">,</span> <span class="n">Color32</span> <span class="n">color</span><span class="p">,</span> <span class="kt">int</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">end</span><span class="p">,</span> <span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">UIVertex</span> <span class="n">vt</span><span class="p">;</span>
 
-    <span class="n">var</span> <span class="n">neededCpacity</span> <span class="o">=</span> <span class="n">verts</span><span class="o">.</span><span class="na">Count</span> <span class="o">*</span> <span class="mi">2</span><span class="o">;</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">verts</span><span class="o">.</span><span class="na">Capacity</span> <span class="o">&lt;</span> <span class="n">neededCpacity</span><span class="o">)</span>
-        <span class="n">verts</span><span class="o">.</span><span class="na">Capacity</span> <span class="o">=</span> <span class="n">neededCpacity</span><span class="o">;</span>
+    <span class="kt">var</span> <span class="n">neededCpacity</span> <span class="p">=</span> <span class="n">verts</span><span class="p">.</span><span class="n">Count</span> <span class="p">*</span> <span class="m">2</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">verts</span><span class="p">.</span><span class="n">Capacity</span> <span class="p">&lt;</span> <span class="n">neededCpacity</span><span class="p">)</span>
+        <span class="n">verts</span><span class="p">.</span><span class="n">Capacity</span> <span class="p">=</span> <span class="n">neededCpacity</span><span class="p">;</span>
 
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">end</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">vt</span> <span class="o">=</span> <span class="n">verts</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-        <span class="n">verts</span><span class="o">.</span><span class="na">Add</span><span class="o">(</span><span class="n">vt</span><span class="o">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">end</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">vt</span> <span class="p">=</span> <span class="n">verts</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">verts</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">vt</span><span class="p">);</span>
 
-        <span class="n">Vector3</span> <span class="n">v</span> <span class="o">=</span> <span class="n">vt</span><span class="o">.</span><span class="na">position</span><span class="o">;</span>
-        <span class="n">v</span><span class="o">.</span><span class="na">x</span> <span class="o">+=</span> <span class="n">x</span><span class="o">;</span>
-        <span class="n">v</span><span class="o">.</span><span class="na">y</span> <span class="o">+=</span> <span class="n">y</span><span class="o">;</span>
-        <span class="n">vt</span><span class="o">.</span><span class="na">position</span> <span class="o">=</span> <span class="n">v</span><span class="o">;</span>
-        <span class="n">var</span> <span class="n">newColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">;</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">m_UseGraphicAlpha</span><span class="o">)</span>
-            <span class="n">newColor</span><span class="o">.</span><span class="na">a</span> <span class="o">=</span> <span class="o">(</span><span class="kt">byte</span><span class="o">)((</span><span class="n">newColor</span><span class="o">.</span><span class="na">a</span> <span class="o">*</span> <span class="n">verts</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">color</span><span class="o">.</span><span class="na">a</span><span class="o">)</span> <span class="o">/</span> <span class="mi">255</span><span class="o">);</span>
-        <span class="n">vt</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">newColor</span><span class="o">;</span>
-        <span class="n">verts</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">vt</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+        <span class="n">Vector3</span> <span class="n">v</span> <span class="p">=</span> <span class="n">vt</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+        <span class="n">v</span><span class="p">.</span><span class="n">x</span> <span class="p">+=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">v</span><span class="p">.</span><span class="n">y</span> <span class="p">+=</span> <span class="n">y</span><span class="p">;</span>
+        <span class="n">vt</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="n">v</span><span class="p">;</span>
+        <span class="kt">var</span> <span class="n">newColor</span> <span class="p">=</span> <span class="n">color</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">m_UseGraphicAlpha</span><span class="p">)</span>
+            <span class="n">newColor</span><span class="p">.</span><span class="n">a</span> <span class="p">=</span> <span class="p">(</span><span class="kt">byte</span><span class="p">)((</span><span class="n">newColor</span><span class="p">.</span><span class="n">a</span> <span class="p">*</span> <span class="n">verts</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">color</span><span class="p">.</span><span class="n">a</span><span class="p">)</span> <span class="p">/</span> <span class="m">255</span><span class="p">);</span>
+        <span class="n">vt</span><span class="p">.</span><span class="n">color</span> <span class="p">=</span> <span class="n">newColor</span><span class="p">;</span>
+        <span class="n">verts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">vt</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>此函数作用是，在原有的Mesh顶点基础上，加入新的顶点，这些新的顶点复制了原来的顶点数据，修改颜色并向外扩充，使得原图形外渲染出外描边或者阴影。</p>
 
@@ -412,180 +412,180 @@
 <h6>我们首先来看 Graphic 核心部分，它有两个地方比较重要，这两个地方揭示了 Graphic 的运作机制。</h6>
 
 <p>第一个如下：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="n">virtual</span> <span class="kt">void</span> <span class="nf">SetAllDirty</span><span class="o">()</span>
-<span class="o">{</span>
-    <span class="n">SetLayoutDirty</span><span class="o">();</span>
-    <span class="n">SetVerticesDirty</span><span class="o">();</span>
-    <span class="n">SetMaterialDirty</span><span class="o">();</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">SetAllDirty</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">SetLayoutDirty</span><span class="p">();</span>
+    <span class="n">SetVerticesDirty</span><span class="p">();</span>
+    <span class="n">SetMaterialDirty</span><span class="p">();</span>
+<span class="p">}</span>
 
-<span class="kd">public</span> <span class="n">virtual</span> <span class="kt">void</span> <span class="nf">SetLayoutDirty</span><span class="o">()</span>
-<span class="o">{</span>
-    <span class="k">if</span> <span class="o">(!</span><span class="n">IsActive</span><span class="o">())</span>
-        <span class="k">return</span><span class="o">;</span>
+<span class="k">public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">SetLayoutDirty</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">IsActive</span><span class="p">())</span>
+        <span class="k">return</span><span class="p">;</span>
 
-    <span class="n">LayoutRebuilder</span><span class="o">.</span><span class="na">MarkLayoutForRebuild</span><span class="o">(</span><span class="n">rectTransform</span><span class="o">);</span>
+    <span class="n">LayoutRebuilder</span><span class="p">.</span><span class="n">MarkLayoutForRebuild</span><span class="p">(</span><span class="n">rectTransform</span><span class="p">);</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">m_OnDirtyLayoutCallback</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-        <span class="n">m_OnDirtyLayoutCallback</span><span class="o">();</span>
-<span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">m_OnDirtyLayoutCallback</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="n">m_OnDirtyLayoutCallback</span><span class="p">();</span>
+<span class="p">}</span>
 
-<span class="kd">public</span> <span class="n">virtual</span> <span class="kt">void</span> <span class="nf">SetVerticesDirty</span><span class="o">()</span>
-<span class="o">{</span>
-    <span class="k">if</span> <span class="o">(!</span><span class="n">IsActive</span><span class="o">())</span>
-        <span class="k">return</span><span class="o">;</span>
+<span class="k">public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">SetVerticesDirty</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">IsActive</span><span class="p">())</span>
+        <span class="k">return</span><span class="p">;</span>
 
-    <span class="n">m_VertsDirty</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="n">CanvasUpdateRegistry</span><span class="o">.</span><span class="na">RegisterCanvasElementForGraphicRebuild</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="n">m_VertsDirty</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="n">CanvasUpdateRegistry</span><span class="p">.</span><span class="n">RegisterCanvasElementForGraphicRebuild</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">m_OnDirtyVertsCallback</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-        <span class="n">m_OnDirtyVertsCallback</span><span class="o">();</span>
-<span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">m_OnDirtyVertsCallback</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="n">m_OnDirtyVertsCallback</span><span class="p">();</span>
+<span class="p">}</span>
 
-<span class="kd">public</span> <span class="n">virtual</span> <span class="kt">void</span> <span class="nf">SetMaterialDirty</span><span class="o">()</span>
-<span class="o">{</span>
-    <span class="k">if</span> <span class="o">(!</span><span class="n">IsActive</span><span class="o">())</span>
-        <span class="k">return</span><span class="o">;</span>
+<span class="k">public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">SetMaterialDirty</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">IsActive</span><span class="p">())</span>
+        <span class="k">return</span><span class="p">;</span>
 
-    <span class="n">m_MaterialDirty</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="n">CanvasUpdateRegistry</span><span class="o">.</span><span class="na">RegisterCanvasElementForGraphicRebuild</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="n">m_MaterialDirty</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="n">CanvasUpdateRegistry</span><span class="p">.</span><span class="n">RegisterCanvasElementForGraphicRebuild</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">m_OnDirtyMaterialCallback</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-        <span class="n">m_OnDirtyMaterialCallback</span><span class="o">();</span>
-<span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">m_OnDirtyMaterialCallback</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="n">m_OnDirtyMaterialCallback</span><span class="p">();</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>上述代码中，SetAllDirty 设置并通知元素需要重新布局、重新构建网格、以及重新构建材质球。 它通知 LayoutRebuilder 布局管理类进行重新布局，在 LayoutRebuilder.MarkLayoutForRebuild 中它调用 CanvasUpdateRegistry.TryRegisterCanvasElementForLayoutRebuild 加入重构队伍，最终重构布局。</p>
 
 <p>SetLayoutDirty、SetVerticesDirty、SetMaterialDirty 都调用了 CanvasUpdateRegistry.RegisterCanvasElementForGraphicRebuild，它被调用时可以认为是通知它去重新重构Mesh，但它并没有立即重新构建，而是将需要重构的元件数据加入到IndexedSet<ICanvasElement>容器中，等待下次重构。注意，CanvasUpdateRegistry 只负责重构Mesh网格，并不负责渲染和合并。我们来看看 CanvasUpdateRegistry 的RegisterCanvasElementForGraphicRebuild 函数部分:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">RegisterCanvasElementForGraphicRebuild</span><span class="o">(</span><span class="n">ICanvasElement</span> <span class="n">element</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="n">instance</span><span class="o">.</span><span class="na">InternalRegisterCanvasElementForGraphicRebuild</span><span class="o">(</span><span class="n">element</span><span class="o">);</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">RegisterCanvasElementForGraphicRebuild</span><span class="p">(</span><span class="n">ICanvasElement</span> <span class="n">element</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">instance</span><span class="p">.</span><span class="n">InternalRegisterCanvasElementForGraphicRebuild</span><span class="p">(</span><span class="n">element</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="n">bool</span> <span class="nf">TryRegisterCanvasElementForGraphicRebuild</span><span class="o">(</span><span class="n">ICanvasElement</span> <span class="n">element</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="k">return</span> <span class="n">instance</span><span class="o">.</span><span class="na">InternalRegisterCanvasElementForGraphicRebuild</span><span class="o">(</span><span class="n">element</span><span class="o">);</span>
-<span class="o">}</span>
+<span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">TryRegisterCanvasElementForGraphicRebuild</span><span class="p">(</span><span class="n">ICanvasElement</span> <span class="n">element</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">instance</span><span class="p">.</span><span class="n">InternalRegisterCanvasElementForGraphicRebuild</span><span class="p">(</span><span class="n">element</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="kd">private</span> <span class="n">bool</span> <span class="nf">InternalRegisterCanvasElementForGraphicRebuild</span><span class="o">(</span><span class="n">ICanvasElement</span> <span class="n">element</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">m_PerformingGraphicUpdate</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">Debug</span><span class="o">.</span><span class="na">LogError</span><span class="o">(</span><span class="n">string</span><span class="o">.</span><span class="na">Format</span><span class="o">(</span><span class="s">&quot;Trying to add {0} for graphic rebuild while we are already inside a graphic rebuild loop. This is not supported.&quot;</span><span class="o">,</span> <span class="n">element</span><span class="o">));</span>
-        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-    <span class="o">}</span>
+<span class="k">private</span> <span class="kt">bool</span> <span class="nf">InternalRegisterCanvasElementForGraphicRebuild</span><span class="p">(</span><span class="n">ICanvasElement</span> <span class="n">element</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">m_PerformingGraphicUpdate</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Trying to add {0} for graphic rebuild while we are already inside a graphic rebuild loop. This is not supported.&quot;</span><span class="p">,</span> <span class="n">element</span><span class="p">));</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">m_GraphicRebuildQueue</span><span class="o">.</span><span class="na">Contains</span><span class="o">(</span><span class="n">element</span><span class="o">))</span>
-        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">m_GraphicRebuildQueue</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
 
-    <span class="n">m_GraphicRebuildQueue</span><span class="o">.</span><span class="na">Add</span><span class="o">(</span><span class="n">element</span><span class="o">);</span>
-    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-<span class="o">}</span>
+    <span class="n">m_GraphicRebuildQueue</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">element</span><span class="p">);</span>
+    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>上述代码中，InternalRegisterCanvasElementForGraphicRebuild 将元素放入重构队列中等待下一次重构。</p>
 
 <p>以及重构时的逻辑:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">private</span> <span class="kd">static</span> <span class="n">readonly</span> <span class="n">Comparison</span><span class="o">&lt;</span><span class="n">ICanvasElement</span><span class="o">&gt;</span> <span class="n">s_SortLayoutFunction</span> <span class="o">=</span> <span class="n">SortLayoutList</span><span class="o">;</span>
-<span class="kd">private</span> <span class="kt">void</span> <span class="nf">PerformUpdate</span><span class="o">()</span>
-<span class="o">{</span>
-    <span class="n">CleanInvalidItems</span><span class="o">();</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">Comparison</span><span class="p">&lt;</span><span class="n">ICanvasElement</span><span class="p">&gt;</span> <span class="n">s_SortLayoutFunction</span> <span class="p">=</span> <span class="n">SortLayoutList</span><span class="p">;</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">PerformUpdate</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">CleanInvalidItems</span><span class="p">();</span>
 
-    <span class="n">m_PerformingLayoutUpdate</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="n">m_PerformingLayoutUpdate</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
 
     <span class="c1">//布局重构</span>
-    <span class="n">m_LayoutRebuildQueue</span><span class="o">.</span><span class="na">Sort</span><span class="o">(</span><span class="n">s_SortLayoutFunction</span><span class="o">);</span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">CanvasUpdate</span><span class="o">.</span><span class="na">PostLayout</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
-    <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m_LayoutRebuildQueue</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span>
-        <span class="o">{</span>
-            <span class="n">var</span> <span class="n">rebuild</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="na">m_LayoutRebuildQueue</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+    <span class="n">m_LayoutRebuildQueue</span><span class="p">.</span><span class="n">Sort</span><span class="p">(</span><span class="n">s_SortLayoutFunction</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">CanvasUpdate</span><span class="p">.</span><span class="n">PostLayout</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+    <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">m_LayoutRebuildQueue</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">j</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">rebuild</span> <span class="p">=</span> <span class="n">instance</span><span class="p">.</span><span class="n">m_LayoutRebuildQueue</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
             <span class="k">try</span>
-            <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">ObjectValidForUpdate</span><span class="o">(</span><span class="n">rebuild</span><span class="o">))</span>
-                    <span class="n">rebuild</span><span class="o">.</span><span class="na">Rebuild</span><span class="o">((</span><span class="n">CanvasUpdate</span><span class="o">)</span><span class="n">i</span><span class="o">);</span>
-            <span class="o">}</span>
-            <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span>
-            <span class="o">{</span>
-                <span class="n">Debug</span><span class="o">.</span><span class="na">LogException</span><span class="o">(</span><span class="n">e</span><span class="o">,</span> <span class="n">rebuild</span><span class="o">.</span><span class="na">transform</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">ObjectValidForUpdate</span><span class="p">(</span><span class="n">rebuild</span><span class="p">))</span>
+                    <span class="n">rebuild</span><span class="p">.</span><span class="n">Rebuild</span><span class="p">((</span><span class="n">CanvasUpdate</span><span class="p">)</span><span class="n">i</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Debug</span><span class="p">.</span><span class="n">LogException</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">rebuild</span><span class="p">.</span><span class="n">transform</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m_LayoutRebuildQueue</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span>
-        <span class="n">m_LayoutRebuildQueue</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">LayoutComplete</span><span class="o">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">m_LayoutRebuildQueue</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">m_LayoutRebuildQueue</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">LayoutComplete</span><span class="p">();</span>
 
-    <span class="n">instance</span><span class="o">.</span><span class="na">m_LayoutRebuildQueue</span><span class="o">.</span><span class="na">Clear</span><span class="o">();</span>
-    <span class="n">m_PerformingLayoutUpdate</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="n">instance</span><span class="p">.</span><span class="n">m_LayoutRebuildQueue</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+    <span class="n">m_PerformingLayoutUpdate</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
 
     <span class="c1">// 裁剪</span>
     <span class="c1">// now layout is complete do culling...</span>
-    <span class="n">ClipperRegistry</span><span class="o">.</span><span class="na">instance</span><span class="o">.</span><span class="na">Cull</span><span class="o">();</span>
+    <span class="n">ClipperRegistry</span><span class="p">.</span><span class="n">instance</span><span class="p">.</span><span class="n">Cull</span><span class="p">();</span>
 
     <span class="c1">//元素重构</span>
-    <span class="n">m_PerformingGraphicUpdate</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="k">for</span> <span class="o">(</span><span class="n">var</span> <span class="n">i</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">CanvasUpdate</span><span class="o">.</span><span class="na">PreRender</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">CanvasUpdate</span><span class="o">.</span><span class="na">MaxUpdateValue</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
-    <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">var</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">instance</span><span class="o">.</span><span class="na">m_GraphicRebuildQueue</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="n">k</span><span class="o">++)</span>
-        <span class="o">{</span>
+    <span class="n">m_PerformingGraphicUpdate</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">var</span> <span class="n">i</span> <span class="p">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">CanvasUpdate</span><span class="p">.</span><span class="n">PreRender</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">CanvasUpdate</span><span class="p">.</span><span class="n">MaxUpdateValue</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+    <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">var</span> <span class="n">k</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">k</span> <span class="p">&lt;</span> <span class="n">instance</span><span class="p">.</span><span class="n">m_GraphicRebuildQueue</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">k</span><span class="p">++)</span>
+        <span class="p">{</span>
             <span class="k">try</span>
-            <span class="o">{</span>
-                <span class="n">var</span> <span class="n">element</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="na">m_GraphicRebuildQueue</span><span class="o">[</span><span class="n">k</span><span class="o">];</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">ObjectValidForUpdate</span><span class="o">(</span><span class="n">element</span><span class="o">))</span>
-                    <span class="n">element</span><span class="o">.</span><span class="na">Rebuild</span><span class="o">((</span><span class="n">CanvasUpdate</span><span class="o">)</span><span class="n">i</span><span class="o">);</span>
-            <span class="o">}</span>
-            <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span>
-            <span class="o">{</span>
-                <span class="n">Debug</span><span class="o">.</span><span class="na">LogException</span><span class="o">(</span><span class="n">e</span><span class="o">,</span> <span class="n">instance</span><span class="o">.</span><span class="na">m_GraphicRebuildQueue</span><span class="o">[</span><span class="n">k</span><span class="o">].</span><span class="na">transform</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">element</span> <span class="p">=</span> <span class="n">instance</span><span class="p">.</span><span class="n">m_GraphicRebuildQueue</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">ObjectValidForUpdate</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+                    <span class="n">element</span><span class="p">.</span><span class="n">Rebuild</span><span class="p">((</span><span class="n">CanvasUpdate</span><span class="p">)</span><span class="n">i</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Debug</span><span class="p">.</span><span class="n">LogException</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">instance</span><span class="p">.</span><span class="n">m_GraphicRebuildQueue</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="n">transform</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m_GraphicRebuildQueue</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span>
-        <span class="n">m_GraphicRebuildQueue</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">LayoutComplete</span><span class="o">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">m_GraphicRebuildQueue</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">m_GraphicRebuildQueue</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">LayoutComplete</span><span class="p">();</span>
 
-    <span class="n">instance</span><span class="o">.</span><span class="na">m_GraphicRebuildQueue</span><span class="o">.</span><span class="na">Clear</span><span class="o">();</span>
-    <span class="n">m_PerformingGraphicUpdate</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-<span class="o">}</span>
+    <span class="n">instance</span><span class="p">.</span><span class="n">m_GraphicRebuildQueue</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+    <span class="n">m_PerformingGraphicUpdate</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>上述代码中，PerformUpdate 为 CanvasUpdateRegistry 在重构调用中的逻辑。先将需要重新布局的元素取出来一个个调用Rebuild 函数重构，再对布局后的元素进行裁剪，裁剪后对布局中每个需要重构的元素取出来调用 Rebuild 函数进行重构，最后做一些清理的事务。</p>
 
 <h6>我们再来看看 Graphic 另一个重要的函数，即执行网格构建函数。</h6>
 
 <p>如下代码：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">private</span> <span class="kt">void</span> <span class="nf">DoMeshGeneration</span><span class="o">()</span>
-<span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">rectTransform</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">rectTransform</span><span class="o">.</span><span class="na">rect</span><span class="o">.</span><span class="na">width</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">rectTransform</span><span class="o">.</span><span class="na">rect</span><span class="o">.</span><span class="na">height</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span>
-        <span class="n">OnPopulateMesh</span><span class="o">(</span><span class="n">s_VertexHelper</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">private</span> <span class="k">void</span> <span class="nf">DoMeshGeneration</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rectTransform</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">rectTransform</span><span class="p">.</span><span class="n">rect</span><span class="p">.</span><span class="n">width</span> <span class="p">&gt;=</span> <span class="m">0</span> <span class="p">&amp;&amp;</span> <span class="n">rectTransform</span><span class="p">.</span><span class="n">rect</span><span class="p">.</span><span class="n">height</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">)</span>
+        <span class="n">OnPopulateMesh</span><span class="p">(</span><span class="n">s_VertexHelper</span><span class="p">);</span>
     <span class="k">else</span>
-        <span class="n">s_VertexHelper</span><span class="o">.</span><span class="na">Clear</span><span class="o">();</span> <span class="c1">// clear the vertex helper so invalid graphics dont draw.</span>
+        <span class="n">s_VertexHelper</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span> <span class="c1">// clear the vertex helper so invalid graphics dont draw.</span>
 
-    <span class="n">var</span> <span class="n">components</span> <span class="o">=</span> <span class="n">ListPool</span><span class="o">&lt;</span><span class="n">Component</span><span class="o">&gt;.</span><span class="na">Get</span><span class="o">();</span>
-    <span class="n">GetComponents</span><span class="o">(</span><span class="n">typeof</span><span class="o">(</span><span class="n">IMeshModifier</span><span class="o">),</span> <span class="n">components</span><span class="o">);</span>
+    <span class="kt">var</span> <span class="n">components</span> <span class="p">=</span> <span class="n">ListPool</span><span class="p">&lt;</span><span class="n">Component</span><span class="p">&gt;.</span><span class="n">Get</span><span class="p">();</span>
+    <span class="n">GetComponents</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">IMeshModifier</span><span class="p">),</span> <span class="n">components</span><span class="p">);</span>
 
-    <span class="k">for</span> <span class="o">(</span><span class="n">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">components</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
-        <span class="o">((</span><span class="n">IMeshModifier</span><span class="o">)</span><span class="n">components</span><span class="o">[</span><span class="n">i</span><span class="o">]).</span><span class="na">ModifyMesh</span><span class="o">(</span><span class="n">s_VertexHelper</span><span class="o">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">var</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">components</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+        <span class="p">((</span><span class="n">IMeshModifier</span><span class="p">)</span><span class="n">components</span><span class="p">[</span><span class="n">i</span><span class="p">]).</span><span class="n">ModifyMesh</span><span class="p">(</span><span class="n">s_VertexHelper</span><span class="p">);</span>
 
-    <span class="n">ListPool</span><span class="o">&lt;</span><span class="n">Component</span><span class="o">&gt;.</span><span class="na">Release</span><span class="o">(</span><span class="n">components</span><span class="o">);</span>
+    <span class="n">ListPool</span><span class="p">&lt;</span><span class="n">Component</span><span class="p">&gt;.</span><span class="n">Release</span><span class="p">(</span><span class="n">components</span><span class="p">);</span>
 
-    <span class="n">s_VertexHelper</span><span class="o">.</span><span class="na">FillMesh</span><span class="o">(</span><span class="n">workerMesh</span><span class="o">);</span>
-    <span class="n">canvasRenderer</span><span class="o">.</span><span class="na">SetMesh</span><span class="o">(</span><span class="n">workerMesh</span><span class="o">);</span>
-<span class="o">}</span>
+    <span class="n">s_VertexHelper</span><span class="p">.</span><span class="n">FillMesh</span><span class="p">(</span><span class="n">workerMesh</span><span class="p">);</span>
+    <span class="n">canvasRenderer</span><span class="p">.</span><span class="n">SetMesh</span><span class="p">(</span><span class="n">workerMesh</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>此段代码是 Graphic 构建 Mesh 的部分，先调用OnPopulateMesh创建自己的Mesh网格，然后调用所有需要修改 Mesh 的修改者(IMeshModifier)也就是网格后处理组件(描边等效果组件)进行修改，最后放入 CanvasRenderer 。</p>
 
 <p>其中 CanvasRenderer 是每个绘制元素都必须有的组件，它是画布与渲染的连接组件，通过 CanvasRenderer 我们才能把网格绘制到 Canvas 画布上去。</p>
 
 <p>这里使用 VertexHelper 是为了节省内存和CPU消耗，它内部采用List容器对象池，将所有使用过的废弃的数据都存储在里pool池子的容器中，当需要时再拿旧的继续使用。</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">VertexHelper</span> <span class="o">:</span> <span class="n">IDisposable</span>
-<span class="o">{</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;</span> <span class="n">m_Positions</span> <span class="o">=</span> <span class="n">ListPool</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;.</span><span class="na">Get</span><span class="o">();</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Color32</span><span class="o">&gt;</span> <span class="n">m_Colors</span> <span class="o">=</span> <span class="n">ListPool</span><span class="o">&lt;</span><span class="n">Color32</span><span class="o">&gt;.</span><span class="na">Get</span><span class="o">();</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span> <span class="n">m_Uv0S</span> <span class="o">=</span> <span class="n">ListPool</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;.</span><span class="na">Get</span><span class="o">();</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span> <span class="n">m_Uv1S</span> <span class="o">=</span> <span class="n">ListPool</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;.</span><span class="na">Get</span><span class="o">();</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;</span> <span class="n">m_Normals</span> <span class="o">=</span> <span class="n">ListPool</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;.</span><span class="na">Get</span><span class="o">();</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Vector4</span><span class="o">&gt;</span> <span class="n">m_Tangents</span> <span class="o">=</span> <span class="n">ListPool</span><span class="o">&lt;</span><span class="n">Vector4</span><span class="o">&gt;.</span><span class="na">Get</span><span class="o">();</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">m_Indicies</span> <span class="o">=</span> <span class="n">ListPool</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;.</span><span class="na">Get</span><span class="o">();</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">VertexHelper</span> <span class="p">:</span> <span class="n">IDisposable</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;</span> <span class="n">m_Positions</span> <span class="p">=</span> <span class="n">ListPool</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;.</span><span class="n">Get</span><span class="p">();</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Color32</span><span class="p">&gt;</span> <span class="n">m_Colors</span> <span class="p">=</span> <span class="n">ListPool</span><span class="p">&lt;</span><span class="n">Color32</span><span class="p">&gt;.</span><span class="n">Get</span><span class="p">();</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;</span> <span class="n">m_Uv0S</span> <span class="p">=</span> <span class="n">ListPool</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;.</span><span class="n">Get</span><span class="p">();</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;</span> <span class="n">m_Uv1S</span> <span class="p">=</span> <span class="n">ListPool</span><span class="p">&lt;</span><span class="n">Vector2</span><span class="p">&gt;.</span><span class="n">Get</span><span class="p">();</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;</span> <span class="n">m_Normals</span> <span class="p">=</span> <span class="n">ListPool</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;.</span><span class="n">Get</span><span class="p">();</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Vector4</span><span class="p">&gt;</span> <span class="n">m_Tangents</span> <span class="p">=</span> <span class="n">ListPool</span><span class="p">&lt;</span><span class="n">Vector4</span><span class="p">&gt;.</span><span class="n">Get</span><span class="p">();</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">m_Indicies</span> <span class="p">=</span> <span class="n">ListPool</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;.</span><span class="n">Get</span><span class="p">();</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>上述代码为 VertexHelper 的定义部分。</p>
 
@@ -599,48 +599,48 @@
 <p>我试图通过查找反编译的代码查看相关内容，也没有找到，我们无法获得这部分的源码。但仔细一想，也差不多能想个大概。合并部分无非就是每次重构时获取 Canvas 下面所有的 CanvasRenderer 实例，将它们的 Mesh 合并起来，仅此而已。因此关键还是要看，如何减少重构次数，以及提高内存，CPU使用效率。</p>
 
 <h6>除了 Graphic类，遮罩部分也是我们非常关心的问题，我们继续看 Mask 遮罩部分的核心部分：</h6>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">var</span> <span class="n">maskMaterial</span> <span class="o">=</span> <span class="n">StencilMaterial</span><span class="o">.</span><span class="na">Add</span><span class="o">(</span><span class="n">baseMaterial</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="n">StencilOp</span><span class="o">.</span><span class="na">Replace</span><span class="o">,</span> <span class="n">CompareFunction</span><span class="o">.</span><span class="na">Always</span><span class="o">,</span> <span class="n">m_ShowMaskGraphic</span> <span class="o">?</span> <span class="n">ColorWriteMask</span><span class="o">.</span><span class="na">All</span> <span class="o">:</span> <span class="mi">0</span><span class="o">);</span>
-<span class="n">StencilMaterial</span><span class="o">.</span><span class="na">Remove</span><span class="o">(</span><span class="n">m_MaskMaterial</span><span class="o">);</span>
-<span class="n">m_MaskMaterial</span> <span class="o">=</span> <span class="n">maskMaterial</span><span class="o">;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="kt">var</span> <span class="n">maskMaterial</span> <span class="p">=</span> <span class="n">StencilMaterial</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">baseMaterial</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">StencilOp</span><span class="p">.</span><span class="n">Replace</span><span class="p">,</span> <span class="n">CompareFunction</span><span class="p">.</span><span class="n">Always</span><span class="p">,</span> <span class="n">m_ShowMaskGraphic</span> <span class="p">?</span> <span class="n">ColorWriteMask</span><span class="p">.</span><span class="n">All</span> <span class="p">:</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">StencilMaterial</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">m_MaskMaterial</span><span class="p">);</span>
+<span class="n">m_MaskMaterial</span> <span class="p">=</span> <span class="n">maskMaterial</span><span class="p">;</span>
 
-<span class="n">var</span> <span class="n">unmaskMaterial</span> <span class="o">=</span> <span class="n">StencilMaterial</span><span class="o">.</span><span class="na">Add</span><span class="o">(</span><span class="n">baseMaterial</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="n">StencilOp</span><span class="o">.</span><span class="na">Zero</span><span class="o">,</span> <span class="n">CompareFunction</span><span class="o">.</span><span class="na">Always</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
-<span class="n">StencilMaterial</span><span class="o">.</span><span class="na">Remove</span><span class="o">(</span><span class="n">m_UnmaskMaterial</span><span class="o">);</span>
-<span class="n">m_UnmaskMaterial</span> <span class="o">=</span> <span class="n">unmaskMaterial</span><span class="o">;</span>
-<span class="n">graphic</span><span class="o">.</span><span class="na">canvasRenderer</span><span class="o">.</span><span class="na">popMaterialCount</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-<span class="n">graphic</span><span class="o">.</span><span class="na">canvasRenderer</span><span class="o">.</span><span class="na">SetPopMaterial</span><span class="o">(</span><span class="n">m_UnmaskMaterial</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="kt">var</span> <span class="n">unmaskMaterial</span> <span class="p">=</span> <span class="n">StencilMaterial</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">baseMaterial</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">StencilOp</span><span class="p">.</span><span class="n">Zero</span><span class="p">,</span> <span class="n">CompareFunction</span><span class="p">.</span><span class="n">Always</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">StencilMaterial</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">m_UnmaskMaterial</span><span class="p">);</span>
+<span class="n">m_UnmaskMaterial</span> <span class="p">=</span> <span class="n">unmaskMaterial</span><span class="p">;</span>
+<span class="n">graphic</span><span class="p">.</span><span class="n">canvasRenderer</span><span class="p">.</span><span class="n">popMaterialCount</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="n">graphic</span><span class="p">.</span><span class="n">canvasRenderer</span><span class="p">.</span><span class="n">SetPopMaterial</span><span class="p">(</span><span class="n">m_UnmaskMaterial</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
 
-<span class="k">return</span> <span class="n">m_MaskMaterial</span><span class="o">;</span>
+<span class="k">return</span> <span class="n">m_MaskMaterial</span><span class="p">;</span>
 </code></pre></div>
 <p>从上述代码中看出来，Mask 组件调用了模板材质球构建了一个自己的材质球，因此它使用了实时渲染中的模板方法来裁切不需要显示的部分，所有在 Mask 组件后面的物体都会进行裁切。我们可以说 Mask 是在 GPU 中做的裁切，使用的方法是着色器中的模板方法。</p>
 
 <p>不过 RectMask2D 并不和 Mask 一样。我们来看 RectMask2D 核心部分源码：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="n">virtual</span> <span class="kt">void</span> <span class="nf">PerformClipping</span><span class="o">()</span>
-<span class="o">{</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">PerformClipping</span><span class="p">()</span>
+<span class="p">{</span>
     <span class="c1">// if the parents are changed</span>
     <span class="c1">// or something similar we</span>
     <span class="c1">// do a recalculate here</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">m_ShouldRecalculateClipRects</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">MaskUtilities</span><span class="o">.</span><span class="na">GetRectMasksForClip</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">m_Clippers</span><span class="o">);</span>
-        <span class="n">m_ShouldRecalculateClipRects</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-    <span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">m_ShouldRecalculateClipRects</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">MaskUtilities</span><span class="p">.</span><span class="n">GetRectMasksForClip</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">m_Clippers</span><span class="p">);</span>
+        <span class="n">m_ShouldRecalculateClipRects</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
 
     <span class="c1">// get the compound rects from</span>
     <span class="c1">// the clippers that are valid</span>
-    <span class="n">bool</span> <span class="n">validRect</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="n">Rect</span> <span class="n">clipRect</span> <span class="o">=</span> <span class="n">Clipping</span><span class="o">.</span><span class="na">FindCullAndClipWorldRect</span><span class="o">(</span><span class="n">m_Clippers</span><span class="o">,</span> <span class="n">out</span> <span class="n">validRect</span><span class="o">);</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">clipRect</span> <span class="o">!=</span> <span class="n">m_LastClipRectCanvasSpace</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m_ClipTargets</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span>
-            <span class="n">m_ClipTargets</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">SetClipRect</span><span class="o">(</span><span class="n">clipRect</span><span class="o">,</span> <span class="n">validRect</span><span class="o">);</span>
+    <span class="kt">bool</span> <span class="n">validRect</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="n">Rect</span> <span class="n">clipRect</span> <span class="p">=</span> <span class="n">Clipping</span><span class="p">.</span><span class="n">FindCullAndClipWorldRect</span><span class="p">(</span><span class="n">m_Clippers</span><span class="p">,</span> <span class="k">out</span> <span class="n">validRect</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">clipRect</span> <span class="p">!=</span> <span class="n">m_LastClipRectCanvasSpace</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">m_ClipTargets</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">m_ClipTargets</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">SetClipRect</span><span class="p">(</span><span class="n">clipRect</span><span class="p">,</span> <span class="n">validRect</span><span class="p">);</span>
 
-        <span class="n">m_LastClipRectCanvasSpace</span> <span class="o">=</span> <span class="n">clipRect</span><span class="o">;</span>
-        <span class="n">m_LastClipRectValid</span> <span class="o">=</span> <span class="n">validRect</span><span class="o">;</span>
-    <span class="o">}</span>
+        <span class="n">m_LastClipRectCanvasSpace</span> <span class="p">=</span> <span class="n">clipRect</span><span class="p">;</span>
+        <span class="n">m_LastClipRectValid</span> <span class="p">=</span> <span class="n">validRect</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m_ClipTargets</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span>
-        <span class="n">m_ClipTargets</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">Cull</span><span class="o">(</span><span class="n">m_LastClipRectCanvasSpace</span><span class="o">,</span> <span class="n">m_LastClipRectValid</span><span class="o">);</span>
-<span class="o">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">m_ClipTargets</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">m_ClipTargets</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Cull</span><span class="p">(</span><span class="n">m_LastClipRectCanvasSpace</span><span class="p">,</span> <span class="n">m_LastClipRectValid</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>上述源码中我们可以看到，RectMask2D 会先计算并设置裁切的范围，再对所有子节点调用裁切操作。其中:</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    MaskUtilities.GetRectMasksForClip(this, m_Clippers);
@@ -649,17 +649,17 @@
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Rect clipRect = Clipping.FindCullAndClipWorldRect(m_Clippers, out validRect);
 </code></pre></div>
 <p>计算了需要裁切的部分，实际上是计算了不需要裁切的部分，其他部分都进行裁切。最后</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m_ClipTargets</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span>
-            <span class="n">m_ClipTargets</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">SetClipRect</span><span class="o">(</span><span class="n">clipRect</span><span class="o">,</span> <span class="n">validRect</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">m_ClipTargets</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">m_ClipTargets</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">SetClipRect</span><span class="p">(</span><span class="n">clipRect</span><span class="p">,</span> <span class="n">validRect</span><span class="p">);</span>
 </code></pre></div>
 <p>对所有需要裁切的UI元素，进行裁切操作。其中 SetClipRect 裁切操作的源码，如下：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="n">virtual</span> <span class="kt">void</span> <span class="nf">SetClipRect</span><span class="o">(</span><span class="n">Rect</span> <span class="n">clipRect</span><span class="o">,</span> <span class="n">bool</span> <span class="n">validRect</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">validRect</span><span class="o">)</span>
-        <span class="n">canvasRenderer</span><span class="o">.</span><span class="na">EnableRectClipping</span><span class="o">(</span><span class="n">clipRect</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">SetClipRect</span><span class="p">(</span><span class="n">Rect</span> <span class="n">clipRect</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">validRect</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">validRect</span><span class="p">)</span>
+        <span class="n">canvasRenderer</span><span class="p">.</span><span class="n">EnableRectClipping</span><span class="p">(</span><span class="n">clipRect</span><span class="p">);</span>
     <span class="k">else</span>
-        <span class="n">canvasRenderer</span><span class="o">.</span><span class="na">DisableRectClipping</span><span class="o">();</span>
-<span class="o">}</span>
+        <span class="n">canvasRenderer</span><span class="p">.</span><span class="n">DisableRectClipping</span><span class="p">();</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>最后操作是在 CanvasRenderer 中进行的。前面说过 CanvasRenderer 是我们无法得知内容。不过我们可以想到这里面的内容，计算两个四边形的相交点，再组合成裁切后的内容。</p>
 

@@ -266,64 +266,64 @@
 <p>事件数据模块部分对整个事件系统的作用来说，它主要定义并且存储了事件发生时的位置、和事件对应的物体，事件的位移大小，触发事件的输入类型，以及事件的设备信息等。事件数据模块在逻辑上没有做过多的内容，而主要为了获取数据，提供数据服务。</p>
 
 <p>它有三个类 PointerEventData、AxisEventData、BaseEventData，分别为点位事件数据类，滚轮事件数据类，事件基础数据类。PointerEventData和AxisEventData 继承自 BaseEventData，且 AxisEventData 的代码量非常少，因为它只需要提供滚轮的方向信息。即如下:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">namespace</span> <span class="n">UnityEngine</span><span class="o">.</span><span class="na">EventSystems</span>
-<span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AxisEventData</span> <span class="o">:</span> <span class="n">BaseEventData</span>
-    <span class="o">{</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">namespace</span> <span class="nn">UnityEngine.EventSystems</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">AxisEventData</span> <span class="p">:</span> <span class="n">BaseEventData</span>
+    <span class="p">{</span>
         <span class="c1">//移动方向</span>
-        <span class="kd">public</span> <span class="n">Vector2</span> <span class="n">moveVector</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
-        <span class="kd">public</span> <span class="n">MoveDirection</span> <span class="n">moveDir</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+        <span class="k">public</span> <span class="n">Vector2</span> <span class="n">moveVector</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">MoveDirection</span> <span class="n">moveDir</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
-        <span class="kd">public</span> <span class="nf">AxisEventData</span><span class="o">(</span><span class="n">EventSystem</span> <span class="n">eventSystem</span><span class="o">)</span>
-            <span class="o">:</span> <span class="n">base</span><span class="o">(</span><span class="n">eventSystem</span><span class="o">)</span>
-        <span class="o">{</span>
-            <span class="n">moveVector</span> <span class="o">=</span> <span class="n">Vector2</span><span class="o">.</span><span class="na">zero</span><span class="o">;</span>
-            <span class="n">moveDir</span> <span class="o">=</span> <span class="n">MoveDirection</span><span class="o">.</span><span class="na">None</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+        <span class="k">public</span> <span class="nf">AxisEventData</span><span class="p">(</span><span class="n">EventSystem</span> <span class="n">eventSystem</span><span class="p">)</span>
+            <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">eventSystem</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">moveVector</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">zero</span><span class="p">;</span>
+            <span class="n">moveDir</span> <span class="p">=</span> <span class="n">MoveDirection</span><span class="p">.</span><span class="n">None</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>BaseEventData 定义了几个常用的接口，其子类 PointerEventData 是最常用的事件数据，我们来看看它是如何编写的，代码量并不多基本全是数据定义:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PointerEventData</span> <span class="o">:</span> <span class="n">BaseEventData</span>
-<span class="o">{</span>
-    <span class="kd">public</span> <span class="n">GameObject</span> <span class="n">pointerEnter</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">PointerEventData</span> <span class="p">:</span> <span class="n">BaseEventData</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">pointerEnter</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="c1">// 接收OnPointerDown事件的物体</span>
-    <span class="kd">private</span> <span class="n">GameObject</span> <span class="n">m_PointerPress</span><span class="o">;</span>
+    <span class="k">private</span> <span class="n">GameObject</span> <span class="n">m_PointerPress</span><span class="p">;</span>
     <span class="c1">// 上一下接收OnPointerDown事件的物体</span>
-    <span class="kd">public</span> <span class="n">GameObject</span> <span class="n">lastPress</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="kd">private</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">lastPress</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
     <span class="c1">// 接收按下事件的无法响应处理的物体</span>
-    <span class="kd">public</span> <span class="n">GameObject</span> <span class="n">rawPointerPress</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">rawPointerPress</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
     <span class="c1">// 接收OnDrag事件的物体</span>
-    <span class="kd">public</span> <span class="n">GameObject</span> <span class="n">pointerDrag</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">pointerDrag</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
-    <span class="kd">public</span> <span class="n">RaycastResult</span> <span class="n">pointerCurrentRaycast</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
-    <span class="kd">public</span> <span class="n">RaycastResult</span> <span class="n">pointerPressRaycast</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="n">RaycastResult</span> <span class="n">pointerCurrentRaycast</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">RaycastResult</span> <span class="n">pointerPressRaycast</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
-    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;</span> <span class="n">hovered</span> <span class="o">=</span> <span class="k">new</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;();</span>
+    <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">hovered</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;();</span>
 
-    <span class="kd">public</span> <span class="n">bool</span> <span class="n">eligibleForClick</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">eligibleForClick</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
-    <span class="kd">public</span> <span class="kt">int</span> <span class="n">pointerId</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">pointerId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="c1">// 鼠标或触摸时的点位</span>
-    <span class="kd">public</span> <span class="n">Vector2</span> <span class="n">position</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="n">Vector2</span> <span class="n">position</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
     <span class="c1">// 滚轮的移速</span>
-    <span class="kd">public</span> <span class="n">Vector2</span> <span class="n">delta</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="n">Vector2</span> <span class="n">delta</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
     <span class="c1">// 按下时的点位</span>
-    <span class="kd">public</span> <span class="n">Vector2</span> <span class="n">pressPosition</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="n">Vector2</span> <span class="n">pressPosition</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="c1">// 为双击服务的上次点击时间</span>
-    <span class="kd">public</span> <span class="kt">float</span> <span class="n">clickTime</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">clickTime</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
     <span class="c1">// 为双击服务的点击次数</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="n">clickCount</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">clickCount</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
-    <span class="kd">public</span> <span class="n">Vector2</span> <span class="n">scrollDelta</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
-    <span class="kd">public</span> <span class="n">bool</span> <span class="n">useDragThreshold</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
-    <span class="kd">public</span> <span class="n">bool</span> <span class="n">dragging</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">public</span> <span class="n">Vector2</span> <span class="n">scrollDelta</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">useDragThreshold</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">dragging</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
-    <span class="kd">public</span> <span class="n">InputButton</span> <span class="n">button</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="n">set</span><span class="o">;</span> <span class="o">}</span>
-<span class="o">}</span>
+    <span class="k">public</span> <span class="n">InputButton</span> <span class="n">button</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>上述代码中为数据类的核心类 PointerEventData，它存储了大部分的事件系统逻辑需要的数据，包括按下时的位置，松开与按下的时间差，拖动的位移差，点击到的物体等等，承载了所有输入事件需要的数据。事件数据模块的意义所在便是存储数据并为逻辑部分做好准备。</p>
 
@@ -343,231 +343,231 @@
 <p>StandaloneInputModule 向标准键盘鼠标输入方向拓展，而 TouchInputModule 向触控板输入方向拓展。</p>
 
 <p>下面我们来看看他们的核心部分的代码：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="c1">/// &lt;summary&gt;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// 处理所有的鼠标事件</span>
 <span class="c1">/// &lt;/summary&gt;</span>
-<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">ProcessMouseEvent</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="n">var</span> <span class="n">mouseData</span> <span class="o">=</span> <span class="n">GetMousePointerEventData</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
-    <span class="n">var</span> <span class="n">leftButtonData</span> <span class="o">=</span> <span class="n">mouseData</span><span class="o">.</span><span class="na">GetButtonState</span><span class="o">(</span><span class="n">PointerEventData</span><span class="o">.</span><span class="na">InputButton</span><span class="o">.</span><span class="na">Left</span><span class="o">).</span><span class="na">eventData</span><span class="o">;</span>
+<span class="k">protected</span> <span class="k">void</span> <span class="nf">ProcessMouseEvent</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">mouseData</span> <span class="p">=</span> <span class="n">GetMousePointerEventData</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+    <span class="kt">var</span> <span class="n">leftButtonData</span> <span class="p">=</span> <span class="n">mouseData</span><span class="p">.</span><span class="n">GetButtonState</span><span class="p">(</span><span class="n">PointerEventData</span><span class="p">.</span><span class="n">InputButton</span><span class="p">.</span><span class="n">Left</span><span class="p">).</span><span class="n">eventData</span><span class="p">;</span>
 
     <span class="c1">// Process the first mouse button fully</span>
     <span class="c1">// 处理鼠标左键相关的事件</span>
-    <span class="n">ProcessMousePress</span><span class="o">(</span><span class="n">leftButtonData</span><span class="o">);</span>
-    <span class="n">ProcessMove</span><span class="o">(</span><span class="n">leftButtonData</span><span class="o">.</span><span class="na">buttonData</span><span class="o">);</span>
-    <span class="n">ProcessDrag</span><span class="o">(</span><span class="n">leftButtonData</span><span class="o">.</span><span class="na">buttonData</span><span class="o">);</span>
+    <span class="n">ProcessMousePress</span><span class="p">(</span><span class="n">leftButtonData</span><span class="p">);</span>
+    <span class="n">ProcessMove</span><span class="p">(</span><span class="n">leftButtonData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">);</span>
+    <span class="n">ProcessDrag</span><span class="p">(</span><span class="n">leftButtonData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">);</span>
 
     <span class="c1">// Now process right / middle clicks</span>
     <span class="c1">// 处理鼠标右键和中建的点击事件</span>
-    <span class="n">ProcessMousePress</span><span class="o">(</span><span class="n">mouseData</span><span class="o">.</span><span class="na">GetButtonState</span><span class="o">(</span><span class="n">PointerEventData</span><span class="o">.</span><span class="na">InputButton</span><span class="o">.</span><span class="na">Right</span><span class="o">).</span><span class="na">eventData</span><span class="o">);</span>
-    <span class="n">ProcessDrag</span><span class="o">(</span><span class="n">mouseData</span><span class="o">.</span><span class="na">GetButtonState</span><span class="o">(</span><span class="n">PointerEventData</span><span class="o">.</span><span class="na">InputButton</span><span class="o">.</span><span class="na">Right</span><span class="o">).</span><span class="na">eventData</span><span class="o">.</span><span class="na">buttonData</span><span class="o">);</span>
-    <span class="n">ProcessMousePress</span><span class="o">(</span><span class="n">mouseData</span><span class="o">.</span><span class="na">GetButtonState</span><span class="o">(</span><span class="n">PointerEventData</span><span class="o">.</span><span class="na">InputButton</span><span class="o">.</span><span class="na">Middle</span><span class="o">).</span><span class="na">eventData</span><span class="o">);</span>
-    <span class="n">ProcessDrag</span><span class="o">(</span><span class="n">mouseData</span><span class="o">.</span><span class="na">GetButtonState</span><span class="o">(</span><span class="n">PointerEventData</span><span class="o">.</span><span class="na">InputButton</span><span class="o">.</span><span class="na">Middle</span><span class="o">).</span><span class="na">eventData</span><span class="o">.</span><span class="na">buttonData</span><span class="o">);</span>
+    <span class="n">ProcessMousePress</span><span class="p">(</span><span class="n">mouseData</span><span class="p">.</span><span class="n">GetButtonState</span><span class="p">(</span><span class="n">PointerEventData</span><span class="p">.</span><span class="n">InputButton</span><span class="p">.</span><span class="n">Right</span><span class="p">).</span><span class="n">eventData</span><span class="p">);</span>
+    <span class="n">ProcessDrag</span><span class="p">(</span><span class="n">mouseData</span><span class="p">.</span><span class="n">GetButtonState</span><span class="p">(</span><span class="n">PointerEventData</span><span class="p">.</span><span class="n">InputButton</span><span class="p">.</span><span class="n">Right</span><span class="p">).</span><span class="n">eventData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">);</span>
+    <span class="n">ProcessMousePress</span><span class="p">(</span><span class="n">mouseData</span><span class="p">.</span><span class="n">GetButtonState</span><span class="p">(</span><span class="n">PointerEventData</span><span class="p">.</span><span class="n">InputButton</span><span class="p">.</span><span class="n">Middle</span><span class="p">).</span><span class="n">eventData</span><span class="p">);</span>
+    <span class="n">ProcessDrag</span><span class="p">(</span><span class="n">mouseData</span><span class="p">.</span><span class="n">GetButtonState</span><span class="p">(</span><span class="n">PointerEventData</span><span class="p">.</span><span class="n">InputButton</span><span class="p">.</span><span class="n">Middle</span><span class="p">).</span><span class="n">eventData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">);</span>
 
     <span class="c1">//滚轮事件处理</span>
-    <span class="k">if</span> <span class="o">(!</span><span class="n">Mathf</span><span class="o">.</span><span class="na">Approximately</span><span class="o">(</span><span class="n">leftButtonData</span><span class="o">.</span><span class="na">buttonData</span><span class="o">.</span><span class="na">scrollDelta</span><span class="o">.</span><span class="na">sqrMagnitude</span><span class="o">,</span> <span class="mf">0.0f</span><span class="o">))</span>
-    <span class="o">{</span>
-        <span class="n">var</span> <span class="n">scrollHandler</span> <span class="o">=</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">GetEventHandler</span><span class="o">&lt;</span><span class="n">IScrollHandler</span><span class="o">&gt;(</span><span class="n">leftButtonData</span><span class="o">.</span><span class="na">buttonData</span><span class="o">.</span><span class="na">pointerCurrentRaycast</span><span class="o">.</span><span class="na">gameObject</span><span class="o">);</span>
-        <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">ExecuteHierarchy</span><span class="o">(</span><span class="n">scrollHandler</span><span class="o">,</span> <span class="n">leftButtonData</span><span class="o">.</span><span class="na">buttonData</span><span class="o">,</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">scrollHandler</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">Mathf</span><span class="p">.</span><span class="n">Approximately</span><span class="p">(</span><span class="n">leftButtonData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">.</span><span class="n">scrollDelta</span><span class="p">.</span><span class="n">sqrMagnitude</span><span class="p">,</span> <span class="m">0.0f</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">scrollHandler</span> <span class="p">=</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">GetEventHandler</span><span class="p">&lt;</span><span class="n">IScrollHandler</span><span class="p">&gt;(</span><span class="n">leftButtonData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">.</span><span class="n">pointerCurrentRaycast</span><span class="p">.</span><span class="n">gameObject</span><span class="p">);</span>
+        <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">ExecuteHierarchy</span><span class="p">(</span><span class="n">scrollHandler</span><span class="p">,</span> <span class="n">leftButtonData</span><span class="p">.</span><span class="n">buttonData</span><span class="p">,</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">scrollHandler</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>以上代码为 StandaloneInputModule 的主函数 ProcessMouseEvent，它从鼠标键盘输入事件上扩展了输入的逻辑，处理了鼠标的按下，移动，滚轮，拖拽的操作事件。其中比较重要的函数为 ProcessMousePress、ProcessMove、ProcessDrag 这三个函数，我们来重点看下他们处理的内容。</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="c1">/// &lt;summary&gt;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Process the current mouse press.</span>
 <span class="c1">/// 处理鼠标按下事件</span>
 <span class="c1">/// &lt;/summary&gt;</span>
-<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">ProcessMousePress</span><span class="o">(</span><span class="n">MouseButtonEventData</span> <span class="n">data</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="n">var</span> <span class="n">pointerEvent</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">buttonData</span><span class="o">;</span>
-    <span class="n">var</span> <span class="n">currentOverGo</span> <span class="o">=</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerCurrentRaycast</span><span class="o">.</span><span class="na">gameObject</span><span class="o">;</span>
+<span class="k">protected</span> <span class="k">void</span> <span class="nf">ProcessMousePress</span><span class="p">(</span><span class="n">MouseButtonEventData</span> <span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">pointerEvent</span> <span class="p">=</span> <span class="n">data</span><span class="p">.</span><span class="n">buttonData</span><span class="p">;</span>
+    <span class="kt">var</span> <span class="n">currentOverGo</span> <span class="p">=</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerCurrentRaycast</span><span class="p">.</span><span class="n">gameObject</span><span class="p">;</span>
 
     <span class="c1">// PointerDown notification</span>
     <span class="c1">// 按下通知</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">PressedThisFrame</span><span class="o">())</span>
-    <span class="o">{</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">eligibleForClick</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">delta</span> <span class="o">=</span> <span class="n">Vector2</span><span class="o">.</span><span class="na">zero</span><span class="o">;</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">dragging</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">useDragThreshold</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pressPosition</span> <span class="o">=</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">position</span><span class="o">;</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerPressRaycast</span> <span class="o">=</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerCurrentRaycast</span><span class="o">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">PressedThisFrame</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">eligibleForClick</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">delta</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">zero</span><span class="p">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">dragging</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">useDragThreshold</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pressPosition</span> <span class="p">=</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerPressRaycast</span> <span class="p">=</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerCurrentRaycast</span><span class="p">;</span>
 
-        <span class="n">DeselectIfSelectionChanged</span><span class="o">(</span><span class="n">currentOverGo</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">);</span>
+        <span class="n">DeselectIfSelectionChanged</span><span class="p">(</span><span class="n">currentOverGo</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">);</span>
 
         <span class="c1">// 搜索元件中按下事件的句柄，并执行按下事件句柄</span>
-        <span class="n">var</span> <span class="n">newPressed</span> <span class="o">=</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">ExecuteHierarchy</span><span class="o">(</span><span class="n">currentOverGo</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">,</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">pointerDownHandler</span><span class="o">);</span>
+        <span class="kt">var</span> <span class="n">newPressed</span> <span class="p">=</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">ExecuteHierarchy</span><span class="p">(</span><span class="n">currentOverGo</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">,</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">pointerDownHandler</span><span class="p">);</span>
 
         <span class="c1">// didnt find a press handler... search for a click handler</span>
         <span class="c1">// 搜索后找不到句柄，就设置一个自己的</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">newPressed</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
-            <span class="n">newPressed</span> <span class="o">=</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">GetEventHandler</span><span class="o">&lt;</span><span class="n">IPointerClickHandler</span><span class="o">&gt;(</span><span class="n">currentOverGo</span><span class="o">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">newPressed</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="n">newPressed</span> <span class="p">=</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">GetEventHandler</span><span class="p">&lt;</span><span class="n">IPointerClickHandler</span><span class="p">&gt;(</span><span class="n">currentOverGo</span><span class="p">);</span>
 
         <span class="c1">// Debug.Log(&quot;Pressed: &quot; + newPressed);</span>
 
-        <span class="kt">float</span> <span class="n">time</span> <span class="o">=</span> <span class="n">Time</span><span class="o">.</span><span class="na">unscaledTime</span><span class="o">;</span>
+        <span class="kt">float</span> <span class="n">time</span> <span class="p">=</span> <span class="n">Time</span><span class="p">.</span><span class="n">unscaledTime</span><span class="p">;</span>
 
-        <span class="k">if</span> <span class="o">(</span><span class="n">newPressed</span> <span class="o">==</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">lastPress</span><span class="o">)</span>
-        <span class="o">{</span>
-            <span class="n">var</span> <span class="n">diffTime</span> <span class="o">=</span> <span class="n">time</span> <span class="o">-</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">clickTime</span><span class="o">;</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">diffTime</span> <span class="o">&lt;</span> <span class="mf">0.3f</span><span class="o">)</span>
-                <span class="o">++</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">clickCount</span><span class="o">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">newPressed</span> <span class="p">==</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">lastPress</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">diffTime</span> <span class="p">=</span> <span class="n">time</span> <span class="p">-</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">clickTime</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">diffTime</span> <span class="p">&lt;</span> <span class="m">0.3f</span><span class="p">)</span>
+                <span class="p">++</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">clickCount</span><span class="p">;</span>
             <span class="k">else</span>
-                <span class="n">pointerEvent</span><span class="o">.</span><span class="na">clickCount</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+                <span class="n">pointerEvent</span><span class="p">.</span><span class="n">clickCount</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
 
-            <span class="n">pointerEvent</span><span class="o">.</span><span class="na">clickTime</span> <span class="o">=</span> <span class="n">time</span><span class="o">;</span>
-        <span class="o">}</span>
+            <span class="n">pointerEvent</span><span class="p">.</span><span class="n">clickTime</span> <span class="p">=</span> <span class="n">time</span><span class="p">;</span>
+        <span class="p">}</span>
         <span class="k">else</span>
-        <span class="o">{</span>
-            <span class="n">pointerEvent</span><span class="o">.</span><span class="na">clickCount</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-        <span class="o">}</span>
+        <span class="p">{</span>
+            <span class="n">pointerEvent</span><span class="p">.</span><span class="n">clickCount</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerPress</span> <span class="o">=</span> <span class="n">newPressed</span><span class="o">;</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">rawPointerPress</span> <span class="o">=</span> <span class="n">currentOverGo</span><span class="o">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerPress</span> <span class="p">=</span> <span class="n">newPressed</span><span class="p">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">rawPointerPress</span> <span class="p">=</span> <span class="n">currentOverGo</span><span class="p">;</span>
 
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">clickTime</span> <span class="o">=</span> <span class="n">time</span><span class="o">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">clickTime</span> <span class="p">=</span> <span class="n">time</span><span class="p">;</span>
 
         <span class="c1">// Save the drag handler as well</span>
         <span class="c1">// 保存拖拽信息</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span> <span class="o">=</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">GetEventHandler</span><span class="o">&lt;</span><span class="n">IDragHandler</span><span class="o">&gt;(</span><span class="n">currentOverGo</span><span class="o">);</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span> <span class="p">=</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">GetEventHandler</span><span class="p">&lt;</span><span class="n">IDragHandler</span><span class="p">&gt;(</span><span class="n">currentOverGo</span><span class="p">);</span>
 
         <span class="c1">// 执行拖拽启动事件句柄</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-            <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">Execute</span><span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">,</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">initializePotentialDrag</span><span class="o">);</span>
-    <span class="o">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+            <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">,</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">initializePotentialDrag</span><span class="p">);</span>
+    <span class="p">}</span>
 
     <span class="c1">// PointerUp notification</span>
     <span class="c1">// 抬起通知</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">ReleasedThisFrame</span><span class="o">())</span>
-    <span class="o">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">ReleasedThisFrame</span><span class="p">())</span>
+    <span class="p">{</span>
         <span class="c1">//执行抬起事件的句柄</span>
         <span class="c1">// Debug.Log(&quot;Executing pressup on: &quot; + pointer.pointerPress);</span>
-        <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">Execute</span><span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerPress</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">,</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">pointerUpHandler</span><span class="o">);</span>
+        <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerPress</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">,</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">pointerUpHandler</span><span class="p">);</span>
 
         <span class="c1">// Debug.Log(&quot;KeyCode: &quot; + pointer.eventData.keyCode);</span>
 
-        <span class="n">var</span> <span class="n">pointerUpHandler</span> <span class="o">=</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">GetEventHandler</span><span class="o">&lt;</span><span class="n">IPointerClickHandler</span><span class="o">&gt;(</span><span class="n">currentOverGo</span><span class="o">);</span>
+        <span class="kt">var</span> <span class="n">pointerUpHandler</span> <span class="p">=</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">GetEventHandler</span><span class="p">&lt;</span><span class="n">IPointerClickHandler</span><span class="p">&gt;(</span><span class="n">currentOverGo</span><span class="p">);</span>
 
         <span class="c1">// 如果抬起时与按下时为同一个元素，那就是点击</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerPress</span> <span class="o">==</span> <span class="n">pointerUpHandler</span> <span class="o">&amp;&amp;</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">eligibleForClick</span><span class="o">)</span>
-        <span class="o">{</span>
-            <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">Execute</span><span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerPress</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">,</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">pointerClickHandler</span><span class="o">);</span>
-        <span class="o">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerPress</span> <span class="p">==</span> <span class="n">pointerUpHandler</span> <span class="p">&amp;&amp;</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">eligibleForClick</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerPress</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">,</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">pointerClickHandler</span><span class="p">);</span>
+        <span class="p">}</span>
         <span class="c1">// 否则也可能是拖拽的释放</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">dragging</span><span class="o">)</span>
-        <span class="o">{</span>
-            <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">ExecuteHierarchy</span><span class="o">(</span><span class="n">currentOverGo</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">,</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">dropHandler</span><span class="o">);</span>
-        <span class="o">}</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">dragging</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">ExecuteHierarchy</span><span class="p">(</span><span class="n">currentOverGo</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">,</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">dropHandler</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">eligibleForClick</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerPress</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">rawPointerPress</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">eligibleForClick</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerPress</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">rawPointerPress</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
 
         <span class="c1">// 如果正在拖拽则抬起事件等于拖拽结束事件</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">dragging</span><span class="o">)</span>
-            <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">Execute</span><span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">,</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">endDragHandler</span><span class="o">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">dragging</span><span class="p">)</span>
+            <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">,</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">endDragHandler</span><span class="p">);</span>
 
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">dragging</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">dragging</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
 
         <span class="c1">// 如果当前接收事件的物体和事件的刚开始的物体不一致，则对两个物体做进和出的事件处理</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">currentOverGo</span> <span class="o">!=</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerEnter</span><span class="o">)</span>
-        <span class="o">{</span>
-            <span class="n">HandlePointerExitAndEnter</span><span class="o">(</span><span class="n">pointerEvent</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
-            <span class="n">HandlePointerExitAndEnter</span><span class="o">(</span><span class="n">pointerEvent</span><span class="o">,</span> <span class="n">currentOverGo</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">currentOverGo</span> <span class="p">!=</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerEnter</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">HandlePointerExitAndEnter</span><span class="p">(</span><span class="n">pointerEvent</span><span class="p">,</span> <span class="k">null</span><span class="p">);</span>
+            <span class="n">HandlePointerExitAndEnter</span><span class="p">(</span><span class="n">pointerEvent</span><span class="p">,</span> <span class="n">currentOverGo</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>上面展示了 ProcessMousePress 处理鼠标按下事件的代码，虽然比较多但并不复杂，我在代码上做了详尽的注解。其实它不仅仅处理的是按下的操作，也同时处理鼠标抬起的操作，以及处理了拖拽启动和拖拽抬起与结束的事件。在调用处理相关句柄的前后，事件数据都会被保存在 pointerEvent 中，然后被传递给业务层中设置的输入事件句柄。</p>
 
 <p>我们再来看看 ProcessDrag 拖拽处理函数:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">protected</span> <span class="n">virtual</span> <span class="kt">void</span> <span class="nf">ProcessDrag</span><span class="o">(</span><span class="n">PointerEventData</span> <span class="n">pointerEvent</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="n">bool</span> <span class="n">moving</span> <span class="o">=</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">IsPointerMoving</span><span class="o">();</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">protected</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">ProcessDrag</span><span class="p">(</span><span class="n">PointerEventData</span> <span class="n">pointerEvent</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">bool</span> <span class="n">moving</span> <span class="p">=</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">IsPointerMoving</span><span class="p">();</span>
 
     <span class="c1">// 如果已经在移动，且还没开始拖拽启动事件，则调用拖拽启动句柄，并设置拖拽中标记为true</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">moving</span> <span class="o">&amp;&amp;</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span> <span class="o">!=</span> <span class="kc">null</span>
-        <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">dragging</span>
-        <span class="o">&amp;&amp;</span> <span class="n">ShouldStartDrag</span><span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pressPosition</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">position</span><span class="o">,</span> <span class="n">eventSystem</span><span class="o">.</span><span class="na">pixelDragThreshold</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">useDragThreshold</span><span class="o">))</span>
-    <span class="o">{</span>
-        <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">Execute</span><span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">,</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">beginDragHandler</span><span class="o">);</span>
-        <span class="n">pointerEvent</span><span class="o">.</span><span class="na">dragging</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">moving</span> <span class="p">&amp;&amp;</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span> <span class="p">!=</span> <span class="k">null</span>
+        <span class="p">&amp;&amp;</span> <span class="p">!</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">dragging</span>
+        <span class="p">&amp;&amp;</span> <span class="n">ShouldStartDrag</span><span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pressPosition</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">position</span><span class="p">,</span> <span class="n">eventSystem</span><span class="p">.</span><span class="n">pixelDragThreshold</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">useDragThreshold</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">,</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">beginDragHandler</span><span class="p">);</span>
+        <span class="n">pointerEvent</span><span class="p">.</span><span class="n">dragging</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
 
     <span class="c1">// 拖拽时的句柄处理</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">dragging</span> <span class="o">&amp;&amp;</span> <span class="n">moving</span> <span class="o">&amp;&amp;</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-    <span class="o">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">dragging</span> <span class="p">&amp;&amp;</span> <span class="n">moving</span> <span class="p">&amp;&amp;</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
         <span class="c1">// 如果按下的物体和拖拽的物体不是同一个则视为抬起拖拽，并清除前面按下时的标记</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerPress</span> <span class="o">!=</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span><span class="o">)</span>
-        <span class="o">{</span>
-            <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">Execute</span><span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerPress</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">,</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">pointerUpHandler</span><span class="o">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerPress</span> <span class="p">!=</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerPress</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">,</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">pointerUpHandler</span><span class="p">);</span>
 
-            <span class="n">pointerEvent</span><span class="o">.</span><span class="na">eligibleForClick</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-            <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerPress</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-            <span class="n">pointerEvent</span><span class="o">.</span><span class="na">rawPointerPress</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="o">}</span>
+            <span class="n">pointerEvent</span><span class="p">.</span><span class="n">eligibleForClick</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+            <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerPress</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+            <span class="n">pointerEvent</span><span class="p">.</span><span class="n">rawPointerPress</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="p">}</span>
 
         <span class="c1">// 执行拖拽中句柄</span>
-        <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">Execute</span><span class="o">(</span><span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerDrag</span><span class="o">,</span> <span class="n">pointerEvent</span><span class="o">,</span> <span class="n">ExecuteEvents</span><span class="o">.</span><span class="na">dragHandler</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+        <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerDrag</span><span class="p">,</span> <span class="n">pointerEvent</span><span class="p">,</span> <span class="n">ExecuteEvents</span><span class="p">.</span><span class="n">dragHandler</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>上面展示了 ProcessDrag 拖拽句柄处理函数，与ProcessMousePress类似对拖拽事件逻辑做了判断，包括拖拽开始事件处理，判断结束拖拽事件，以及拖拽句柄的调用。</p>
 
 <p>ProcessMove 则相对简单点，每帧都会直接调用处理句柄。</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">protected</span> <span class="n">virtual</span> <span class="kt">void</span> <span class="nf">ProcessMove</span><span class="o">(</span><span class="n">PointerEventData</span> <span class="n">pointerEvent</span><span class="o">)</span>
-<span class="o">{</span>
-    <span class="n">var</span> <span class="n">targetGO</span> <span class="o">=</span> <span class="n">pointerEvent</span><span class="o">.</span><span class="na">pointerCurrentRaycast</span><span class="o">.</span><span class="na">gameObject</span><span class="o">;</span>
-    <span class="n">HandlePointerExitAndEnter</span><span class="o">(</span><span class="n">pointerEvent</span><span class="o">,</span> <span class="n">targetGO</span><span class="o">);</span>
-<span class="o">}</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">protected</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">ProcessMove</span><span class="p">(</span><span class="n">PointerEventData</span> <span class="n">pointerEvent</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">targetGO</span> <span class="p">=</span> <span class="n">pointerEvent</span><span class="p">.</span><span class="n">pointerCurrentRaycast</span><span class="p">.</span><span class="n">gameObject</span><span class="p">;</span>
+    <span class="n">HandlePointerExitAndEnter</span><span class="p">(</span><span class="n">pointerEvent</span><span class="p">,</span> <span class="n">targetGO</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>除了鼠标事件外，我们再来看看触屏事件的处理方式，即 TouchInputModule 的核心函数。如下:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="c1">/// &lt;summary&gt;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Process all touch events.</span>
 <span class="c1">/// 处理所有触屏事件</span>
 <span class="c1">/// &lt;/summary&gt;</span>
-<span class="kd">private</span> <span class="kt">void</span> <span class="nf">ProcessTouchEvents</span><span class="o">()</span>
-<span class="o">{</span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">Input</span><span class="o">.</span><span class="na">touchCount</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">Touch</span> <span class="n">input</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="na">GetTouch</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">ProcessTouchEvents</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">Input</span><span class="p">.</span><span class="n">touchCount</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Touch</span> <span class="n">input</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetTouch</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
 
-        <span class="n">bool</span> <span class="n">released</span><span class="o">;</span>
-        <span class="n">bool</span> <span class="n">pressed</span><span class="o">;</span>
-        <span class="n">var</span> <span class="n">pointer</span> <span class="o">=</span> <span class="n">GetTouchPointerEventData</span><span class="o">(</span><span class="n">input</span><span class="o">,</span> <span class="n">out</span> <span class="n">pressed</span><span class="o">,</span> <span class="n">out</span> <span class="n">released</span><span class="o">);</span>
+        <span class="kt">bool</span> <span class="n">released</span><span class="p">;</span>
+        <span class="kt">bool</span> <span class="n">pressed</span><span class="p">;</span>
+        <span class="kt">var</span> <span class="n">pointer</span> <span class="p">=</span> <span class="n">GetTouchPointerEventData</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="k">out</span> <span class="n">pressed</span><span class="p">,</span> <span class="k">out</span> <span class="n">released</span><span class="p">);</span>
 
-        <span class="n">ProcessTouchPress</span><span class="o">(</span><span class="n">pointer</span><span class="o">,</span> <span class="n">pressed</span><span class="o">,</span> <span class="n">released</span><span class="o">);</span>
+        <span class="n">ProcessTouchPress</span><span class="p">(</span><span class="n">pointer</span><span class="p">,</span> <span class="n">pressed</span><span class="p">,</span> <span class="n">released</span><span class="p">);</span>
 
-        <span class="k">if</span> <span class="o">(!</span><span class="n">released</span><span class="o">)</span>
-        <span class="o">{</span>
-            <span class="n">ProcessMove</span><span class="o">(</span><span class="n">pointer</span><span class="o">);</span>
-            <span class="n">ProcessDrag</span><span class="o">(</span><span class="n">pointer</span><span class="o">);</span>
-        <span class="o">}</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="n">released</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">ProcessMove</span><span class="p">(</span><span class="n">pointer</span><span class="p">);</span>
+            <span class="n">ProcessDrag</span><span class="p">(</span><span class="n">pointer</span><span class="p">);</span>
+        <span class="p">}</span>
         <span class="k">else</span>
-            <span class="n">RemovePointerData</span><span class="o">(</span><span class="n">pointer</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+            <span class="nf">RemovePointerData</span><span class="p">(</span><span class="n">pointer</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>从代码中我们看到 ProcessMove 和 ProcessDrag 与前面鼠标事件处理时一样的，只是按下的时间处理不同，而且它对每个触点都做了相同的操作处理。其实 ProcessTouchPress 和鼠标按下处理函数 ProcessMousePress 非常相似，可以说基本上一模一样，只是传入时的数据类型不同而已，由于篇幅有限这里不再重复展示长串代码。</p>
 
 <p>这里大量用到了 ExecuteEvents.ExecuteHierarchy，ExecuteEvents.Execute 之类的静态函数来执行句柄，它是怎么工作的呢，其实很简单:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">private</span> <span class="kd">static</span> <span class="n">readonly</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Transform</span><span class="o">&gt;</span> <span class="n">s_InternalTransformList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Transform</span><span class="o">&gt;(</span><span class="mi">30</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Transform</span><span class="p">&gt;</span> <span class="n">s_InternalTransformList</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Transform</span><span class="p">&gt;(</span><span class="m">30</span><span class="p">);</span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="n">GameObject</span> <span class="n">ExecuteHierarchy</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;(</span><span class="n">GameObject</span> <span class="n">root</span><span class="o">,</span> <span class="n">BaseEventData</span> <span class="n">eventData</span><span class="o">,</span> <span class="n">EventFunction</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">callbackFunction</span><span class="o">)</span> <span class="n">where</span> <span class="n">T</span> <span class="o">:</span> <span class="n">IEventSystemHandler</span>
-<span class="o">{</span>
+<span class="k">public</span> <span class="k">static</span> <span class="n">GameObject</span> <span class="n">ExecuteHierarchy</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">GameObject</span> <span class="n">root</span><span class="p">,</span> <span class="n">BaseEventData</span> <span class="n">eventData</span><span class="p">,</span> <span class="n">EventFunction</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">callbackFunction</span><span class="p">)</span> <span class="k">where</span> <span class="n">T</span> <span class="p">:</span> <span class="n">IEventSystemHandler</span>
+<span class="p">{</span>
     <span class="c1">// 获取物体的所有父节点，包括它自己</span>
-    <span class="n">GetEventChain</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">s_InternalTransformList</span><span class="o">);</span>
+    <span class="n">GetEventChain</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">s_InternalTransformList</span><span class="p">);</span>
 
-    <span class="k">for</span> <span class="o">(</span><span class="n">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s_InternalTransformList</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
-    <span class="o">{</span>
-        <span class="n">var</span> <span class="n">transform</span> <span class="o">=</span> <span class="n">s_InternalTransformList</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">var</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">s_InternalTransformList</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">transform</span> <span class="p">=</span> <span class="n">s_InternalTransformList</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
         <span class="c1">// 对每个父节点包括自己依次执行句柄响应</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">Execute</span><span class="o">(</span><span class="n">transform</span><span class="o">.</span><span class="na">gameObject</span><span class="o">,</span> <span class="n">eventData</span><span class="o">,</span> <span class="n">callbackFunction</span><span class="o">))</span>
-            <span class="k">return</span> <span class="n">transform</span><span class="o">.</span><span class="na">gameObject</span><span class="o">;</span>
-    <span class="o">}</span>
-    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-<span class="o">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">Execute</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">eventData</span><span class="p">,</span> <span class="n">callbackFunction</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">transform</span><span class="p">.</span><span class="n">gameObject</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>解释下上述代码，对所有父节点都调用句柄函数。也就是说，当前节点的事件会通知给它上面的父节点。</p>
 
@@ -584,40 +584,40 @@
 <p>GraphicRaycaster 为UGUI元素点位检测的类，它被放在了 Core 渲染块里。它主要针对 ScreenSpaceOverlay 模式下输入点位做碰撞检测，因为这个模式下的检测并不依赖于射线碰撞，而是遍历所有可点击的UGUI元素来检测比较，从而判断是该响应哪个UI元素。因此 GraphicRaycaster 是比较特殊的。</p>
 
 <p>我们来着重看下 GraphicRaycaster 的核心源码如下：</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="c1">/// &lt;summary&gt;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Perform a raycast into the screen and collect all graphics underneath it.</span>
 <span class="c1">/// &lt;/summary&gt;</span>
-<span class="o">[</span><span class="n">NonSerialized</span><span class="o">]</span> <span class="kd">static</span> <span class="n">readonly</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Graphic</span><span class="o">&gt;</span> <span class="n">s_SortedGraphics</span> <span class="o">=</span> <span class="k">new</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Graphic</span><span class="o">&gt;();</span>
-<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">Raycast</span><span class="o">(</span><span class="n">Canvas</span> <span class="n">canvas</span><span class="o">,</span> <span class="n">Camera</span> <span class="n">eventCamera</span><span class="o">,</span> <span class="n">Vector2</span> <span class="n">pointerPosition</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Graphic</span><span class="o">&gt;</span> <span class="n">results</span><span class="o">)</span>
-<span class="o">{</span>
+<span class="na">[NonSerialized]</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Graphic</span><span class="p">&gt;</span> <span class="n">s_SortedGraphics</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Graphic</span><span class="p">&gt;();</span>
+<span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Raycast</span><span class="p">(</span><span class="n">Canvas</span> <span class="n">canvas</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">eventCamera</span><span class="p">,</span> <span class="n">Vector2</span> <span class="n">pointerPosition</span><span class="p">,</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Graphic</span><span class="p">&gt;</span> <span class="n">results</span><span class="p">)</span>
+<span class="p">{</span>
     <span class="c1">// Debug.Log(&quot;ttt&quot; + pointerPoision + &quot;:::&quot; + camera);</span>
     <span class="c1">// Necessary for the event system</span>
-    <span class="n">var</span> <span class="n">foundGraphics</span> <span class="o">=</span> <span class="n">GraphicRegistry</span><span class="o">.</span><span class="na">GetGraphicsForCanvas</span><span class="o">(</span><span class="n">canvas</span><span class="o">);</span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">foundGraphics</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">Graphic</span> <span class="n">graphic</span> <span class="o">=</span> <span class="n">foundGraphics</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+    <span class="kt">var</span> <span class="n">foundGraphics</span> <span class="p">=</span> <span class="n">GraphicRegistry</span><span class="p">.</span><span class="n">GetGraphicsForCanvas</span><span class="p">(</span><span class="n">canvas</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">foundGraphics</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Graphic</span> <span class="n">graphic</span> <span class="p">=</span> <span class="n">foundGraphics</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
 
         <span class="c1">// -1 means it hasn&#39;t been processed by the canvas, which means it isn&#39;t actually drawn</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">graphic</span><span class="o">.</span><span class="na">depth</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span> <span class="o">!</span><span class="n">graphic</span><span class="o">.</span><span class="na">raycastTarget</span><span class="o">)</span>
-            <span class="k">continue</span><span class="o">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">graphic</span><span class="p">.</span><span class="n">depth</span> <span class="p">==</span> <span class="p">-</span><span class="m">1</span> <span class="p">||</span> <span class="p">!</span><span class="n">graphic</span><span class="p">.</span><span class="n">raycastTarget</span><span class="p">)</span>
+            <span class="k">continue</span><span class="p">;</span>
 
-        <span class="k">if</span> <span class="o">(!</span><span class="n">RectTransformUtility</span><span class="o">.</span><span class="na">RectangleContainsScreenPoint</span><span class="o">(</span><span class="n">graphic</span><span class="o">.</span><span class="na">rectTransform</span><span class="o">,</span> <span class="n">pointerPosition</span><span class="o">,</span> <span class="n">eventCamera</span><span class="o">))</span>
-            <span class="k">continue</span><span class="o">;</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="n">RectTransformUtility</span><span class="p">.</span><span class="n">RectangleContainsScreenPoint</span><span class="p">(</span><span class="n">graphic</span><span class="p">.</span><span class="n">rectTransform</span><span class="p">,</span> <span class="n">pointerPosition</span><span class="p">,</span> <span class="n">eventCamera</span><span class="p">))</span>
+            <span class="k">continue</span><span class="p">;</span>
 
-        <span class="k">if</span> <span class="o">(</span><span class="n">graphic</span><span class="o">.</span><span class="na">Raycast</span><span class="o">(</span><span class="n">pointerPosition</span><span class="o">,</span> <span class="n">eventCamera</span><span class="o">))</span>
-        <span class="o">{</span>
-            <span class="n">s_SortedGraphics</span><span class="o">.</span><span class="na">Add</span><span class="o">(</span><span class="n">graphic</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">graphic</span><span class="p">.</span><span class="n">Raycast</span><span class="p">(</span><span class="n">pointerPosition</span><span class="p">,</span> <span class="n">eventCamera</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">s_SortedGraphics</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">graphic</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    <span class="n">s_SortedGraphics</span><span class="o">.</span><span class="na">Sort</span><span class="o">((</span><span class="n">g1</span><span class="o">,</span> <span class="n">g2</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">g2</span><span class="o">.</span><span class="na">depth</span><span class="o">.</span><span class="na">CompareTo</span><span class="o">(</span><span class="n">g1</span><span class="o">.</span><span class="na">depth</span><span class="o">));</span>
+    <span class="n">s_SortedGraphics</span><span class="p">.</span><span class="n">Sort</span><span class="p">((</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">g2</span><span class="p">.</span><span class="n">depth</span><span class="p">.</span><span class="n">CompareTo</span><span class="p">(</span><span class="n">g1</span><span class="p">.</span><span class="n">depth</span><span class="p">));</span>
     <span class="c1">//      StringBuilder cast = new StringBuilder();</span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s_SortedGraphics</span><span class="o">.</span><span class="na">Count</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span>
-        <span class="n">results</span><span class="o">.</span><span class="na">Add</span><span class="o">(</span><span class="n">s_SortedGraphics</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">s_SortedGraphics</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">s_SortedGraphics</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
     <span class="c1">//      Debug.Log (cast.ToString());</span>
 
-    <span class="n">s_SortedGraphics</span><span class="o">.</span><span class="na">Clear</span><span class="o">();</span>
-<span class="o">}</span>
+    <span class="n">s_SortedGraphics</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>上述代码中，GraphicRaycaster 对每个可以点击的元素(raycastTarget是否为true，并且 depth 不为-1，为可点击元素)进行计算，判断点位是否落在该元素上。再通过 depth 变量排序，判断最先该落在哪个元素上，从而确定哪个元素响应输入事件。</p>
 
