@@ -32,7 +32,7 @@ List是一个C#中最常见的可伸缩数组组件，我们常常用它来替�
 
 我们首先来看看List的构造部分，源码如下：
 
-{% highlight c# %}
+``` c#
 
 public class List<T> : IList<T>, System.Collections.IList, IReadOnlyList<T>
 {
@@ -70,7 +70,7 @@ public class List<T> : IList<T>, System.Collections.IList, IReadOnlyList<T>
     //其他内容
 }
 
-{% endhighlight %}
+```
 
 从源码中可以知道，List 继承于IList，IReadOnlyList，IList是提供了主要的接口，IReadOnlyList提供了迭代接口。
 
@@ -86,7 +86,7 @@ public class List<T> : IList<T>, System.Collections.IList, IReadOnlyList<T>
 
 ###### Add接口源码：
 
-{% highlight c# %}
+``` c#
 
 // Adds the given object to the end of this list. The size of the list is
 // increased by one. If required, the capacity of the list is doubled
@@ -113,7 +113,7 @@ private void EnsureCapacity(int min) {
     }
 }
 
-{% endhighlight %}
+```
 
 上述List源代码中的Add函数，每次增加一个元素的数据，Add接口都会首先检查的是容量还够不够，如果不够则用 EnsureCapacity 来增加容量。
 
@@ -129,7 +129,7 @@ List使用数组形式作为底层数据结构，好处是使用索引方式提�
 
 我们再来看看Remove接口部分的源码：
 
-{% highlight c# %}
+``` c#
 
 // Removes the element at the given index. The size of the list is
 // decreased by one.
@@ -174,7 +174,7 @@ public void RemoveAt(int index) {
     _version++;
 }
 
-{% endhighlight %}
+```
 
 Remove接口中包含了 IndexOf 和 RemoveAt，其中用 IndexOf 函数是位了找到元素的索引位置，用 RemoveAt 可以删除指定位置的元素。
 
@@ -182,7 +182,7 @@ Remove接口中包含了 IndexOf 和 RemoveAt，其中用 IndexOf 函数是位�
 
 先补急着总结，我们再看来 Insert 接口源码。
 
-{% highlight c# %}
+``` c#
 
 // Inserts an element into this list at a given index. The size of the list
 // is increased by one. If required, the capacity of the list is doubled
@@ -203,7 +203,7 @@ public void Insert(int index, T item) {
     _version++;
 }
 
-{% endhighlight %}
+```
 
 与Add接口一样，先检查容量是否足够，不足则扩容。从源码中获悉，Insert插入元素时，使用的用拷贝数组的形式，将数组里的指定元素后面的元素向后移动一个位置。
 
@@ -215,7 +215,7 @@ public void Insert(int index, T item) {
 
 比如 []的实现，
 
-{% highlight c# %}
+``` c#
 
 // Sets or Gets the element at the given index.
 // 
@@ -239,13 +239,13 @@ public T this[int index] {
     }
 }
 
-{% endhighlight %}
+```
 
 []的实现，直接使用了数组的索引方式获取元素。
 
 ###### 再比如 Clear 清除接口
 
-{% highlight c# %}
+``` c#
 
 // Clears the contents of List.
 public void Clear() {
@@ -257,14 +257,14 @@ public void Clear() {
     _version++;
 }
 
-{% endhighlight %}
+```
 
 Clear接口在调用时并不会删除数组，而只是将数组中的元素清零，并设置 _size 为 0 而已，用于虚拟地表明当前容量为0。
 
 
 ###### 再比如 Contains 接口，用于确实某元素是否存在于List中
 
-{% highlight c# %}
+``` c#
 
 // Contains returns true if the specified element is in the List.
 // It does a linear, O(n) search.  Equality is determined by calling
@@ -286,14 +286,14 @@ public bool Contains(T item) {
     }
 }
 
-{% endhighlight %}
+```
 
 从源代码中我们可以看到，Contains 接口使用的是线性查找方式比较元素，对数组进行迭代，比较每个元素与参数的实例是否一致，如果一致则返回true，全部比较结束还没有找到，则认为查找失败。
 
 
 ###### 再比如 ToArray 转化数组接口
 
-{% highlight c# %}
+``` c#
 
 // ToArray returns a new Object array containing the contents of the List.
 // This requires copying the List, which is an O(n) operation.
@@ -306,13 +306,13 @@ public T[] ToArray() {
     return array;
 }
 
-{% endhighlight %}
+```
 
 ToArray接口中，重新new了一个指定大小的数组，再将本身数组上的内容考别到新数组上，再返回出来。
 
 ###### 再比如 Find 查找接口
 
-{% highlight c# %}
+``` c#
 
 public T Find(Predicate<T> match) {
     if( match == null) {
@@ -328,13 +328,13 @@ public T Find(Predicate<T> match) {
     return default(T);
 }
 
-{% endhighlight %}
+```
 
 Find接口使用的同样是线性查找，对每个元素都进行了比较，复杂度为O(n)。
 
 ###### 再比如 Enumerator 枚举迭代部分的细节
 
-{% highlight c# %}
+``` c#
 
 // Returns an enumerator for this list with the given
 // permission for removal of elements. If modifications made to the list 
@@ -422,13 +422,13 @@ public struct Enumerator : IEnumerator<T>, System.Collections.IEnumerator
 
 }
 
-{% endhighlight %}
+```
 
 其中我们需要注意 Enumerator 这个结构，每次获取迭代器时，Enumerator 每次都是被new出来，如果大量使用迭代器的话，比如foreach就会造成大量的垃圾对象，这也是为什么我们常常告诫程序员们，尽量不要用foreach，因为 List 的 foreach 会增加有新的 Enumerator 实例，最后由GC垃圾回收掉。
 
 ###### 最后我们来看看 Sort 排序接口
 
-{% highlight c# %}
+``` c#
 
 // Sorts the elements in a section of this list. The sort compares the
 // elements to each other using the given IComparer interface. If
@@ -455,11 +455,11 @@ public void Sort(int index, int count, IComparer<T> comparer) {
     _version++;
 }
 
-{% endhighlight %}
+```
 
 它使用了 Array.Sort接口进行排序，其中Array.Sort的源码我们也把它找出来。以下为 Array.Sort 的使用的算法源码：
 
-{% highlight c# %}
+``` c#
 
 internal static void DepthLimitedQuickSort(T[] keys, int left, int right, IComparer<T> comparer, int depthLimit)
 {
@@ -517,7 +517,7 @@ internal static void DepthLimitedQuickSort(T[] keys, int left, int right, ICompa
     } while (left < right);
 }
 
-{% endhighlight %}
+```
 
 Array.Sort 使用的是快速排序方式进行排序，从而我们明白了 List 的 Sort 排序的效率为O(nlogn)。
 

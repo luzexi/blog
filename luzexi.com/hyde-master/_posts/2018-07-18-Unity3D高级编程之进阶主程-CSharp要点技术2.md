@@ -55,7 +55,7 @@ Hash函数可以有很多种算法，最简单的可以认为是余操作，比�
 
 首先我们来看看源码中对 Dictionary 的变量定义部分，如下:
 
-{% highlight c# %}
+``` java
 
 public class Dictionary<TKey,TValue>: IDictionary<TKey,TValue>, IDictionary, IReadOnlyDictionary<TKey, TValue>, ISerializable, IDeserializationCallback 
 {
@@ -79,7 +79,7 @@ public class Dictionary<TKey,TValue>: IDictionary<TKey,TValue>, IDictionary, IRe
     private Object _syncRoot;
 }
 
-{% endhighlight %}
+```
 
 从继承的类和接口看，Dictionary 主要继承了 IDictionary 接口，和 ISerializable 接口。IDictionary 和 ISerializable 在使用过程中，其主要的接口为，Add, Remove, ContainsKey, Clear, TryGetValue, Keys, Values, 以及[]数组符号形式作为返回值的接口。也包括了常用库 Collection 中的接口，Count, Contains等。
 
@@ -91,7 +91,7 @@ public class Dictionary<TKey,TValue>: IDictionary<TKey,TValue>, IDictionary, IRe
 
 源代码如下：
 
-{% highlight c# %}
+``` java
 
 public void Add(TKey key, TValue value)
 {
@@ -183,7 +183,7 @@ private void Insert(TKey key, TValue value, bool add)
 
 }
 
-{% endhighlight %}
+```
 
 展示的代码稍稍多了点，我们摘出其中的要点，通过要点来了解重点，再通过重点了解全局。
 
@@ -203,7 +203,7 @@ private void Insert(TKey key, TValue value, bool add)
 
 它们有专门的方法来计算到底该使用多大的数组，我们查出源码 HashHelpers 中，primes数值是这样定义的:
 
-{% highlight c# %}
+``` java
 
  public static readonly int[] primes = {
         3, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919,
@@ -250,7 +250,7 @@ public static int ExpandPrime(int oldSize)
     return GetPrime(newSize);
 }
 
-{% endhighlight %}
+```
 
 上述代码为 HashHelpers 部分的源码，其中 GetPrime 会返回一个需要的 size 最小的数值，从 GetPrime 函数的代码中，我们可以知道这个 size 是由数组 primes 里的值与当前需要的数量大小有关，当需要的数量小于 primes 某个单元格的数字时返回该数字，而 ExpandPrime 则更加简单粗暴，直接返回原来size的2倍作为扩展数量。
 
@@ -265,46 +265,50 @@ public static int ExpandPrime(int oldSize)
 
 紧接着对指定数组单元格内的链表元素做遍历操作，找出空出来的位置将值填入。
 
-    for (int i = buckets[targetBucket]; i >= 0; i = entries[i].next) {
-        if (entries[i].hashCode == hashCode && comparer.Equals(entries[i].key, key)) {
-            if (add) { 
-                ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_AddingDuplicate);
-            }
-            entries[i].value = value;
-            version++;
-            return;
-        } 
+``` java
+for (int i = buckets[targetBucket]; i >= 0; i = entries[i].next) {
+    if (entries[i].hashCode == hashCode && comparer.Equals(entries[i].key, key)) {
+        if (add) { 
+            ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_AddingDuplicate);
+        }
+        entries[i].value = value;
+        version++;
+        return;
+    } 
 
 #if FEATURE_RANDOMIZED_STRING_HASHING
-        collisionCount++;
+    collisionCount++;
 #endif
-    }
+}
+```
 
 这一步就是前面我们所说的拉链法的链表推入动作。当获得Hash值的数组索引后，我们知道了该将数据存放在哪个数组位置上，如果该位置已经有元素被推入，则需要将其推入到链表的尾部。从for循环开始，检查是否到达链表的末尾，最后将数据放入尾部，并结束函数。
 
 如果数组的空间不够了怎么办？源码中体现了这一点:
 
-    int index;
-    if (freeCount > 0) {
-        index = freeList;
-        freeList = entries[index].next;
-        freeCount--;
+``` java
+int index;
+if (freeCount > 0) {
+    index = freeList;
+    freeList = entries[index].next;
+    freeCount--;
+}
+else {
+    if (count == entries.Length)
+    {
+        Resize();
+        targetBucket = hashCode % buckets.Length;
     }
-    else {
-        if (count == entries.Length)
-        {
-            Resize();
-            targetBucket = hashCode % buckets.Length;
-        }
-        index = count;
-        count++;
-    }
+    index = count;
+    count++;
+}
 
-    entries[index].hashCode = hashCode;
-    entries[index].next = buckets[targetBucket];
-    entries[index].key = key;
-    entries[index].value = value;
-    buckets[targetBucket] = index;
+entries[index].hashCode = hashCode;
+entries[index].next = buckets[targetBucket];
+entries[index].key = key;
+entries[index].value = value;
+buckets[targetBucket] = index;
+```
 
 当被用来记录剩余单元格数量的变量 freeCount 等于0时，则进行扩容，扩容后的大小就是我们前面提到的 调用 ExpandPrime 后的数量，即通常情况下为原来的2倍，再根据这个空间大小数字调用 GetPrime 来得到真正的新数组的大小。
 
@@ -314,7 +318,7 @@ public static int ExpandPrime(int oldSize)
 
 ###### Remove 用关键字删除元素的接口源码：
 
-{% highlight c# %}
+``` java
 
 public bool Remove(TKey key)
 {
@@ -348,7 +352,7 @@ public bool Remove(TKey key)
     return false;
 }
 
-{% endhighlight %}
+```
 
 我们注意到 Remove 接口相对 Add 接口简单的多，同样用哈希函数 comparer.GetHashCode 再除余后得到范围内的地址索引，再做余操作确定地址落在数组范围内，从哈希索引地址开始，查找冲突的元素的Key是否与需要移除的Key值相同，相同则进行移除操作并退出。
 
@@ -356,7 +360,7 @@ public bool Remove(TKey key)
 
 ###### 我们继续剖析另一个重要的接口 ContainsKey 检测是否包含关键字的接口。源码如下：
 
-{% highlight c# %}
+``` java
 
 public bool ContainsKey(TKey key)
 {
@@ -378,7 +382,7 @@ private int FindEntry(TKey key)
     return -1;
 }
 
-{% endhighlight %}
+```
 
 从源码中看到 ContainsKey 是一个查找Key位置的过程。它调用了 FindEntry 函数，FindEntry 查找Key值位置的方法跟我们前面提到的相同。从用Key值得到的哈希值地址开始查找，查看所有冲突链表中，是否有与Key值相同的值，找到即刻返回该索引地址。
 
@@ -386,7 +390,7 @@ private int FindEntry(TKey key)
 
 ###### TryGetValue 尝试获取值的接口:
 
-{% highlight c# %}
+``` java
 
 public bool TryGetValue(TKey key, out TValue value)
 {
@@ -399,13 +403,13 @@ public bool TryGetValue(TKey key, out TValue value)
     return false;
 }
 
-{% endhighlight %}
+```
 
 与 ContainsKey 同样，他调用的也是FindEntry的接口，来获取Key对应的Value值。
 
 ###### 对[]操作符的重定义，源码:
 
-{% highlight c# %}
+``` java
 
 public TValue this[TKey key] {
     get {
@@ -419,7 +423,7 @@ public TValue this[TKey key] {
     }
 }
 
-{% endhighlight %}
+```
 
 在重新定义[]符号的代码中，获取元素时也同样使用 FindEntry 函数，而 Set 设置元素时则使用与 Add 调用相同的 Insert函数，它们都是同一套方法，即哈希拉链冲突解决方案。
 
@@ -427,7 +431,7 @@ public TValue this[TKey key] {
 
 既然这么重要，我们来看看哈希函数的创建过程，比较函数的创建的源码：
 
-{% highlight c# %}
+``` java
 
 private static EqualityComparer<T> CreateComparer()
 {
@@ -476,7 +480,7 @@ private static EqualityComparer<T> CreateComparer()
     return new ObjectEqualityComparer<T>();
 }
 
-{% endhighlight %}
+```
 
 我们看到源码中，对数字，byte，有‘比较’接口(IEquatable<T>)，和没有‘比较’接口，四种方式进行了区分对待。
 
@@ -490,7 +494,7 @@ private static EqualityComparer<T> CreateComparer()
 
 在C#里所有类都继承了 Object 类，所以即使没有特别的重写 Equals 函数，都会使用 Object 类的 Equals 函数:
 
-{% highlight c# %}
+``` java
 
 public virtual bool Equals(Object obj)
 {
@@ -502,7 +506,7 @@ public virtual bool Equals(Object obj)
 [MethodImplAttribute(MethodImplOptions.InternalCall)]
 public new static extern bool Equals(Object o1, Object o2);
 
-{% endhighlight %}
+```
 
 而这个 Equals 两个对象的比较，是以内存地址为基准的。
 

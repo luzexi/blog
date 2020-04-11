@@ -251,8 +251,7 @@
 <p>List是一个C#中最常见的可伸缩数组组件，我们常常用它来替代数组，因为它是可伸缩的，所以我们在写的时候不用手动去分配数组的大小。甚至有时我们也会拿它当链表使用。那么到底它的底层是怎么编写的呢，每次增加和减少以及赋值，内部是怎么执行和运作的呢？我们接下来就来详细的讲解。</p>
 
 <p>我们首先来看看List的构造部分，源码如下：</p>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;,</span> <span class="n">System</span><span class="p">.</span><span class="n">Collections</span><span class="p">.</span><span class="n">IList</span><span class="p">,</span> <span class="n">IReadOnlyList</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;,</span> <span class="n">System</span><span class="p">.</span><span class="n">Collections</span><span class="p">.</span><span class="n">IList</span><span class="p">,</span> <span class="n">IReadOnlyList</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span>
 <span class="p">{</span>
     <span class="k">private</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">_defaultCapacity</span> <span class="p">=</span> <span class="m">4</span><span class="p">;</span>
 
@@ -260,9 +259,9 @@
     <span class="k">private</span> <span class="kt">int</span> <span class="n">_size</span><span class="p">;</span>
     <span class="k">private</span> <span class="kt">int</span> <span class="n">_version</span><span class="p">;</span>
     <span class="k">private</span> <span class="n">Object</span> <span class="n">_syncRoot</span><span class="p">;</span>
-    
+
     <span class="k">static</span> <span class="k">readonly</span> <span class="n">T</span><span class="p">[]</span>  <span class="n">_emptyArray</span> <span class="p">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>        
-        
+
     <span class="c1">// Constructs a List. The list is initially empty and has a capacity</span>
     <span class="c1">// of zero. Upon adding the first element to the list the capacity is</span>
     <span class="c1">// increased to 16, and then increased in multiples of two as required.</span>
@@ -286,8 +285,8 @@
 
     <span class="c1">//...</span>
     <span class="c1">//其他内容</span>
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>从源码中可以知道，List 继承于IList，IReadOnlyList，IList是提供了主要的接口，IReadOnlyList提供了迭代接口。</p>
 
 <p><a href="https://referencesource.microsoft.com/#mscorlib/system/collections/ilist.cs,5d74f6adfeaf6c7d">IList源码</a></p>
@@ -301,8 +300,7 @@
 <p>下面我们来看下，我们的猜测是否正确。</p>
 
 <h6>Add接口源码：</h6>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Adds the given object to the end of this list. The size of the list is</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Adds the given object to the end of this list. The size of the list is</span>
 <span class="c1">// increased by one. If required, the capacity of the list is doubled</span>
 <span class="c1">// before adding the new element.</span>
 <span class="c1">//</span>
@@ -325,8 +323,8 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">newCapacity</span> <span class="p">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">newCapacity</span> <span class="p">=</span> <span class="n">min</span><span class="p">;</span>
         <span class="n">Capacity</span> <span class="p">=</span> <span class="n">newCapacity</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>上述List源代码中的Add函数，每次增加一个元素的数据，Add接口都会首先检查的是容量还够不够，如果不够则用 EnsureCapacity 来增加容量。</p>
 
 <p>在 EnsureCapacity 中，有这样一行代码：</p>
@@ -339,8 +337,7 @@
 <p>这里按2指数扩容的方式，可以为GC减轻负担，但是如果当数组连续被替换掉也还是会造成GC的不小负担，特别是代码中List频繁使用的Add时。另外，如果数量不得当也会浪费大量内存空间，比如当元素数量为 520 时，List 就会扩容到1024个元素，如果不使用剩余的504个空间单位，就造成了大部分的内存空间的浪费。具体该怎么做才是最佳的策略，我们将在后面的文章中讨论。</p>
 
 <p>我们再来看看Remove接口部分的源码：</p>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Removes the element at the given index. The size of the list is</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Removes the element at the given index. The size of the list is</span>
 <span class="c1">// decreased by one.</span>
 <span class="c1">// </span>
 <span class="k">public</span> <span class="kt">bool</span> <span class="nf">Remove</span><span class="p">(</span><span class="n">T</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
@@ -381,15 +378,14 @@
     <span class="p">}</span>
     <span class="n">_items</span><span class="p">[</span><span class="n">_size</span><span class="p">]</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
     <span class="n">_version</span><span class="p">++;</span>
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>Remove接口中包含了 IndexOf 和 RemoveAt，其中用 IndexOf 函数是位了找到元素的索引位置，用 RemoveAt 可以删除指定位置的元素。</p>
 
 <p>从源码中我们可以看到，元素删除的原理其实就是用 Array.Copy 对数组进行覆盖。IndexOf 启用的是 Array.IndexOf 接口来查找元素的索引位置，这个接口本身内部实现是就是按索引顺序从0到n对每个位置的比较，复杂度为O(n)。</p>
 
 <p>先补急着总结，我们再看来 Insert 接口源码。</p>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Inserts an element into this list at a given index. The size of the list</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Inserts an element into this list at a given index. The size of the list</span>
 <span class="c1">// is increased by one. If required, the capacity of the list is doubled</span>
 <span class="c1">// before inserting the new element.</span>
 <span class="c1">// </span>
@@ -406,8 +402,8 @@
     <span class="n">_items</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="p">=</span> <span class="n">item</span><span class="p">;</span>
     <span class="n">_size</span><span class="p">++;</span>            
     <span class="n">_version</span><span class="p">++;</span>
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>与Add接口一样，先检查容量是否足够，不足则扩容。从源码中获悉，Insert插入元素时，使用的用拷贝数组的形式，将数组里的指定元素后面的元素向后移动一个位置。</p>
 
 <p>看到这里，可以我们明白了List的Add，Insert，IndexOf，Remove接口都是没有做过任何形式的优化，都使用的是顺序迭代的方式，如果过于频繁使用的话，会导致效率降低，也会造成不少内存的冗余，使得垃圾回收(GC)时承担了更多的压力。</p>
@@ -417,8 +413,7 @@
 <h6>其他接口也同样基于数组，并使用了类似的方式来对数据做操作，我们可以来快速的看看其他常用接口的源码是如何实现的。</h6>
 
 <p>比如 []的实现，</p>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Sets or Gets the element at the given index.</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Sets or Gets the element at the given index.</span>
 <span class="c1">// </span>
 <span class="k">public</span> <span class="n">T</span> <span class="k">this</span><span class="p">[</span><span class="kt">int</span> <span class="n">index</span><span class="p">]</span> <span class="p">{</span>
     <span class="k">get</span> <span class="p">{</span>
@@ -438,13 +433,12 @@
         <span class="n">_items</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
         <span class="n">_version</span><span class="p">++;</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>[]的实现，直接使用了数组的索引方式获取元素。</p>
 
 <h6>再比如 Clear 清除接口</h6>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Clears the contents of List.</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Clears the contents of List.</span>
 <span class="k">public</span> <span class="k">void</span> <span class="nf">Clear</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">_size</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span>
     <span class="p">{</span>
@@ -452,13 +446,12 @@
         <span class="n">_size</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="n">_version</span><span class="p">++;</span>
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>Clear接口在调用时并不会删除数组，而只是将数组中的元素清零，并设置 _size 为 0 而已，用于虚拟地表明当前容量为0。</p>
 
 <h6>再比如 Contains 接口，用于确实某元素是否存在于List中</h6>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Contains returns true if the specified element is in the List.</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Contains returns true if the specified element is in the List.</span>
 <span class="c1">// It does a linear, O(n) search.  Equality is determined by calling</span>
 <span class="c1">// item.Equals().</span>
 <span class="c1">//</span>
@@ -476,13 +469,12 @@
         <span class="p">}</span>
         <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>从源代码中我们可以看到，Contains 接口使用的是线性查找方式比较元素，对数组进行迭代，比较每个元素与参数的实例是否一致，如果一致则返回true，全部比较结束还没有找到，则认为查找失败。</p>
 
 <h6>再比如 ToArray 转化数组接口</h6>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// ToArray returns a new Object array containing the contents of the List.</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// ToArray returns a new Object array containing the contents of the List.</span>
 <span class="c1">// This requires copying the List, which is an O(n) operation.</span>
 <span class="k">public</span> <span class="n">T</span><span class="p">[]</span> <span class="nf">ToArray</span><span class="p">()</span> <span class="p">{</span>
     <span class="n">Contract</span><span class="p">.</span><span class="n">Ensures</span><span class="p">(</span><span class="n">Contract</span><span class="p">.</span><span class="n">Result</span><span class="p">&lt;</span><span class="n">T</span><span class="p">[]&gt;()</span> <span class="p">!=</span> <span class="k">null</span><span class="p">);</span>
@@ -491,13 +483,12 @@
     <span class="n">T</span><span class="p">[]</span> <span class="n">array</span> <span class="p">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">_size</span><span class="p">];</span>
     <span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">_items</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">_size</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>ToArray接口中，重新new了一个指定大小的数组，再将本身数组上的内容考别到新数组上，再返回出来。</p>
 
 <h6>再比如 Find 查找接口</h6>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="n">T</span> <span class="nf">Find</span><span class="p">(</span><span class="n">Predicate</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">match</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="n">T</span> <span class="nf">Find</span><span class="p">(</span><span class="n">Predicate</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">match</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span> <span class="n">match</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentNullException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">match</span><span class="p">);</span>
     <span class="p">}</span>
@@ -509,13 +500,12 @@
         <span class="p">}</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="nf">default</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>Find接口使用的同样是线性查找，对每个元素都进行了比较，复杂度为O(n)。</p>
 
 <h6>再比如 Enumerator 枚举迭代部分的细节</h6>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Returns an enumerator for this list with the given</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Returns an enumerator for this list with the given</span>
 <span class="c1">// permission for removal of elements. If modifications made to the list </span>
 <span class="c1">// while an enumeration is in progress, the MoveNext and </span>
 <span class="c1">// GetObject methods of the enumerator will throw an exception.</span>
@@ -594,18 +584,17 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">version</span> <span class="p">!=</span> <span class="n">list</span><span class="p">.</span><span class="n">_version</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowInvalidOperationException</span><span class="p">(</span><span class="n">ExceptionResource</span><span class="p">.</span><span class="n">InvalidOperation_EnumFailedVersion</span><span class="p">);</span>
         <span class="p">}</span>
-        
+
         <span class="n">index</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
         <span class="n">current</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
     <span class="p">}</span>
 
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>其中我们需要注意 Enumerator 这个结构，每次获取迭代器时，Enumerator 每次都是被new出来，如果大量使用迭代器的话，比如foreach就会造成大量的垃圾对象，这也是为什么我们常常告诫程序员们，尽量不要用foreach，因为 List 的 foreach 会增加有新的 Enumerator 实例，最后由GC垃圾回收掉。</p>
 
 <h6>最后我们来看看 Sort 排序接口</h6>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Sorts the elements in a section of this list. The sort compares the</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Sorts the elements in a section of this list. The sort compares the</span>
 <span class="c1">// elements to each other using the given IComparer interface. If</span>
 <span class="c1">// comparer is null, the elements are compared to each other using</span>
 <span class="c1">// the IComparable interface, which in that case must be implemented by all</span>
@@ -617,22 +606,21 @@
     <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentOutOfRangeException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">index</span><span class="p">,</span> <span class="n">ExceptionResource</span><span class="p">.</span><span class="n">ArgumentOutOfRange_NeedNonNegNum</span><span class="p">);</span>
     <span class="p">}</span>
-    
+
     <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentOutOfRangeException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">count</span><span class="p">,</span> <span class="n">ExceptionResource</span><span class="p">.</span><span class="n">ArgumentOutOfRange_NeedNonNegNum</span><span class="p">);</span>
     <span class="p">}</span>
-        
+
     <span class="k">if</span> <span class="p">(</span><span class="n">_size</span> <span class="p">-</span> <span class="n">index</span> <span class="p">&lt;</span> <span class="n">count</span><span class="p">)</span>
         <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentException</span><span class="p">(</span><span class="n">ExceptionResource</span><span class="p">.</span><span class="n">Argument_InvalidOffLen</span><span class="p">);</span>
     <span class="n">Contract</span><span class="p">.</span><span class="n">EndContractBlock</span><span class="p">();</span>
 
     <span class="n">Array</span><span class="p">.</span><span class="n">Sort</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">_items</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">comparer</span><span class="p">);</span>
     <span class="n">_version</span><span class="p">++;</span>
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>它使用了 Array.Sort接口进行排序，其中Array.Sort的源码我们也把它找出来。以下为 Array.Sort 的使用的算法源码：</p>
-
-<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">internal</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">DepthLimitedQuickSort</span><span class="p">(</span><span class="n">T</span><span class="p">[]</span> <span class="n">keys</span><span class="p">,</span> <span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">,</span> <span class="n">IComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">comparer</span><span class="p">,</span> <span class="kt">int</span> <span class="n">depthLimit</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">internal</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">DepthLimitedQuickSort</span><span class="p">(</span><span class="n">T</span><span class="p">[]</span> <span class="n">keys</span><span class="p">,</span> <span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">,</span> <span class="n">IComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">comparer</span><span class="p">,</span> <span class="kt">int</span> <span class="n">depthLimit</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">do</span>
     <span class="p">{</span>
@@ -686,8 +674,8 @@
             <span class="n">right</span> <span class="p">=</span> <span class="n">j</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">left</span> <span class="p">&lt;</span> <span class="n">right</span><span class="p">);</span>
-<span class="p">}</span></code></pre></figure>
-
+<span class="p">}</span>
+</code></pre></div>
 <p>Array.Sort 使用的是快速排序方式进行排序，从而我们明白了 List 的 Sort 排序的效率为O(nlogn)。</p>
 
 <h6>我们把大部分的接口都列了出来，差不多把所有的源码都分析了一遍，我们可以看到 List 的效率并不高，只是通用性强而已，大部分的算法都使用的是线性复杂度的算法，这种线性算法当遇到规模比较大的计算量级时就会导致CPU的大量损耗。</h6>
