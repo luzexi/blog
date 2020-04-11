@@ -482,15 +482,9 @@ private static EqualityComparer<T> CreateComparer()
 
 ```
 
-我们看到源码中，对数字，byte，有‘比较’接口(IEquatable<T>)，和没有‘比较’接口，四种方式进行了区分对待。
+我们看到源码中，对数字，byte，有‘比较’接口(IEquatable\<T\>)，和没有‘比较’接口，四种方式进行了区分对待。
 
-对于像数字和byte类的，比较容易比较，所以它们都是一类，且是有相应固定的比较函数的。
-
-而有‘比较’接口(IEquatable<T>)的实体，则直接使用GenericEqualityComparer<T>来获得哈希函数。
-
-最后那些没有‘比较’接口(IEquatable<T>)的实体，如果继承了 Nullable<U> 接口，则使用一个叫 NullableEqualityComparer 的比较函数来代替。
-
-如果什么都不是，就只能使用 ObjectEqualityComparer<T> 默认的对象比较方式来做比较了。
+对于像数字和byte类的，比较容易比较，所以它们都是一类，且是有相应固定的比较函数的。而有‘比较’接口(IEquatable\<T\>)的实体，则直接使用GenericEqualityComparer\<T\>来获得哈希函数。最后那些没有‘比较’接口(IEquatable<T>)的实体，如果继承了 Nullable\<U\> 接口，则使用一个叫 NullableEqualityComparer 的比较函数来代替。如果什么都不是，就只能使用 ObjectEqualityComparer\<T\> 默认的对象比较方式来做比较了。
 
 在C#里所有类都继承了 Object 类，所以即使没有特别的重写 Equals 函数，都会使用 Object 类的 Equals 函数:
 
