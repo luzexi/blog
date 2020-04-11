@@ -232,13 +232,23 @@
   <h1 class="post-title">《Unity3D高级编程之进阶主程》第一章，C#要点技术(一) - List 底层源码剖析</h1>
   <span class="post-date">06 Jul 2018</span>
 
-  <p>很多老鸟看到C#基础总想跳过，因为看了太多次，次次都一样，有时候看得都想吐，基础里无非是几个语法，或者由继承展开的特性，再加上一些高级特有的属性，看多了当然会吐。而我在这里想写些不一样的东西，我认为能看这本书的，基本上都能做到基础的语法部分已经滚瓜烂熟了。所以我们在基础的语法之上讲些更高级的东西会来得更有趣些，比如算法设计，比如常用组件的底层代码分析，比如设计模式，比如动态库(so文件和dll文件)等等。</p>
+  <p>很多老鸟看到C#基础总想跳过，因为看了太多次，次次都一样，基础里无非是几个语法，或者由继承展开的特性，再加上一些高级特有的属性，看多了确实有点枯燥。但我还是要强调一下，基础的重要性，没有扎实的基础，所有写的程序就会随着软件规模的扩大，使用规模的扩大，或者使用途径的扩大而遇到越来越多的问题，这些程序最后大部分都会被遗弃，或者重新开始。</p>
+
+<p>===</p>
+
+<p>也是因为基础的重要性之高，使得很多资深的程序员从这里出发，最终又回到了这里，他们一遍又一遍的看着这部分内容，希望从中得到新的启发或者纠正自己以前的错误观念。</p>
+
+<p>我不仅仅想把基础的东西告知给大家，但又不想让大家觉得开枯燥，所以我想写些不一样的东西。我认为能看这本书的，基本上都能做到基础的语法部分已经滚瓜烂熟，所以我们在基础的语法之上讲些进阶的内容会来得更有趣些，比如算法设计，比如常用组件的底层代码分析，比如设计模式，比如动态库(so文件和dll文件)等等。</p>
+
+<p>首先我们来讲解下我们在日常的工作中常常会用到的C#组件底层原理，从这一章的知识中，我们可以充分的了解到我们日常编程代码中，这些组件在底层是如何运作的，当我们再次编写代码时，能有意识的理解背后的执行步骤，从而能更好的提升代码的质量。</p>
 
 <p>===</p>
 
 <p>1。 ## 常用组件底层代码解析</p>
 
-<h3>List 底层代码</h3>
+<h3>List 底层代码剖析</h3>
+
+<p>List是一个C#中最常见的可伸缩数组组件，我们常常用它来替代数组，因为它是可伸缩的，所以我们在写的时候不用手动去分配数组的大小。甚至有时我们也会拿它当链表使用。那么到底它的底层是怎么编写的呢，每次增加和减少以及赋值，内部是怎么执行和运作的呢？我们接下来就来详细的讲解。</p>
 
 <p>我们首先来看看List的构造部分，源码如下：</p>
 
@@ -286,9 +296,11 @@
 
 <p>看构造部分，我们明确了，List内部是用数组实现的，而不是链表，并且当没有给予指定容量时，初始的容量为0。</p>
 
-<p>也就是说，可以大概率推测List在Add,Remove时都是用数组拷贝生成新数组的方式工作的。下面我们来看下，我们的猜测是否正确。</p>
+<p>也就是说，我们可以大概率推测List组件在Add,Remove两个函数调用时都采用的是“从原数组拷贝生成到新数组”的方式工作的。</p>
 
-<p>Add接口源码：</p>
+<p>下面我们来看下，我们的猜测是否正确。</p>
+
+<h6>Add接口源码：</h6>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Adds the given object to the end of this list. The size of the list is</span>
 <span class="c1">// increased by one. If required, the capacity of the list is doubled</span>
@@ -315,16 +327,18 @@
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>每次增加一个元素的数据，Add接口首先检查的是容量还够吗，如果不够则用 EnsureCapacity 来增加容量。</p>
+<p>上述List源代码中的Add函数，每次增加一个元素的数据，Add接口都会首先检查的是容量还够不够，如果不够则用 EnsureCapacity 来增加容量。</p>
 
-<p>在 EnsureCapacity 中，</p>
+<p>在 EnsureCapacity 中，有这样一行代码：</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    int newCapacity = _items.Length == 0? _defaultCapacity : _items.Length * 2;
 </code></pre></div>
-<p>每次容量不够的时候，整个数组的容量都会扩充一倍，_defaultCapacity 是容量的默认值为4. 所以整个扩充的路线为4，8，16，32，64，128，256，512，1024....</p>
+<p>每次容量不够的时候，整个数组的容量都会扩充一倍，_defaultCapacity 是容量的默认值为4。因此整个扩充的路线为4，8，16，32，64，128，256，512，1024...依次类推。</p>
 
-<p>用数组形式作为底层数据结构，好处是使用索引方式提取元素很快，但在扩容的时候就很糟糕了，每次new数组都会造成内存垃圾，这给垃圾回收GC带来了很多负担。一次性扩充更多的数组容量为GC减轻了负担，但数组连续的new也还是GC的不小负担，特别是代码中List频繁使用的Add时。另外，如果数量不得当也会浪费大量内存空间，比如当元素数量为 520 时，List 就会扩容到1024个元素，如果不使用剩余的504个空间单位，就造成了大部分的内存空间的浪费。</p>
+<p>List使用数组形式作为底层数据结构，好处是使用索引方式提取元素很快，但在扩容的时候就会很糟糕，每次new数组都会造成内存垃圾，这给垃圾回收GC带来了很多负担。</p>
 
-<p>我们再来看看Remove接口部分的源码。</p>
+<p>这里按2指数扩容的方式，可以为GC减轻负担，但是如果当数组连续被替换掉也还是会造成GC的不小负担，特别是代码中List频繁使用的Add时。另外，如果数量不得当也会浪费大量内存空间，比如当元素数量为 520 时，List 就会扩容到1024个元素，如果不使用剩余的504个空间单位，就造成了大部分的内存空间的浪费。具体该怎么做才是最佳的策略，我们将在后面的文章中讨论。</p>
+
+<p>我们再来看看Remove接口部分的源码：</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Removes the element at the given index. The size of the list is</span>
 <span class="c1">// decreased by one.</span>
@@ -369,9 +383,11 @@
     <span class="n">_version</span><span class="p">++;</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>Remove接口中包含了 IndexOf 和 RemoveAt，用 IndexOf 找到元素的索引位置，用 RemoveAt 删除指定位置的元素。删除的原理其实就是用 Array.Copy 对数组进行覆盖。IndexOf 启用的是 Array.IndexOf 接口来查找元素的索引位置，这个接口内部实现是就是按索引顺序从0到n对每个位置的比较，复杂度为O(n)。</p>
+<p>Remove接口中包含了 IndexOf 和 RemoveAt，其中用 IndexOf 函数是位了找到元素的索引位置，用 RemoveAt 可以删除指定位置的元素。</p>
 
-<p>再看来 Insert 接口源码。</p>
+<p>从源码中我们可以看到，元素删除的原理其实就是用 Array.Copy 对数组进行覆盖。IndexOf 启用的是 Array.IndexOf 接口来查找元素的索引位置，这个接口本身内部实现是就是按索引顺序从0到n对每个位置的比较，复杂度为O(n)。</p>
+
+<p>先补急着总结，我们再看来 Insert 接口源码。</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Inserts an element into this list at a given index. The size of the list</span>
 <span class="c1">// is increased by one. If required, the capacity of the list is doubled</span>
@@ -392,28 +408,13 @@
     <span class="n">_version</span><span class="p">++;</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>与Add接口一样，先检查容量是否足够，不足则扩容。插入元素时，则以拷贝数组的形式，将数组里的指定元素后面的元素向后移动一个位置。</p>
+<p>与Add接口一样，先检查容量是否足够，不足则扩容。从源码中获悉，Insert插入元素时，使用的用拷贝数组的形式，将数组里的指定元素后面的元素向后移动一个位置。</p>
 
-<p>到这里，可以知道List的Add，Insert，IndexOf，Remove接口都是没有优化过的，如果过于频繁使用的话，会导致CPU使用过高，造成不少内存的冗余，也会使得垃圾回收(GC)时承担了更多的压力。</p>
+<p>看到这里，可以我们明白了List的Add，Insert，IndexOf，Remove接口都是没有做过任何形式的优化，都使用的是顺序迭代的方式，如果过于频繁使用的话，会导致效率降低，也会造成不少内存的冗余，使得垃圾回收(GC)时承担了更多的压力。</p>
 
-<p>AddRange，RemoveRange的原理和Add与Remove是一样的，只是多了几个元素，把单个元素变成了以容器为单位的形式进行操作。都是先检查容量是否合适，不合适则扩容，以及Remove时先得到索引位置再进行整体的覆盖删掉的元素。</p>
+<p>其他相关接口比如 AddRange，RemoveRange的原理和Add与Remove一样，区别只是多了几个元素，把单个元素变成了以容器为单位的形式进行操作。都是先检查容量是否合适，不合适则扩容，或者当Remove时先得到索引位置再进行整体的覆盖掉后面的的元素，容器本身大小不会变化，只是做了重复覆盖的操作。</p>
 
-<script type="text/javascript">
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-    { //移动端
-        /*mobile-20:5*/
-        var cpro_id = "u3493987";
-        document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>");
-    }
-    else
-    {
-         /*700*200信息流*/
-        var cpro_id = "u3469788";
-        document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>");
-    }
-</script>
-
-<h3>我们再来快速的看看其他常用接口的源码是如何实现的。</h3>
+<h6>其他接口也同样基于数组，并使用了类似的方式来对数据做操作，我们可以来快速的看看其他常用接口的源码是如何实现的。</h6>
 
 <p>比如 []的实现，</p>
 
@@ -441,7 +442,7 @@
 
 <p>[]的实现，直接使用了数组的索引方式获取元素。</p>
 
-<p>再比如 Clear 清除接口</p>
+<h6>再比如 Clear 清除接口</h6>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Clears the contents of List.</span>
 <span class="k">public</span> <span class="k">void</span> <span class="nf">Clear</span><span class="p">()</span> <span class="p">{</span>
@@ -453,9 +454,9 @@
     <span class="n">_version</span><span class="p">++;</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>Clear时并不会删除数组，而是将数组中的元素清空，并置 _size 为 0，表明当前容量为0.</p>
+<p>Clear接口在调用时并不会删除数组，而只是将数组中的元素清零，并设置 _size 为 0 而已，用于虚拟地表明当前容量为0。</p>
 
-<p>再比如 Contains 包含接口</p>
+<h6>再比如 Contains 接口，用于确实某元素是否存在于List中</h6>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Contains returns true if the specified element is in the List.</span>
 <span class="c1">// It does a linear, O(n) search.  Equality is determined by calling</span>
@@ -477,9 +478,9 @@
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>Contains 接口使用的是线性查找方式比较元素，复杂度为O(n)。</p>
+<p>从源代码中我们可以看到，Contains 接口使用的是线性查找方式比较元素，对数组进行迭代，比较每个元素与参数的实例是否一致，如果一致则返回true，全部比较结束还没有找到，则认为查找失败。</p>
 
-<p>再比如 ToArray 转化数组接口</p>
+<h6>再比如 ToArray 转化数组接口</h6>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// ToArray returns a new Object array containing the contents of the List.</span>
 <span class="c1">// This requires copying the List, which is an O(n) operation.</span>
@@ -492,9 +493,9 @@
     <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>ToArray接口，重新new了一个数组返回出来。</p>
+<p>ToArray接口中，重新new了一个指定大小的数组，再将本身数组上的内容考别到新数组上，再返回出来。</p>
 
-<p>再比如 Find 查找接口</p>
+<h6>再比如 Find 查找接口</h6>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="n">T</span> <span class="nf">Find</span><span class="p">(</span><span class="n">Predicate</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">match</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span> <span class="n">match</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
@@ -510,9 +511,9 @@
     <span class="k">return</span> <span class="nf">default</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>Find接口使用的也是线性查找，对每个元素都进行了比较，算法复杂度为O(n)。</p>
+<p>Find接口使用的同样是线性查找，对每个元素都进行了比较，复杂度为O(n)。</p>
 
-<p>再比如 Enumerator 枚举迭代部分的细节</p>
+<h6>再比如 Enumerator 枚举迭代部分的细节</h6>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Returns an enumerator for this list with the given</span>
 <span class="c1">// permission for removal of elements. If modifications made to the list </span>
@@ -600,9 +601,9 @@
 
 <span class="p">}</span></code></pre></figure>
 
-<p>Enumerator 每次都是被new出来了，如果大量使用枚举器比如foreach就会造成大量的垃圾对象，这也是为什么大家说 list 的 foreach 会增加垃圾回收GC的压力了原因了。</p>
+<p>其中我们需要注意 Enumerator 这个结构，每次获取迭代器时，Enumerator 每次都是被new出来，如果大量使用迭代器的话，比如foreach就会造成大量的垃圾对象，这也是为什么我们常常告诫程序员们，尽量不要用foreach，因为 List 的 foreach 会增加有新的 Enumerator 实例，最后由GC垃圾回收掉。</p>
 
-<p>最后我们来看看 Sort 排序接口</p>
+<h6>最后我们来看看 Sort 排序接口</h6>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">// Sorts the elements in a section of this list. The sort compares the</span>
 <span class="c1">// elements to each other using the given IComparer interface. If</span>
@@ -629,9 +630,7 @@
     <span class="n">_version</span><span class="p">++;</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>我找到 Array.Sort 源码，使用的是快速排序方式进行排序。也决定了 List 的 Sort 排序部分的效率为O(nlogn)。</p>
-
-<p>以下为 Array.Sort 的使用的算法源码。</p>
+<p>它使用了 Array.Sort接口进行排序，其中Array.Sort的源码我们也把它找出来。以下为 Array.Sort 的使用的算法源码：</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">internal</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">DepthLimitedQuickSort</span><span class="p">(</span><span class="n">T</span><span class="p">[]</span> <span class="n">keys</span><span class="p">,</span> <span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">,</span> <span class="n">IComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">comparer</span><span class="p">,</span> <span class="kt">int</span> <span class="n">depthLimit</span><span class="p">)</span>
 <span class="p">{</span>
@@ -689,13 +688,21 @@
     <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">left</span> <span class="p">&lt;</span> <span class="n">right</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
-<hr>
+<p>Array.Sort 使用的是快速排序方式进行排序，从而我们明白了 List 的 Sort 排序的效率为O(nlogn)。</p>
+
+<h6>我们把大部分的接口都列了出来，差不多把所有的源码都分析了一遍，我们可以看到 List 的效率并不高，只是通用性强而已，大部分的算法都使用的是线性复杂度的算法，这种线性算法当遇到规模比较大的计算量级时就会导致CPU的大量损耗。</h6>
+
+<h6>我们可以自己改进它，比如不再使用有线性算法的接口，自己重写一套，但凡要优化List 中的线性算法的地方都使用，我们自己制作的工具类。</h6>
+
+<h6>List的内存分配方式也极为不合理，当List里的元素不断增加时，会多次重新new数组，导致原来的数组被抛弃，最后当GC被调用时造成回收的压力。</h6>
+
+<h6>我们可以提前告知 List 对象最多会有多少元素在里面，这样的话 List 就不会因为空间不够而抛弃原有的数组，去重新申请数组了。</h6>
 
 <p><a href="https://referencesource.microsoft.com/#mscorlib/system/collections/generic/list.cs">List源码</a></p>
 
-<h3>从源码上看得出来，代码是线程不安全的。所以最好别使用公用的 List 来添加，并发情况下，无法判断 _size++ 的执行顺序。</h3>
+<h3>另外我们也可以从源码上看得出，代码是线程不安全的，它并没有对多线程下做任何锁或其他同步操作。并发情况下，无法判断 _size++ 的执行顺序，因此当我们在多线程间使用 List 时加上安全机制。</h3>
 
-<h3>List 并不是高效的组件，真实情况是，他比数组的效率还要差的多，他只是个兼容性比较强得组件而已，好用，但效率差。</h3>
+<h3>最后List 并不是高效的组件，真实情况是，他比数组的效率还要差的多，他只是个兼容性比较强得组件而已，好用，但效率差。</h3>
 
   <p>感谢您的耐心阅读</p>
   <p>Thanks for your reading</p>
@@ -1569,13 +1576,6 @@
       
 
       
-
-    
-
-      
-      
-
-      
         
           <li>
             <h3>
@@ -1630,12 +1630,6 @@
 
   <ul class="related-posts">
     
-
-    
-
-      
-
-      
 
     
 
