@@ -259,69 +259,69 @@
 <p>整个骨骼动画的呈现流程清晰了，我们来用Unity3D的API来整理下，让我们理解的更加透彻。</p>
 
 <p>举例代码和解释如下，重点在注释的解释：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    //新建个动画组件和蒙皮组件
-    gameObject.AddComponent&lt;Animation&gt;();
-    gameObject.AddComponent&lt;SkinnedMeshRenderer&gt;();
-    SkinnedMeshRenderer rend = GetComponent&lt;SkinnedMeshRenderer&gt;();
-    Animation anim = GetComponent&lt;Animation&gt;();
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">//新建个动画组件和蒙皮组件</span>
+<span class="n">gameObject</span><span class="p">.</span><span class="n">AddComponent</span><span class="p">&lt;</span><span class="n">Animation</span><span class="p">&gt;();</span>
+<span class="n">gameObject</span><span class="p">.</span><span class="n">AddComponent</span><span class="p">&lt;</span><span class="n">SkinnedMeshRenderer</span><span class="p">&gt;();</span>
+<span class="n">SkinnedMeshRenderer</span> <span class="n">rend</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">SkinnedMeshRenderer</span><span class="p">&gt;();</span>
+<span class="n">Animation</span> <span class="n">anim</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Animation</span><span class="p">&gt;();</span>
 
-    //新建个网格组件，并编入4个顶点形成一个矩形形状的网格
-    Mesh mesh = new Mesh();
-    mesh.vertices = new Vector3[] {new Vector3(-1, 0, 0), new Vector3(1, 0, 0), new Vector3(-1, 5, 0), new Vector3(1, 5, 0)};
-    mesh.uv = new Vector2[] {new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(1, 1)};
-    mesh.triangles = new int[] {0, 1, 2, 1, 3, 2};
-    mesh.RecalculateNormals();
+<span class="c1">//新建个网格组件，并编入4个顶点形成一个矩形形状的网格</span>
+<span class="n">Mesh</span> <span class="n">mesh</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Mesh</span><span class="p">();</span>
+<span class="n">mesh</span><span class="p">.</span><span class="n">vertices</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">[]</span> <span class="p">{</span><span class="k">new</span> <span class="n">Vector3</span><span class="p">(-</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(-</span><span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">0</span><span class="p">)};</span>
+<span class="n">mesh</span><span class="p">.</span><span class="n">uv</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">[]</span> <span class="p">{</span><span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">)};</span>
+<span class="n">mesh</span><span class="p">.</span><span class="n">triangles</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[]</span> <span class="p">{</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">2</span><span class="p">};</span>
+<span class="n">mesh</span><span class="p">.</span><span class="n">RecalculateNormals</span><span class="p">();</span>
 
-    //新建个漫反射的材质球
-    rend.material = new Material(Shader.Find(&quot;Diffuse&quot;));
+<span class="c1">//新建个漫反射的材质球</span>
+<span class="n">rend</span><span class="p">.</span><span class="n">material</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Material</span><span class="p">(</span><span class="n">Shader</span><span class="p">.</span><span class="n">Find</span><span class="p">(</span><span class="s">&quot;Diffuse&quot;</span><span class="p">));</span>
 
-    //为每个顶点定制相应的骨骼权重
-    BoneWeight[] weights = new BoneWeight[4];
-    weights[0].boneIndex0 = 0;
-    weights[0].weight0 = 1;
-    weights[1].boneIndex0 = 0;
-    weights[1].weight0 = 1;
-    weights[2].boneIndex0 = 1;
-    weights[2].weight0 = 1;
-    weights[3].boneIndex0 = 1;
-    weights[3].weight0 = 1;
+<span class="c1">//为每个顶点定制相应的骨骼权重</span>
+<span class="n">BoneWeight</span><span class="p">[]</span> <span class="n">weights</span> <span class="p">=</span> <span class="k">new</span> <span class="n">BoneWeight</span><span class="p">[</span><span class="m">4</span><span class="p">];</span>
+<span class="n">weights</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">boneIndex0</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+<span class="n">weights</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">weight0</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="n">weights</span><span class="p">[</span><span class="m">1</span><span class="p">].</span><span class="n">boneIndex0</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+<span class="n">weights</span><span class="p">[</span><span class="m">1</span><span class="p">].</span><span class="n">weight0</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="n">weights</span><span class="p">[</span><span class="m">2</span><span class="p">].</span><span class="n">boneIndex0</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="n">weights</span><span class="p">[</span><span class="m">2</span><span class="p">].</span><span class="n">weight0</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="n">weights</span><span class="p">[</span><span class="m">3</span><span class="p">].</span><span class="n">boneIndex0</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="n">weights</span><span class="p">[</span><span class="m">3</span><span class="p">].</span><span class="n">weight0</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
 
-    //把骨骼权重赋值给网格组件
-    mesh.boneWeights = weights;
+<span class="c1">//把骨骼权重赋值给网格组件</span>
+<span class="n">mesh</span><span class="p">.</span><span class="n">boneWeights</span> <span class="p">=</span> <span class="n">weights</span><span class="p">;</span>
 
-    //创建新的骨骼点，设置骨骼点的位置，父节点，和位移旋转矩阵
-    Transform[] bones = new Transform[2];
-    Matrix4x4[] bindPoses = new Matrix4x4[2];
+<span class="c1">//创建新的骨骼点，设置骨骼点的位置，父节点，和位移旋转矩阵</span>
+<span class="n">Transform</span><span class="p">[]</span> <span class="n">bones</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Transform</span><span class="p">[</span><span class="m">2</span><span class="p">];</span>
+<span class="n">Matrix4x4</span><span class="p">[]</span> <span class="n">bindPoses</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Matrix4x4</span><span class="p">[</span><span class="m">2</span><span class="p">];</span>
 
-    bones[0] = new GameObject(&quot;Lower&quot;).transform;
-    bones[0].parent = transform;
-    bones[0].localRotation = Quaternion.identity;
-    bones[0].localPosition = Vector3.zero;
-    bindPoses[0] = bones[0].worldToLocalMatrix * transform.localToWorldMatrix;
+<span class="n">bones</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="n">GameObject</span><span class="p">(</span><span class="s">&quot;Lower&quot;</span><span class="p">).</span><span class="n">transform</span><span class="p">;</span>
+<span class="n">bones</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">parent</span> <span class="p">=</span> <span class="n">transform</span><span class="p">;</span>
+<span class="n">bones</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">localRotation</span> <span class="p">=</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">;</span>
+<span class="n">bones</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">localPosition</span> <span class="p">=</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">zero</span><span class="p">;</span>
+<span class="n">bindPoses</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">=</span> <span class="n">bones</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">worldToLocalMatrix</span> <span class="p">*</span> <span class="n">transform</span><span class="p">.</span><span class="n">localToWorldMatrix</span><span class="p">;</span>
 
-    bones[1] = new GameObject(&quot;Upper&quot;).transform;
-    bones[1].parent = transform;
-    bones[1].localRotation = Quaternion.identity;
-    bones[1].localPosition = new Vector3(0, 5, 0);
-    bindPoses[1] = bones[1].worldToLocalMatrix * transform.localToWorldMatrix;
+<span class="n">bones</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="n">GameObject</span><span class="p">(</span><span class="s">&quot;Upper&quot;</span><span class="p">).</span><span class="n">transform</span><span class="p">;</span>
+<span class="n">bones</span><span class="p">[</span><span class="m">1</span><span class="p">].</span><span class="n">parent</span> <span class="p">=</span> <span class="n">transform</span><span class="p">;</span>
+<span class="n">bones</span><span class="p">[</span><span class="m">1</span><span class="p">].</span><span class="n">localRotation</span> <span class="p">=</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">;</span>
+<span class="n">bones</span><span class="p">[</span><span class="m">1</span><span class="p">].</span><span class="n">localPosition</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">bindPoses</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">=</span> <span class="n">bones</span><span class="p">[</span><span class="m">1</span><span class="p">].</span><span class="n">worldToLocalMatrix</span> <span class="p">*</span> <span class="n">transform</span><span class="p">.</span><span class="n">localToWorldMatrix</span><span class="p">;</span>
 
-    mesh.bindposes = bindPoses;
+<span class="n">mesh</span><span class="p">.</span><span class="n">bindposes</span> <span class="p">=</span> <span class="n">bindPoses</span><span class="p">;</span>
 
-    //把骨骼点和网格赋值给蒙皮组件
-    rend.bones = bones;
-    rend.sharedMesh = mesh;
+<span class="c1">//把骨骼点和网格赋值给蒙皮组件</span>
+<span class="n">rend</span><span class="p">.</span><span class="n">bones</span> <span class="p">=</span> <span class="n">bones</span><span class="p">;</span>
+<span class="n">rend</span><span class="p">.</span><span class="n">sharedMesh</span> <span class="p">=</span> <span class="n">mesh</span><span class="p">;</span>
 
-    //定制几个关键帧
-    AnimationCurve curve = new AnimationCurve();
-    curve.keys = new Keyframe[] {new Keyframe(0, 0, 0, 0), new Keyframe(1, 3, 0, 0), new Keyframe(2, 0.0F, 0, 0)};
+<span class="c1">//定制几个关键帧</span>
+<span class="n">AnimationCurve</span> <span class="n">curve</span> <span class="p">=</span> <span class="k">new</span> <span class="n">AnimationCurve</span><span class="p">();</span>
+<span class="n">curve</span><span class="p">.</span><span class="n">keys</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Keyframe</span><span class="p">[]</span> <span class="p">{</span><span class="k">new</span> <span class="n">Keyframe</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="k">new</span> <span class="n">Keyframe</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="k">new</span> <span class="n">Keyframe</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">0.0F</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">)};</span>
 
-    //创建帧动画
-    AnimationClip clip = new AnimationClip();
-    clip.SetCurve(&quot;Lower&quot;, typeof(Transform), &quot;m_LocalPosition.z&quot;, curve);
+<span class="c1">//创建帧动画</span>
+<span class="n">AnimationClip</span> <span class="n">clip</span> <span class="p">=</span> <span class="k">new</span> <span class="n">AnimationClip</span><span class="p">();</span>
+<span class="n">clip</span><span class="p">.</span><span class="n">SetCurve</span><span class="p">(</span><span class="s">&quot;Lower&quot;</span><span class="p">,</span> <span class="k">typeof</span><span class="p">(</span><span class="n">Transform</span><span class="p">),</span> <span class="s">&quot;m_LocalPosition.z&quot;</span><span class="p">,</span> <span class="n">curve</span><span class="p">);</span>
 
-    //把帧动画赋值给动画组件，并播放动画
-    anim.AddClip(clip, &quot;test&quot;);
-    anim.Play(&quot;test&quot;);
+<span class="c1">//把帧动画赋值给动画组件，并播放动画</span>
+<span class="n">anim</span><span class="p">.</span><span class="n">AddClip</span><span class="p">(</span><span class="n">clip</span><span class="p">,</span> <span class="s">&quot;test&quot;</span><span class="p">);</span>
+<span class="n">anim</span><span class="p">.</span><span class="n">Play</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">);</span>
 </code></pre></div>
 <p>以上的Unity3D代码就呈现了，几何模型数据，蒙皮动画数据，从无到有的过程。</p>
 
@@ -376,27 +376,27 @@
 <p>这样一来，每个人物模型只需要消耗1个drawcall，减轻了gpu的负担。从CPU消耗来看，拼接的操作只存在于人物初始化，和更换部件模型时才会有消耗，所以合并贴图和模型的消耗并不频繁。</p>
 
 <p>伪代码为：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    function change_role_part( list of part_fbx )
-    {
-        root = new SkinnedMesh(&#39;role_bone.fbx&#39;);
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">function</span> <span class="nf">change_role_part</span><span class="p">(</span> <span class="n">list</span> <span class="n">of</span> <span class="n">part_fbx</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">root</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SkinnedMesh</span><span class="p">(</span><span class="err">&#39;</span><span class="n">role_bone</span><span class="p">.</span><span class="n">fbx</span><span class="err">&#39;</span><span class="p">);</span>
 
-        combine_mesh = new Mesh();
-        combine_tex = new Texture();
+    <span class="n">combine_mesh</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Mesh</span><span class="p">();</span>
+    <span class="n">combine_tex</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Texture</span><span class="p">();</span>
 
-        for( item in part_fbx )
-        {
-            item.mesh.uv = item.uv + offset;
+    <span class="k">for</span><span class="p">(</span> <span class="n">item</span> <span class="k">in</span> <span class="n">part_fbx</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">item</span><span class="p">.</span><span class="n">mesh</span><span class="p">.</span><span class="n">uv</span> <span class="p">=</span> <span class="n">item</span><span class="p">.</span><span class="n">uv</span> <span class="p">+</span> <span class="n">offset</span><span class="p">;</span>
 
-            combine_mesh.combine(item.mesh);
+        <span class="n">combine_mesh</span><span class="p">.</span><span class="n">combine</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">mesh</span><span class="p">);</span>
 
-            combine_tex.combine(item.texture);
-        }
+        <span class="n">combine_tex</span><span class="p">.</span><span class="n">combine</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">texture</span><span class="p">);</span>
+    <span class="p">}</span>
 
-        root.mesh = combine_mesh;
-        root.texture = combine_tex;
+    <span class="n">root</span><span class="p">.</span><span class="n">mesh</span> <span class="p">=</span> <span class="n">combine_mesh</span><span class="p">;</span>
+    <span class="n">root</span><span class="p">.</span><span class="n">texture</span> <span class="p">=</span> <span class="n">combine_tex</span><span class="p">;</span>
 
-        return root;
-    }
+    <span class="k">return</span> <span class="n">root</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
   <p>感谢您的耐心阅读</p>
   <p>Thanks for your reading</p>

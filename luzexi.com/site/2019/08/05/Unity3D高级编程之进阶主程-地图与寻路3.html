@@ -253,16 +253,16 @@
 <p>地图的元素都是以坐标，旋转角度，缩放大小为基准形成的数据，大部分元素都是节点，模型，特效，因此大部分地图编辑器都需要有，元素的坐标，角度，缩放大小，至少有这三样的数据记录。其他的数据，也会有包括配置表ID，物件类型，范围大小，脚本名字等，是为了配合不同游戏系统的需要而构建的。</p>
 
 <p>即通常每个元素的数据为：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    class map_unit
-    {
-        position, //坐标
-        rotation, //旋转角度
-        scale, //缩放
-        type, //类型
-        table_id, //配置表ID
-        size, //大小
-        function_name, //功能名
-    }
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">class</span> <span class="nc">map_unit</span>
+<span class="p">{</span>
+    <span class="n">position</span><span class="p">,</span> <span class="c1">//坐标</span>
+    <span class="n">rotation</span><span class="p">,</span> <span class="c1">//旋转角度</span>
+    <span class="n">scale</span><span class="p">,</span> <span class="c1">//缩放</span>
+    <span class="n">type</span><span class="p">,</span> <span class="c1">//类型</span>
+    <span class="n">table_id</span><span class="p">,</span> <span class="c1">//配置表ID</span>
+    <span class="n">size</span><span class="p">,</span> <span class="c1">//大小</span>
+    <span class="n">function_name</span><span class="p">,</span> <span class="c1">//功能名</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>其中position, rotation, scale 是基础的数据类型，它记录了需要被展示在场景中的位置，角度，缩放大小。而其他的数据，例如 type 可以用来表示这个物件的类型，是人，是怪，是门，是机关，还是不会动的静态场景物件。</p>
 
@@ -289,31 +289,31 @@
 <p>假设说我们使用自定义格式的协议，把每个变量都转换成byte流形式存储，这种形式的存储是最能掌控的，也是最能够节省空间的。因此用自定义协议做存储格式的人，可能非常想要掌控这个存储过程，而不想让其他第三方的插件干扰。不过，自定义协议在使用时也有很大的缺陷，当数据格式变化时，对变化协议格式的适应能力比较弱，虽然也不是没办法，但确实有点代价。</p>
 
 <p>代价是什么呢？代价就是要为每个版本的数据格式各自写一个完整的数据读取和存储的程序。每增加一个版本，为了维护旧的数据，都要在原有的数据解析的程序外，增加一个新的数据解析程序。就如下面的伪代码：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    void ReadData(io_stream)
-    {
-        version = io_stream.read_int();
-        if( version == 1 )
-        {
-            Read_version1(io_stream);
-        }
-        else if(version == 2)
-        {
-            Read_version2(io_stream);
-        }
-    }
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">void</span> <span class="nf">ReadData</span><span class="p">(</span><span class="n">io_stream</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">version</span> <span class="p">=</span> <span class="n">io_stream</span><span class="p">.</span><span class="n">read_int</span><span class="p">();</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">version</span> <span class="p">==</span> <span class="m">1</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Read_version1</span><span class="p">(</span><span class="n">io_stream</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">version</span> <span class="p">==</span> <span class="m">2</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Read_version2</span><span class="p">(</span><span class="n">io_stream</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-    voi Read_version(io_stream)
-    {
-        id = io_stream.read_int();
-        level = io_stream.read_int();
-    }
+<span class="n">voi</span> <span class="nf">Read_version</span><span class="p">(</span><span class="n">io_stream</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">id</span> <span class="p">=</span> <span class="n">io_stream</span><span class="p">.</span><span class="n">read_int</span><span class="p">();</span>
+    <span class="n">level</span> <span class="p">=</span> <span class="n">io_stream</span><span class="p">.</span><span class="n">read_int</span><span class="p">();</span>
+<span class="p">}</span>
 
-    voi Read_version(io_stream)
-    {
-        id = io_stream.read_int();
-        name = io_stream.read_str();
-        gold = io_stream.read_int();
-    }
+<span class="n">voi</span> <span class="nf">Read_version</span><span class="p">(</span><span class="n">io_stream</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">id</span> <span class="p">=</span> <span class="n">io_stream</span><span class="p">.</span><span class="n">read_int</span><span class="p">();</span>
+    <span class="n">name</span> <span class="p">=</span> <span class="n">io_stream</span><span class="p">.</span><span class="n">read_str</span><span class="p">();</span>
+    <span class="n">gold</span> <span class="p">=</span> <span class="n">io_stream</span><span class="p">.</span><span class="n">read_int</span><span class="p">();</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>代码中读取数据时考虑了多种版本的兼容，使用了不同函数应对不同版本的办法，为每个版本写一个特有的读取顺序，在读取开头，用一个int元素来代表是应该使用哪个版本来读取数据，得到数据版本号后就能对应到不同版本的读取方法。</p>
 

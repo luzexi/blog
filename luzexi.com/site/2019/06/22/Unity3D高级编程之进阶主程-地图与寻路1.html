@@ -297,63 +297,63 @@
 <p>上述过程明晰的阐述了A星算法贪婪的全过程，即只选择当前的最优选择，因为只关注当前的最优解，就忽视了对全局的最优解，走‘弯路’是常有的事。</p>
 
 <p>体现在代码上为如下伪代码：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>        function find_path(s,e)
-        {
-            open = new list(); //没有被取到过的点
-            close = new list(); //已经被取过的点
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span>        <span class="n">function</span> <span class="nf">find_path</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">open</span> <span class="p">=</span> <span class="k">new</span> <span class="n">list</span><span class="p">();</span> <span class="c1">//没有被取到过的点</span>
+            <span class="n">close</span> <span class="p">=</span> <span class="k">new</span> <span class="n">list</span><span class="p">();</span> <span class="c1">//已经被取过的点</span>
 
-            open.add(s); //从s点开始
+            <span class="n">open</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="c1">//从s点开始</span>
 
-            for(!open.IsEmpty()) //重复遍历直到没有点可以取
-            {
-                open.sort(); //排序一下
+            <span class="k">for</span><span class="p">(!</span><span class="n">open</span><span class="p">.</span><span class="n">IsEmpty</span><span class="p">())</span> <span class="c1">//重复遍历直到没有点可以取</span>
+            <span class="p">{</span>
+                <span class="n">open</span><span class="p">.</span><span class="n">sort</span><span class="p">();</span> <span class="c1">//排序一下</span>
 
-                p = open.pop(); //把最近的点推出来
+                <span class="n">p</span> <span class="p">=</span> <span class="n">open</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span> <span class="c1">//把最近的点推出来</span>
 
-                if(p == e)
-                {
-                    //找到终点
-                    break;
-                }
+                <span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="p">==</span> <span class="n">e</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="c1">//找到终点</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
 
-                p1 = p.left(); //取左边的点
-                p2 = p.right(); //取右边的点
-                p3 = p.top(); //取上边的点
-                p4 = p.down(); //取下边的点
+                <span class="n">p1</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">left</span><span class="p">();</span> <span class="c1">//取左边的点</span>
+                <span class="n">p2</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">right</span><span class="p">();</span> <span class="c1">//取右边的点</span>
+                <span class="n">p3</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">top</span><span class="p">();</span> <span class="c1">//取上边的点</span>
+                <span class="n">p4</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">down</span><span class="p">();</span> <span class="c1">//取下边的点</span>
 
-                //是否已经被取过
-                if(p1 != null &amp;&amp; p1.IsNotInClose())
-                {
-                    //加入到没被取过的列表里
-                    open.add(p1);
-                }
+                <span class="c1">//是否已经被取过</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">p1</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">p1</span><span class="p">.</span><span class="n">IsNotInClose</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="c1">//加入到没被取过的列表里</span>
+                    <span class="n">open</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">p1</span><span class="p">);</span>
+                <span class="p">}</span>
 
-                //是否已经被取过
-                if(p2 != null &amp;&amp; p2.IsNotInClose())
-                {
-                    //加入到没被取过的列表里
-                    open.add(p2);
-                }
+                <span class="c1">//是否已经被取过</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">p2</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">p2</span><span class="p">.</span><span class="n">IsNotInClose</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="c1">//加入到没被取过的列表里</span>
+                    <span class="n">open</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">p2</span><span class="p">);</span>
+                <span class="p">}</span>
 
-                //是否已经被取过
-                if(p3 != null &amp;&amp; p3.IsNotInClose())
-                {
-                    //加入到没被取过的列表里
-                    open.add(p3);
-                }
+                <span class="c1">//是否已经被取过</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">p3</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">p3</span><span class="p">.</span><span class="n">IsNotInClose</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="c1">//加入到没被取过的列表里</span>
+                    <span class="n">open</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">p3</span><span class="p">);</span>
+                <span class="p">}</span>
 
-                //是否已经被取过
-                if(p4 != null &amp;&amp; p4.IsNotInClose())
-                {
-                    //加入到没被取过的列表里
-                    open.add(p4);
-                }
+                <span class="c1">//是否已经被取过</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">p4</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">p4</span><span class="p">.</span><span class="n">IsNotInClose</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="c1">//加入到没被取过的列表里</span>
+                    <span class="n">open</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">p4</span><span class="p">);</span>
+                <span class="p">}</span>
 
-                //p点已经被取过了
-                p.setClose(false);
-                close.add(p);
-            }
-        }
+                <span class="c1">//p点已经被取过了</span>
+                <span class="n">p</span><span class="p">.</span><span class="n">setClose</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+                <span class="n">close</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 </code></pre></div>
 <p>上述伪代码完整的诠释了A星寻路的全过程。</p>
 
