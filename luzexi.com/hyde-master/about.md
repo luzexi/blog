@@ -8,8 +8,6 @@ title: 我的简介
 
 曾就职：盛大游戏，动视暴雪Activision，Gumi日本，百游Baiyou
 
-坐标 ：上海
-
 ### Game Project：
 
 		《保密项目》 3D 电子竞技 2020 - 至今
