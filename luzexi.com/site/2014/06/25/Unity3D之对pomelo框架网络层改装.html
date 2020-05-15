@@ -1,131 +1,131 @@
-<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> Unity3D之对pomelo框架网络层改装 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>Unity3D之对pomelo框架网络层改装</h2><p>最近了解了下网易的开源服务器框架pomelo，github地址：<a href="https://github.com/NetEase/pomelo">https://github.com/NetEase/pomelo</a>发现其中它封装的u3d的网络层部分有线程安全问题，几乎不能直接u3d项目，所以对其进行了2次封装，让他可以真正用于u3d项目。</p><p>封装后的源码也同样放在我的github上：<a href="https://github.com/luzexi">https://github.com/luzexi</a> 供大家参考。</p><p>下面写下pomelo的u3d网络层源码问题和我对源码的封装过程： pomelo网络通信方式分:原始socket和websocket两种，这两种方式由项目需要而选择其中一种来使用。pomelo种对u3d网络通信封装的最主要问题是线程中逻辑句柄的调用，因为u3d对它本身主线程意外的线程调用本身api是非常排斥，当你在其他线程中运行u3d的api会直接被cut掉，所以我们需要将其调用游戏逻辑句柄的那部分放到u3d主线程中去。</p><p>如何将线程通信后的游戏句柄调用部分放到u3d主线程中去：</p><p>1.网络通信是由数据包为单位来驱动游戏逻辑句柄的，所以只要加入队列概念，在收到数据包时由原来的直接调用句柄，改为先推入到队列中，等待处理。</p><pre><code class="language-c#">#if LUZEXI
-        private System.Object m_cLock = new System.Object();    //the lock object
-        private const int PROCESS_NUM = 5;  //the process handle num per fps
-        private Queue&lt;byte[]&gt; m_seqReceiveMsg = new Queue&lt;byte[]&gt;();    //the message queue
-        private TranspotUpdate m_cUpdater = null;   //The Updater of the message queue
-#endif
-</code></pre><p>2.在u3d主逻辑中增加一个专门处理网络通信逻辑句柄的类。这个类在通信开始时就加入到u3d主逻辑中去，当通信结束(无论是正常还是异常结束)时在u3d主逻辑中销毁。在主逻辑中不断的或者说每帧都去查看网络通信层队列中有没有等待处理的句柄，有就取出来处理。这样就由等待队列串联起来了几个线程的共同合作。ps:对队列做防死锁操作</p><pre><code class="language-c#">#if LUZEXI
-        internal void Update()
-        {
-            for( int i = 0 ; i&lt;PROCESS_NUM &amp;&amp; i&lt; this.m_seqReceiveMsg.Count; i++)
-            {
-                lock(this.m_cLock)
-                {
-                    byte[] data = this.m_seqReceiveMsg.Dequeue();
-                    this.messageProcesser.Invoke(data);
-                }
-            }
-        }
-#endif
-</code></pre><script type="text/javascript"> if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端 /*mobile-20:5*/ var cpro_id = "u3493987"; document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>"); } else { /*700*200信息流*/ var cpro_id = "u3469788"; document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>"); } </script><p>3.拆分网络通信事件。将网络通信事件拆分为OnConnect , OnError , OnDisconnect , 这3个事件是最常见的通信事件。这3个事件也必须在主线程中调用，但这3个事件又不是以网络数据包为基础，所以需要在专门处理通信逻辑的类中加入3种状态start , error , disconnect.当网络通信层出现这三种事件时，将状态切过去（ps:而不是直接调用句柄）,然后再由专门处理通信逻辑的类在下一帧去调用对应的事件句柄。</p><pre><code class="language-c#">using UnityEngine;
-using System;
-using System.Collections.Generic;
-using SimpleJson;
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> Unity3D之对pomelo框架网络层改装 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>Unity3D之对pomelo框架网络层改装</h2><p>最近了解了下网易的开源服务器框架pomelo，github地址：<a href="https://github.com/NetEase/pomelo">https://github.com/NetEase/pomelo</a>发现其中它封装的u3d的网络层部分有线程安全问题，几乎不能直接u3d项目，所以对其进行了2次封装，让他可以真正用于u3d项目。</p><p>封装后的源码也同样放在我的github上：<a href="https://github.com/luzexi">https://github.com/luzexi</a> 供大家参考。</p><p>下面写下pomelo的u3d网络层源码问题和我对源码的封装过程： pomelo网络通信方式分:原始socket和websocket两种，这两种方式由项目需要而选择其中一种来使用。pomelo种对u3d网络通信封装的最主要问题是线程中逻辑句柄的调用，因为u3d对它本身主线程意外的线程调用本身api是非常排斥，当你在其他线程中运行u3d的api会直接被cut掉，所以我们需要将其调用游戏逻辑句柄的那部分放到u3d主线程中去。</p><p>如何将线程通信后的游戏句柄调用部分放到u3d主线程中去：</p><p>1.网络通信是由数据包为单位来驱动游戏逻辑句柄的，所以只要加入队列概念，在收到数据包时由原来的直接调用句柄，改为先推入到队列中，等待处理。</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="cp">#if LUZEXI</span>
+        <span class="k">private</span> <span class="n">System</span><span class="p">.</span><span class="n">Object</span> <span class="n">m_cLock</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Object</span><span class="p">();</span>    <span class="c1">//the lock object</span>
+        <span class="k">private</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_NUM</span> <span class="p">=</span> <span class="m">5</span><span class="p">;</span>  <span class="c1">//the process handle num per fps</span>
+        <span class="k">private</span> <span class="n">Queue</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;</span> <span class="n">m_seqReceiveMsg</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;();</span>    <span class="c1">//the message queue</span>
+        <span class="k">private</span> <span class="n">TranspotUpdate</span> <span class="n">m_cUpdater</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>   <span class="c1">//The Updater of the message queue</span>
+<span class="cp">#endif</span>
+</code></pre></div><p>2.在u3d主逻辑中增加一个专门处理网络通信逻辑句柄的类。这个类在通信开始时就加入到u3d主逻辑中去，当通信结束(无论是正常还是异常结束)时在u3d主逻辑中销毁。在主逻辑中不断的或者说每帧都去查看网络通信层队列中有没有等待处理的句柄，有就取出来处理。这样就由等待队列串联起来了几个线程的共同合作。ps:对队列做防死锁操作</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="cp">#if LUZEXI</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span> <span class="p">;</span> <span class="n">i</span><span class="p">&lt;</span><span class="n">PROCESS_NUM</span> <span class="p">&amp;&amp;</span> <span class="n">i</span><span class="p">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="n">m_seqReceiveMsg</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="k">lock</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_cLock</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="kt">byte</span><span class="p">[]</span> <span class="n">data</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="n">m_seqReceiveMsg</span><span class="p">.</span><span class="n">Dequeue</span><span class="p">();</span>
+                    <span class="k">this</span><span class="p">.</span><span class="n">messageProcesser</span><span class="p">.</span><span class="n">Invoke</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+<span class="cp">#endif</span>
+</code></pre></div><script type="text/javascript"> if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端 /*mobile-20:5*/ var cpro_id = "u3493987"; document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>"); } else { /*700*200信息流*/ var cpro_id = "u3469788"; document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>"); } </script><p>3.拆分网络通信事件。将网络通信事件拆分为OnConnect , OnError , OnDisconnect , 这3个事件是最常见的通信事件。这3个事件也必须在主线程中调用，但这3个事件又不是以网络数据包为基础，所以需要在专门处理通信逻辑的类中加入3种状态start , error , disconnect.当网络通信层出现这三种事件时，将状态切过去（ps:而不是直接调用句柄）,然后再由专门处理通信逻辑的类在下一帧去调用对应的事件句柄。</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">SimpleJson</span><span class="p">;</span>
 
-//  TranspotUpdate.cs
-//  Author: Lu Zexi
-//  2014-6-20
-namespace Pomelo.DotNetClient
-{
-    /// &lt;summary&gt;
-    /// Transpot updater.
-    /// &lt;/summary&gt;
-    public class TranspotUpdate : MonoBehaviour
-    {
-        private enum STATE
-        {
-            NONE = 0,
-            START = 1,
-            RUNING = 2,
-            CLOSE = 3,
-            DESTORY = 4,
-        }
-        private STATE m_eStat = STATE.NONE; //the state of the transpotUpdate
-        private Action m_cUpdate;   //update action
-        private List&lt;Action&lt;JsonObject&gt;&gt; m_cOnDisconnect;   //on the disconnect
+<span class="c1">//  TranspotUpdate.cs</span>
+<span class="c1">//  Author: Lu Zexi</span>
+<span class="c1">//  2014-6-20</span>
+<span class="k">namespace</span> <span class="nn">Pomelo.DotNetClient</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Transpot updater.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">TranspotUpdate</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">enum</span> <span class="n">STATE</span>
+        <span class="p">{</span>
+            <span class="n">NONE</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span>
+            <span class="n">START</span> <span class="p">=</span> <span class="m">1</span><span class="p">,</span>
+            <span class="n">RUNING</span> <span class="p">=</span> <span class="m">2</span><span class="p">,</span>
+            <span class="n">CLOSE</span> <span class="p">=</span> <span class="m">3</span><span class="p">,</span>
+            <span class="n">DESTORY</span> <span class="p">=</span> <span class="m">4</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">private</span> <span class="n">STATE</span> <span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">NONE</span><span class="p">;</span> <span class="c1">//the state of the transpotUpdate</span>
+        <span class="k">private</span> <span class="n">Action</span> <span class="n">m_cUpdate</span><span class="p">;</span>   <span class="c1">//update action</span>
+        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Action</span><span class="p">&lt;</span><span class="n">JsonObject</span><span class="p">&gt;&gt;</span> <span class="n">m_cOnDisconnect</span><span class="p">;</span>   <span class="c1">//on the disconnect</span>
 
-        /// &lt;summary&gt;
-        /// Init this instance.
-        /// &lt;/summary&gt;
-        internal static TranspotUpdate Init()
-        {
-            GameObject obj = new GameObject(&lt;span class="string"&gt;"Socket");
-            TranspotUpdate trans = obj.AddComponent&lt;TranspotUpdate&gt;();
-            return trans;
-        }
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Init this instance.</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">internal</span> <span class="k">static</span> <span class="n">TranspotUpdate</span> <span class="nf">Init</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">GameObject</span> <span class="n">obj</span> <span class="p">=</span> <span class="k">new</span> <span class="n">GameObject</span><span class="p">(&lt;</span><span class="n">span</span> <span class="n">class</span><span class="p">=</span><span class="s">&quot;string&quot;</span><span class="p">&gt;</span><span class="s">&quot;Socket&quot;</span><span class="p">);</span>
+            <span class="n">TranspotUpdate</span> <span class="n">trans</span> <span class="p">=</span> <span class="n">obj</span><span class="p">.</span><span class="n">AddComponent</span><span class="p">&lt;</span><span class="n">TranspotUpdate</span><span class="p">&gt;();</span>
+            <span class="k">return</span> <span class="n">trans</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        /// &lt;summary&gt;
-        /// set the update of the process message action
-        /// &lt;/summary&gt;
-        /// &lt;param name="update"&gt;Update.&lt;/param&gt;
-        internal void SetUpdate( Action update )
-        {
-            this.m_cUpdate = update;
-        }
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// set the update of the process message action</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;param name=&quot;update&quot;&gt;Update.&lt;/param&gt;</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">SetUpdate</span><span class="p">(</span> <span class="n">Action</span> <span class="n">update</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">m_cUpdate</span> <span class="p">=</span> <span class="n">update</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        /// &lt;summary&gt;
-        /// set the disconnect evet.
-        /// &lt;/summary&gt;
-        /// &lt;param name="ondisconnect"&gt;Ondisconnect.&lt;/param&gt;
-        internal void SetOndisconnect( List&lt;Action&lt;JsonObject&gt;&gt; ondisconnect )
-        {
-            this.m_cOnDisconnect = ondisconnect;
-        }
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// set the disconnect evet.</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;param name=&quot;ondisconnect&quot;&gt;Ondisconnect.&lt;/param&gt;</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">SetOndisconnect</span><span class="p">(</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Action</span><span class="p">&lt;</span><span class="n">JsonObject</span><span class="p">&gt;&gt;</span> <span class="n">ondisconnect</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">m_cOnDisconnect</span> <span class="p">=</span> <span class="n">ondisconnect</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        /// &lt;summary&gt;
-        /// close the updater
-        /// &lt;/summary&gt;
-        internal void Close()
-        {
-            this.m_eStat = STATE.CLOSE;
-        }
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// close the updater</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">Close</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">CLOSE</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        /// &lt;summary&gt;
-        /// Start this update.
-        /// &lt;/summary&gt;
-        internal void _Start()
-        {
-            this.m_eStat = STATE.START;
-        }
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Start this update.</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">_Start</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">START</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        /// &lt;summary&gt;
-        /// destory the gameobject.
-        /// &lt;/summary&gt;
-        internal void _Destory()
-        {
-            if(this.m_eStat != STATE.CLOSE)
-                this.m_eStat = STATE.DESTORY;
-        }
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// destory the gameobject.</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">internal</span> <span class="k">void</span> <span class="nf">_Destory</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">!=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">CLOSE</span><span class="p">)</span>
+                <span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">DESTORY</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        /// &lt;summary&gt;
-        /// Fixeds the update.
-        /// &lt;/summary&gt;
-        void FixedUpdate()
-        {
-            switch(this.m_eStat)
-            {
-            case STATE.START:
-            case STATE.RUNING:
-                if(this.m_cUpdate != null )
-                {
-                    this.m_cUpdate();
-                }
-                break;
-            case STATE.CLOSE:
-                if(this.m_cOnDisconnect != null )
-                {
-                    foreach(Action&lt;JsonObject&gt; action in this.m_cOnDisconnect)
-                        action.Invoke(null);
-                }
-                this.m_cOnDisconnect = null;
-                this.m_eStat = STATE.DESTORY;
-                break;
-            case STATE.DESTORY:
-                this.m_eStat = STATE.NONE;
-                GameObject.Destroy(gameObject);
-                break;
-            }
-        }
-    }
-}
-</code></pre><p>转载请注明出处：http://www.luzexi.com</p><span class="meta"><time datetime="2014-06-25T14:27:25+08:00">June 25, 2014</time> &middot; <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2014-06-25T14:27:25+08:00">June 25, 2014</time> &middot; <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Fixeds the update.</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">void</span> <span class="nf">FixedUpdate</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">switch</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span><span class="p">)</span>
+            <span class="p">{</span>
+            <span class="k">case</span> <span class="n">STATE</span><span class="p">.</span><span class="n">START</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">STATE</span><span class="p">.</span><span class="n">RUNING</span><span class="p">:</span>
+                <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_cUpdate</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="n">m_cUpdate</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="n">STATE</span><span class="p">.</span><span class="n">CLOSE</span><span class="p">:</span>
+                <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_cOnDisconnect</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">foreach</span><span class="p">(</span><span class="n">Action</span><span class="p">&lt;</span><span class="n">JsonObject</span><span class="p">&gt;</span> <span class="n">action</span> <span class="k">in</span> <span class="k">this</span><span class="p">.</span><span class="n">m_cOnDisconnect</span><span class="p">)</span>
+                        <span class="n">action</span><span class="p">.</span><span class="n">Invoke</span><span class="p">(</span><span class="k">null</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">this</span><span class="p">.</span><span class="n">m_cOnDisconnect</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+                <span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">DESTORY</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="n">STATE</span><span class="p">.</span><span class="n">DESTORY</span><span class="p">:</span>
+                <span class="k">this</span><span class="p">.</span><span class="n">m_eStat</span> <span class="p">=</span> <span class="n">STATE</span><span class="p">.</span><span class="n">NONE</span><span class="p">;</span>
+                <span class="n">GameObject</span><span class="p">.</span><span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>转载请注明出处：http://www.luzexi.com</p><span class="meta"><time datetime="2014-06-25T14:27:25+08:00">June 25, 2014</time> &middot; <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2014-06-25T14:27:25+08:00">June 25, 2014</time> &middot; <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>

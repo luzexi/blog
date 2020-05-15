@@ -16,7 +16,9 @@ permalink: pretty
 
 # baseurl: /
 
-highlighter: none
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
 
 exclude:
   - .jekyll-cache
@@ -57,7 +59,7 @@ collections:
     permalink: /:name
   posts:
     output: true
-    permalink: /:year/:month/:day/:slug
+    permalink: /:year/:month/:day/:title
   
 defaults:
   -

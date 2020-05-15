@@ -1,73 +1,73 @@
-<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> Git命令使用集合 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>Git命令使用集合</h2><p>下面是我最近一直在使用的git命令。不知道能否为你提供点帮助。当然，我在github上做了很多好东西，全是开源的供你慢慢享用，如果觉得不错可以star(收藏),fllow(订阅)一下。等我空点了再把项目技术分享给你们哦。<a href="https://github.com/luzexi">https://github.com/luzexi</a></p><p>===</p><h4 id="clone">clone:</h4><pre><code>	git clone path dir 或者 git clone path 名字可以省略默认使用该项目名
-</code></pre><h4 id="branch">branch:</h4><pre><code>	git branch -r 查看所有分支
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> Git命令使用集合 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>Git命令使用集合</h2><p>下面是我最近一直在使用的git命令。不知道能否为你提供点帮助。当然，我在github上做了很多好东西，全是开源的供你慢慢享用，如果觉得不错可以star(收藏),fllow(订阅)一下。等我空点了再把项目技术分享给你们哦。<a href="https://github.com/luzexi">https://github.com/luzexi</a></p><p>===</p><h4>clone:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git clone path dir 或者 git clone path 名字可以省略默认使用该项目名
+</code></pre></div><h4>branch:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git branch -r 查看所有分支
 
-	git branch 查看当前获取的分支信息，在没有获取分支信息前，只会显示在哪个提交点。
-</code></pre><h4 id="checkout">checkout:</h4><pre><code>	git checkout branch_name 切换某个分支
+    git branch 查看当前获取的分支信息，在没有获取分支信息前，只会显示在哪个提交点。
+</code></pre></div><h4>checkout:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git checkout branch_name 切换某个分支
 
-	git checkout -b branch_name 以当前分支未基础建立新分支并且切换过去
+    git checkout -b branch_name 以当前分支未基础建立新分支并且切换过去
 
-	git checkout -f 强制替换与分支不一样的文件
+    git checkout -f 强制替换与分支不一样的文件
 
-	git checkout path 撤销某个未提交文件恢复原状
+    git checkout path 撤销某个未提交文件恢复原状
 
-	git checkout . 撤销所有未提交文件恢复原状
+    git checkout . 撤销所有未提交文件恢复原状
 
-	git checkout --ours path  冲突中以当前分支未基准
+    git checkout --ours path  冲突中以当前分支未基准
 
-	git checkout --theirs path 冲突中以对方分支未基准
-</code></pre><h4 id="add">add:</h4><pre><code>	git add path 告诉git这个文件或文件夹加入到提交队列
+    git checkout --theirs path 冲突中以对方分支未基准
+</code></pre></div><h4>add:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git add path 告诉git这个文件或文件夹加入到提交队列
 
-	git add . 告诉git目录下文件和文件夹都加入到提交队列
-</code></pre><h4 id="rm">rm:</h4><pre><code>	git rm path 告诉git这个文件或文件夹需要被删除
+    git add . 告诉git目录下文件和文件夹都加入到提交队列
+</code></pre></div><h4>rm:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git rm path 告诉git这个文件或文件夹需要被删除
 
-	git rm . 告诉git当前目录下所有文件和文件夹都需要被删除
+    git rm . 告诉git当前目录下所有文件和文件夹都需要被删除
 
-	git rm `git status | grep delete | awk '{print $2}'` 删除所有被删除的文件
-</code></pre><h4 id="commit">commit:</h4><pre><code>	git commit -m "write something" 提交当前被git add 或者 git rm 的内容
+    git rm `git status | grep delete | awk &#39;{print $2}&#39;` 删除所有被删除的文件
+</code></pre></div><h4>commit:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git commit -m &quot;write something&quot; 提交当前被git add 或者 git rm 的内容
 
-	git commit -a -m "write something" 提交所有被git跟踪的文件，-a表示所有
-</code></pre><h4 id="push">push:</h4><pre><code>	git push origin branch_name 推送branch_name分支
+    git commit -a -m &quot;write something&quot; 提交所有被git跟踪的文件，-a表示所有
+</code></pre></div><h4>push:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git push origin branch_name 推送branch_name分支
 
-	git push origin branch_name1:branch_name2 把当branch_name1支推送到新建一个分支branch_name2中去
+    git push origin branch_name1:branch_name2 把当branch_name1支推送到新建一个分支branch_name2中去
 
-	git push 推送所有本地修改过的分支到服务器
-</code></pre><h4 id="pull">pull:</h4><pre><code>	git pull 下载当前分支内容
+    git push 推送所有本地修改过的分支到服务器
+</code></pre></div><h4>pull:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git pull 下载当前分支内容
 
-	git pull server branch_name 下载server服务器上的 branch_name分支，如果有冲突将自动合并
-</code></pre><h4 id="show">show:</h4><pre><code>	git show commit_id 查看某次提交修改的内容
-</code></pre><h4 id="whatchanged">whatchanged:</h4><pre><code>	git whatchanged filepath  查看某个文件的修改记录
-</code></pre><h4 id="clean">clean:</h4><pre><code>	git clean -f 清除所有未被git跟踪的文件
+    git pull server branch_name 下载server服务器上的 branch_name分支，如果有冲突将自动合并
+</code></pre></div><h4>show:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git show commit_id 查看某次提交修改的内容
+</code></pre></div><h4>whatchanged:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git whatchanged filepath  查看某个文件的修改记录
+</code></pre></div><h4>clean:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git clean -f 清除所有未被git跟踪的文件
 
-	git clean -df 清除所有未被git跟踪的文件和文件夹
-</code></pre><h4 id="reset">reset:</h4><pre><code>	git reset --hard commitID 回撤到某个提交点,文件也一同回到那个状态
+    git clean -df 清除所有未被git跟踪的文件和文件夹
+</code></pre></div><h4>reset:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git reset --hard commitID 回撤到某个提交点,文件也一同回到那个状态
 
-	git reset --soft commitID  回撤到某个提交点，但文件仍然保持原来被修改后的状态。
-</code></pre><h4 id="fetch">fetch:</h4><pre><code>	git fetch 这个我只知道抓取当前项目的所有信息主要实分支信息和提交记录，并不下载内容
-</code></pre><script type="text/javascript"> if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端 /*mobile-20:5*/ var cpro_id = "u3493987"; document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>"); } else { /*700*200信息流*/ var cpro_id = "u3469788"; document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>"); } </script><h4 id="merge">merge:</h4><pre><code>	git merge server branch_name 合并server项目上branch_name分支
+    git reset --soft commitID  回撤到某个提交点，但文件仍然保持原来被修改后的状态。
+</code></pre></div><h4>fetch:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git fetch 这个我只知道抓取当前项目的所有信息主要实分支信息和提交记录，并不下载内容
+</code></pre></div><script type="text/javascript"> if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端 /*mobile-20:5*/ var cpro_id = "u3493987"; document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>"); } else { /*700*200信息流*/ var cpro_id = "u3469788"; document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>"); } </script><h4>merge:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git merge server branch_name 合并server项目上branch_name分支
 
-	git merge branch_name 合并默认origin项目上的branch_name分支
-</code></pre><h4 id="diff">diff:</h4><pre><code>	git diff file_name 比较文件与前一个版本的不同之处
-</code></pre><h4 id="remote">remote:</h4><pre><code>	git remote add server_name git_path 将git_path以server_name命名，方便后面操作
-</code></pre><h4 id="submodule">submodule:</h4><pre><code>	git submodule add git_address dir_name  加入其他模块仓库
+    git merge branch_name 合并默认origin项目上的branch_name分支
+</code></pre></div><h4>diff:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git diff file_name 比较文件与前一个版本的不同之处
+</code></pre></div><h4>remote:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git remote add server_name git_path 将git_path以server_name命名，方便后面操作
+</code></pre></div><h4>submodule:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    git submodule add git_address dir_name  加入其他模块仓库
 
-	git submodule init  初始化模块仓库
+    git submodule init  初始化模块仓库
 
-	git submodule update  更新模块仓库
-</code></pre><h4 id="log">log:</h4><pre><code>	-p：按补丁显示每个更新间的差异
+    git submodule update  更新模块仓库
+</code></pre></div><h4>log:</h4><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    -p：按补丁显示每个更新间的差异
 
-	--stat：显示每次更新的修改文件的统计信息
+    --stat：显示每次更新的修改文件的统计信息
 
-	--shortstat：只显示--stat中最后的行数添加修改删除统计
+    --shortstat：只显示--stat中最后的行数添加修改删除统计
 
-	--name-only：尽在已修改的提交信息后显示文件清单
+    --name-only：尽在已修改的提交信息后显示文件清单
 
-	--name-status：显示新增、修改和删除的文件清单
+    --name-status：显示新增、修改和删除的文件清单
 
-	--abbrev-commit：仅显示SHA-1的前几个字符，而非所有的40个字符
+    --abbrev-commit：仅显示SHA-1的前几个字符，而非所有的40个字符
 
-	--relative-date：使用较短的相对时间显示（例如："two weeks ago"）
+    --relative-date：使用较短的相对时间显示（例如：&quot;two weeks ago&quot;）
 
-	--graph：显示ASCII图形表示的分支合并历史
+    --graph：显示ASCII图形表示的分支合并历史
 
-	--pretty：使用其他格式显示历史提交信息
-</code></pre><span class="meta"><time datetime="2014-09-12T18:54:22+08:00">September 12, 2014</time> &middot; <a href="/tag/其他技术">其他技术</a></span> <!--<span class="meta"><time datetime="2014-09-12T18:54:22+08:00">September 12, 2014</time> &middot; <a class="post" href="/tag/其他技术">其他技术</a></span> --></section></main></body></html>
+    --pretty：使用其他格式显示历史提交信息
+</code></pre></div><span class="meta"><time datetime="2014-09-12T18:54:22+08:00">September 12, 2014</time> &middot; <a href="/tag/其他技术">其他技术</a></span> <!--<span class="meta"><time datetime="2014-09-12T18:54:22+08:00">September 12, 2014</time> &middot; <a class="post" href="/tag/其他技术">其他技术</a></span> --></section></main></body></html>

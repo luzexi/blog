@@ -1,197 +1,197 @@
-<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 《Unity3D高级编程之进阶主程》第六章，网络层(五) - 剖析数据协议原理 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>《Unity3D高级编程之进阶主程》第六章，网络层(五) - 剖析数据协议原理</h2><h6 id="协议包的格式json-msgpack-protobuf-以及自定义格式">协议包的格式，json, msgpack, protobuf 以及自定义格式</h6><p>项目的网路层在建设中，除了选择传输协议TCP，UDP，以及应用层协议HTTP方式外，还需要选择在传输过程中的业务层协议格式。前面我们分析了TCP，UDP，HTTP的原理与应用，这里我们来了解下在传输层和应用层之上的业务层中，网络数据传输格式的选择以及它们的利弊。我们将在这里剖析JSON，MessagePack，Protobuf的原理，包括它们都是由什么组成的，怎么序列化的，以及怎么反序列化，通过对原理和底层的剖析使我们对网络数据协议的理解更加透彻清晰。</p><p>我们从最常见的JSON格式开始，一步步深入了解业务层协议的规则与背后的原理，一步步剖析复杂的数据格式与底层实现。</p><p>===</p><h6 id="json">JSON</h6><p>JSON原本是JavaScript 对象表示法（JavaScript Object Notation），后来慢慢在被大家所接受普及开来成为一种协议数据的格式。它是存储和交换文本信息的语法，类似于 XML 但又比 XML 更小、更快，更易解析。</p><p>JSON 本身是轻量级的文本数据交换格式由字符串组成，它独立于语言且具有自我描述性，这些特性导致它非常容易被人理解。与同是纯文本类型格式的XML相比较，JSON不需要结束标签，JSON更短，JSON解析和读写的速度更快，在JavaScript中能够使用内建的 JavaScript eval() 方法进行解析，JSON还可以使用数组，且不使用保留字（&amp;，&lt;，&gt;，’，”）。</p><p>我们来看看 JSON 的语法规则，JSON 数据的书写格式是：名称/值对。名称/值对包括字段名称（在双引号中），后面写一个冒号，然后是值：</p><pre><code>"firstName" : "John"
-</code></pre><p>JSON数据由逗号分隔，它的值可以是数字、字符串、真假逻辑值、数组、对象，我们来看看它们在文本中的具体格式：</p><p>数字（整数或浮点数）</p><pre><code>{
-  "number" : 1,
-  "number2" : 11.5
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 《Unity3D高级编程之进阶主程》第六章，网络层(五) - 剖析数据协议原理 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>《Unity3D高级编程之进阶主程》第六章，网络层(五) - 剖析数据协议原理</h2><h6>协议包的格式，json, msgpack, protobuf 以及自定义格式</h6><p>项目的网路层在建设中，除了选择传输协议TCP，UDP，以及应用层协议HTTP方式外，还需要选择在传输过程中的业务层协议格式。前面我们分析了TCP，UDP，HTTP的原理与应用，这里我们来了解下在传输层和应用层之上的业务层中，网络数据传输格式的选择以及它们的利弊。我们将在这里剖析JSON，MessagePack，Protobuf的原理，包括它们都是由什么组成的，怎么序列化的，以及怎么反序列化，通过对原理和底层的剖析使我们对网络数据协议的理解更加透彻清晰。</p><p>我们从最常见的JSON格式开始，一步步深入了解业务层协议的规则与背后的原理，一步步剖析复杂的数据格式与底层实现。</p><p>===</p><h6>JSON</h6><p>JSON原本是JavaScript 对象表示法（JavaScript Object Notation），后来慢慢在被大家所接受普及开来成为一种协议数据的格式。它是存储和交换文本信息的语法，类似于 XML 但又比 XML 更小、更快，更易解析。</p><p>JSON 本身是轻量级的文本数据交换格式由字符串组成，它独立于语言且具有自我描述性，这些特性导致它非常容易被人理解。与同是纯文本类型格式的XML相比较，JSON不需要结束标签，JSON更短，JSON解析和读写的速度更快，在JavaScript中能够使用内建的 JavaScript eval() 方法进行解析，JSON还可以使用数组，且不使用保留字（&amp;，&lt;，&gt;，&#39;，&quot;）。</p><p>我们来看看 JSON 的语法规则，JSON 数据的书写格式是：名称/值对。名称/值对包括字段名称（在双引号中），后面写一个冒号，然后是值：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>&quot;firstName&quot; : &quot;John&quot;
+</code></pre></div><p>JSON数据由逗号分隔，它的值可以是数字、字符串、真假逻辑值、数组、对象，我们来看看它们在文本中的具体格式：</p><p>数字（整数或浮点数）</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{
+  &quot;number&quot; : 1,
+  &quot;number2&quot; : 11.5
 }
-</code></pre><p>字符串（在双引号中）</p><pre><code>{
-  "str1" : "1",
-  "str2" : "11"
+</code></pre></div><p>字符串（在双引号中）</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{
+  &quot;str1&quot; : &quot;1&quot;,
+  &quot;str2&quot; : &quot;11&quot;
 }
-</code></pre><p>逻辑值（true 或 false）</p><pre><code>{
-  "logic1" : true,
-  "logic2" : false
+</code></pre></div><p>逻辑值（true 或 false）</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{
+  &quot;logic1&quot; : true,
+  &quot;logic2&quot; : false
 }
-</code></pre><p>数组（在方括号中）</p><pre><code>{
-   "array1" : [1,2,3],
-   "array2" : [{"str1",1},{"str2",2},{33,44}]
+</code></pre></div><p>数组（在方括号中）</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{
+   &quot;array1&quot; : [1,2,3],
+   &quot;array2&quot; : [{&quot;str1&quot;,1},{&quot;str2&quot;,2},{33,44}]
  }
-</code></pre><p>对象（在花括号中）</p><pre><code>{
-  "obj1" : {1, "str1", true},
-  "obj2" : {"str2", 2, false},
-  "obj3" : null
+</code></pre></div><p>对象（在花括号中）</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{
+  &quot;obj1&quot; : {1, &quot;str1&quot;, true},
+  &quot;obj2&quot; : {&quot;str2&quot;, 2, false},
+  &quot;obj3&quot; : null
 }
-</code></pre><p>其中对象在花括号中书写，其对象可以包含多个名称/值对：</p><pre><code>{ "firstName":"John" , "lastName":"Doe" }
-</code></pre><p>数组在方括号中书写，数组可包含多个对象：</p><pre><code>{
-    "employees": [
-        { "firstName":"John" , "lastName":"Doe" },
-        { "firstName":"Anna" , "lastName":"Smith" },
-        { "firstName":"Peter" , "lastName":"Jones" }
+</code></pre></div><p>其中对象在花括号中书写，其对象可以包含多个名称/值对：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{ &quot;firstName&quot;:&quot;John&quot; , &quot;lastName&quot;:&quot;Doe&quot; }
+</code></pre></div><p>数组在方括号中书写，数组可包含多个对象：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{
+    &quot;employees&quot;: [
+        { &quot;firstName&quot;:&quot;John&quot; , &quot;lastName&quot;:&quot;Doe&quot; },
+        { &quot;firstName&quot;:&quot;Anna&quot; , &quot;lastName&quot;:&quot;Smith&quot; },
+        { &quot;firstName&quot;:&quot;Peter&quot; , &quot;lastName&quot;:&quot;Jones&quot; }
     ]
 }
-</code></pre><p>JSON 文件的文件类型通常是 “xxx.json” 用来扩展名用来说明是json格式的文本文件。在HTTP协议中还定义了Json格式的MINE类型以方便终端逻辑识别，JSON 文本的 MIME 类型是 “application/json” (MIME (Multipurpose Internet Mail Extensions) 是描述消息内容类型的因特网标准。其他MIME 消息包含文本、图像、音频、视频以及其他应用程序专用的数据。</p><p>我们在平时的编程中 JSON 解析器也比较多，例如simpleJson，MiniJson，DataContractJsonSerializer，JArray，JObject等等，都是非常通用高效的插件，也可以自己’造轮子‘做一个JSON解析器，做时也要多考虑下效率和性能方面的问题。</p><h6 id="自定义二进制流协议格式">自定义二进制流协议格式</h6><p>大部分的网络协议都具有一定的通用性，JSON是最典型的案例，其他的包括 XML，MessagePack，Protobuf都是相对通用的，但我们所要说的自定义二进制流协议则不是，理论上说它完全不通用，其原因是它被设计出来就不需要顾及通用性。</p><p>我们在存储一串数据的时候，无论这串数据里包含了哪些数据以及哪些数据类型，当我们拿着这串数据解析的时候我们应该首先知道数据如何解析，这是定义协议格式的目标。简单说就是，当我们收到一串数据的时候，我们用什么样的规则知道这串数据里的内容的，这就是协议规则的目标。JSON就制定了这么一个规则，这个规则以字符串 KEY-VALUE 简单配对的形式，以及一些辅助的符号‘{’,’}’,’[’,’]’组合而成，这个规则比较通用且易于理解，这使得任何人拿到JSON数据都能一眼知道里面有什么数据。</p><p>自定义二进制协议格式则不具有通用性，并不是任何人拿到数据都能知道里面装的是什么的，有且只有两端协定的双方才知道该如何解析收到的数据，对于破解自定义二进制流的内容也只有靠猜因为协议格式只有制定时的双方才知道(虽然猜的难度也不是很大，很多外挂都靠经验猜测数据内容)。</p><p>一个自定义二进制流协议格式，分成三部分：</p><pre><code>数据大小|协议编号|具体数据
-</code></pre><p>用代码结构可以表示为:</p><pre><code class="language-c#">class Mssage
-{
-  uint Size;
-  uint CommandID;
-  byte[] Data;
-}
-</code></pre><p>数据大小、协议编号、具体数据，这三者构成了一个完整的协议内容，当然很多时候command id 可以放入具体的数据中去。</p><p>现在假设我们客户端有这样一个数据结构需要传输到服务端去：</p><pre><code class="language-c#">class TestMsg
-{
-  int test1;
-  float test2;
-  bool test3;
-}
-</code></pre><p>服务端拿到数据时，其实是完全不知道当前拿到的数据是什么，也不知道数据是否完整，有可能只拿到一半的数据，或者一部分的数据。因此首先我们要确定的是，我们收到的数据包它的完整的大小有多大，只有知道完整的包体大小才能确定我当前收到的数据在大小上是否完整，我们是要等待继续接受后面的数据，还是现在就可以进行解析操作了。</p><p>为了确定包的完整性，我们必须先向二进制流中读取4个byte，组合成一个无符号整数，整数总共32位，也就是说我们的数据包的大小最大可以为2的32次减1个byte，这个整数让我们知道了接下来数据的大小。例如我现在接收到了20个byte后，读取了前4个byte，组成一个整数后这个整数为24，说明后面16个byte是一个不完整的包体，我应该继续等待后续的数据到来。</p><p>其次我们要确定的是收到的数据包是属于哪个协议格式。于是我们再读取4个byte大小的数据，组成一个无符号整数CommandID，用来确定协议号。假如这个无符号整数的协议号为1002，就代表是接下来的数据是编号为1002的协议的数据格式。假设我们上面这个TestMsg类就是协议号1002的数据体，那么接下来连着这个协议号的所有数据直到包体大小的末尾都是这个TestMsg的数据，我们可以提取后解析为该类实例。</p><p>在解析这个具体数据的时候，我们需要根据生成这个数据的顺序来解析，写入数据的顺序和读取数据的顺序是一致的。假设在生成这个二进制流数据时，我们的顺序是，先推入test1变量，再推入test2变量，再推入test3变量。其中test1变量为4个byte的整数，test2变量为4个byte的浮点数，test3变量为1个byte的布尔值，于是就有了如下byte数组结构：</p><pre><code>xxxx|xxxx|x
-</code></pre><table><tbody><tr><td>这样一个形状的二进制流，每个‘x’为一个byte，前两次4个byte组成一个int和float数据，最后1个byte组成布尔数据，‘</td><td>’只是为了解释说明用的分隔符不存在于数据内，这个数据是由9个byte组成，其中前4个byte为test1，中间4个byte为test2，后面1个btye为test3。</td></tr></tbody></table><p>在向网络传输的中整个数据包TestMsg的格式为如下：</p><pre><code>13|1002|test1|test2|test3
-</code></pre><table><tbody><tr><td>上述格式中13为接下来的数据包大小，1002位协议编号，test1</td><td>test2</td><td>test3为具体数据。我们在解析的时候也需要按照生成时的顺序来解析，先读取前4个byte组成一个整数赋值给test1，接着再读取4个byte组成一个浮点数赋值给test2，接着再读取1个byte赋值给test3，完成数据解析。</td></tr></tbody></table><p>对于数组形式的数据则要在原来的基础上多增加一个长度标志，比如 int[]类型数据，在生成时先推入代表长度的无符号整数数据，再连续推入所有数组内容，在解析的时候做同样的反向操作，先读取4个byte的长度标志，再对连续读取N个具体数据，N为提取的长度。我们举例int[]为3个整数数组则二进制为如下效果：</p><pre><code>xxxx|xxxx|xxxx|xxxx
-</code></pre><p>前4个byte为长度数据，接着3次4个byte为数组内的整数数据。</p><p>自定义二进制流协议格式为最不通用的格式，但可以成为最节省流量的协议方式，因为每个数据都可以用最小的方式进行定义，比如协议号不需要4个byte，2个byte大小代表2的16次-1也就是65535就够用了，长度有可能也不需要4个byte，只要2个甚至1个byte就够用了，有些数据不需要4个byte组成int整数，只需要2个byte数组ushort就够用了，甚至有些可以组合起来使用，比如协议结构中有4个bool，可以拼成一个byte来传递，这些都可以完全由我们来控制包体的大小不受到任何规则的限制，这也是自定义二进制协议格式最吸引人的地方。</p><p>自定义二进制流协议格式最大的缺点是不通用和难更新，当我们需要更换一个协议格式的时候，旧的协议格式就无法解析了，特别是当新的协议解析旧的协议时就会报错。不过我们也可以做些补救这种问题的措施，为了能让旧的协议格式还能继续使用，我们在每个数据头部都加入一个2个byte的整数代表版本号，由版本号来决定该读取哪个版本的协议，这样旧的协议也照样可以兼容新的协议，只是处理起来的时候需要注意些初始化问题，那些旧协议没有的而新协议有的数据则要尽可能的初始化成默认值以免造成逻辑报错。</p><h6 id="messagepack">MessagePack</h6><p>MessagePack 是一个介乎于JSON和自定义二进制流之间的协议格式，他的理念是 ‘It’s like JSON. but fast and small.’ 。</p><p>与JSON相同的是MessagePack也有采用Key-Value形式的Map映射类型，不同的是MessagePack用byte形式存储data部分的数据，包括整数、浮点数、布尔值等，并且在Map映射类型外加入了更多独立类型（非KEY-VALUE形式）的数据类型，其中也包括了自定义二进制流的数据类型。</p><p>Map映射类型在MessagePack中也是比较常用的数据类型，它是比较通用的存储形式类型，也因为通用性被很多程序员所喜爱。在使用过JSON的程序员知道JSON易懂且易用，MessagePack使用起来能和JSON用起来一样，并且数据大小比JSON小，解析速度又比JSON快，这也是作者所说的 “It’s like JSON. but fast and small.”。</p><table><tbody><tr><td>非Map类型的数据部分其实和自定义二进制流的存储方式差不多，只是把自定义二进制数据流中的‘数据大小</td><td>数据’的形式改为了‘类型</td><td>数据’，比如我们存储一个4个byte的32位的整数：</td></tr></tbody></table><pre><code>+--------+--------+--------+--------+--------+
+</code></pre></div><p>JSON 文件的文件类型通常是 &quot;xxx.json&quot; 用来扩展名用来说明是json格式的文本文件。在HTTP协议中还定义了Json格式的MINE类型以方便终端逻辑识别，JSON 文本的 MIME 类型是 &quot;application/json&quot; (MIME (Multipurpose Internet Mail Extensions) 是描述消息内容类型的因特网标准。其他MIME 消息包含文本、图像、音频、视频以及其他应用程序专用的数据。</p><p>我们在平时的编程中 JSON 解析器也比较多，例如simpleJson，MiniJson，DataContractJsonSerializer，JArray，JObject等等，都是非常通用高效的插件，也可以自己’造轮子‘做一个JSON解析器，做时也要多考虑下效率和性能方面的问题。</p><h6>自定义二进制流协议格式</h6><p>大部分的网络协议都具有一定的通用性，JSON是最典型的案例，其他的包括 XML，MessagePack，Protobuf都是相对通用的，但我们所要说的自定义二进制流协议则不是，理论上说它完全不通用，其原因是它被设计出来就不需要顾及通用性。</p><p>我们在存储一串数据的时候，无论这串数据里包含了哪些数据以及哪些数据类型，当我们拿着这串数据解析的时候我们应该首先知道数据如何解析，这是定义协议格式的目标。简单说就是，当我们收到一串数据的时候，我们用什么样的规则知道这串数据里的内容的，这就是协议规则的目标。JSON就制定了这么一个规则，这个规则以字符串 KEY-VALUE 简单配对的形式，以及一些辅助的符号‘{’,&#39;}&#39;,&#39;[&#39;,&#39;]&#39;组合而成，这个规则比较通用且易于理解，这使得任何人拿到JSON数据都能一眼知道里面有什么数据。</p><p>自定义二进制协议格式则不具有通用性，并不是任何人拿到数据都能知道里面装的是什么的，有且只有两端协定的双方才知道该如何解析收到的数据，对于破解自定义二进制流的内容也只有靠猜因为协议格式只有制定时的双方才知道(虽然猜的难度也不是很大，很多外挂都靠经验猜测数据内容)。</p><p>一个自定义二进制流协议格式，分成三部分：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>数据大小|协议编号|具体数据
+</code></pre></div><p>用代码结构可以表示为:</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">class</span> <span class="nc">Mssage</span>
+<span class="p">{</span>
+  <span class="kt">uint</span> <span class="n">Size</span><span class="p">;</span>
+  <span class="kt">uint</span> <span class="n">CommandID</span><span class="p">;</span>
+  <span class="kt">byte</span><span class="p">[]</span> <span class="n">Data</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><p>数据大小、协议编号、具体数据，这三者构成了一个完整的协议内容，当然很多时候command id 可以放入具体的数据中去。</p><p>现在假设我们客户端有这样一个数据结构需要传输到服务端去：</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">class</span> <span class="nc">TestMsg</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">test1</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">test2</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">test3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><p>服务端拿到数据时，其实是完全不知道当前拿到的数据是什么，也不知道数据是否完整，有可能只拿到一半的数据，或者一部分的数据。因此首先我们要确定的是，我们收到的数据包它的完整的大小有多大，只有知道完整的包体大小才能确定我当前收到的数据在大小上是否完整，我们是要等待继续接受后面的数据，还是现在就可以进行解析操作了。</p><p>为了确定包的完整性，我们必须先向二进制流中读取4个byte，组合成一个无符号整数，整数总共32位，也就是说我们的数据包的大小最大可以为2的32次减1个byte，这个整数让我们知道了接下来数据的大小。例如我现在接收到了20个byte后，读取了前4个byte，组成一个整数后这个整数为24，说明后面16个byte是一个不完整的包体，我应该继续等待后续的数据到来。</p><p>其次我们要确定的是收到的数据包是属于哪个协议格式。于是我们再读取4个byte大小的数据，组成一个无符号整数CommandID，用来确定协议号。假如这个无符号整数的协议号为1002，就代表是接下来的数据是编号为1002的协议的数据格式。假设我们上面这个TestMsg类就是协议号1002的数据体，那么接下来连着这个协议号的所有数据直到包体大小的末尾都是这个TestMsg的数据，我们可以提取后解析为该类实例。</p><p>在解析这个具体数据的时候，我们需要根据生成这个数据的顺序来解析，写入数据的顺序和读取数据的顺序是一致的。假设在生成这个二进制流数据时，我们的顺序是，先推入test1变量，再推入test2变量，再推入test3变量。其中test1变量为4个byte的整数，test2变量为4个byte的浮点数，test3变量为1个byte的布尔值，于是就有了如下byte数组结构：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>xxxx|xxxx|x
+</code></pre></div><p>这样一个形状的二进制流，每个‘x’为一个byte，前两次4个byte组成一个int和float数据，最后1个byte组成布尔数据，‘|’只是为了解释说明用的分隔符不存在于数据内，这个数据是由9个byte组成，其中前4个byte为test1，中间4个byte为test2，后面1个btye为test3。</p><p>在向网络传输的中整个数据包TestMsg的格式为如下：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>13|1002|test1|test2|test3
+</code></pre></div><p>上述格式中13为接下来的数据包大小，1002位协议编号，test1|test2|test3为具体数据。我们在解析的时候也需要按照生成时的顺序来解析，先读取前4个byte组成一个整数赋值给test1，接着再读取4个byte组成一个浮点数赋值给test2，接着再读取1个byte赋值给test3，完成数据解析。</p><p>对于数组形式的数据则要在原来的基础上多增加一个长度标志，比如 int[]类型数据，在生成时先推入代表长度的无符号整数数据，再连续推入所有数组内容，在解析的时候做同样的反向操作，先读取4个byte的长度标志，再对连续读取N个具体数据，N为提取的长度。我们举例int[]为3个整数数组则二进制为如下效果：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>xxxx|xxxx|xxxx|xxxx
+</code></pre></div><p>前4个byte为长度数据，接着3次4个byte为数组内的整数数据。</p><p>自定义二进制流协议格式为最不通用的格式，但可以成为最节省流量的协议方式，因为每个数据都可以用最小的方式进行定义，比如协议号不需要4个byte，2个byte大小代表2的16次-1也就是65535就够用了，长度有可能也不需要4个byte，只要2个甚至1个byte就够用了，有些数据不需要4个byte组成int整数，只需要2个byte数组ushort就够用了，甚至有些可以组合起来使用，比如协议结构中有4个bool，可以拼成一个byte来传递，这些都可以完全由我们来控制包体的大小不受到任何规则的限制，这也是自定义二进制协议格式最吸引人的地方。</p><p>自定义二进制流协议格式最大的缺点是不通用和难更新，当我们需要更换一个协议格式的时候，旧的协议格式就无法解析了，特别是当新的协议解析旧的协议时就会报错。不过我们也可以做些补救这种问题的措施，为了能让旧的协议格式还能继续使用，我们在每个数据头部都加入一个2个byte的整数代表版本号，由版本号来决定该读取哪个版本的协议，这样旧的协议也照样可以兼容新的协议，只是处理起来的时候需要注意些初始化问题，那些旧协议没有的而新协议有的数据则要尽可能的初始化成默认值以免造成逻辑报错。</p><h6>MessagePack</h6><p>MessagePack 是一个介乎于JSON和自定义二进制流之间的协议格式，他的理念是 ‘It’s like JSON. but fast and small.’ 。</p><p>与JSON相同的是MessagePack也有采用Key-Value形式的Map映射类型，不同的是MessagePack用byte形式存储data部分的数据，包括整数、浮点数、布尔值等，并且在Map映射类型外加入了更多独立类型（非KEY-VALUE形式）的数据类型，其中也包括了自定义二进制流的数据类型。</p><p>Map映射类型在MessagePack中也是比较常用的数据类型，它是比较通用的存储形式类型，也因为通用性被很多程序员所喜爱。在使用过JSON的程序员知道JSON易懂且易用，MessagePack使用起来能和JSON用起来一样，并且数据大小比JSON小，解析速度又比JSON快，这也是作者所说的 “It’s like JSON. but fast and small.”。</p><p>非Map类型的数据部分其实和自定义二进制流的存储方式差不多，只是把自定义二进制数据流中的‘数据大小|数据’的形式改为了‘类型|数据’，比如我们存储一个4个byte的32位的整数：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>+--------+--------+--------+--------+--------+
 |  0xd2  |ZZZZZZZZ|ZZZZZZZZ|ZZZZZZZZ|ZZZZZZZZ|
 +--------+--------+--------+--------+--------+
-</code></pre><p>第一个byte的值0xd2代表32位整数类型，它表示后面4个byte组合起来是整数类型的数据。再比如32位的浮点数的存储格式：</p><pre><code>+--------+--------+--------+--------+--------+
+</code></pre></div><p>第一个byte的值0xd2代表32位整数类型，它表示后面4个byte组合起来是整数类型的数据。再比如32位的浮点数的存储格式：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>+--------+--------+--------+--------+--------+
 |  0xca  |XXXXXXXX|XXXXXXXX|XXXXXXXX|XXXXXXXX|
 +--------+--------+--------+--------+--------+
-</code></pre><p>第一个byte的值0xca代表32位浮点数类型，它表示后面4个byte组合起来是浮点数类型的数据。以此类推，nil，bool，8位无符号整数，16位无符号整数，32位无符号整数，64位无符号整数，8位有符号整数，16位有符号整数，32位有符号整数，64位有符号整数等，以及32位浮点数，64位浮点数，都用这种类似的方式表示。</p><p>其实用MessagePack并不是冲着这些单独的数据类型去的，因为这些单独的数据类型完全可以用自定义二进制流代替，我们关心的是它的Map类型数据的格式定义。我们先来看看，MessagePack的Map类型的存储机制和Json有什么区别，它为什么就比JSON快，为什么就比JSON小，它是如何存储和解析的。</p><p>在Map之前我们看看数组类型的格式：</p><pre><code>+--------+--------+--------+~~~~~~~~~~~~~~~~~+
+</code></pre></div><p>第一个byte的值0xca代表32位浮点数类型，它表示后面4个byte组合起来是浮点数类型的数据。以此类推，nil，bool，8位无符号整数，16位无符号整数，32位无符号整数，64位无符号整数，8位有符号整数，16位有符号整数，32位有符号整数，64位有符号整数等，以及32位浮点数，64位浮点数，都用这种类似的方式表示。</p><p>其实用MessagePack并不是冲着这些单独的数据类型去的，因为这些单独的数据类型完全可以用自定义二进制流代替，我们关心的是它的Map类型数据的格式定义。我们先来看看，MessagePack的Map类型的存储机制和Json有什么区别，它为什么就比JSON快，为什么就比JSON小，它是如何存储和解析的。</p><p>在Map之前我们看看数组类型的格式：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>+--------+--------+--------+~~~~~~~~~~~~~~~~~+
 |  0xdc  |YYYYYYYY|YYYYYYYY|    N objects    |
 +--------+--------+--------+~~~~~~~~~~~~~~~~~+
-</code></pre><p>第一个byte的值0xdc代表是个总共可以存储16位长度的数组，也就是它的最大存放个数为2的16次-1个元素的数组，后面2个byte组合起来成为一个无符号的整数代表后面有多少个元素，接着后面N就是相同类型的元素的数据。</p><p>假设说这N个元素是32位整数类型的数据，那么上述的数组类型具体格式就是如下：</p><pre><code>+--------+--------+--------+~~~~~~~~~~~~~~~~~+
+</code></pre></div><p>第一个byte的值0xdc代表是个总共可以存储16位长度的数组，也就是它的最大存放个数为2的16次-1个元素的数组，后面2个byte组合起来成为一个无符号的整数代表后面有多少个元素，接着后面N就是相同类型的元素的数据。</p><p>假设说这N个元素是32位整数类型的数据，那么上述的数组类型具体格式就是如下：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>+--------+--------+--------+~~~~~~~~~~~~~~~~~+
 |  0xdc  |00000000|00000011|  0xd2|00001001|0xd2|00001101|...(3 objects)
 +--------+--------+--------+~~~~~~~~~~~~~~~~~+
-</code></pre><table><tbody><tr><td>我们看这个数组中指定了数组类型，0xdc就代表数组，以及后面2个byte拼起来表示数组元素的个数为11，接下来的数据就是单个元素的数据，即有11个整数数据组成的数组，每个数据都以‘类型</td><td>数据’格式的存储。其实Map类型就是数组类型的变种，我们在数组类型基础上每个元素，多加了个KEY字符串就成了Map类型的数据格式，我们来看下Map的具体格式：</td></tr></tbody></table><pre><code>+--------+--------+--------+~~~~~~~~~~~~~~~~~+
+</code></pre></div><p>我们看这个数组中指定了数组类型，0xdc就代表数组，以及后面2个byte拼起来表示数组元素的个数为11，接下来的数据就是单个元素的数据，即有11个整数数据组成的数组，每个数据都以‘类型|数据’格式的存储。其实Map类型就是数组类型的变种，我们在数组类型基础上每个元素，多加了个KEY字符串就成了Map类型的数据格式，我们来看下Map的具体格式：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>+--------+--------+--------+~~~~~~~~~~~~~~~~~+
 |  0xde  |YYYYYYYY|YYYYYYYY|   N*2 objects   |
 +--------+--------+--------+~~~~~~~~~~~~~~~~~+
-</code></pre><p>第一个byte的值0xde代表的是最大个数为16位(即2的16次减1个)的map类型数据，接着2个byte组合起来表示有多少个元素，最后部分N乘2个元素为数据元素，以每2个元素为一个Key-Value组合，第一元素一定是字符串Key，第二个元素为任意的单独数据类型。</p><p>我们用官方的例子来分析下，例如一个JSON类型的数据为：</p><pre><code>{"compact":true, "schema":0}
-</code></pre><p>这个数据在MessagePack中是以Map类型数据存在的其格式为：</p><pre><code>82|A7|'c'|'o'|'m'|'p'|'a'|'c'|'t'|C3|A6|'s'|'c'|'h'|'e'|'m'|'a'|00|
-</code></pre><p>数据中头部的‘82’这个数据，前半个byte的值即8代表是个最多拥有15个元素的map类型数据，后半个byte的值即2，代表总共有2个元素。接着第二个数据‘A7’，‘A’为前半个byte的值代表接下去是个31个字符以内的字符串，后半个byte值为7代表这个字符串拥有7个字符。接着7个元素都是字符元素及Key位置的字符串。接着‘C3’是Key-Value的Value类型数据部分，这个Value是一个bool型的ture值。接着‘A6’开始为第二个Key-Value数据组合，其中A为前半个byte代表是接下去是个31个元素以内的字符串，后半个byte为6代表这个字符串有6个长度大小。接着6个元素都是字符作为Key数据。最后的‘00’，前面0为前半个byte，表示类型为7位以内的整数，接着的0位后半个byte，代表数据为0。这样整个数据分析下来，MessagePack数据与Json的{“compact”:true, “schema”:0}数据对应上。</p><table><tbody><tr><td>MessagePack整个Map就是以这种“类型</td><td>数据”或者”类型</td><td>大小</td><td>数据”的方式存储。由于存储的方式是顺序，所以在解析的时候不需要排序，不需要解析符号和类型，数据的类型直接可以用byte来表示，能用byte存储绝不用字符串形式存储，如能减少byte使用个数的尽量减少byte的使用个数，如能合并的尽量合并为一个byte。因此MessagePack对于JSON来说，减少了大量的解析，同时也减少了大量的数据占用空间，使得MessagePack能比起JSON来更快并且更小，就像它自己所说的那样 ‘It’s like JSON. but fast and small.’。</td></tr></tbody></table><h3 id="protocol-buffer">Protocol Buffer</h3><p>虽然Proto3在Proto2之上又做了更多的改进，但我们这里仍以Proto2为基准来讲解Protocal buffer的内在机制。MessagePack在JSON之上做了很多数据空间和序列化以及反序列化上的优化，其实可以看做是把JSON和自定义二进制的混合的做法，既吸收了JSON这种Key-Value(键值对)简单易懂通用性的优点，又吸收了自定义二进制流格式序列化与反序列化性能高和存储空间小的特点。不过话说回来，MessagePack的Map形式数据存储格式毕竟是Key-Value形式的，其Key值仍然使用了字符串，还是逃脱不了字符串string占用太多存储空间的弊端。</p><p>Google Protocol Buffer 的出现就弥补了MessagePack的这个缺点，但是Google Protocol Buffer也有自身不可忽视的缺点，我们来看究竟Google Protocol Buffer是怎么的一种数据协议。</p><p>Google Protocol Buffer( 简称 Protobuf) 是 Google 公司内部的混合语言数据标准，它们用于 RPC 系统和持续数据存储系统。Protobuf 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域，是语言无关、平台无关、可扩展的序列化结构数据格式。常有人推崇说 Protocol Buffer 比JSON、MessagePack要好，那么它究竟好在哪里呢？我们就来分析下。</p><p>我们选择数据协议的目的主要关注的点是，它是否能更简单易上手，序列化与反序列化数据性能是否高效，存储空间占用是否更小，更改协议后的兼容性是否能更强。对于这些特点，Protocol Buffer 是否能都做到，下面我们就来的对它剖析一番。</p><h6 id="protocol-buffer消息定义">Protocol Buffer消息定义</h6><p>Protobuf 的消息定义需要创建一个文件然后把消息结构写进入，然后再通过Protobuf生成工具将定义好的消息文件生成为指定语言的程序文件，我们在编程时可以通过调用这些生成的程序去序列化和反序列化Protobuf。</p><p>我们先来创建一个扩展名为.proto的文件，假设文件名为 MyMessage.proto，并将以下内容存入该文件中。</p><pre><code>message LoginReqMessage {
+</code></pre></div><p>第一个byte的值0xde代表的是最大个数为16位(即2的16次减1个)的map类型数据，接着2个byte组合起来表示有多少个元素，最后部分N乘2个元素为数据元素，以每2个元素为一个Key-Value组合，第一元素一定是字符串Key，第二个元素为任意的单独数据类型。</p><p>我们用官方的例子来分析下，例如一个JSON类型的数据为：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{&quot;compact&quot;:true, &quot;schema&quot;:0}
+</code></pre></div><p>这个数据在MessagePack中是以Map类型数据存在的其格式为：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>82|A7|&#39;c&#39;|&#39;o&#39;|&#39;m&#39;|&#39;p&#39;|&#39;a&#39;|&#39;c&#39;|&#39;t&#39;|C3|A6|&#39;s&#39;|&#39;c&#39;|&#39;h&#39;|&#39;e&#39;|&#39;m&#39;|&#39;a&#39;|00|
+</code></pre></div><p>数据中头部的‘82’这个数据，前半个byte的值即8代表是个最多拥有15个元素的map类型数据，后半个byte的值即2，代表总共有2个元素。接着第二个数据‘A7’，‘A’为前半个byte的值代表接下去是个31个字符以内的字符串，后半个byte值为7代表这个字符串拥有7个字符。接着7个元素都是字符元素及Key位置的字符串。接着‘C3’是Key-Value的Value类型数据部分，这个Value是一个bool型的ture值。接着‘A6’开始为第二个Key-Value数据组合，其中A为前半个byte代表是接下去是个31个元素以内的字符串，后半个byte为6代表这个字符串有6个长度大小。接着6个元素都是字符作为Key数据。最后的‘00’，前面0为前半个byte，表示类型为7位以内的整数，接着的0位后半个byte，代表数据为0。这样整个数据分析下来，MessagePack数据与Json的{&quot;compact&quot;:true, &quot;schema&quot;:0}数据对应上。</p><p>MessagePack整个Map就是以这种“类型|数据”或者&quot;类型|大小|数据&quot;的方式存储。由于存储的方式是顺序，所以在解析的时候不需要排序，不需要解析符号和类型，数据的类型直接可以用byte来表示，能用byte存储绝不用字符串形式存储，如能减少byte使用个数的尽量减少byte的使用个数，如能合并的尽量合并为一个byte。因此MessagePack对于JSON来说，减少了大量的解析，同时也减少了大量的数据占用空间，使得MessagePack能比起JSON来更快并且更小，就像它自己所说的那样 ‘It’s like JSON. but fast and small.’。</p><h3>Protocol Buffer</h3><p>虽然Proto3在Proto2之上又做了更多的改进，但我们这里仍以Proto2为基准来讲解Protocal buffer的内在机制。MessagePack在JSON之上做了很多数据空间和序列化以及反序列化上的优化，其实可以看做是把JSON和自定义二进制的混合的做法，既吸收了JSON这种Key-Value(键值对)简单易懂通用性的优点，又吸收了自定义二进制流格式序列化与反序列化性能高和存储空间小的特点。不过话说回来，MessagePack的Map形式数据存储格式毕竟是Key-Value形式的，其Key值仍然使用了字符串，还是逃脱不了字符串string占用太多存储空间的弊端。</p><p>Google Protocol Buffer 的出现就弥补了MessagePack的这个缺点，但是Google Protocol Buffer也有自身不可忽视的缺点，我们来看究竟Google Protocol Buffer是怎么的一种数据协议。</p><p>Google Protocol Buffer( 简称 Protobuf) 是 Google 公司内部的混合语言数据标准，它们用于 RPC 系统和持续数据存储系统。Protobuf 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域，是语言无关、平台无关、可扩展的序列化结构数据格式。常有人推崇说 Protocol Buffer 比JSON、MessagePack要好，那么它究竟好在哪里呢？我们就来分析下。</p><p>我们选择数据协议的目的主要关注的点是，它是否能更简单易上手，序列化与反序列化数据性能是否高效，存储空间占用是否更小，更改协议后的兼容性是否能更强。对于这些特点，Protocol Buffer 是否能都做到，下面我们就来的对它剖析一番。</p><h6>Protocol Buffer消息定义</h6><p>Protobuf 的消息定义需要创建一个文件然后把消息结构写进入，然后再通过Protobuf生成工具将定义好的消息文件生成为指定语言的程序文件，我们在编程时可以通过调用这些生成的程序去序列化和反序列化Protobuf。</p><p>我们先来创建一个扩展名为.proto的文件，假设文件名为 MyMessage.proto，并将以下内容存入该文件中。</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>message LoginReqMessage {
   required int64 acct_id = 1;
   required string passwd = 2;
 }
-</code></pre><p>上述消息定义是一个简单的登陆消息定义，我们来说明下里面的结构。</p><ol><li><p>message是消息定义的关键字，等同于C#中的struct/class。</p></li><li><p>LoginReqMessage为消息的名字，等同于结构体名或类名。</p></li><li><p>required前缀表示该字段为必要字段。即在序列化和反序列化之前该字段必须已经被赋值。</p></li></ol><p>与required相似的功能还存在另外两个类似的关键字，optional和repeated。optional表示该字段为可选字段，即在序列化和反序列化前可以不进行赋值。相比于optional，repeated主要用于表示数组字段，它代表数组。(required和optional字段已经在Protobuf3中取消，所有未定义类型都是optional)</p><ol><li>int64和string分别表示64位长整型和字符串型的消息字段。</li></ol><p>其实在Protobuf中存在一张类型对照表，这张对照表用于Protobuf中的数据类型与其他编程语言(C#/Java/C++)中所用类型的一一对应。该对照表中还将给出在不同的数据场景下，使用哪种数据类型更为高效。</p><ol><li><p>acct_id 和 passwd 分别表示消息字段名，等同于C#中的域变量名。</p></li><li><p>标签数字 1 和 2 表示不同字段序列化后在二进制数据中的布局位置。</p></li></ol><p>LoginReqMessage结构的实例数据在序列化时，acct_id先被推入数据流中再是passwd，passwd 字段在序列化后的数据一定位于 acct_id 之后。我们需要注意数字标签的值代表二进制流中的位置，该值在同一message中不能重复。</p><p>另外Protocol Buffer有个优化规则我们需要在定制消息的注意，它在标签值为 1 到 15 的字段上序列化时会对其进行优化，即标签值和类型信息仅占有一个byte，标签范围在 16 到 2047 的则占有两个byte，而Protocol Buffer可以支持的字段数量则为2的29次方减1个即536870911个数据变量。鉴于此优化规则，我们在设计消息结构时，可以尽可能考虑让repeated类型的字段标签位于1到15之间，这样便可以有效的节省序列化后的字节大小。</p><h6 id="多层嵌套protocol-buffer">多层嵌套Protocol Buffer</h6><p>除了定义单个消息，我们也可以在同一个.proto文件中定义多个message，这样便可以实现多层嵌套消息的定义，我们来看看具体案例：</p><pre><code class="language-c#">    message Person {
-      required string name = 1;
-      required int32 id = 2;
-      optional string email = 3;
+</code></pre></div><p>上述消息定义是一个简单的登陆消息定义，我们来说明下里面的结构。</p><ol><li><p>message是消息定义的关键字，等同于C#中的struct/class。</p></li><li><p>LoginReqMessage为消息的名字，等同于结构体名或类名。</p></li><li><p>required前缀表示该字段为必要字段。即在序列化和反序列化之前该字段必须已经被赋值。</p></li></ol><p>与required相似的功能还存在另外两个类似的关键字，optional和repeated。optional表示该字段为可选字段，即在序列化和反序列化前可以不进行赋值。相比于optional，repeated主要用于表示数组字段，它代表数组。(required和optional字段已经在Protobuf3中取消，所有未定义类型都是optional)</p><ol><li>int64和string分别表示64位长整型和字符串型的消息字段。</li></ol><p>其实在Protobuf中存在一张类型对照表，这张对照表用于Protobuf中的数据类型与其他编程语言(C#/Java/C++)中所用类型的一一对应。该对照表中还将给出在不同的数据场景下，使用哪种数据类型更为高效。</p><ol><li><p>acct_id 和 passwd 分别表示消息字段名，等同于C#中的域变量名。</p></li><li><p>标签数字 1 和 2 表示不同字段序列化后在二进制数据中的布局位置。</p></li></ol><p>LoginReqMessage结构的实例数据在序列化时，acct<em>id先被推入数据流中再是passwd，passwd 字段在序列化后的数据一定位于 acct</em>id 之后。我们需要注意数字标签的值代表二进制流中的位置，该值在同一message中不能重复。</p><p>另外Protocol Buffer有个优化规则我们需要在定制消息的注意，它在标签值为 1 到 15 的字段上序列化时会对其进行优化，即标签值和类型信息仅占有一个byte，标签范围在 16 到 2047 的则占有两个byte，而Protocol Buffer可以支持的字段数量则为2的29次方减1个即536870911个数据变量。鉴于此优化规则，我们在设计消息结构时，可以尽可能考虑让repeated类型的字段标签位于1到15之间，这样便可以有效的节省序列化后的字节大小。</p><h6>多层嵌套Protocol Buffer</h6><p>除了定义单个消息，我们也可以在同一个.proto文件中定义多个message，这样便可以实现多层嵌套消息的定义，我们来看看具体案例：</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span>    <span class="n">message</span> <span class="n">Person</span> <span class="p">{</span>
+      <span class="n">required</span> <span class="kt">string</span> <span class="n">name</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+      <span class="n">required</span> <span class="n">int32</span> <span class="n">id</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+      <span class="n">optional</span> <span class="kt">string</span> <span class="n">email</span> <span class="p">=</span> <span class="m">3</span><span class="p">;</span>
 
-      enum PhoneType {
-        MOBILE = 0;
-        HOME = 1;
-        WORK = 2;
-      }
+      <span class="k">enum</span> <span class="n">PhoneType</span> <span class="p">{</span>
+        <span class="n">MOBILE</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="n">HOME</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+        <span class="n">WORK</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+      <span class="p">}</span>
 
-      message PhoneNumber {
-        required string number = 1;
-        optional PhoneType type = 2 [default = HOME];
-      }
+      <span class="n">message</span> <span class="n">PhoneNumber</span> <span class="p">{</span>
+        <span class="n">required</span> <span class="kt">string</span> <span class="n">number</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+        <span class="n">optional</span> <span class="n">PhoneType</span> <span class="n">type</span> <span class="p">=</span> <span class="m">2</span> <span class="p">[</span><span class="k">default</span> <span class="p">=</span> <span class="n">HOME</span><span class="p">];</span>
+      <span class="p">}</span>
 
-      repeated PhoneNumber phones = 4;
-      repeated float weight_recent_months = 100 [packed = true];
-    }
+      <span class="n">repeated</span> <span class="n">PhoneNumber</span> <span class="n">phones</span> <span class="p">=</span> <span class="m">4</span><span class="p">;</span>
+      <span class="n">repeated</span> <span class="kt">float</span> <span class="n">weight_recent_months</span> <span class="p">=</span> <span class="m">100</span> <span class="p">[</span><span class="n">packed</span> <span class="p">=</span> <span class="k">true</span><span class="p">];</span>
+    <span class="p">}</span>
 
-    message AddressBook {
-      repeated Person people = 1;
-    }
-</code></pre><p>我们在proto文件中定义了三个消息结构和一个枚举结构，其中AddressBook消息的定义中包含了Person消息类型作为其字段变量，Person又包含了PhoneNumber消息类型作为字段变量，这与我们平时编程的数据结构嵌套方式很相似。除了这些数据结构被集中定义在一个proto文件中以外，它们也可以被分开来定义在各自.proto文件中。</p><p>由于Protocol Buffer提供了另外一个关键字，‘import’关键字，它相当于 C++ 的Include，这样我们在编写Proto结构时便可以将很多通用的message定义在同一个.proto文件中，而每个模块功能的消息体定义可以自己管理分别定义在自己独立的proto文件中或者以其他更清晰的方式分开定义，最后我们可以通过import关键字以动态导入的方式将需要的结构体文件导入进来，如：</p><pre><code class="language-c#">    message Person {
-      required string name = 1;
-      required int32 id = 2;
-      optional string email = 3;
+    <span class="n">message</span> <span class="n">AddressBook</span> <span class="p">{</span>
+      <span class="n">repeated</span> <span class="n">Person</span> <span class="n">people</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div><p>我们在proto文件中定义了三个消息结构和一个枚举结构，其中AddressBook消息的定义中包含了Person消息类型作为其字段变量，Person又包含了PhoneNumber消息类型作为字段变量，这与我们平时编程的数据结构嵌套方式很相似。除了这些数据结构被集中定义在一个proto文件中以外，它们也可以被分开来定义在各自.proto文件中。</p><p>由于Protocol Buffer提供了另外一个关键字，‘import’关键字，它相当于 C++ 的Include，这样我们在编写Proto结构时便可以将很多通用的message定义在同一个.proto文件中，而每个模块功能的消息体定义可以自己管理分别定义在自己独立的proto文件中或者以其他更清晰的方式分开定义，最后我们可以通过import关键字以动态导入的方式将需要的结构体文件导入进来，如：</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span>    <span class="n">message</span> <span class="n">Person</span> <span class="p">{</span>
+      <span class="n">required</span> <span class="kt">string</span> <span class="n">name</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+      <span class="n">required</span> <span class="n">int32</span> <span class="n">id</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+      <span class="n">optional</span> <span class="kt">string</span> <span class="n">email</span> <span class="p">=</span> <span class="m">3</span><span class="p">;</span>
 
-      enum PhoneType {
-        MOBILE = 0;
-        HOME = 1;
-        WORK = 2;
-      }
+      <span class="k">enum</span> <span class="n">PhoneType</span> <span class="p">{</span>
+        <span class="n">MOBILE</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="n">HOME</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+        <span class="n">WORK</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+      <span class="p">}</span>
 
-      message PhoneNumber {
-        required string number = 1;
-        optional PhoneType type = 2 [default = HOME];
-      }
+      <span class="n">message</span> <span class="n">PhoneNumber</span> <span class="p">{</span>
+        <span class="n">required</span> <span class="kt">string</span> <span class="n">number</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+        <span class="n">optional</span> <span class="n">PhoneType</span> <span class="n">type</span> <span class="p">=</span> <span class="m">2</span> <span class="p">[</span><span class="k">default</span> <span class="p">=</span> <span class="n">HOME</span><span class="p">];</span>
+      <span class="p">}</span>
 
-      repeated PhoneNumber phones = 4;
-      repeated float weight_recent_months = 100 [packed = true];
-    }
-</code></pre><p>例如上述我们先写好一个常用的数据结构体消息，将它放入Person.proto文件中。</p><pre><code class="language-c#">    import "myproject/Person.proto"
+      <span class="n">repeated</span> <span class="n">PhoneNumber</span> <span class="n">phones</span> <span class="p">=</span> <span class="m">4</span><span class="p">;</span>
+      <span class="n">repeated</span> <span class="kt">float</span> <span class="n">weight_recent_months</span> <span class="p">=</span> <span class="m">100</span> <span class="p">[</span><span class="n">packed</span> <span class="p">=</span> <span class="k">true</span><span class="p">];</span>
+    <span class="p">}</span>
+</code></pre></div><p>例如上述我们先写好一个常用的数据结构体消息，将它放入Person.proto文件中。</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span>    <span class="n">import</span> <span class="s">&quot;myproject/Person.proto&quot;</span>
 
-    message AddressBook {
-      repeated Person people = 1;
-    }
-</code></pre><p>然后再我们写我们自己模块里的结构消息，定义好自己的需要的数据类型字段，再将Person这个proto文件里的所有消息结构都导入进来。通过‘import’我们可以轻松而且清晰的表达项目中的数据分块与分层。</p><h6 id="限定符-requiredoptionalrepeated-的规则">限定符 required、optional、repeated 的规则</h6><p>在Protobuf2中有这3个限定符，并且在每个消息中必须至少有一个required类型的字段，保证数据中一定有至少一个数据。</p><p>required限定符表示该字段为必要字段。即在序列化和反序列化之前数据中该字段必须已经被赋值。而每个消息中可以包含0个或多个optional类型的字段。optional限定符表示该字段为可选字段，即在序列化和反序列化前可以不进行赋值，如果没有赋值则表示该数据为空。repeated限定符则表示的字段可以包含0个或多个重复的数据，即数组类型符号。注意 repeated 代表是重复的数据，等价于我们常使用的数组和列表，并且可以不赋值，如果不赋值则表示0个数组数据。</p><p>888</p><h5 id="protocol-buffer-原理-序列化和反序列化">Protocol Buffer 原理-序列化和反序列化</h5><p>Protocol Buffer 是怎么识别和存储数据的，是序列化和反序列的关键。</p><p>JSON 和 MessagePack 都使用了字符串的KEY作为映射到程序变量的关键字，变量和字符串用比较字符串的是否相等来判断是否为该变量，避免不了字符串太多而浪费空间。</p><p>Protocol Buffer 则用数字编号来作为KEY的关键字，每个变量都必须有个不能重复的标签号(即数字编号)，用变量后面跟着的数字编号来映射到数据中的数字编号，进而读取数据。</p><p>Protocol Buffer为每个变量都定义了一个标签号(即数字编号)，这个数字编号就代表了程序变量与指定编号数据的映射关系。</p><p>有了这个规则还不够，因为程序在读取的时候，是不知道某个变量到底对应哪个标签号的，比如上面的Person的 name 变量，在程序里的 name 变量是不知道到底该读取哪个编号的数据的，除非在程序里写死。</p><p>Protocol Buffer 就是使用了这种简单粗暴的方法，‘在程序里写死’的这种方式让事情变得更简单。</p><p>‘在程序里写死’这种粗暴的方式最讲究周边工具了，Protocol Buffer就为很多种语言定制了生成序列化和反序列化程序代码的工具。只需要通过提供.proto文件就能生成相应语音的程序代码，在代码中把编号‘写死’，这一切代码都是自动生成的，我们只需要关心.proto文件中的结构。</p><p>以就是说，当Protocol Buffer生成的解析代码在读数据的时候，一旦读取到编号为1的数据时，就把数据解析给 name 这个程序变量，这些都写死在代码中，而代码由Protocol Buffer工具生成。</p><h6 id="我们使用上面提到的-addressbook-数据结构来序列化一个-protocol-buffer-数据">我们使用上面提到的 AddressBook 数据结构来序列化一个 Protocol Buffer 数据。</h6><p>加入数据的伪代码：</p><pre><code class="language-c#">AddressBook address_book;
-Person person = address_book.add_people();
-person.set_id(1);
-person.set_name("Jack");
-person.set_email("Jack@qq.com");
-Person.PhoneNumber phone_number = person-&gt;add_phones();
-phone_number.set_number("123456");
-phone_number.set_type(Person.HOME);
-phone_number = person.add_phones();
-phone_number.set_number("234567");
-phone_number.set_type(Person.MOBILE);
+    <span class="n">message</span> <span class="n">AddressBook</span> <span class="p">{</span>
+      <span class="n">repeated</span> <span class="n">Person</span> <span class="n">people</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div><p>然后再我们写我们自己模块里的结构消息，定义好自己的需要的数据类型字段，再将Person这个proto文件里的所有消息结构都导入进来。通过‘import’我们可以轻松而且清晰的表达项目中的数据分块与分层。</p><h6>限定符 required、optional、repeated 的规则</h6><p>在Protobuf2中有这3个限定符，并且在每个消息中必须至少有一个required类型的字段，保证数据中一定有至少一个数据。</p><p>required限定符表示该字段为必要字段。即在序列化和反序列化之前数据中该字段必须已经被赋值。而每个消息中可以包含0个或多个optional类型的字段。optional限定符表示该字段为可选字段，即在序列化和反序列化前可以不进行赋值，如果没有赋值则表示该数据为空。repeated限定符则表示的字段可以包含0个或多个重复的数据，即数组类型符号。注意 repeated 代表是重复的数据，等价于我们常使用的数组和列表，并且可以不赋值，如果不赋值则表示0个数组数据。</p><p>888</p><h5>Protocol Buffer 原理-序列化和反序列化</h5><p>Protocol Buffer 是怎么识别和存储数据的，是序列化和反序列的关键。</p><p>JSON 和 MessagePack 都使用了字符串的KEY作为映射到程序变量的关键字，变量和字符串用比较字符串的是否相等来判断是否为该变量，避免不了字符串太多而浪费空间。</p><p>Protocol Buffer 则用数字编号来作为KEY的关键字，每个变量都必须有个不能重复的标签号(即数字编号)，用变量后面跟着的数字编号来映射到数据中的数字编号，进而读取数据。</p><p>Protocol Buffer为每个变量都定义了一个标签号(即数字编号)，这个数字编号就代表了程序变量与指定编号数据的映射关系。</p><p>有了这个规则还不够，因为程序在读取的时候，是不知道某个变量到底对应哪个标签号的，比如上面的Person的 name 变量，在程序里的 name 变量是不知道到底该读取哪个编号的数据的，除非在程序里写死。</p><p>Protocol Buffer 就是使用了这种简单粗暴的方法，‘在程序里写死’的这种方式让事情变得更简单。</p><p>‘在程序里写死’这种粗暴的方式最讲究周边工具了，Protocol Buffer就为很多种语言定制了生成序列化和反序列化程序代码的工具。只需要通过提供.proto文件就能生成相应语音的程序代码，在代码中把编号‘写死’，这一切代码都是自动生成的，我们只需要关心.proto文件中的结构。</p><p>以就是说，当Protocol Buffer生成的解析代码在读数据的时候，一旦读取到编号为1的数据时，就把数据解析给 name 这个程序变量，这些都写死在代码中，而代码由Protocol Buffer工具生成。</p><h6>我们使用上面提到的 AddressBook 数据结构来序列化一个 Protocol Buffer 数据。</h6><p>加入数据的伪代码：</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">AddressBook</span> <span class="n">address_book</span><span class="p">;</span>
+<span class="n">Person</span> <span class="n">person</span> <span class="p">=</span> <span class="n">address_book</span><span class="p">.</span><span class="n">add_people</span><span class="p">();</span>
+<span class="n">person</span><span class="p">.</span><span class="n">set_id</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+<span class="n">person</span><span class="p">.</span><span class="n">set_name</span><span class="p">(</span><span class="s">&quot;Jack&quot;</span><span class="p">);</span>
+<span class="n">person</span><span class="p">.</span><span class="n">set_email</span><span class="p">(</span><span class="s">&quot;Jack@qq.com&quot;</span><span class="p">);</span>
+<span class="n">Person</span><span class="p">.</span><span class="n">PhoneNumber</span> <span class="n">phone_number</span> <span class="p">=</span> <span class="n">person</span><span class="p">-&gt;</span><span class="n">add_phones</span><span class="p">();</span>
+<span class="n">phone_number</span><span class="p">.</span><span class="n">set_number</span><span class="p">(</span><span class="s">&quot;123456&quot;</span><span class="p">);</span>
+<span class="n">phone_number</span><span class="p">.</span><span class="n">set_type</span><span class="p">(</span><span class="n">Person</span><span class="p">.</span><span class="n">HOME</span><span class="p">);</span>
+<span class="n">phone_number</span> <span class="p">=</span> <span class="n">person</span><span class="p">.</span><span class="n">add_phones</span><span class="p">();</span>
+<span class="n">phone_number</span><span class="p">.</span><span class="n">set_number</span><span class="p">(</span><span class="s">&quot;234567&quot;</span><span class="p">);</span>
+<span class="n">phone_number</span><span class="p">.</span><span class="n">set_type</span><span class="p">(</span><span class="n">Person</span><span class="p">.</span><span class="n">MOBILE</span><span class="p">);</span>
 
-person-&gt;add_weight_recent_months(50);
-person-&gt;add_weight_recent_months(52);
-person-&gt;add_weight_recent_months(54);
-</code></pre><p>生成出来的二进制数据流如下：</p><pre><code class="language-c#">0a    // (1 &lt;&lt; 3) + 2 = 0a，1为people的标签号,2为嵌入结构对应的类型号
-3c    // 0x3c = 60，表示接下来60个字节为Person的数据
+<span class="n">person</span><span class="p">-&gt;</span><span class="n">add_weight_recent_months</span><span class="p">(</span><span class="m">50</span><span class="p">);</span>
+<span class="n">person</span><span class="p">-&gt;</span><span class="n">add_weight_recent_months</span><span class="p">(</span><span class="m">52</span><span class="p">);</span>
+<span class="n">person</span><span class="p">-&gt;</span><span class="n">add_weight_recent_months</span><span class="p">(</span><span class="m">54</span><span class="p">);</span>
+</code></pre></div><p>生成出来的二进制数据流如下：</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="m">0</span><span class="n">a</span>    <span class="c1">// (1 &lt;&lt; 3) + 2 = 0a，1为people的标签号,2为嵌入结构对应的类型号</span>
+<span class="m">3</span><span class="n">c</span>    <span class="c1">// 0x3c = 60，表示接下来60个字节为Person的数据</span>
 
-// 下面进入到 repeated Person 数组的数据结构
-0a    // (1 &lt;&lt; 3) + 2 = 0a，Person的第一个字段name的标签号为1，2为string(字符串)对应的类型号
-04    // name字段的字符串长度为4
-4a 61 63 6b    // "Jack" 的ascii编码
+<span class="c1">// 下面进入到 repeated Person 数组的数据结构</span>
+<span class="m">0</span><span class="n">a</span>    <span class="c1">// (1 &lt;&lt; 3) + 2 = 0a，Person的第一个字段name的标签号为1，2为string(字符串)对应的类型号</span>
+<span class="m">04</span>    <span class="c1">// name字段的字符串长度为4</span>
+<span class="m">4</span><span class="n">a</span> <span class="m">61</span> <span class="m">63</span> <span class="m">6</span><span class="n">b</span>    <span class="c1">// &quot;Jack&quot; 的ascii编码</span>
 
-10    // (2 &lt;&lt; 3) + 0 = 10，字段id的标签号为2，0为int32对应的类型号
-01    // id的整型数据为1
+<span class="m">10</span>    <span class="c1">// (2 &lt;&lt; 3) + 0 = 10，字段id的标签号为2，0为int32对应的类型号</span>
+<span class="m">01</span>    <span class="c1">// id的整型数据为1</span>
 
-1a    // (3 &lt;&lt; 3) + 2 = 1a，字段email的标签号为3，2为string对应的类型号
-0b    // 0x0b = 11 email字段的字符串长度为11
-4a 61 63 6b 40 71 71 2e 63 6f 6d        // "Jack@qq.com"
+<span class="m">1</span><span class="n">a</span>    <span class="c1">// (3 &lt;&lt; 3) + 2 = 1a，字段email的标签号为3，2为string对应的类型号</span>
+<span class="m">0</span><span class="n">b</span>    <span class="c1">// 0x0b = 11 email字段的字符串长度为11</span>
+<span class="m">4</span><span class="n">a</span> <span class="m">61</span> <span class="m">63</span> <span class="m">6</span><span class="n">b</span> <span class="m">40</span> <span class="m">71</span> <span class="m">71</span> <span class="m">2</span><span class="n">e</span> <span class="m">63</span> <span class="m">6f</span> <span class="m">6d</span>        <span class="c1">// &quot;Jack@qq.com&quot;</span>
 
-    //第1个PhoneNumber，嵌套message
-    22    // (4 &lt;&lt; 3) + 2 = 22，phones字段，标签号为4，2为嵌套结构对应的类型号
-    0a    // 0a = 10，接下来10个字节为PhoneNumber的数据
-    0a    // (1 &lt;&lt; 3) + 2 =  0a, PhoneNumber的number，标签号为1，2为string对应的类型号
-    06    // number字段的字符串长度为6
-    31 32 33 34 35 36    // "123456"
-    10   // (2 &lt;&lt; 3) + 0 = 10，PhoneType type字段，0为enum对应的类型号
-    01   // HOME，enum被视为整数
+    <span class="c1">//第1个PhoneNumber，嵌套message</span>
+    <span class="m">22</span>    <span class="c1">// (4 &lt;&lt; 3) + 2 = 22，phones字段，标签号为4，2为嵌套结构对应的类型号</span>
+    <span class="m">0</span><span class="n">a</span>    <span class="c1">// 0a = 10，接下来10个字节为PhoneNumber的数据</span>
+    <span class="m">0</span><span class="n">a</span>    <span class="c1">// (1 &lt;&lt; 3) + 2 =  0a, PhoneNumber的number，标签号为1，2为string对应的类型号</span>
+    <span class="m">06</span>    <span class="c1">// number字段的字符串长度为6</span>
+    <span class="m">31</span> <span class="m">32</span> <span class="m">33</span> <span class="m">34</span> <span class="m">35</span> <span class="m">36</span>    <span class="c1">// &quot;123456&quot;</span>
+    <span class="m">10</span>   <span class="c1">// (2 &lt;&lt; 3) + 0 = 10，PhoneType type字段，0为enum对应的类型号</span>
+    <span class="m">01</span>   <span class="c1">// HOME，enum被视为整数</span>
 
-    // 第2个PhoneNumber，嵌套message
-    22 0a 0a 06 32 33 34 35 36 37 10 00  //信息解读同上，最后的00为MOBILE
+    <span class="c1">// 第2个PhoneNumber，嵌套message</span>
+    <span class="m">22</span> <span class="m">0</span><span class="n">a</span> <span class="m">0</span><span class="n">a</span> <span class="m">06</span> <span class="m">32</span> <span class="m">33</span> <span class="m">34</span> <span class="m">35</span> <span class="m">36</span> <span class="m">37</span> <span class="m">10</span> <span class="m">00</span>  <span class="c1">//信息解读同上，最后的00为MOBILE</span>
 
-a2 06   // 1010 0010 0000 0110 varint方式，weight_recent_months的key
-        //  010 0010  000 0110 → 000 0110 0100 010 little-endian存储
-        // (100 &lt;&lt; 3) + 2 = a2 06，100为weight_recent_months的标签号
-        //  2为 packed repeated field的类型号
-0c    // 0c = 12，后面12个字节为float的数据，每4个字节一个数据
-00 00 48 42 // float 50
-00 00 50 42 // float 52
-00 00 58 42 // float 54
-</code></pre><p>整个数据看下来都是遵循了简单的规则，即，标签号 + 类型号，最为头部标识，数据大小标识，作为可选标识，最后放入具体数据：</p><pre><code>标签号 + 类型号|数据大小|具体数据
-</code></pre><table><tbody><tr><td>具体数据中再嵌套不同种类的数据，也同样遵循 ‘标签号 + 类型号</td><td>数据大小</td><td>具体数据’ 这样的规则。</td></tr></tbody></table><h6 id="二进制数据流中反序列化为程序对象数据我们重点看看其中-person-结构的反序列过程">二进制数据流中反序列化为程序对象数据，我们重点看看其中 Person 结构的反序列过程：</h6><pre><code class="language-c#">public void MergeFrom(pb::CodedInputStream input) {
-  uint tag;
-  while ((tag = input.ReadTag()) != 0) {
-    switch(tag) {
-      default:
-        _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-        break;
-      case 1: {
-        name = input.ReadString();
-        break;
-      }
-      case 2: {
-        id = input.ReadInt32();
-        break;
-      }
-      case 3: {
-        email = input.ReadString();
-        break;
-      }
-      case 4: {
-        phones_.AddEntriesFrom(input, _repeated_phones_codec);
-        break;
-      }
-      case 100: {
-        
-        weight_recent_months_.AddEntriesFrom(input, _repeated_weight_recent_months_codec);
-        break;
-      }
-    }
-  }
-}
-</code></pre><p>通过上述Protocol Buffer生成的代码我们了解到，所有的对象变量都通过.proto文件中的标签号来识别数据是否与该变量有映射关系的，当拿到具体数据时，先判定属于哪个变量，再针对该变量的类型读取数据。</p><h6 id="protocol-buffer-不同版本消息的兼容问题">Protocol Buffer 不同版本消息的兼容问题</h6><p>在实际的开发中会存在这样一种应用场景，即消息格式因为某些需求的变化而不得不进行必要的修改或者说升级，但是有些使用原有消息格式的应用程序暂时又不能被立刻升级，这便要求我们在升级消息格式时要遵守一定的规则，从而可以保证基于新老消息格式的新老程序能够同时运行。规则如下：</p><ol><li><p>不要修改已经存在字段的标签号，即变量后面的数字，保证旧数据协议能够继续从数据中读取指定标签号的正确数据。</p></li><li><p>任何新添加的字段必须是optional和repeated限定符，保证在旧数据无法加入新数据的情况下，新的协议还能够在旧数据协议之下继续顺利解析，否则无法保证新老程序在互相传递消息时的消息兼容性。</p></li><li><p>在原有的消息中，不能移除已经存在的required字段，虽然optional和repeated类型的字段可以被移除，但是他们之前使用的标签号必须被保留，不能被新的字段重用。因为旧协议在执行时还是会在旧的标签号中加入自己的数据，新协议如果使用了旧的标签号，就会导致新旧协议数据解析错误的问题。</p></li><li><p>int32、uint32、int64、uint64和bool等类型之间是兼容的，sint32和sint64是兼容的，string和bytes是兼容的，fixed32和sfixed32，以及fixed64和sfixed64之间是兼容的，这意味着如果想修改原有字段的类型时，为了保证兼容性，只能将其修改为与其原有类型兼容的类型，否则就将打破新老消息格式的兼容性。</p></li></ol><h6 id="protocol-buffer-的优点">Protocol Buffer 的优点</h6><p>Protobuf 全程使用二进制流形式，用整数代替了KEY来映射变量，比 XML、Json、MessagePack它们更小、更快、也更简单。</p><p>我们可以定义自己的数据结构，然后使用Protobuf代码生成器生成的代码来读写这个数据结构。甚至可以在无需重新部署程序的情况下更新数据结构。只需使用 Protobuf 对数据结构进行一次描述，即可利用各种不同语言或从各种不同数据流中对你的结构化数据轻松读写。</p><p>使用 Protobuf 无需学习复杂的文档对象模型，Protobuf 的编程模式比较友好，简单易学，同时它拥有良好的文档和示例，对于喜欢简单事物的人们而言，Protobuf 比其他的技术更加有吸引力。</p><p>Protobuf 语义更清晰，无需类似 XML，JSON 解析器的东西，简化了解析的操作，减少了解析的消耗。</p><p>Protobuf 数据使用二进制形式，把原来在JSON,XML里用字符串存储的数字换成用byte存储，大量减少了浪费的存储空间。与MessagePack相比，Protobuf减少了Key的存储空间，让原本用字符串来表达Key的方式换成了用整数表达，不但减少了存储空间也加快了反序列化的速度。</p><h6 id="protocol-buffer-的不足">Protocol Buffer 的不足</h6><p>Protbuf 与 XML 相比也有不足之处。它功能简单无法用来表示复杂的概念。</p><p>XML 已经成为多种行业标准的编写工具，Protobuf 只是运用在数据传输与存储上，在通用性上还差很多。</p><p>由于 XML 具有某种程度上的自解释性，它可以被人直接读取编辑，在这一点上 Protobuf 不行，它以二进制的方式存储，除非你有 .proto 定义，否则你没法直接读出 Protobuf 的任何内容。</p><p>参考文献：</p><p>《Protocol Buffers：阅读一个二进制文件》</p><span class="meta"><time datetime="2019-06-16T00:00:00+08:00">June 16, 2019</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2019-06-16T00:00:00+08:00">June 16, 2019</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>
+<span class="n">a2</span> <span class="m">06</span>   <span class="c1">// 1010 0010 0000 0110 varint方式，weight_recent_months的key</span>
+        <span class="c1">//  010 0010  000 0110 → 000 0110 0100 010 little-endian存储</span>
+        <span class="c1">// (100 &lt;&lt; 3) + 2 = a2 06，100为weight_recent_months的标签号</span>
+        <span class="c1">//  2为 packed repeated field的类型号</span>
+<span class="m">0</span><span class="n">c</span>    <span class="c1">// 0c = 12，后面12个字节为float的数据，每4个字节一个数据</span>
+<span class="m">00</span> <span class="m">00</span> <span class="m">48</span> <span class="m">42</span> <span class="c1">// float 50</span>
+<span class="m">00</span> <span class="m">00</span> <span class="m">50</span> <span class="m">42</span> <span class="c1">// float 52</span>
+<span class="m">00</span> <span class="m">00</span> <span class="m">58</span> <span class="m">42</span> <span class="c1">// float 54</span>
+</code></pre></div><p>整个数据看下来都是遵循了简单的规则，即，标签号 + 类型号，最为头部标识，数据大小标识，作为可选标识，最后放入具体数据：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>标签号 + 类型号|数据大小|具体数据
+</code></pre></div><p>具体数据中再嵌套不同种类的数据，也同样遵循 ‘标签号 + 类型号|数据大小|具体数据’ 这样的规则。</p><h6>二进制数据流中反序列化为程序对象数据，我们重点看看其中 Person 结构的反序列过程：</h6><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">void</span> <span class="nf">MergeFrom</span><span class="p">(</span><span class="n">pb</span><span class="p">::</span><span class="n">CodedInputStream</span> <span class="n">input</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">uint</span> <span class="n">tag</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">((</span><span class="n">tag</span> <span class="p">=</span> <span class="n">input</span><span class="p">.</span><span class="n">ReadTag</span><span class="p">())</span> <span class="p">!=</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">default</span><span class="p">:</span>
+        <span class="n">_unknownFields</span> <span class="p">=</span> <span class="n">pb</span><span class="p">::</span><span class="n">UnknownFieldSet</span><span class="p">.</span><span class="n">MergeFieldFrom</span><span class="p">(</span><span class="n">_unknownFields</span><span class="p">,</span> <span class="n">input</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="m">1</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">name</span> <span class="p">=</span> <span class="n">input</span><span class="p">.</span><span class="n">ReadString</span><span class="p">();</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">case</span> <span class="m">2</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">id</span> <span class="p">=</span> <span class="n">input</span><span class="p">.</span><span class="n">ReadInt32</span><span class="p">();</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">case</span> <span class="m">3</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">email</span> <span class="p">=</span> <span class="n">input</span><span class="p">.</span><span class="n">ReadString</span><span class="p">();</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">case</span> <span class="m">4</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">phones_</span><span class="p">.</span><span class="n">AddEntriesFrom</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">_repeated_phones_codec</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">case</span> <span class="m">100</span><span class="p">:</span> <span class="p">{</span>
+
+        <span class="n">weight_recent_months_</span><span class="p">.</span><span class="n">AddEntriesFrom</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">_repeated_weight_recent_months_codec</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>通过上述Protocol Buffer生成的代码我们了解到，所有的对象变量都通过.proto文件中的标签号来识别数据是否与该变量有映射关系的，当拿到具体数据时，先判定属于哪个变量，再针对该变量的类型读取数据。</p><h6>Protocol Buffer 不同版本消息的兼容问题</h6><p>在实际的开发中会存在这样一种应用场景，即消息格式因为某些需求的变化而不得不进行必要的修改或者说升级，但是有些使用原有消息格式的应用程序暂时又不能被立刻升级，这便要求我们在升级消息格式时要遵守一定的规则，从而可以保证基于新老消息格式的新老程序能够同时运行。规则如下：</p><ol><li><p>不要修改已经存在字段的标签号，即变量后面的数字，保证旧数据协议能够继续从数据中读取指定标签号的正确数据。</p></li><li><p>任何新添加的字段必须是optional和repeated限定符，保证在旧数据无法加入新数据的情况下，新的协议还能够在旧数据协议之下继续顺利解析，否则无法保证新老程序在互相传递消息时的消息兼容性。</p></li><li><p>在原有的消息中，不能移除已经存在的required字段，虽然optional和repeated类型的字段可以被移除，但是他们之前使用的标签号必须被保留，不能被新的字段重用。因为旧协议在执行时还是会在旧的标签号中加入自己的数据，新协议如果使用了旧的标签号，就会导致新旧协议数据解析错误的问题。</p></li><li><p>int32、uint32、int64、uint64和bool等类型之间是兼容的，sint32和sint64是兼容的，string和bytes是兼容的，fixed32和sfixed32，以及fixed64和sfixed64之间是兼容的，这意味着如果想修改原有字段的类型时，为了保证兼容性，只能将其修改为与其原有类型兼容的类型，否则就将打破新老消息格式的兼容性。</p></li></ol><h6>Protocol Buffer 的优点</h6><p>Protobuf 全程使用二进制流形式，用整数代替了KEY来映射变量，比 XML、Json、MessagePack它们更小、更快、也更简单。</p><p>我们可以定义自己的数据结构，然后使用Protobuf代码生成器生成的代码来读写这个数据结构。甚至可以在无需重新部署程序的情况下更新数据结构。只需使用 Protobuf 对数据结构进行一次描述，即可利用各种不同语言或从各种不同数据流中对你的结构化数据轻松读写。</p><p>使用 Protobuf 无需学习复杂的文档对象模型，Protobuf 的编程模式比较友好，简单易学，同时它拥有良好的文档和示例，对于喜欢简单事物的人们而言，Protobuf 比其他的技术更加有吸引力。</p><p>Protobuf 语义更清晰，无需类似 XML，JSON 解析器的东西，简化了解析的操作，减少了解析的消耗。</p><p>Protobuf 数据使用二进制形式，把原来在JSON,XML里用字符串存储的数字换成用byte存储，大量减少了浪费的存储空间。与MessagePack相比，Protobuf减少了Key的存储空间，让原本用字符串来表达Key的方式换成了用整数表达，不但减少了存储空间也加快了反序列化的速度。</p><h6>Protocol Buffer 的不足</h6><p>Protbuf 与 XML 相比也有不足之处。它功能简单无法用来表示复杂的概念。</p><p>XML 已经成为多种行业标准的编写工具，Protobuf 只是运用在数据传输与存储上，在通用性上还差很多。</p><p>由于 XML 具有某种程度上的自解释性，它可以被人直接读取编辑，在这一点上 Protobuf 不行，它以二进制的方式存储，除非你有 .proto 定义，否则你没法直接读出 Protobuf 的任何内容。</p><p>参考文献：</p><p>《Protocol Buffers：阅读一个二进制文件》</p><span class="meta"><time datetime="2019-06-16T00:00:00+08:00">June 16, 2019</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2019-06-16T00:00:00+08:00">June 16, 2019</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>

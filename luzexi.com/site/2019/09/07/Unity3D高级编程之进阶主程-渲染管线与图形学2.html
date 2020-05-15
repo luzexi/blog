@@ -1,142 +1,142 @@
-<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2</h2><h3 id="理解矩阵表达缩放的几何意义">理解矩阵表达缩放的几何意义</h3><p>缩放矩阵和旋转矩阵在几何意义上有着异曲同工之妙，我们同样用二维坐标系来表达缩放矩阵的两个 a,b 向量。</p><p>===</p><p>举例来说，二维标准轴的旋转矩阵：</p><pre><code>	[1.5,  0]  等  [a]
-	[0, 0.75]  于  [b]
-</code></pre><p>我们把 a和b 表现在二维坐标系中，即如图：</p><pre><code>	缺少图片
-</code></pre><p>图中a，b两个向量可以形成了一个矩形，我们就假设这个矩形图像表达了a，b向量的缩放关系。当a，b被拉长时，这个矩形图像被也同样被拉长。</p><p>其原理为向量与矩阵的乘法，我们知道</p><pre><code>	二维向量与二维矩阵相乘 = (x * m11 + y * m21, x * m12 + y * m22)
-</code></pre><p>对于我们上图中标准坐标系上的缩放矩阵来说的到的结果是 (1.5<em>x, 0.75</em>y)，即：</p><pre><code>	(x*m11 + y*m21, x*m12 + y*m22) = (x*1.5 + y*0, x*0 + y*0.75) = (1.5*x, 0.75*y)
-</code></pre><p>这个结果表达了，缩放矩阵对向量缩放时非常直观易懂，因为除了对角线上的数字，其他位置的数字都是0。</p><p>不过这种简单易懂的旋转矩阵，也仅限于标准坐标系中对标准轴的缩放。如果只有标准坐标系上的缩放计算，是远远满足不了我们的需求的。</p><p>那么怎么计算对任意轴方向上的缩放呢？我们来看如下图所示：</p><pre><code>	缺少图片
-</code></pre><p>沿 N 方向缩放 v 向量，其实和前一节中绕 N 轴旋转 v 向量有异曲同工之妙。</p><p>我们需要根据所知道的推导这个公式，即我们已知v，已知 N，已知缩放因子k (k是一个单纯的数字) ，要求得v’。</p><p>可以通过 N 和 v 求得投影 v1，通过 v 和 v1 求得他们的垂直向量 v2，再通过缩放因子 k 求得v1和v2缩放后的向量 v1‘ 和 v2’，最后通过 v1‘ 和 v2’ 求得缩放后的结果向量 v‘，即如下图公式。</p><pre><code>	缺少图片
-</code></pre><p>同样的，三维空间中，如果是标准坐标系上缩放，则缩放矩阵可以是很简单的对角线矩阵，即。</p><pre><code>	[scale-x, 0, 0]
-	[0, scale-y, 0]
-	[0, 0, scale-z]
-</code></pre><p>也同样的，这种标准坐标系上的缩放完全满足不了我们的需求，我们需要沿任意向量上的缩放矩阵。</p><p>同样的向量，同样的变化，同样的推导，最终结果为：</p><pre><code>	缺少图片
-</code></pre><p>最终我们获得了，沿任意方向缩放的矩阵。</p><p>这里不再重复叙述推导的过程，我们只要理解缩放矩阵的由来和推导的方式就可以了，我们最终的目的通过是解释原理来理解缩放矩阵的几何意义。</p><h3 id="平行投影镜像切变的理解和几何意义">平行投影，镜像，切变的理解和几何意义</h3><h6 id="平行投影">平行投影</h6><p>在上述几节中我们了解到了可以用矩阵去缩放任意点和向量，那么如果在缩放时某个轴上的缩放因子为零会变成是什么样的呢，如图所示：</p><pre><code>	缺少图片
-</code></pre><p>图中模型所有的点都被’挤‘到了一个平面上，这种所有点都被拉平至垂直轴或平面上的做法就叫，平行投影，或者也可以叫正交投影。</p><p>在标准坐标轴上的平行投影是一个很简单的矩阵，只要把那个投影轴上的缩放因子置零就可以，即：</p><pre><code>	二维上x轴平行投影
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(一) - 图形学基础2</h2><h3>理解矩阵表达缩放的几何意义</h3><p>缩放矩阵和旋转矩阵在几何意义上有着异曲同工之妙，我们同样用二维坐标系来表达缩放矩阵的两个 a,b 向量。</p><p>===</p><p>举例来说，二维标准轴的旋转矩阵：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    [1.5,  0]  等  [a]
+    [0, 0.75]  于  [b]
+</code></pre></div><p>我们把 a和b 表现在二维坐标系中，即如图：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
+</code></pre></div><p>图中a，b两个向量可以形成了一个矩形，我们就假设这个矩形图像表达了a，b向量的缩放关系。当a，b被拉长时，这个矩形图像被也同样被拉长。</p><p>其原理为向量与矩阵的乘法，我们知道</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    二维向量与二维矩阵相乘 = (x * m11 + y * m21, x * m12 + y * m22)
+</code></pre></div><p>对于我们上图中标准坐标系上的缩放矩阵来说的到的结果是 (1.5<em>x, 0.75</em>y)，即：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    (x*m11 + y*m21, x*m12 + y*m22) = (x*1.5 + y*0, x*0 + y*0.75) = (1.5*x, 0.75*y)
+</code></pre></div><p>这个结果表达了，缩放矩阵对向量缩放时非常直观易懂，因为除了对角线上的数字，其他位置的数字都是0。</p><p>不过这种简单易懂的旋转矩阵，也仅限于标准坐标系中对标准轴的缩放。如果只有标准坐标系上的缩放计算，是远远满足不了我们的需求的。</p><p>那么怎么计算对任意轴方向上的缩放呢？我们来看如下图所示：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
+</code></pre></div><p>沿 N 方向缩放 v 向量，其实和前一节中绕 N 轴旋转 v 向量有异曲同工之妙。</p><p>我们需要根据所知道的推导这个公式，即我们已知v，已知 N，已知缩放因子k (k是一个单纯的数字) ，要求得v’。</p><p>可以通过 N 和 v 求得投影 v1，通过 v 和 v1 求得他们的垂直向量 v2，再通过缩放因子 k 求得v1和v2缩放后的向量 v1‘ 和 v2’，最后通过 v1‘ 和 v2’ 求得缩放后的结果向量 v‘，即如下图公式。</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
+</code></pre></div><p>同样的，三维空间中，如果是标准坐标系上缩放，则缩放矩阵可以是很简单的对角线矩阵，即。</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    [scale-x, 0, 0]
+    [0, scale-y, 0]
+    [0, 0, scale-z]
+</code></pre></div><p>也同样的，这种标准坐标系上的缩放完全满足不了我们的需求，我们需要沿任意向量上的缩放矩阵。</p><p>同样的向量，同样的变化，同样的推导，最终结果为：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
+</code></pre></div><p>最终我们获得了，沿任意方向缩放的矩阵。</p><p>这里不再重复叙述推导的过程，我们只要理解缩放矩阵的由来和推导的方式就可以了，我们最终的目的通过是解释原理来理解缩放矩阵的几何意义。</p><h3>平行投影，镜像，切变的理解和几何意义</h3><h6>平行投影</h6><p>在上述几节中我们了解到了可以用矩阵去缩放任意点和向量，那么如果在缩放时某个轴上的缩放因子为零会变成是什么样的呢，如图所示：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
+</code></pre></div><p>图中模型所有的点都被’挤‘到了一个平面上，这种所有点都被拉平至垂直轴或平面上的做法就叫，平行投影，或者也可以叫正交投影。</p><p>在标准坐标轴上的平行投影是一个很简单的矩阵，只要把那个投影轴上的缩放因子置零就可以，即：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    二维上x轴平行投影
 
-	[1, 0]
-	[0, 0]
+    [1, 0]
+    [0, 0]
 
-	二维上y轴平行投影
+    二维上y轴平行投影
 
-	[0, 0]
-	[0, 1]
+    [0, 0]
+    [0, 1]
 
-	三维上xy平面上的平行投影
+    三维上xy平面上的平行投影
 
-	[1, 0, 0]
-	[0, 1, 0]
-	[0, 0, 0]
+    [1, 0, 0]
+    [0, 1, 0]
+    [0, 0, 0]
 
-	三维上xz平面上的平行投影
+    三维上xz平面上的平行投影
 
-	[1, 0, 0]
-	[0, 0, 0]
-	[0, 0, 1]
+    [1, 0, 0]
+    [0, 0, 0]
+    [0, 0, 1]
 
-	三维上yz平面上的平行投影
+    三维上yz平面上的平行投影
 
-	[0, 0, 0]
-	[0, 1, 0]
-	[0, 0, 1]
-</code></pre><p>当然只是标准坐标轴上的平行投影还不够用，我们也需要任意直线或任意平面的投影矩阵，不过这次我们不需要再次计算任意轴上的平行投影，只需要通过前面计算过的缩放矩阵在任意方向或任意轴上的缩放矩阵就可以得到平行投影的矩阵，即如下图：</p><pre><code>	缺少图片
-</code></pre><p>通过使缩放方向上的缩放因子变为零的方式，来获得平行投影矩阵。三维中也是一样，只是在三维中要 N 方向为垂直平面的方向而不是平行于平面的方向。</p><h6 id="镜像">镜像</h6><p>镜像其实挺容易理解的，平行投影是将某个轴上的缩放因子变为零，镜像就是在某个轴上将缩放因子变为负1，这样在缩放时就形成了‘翻转’的局面。如图所示：</p><pre><code>	缺少图片
-</code></pre><p>坐标轴的四个象限，右上角的图为正常的图案，左边为对x轴翻转后的图案，下边为y轴翻转后的图案，右下角为x轴和y轴同时翻转的图案。</p><p>镜像矩阵也和平行投影矩阵一样，可以用任意缩放矩阵来计算出对任意方向和轴的镜像矩阵，如图所示：</p><pre><code>	缺少图片
-</code></pre><p>图中为任意方向的缩放矩阵在当缩放因子为-1时的公式，我们很容易就明白，镜像不过是缩放的一种特殊形式。</p><h6 id="切变">切变</h6><p>切变非常特殊和有趣，它其实是一种坐标系‘扭曲’变换。这种坐标系的‘扭曲’变换将会被运用到对次级空间的坐标平移上。切变的形式如图：</p><pre><code>	缺少图片
-</code></pre><p>图中y轴方向的向量中的x坐标被平移了。这是切变在x轴上的变化，我们也可以让切变在y轴上发生变化，如图：</p><pre><code>	缺少图片
-</code></pre><p>这两种形式的切变都是通过位移x轴方向上的坐标或y轴方向上的坐标来达到的，其实我们可以理解为对次级维度坐标系的‘扭曲’。</p><p>为什么要这么理解呢，因为它在仿射变化中起到了非常关键的作用，我们将在下面几节内容中介绍。</p><p>切变的矩阵为：</p><pre><code>	二维x轴方向的‘扭曲’
-	[1, 0]
-	[s, 1]
+    [0, 0, 0]
+    [0, 1, 0]
+    [0, 0, 1]
+</code></pre></div><p>当然只是标准坐标轴上的平行投影还不够用，我们也需要任意直线或任意平面的投影矩阵，不过这次我们不需要再次计算任意轴上的平行投影，只需要通过前面计算过的缩放矩阵在任意方向或任意轴上的缩放矩阵就可以得到平行投影的矩阵，即如下图：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
+</code></pre></div><p>通过使缩放方向上的缩放因子变为零的方式，来获得平行投影矩阵。三维中也是一样，只是在三维中要 N 方向为垂直平面的方向而不是平行于平面的方向。</p><h6>镜像</h6><p>镜像其实挺容易理解的，平行投影是将某个轴上的缩放因子变为零，镜像就是在某个轴上将缩放因子变为负1，这样在缩放时就形成了‘翻转’的局面。如图所示：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
+</code></pre></div><p>坐标轴的四个象限，右上角的图为正常的图案，左边为对x轴翻转后的图案，下边为y轴翻转后的图案，右下角为x轴和y轴同时翻转的图案。</p><p>镜像矩阵也和平行投影矩阵一样，可以用任意缩放矩阵来计算出对任意方向和轴的镜像矩阵，如图所示：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
+</code></pre></div><p>图中为任意方向的缩放矩阵在当缩放因子为-1时的公式，我们很容易就明白，镜像不过是缩放的一种特殊形式。</p><h6>切变</h6><p>切变非常特殊和有趣，它其实是一种坐标系‘扭曲’变换。这种坐标系的‘扭曲’变换将会被运用到对次级空间的坐标平移上。切变的形式如图：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
+</code></pre></div><p>图中y轴方向的向量中的x坐标被平移了。这是切变在x轴上的变化，我们也可以让切变在y轴上发生变化，如图：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
+</code></pre></div><p>这两种形式的切变都是通过位移x轴方向上的坐标或y轴方向上的坐标来达到的，其实我们可以理解为对次级维度坐标系的‘扭曲’。</p><p>为什么要这么理解呢，因为它在仿射变化中起到了非常关键的作用，我们将在下面几节内容中介绍。</p><p>切变的矩阵为：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    二维x轴方向的‘扭曲’
+    [1, 0]
+    [s, 1]
 
-	二维y轴方向的‘扭曲’
-	[1, s]
-	[0, 1]
+    二维y轴方向的‘扭曲’
+    [1, s]
+    [0, 1]
 
-	三维x,y轴方向的的切变
-	[1, 0, 0]
-	[0, 1, 0]
-	[s, t, 1]
+    三维x,y轴方向的的切变
+    [1, 0, 0]
+    [0, 1, 0]
+    [s, t, 1]
 
-	三维x,z轴方向的切变
-	[1, 0, 0]
-	[s, 1, t]
-	[0, 0, 1]
+    三维x,z轴方向的切变
+    [1, 0, 0]
+    [s, 1, t]
+    [0, 0, 1]
 
-	三维y,z轴方向的切变
-	[1, s, t]
-	[0, 1, 0]
-	[0, 0, 1]
-</code></pre><p>这几个矩阵看起来好像很简单，具体代表什么意思呢。我们用向量与矩阵的乘法表示就知道了：</p><pre><code>	向量p与3x3矩阵M的乘法 p * M = [x * M11 + y * M21 + z * M31, x * M12 + y * M22 + z * M32, x * M13 + y * M23 + z * M33]
+    三维y,z轴方向的切变
+    [1, s, t]
+    [0, 1, 0]
+    [0, 0, 1]
+</code></pre></div><p>这几个矩阵看起来好像很简单，具体代表什么意思呢。我们用向量与矩阵的乘法表示就知道了：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    向量p与3x3矩阵M的乘法 p * M = [x * M11 + y * M21 + z * M31, x * M12 + y * M22 + z * M32, x * M13 + y * M23 + z * M33]
 
-	由向量与矩阵的乘法得知上面5个矩阵，当向量乘以他们时：
+    由向量与矩阵的乘法得知上面5个矩阵，当向量乘以他们时：
 
-	第一个切变矩阵为向量x轴方向的偏移，(x + y * s, y)
+    第一个切变矩阵为向量x轴方向的偏移，(x + y * s, y)
 
-	第二个切变矩阵为向量y轴方向的偏移，(x, x * s + y)
+    第二个切变矩阵为向量y轴方向的偏移，(x, x * s + y)
 
-	第三个切变矩阵为向量x、y轴方向的起偏移，(x + s * z, y + t * z, z)
+    第三个切变矩阵为向量x、y轴方向的起偏移，(x + s * z, y + t * z, z)
 
-	第四个切变矩阵为向量x、z轴方向的起偏移，(x + s * y, y, t * y + z)
+    第四个切变矩阵为向量x、z轴方向的起偏移，(x + s * y, y, t * y + z)
 
-	第五个切变矩阵为向量y、z轴方向的起偏移，(x, s * x + y, t * x + z)
-</code></pre><p>上述经过矩阵乘法后，向量得到了切变的偏移，如果乘的是矩阵的话，则会对矩阵产生切变。下面一节平移中就会应用到切变的变化。</p><h6 id="齐次坐标的平移矩阵">齐次坐标的平移矩阵</h6><p>我们知道了3x3矩阵的线性变换中不包括平移这个操作，为什么呢？</p><p>因为矩阵乘法的性质，零向量乘法总是变换成零向量，任何相同维度的矩阵乘法都表达不了零偏移。</p><p>矩阵乘法其实很强大，经过我们上面的介绍我们已经知道了矩阵乘法可以表达旋转，缩放，投影，镜像，切变，可惜的是无法表达平移，怎么办？</p><p>齐次矩阵就恰好满足了我们的需求，齐次矩阵它在原来的维度上增加了一个维度，用多出来的那个维度来表达了平移操作。即如下图：</p><pre><code>	[1, 0, 0, 0]
-	[0, 1, 0, 0]
-	[0, 0, 1, 0]
-	[x, y, z, 1]
-</code></pre><p>上图中用增加一个维度的方式用x，y，z分别表示了在x，y，z轴上的偏移。</p><p>为什么这种方式就能表达平移操作？</p><p>我们回忆下上一节说的切变的原理和过程，在某个轴不变的情况下对其他轴进行偏移，这就是切变。</p><p>我们无法对当前空间的矩阵进行偏移，却可以通过增加一个维度，用不动新增的维度情况下，再用切变的方式来偏移次级维度，这其实就是个用切变解决平移问题的解决方案。</p><p>在上述的图中描述了4维矩阵在第四维空间上的切变。有了平移矩阵，我们可以通过用3x3矩阵增加一个维度的方式，把原来无法表达的操作全都可以表达出来了。</p><p>比如，我们需要一个将向量 v 旋转后再平移得到 v‘ ，旋转矩阵为R，平移矩阵为T，就可以用向量与矩阵的乘法，以及矩阵与矩阵的乘法来表达：</p><pre><code>	v' = vRT
+    第五个切变矩阵为向量y、z轴方向的起偏移，(x, s * x + y, t * x + z)
+</code></pre></div><p>上述经过矩阵乘法后，向量得到了切变的偏移，如果乘的是矩阵的话，则会对矩阵产生切变。下面一节平移中就会应用到切变的变化。</p><h6>齐次坐标的平移矩阵</h6><p>我们知道了3x3矩阵的线性变换中不包括平移这个操作，为什么呢？</p><p>因为矩阵乘法的性质，零向量乘法总是变换成零向量，任何相同维度的矩阵乘法都表达不了零偏移。</p><p>矩阵乘法其实很强大，经过我们上面的介绍我们已经知道了矩阵乘法可以表达旋转，缩放，投影，镜像，切变，可惜的是无法表达平移，怎么办？</p><p>齐次矩阵就恰好满足了我们的需求，齐次矩阵它在原来的维度上增加了一个维度，用多出来的那个维度来表达了平移操作。即如下图：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    [1, 0, 0, 0]
+    [0, 1, 0, 0]
+    [0, 0, 1, 0]
+    [x, y, z, 1]
+</code></pre></div><p>上图中用增加一个维度的方式用x，y，z分别表示了在x，y，z轴上的偏移。</p><p>为什么这种方式就能表达平移操作？</p><p>我们回忆下上一节说的切变的原理和过程，在某个轴不变的情况下对其他轴进行偏移，这就是切变。</p><p>我们无法对当前空间的矩阵进行偏移，却可以通过增加一个维度，用不动新增的维度情况下，再用切变的方式来偏移次级维度，这其实就是个用切变解决平移问题的解决方案。</p><p>在上述的图中描述了4维矩阵在第四维空间上的切变。有了平移矩阵，我们可以通过用3x3矩阵增加一个维度的方式，把原来无法表达的操作全都可以表达出来了。</p><p>比如，我们需要一个将向量 v 旋转后再平移得到 v‘ ，旋转矩阵为R，平移矩阵为T，就可以用向量与矩阵的乘法，以及矩阵与矩阵的乘法来表达：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    v&#39; = vRT
 
-	R为：
-	[r11, r12, r13, 0]
-	[r21, r22, r23, 0]
-	[r31, r32, r33, 0]
-	[0, 	0, 	 0, 1]
+    R为：
+    [r11, r12, r13, 0]
+    [r21, r22, r23, 0]
+    [r31, r32, r33, 0]
+    [0,     0,   0, 1]
 
-	T为：
-	[1, 0, 0, 0]
-	[0, 1, 0, 0]
-	[0, 0, 1, 0]
-	[x, y, z, 1]
+    T为：
+    [1, 0, 0, 0]
+    [0, 1, 0, 0]
+    [0, 0, 1, 0]
+    [x, y, z, 1]
 
-	通过结合律 v' = vRT = v(RT)
+    通过结合律 v&#39; = vRT = v(RT)
 
-	R与T相乘的结果为
-	[r11, r12, r13, 0]
-	[r21, r22, r23, 0]
-	[r31, r32, r33, 0]
-	[x, 	y, 	 z, 1]
-</code></pre><p>上图中通过乘以旋转矩阵和平移矩阵就可以得到最终结果，或者使用结合律先将矩阵相乘。对于矩阵结合的方式，如果这种系列操作方式比较频繁，可以建立一个固定的常量矩阵，通过常量矩阵来计算结果，这样就省去了很多频繁的重复计算矩阵的过程，顶点着色器中的顶点坐标空间转换就是这样做的，它在整个程序开始执行前就已经计算好了一个变化的矩阵，这个变化的矩阵就叫做 MVP，即Model，View，Projection，它是由模型空间矩阵、观察者空间矩阵、投影空间矩阵相乘得到的结果，乘以此矩阵就会从模型坐标系变换为世界坐标系，再变换为观察者坐标系，最后变化为视锥体的裁剪空间。</p><p>有了平移矩阵我们能做的事更加多了，能运用的地方也更加多了。这次我们用到了齐次矩阵，即通过增加一个维度的方式来表达当前维度无法表达的计算，用高一个维度的切变来表达操作次级维度的平移。</p><h3 id="如何理解-quaternion-四元数">如何理解 Quaternion 四元数</h3><h6 id="为什么不是欧拉角">为什么不是欧拉角</h6><p>欧拉角的定义是，x,y,z 分别表达了x轴上的旋转角度，y轴上的旋转角度，z轴上的旋转角度，即(20,40,50) 表达了在x轴上旋转20度，y轴上旋转40度，z轴上旋转50度。</p><p>看起来很简单易懂就能定义坐标系上的旋转角度，为什么就不能使用它来表达所有的旋转角度，却还要使用四元数呢？其实是有原因的。</p><p>首先欧拉角存在别名，100度的旋转角度可以用-260度来表示，370度角与10度角以及-350度角是相同的旋转角度，这种表达方式在计算上特别难统一。</p><p>其次欧拉角在插值上存在些问题，一个-260度的角度和一个50度的角度进行插值是需要先进行转换的，先将-260度转换成100度，再进行插值才可以得到正确的结果。简单的别名问题虽然讨厌，但是可以转换角度的方式解决，但转换角度这种方式并不是一个靠谱的方式，在计算过程中会遇到相当多的麻烦。</p><p>欧拉角这种周期性和旋转之间的不独立性造成了欧拉角在线性变化的计算中比较困难。因此我们需要寻找在计算过程中更加便捷的方法，不需要转换，没有别名，统一规格。</p><p>四元数恰好就满足了这些需求，它在线性变换中非常统一而且灵活。不过它有一个致命的缺陷，就是在表现上让你人比较难理解，普通人一眼看不出一个四元数想要表达的旋转的方向和角度。</p><h6 id="四元数的由来">四元数的由来</h6><p>四元数其实是一个我们生活中的“异次元”，这也是为什么普通人难以理解它的原因，为什么说它是一个“异次元”呢？</p><p>我们所有的向量，坐标，矩阵，旋转，缩放，平移，都是建立在使用坐标系和空间矩阵计算的那一套计算体系上的，而四元数则不是，它特立独行，它计算所用的公式，并不是建立在传统的坐标系矩阵上，而是拥有自己一套“自有”的公式体系，即复数体系。</p><p>四元数有两种记法即：</p><pre><code>	向量v 加 w分量 (v, w) 和 四个分量都分开 (x, y, z, w)
-</code></pre><p>某些情况下v分量更方便，而在另一些情况下分开记会更清楚。但其实这个w分量和x,y,z的相关度有但不是很大，因此不要被迷惑了，以为他们的值越大或者越小会怎样怎样的，其实和我们肉眼看到的是有所差别的。</p><p>最早数学家们是用复数系统来表达二维中的旋转的。</p><p>我们来回忆下什么是复数？</p><pre><code>	我们把形如z=a+bi（a,b均为实数）的数称为复数，其中a称为实部，b称为虚部，i称为虚数单位。
-	其中虚数 i * i = -1；
-	当z的虚部等于零时，常称z为实数；
-	当z的虚部不等于零时，实部等于零时，常称z为纯虚数。
-</code></pre><p>数学家使用复数对(a, b)来表达二维平面中的旋转，他们把向量也定义为复数对，如果(a,b)为向量的话，那么就定义了 a + b * i，i为虚数，满足 i * i = -1，a为实轴的坐标，b为虚轴坐标，我们可以理解为x，y轴上的坐标。</p><p>对于定义一个旋转复数，则为 (cos(β), sin(β)) 表达式为 cos(β) + sin(β) * i，i为虚数，β为旋转的角度。</p><p>他们发现从平面上求得某个向量旋转 β 的结果，可以用向量复数对乘以旋转复数对的方式来获得，即</p><pre><code>	缺少图片
+    R与T相乘的结果为
+    [r11, r12, r13, 0]
+    [r21, r22, r23, 0]
+    [r31, r32, r33, 0]
+    [x,     y,   z, 1]
+</code></pre></div><p>上图中通过乘以旋转矩阵和平移矩阵就可以得到最终结果，或者使用结合律先将矩阵相乘。对于矩阵结合的方式，如果这种系列操作方式比较频繁，可以建立一个固定的常量矩阵，通过常量矩阵来计算结果，这样就省去了很多频繁的重复计算矩阵的过程，顶点着色器中的顶点坐标空间转换就是这样做的，它在整个程序开始执行前就已经计算好了一个变化的矩阵，这个变化的矩阵就叫做 MVP，即Model，View，Projection，它是由模型空间矩阵、观察者空间矩阵、投影空间矩阵相乘得到的结果，乘以此矩阵就会从模型坐标系变换为世界坐标系，再变换为观察者坐标系，最后变化为视锥体的裁剪空间。</p><p>有了平移矩阵我们能做的事更加多了，能运用的地方也更加多了。这次我们用到了齐次矩阵，即通过增加一个维度的方式来表达当前维度无法表达的计算，用高一个维度的切变来表达操作次级维度的平移。</p><h3>如何理解 Quaternion 四元数</h3><h6>为什么不是欧拉角</h6><p>欧拉角的定义是，x,y,z 分别表达了x轴上的旋转角度，y轴上的旋转角度，z轴上的旋转角度，即(20,40,50) 表达了在x轴上旋转20度，y轴上旋转40度，z轴上旋转50度。</p><p>看起来很简单易懂就能定义坐标系上的旋转角度，为什么就不能使用它来表达所有的旋转角度，却还要使用四元数呢？其实是有原因的。</p><p>首先欧拉角存在别名，100度的旋转角度可以用-260度来表示，370度角与10度角以及-350度角是相同的旋转角度，这种表达方式在计算上特别难统一。</p><p>其次欧拉角在插值上存在些问题，一个-260度的角度和一个50度的角度进行插值是需要先进行转换的，先将-260度转换成100度，再进行插值才可以得到正确的结果。简单的别名问题虽然讨厌，但是可以转换角度的方式解决，但转换角度这种方式并不是一个靠谱的方式，在计算过程中会遇到相当多的麻烦。</p><p>欧拉角这种周期性和旋转之间的不独立性造成了欧拉角在线性变化的计算中比较困难。因此我们需要寻找在计算过程中更加便捷的方法，不需要转换，没有别名，统一规格。</p><p>四元数恰好就满足了这些需求，它在线性变换中非常统一而且灵活。不过它有一个致命的缺陷，就是在表现上让你人比较难理解，普通人一眼看不出一个四元数想要表达的旋转的方向和角度。</p><h6>四元数的由来</h6><p>四元数其实是一个我们生活中的“异次元”，这也是为什么普通人难以理解它的原因，为什么说它是一个“异次元”呢？</p><p>我们所有的向量，坐标，矩阵，旋转，缩放，平移，都是建立在使用坐标系和空间矩阵计算的那一套计算体系上的，而四元数则不是，它特立独行，它计算所用的公式，并不是建立在传统的坐标系矩阵上，而是拥有自己一套“自有”的公式体系，即复数体系。</p><p>四元数有两种记法即：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    向量v 加 w分量 (v, w) 和 四个分量都分开 (x, y, z, w)
+</code></pre></div><p>某些情况下v分量更方便，而在另一些情况下分开记会更清楚。但其实这个w分量和x,y,z的相关度有但不是很大，因此不要被迷惑了，以为他们的值越大或者越小会怎样怎样的，其实和我们肉眼看到的是有所差别的。</p><p>最早数学家们是用复数系统来表达二维中的旋转的。</p><p>我们来回忆下什么是复数？</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    我们把形如z=a+bi（a,b均为实数）的数称为复数，其中a称为实部，b称为虚部，i称为虚数单位。
+    其中虚数 i * i = -1；
+    当z的虚部等于零时，常称z为实数；
+    当z的虚部不等于零时，实部等于零时，常称z为纯虚数。
+</code></pre></div><p>数学家使用复数对(a, b)来表达二维平面中的旋转，他们把向量也定义为复数对，如果(a,b)为向量的话，那么就定义了 a + b * i，i为虚数，满足 i * i = -1，a为实轴的坐标，b为虚轴坐标，我们可以理解为x，y轴上的坐标。</p><p>对于定义一个旋转复数，则为 (cos(β), sin(β)) 表达式为 cos(β) + sin(β) * i，i为虚数，β为旋转的角度。</p><p>他们发现从平面上求得某个向量旋转 β 的结果，可以用向量复数对乘以旋转复数对的方式来获得，即</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺少图片
 
-	v = x + y * i
-	r = cos(β) + sin(β) * i
-	v' = vr = (x + y * i)(cos(β) + sin(β) * i)
-	   = (x * cos(β) - y * sin(β)) + (x * sin(β) + y * cos(β)) * i
-</code></pre><p>上述图中的公式推导，乘法的运算看起来是不是跟传统的计算有点差异。因为我们使用的是复数做运算，其中i满足 i * i = -1。</p><p>这是最早发明的二维向量旋转运算法则，由十六世纪被意大利米兰学者卡当提出复数后，经过达朗贝尔、棣莫弗、欧拉、高斯等人的工作，最后成形的数学体系。</p><p>不过二维的上的旋转公式很快就不够用，无法对三维的旋转操作，旋转复数局限性太大。爱尔兰数学家 William Hamilton 终于在1843年找到了一种表达三维旋转的复数表达方式，即四元数就此诞生。</p><h6 id="四元数的几何意义">四元数的几何意义</h6><p>四元数扩展了复数系统，它使用了三个虚部，即i，j，k，因此四元数的表达复数表达方式为</p><pre><code>	q = w + i * x + j * y + k * z
-	其中i，j，k为虚数，即满足
-	i*i = j*j = k*k = -1
-	i*j=k, ji=-k
-	j*k=i, k*j=-i
-	k*i=j, i*k=-j
-</code></pre><p>和复数能用来旋转二维中的向量类似，四元数也能用来旋转三维中的向量。</p><p>四元数被解释为角位移的轴一角方式。什么是轴一角？</p><p>就是绕某个单一轴旋转一个角位移就能表达旋转的方式就叫轴一角，这个角位移其实就是一个和向量类似的表达方式，即(x,y,z)，只不过四元组用4个元素来表达罢了。</p><p>再通俗点，四元组可以理解为绕 某个轴N 旋转的角位移，和欧拉角用x,y,z表达绕标准坐标轴旋转是同样的道理，只不过这个轴不再是标准轴，而是任意轴。</p><p>这也就说明了，四元组不再受到标准轴的限制，它可以表达绕任意轴旋转的角位移。</p><p>四元组表示为对任意轴 N 的角位移即：</p><pre><code>	q = [cos(β/2), sin(β/2) * N]
-	  = [cos(β/2), sin(β/2) * Nx, sin(β/2) * Ny, sin(β/2) * Nz]
-</code></pre><p>利用上图的四元组表达方式，假设我们绕的是某个单轴旋转，也就是在x轴上旋转 A 度，或者在y轴上旋转 B 度，或者在z轴上旋转 C 度，根据上述的公式，我们可以得到三个供旋转的四元数，即：</p><pre><code>	A' = [cos(-A/2), sin(-A/2) * 1, 0, 0]
+    v = x + y * i
+    r = cos(β) + sin(β) * i
+    v&#39; = vr = (x + y * i)(cos(β) + sin(β) * i)
+       = (x * cos(β) - y * sin(β)) + (x * sin(β) + y * cos(β)) * i
+</code></pre></div><p>上述图中的公式推导，乘法的运算看起来是不是跟传统的计算有点差异。因为我们使用的是复数做运算，其中i满足 i * i = -1。</p><p>这是最早发明的二维向量旋转运算法则，由十六世纪被意大利米兰学者卡当提出复数后，经过达朗贝尔、棣莫弗、欧拉、高斯等人的工作，最后成形的数学体系。</p><p>不过二维的上的旋转公式很快就不够用，无法对三维的旋转操作，旋转复数局限性太大。爱尔兰数学家 William Hamilton 终于在1843年找到了一种表达三维旋转的复数表达方式，即四元数就此诞生。</p><h6>四元数的几何意义</h6><p>四元数扩展了复数系统，它使用了三个虚部，即i，j，k，因此四元数的表达复数表达方式为</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    q = w + i * x + j * y + k * z
+    其中i，j，k为虚数，即满足
+    i*i = j*j = k*k = -1
+    i*j=k, ji=-k
+    j*k=i, k*j=-i
+    k*i=j, i*k=-j
+</code></pre></div><p>和复数能用来旋转二维中的向量类似，四元数也能用来旋转三维中的向量。</p><p>四元数被解释为角位移的轴一角方式。什么是轴一角？</p><p>就是绕某个单一轴旋转一个角位移就能表达旋转的方式就叫轴一角，这个角位移其实就是一个和向量类似的表达方式，即(x,y,z)，只不过四元组用4个元素来表达罢了。</p><p>再通俗点，四元组可以理解为绕 某个轴N 旋转的角位移，和欧拉角用x,y,z表达绕标准坐标轴旋转是同样的道理，只不过这个轴不再是标准轴，而是任意轴。</p><p>这也就说明了，四元组不再受到标准轴的限制，它可以表达绕任意轴旋转的角位移。</p><p>四元组表示为对任意轴 N 的角位移即：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    q = [cos(β/2), sin(β/2) * N]
+      = [cos(β/2), sin(β/2) * Nx, sin(β/2) * Ny, sin(β/2) * Nz]
+</code></pre></div><p>利用上图的四元组表达方式，假设我们绕的是某个单轴旋转，也就是在x轴上旋转 A 度，或者在y轴上旋转 B 度，或者在z轴上旋转 C 度，根据上述的公式，我们可以得到三个供旋转的四元数，即：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    A&#39; = [cos(-A/2), sin(-A/2) * 1, 0, 0]
 
-	B' = [cos(-B/2), 0, sin(-B/2) * 1, 0]
+    B&#39; = [cos(-B/2), 0, sin(-B/2) * 1, 0]
 
-	C' = [cos(-C/2), 0, 0, sin(-C/2) * 1]
-</code></pre><p>上图中的角度为什么是负的，因为我们在旋转点时的角度，和在旋转坐标系时的角度恰恰是相反的，因此操作旋转点的角度，其实就是旋转坐标系反方向的角度，即负的角度。</p><p>现在我们要计算绕x轴上旋转A角度，并且绕y轴上旋转B角度，并且绕z轴上旋转C角度的四元组时，可以把 A‘，B’，C‘，这三个四元组乘起来，即：</p><pre><code>	A'B'C' = (A'B'C') 最终计算得到
+    C&#39; = [cos(-C/2), 0, 0, sin(-C/2) * 1]
+</code></pre></div><p>上图中的角度为什么是负的，因为我们在旋转点时的角度，和在旋转坐标系时的角度恰恰是相反的，因此操作旋转点的角度，其实就是旋转坐标系反方向的角度，即负的角度。</p><p>现在我们要计算绕x轴上旋转A角度，并且绕y轴上旋转B角度，并且绕z轴上旋转C角度的四元组时，可以把 A‘，B’，C‘，这三个四元组乘起来，即：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    A&#39;B&#39;C&#39; = (A&#39;B&#39;C&#39;) 最终计算得到
 
-	[x,]
-	[y,]
-	[z,]
-	[w]
+    [x,]
+    [y,]
+    [z,]
+    [w]
 
-	等于
+    等于
 
-	[cos(B/2)sin(A/2)cos(C/2) + sin(B/2)cos(A/2)sin(C/2),]
-	[sin(B/2)cos(A/2)cos(C/2) - cos(B/2)sin(A/2)sin(C/2),]
-	[cos(B/2)cos(A/2)sin(C/2) - sin(B/2)sin(A/2)cos(C/2),]
-	[cos(B/2)cos(A/2)cos(C/2) + sin(B/2)sin(A/2)sin(C/2)]
-</code></pre><p>上图中得到的最后公式就是从欧拉角转换到四元数的计算公式。</p><p>四元数的虽然在计算上很方便且通用，但在辨识度上却存在着严重的缺陷，人肉眼很难分辨某个四元数的旋转情况。但是没关系，我们只要理解它的原理，并且已经知道了四元数的几何意义，我们在运用四元数过程中将更加自如。</p><p>参考文献：</p><p>《3D数学基础:图形与游戏开发》</p><span class="meta"><time datetime="2019-09-07T00:00:00+08:00">September 7, 2019</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2019-09-07T00:00:00+08:00">September 7, 2019</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>
+    [cos(B/2)sin(A/2)cos(C/2) + sin(B/2)cos(A/2)sin(C/2),]
+    [sin(B/2)cos(A/2)cos(C/2) - cos(B/2)sin(A/2)sin(C/2),]
+    [cos(B/2)cos(A/2)sin(C/2) - sin(B/2)sin(A/2)cos(C/2),]
+    [cos(B/2)cos(A/2)cos(C/2) + sin(B/2)sin(A/2)sin(C/2)]
+</code></pre></div><p>上图中得到的最后公式就是从欧拉角转换到四元数的计算公式。</p><p>四元数的虽然在计算上很方便且通用，但在辨识度上却存在着严重的缺陷，人肉眼很难分辨某个四元数的旋转情况。但是没关系，我们只要理解它的原理，并且已经知道了四元数的几何意义，我们在运用四元数过程中将更加自如。</p><p>参考文献：</p><p>《3D数学基础:图形与游戏开发》</p><span class="meta"><time datetime="2019-09-07T00:00:00+08:00">September 7, 2019</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2019-09-07T00:00:00+08:00">September 7, 2019</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>
