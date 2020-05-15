@@ -323,20 +323,25 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
 
 <p>另外一面在服务器端上，Nginx的 keepalive<em>timeout，和Apache的 KeepAliveTimeout 上都能设置 Keep-alive 的空闲时间大小，当httpd守护进程发送完一个响应后，理应马上主动关闭相应的TCP连接，但设置 keepalive</em>timeout后，httpd守护进程会说：”再等等吧，看看客户端还有没有请求过来”，这一等，便是 keepalive_timeout时间。如果守护进程在这个等待的时间里，一直没有收到客户端发过来HTTP请求，则关闭这个HTTP连接。不过也不一定说使用 keep-alive 标识能提高效率，有时也会反而降低了效率，比如经常会没有数据需要发送，导致长时间的Tcp连接保持导致系统资源无效占用，浪费系统资源，巨量的保持连接状态就会浪费大量的连接资源。</p>
 
-<p>倘若我们客户端使用keep-alive做连续发送，则需要在连续发送数据时使用同一个HTTP连接实例。并且在发送完毕后要记录空闲时间，以便再次发送时，可以判断是否继续使用该连接，因为通常服务器端主动断开连接后并没有被客户端及时的得知，所以自行判断是否有可能已经被服务器端断开连接为好。还有一个问题是，如果网络环境不好导致发送请求无法到达时，则要尽可能的自己记录和判断，哪些数据是需要重发的。这几个问题增加了HTTP作为keep-alive来保持连接的操作难度，将本来简单便捷的HTTP，变得使用更加困难，因此keep-alive的情况并不常使用在游戏项目中。</p>
-
-<p>888</p>
+<p>倘若我们客户端使用keep-alive做连续发送，则需要在连续发送数据时使用同一个HTTP连接实例。并且在发送完毕后要记录空闲时间，以便再次发送时，可以判断是否继续使用该连接，因为通常服务器端主动断开连接后并没有被客户端及时的得知，所以自行判断是否有可能已经被服务器端断开连接为好。还有一个问题是，如果网络环境不好导致发送请求无法到达时，则要尽可能的自己记录和判断，哪些数据是需要重发的。这几个问题增加了HTTP作为keep-alive来保持连接的操作难度，将本来简单便捷的HTTP，变得使用更加困难，因此这也是keep-alive并不常使用在游戏项目中。</p>
 
 <h6>在Unity3D中的HTTP封装</h6>
 
-<p>Unity3D的2018版本中原本经常用的WWW类已经被废弃，取而代之的是UnityWebRequest。</p>
+<p>Unity3D的2018版本中将原本经常用的WWW类废弃了，取而代之的是UnityWebRequest。其实API改了但功能都是一样的，我们主要还是围绕HTTP的原理来写程序，也只有这样才能真正写出程序的精髓。</p>
 
-<p>API改了但功能都是一样的，我们主要还是围绕HTTP的原理来写程序，也只有这样才能真正写出程序的精髓。</p>
-
-<p>UnityWebRequest里有几个接口对我们来说比较重要，一个是Post(string uri, WWWForm postData)接口用来创建一个带有地址和Post数据的UnityWebRequest实例，一个是SendWebRequest()用来开始发送请求和迭代请求的接口，另一个是SetRequestHeader(string name, string value)用来设置HTTP头的，其中它说下面这些HEAD标记不支持设置：</p>
+<p>UnityWebRequest里有几个接口对我们来说比较重要，一个是</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Post(string uri, WWWForm postData)接口
+</code></pre></div>
+<p>用来创建一个带有地址和Post数据的UnityWebRequest实例，一个是</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    SendWebRequest()
+</code></pre></div>
+<p>用来开始发送请求和迭代请求的接口，另一个是</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    SetRequestHeader(string name, string value)
+</code></pre></div>
+<p>调用它可以设置HTTP的标签头，其中Unity3D官方说下面这些HEAD标记在UnityWebRequest中并不支持：</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    These headers cannot be set with custom values on any platform: accept-charset, access-control-request-headers, access-control-request-method, connection, date, dnt, expect, host, keep-alive, origin, referer, te, trailer, transfer-encoding, upgrade, via.
 </code></pre></div>
-<p>这些标记都是什么意思呢，</p>
+<p>我们来看看这些标签都是代表什么功能：</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    accept-charset: 用于告诉服务器，客户机采用的编码格式
 
     access-control-request-headers: 在预检请求中，用于通知服务器在真正的请求中会采用哪些请求首部
@@ -369,30 +374,24 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
 
     via: 代理服务器相关的信息
 </code></pre></div>
-<p>以上这些由HEAD扩展的HTTP功能都不能进行自主的选择，其中包括了我们比较关心的标识 connection 和 keep-alive 保持连接的功能，代表了我们无法用UnityWebRequest来实现一次连接发送多次数据的需求。</p>
+<p>以上这些由HEAD扩展的HTTP功能都不能进行自主的选择，其中包括了我们比较关心的标识 connection 和 keep-alive 保持连接的功能，这同时说明我们无法用UnityWebRequest来实现一次连接发送多次数据的需求。另外我们比较关心的content-length也不能被自定义设置，它会由API本身来自动设置。与原来WWWW的API不同的是，UnityWebRequest更加简洁方便，但也失去了一些自定义的功能。接下来我们就使用UnityWebRequest来封装HTTP网络层。</p>
 
-<p>另外我们最关心的content-length也不能被自定义设置，而是由API本身来自动设置。</p>
+<p>我们先设计一个类，假如建个名称为HTTPRequest的类，它最重要的功能是向指定服务器发送请求并接受响应数据，每次请求服务器都调用这个类的方法来处理一个请求的操作。我们可以通过 HTTPRequest 这个类把地址、参数、回调句柄传进去，然后等待服务器响应数据，当收到响应数据时就调用相应游戏逻辑做处理从而反应到画面上。</p>
 
-<p>与原来WWWW的API不同的是，UnityWebRequest更加简洁方便，但也失去了一些自定义的功能。接下来我们来使用UnityWebRequest封装HTTP网络层。</p>
+<p>HTTP需要的接口相对较少，其中POST(以POST方式发送数据)、GET(以GET方式发送数据)、HEAD(修改某个HEAD标签值)、Start(开始发送请求) 这几个接口比较重要，这些我们都可以在 UnityWebRequest 中对应的是函数句柄。</p>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="n">POST</span><span class="p">:</span> <span class="n">UnityWebRequest</span> <span class="n">UnityWebRequest</span><span class="p">.</span><span class="n">Post</span><span class="p">(</span><span class="kt">string</span> <span class="n">uri</span><span class="p">,</span> <span class="n">WWWForm</span> <span class="n">postData</span><span class="p">)</span> <span class="p">(</span><span class="err">静态函数</span><span class="p">)</span>
 
-<p>我们必须设计一个类，比如建个名称为HTTPRequest的类，每次请求服务器都调用这个类的方法来处理一个请求的操作。把地址，参数，回调传进去，等待服务器相应和回调。</p>
+<span class="n">GET</span><span class="p">:</span> <span class="n">UnityWebRequest</span> <span class="n">UnityWebRequest</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="kt">string</span> <span class="n">uri</span><span class="p">)</span> <span class="p">(</span><span class="err">静态函数</span><span class="p">)</span>
 
-<p>短连接接口相对较少，其中POST,GET,HEAD,Start，这几个接口最为关键。在UnityWebRequest中对应的是</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    POST: UnityWebRequest UnityWebRequest.Post(string uri, WWWForm postData) (静态函数)
+<span class="n">HEAD</span><span class="p">:</span> <span class="n">UnityWebRequest</span><span class="p">.</span><span class="n">SetRequestHeader</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">,</span> <span class="kt">string</span> <span class="k">value</span><span class="p">)</span> <span class="p">(</span><span class="err">非静态函数</span><span class="p">)</span>
 
-    GET: UnityWebRequest UnityWebRequest.Get(string uri) (静态函数)
-
-    HEAD: UnityWebRequest.SetRequestHeader(string name, string value) (非静态函数)
-
-    Start: UnityWebRequest.SendWebRequest() (非静态函数)
+<span class="n">Start</span><span class="p">:</span> <span class="n">UnityWebRequest</span><span class="p">.</span><span class="n">SendWebRequest</span><span class="p">()</span> <span class="p">(</span><span class="err">非静态函数</span><span class="p">)</span>
 </code></pre></div>
-<p>用这四个API就能实现HTTP基本的发送与接收。</p>
+<p>用这四个API实现HTTP基本的发送与接收足以。</p>
 
-<p>在调用UnityWebRequest发送请求时可以用协程也可以在逻辑更新中进行判断收发过程。</p>
+<p>在使用 UnityWebRequest 发送请求时可以用协程也可以在逻辑更新中进行判断收发过程。只是根据我个人经验在协程中不太可控，每次都起一个协程来发送请求数据也有点浪费，在一些特殊需求下协程结束时随着函数调用结束而结束的，而我们时常会有需要暂停、而后继续操作等无法满足。所以一般都会把HTTP的收发判断移到脚本更新函数Update里去，这样做更容易掌控也更容易理解。</p>
 
-<p>不过在协程中不太可控，并且每次都起一个携程来发送数据也浪费资源，并且协程结束时随着函数调用结束而结束的，而我们时常会有需要暂停，继续等操作。所以一般都会把HTTP的收发判断移到逻辑更新中的Update里去，这样做更容易理解，也更容易掌控。</p>
-
-<p>下面我们建立一个类来封装UnityWebRequest的收发过程：</p>
+<h6>下面我们建立一个类来封装 UnityWebRequest 的收发过程：</h6>
 
 <p>1.建立实例开始连接和发送请求，设置好这次请求回应的回调句柄。</p>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">void</span> <span class="nf">StartRequest</span><span class="p">(</span><span class="kt">string</span> <span class="n">url</span><span class="p">,</span> <span class="n">Callback</span> <span class="n">_callback</span><span class="p">)</span>
@@ -411,6 +410,8 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
     <span class="k">this</span><span class="p">.</span><span class="n">web_request</span><span class="p">.</span><span class="n">SendWebRequest</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div>
+<p>上述代码中我们实例化了一个HTTP请求，并且把地址和参数内容传给了实例，然后设置数据响应时的回调句柄，最后发送请求。</p>
+
 <p>2.判断是否完成或者说发送请求是否完毕,并且调用回调函数</p>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
 <span class="p">{</span>
@@ -425,7 +426,9 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>3.处理数据，先判断有错误存在，如果没有错误则对数据进行处理，HTTP回应的数据格式比较多，比如Json格式的，Xml格式等等。对数据进行解析后变为具体的类实例，再传给相应的函数句柄进行调用。所以这里数据格式协议也是关键。</p>
+<p>这里我们在脚本更新函数 Update 中不断去判断当前的请求实例是否完成并有响应数据，当收到响应数据时则调用处理函数对数据进行逻辑处理。</p>
+
+<p>3.处理数据，收到响应数据后先判断是否有错误存在，没有错误再对数据进一步处理。客户端与服务器之间的数据传输都需要有协商好的协议，通常HTTP上使用Json格式的比较多，我们在收到响应数据后对数据进行解析然后变为了具体实例，再传给相应的函数句柄进行调用，所以数据格式协议也是比较重要的关键，关于数据协议我们会在下面的章节中详细的讨论。</p>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">void</span> <span class="nf">ProcessResponse</span><span class="p">(</span><span class="n">UnityWebRequest</span> <span class="n">_WebRequest</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="n">_WebRequest</span><span class="p">.</span><span class="n">error</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
@@ -433,33 +436,30 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
         <span class="n">NetworkErrorReport</span><span class="p">(</span><span class="n">_www</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
         <span class="k">return</span><span class="p">;</span>
     <span class="p">}</span>
-    <span class="n">CallbackResponse</span><span class="p">(</span><span class="n">_WebRequest</span><span class="p">.</span><span class="n">downloadHandler</span><span class="p">.</span><span class="n">text</span><span class="p">);</span>
+
+    <span class="n">NetData</span> <span class="n">net_data</span> <span class="p">=</span> <span class="n">ParseJson</span><span class="p">(</span><span class="n">_WebRequest</span><span class="p">.</span><span class="n">downloadHandler</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="n">CallbackResponse</span><span class="p">(</span><span class="n">net_data</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>以上是用UnityWebRequest做HTTP请求的基本步骤。在具体项目中看似简单的连接，发送，接收过程中也有不少事情需要我们做。特别是游戏逻辑中，大量多次，频繁发送HTTP请求的问题的延伸和提出的解决方案。</p>
+<p>以上是用UnityWebRequest做HTTP请求的基本步骤。在具体项目中看似简单的连接、发送、接收过程有不少事情需要我们扩展，特别是游戏逻辑中大量多次频繁发送HTTP请求导致的效率问题需要我们更多的关注。</p>
 
-<p>多次或者连续发送HTTP请求引起的问题</p>
+<h6>多次请求时连续发送HTTP请求引起的问题</h6>
 
-<p>多次或者连续请求HTTP在具体项目中比价常见，比如客户端向服务器请求角色信息，并且请求军团信息，并且请求每日任务信息，然后再显示主界面。</p>
+<p>多次或者连续请求HTTP在具体项目中比较常见，例如客户端向服务器请求角色信息，并同时请求军团信息，并同时请求每日任务信息，收到所有数据后将数据呈现在主界面上。像这样的连续多次的发出HTTP请求，会同时触发多个线程向服务器做请求操作，每个请求都包括建立连接、发送数据、接受数据、关闭连接这几个步骤，多个请求导致多个线程最后得到服务器响应的返回数据时，却不知道哪个在先哪个在后，例如军团信息有可能先得到响应，然后再是每日任务信息得到了响应，再是角色信息得到了响应，因为是多个线程发起的多个连接，服务端接收到的数据也会因为受到网络的干扰而导致顺序不正确，即使服务器端接收的请求数据顺序刚好没有被打乱顺序，在处理和回调的数据时也是不可知的，这导致回调的顺序不可知，所以多连接导致不能确定响应的顺序与请求的顺序是否一致。</p>
 
-<p>这种连续的多次的请求HTTP，会同时触发多个线程向服务器做请求操作，建立连接，发送请求，关闭连接，而得到服务器返回时，却不知道哪个在先哪个在后，例如军团信息有可能先得到响应，然后再是每日任务信息得到了响应，再是角色信息得到了响应，因为是多个线程发起的多个连接，服务端接受到的数据也是没有顺序的，即使服务器端接受的顺序刚好没有打乱顺序，在处理和回调的时机也是不可知的，导致回调的顺序不可知，所以并不能确定响应的顺序与请求的顺序是一样的。</p>
+<p>当接收响应数据的顺序无法确定时，我们还用顺序接收数据的方式处理就会发生问题，例如前面我们说的在发送，军团，任务，角色数据请求后，希望能够在三者都到齐的情况下执行某个程序逻辑，倘若得到的数据是顺序的话，我们在收到角色数据后就能确定所有数据都已经到齐，到时我们再执行逻辑程序也会是正确的。</p>
 
-<p>当接受数据的顺序无法确定时，如果还用顺序接受数据的方式处理出具则有风险，比如我们在发送，军团，任务，角色数据请求后，希望能够在三者都到齐的情况下执行某个程序逻辑，如果得到的数据是顺序的，则我们可以确定在收到角色数据后表明所有的数据都到齐了，于是我们再执行逻辑程序。</p>
+<p>那么怎么在多开请求连接的情况下保证顺序呢？</p>
 
-<h6>解决方案1：多开线程发送请求数据，等待所有数据到齐再调用执行逻辑。</h6>
+<h6>解决方案1：多个连接同时发送请求数据，等待所有数据到齐后再调用执行逻辑。</h6>
 
-<p>每个HTTP(也可以认为是UnityWebRequest)请求都会开一个线程来向服务器请求数据，多个HTTP请求同时开启，相当于多个线程同时工作提高了网络效率。</p>
+<p>每个HTTP(也可以认为是UnityWebRequest)请求都会开一个线程来向服务器请求数据，多个HTTP请求同时开启，相当于多个线程同时工作这样能提高网络利用率，但同时也有数据响应顺序混乱的隐患。多个请求后等待数据全部到齐后再处理逻辑，是一个比较普遍的解决多请求数据响应的方式。不过我们仍然要假设多次请求之间没有且不需要逻辑顺序，逻辑只需要它们收集齐数据后再做执行操作，只有这样我们才可以使用同时发起多次HTTP请求后等待所有请求结束后再做逻辑处理。</p>
 
-<p>我们可以用HTTP这种开线程的方式做，当需要多个请求的回应数据时，开启多个HTTP请求，等到数据全部得到相应后再处理逻辑。</p>
+<p>多次请求的响应数据后等待处理的解决方案其本质是‘如何判断我们需要的多条数据是否已经都到达’。为了能更快的、更高效的得到HTTP请求数据，在同一时间同时向服务器发起多个HTTP请求，并且等待所有请求都得到响应后再执行逻辑程序。</p>
 
-<p>这里有一个限制，我们需要假设多次请求之间没有且不需要逻辑顺序，则可以使用同时发起多次HTTP请求，并且等待所有请求结束后再做逻辑处理。</p>
-
-<p>多次请求的响应数据的需求问题，其本质是‘如何判断我们需要的多条数据是否已经都到达’。</p>
-
-<p>为了能更快的，更高效的得到HTTP请求数据，在同一时间同时向服务器发起多个HTTP请求，并且等待所有请求都得到响应后才执行逻辑程序，即等待并辨认多次请求是否全数收到。</p>
-
-<p>在Unity3D上伪代码及注释如下：</p>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">class</span> <span class="nc">multiple_request</span>
+<p>这种方式我们可以用伪代码及注释来表述得更清楚些：</p>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">class</span> <span class="nc">Multiple_Request</span>
 <span class="p">{</span>
     <span class="k">void</span> <span class="nf">StartRequest</span><span class="p">(</span> <span class="n">request_list</span><span class="p">,</span> <span class="n">call_back</span> <span class="p">)</span>
     <span class="p">{</span>
@@ -499,23 +499,19 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>这种方式同时开启多个HTTP连接来向服务器请求数据，极大程度地加速了数据的响应速度，最大限度的提高了服务器端的CPU利用率，但请求彼此之间必须没有顺序关系，只有这样服务器端的执行顺序才无序担心。</p>
+<p>上述伪代码中同时开启多个HTTP连接来向服务器请求数据，提高了网络传输效率和服务器端的CPU利用率，请求彼此之间没有顺序关系，只有这样服务器端的执行顺序才无序担心。</p>
 
-<p>如果请求之间是有顺序要求的，服务器端执行顺序无法保障则容易出现逻辑顺序问题，比如会有多个这样的请求，购买物品，出售物品，使用物品，三个请求一起被发起，服务器接受到的请求顺序有可能是，使用物品，出售物品，再购买物品，当顺序不同时就有可能存在逻辑问题，与我们原本设想的逻辑存在偏差，物品可能先被使用或出售，而不是被先购买，导致没有物品可被使用或出售，跟我们的所预期不一致。</p>
+<p>如果请求之间是有顺序要求的，服务器端执行顺序无法保障则容易出现逻辑顺序混乱的问题。例如我们同时发起多个如下这样的请求，先购买物品、再出售物品、最后使用物品，这三个请求同时一起被发起，由于网络波动原因服务器接受到的请求顺序有可能是，使用物品，出售物品，再购买物品，当顺序不同时就有可能存在逻辑问题，这与我们原本设想的逻辑存在偏差，实例物品可能先被使用或出售，而不是被先购买，导致没有物品可被使用或出售，逻辑错位混乱是必然的。</p>
 
-<p>提高了网络效率，服务器的CPU利用率，却无法保证预期的逻辑顺序，在需要顺序的功能上必出现诸多错误。</p>
+<p>我们在同时发起多个HTTP请求连接时，虽然提高了网络效率和服务器的CPU利用率，却无法保证预期的逻辑顺序，这会使得一些业务遭遇问题。因此这种解决方案在需要逻辑顺序严格执行的业务上无法正常运作，它只能运用在不需要逻辑顺并且需要同时发起多个请求的业务上。</p>
 
-<p>因此这种解决方案在需要逻辑顺序的连接请求上无法运作，但在不需要逻辑顺的连接请求上可以极大的提高网络连接利用率。</p>
+<h6>解决方案2：逐个发起请求，保证顺序</h6>
 
-<h6>解决方案2：逐个发起请求，保证顺序。</h6>
+<p>为了解决顺序问题，我们可以逐个发起请求，这种方式比较普遍。在网页端、安卓原生端、苹果原生端都会使用这种方式来做请求，即每次只处理一个请求，当这个请求结束后再发起下一个请求，每个请求对应一个功能模块，结束当前功能模块后再发起下一个模块的请求逻辑。</p>
 
-<p>逐个发送请求的方式最常见也比较普遍的做法，在网页端，安卓原生端，苹果原生端都使用这种方式来做请求，即每次只处理一个请求，当这个请求结束后再发起下一个请求，即一个请求对应一个功能模块，结束当前功能模块后再发起下一个请求。</p>
+<p>我们再用前面所描述的例子来描述当前的解决方案，我们对HTTP做请求角色信息、再请求军团信息，再请求每日任务信息，这次我们不再同时发起请求，而是每次只做一件事，在收到角色信息数据后，再发起请求军团信息，收到军团信息后，再发起请求任务信息，收到任务信息后再显示在界面，每个请求收到响应数据后再处理当前请求的业务逻辑，当某个请求得到响应后都处理各自的事情。</p>
 
-<p>例如前面所描述的例子，请求角色信息，并且请求军团信息，并且请求每日任务信息，每次只做一件事，收到角色信息数据后，再发起请求军团信息，收到军团信息后，再发起请求任务信息，收到任务信息后再显示在界面，每个请求都会被动态的分配一个回调函数，当某个请求的数据需要做别的事情的时候，就分配一个不同回调函数。</p>
-
-<p>也就是说，当请求角色信息前，我们可以分配一个自定义句柄，当接受到数据后，回调执行这个自定义句柄。在自定义句柄里，可以继续发送我们需要请求的数据或功能，或者执行其他逻辑。</p>
-
-<p>伪代码为：</p>
+<p>也就是说在我们的例子中，请求角色信息的得到响应后处理角色信息相关的逻辑，请求任务信息的得到响应后处理任务信息相关的逻辑，以此类推由于客户端按顺序发送，结束时每个数据也都可以独立运行，结束后再继续下一个请求，并且所有请求响应的逻辑都可以程序来实时的自定义。可以理解为如下伪代码为：</p>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">void</span> <span class="nf">on_button_click</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="c1">//请求角色数据</span>
@@ -549,17 +545,15 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
     <span class="n">show_ui</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>伪代码展示了发送请求的逻辑顺序，这种逐个发送请求的方式，保证了逻辑顺序，同时也满足了对多样化功能的扩展，同一个请求可以在不同逻辑处拥有自己的自定义回调。</p>
+<p>上述伪代码描述了发送请求的逻辑顺序，这种逐个发送请求的方式，保证了逻辑顺序，同时也满足了对多样化功能的扩展，同一个请求可以在不同逻辑处拥有自己的自定义的处理逻辑。</p>
 
-<p>单个连接的自定义方式确实保证了顺序，但也降低了网络连接效率，多个请求需要发起多个TPC连接，每个连接都需要等待上一个连接请求完毕后才能开始下一个请求，每次收到消息后都需要发起4次握手的断开连接‘仪式’，每次发起请求时又必须进行3次握手的建立连接‘仪式’，消耗网络连接资源降低了收发效率。</p>
+<p>我们说的单个连接的方式确实保证了顺序，但也降低了网络连接效率，多个请求时需要逐个发起TPC连接，每个连接都需要等待上一个连接请求完毕后才能开始下一个请求，并且在每次收到消息后都会发起4次TCP挥手来断开连接，在每次发起请求时又必须进行3次握手来建立连接，这种方式消耗了网络资源降低了收发效率。</p>
 
-<p>另一种逐个发送请求的方式，为了保证请求的顺序进行，可以使用发送队列和接收队列来做逐个发送的模式。</p>
+<p>除了上面我们说的这种自定义式的逐个发送请求外，另外还有一种逐个发送请求的方式，它为了保证请求的顺序进行，使用了发送队列和接收队列来确保发送与接收的顺序。其中为发送所做的队列在请求和响应中起到了缓冲的作用，在连续使用HTTP请求和连续收到HTTP响应时，能够做到依次处理相应的逻辑。</p>
 
-<p>队列在请求和响应中起到了缓冲的作用，当连续使用HTTP请求，连续收到HTTP响应的时候，能够依次处理相应的逻辑。</p>
+<p>这种方式全程只有1个线程在做请求处理，所以并不需要线程锁之类的操作。发送时向队列推送请求实例，在逻辑更新函数Update上判断是否有请求在队列里，有的话推出一个请求做HTTP连接操作，同时将当前请求的信息暂时存放在内存中，当得到服务器响应时调用请求信息中的回调函数处理回调数据。</p>
 
-<p>因为全程是只有1个线程在做请求处理，所以并不需要线程锁之类的操作。发送时，向队列推送请求实例。在逻辑更新上，判断是否有请求在队列里，有的话推出来，做HTTP请求操作，并将请求的相关信息存起来，当得到服务器响应时，调用请求信息中的回调函数，处理回调句柄。</p>
-
-<p>发送和接收队列的伪代码:</p>
+<p>我们也用伪代码来描述这种发送和接收队列的过程:</p>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">//将请求推入队列</span>
 <span class="k">void</span> <span class="nf">RequestHttp</span><span class="p">(</span><span class="n">Request</span> <span class="n">req</span><span class="p">)</span>
 <span class="p">{</span>
@@ -570,9 +564,9 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
 <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="c1">//是否完成HTTP</span>
-    <span class="n">If</span><span class="p">(</span> <span class="n">IsHttpFinished</span><span class="p">()</span> <span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">IsHttpFinished</span><span class="p">()</span> <span class="p">)</span>
     <span class="p">{</span>
-        <span class="c1">//开始新的请求</span>
+        <span class="c1">//开始新的请求，推出一个请求数据，存起来，并开始发送HTTP连接</span>
         <span class="n">Request</span>  <span class="n">req</span> <span class="p">=</span> <span class="n">ListRequest</span><span class="p">.</span><span class="n">Pop</span><span class="p">();</span>
         <span class="n">mCurrentRequest</span> <span class="p">=</span> <span class="n">req</span><span class="p">;</span>
         <span class="n">StartHttpRequest</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
@@ -580,7 +574,7 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
     <span class="k">else</span>
     <span class="p">{</span>
         <span class="c1">//是否收到响应</span>
-        <span class="n">If</span><span class="p">(</span><span class="n">HttpIsDone</span><span class="p">())</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">HttpIsDone</span><span class="p">())</span>
         <span class="p">{</span>
             <span class="c1">//根据响应数据处理逻辑</span>
             <span class="n">ProcessResponse</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
@@ -594,26 +588,22 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
 <span class="c1">//根据数据处理逻辑</span>
 <span class="k">void</span> <span class="nf">ProcessResponse</span><span class="p">(</span><span class="n">Response</span> <span class="n">data</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">If</span><span class="p">(</span><span class="n">mCurrentRequest</span> <span class="p">!=</span> <span class="k">null</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">mCurrentRequest</span> <span class="p">!=</span> <span class="k">null</span>
         <span class="p">&amp;&amp;</span> <span class="n">mCurrentRequest</span><span class="p">.</span><span class="n">Callback</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="c1">//回调句柄</span>
+        <span class="c1">//回调句柄，根据数据处理相关逻辑</span>
         <span class="n">mCurrentRequest</span><span class="p">.</span><span class="n">Callback</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
         <span class="n">mCurrentRequest</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>以上阐述了，在发送HTTP请求时的推入队列操作和在收到请求后的句柄响应操作，队列使我们做到了逐个请求以及逐个响应。</p>
+<p>以上过程阐述了在发送HTTP请求时的推入队列操作和在收到请求后的句柄响应操作，队列使我们能够逐个请求以及逐个响应。</p>
 
-<h6>解决方案3：多连接与逐个发送，并行使用。</h6>
+<h6>解决方案3：多连接与逐个发送的混合使用。</h6>
 
-<p>多连接提高网络请求效率但没有一致的响应顺序，逐个发送有一致的响应顺序网络请求效率则不够好。</p>
+<p>多连接提高网络请求效率但没有一致的响应顺序，逐个发送有一致的响应顺序网络请求效率则不够好。两者之间其实没有排斥关系，我么可以混合使用，这样既提高了网络效率又保证了顺序。</p>
 
-<p>两者之间没有排斥关系，可以并行使用，既提高了网络请求效率，又保证了顺序。</p>
-
-<p>仍然使用前面解决方案1中的类 multiple<em>request ，原本 multiple</em>request 类可以传入多个请求数据，并等待全部相应结束后再执行回调。然后再在 multiple_request 中回调中执行下一个请求。</p>
-
-<p>伪代码如下：</p>
+<p>我们来看看该如何混合使用它们，我们仍然使用前面解决方案1中的类 Multiple<em>Request ，原本的 Multiple</em>Request 类可以传入多个请求数据，并等待全部数据响应结束后再执行回调，接着我们在回调逻辑中也可以用 Multiple_Request 来执行下一组请求。我们用伪代码描述一下：</p>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">//界面按钮</span>
 <span class="k">void</span> <span class="nf">on_click</span><span class="p">()</span>
 <span class="p">{</span>
@@ -651,7 +641,7 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
     <span class="n">req</span><span class="p">.</span><span class="n">StartRequest</span><span class="p">(</span><span class="n">lst_request</span><span class="p">,</span> <span class="n">callback_function1</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="k">void</span> <span class="nf">callback_fucntion1</span><span class="p">(</span><span class="n">lst_request</span><span class="p">)</span>
+<span class="k">void</span> <span class="nf">callback_function1</span><span class="p">(</span><span class="n">lst_request</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">//做些逻辑</span>
     <span class="n">do_some_function</span><span class="p">(</span><span class="n">lst_request</span><span class="p">);</span>
@@ -684,13 +674,7 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
     <span class="n">show_ui</span><span class="p">(</span><span class="n">lst_request</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>伪代码中展示了如何多请求与逐个请求的并行使用，将多个请求看成一个请求的变体，将多个请求看成一个完整的功能块，就有了多请求与逐个请求的并行使用过程。</p>
-
-<p>伪代码中展示的编码过程太过繁琐，展示出每一步的编码是为了让读者能更容易理解，多请求连接与逐个请求并行使用的理念。</p>
-
-<p>在现实项目中，完全可以为每个网络功能新建一个类，继承 multiple_request 类，并且将所有参数写进子类中，一并发送，并且可以多次使用在多个地方。</p>
-
-<p>伪代码:</p>
+<p>上述伪代码描述了如何多请求与逐个请求的并行使用，将多个请求看成一个请求的变体，将多个请求看成一个完整的功能块，就有了多请求与逐个请求的混合使用过程。在现实项目中，我们可以为每个网络功能新建一个类，即继承 Multiple_Request 类，并且将所有参数写进子类中后一并发送，并且可以多次使用在多个业务逻辑中。我们用伪代码描述这种情况:</p>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">//新建个父类继承 multiple_request 专门用来做某个功能，这个功能里需要请求多条数据</span>
 <span class="k">class</span> <span class="nc">do_something</span> <span class="p">:</span> <span class="n">multiple_request</span>
 <span class="p">{</span>
@@ -741,7 +725,7 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
     <span class="n">do_something</span><span class="p">(</span><span class="n">lst_requset</span><span class="p">);</span>
 
     <span class="c1">//实例化功能2的对象</span>
-    <span class="n">do_something2</span> <span class="p">=</span> <span class="n">do_something2</span><span class="p">();</span>
+    <span class="n">do_something2</span> <span class="p">=</span> <span class="k">new</span> <span class="n">do_something2</span><span class="p">();</span>
 
     <span class="c1">//开始请求</span>
     <span class="n">do_something2</span><span class="p">.</span><span class="n">StartRequest</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="m">2</span><span class="p">,</span> <span class="n">call_back_function2</span><span class="p">);</span>
@@ -754,31 +738,28 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
     <span class="n">show_ui</span><span class="p">(</span><span class="n">lst_request</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>如上所描述的，在实际项目中可以用子类继承父类功能的方法，复用了请求的步骤，使得需要某个功能时使用起来更加便捷。</p>
+<p>上述伪代码描述的，在实际项目中可以用子类继承父类功能的方法复用了请求的步骤，使得需要某个功能时使用起来更加便捷。</p>
 
 <h6>解决方案4：合并请求，并逐个发送合并后的请求包。</h6>
 
-<p>多个请求与逐一发送合并的解决方案，确实既提高了发送效率，又保证了顺序，但还是有几个缺点。</p>
+<p>多个请求与逐一发送混合的解决方案，确实既提高了发送效率，又保证了顺序，但任然有几个缺点。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    缺点1，多开连接导致连接数增多，频繁的建立连接与断开连接导致网络效率仍然不够高。
 
-<p>缺点1，多开连接，连接数增多，服务器建立和断开连接的压力增大。</p>
+    缺点2，虽然自定义空间很大但必须手动建立新功能类，逻辑变得庞大后分层不容易清晰。
 
-<p>缺点2，使用操作不方便，必须手动建立新功能类。</p>
+    缺点3，多功能间的顺序必须手动排列顺序。
+</code></pre></div>
+<p>客户端程序员在使用时更希望的是多次请求能够被同时发出，同时收到的响应顺序也要按原来请求的顺序响应，并且要可以满足自定义回调句柄满足多样化的扩展需求。</p>
 
-<p>缺点3，多功能间的顺序，必须手动排列顺序。</p>
+<p>如此一来合并请求就成了更适合的解决方案，即合并多个请求的数据为一个请求，当发起请求时一次性打包多个请求，只用一个连接就能全部发送并响应所有数据，这样一来发送这个合并数据包可以做到与发起多个连接同样的效果，并且响应也可以做到顺序一致性。</p>
 
-<p>客户端更希望的是多次请求能够被同时发出，收到的响应顺序也要按原来请求的顺序响应，并且要可以自定义回调句柄满足多样化的功能扩展。</p>
+<p>合并请求的方式做HTTP，减少了连接数量也提高了网络效率，同时还保证了请求顺序与响应顺序的准确性。</p>
 
-<p>合并请求就成了更好的解决方案。合并多个请求的数据进一个请求中，再发起请求，一次打包多个请求，只发一次能全部响应回来，发送这个合并包则可以做到与发起多个连接同样的效果，并且响应也可以做到顺序一致性。</p>
+<p>那么如何实现呢？这次我们需要服务端程序员同学一些配合，服务端同学需要将原本多个地址，每个地址对应的功能块的模式，改为同一个地址，并且改为使用ID(我们暂且称它为Commoand ID) 字段来对应不同的功能块。</p>
 
-<p>合并请求，减少了连接数量，提高了网络效率，同时也可以保证顺序的一致性。</p>
+<p>这里我们以Json数据协议为例来说明这个过程(因为Json格式比较好理解)，HTTP请求数据使用Json格式，服务器响应数据也是Json格式(通常都是这种做法，并且这在互联网非常普遍)。客户端发送Json格式的请求数据给服务器，服务器收到后解析Json格式数据提取数据后处理逻辑，接着将要返回的数据反序列化为Json格式给客户端。</p>
 
-<p>如何实现呢？</p>
-
-<p>这需要服务端程序员一些配合，服务端需要将原本多个地址，每个地址对应的功能块的模式，改为同一个地址，并且改为用commoand id 字段来对应不同的功能块。</p>
-
-<p>我们以json为例，HTTP数据使用json格式，服务器响应也是json格式。每次请求，客户端都会发送格式给服务器，服务器收到后解析json格式数据，然后提取变量。</p>
-
-<p>我们在对多个请求进行合并时，可以将多个json请求格式，推入一个大的json数据中，为每个json数据添加一个序列号，以代表请求顺序，如下：</p>
+<p>现在为了合并Json数据，我们在对多个请求发起时，将多个Json请求格式推入到一个大的Json数据中，同时在合并时为每个合入进去的Json数据添加一个序列号，代表合入前的顺序，请看如下Json合并过程：</p>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">//请求1</span>
 <span class="p">{</span>
     <span class="s">&quot;request-order&quot;</span> <span class="p">:</span> <span class="m">1</span><span class="p">,</span>
@@ -832,11 +813,11 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
 <span class="na">    ]</span><span class="p">,</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>合并后多个json被推入数组中发送给服务器，服务器拿到数据后对data中的数据进行提取和处理，处理顺序按照request-order来做，每个数据块都有一个command字段，用这个字段来判断使用哪个功能模块，将数据传给该功能模块处理。</p>
+<p>上述中合并时多个Json被推入到Json数组中，接着将它们一并发送给服务器端，服务器端程序接受到数据后对data字段中的数据进行提取、解析、处理，并且处理顺序按照request-order从小到的顺序来做，每个数据块都有一个command字段，用这个字段来判断使用哪个程序功能模块来处理逻辑，接着将数据传给该功能模块处理。</p>
 
-<p>每个功能模块处理完毕后，将所有响应数据都推入同一个json实例中，并且附上与请求数据中相同的request-order，再把整个响应数据发送给客户端，当客户端收到数据时，就可以通过request-order知道响应数据的顺序了，按照request-order排序后，再进行解析和回调，得到了与请求顺序一致的响应顺序。</p>
+<p>在每个功能模块处理完毕后，将所有响应数据都推入同一个Json实例中，同时附上与请求数据中相同的request-order，以便客户端识别与请求数据对应的响应数据，最后把整个响应数据一并发送给客户端。当客户端收到数据时，通过request-order就能知道响应数据的顺序，以及是哪个请求发起后响应的数据，于是客户端在按照request-order从小到大的顺序排序后进行解析和回调，得到了与请求顺序一致的响应顺序。</p>
 
-<p>合并响应后的例子如下：</p>
+<p>我们来看看客户端收到服务器端的合并响应数据是怎样的：</p>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">//响应数据1</span>
 <span class="p">{</span>
     <span class="s">&quot;response-order&quot;</span> <span class="p">:</span> <span class="m">1</span><span class="p">,</span>
@@ -895,13 +876,11 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
 <span class="na">    ]</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>得到合并后的响应数据后，客户端要先提取data数据中的所有数据，以respose-order为基准进行排序，头部最小序号的先处理，解析，回调。</p>
+<p>如上所描述的，在得到合并后的响应数据后，客户端要先提取data数据中的所有数据，以respose-order为基准从小到大进行排序，从头上最小序号的开始处理。</p>
 
-<p>不仅仅是合并，我们还要保证发送的顺序，多个合并请求一同发送则会遇到大麻烦，也就是顺序问题，所以需要用队列来规避。</p>
+<p>到现在合并请求的部分我们描述了单个连接多个请求的方式，如果多个合并请求一同发送也会遇到大麻烦，同样会遇到顺序问题，因此我们依然需要用队列来规避这个问题。用了队列的方式保证多个请求的有序性，与前面用队列逐个发送的方式相比，我们除了用队列暂时存储请求数据外还在队列之上进行操作请求合并，这样能更有效更方便的做到合并以及有序发送。</p>
 
-<p>用了队列的方式保证请求的有序性，并且在队列之上进行操作请求合并，能更有效更便捷的进行合并。</p>
-
-<p>队列与合并结合的伪代码如下:</p>
+<p>我们来看看队列与合并数据包相结合的方式用伪代码描述:</p>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">//将请求推入队列</span>
 <span class="k">void</span> <span class="nf">RequestHttp</span><span class="p">(</span><span class="n">Request</span> <span class="n">req</span><span class="p">)</span>
 <span class="p">{</span>
@@ -912,7 +891,7 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
 <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="c1">//是否完成HTTP</span>
-    <span class="n">If</span><span class="p">(</span> <span class="n">IsHttpFinished</span><span class="p">()</span> <span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">IsHttpFinished</span><span class="p">()</span> <span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">//推出多个请求进行合并</span>
         <span class="n">lst_combine_req</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
@@ -922,15 +901,16 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
             <span class="n">lst_combine_req</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
         <span class="p">}</span>
 
+        <span class="c1">//合并多个请求</span>
         <span class="n">combine_request</span> <span class="p">=</span> <span class="n">CombineRequest</span><span class="p">(</span><span class="n">lst_combine_req</span><span class="p">);</span>
         <span class="n">StartHttpRequest</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
     <span class="p">}</span>
     <span class="k">else</span>
     <span class="p">{</span>
         <span class="c1">//是否收到响应</span>
-        <span class="n">If</span><span class="p">(</span><span class="n">HttpIsDone</span><span class="p">())</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">HttpIsDone</span><span class="p">())</span>
         <span class="p">{</span>
-            <span class="c1">//排序</span>
+            <span class="c1">//按ID从小到大排序</span>
             <span class="n">sort</span><span class="p">(</span><span class="n">combine_request</span><span class="p">.</span><span class="n">lst_response</span><span class="p">);</span>
 
             <span class="c1">//循环处理每个响应逻辑</span>
@@ -950,7 +930,7 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
 <span class="c1">//根据数据处理逻辑</span>
 <span class="k">void</span> <span class="nf">ProcessResponse</span><span class="p">(</span><span class="n">Response</span> <span class="n">data</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">If</span><span class="p">(</span><span class="n">mCurrentRequest</span> <span class="p">!=</span> <span class="k">null</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">mCurrentRequest</span> <span class="p">!=</span> <span class="k">null</span>
         <span class="p">&amp;&amp;</span> <span class="n">mCurrentRequest</span><span class="p">.</span><span class="n">Callback</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">//回调句柄</span>
@@ -959,7 +939,7 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>具体逻辑中的操作伪代码：</p>
+<p>来看看从按钮点击事件开始的具体逻辑的操作：</p>
 <div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="c1">//按钮事件</span>
 <span class="k">void</span> <span class="nf">on_click</span><span class="p">()</span>
 <span class="p">{</span>
@@ -996,11 +976,11 @@ Agent发起的，当用户接收到服务器的响应数据后，通过这些数
     <span class="n">do_something</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>上述伪代码中表现了，客户端可以随意的发送请求而不需要去关心顺序的问题，大大提高了程序员的网络逻辑编程效率。</p>
+<p>上述伪代码中描述的在具体业务逻辑中，我们客户端在编写网络请求时可以随意的调用发送请求而不再需要关心顺序和发送效率的问题，大大提高了程序员的网络逻辑编程效率。</p>
 
-<p>对多个请求进行合并后减少HTTP请求的次数，对速度的提升很有效果，但这里还有一些细节问题，比如多少个开始进行合并，或者多少时间内合并一次。</p>
+<p>我们对多个HTTP请求进行了合并数据的操作后减少请求的次数，对速度的提升很有大的效果，但这里还有一些细节问题需要我们关注，比如多少个开始进行合并，或者多少时间内合并一次。</p>
 
-<p>为了让HTTP最大效率的得到提升，必须每次请求得到响应后就应该立即进行下一次HTTP请求，如果有等待合并间隔，反而减低了网络效率。不过每次合并数量可以做一些限制，比如有1000个请求，我们不能统统合并了，为了保证发送数据大小和回调数据大小合适，也保证服务器不会为了一下子需要处理1000个数据请求而当机，我们必须限制一次性合并的个数，比如每次最多合并10个请求数据包，来保证减少连接次数减少的情况下，服务器不会在瞬间压力过大。</p>
+<p>为了让HTTP最大效率的得到提升，必须每次请求得到响应后就应该立即进行下一次HTTP请求，如果有等待合并间隔，反而减低了网络效率。不过每次合并数量需要做一些限制，如果有100个请求同时被发起，我们不能统统合并了，这也是为了保证发送数据大小和回调数据大小合适，数据包越大丢包重发的概率也就越大，因此我们必须限制一次性合并的个数，我们可以选择每次最多合并10个请求数据包，以保证减少连接次数减少的情况下，发送和接收的数据包不会过大。</p>
 
   <p>感谢您的耐心阅读</p>
   <p>Thanks for your reading</p>
