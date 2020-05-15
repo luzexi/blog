@@ -14,7 +14,7 @@ author:
   url: http://www.luzexi.com
 permalink: pretty
 
-baseurl: /
+# baseurl: /
 
 highlighter: none
 
