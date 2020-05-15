@@ -13,6 +13,6 @@ title: 友情链接
 
 [技术博客](https://www.d1blog.com/)
 
-### 加友情链接的请留言
+### 加友情链接的请留言或发Emial
 
 {% include comments.html %}

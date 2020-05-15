@@ -1,0 +1,51 @@
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
+
+# Permalinks
+# permalink:        pretty
+# relative_permalinks: true
+
+# Setup
+title:            技术人生
+tagline:          'www.luzexi.com'
+description:      '技术，哲学，金融'
+url:              http://www.luzexi.com
+baseurl:          /
+
+author:
+  name:           'Jesse Lu'
+  url:            http://www.luzexi.com
+
+# gems: [jekyll-paginate]
+paginate:         10
+
+excerpt_separator: "\n\n"
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+
+
+# plugins
+comments: 		  false
+analytics : 	  true
+share: true
+advertisement_image: true
+advertisement_category: true
+advertisement_bottom: true
+advertisement_content: true
+copyright_info: true
+tip_info: true
+gongzhonghao: true
+relate_article: true
+unity3d_book_copyright: true
+
+#donation
+paypal_donation: false
+
+# Custom vars
+version:          2.1.0
+
+github:
+  repo:           https://github.com/luzexi

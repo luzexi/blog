@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 赌博游戏程序设计中如何运用数学概率论 - 技术人生</title><link rel="shortcut icon" href="//favicon.png"><link rel="alternate" type="application/atom+xml" title="技术人生" href="//atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com//feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="//sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>赌博游戏程序设计中如何运用数学概率论</h2><p>我们在《王途霸业》中加入了一个非常有特色的系统，叫做”通吃谷”，它是一个类似于街机中的水果机那样的游戏系统。每盘玩家可以押注8个元素中任意个数，按开始后，轮盘开始转动，一旦停下来，停在某个元素上，该元素就算中奖，奖励的倍数由所在的元素显示的倍数决定。这种类似的押宝游戏我一直想做，但一直没有机会，所以这个押宝系统一直对我笼罩着一层神秘感。随着研究的深入，这层神秘感渐渐消除。</p><p>首先说说，如何将概率的准确性达到最高。内容在最下面的转载内容部分。请细细品尝。</p><p>再着，先把大部分人认定的那些误区给去除，水果机并不是由算法支撑核心的，那是数学概率论的一部分。每个元素都有一个概率，准确定义这个概率，再加上一定的算法技巧，就会有一个可玩性，体验好，庄家必赢的赌博系统。</p><p>首先给8个元素定义一个赔率，5倍，10倍，15倍，20倍，30倍，40倍，50倍，100倍。漫无目的的调整中奖概率是件很痛苦的事情，那我就用一个方法去定义，提取这些倍率的公倍数，在将他们各自的倍率去除以这个公倍数，得到一个基础的中奖概率。这样就得到一个总和加起来并不是百分之一百的概率体系。为什么要是总和不是100%的概率体系呢？我把剩余的未中奖的概率设定为吞吃比率，也就是在这些中奖概率后，有一个一定吞吃所有的概率，当这个吞吃概率被命中时，我们就需要用一定的算法来获得一个不一定不让玩家赢的中奖位置，这个中奖位置也可能是玩家选择的位置，也可以是玩家没有选择的赔率，为了让游戏体验更加的有趣，这个算法非常重要。</p><p>其实整个游戏所用到的知识非常简单，而如何让玩家能有一个非常良好的体验，是从吞吃算法和概率调整上下手。我并没有去细致的调整概率，而是做了一个整体概率调整的方案，也就是一个浮点数调整所有概率，当浮点数为1时，是基础的概率，浮点数越大，各元素的中奖概率越大，玩家中奖机会也越大，再加上吞吃算法，整个游戏体验将会是非常切合人的本性。这样，既实现了游戏了娱乐性，也实现了庄家必赢的局面，最重要的是，整个游戏调整起来非常便捷，无需了解很多知识，这也是对项目灵活性的一个很大帮助。</p><p>以下内容转载网络，由于页面不复存在，所以只能贴出来： 计算机随机模拟方法，是一种基于”随机数”的计算方法。这一方法源于美国在第二次世界大战中研制原子弹的”曼哈顿计划”。该计划的主持人之一、数学家冯诺伊曼用驰名世界的赌城-摩纳哥的Monte Carlo-来命名这种方法，为它蒙上了一层神秘色彩。Monte Carlo方法的基本思想很早以前就被人们所发现和利用。早在17世纪，人们就知道用事件发生的”频率”来决定事件的”概率”。19世纪人们用投针试验的方法来决定圆周率pi。本世纪40年代电子计算机的出现，特别是近年来高速电子计算机的出现，使得用数学方法在计算机上大量、快速地模拟这样的试验成为可能。考虑平面上的一个边长为1的正方形及其内部的一个形状不规则的”图形”，如何求出这个”图形”的面积呢？Monte Carlo方法是这样一种”随机化”的方法：向该正方形”随机地”投掷N个点,其中有M个点落于”图形”内，则该”图形”的面积近似为M/N。可用民意测验来作一个不严格的比喻。民意测验的人不是征询每一个登记选民的意见，而是通过对选民进行小规模的抽样调查来确定可能的优胜者。其基本思想是一样的。科技计算中的问题比这要复杂得多。比如金融衍生产品（期权、期货、掉期等）的定价及交易风险估算，问题的维数（即变量的个数）可能高达数百甚至数千。对这类问题，难度随维数的增加呈指数增长，这就是所谓的”维数的灾难”(Course Dimensionality)，传统的数值方法难以对付（即使使用速度最快的计算机）。Monte Carlo方法能很好地用来对付维数的灾难，因为该方法的计算复杂性不再依赖于维数。以前那些本来是无法计算的问题现在也能够计算量。为提高方法的效率，科学家们提出了许多所谓的”方差缩减”技巧。另一类形式与Monte Carlo方法相似，但理论基础不同的方法-“拟蒙特卡罗方法”(Quasi-Monte Carlo方法)-近年来也获得迅速发展。我国数学家华罗庚、王元提出的”华-王”方法即是其中的一例。这种方法的基本思想是”用确定性的超均匀分布序列(数学上称为Low Discrepancy Sequences) 代替Monte Carlo方法中的随机数序列。对某些问题该方法的实际速度一般可比Monte Carlo方法提出高数百倍，并可计算精确度。</p><p>高精度概率事件，程序实现如下：</p><p>设P(i)，其中i=1..n，为n个个体被选择的概率，在轮盘上表示为所占扇区的面积百分比，这里显然sum(P)=1。select用来保存n次选择的结果。</p><p>1） 第一种实现办法：可以想象一个转动的轮盘，注意这里轮盘最多只转一圈。每次转轮盘前，把色子随机放到轮盘外缘的某处，即色子不随轮盘转动，以一个随机数sel代表它所处的位置。轮盘转动后，色子所指示的轮盘扇区号不断变化，轮盘停止时色子所指示的轮盘上扇区号，即为本次轮盘赌所选中的个体号。</p><pre><code class="language-c#">for i = 1:n   %第i次掷色子
+    sel = rand; %产生一个0、1之间的随机数，代表色子在轮盘外缘所指示的位置
+    sumPs = 0;   %轮盘初始转动的位置，从0变化到1
+    j = 1;   %轮盘初始指示的位置
+    while sumPs&lt;sel   %终止条件为轮盘转动的位置超过色子位置
+        sumPs = sumPs + P(j)   %轮盘转动
+        j = j + 1；   %轮盘指示位置
+    end
+    select(i) = j-1;   %轮盘停止时色子停留位置所指示的个体
+end   %循环终了，会对轮盘上由P所划分出来的n个区间产生n次随机选择，扇区越大，该扇区被选中的几率也越大
+</code></pre><p>还需要注意的是：上面的程序中，我们当然可以把n改成2<em>n或者10</em>n，产生的结果都是’个体概率所表示扇区越大，该个体被选中的几率也越大’，并且随着实验次数的增大，这一结果越精确。</p><script type="text/javascript"> if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端 /*mobile-20:5*/ var cpro_id = "u3493987"; document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>"); } else { /*700*200信息流*/ var cpro_id = "u3469788"; document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>"); } </script><p>2）这种方法可以想象成往划分好扇区的轮盘里扔色子，事先生成一组满足均匀分布的随机数，代表n次掷色子或者n个色子一起扔，轮盘不动，色子所在区域为选择结果。</p><pre><code class="language-c#">r = rand(1,n)   %预先产生n个色子的位置，注意这里r服从0、1之间均匀分布
+for i = 1:n   %第i次轮盘赌
+    select(i) = n;   %本次轮盘赌的结果初始化为n
+    for j = 1:n   %轮盘开始转动
+        if r(j) &lt;=P(i)   %若色子停在轮盘第j扇区
+        select(i) = j; %则第i次轮盘赌的结果为j
+        break;   %第i次轮盘赌结束
+    end %~第i次轮盘赌结束
+end %~第i次轮盘赌结束
+end %n次轮盘赌结束
+</code></pre><pre><code class="language-c#">%%%%%%%%%%%%%下面为完整的matlab程序实现%%%%%%%%%%%%%%%
+function Select=Roulette(P,num)
+按轮盘赌策略选择下一点,返回num次轮盘赌结果
+第一种轮盘赌方法,精度很低,
+ m = length(P);
+ Select = zeros(1,num);
+ for i=1:num
+     Select(i) = m;% 初始化为最后一个
+     for j=1:m %:按概率选择
+       if P(j)&gt;rand()
+          Select(i)=j;
+          break;
+       end
+     end
+ end
+第二种轮盘赌方法,精度较高
+m = length(P);
+Select = zeros(1,num);
+r = rand(1,num);
+for i=1:num
+    sumP = 0;
+    j = ceil(m*rand); %产生1~m之间的随机整数
+    while sumP &lt; r(i)
+        sumP = sumP + P(mod(j-1,m)+1);
+        j = j+1;
+    end
+Select(i) = mod(j-2,m)+1;
+end
+ 本程序中轮盘赌方法的准确程度可由如下程序验证
+ P=rand(10,1);
+ P=P./sum(P);
+ Select=Roulette(P,1e6);
+ for i=1:10
+     Ps(i)=(sum(Select==i)/1e6);
+ end
+最后验证该轮盘赌方法准确程度
+比较P和Ps差异大小，例
+</code></pre><span class="meta"><time datetime="2013-09-04T21:07:10+08:00">September 4, 2013</time> &middot; <a href="/tag/游戏通用模块">游戏通用模块</a></span> <!--<span class="meta"><time datetime="2013-09-04T21:07:10+08:00">September 4, 2013</time> &middot; <a class="post" href="/tag/游戏通用模块">游戏通用模块</a></span> --></section></main></body></html>

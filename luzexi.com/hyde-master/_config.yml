@@ -1,35 +1,42 @@
-# Dependencies
-markdown:         redcarpet
-highlighter:      pygments
-
-# Permalinks
-# permalink:        pretty
-# relative_permalinks: true
-
-# Setup
-title:            技术人生
-tagline:          'www.luzexi.com'
-description:      '技术，哲学，金融'
-url:              http://www.luzexi.com
-baseurl:          /
-
+site: 技术人生
+url: http://www.luzexi.com
+title: 技术人生
+description: '技术，哲学，金融'
+twitter:
+  username: luzexi
+  card: summary
+  creator: 陆泽西
 author:
-  name:           'Jesse Lu'
-  url:            http://www.luzexi.com
+  twitter: 陆泽西
+  name: 'Jesse Lu'
+  avatar:
+  email: jesse_luzexi@163.com
+  url: http://www.luzexi.com
+permalink: pretty
 
-# gems: [jekyll-paginate]
-paginate:         10
+baseurl: /
 
-excerpt_separator: "\n\n"
+highlighter: none
+
+exclude:
+  - .jekyll-cache
+  
+compress_html:
+  clippings: all
+  comments: ["<!-- ", " -->"]
+
+sass:
+  sass_dir:          _sass
+  style:            :compressed
 
 plugins:
   - jekyll-paginate
+  # - jekyll-seo-tag
   - jekyll-sitemap
 
-
 # plugins
-comments: 		  false
-analytics : 	  true
+comments:       false
+analytics :     true
 share: true
 advertisement_image: true
 advertisement_category: true
@@ -44,8 +51,29 @@ unity3d_book_copyright: true
 #donation
 paypal_donation: false
 
-# Custom vars
-version:          2.1.0
-
-github:
-  repo:           https://github.com/luzexi
+collections:
+  pages:
+    output: true
+    permalink: /:name
+  posts:
+    output: true
+    permalink: /:year/:month/:day/:slug
+  
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
