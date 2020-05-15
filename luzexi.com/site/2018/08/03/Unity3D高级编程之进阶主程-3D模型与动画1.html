@@ -1,102 +1,103 @@
-<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范</h2><h3>3D模型大小，面数，贴图大小，骨骼数量在游戏中的规范。</h3><p>===</p><p>资源的规范在项目中是比较重要的，看到过有很多项目都没有重视资源规范，他们奢求高的运行效率，却不懂资源的规范是运行效率的前提。</p><p>有的游戏项目，一个人物模型就有几万个面，一个建筑就有几十万个面，不堪入目。贴图也有很糟糕的，到处都是不规则的贴图蕾丝1024和2048大小的贴图到处都是，骨骼数量有的甚至到了几百。在这样恶劣的资源环境情况下，项目的运行效率怎么可能高。</p><p>资源的优劣直接导致了项目的性能好坏，模型太大，面数太多，贴图太大，会导致包体过大，骨骼数量太多导致CPU在动画上消耗过多。资源过大过重，还会导致CPU消耗在资源加载上面的时间过多过长，导致画面帧率下降，卡顿严重等问题。假如这个游戏项目完成打包后，在这么劣质的性能品质下发布出去，基本上投资人的钱就打水漂了。</p><p>对于美术资源来说，模型面数不是越多越好，越细越好，而是在一定数量的限制下，我们尽最大努力做到最大限度的美化。同样贴图也不是越大越好，精度越高越好，而是在一定大小的限制下，做到最大限度的不失真。资源规范能有效的限制美术人员在制作美术资源时无度的扩张。</p><h6>如何规范3D美术资源？</h6><p>模型的大小一般都会按正常的尺寸进行制作，通常都规定1个单位空间就是1米，也有例外的时候，不过也是按这个放大缩小的，比如1个单位空间为1厘米，或10米等。</p><h6>如何确定美术资源规范的大小。</h6><h3>1， 根据运用的场景而不同。</h3><p>像汤姆猫这种强调单一主角的场景，主要资源全部投入到主角一个人的，对主角进行精细化的雕琢是很有必要的。</p><p>这种场景的人物模型做到1万面也不为过，主角的骨骼也可以做得很精细，骨骼数量可以达到50-100个，贴图大小也可以在512 x 512左右，如果需要 1024 x 1024 的贴图我觉得问题也不是很大，只是如果需求中有换装时，需要考虑下包体大小。</p><p>第三人称视角的RPG游戏，由于视角与角色的距离有限，同时看到的场景范围有限，可以使用动态场景地图加载的方式控制内存使用量，主要是同屏单位数量会决定模型面数。如果人模模型面数控制在3000-4000面，骨骼数量控制在30个左右，至于建筑模型面数因为大小差异太多无法统一，不过我们可以用整体面数统计法来规范资源。贴图可以控制在 256 x 256 及以下，比如主贴图为 256 x 256，副贴图为 128 x 128。</p><p>总的来说美术资源规范就是限制模型的面数，限制贴图的大小，限制一个材质球的贴图张数，限制一个人物身上的材质球数量，限制骨骼数量，具体数字是多少需要因项目而定，不过这里可以给一个大多数项目使用的标准，3000面左右的模型，不超过256大小的贴图，一个材质球内至多3张贴图，一个人物不超过2个材质球使用量，30个左右的骨骼数量。</p><p>如果做的是《塞尔达传说》，《魔兽世界》这种超大型的游戏场景，可以从高空俯瞰整个场景的这种情况，渲染压力比较大，除了制定美术规范外，我们也需要借用用其他方法比如LOD，它能把渲染压力和渲染质量平衡的很好。后面章节中会具体介绍LOD在优化中的运用。</p><h3>2， 使用反推计算来得出规范。</h3><p>对于一些模型物体大小差异比较大的，无法统一模型与贴图面数的，我们可以用全场景总面数来控制。</p><p>我们可以用这种方式来举个例子，假如我们在场景中同屏面熟控制在6万面左右，然后再开始部署，地形模型总共3万面左右，数量多的小件模型在100面以下平均50面，中型建筑在500-1500面平均下1000面好了，大型建筑在2000-5000面以下平均3000面。这样的情况下，除了地形模型剩下的还有3万面，小件模型可以放100件也就是5千面，中型建筑可以放10件1万面，大型建筑5件，1万面，总共3万面差不多满足了6万面左右的需求。</p><p>贴图大小也可以同样按照这种方法进行规范，假如我们设定总体内存中贴图的大小不得超过100MB，倒推出去平均有多少种小件模型在场景内，平均有多少种中型模型在场景内，平均有多少种大型建筑在场景内。如果小件平均有30种，中型模型有20种，大型模型有10种，那么小件每个贴图不得超过0.3MB，中型模型每个贴图不得超过1MB，大型模型每个贴图不得超过2MB。</p><p>除了占用内存的大小，也可以用总张数和size大小来进行规范。例如我们设定场景的总体贴图大小设置为不得超过 20张 1024 x 1024，那么在小件平均30种，中型模型平均20种，大型模型平均10种的情况下，我们就可以规定为小件贴图大小在128 x 128以下，中型模型贴图大小在256 x 256以下，大型模型贴图大小在 512 x 512 以下。</p><p>用反推的计算方法来计算和规范，一整个地形场景的模型和贴图的规范就会相对容易些，对于整体的内存和计算量的把控会加强很多。</p><h3>3， 规范的自动检测</h3><p>无论什么方法，都敌不过实际测试。如果可以在项目前加入实际的压力测试环节，或者在项目进行中加入渲染压力测试的环境，会更有利于对美术资源的规范，专门有人做渲染压力的实际测试是有必要的。</p><p>专门派遣一个人来完成这件事情，做好前期的计划和测试是对项目负责的做法，是对项目有更好前程的安全保障。但仍然有许多项目和公司，由于人才缺乏成本高企等问题下，没有派人去做各种渲染测试，只是一味的求快求速度是有问题的。不过现实仍然打败了大多数人和项目，更多时候也是无奈的选择，有时我们只能边做边测，遇到具体问题寻找自己的答案。</p><p>只是人工去寻找美术资源规范问题仍然会有很多遗漏，不能形成系统化的流程与规范，导致大家都是有一枪打一枪，发现就修一个，无法确定是否有遗漏，以及完全也不知道什么时候有人一不小心又提交了不符合的资源。</p><p>因此我们要建立自动规范的检测程序，这些测试程序应该设定为每个2-3小时运行一次，运行后提醒我们有多少资源存在不规范的情况，分别是哪些资源罗列出来，甚至可以细化到是最近一次谁提交的。</p><p>这里列举一个我在前一个能够分享的项目的检测例子:</p><div class="highlight"><pre><code class="language-C#" data-lang="C#"><span></span><span class="na">[MenuItem(&quot;校验工具/角色、模型、地形Prefab&quot;)]</span>
-<span class="k">static</span> <span class="k">public</span> <span class="k">void</span> <span class="nf">ModelPrefabValidate</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">//写入csv日志</span>
-    <span class="n">StreamWriter</span> <span class="n">sw</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StreamWriter</span><span class="p">(</span><span class="s">&quot;模型Prefab检测报告.csv&quot;</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="n">System</span><span class="p">.</span><span class="n">Text</span><span class="p">.</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">);</span>
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:"Arial","Microsoft YaHei","黑体","宋体",sans-serif, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>《Unity3D高级编程之进阶主程》第五章，3D模型与动画(一) - 美术资源的规范</h2><h3 id="3d模型大小面数贴图大小骨骼数量在游戏中的规范">3D模型大小，面数，贴图大小，骨骼数量在游戏中的规范。</h3><p>===</p><p>资源的规范在项目中是比较重要的，看到过有很多项目都没有重视资源规范，他们奢求高的运行效率，却不懂资源的规范是运行效率的前提。</p><p>有的游戏项目，一个人物模型就有几万个面，一个建筑就有几十万个面，不堪入目。贴图也有很糟糕的，到处都是不规则的贴图蕾丝1024和2048大小的贴图到处都是，骨骼数量有的甚至到了几百。在这样恶劣的资源环境情况下，项目的运行效率怎么可能高。</p><p>资源的优劣直接导致了项目的性能好坏，模型太大，面数太多，贴图太大，会导致包体过大，骨骼数量太多导致CPU在动画上消耗过多。资源过大过重，还会导致CPU消耗在资源加载上面的时间过多过长，导致画面帧率下降，卡顿严重等问题。假如这个游戏项目完成打包后，在这么劣质的性能品质下发布出去，基本上投资人的钱就打水漂了。</p><p>对于美术资源来说，模型面数不是越多越好，越细越好，而是在一定数量的限制下，我们尽最大努力做到最大限度的美化。同样贴图也不是越大越好，精度越高越好，而是在一定大小的限制下，做到最大限度的不失真。资源规范能有效的限制美术人员在制作美术资源时无度的扩张。</p><h6 id="如何规范3d美术资源">如何规范3D美术资源？</h6><p>模型的大小一般都会按正常的尺寸进行制作，通常都规定1个单位空间就是1米，也有例外的时候，不过也是按这个放大缩小的，比如1个单位空间为1厘米，或10米等。</p><h6 id="如何确定美术资源规范的大小">如何确定美术资源规范的大小。</h6><h3 id="1-根据运用的场景而不同">1， 根据运用的场景而不同。</h3><p>像汤姆猫这种强调单一主角的场景，主要资源全部投入到主角一个人的，对主角进行精细化的雕琢是很有必要的。</p><p>这种场景的人物模型做到1万面也不为过，主角的骨骼也可以做得很精细，骨骼数量可以达到50-100个，贴图大小也可以在512 x 512左右，如果需要 1024 x 1024 的贴图我觉得问题也不是很大，只是如果需求中有换装时，需要考虑下包体大小。</p><p>第三人称视角的RPG游戏，由于视角与角色的距离有限，同时看到的场景范围有限，可以使用动态场景地图加载的方式控制内存使用量，主要是同屏单位数量会决定模型面数。如果人模模型面数控制在3000-4000面，骨骼数量控制在30个左右，至于建筑模型面数因为大小差异太多无法统一，不过我们可以用整体面数统计法来规范资源。贴图可以控制在 256 x 256 及以下，比如主贴图为 256 x 256，副贴图为 128 x 128。</p><p>总的来说美术资源规范就是限制模型的面数，限制贴图的大小，限制一个材质球的贴图张数，限制一个人物身上的材质球数量，限制骨骼数量，具体数字是多少需要因项目而定，不过这里可以给一个大多数项目使用的标准，3000面左右的模型，不超过256大小的贴图，一个材质球内至多3张贴图，一个人物不超过2个材质球使用量，30个左右的骨骼数量。</p><p>如果做的是《塞尔达传说》，《魔兽世界》这种超大型的游戏场景，可以从高空俯瞰整个场景的这种情况，渲染压力比较大，除了制定美术规范外，我们也需要借用用其他方法比如LOD，它能把渲染压力和渲染质量平衡的很好。后面章节中会具体介绍LOD在优化中的运用。</p><h3 id="2-使用反推计算来得出规范">2， 使用反推计算来得出规范。</h3><p>对于一些模型物体大小差异比较大的，无法统一模型与贴图面数的，我们可以用全场景总面数来控制。</p><p>我们可以用这种方式来举个例子，假如我们在场景中同屏面熟控制在6万面左右，然后再开始部署，地形模型总共3万面左右，数量多的小件模型在100面以下平均50面，中型建筑在500-1500面平均下1000面好了，大型建筑在2000-5000面以下平均3000面。这样的情况下，除了地形模型剩下的还有3万面，小件模型可以放100件也就是5千面，中型建筑可以放10件1万面，大型建筑5件，1万面，总共3万面差不多满足了6万面左右的需求。</p><p>贴图大小也可以同样按照这种方法进行规范，假如我们设定总体内存中贴图的大小不得超过100MB，倒推出去平均有多少种小件模型在场景内，平均有多少种中型模型在场景内，平均有多少种大型建筑在场景内。如果小件平均有30种，中型模型有20种，大型模型有10种，那么小件每个贴图不得超过0.3MB，中型模型每个贴图不得超过1MB，大型模型每个贴图不得超过2MB。</p><p>除了占用内存的大小，也可以用总张数和size大小来进行规范。例如我们设定场景的总体贴图大小设置为不得超过 20张 1024 x 1024，那么在小件平均30种，中型模型平均20种，大型模型平均10种的情况下，我们就可以规定为小件贴图大小在128 x 128以下，中型模型贴图大小在256 x 256以下，大型模型贴图大小在 512 x 512 以下。</p><p>用反推的计算方法来计算和规范，一整个地形场景的模型和贴图的规范就会相对容易些，对于整体的内存和计算量的把控会加强很多。</p><h3 id="3-规范的自动检测">3， 规范的自动检测</h3><p>无论什么方法，都敌不过实际测试。如果可以在项目前加入实际的压力测试环节，或者在项目进行中加入渲染压力测试的环境，会更有利于对美术资源的规范，专门有人做渲染压力的实际测试是有必要的。</p><p>专门派遣一个人来完成这件事情，做好前期的计划和测试是对项目负责的做法，是对项目有更好前程的安全保障。但仍然有许多项目和公司，由于人才缺乏成本高企等问题下，没有派人去做各种渲染测试，只是一味的求快求速度是有问题的。不过现实仍然打败了大多数人和项目，更多时候也是无奈的选择，有时我们只能边做边测，遇到具体问题寻找自己的答案。</p><p>只是人工去寻找美术资源规范问题仍然会有很多遗漏，不能形成系统化的流程与规范，导致大家都是有一枪打一枪，发现就修一个，无法确定是否有遗漏，以及完全也不知道什么时候有人一不小心又提交了不符合的资源。</p><p>因此我们要建立自动规范的检测程序，这些测试程序应该设定为每个2-3小时运行一次，运行后提醒我们有多少资源存在不规范的情况，分别是哪些资源罗列出来，甚至可以细化到是最近一次谁提交的。</p><p>这里列举一个我在前一个能够分享的项目的检测例子:</p><pre><code class="language-C#">
+[MenuItem("校验工具/角色、模型、地形Prefab")]
+static public void ModelPrefabValidate()
+{
+	//写入csv日志
+    StreamWriter sw = new StreamWriter("模型Prefab检测报告.csv", false, System.Text.Encoding.UTF8);
 
-    <span class="kt">string</span><span class="p">[]</span> <span class="n">allAssets</span> <span class="p">=</span> <span class="n">AssetDatabase</span><span class="p">.</span><span class="n">GetAllAssetPaths</span><span class="p">();</span>
-    <span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">s</span> <span class="k">in</span> <span class="n">allAssets</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">UIAssetPost</span><span class="p">.</span><span class="n">IsInPath</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">ModelFbxAssetPost</span><span class="p">.</span><span class="n">Character_Prefab_path</span><span class="p">)</span>
-            <span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">GameObject</span> <span class="n">obj</span> <span class="p">=</span> <span class="n">AssetDatabase</span><span class="p">.</span><span class="n">LoadAssetAtPath</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="k">typeof</span><span class="p">(</span><span class="n">GameObject</span><span class="p">))</span> <span class="k">as</span> <span class="n">GameObject</span><span class="p">;</span>
+    string[] allAssets = AssetDatabase.GetAllAssetPaths();
+	foreach (string s in allAssets)
+    {
+    	if (UIAssetPost.IsInPath(s, ModelFbxAssetPost.Character_Prefab_path)
+    		)
+    	{
+			GameObject obj = AssetDatabase.LoadAssetAtPath(s, typeof(GameObject)) as GameObject;
 
-            <span class="c1">//--检查Fbx，网格，设置</span>
-            <span class="n">MeshFilter</span><span class="p">[]</span> <span class="n">meshes</span> <span class="p">=</span> <span class="n">obj</span><span class="p">.</span><span class="n">GetComponentsInChildren</span><span class="p">&lt;</span><span class="n">MeshFilter</span><span class="p">&gt;();</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">meshes</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="kt">int</span> <span class="n">vertexCount_sum</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            //--检查Fbx，网格，设置
+        	MeshFilter[] meshes = obj.GetComponentsInChildren&lt;MeshFilter&gt;();
+        	if (meshes != null)
+        	{
+            	int vertexCount_sum = 0;
 
-                <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span> <span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">meshes</span><span class="p">.</span><span class="n">Length</span> <span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
-                <span class="p">{</span>
-                    <span class="n">Mesh</span> <span class="n">mesh</span> <span class="p">=</span> <span class="n">meshes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">sharedMesh</span><span class="p">;</span>
-                    <span class="n">SkinnedMeshRenderer</span> <span class="n">smr</span> <span class="p">=</span> <span class="n">meshes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">SkinnedMeshRenderer</span><span class="p">&gt;();</span>
-                    <span class="c1">// BatchRenderer br = meshes[i].GetComponent&lt;BatchRenderer&gt;();</span>
+            	for(int i = 0 ; i &lt; meshes.Length ; i++)
+            	{
+            		Mesh mesh = meshes[i].sharedMesh;
+            		SkinnedMeshRenderer smr = meshes[i].GetComponent&lt;SkinnedMeshRenderer&gt;();
+            		// BatchRenderer br = meshes[i].GetComponent&lt;BatchRenderer&gt;();
 
-                    <span class="k">if</span><span class="p">(</span><span class="n">mesh</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-                    <span class="p">{</span>
-                        <span class="n">str_record</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;丢失Mesh ,{0} ,{1}&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">meshes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">name</span><span class="p">);</span>
-                    <span class="p">}</span>
-                    <span class="k">else</span>
-                    <span class="p">{</span>
-                        <span class="n">ModelImporter</span> <span class="n">model_importer</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
-                        <span class="kt">string</span> <span class="n">path_obj</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
-                        <span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span> <span class="n">obj_fbx</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+            		if(mesh == null)
+            		{
+            			str_record = string.Format("丢失Mesh ,{0} ,{1}", s, meshes[i].name);
+            		}
+            		else
+            		{
+	            		ModelImporter model_importer = null;
+	            		string path_obj = null;
+	            		UnityEngine.Object obj_fbx = null;
 
-                        <span class="c1">//检查fbx路径</span>
-                        <span class="n">path_obj</span> <span class="p">=</span> <span class="n">AssetDatabase</span><span class="p">.</span><span class="n">GetAssetPath</span><span class="p">(</span><span class="n">mesh</span><span class="p">);</span>
-                        <span class="n">obj_fbx</span> <span class="p">=</span> <span class="n">AssetDatabase</span><span class="p">.</span><span class="n">LoadAssetAtPath</span><span class="p">(</span><span class="n">path_obj</span><span class="p">,</span> <span class="k">typeof</span><span class="p">(</span><span class="n">GameObject</span><span class="p">));</span>
+            			//检查fbx路径
+            			path_obj = AssetDatabase.GetAssetPath(mesh);
+            			obj_fbx = AssetDatabase.LoadAssetAtPath(path_obj, typeof(GameObject));
 
-                        <span class="c1">//检查fbx设置</span>
-                        <span class="n">model_importer</span> <span class="p">=</span> <span class="n">AssetImporter</span><span class="p">.</span><span class="n">GetAtPath</span><span class="p">(</span><span class="n">path_obj</span><span class="p">)</span> <span class="k">as</span> <span class="n">ModelImporter</span><span class="p">;</span>
-                        <span class="k">if</span><span class="p">(!</span><span class="n">model_importer</span><span class="p">.</span><span class="n">optimizeMesh</span><span class="p">)</span>
-                        <span class="p">{</span>
-                            <span class="n">str_record</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Fbx设置中 optimizeMesh off 没开起来 ,{0} ,{1}&quot;</span><span class="p">,</span> <span class="n">path_obj</span><span class="p">,</span> <span class="n">obj_fbx</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
-                        <span class="p">}</span>
-                        <span class="k">if</span><span class="p">(</span><span class="n">model_importer</span><span class="p">.</span><span class="n">importMaterials</span><span class="p">)</span>
-                        <span class="p">{</span>
-                            <span class="n">str_record</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Fbx设置中 importMaterials on 被开起来了 ,{0} ,{1}&quot;</span><span class="p">,</span> <span class="n">path_obj</span><span class="p">,</span> <span class="n">obj_fbx</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
-                        <span class="p">}</span>
-                        <span class="k">if</span><span class="p">(!</span><span class="n">model_importer</span><span class="p">.</span><span class="n">weldVertices</span><span class="p">)</span>
-                        <span class="p">{</span>
-                            <span class="n">str_record</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Fbx设置中 weldVertices off 没开起来 ,{0} ,{1}&quot;</span><span class="p">,</span> <span class="n">path_obj</span><span class="p">,</span> <span class="n">obj_fbx</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
-                        <span class="p">}</span>
-                        <span class="k">if</span><span class="p">(</span><span class="n">model_importer</span><span class="p">.</span><span class="n">importTangents</span> <span class="p">!=</span> <span class="n">ModelImporterTangents</span><span class="p">.</span><span class="n">None</span><span class="p">)</span>
-                        <span class="p">{</span>
-                            <span class="n">str_record</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Fbx设置中 importTangents on 被开起来了 ,{0} ,{1}&quot;</span><span class="p">,</span> <span class="n">path_obj</span><span class="p">,</span> <span class="n">obj_fbx</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
-                        <span class="p">}</span>
-                        <span class="k">if</span><span class="p">(</span><span class="n">model_importer</span><span class="p">.</span><span class="n">importNormals</span> <span class="p">!=</span> <span class="n">ModelImporterNormals</span><span class="p">.</span><span class="n">Import</span><span class="p">)</span>
-                        <span class="p">{</span>
-                            <span class="n">str_record</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Fbx设置中 importNormals off 没开起来 ,{0} ,{1}&quot;</span><span class="p">,</span> <span class="n">path_obj</span><span class="p">,</span> <span class="n">obj_fbx</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
-                        <span class="p">}</span>
-                        <span class="k">if</span><span class="p">(</span><span class="n">smr</span> <span class="p">!=</span> <span class="k">null</span>
-                            <span class="p">&amp;&amp;</span> <span class="n">model_importer</span><span class="p">.</span><span class="n">isReadable</span><span class="p">)</span>
-                        <span class="p">{</span>
-                            <span class="n">str_record</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Fbx设置中 isReadable on 开起来了 SkinnedMeshRenderer 即动画不能开write ,{0} ,{1}&quot;</span><span class="p">,</span> <span class="n">path_obj</span><span class="p">,</span> <span class="n">obj_fbx</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
-                        <span class="p">}</span>
-                        <span class="k">if</span><span class="p">(!</span><span class="n">path_obj</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="s">&quot;_write&quot;</span><span class="p">)</span>
-                            <span class="p">&amp;&amp;</span> <span class="n">model_importer</span><span class="p">.</span><span class="n">isReadable</span><span class="p">)</span>
-                        <span class="p">{</span>
-                            <span class="n">str_record</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Fbx设置中 isReadable on 开起来了 但文件名没有 _write 后缀,{0} ,{1}&quot;</span><span class="p">,</span> <span class="n">path_obj</span><span class="p">,</span> <span class="n">obj_fbx</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
-                        <span class="p">}</span>
-                        <span class="k">if</span><span class="p">(</span><span class="n">path_obj</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="s">&quot;_write&quot;</span><span class="p">)</span>
-                            <span class="p">&amp;&amp;</span> <span class="p">!</span><span class="n">model_importer</span><span class="p">.</span><span class="n">isReadable</span><span class="p">)</span>
-                        <span class="p">{</span>
-                            <span class="n">str_record</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Fbx设置中 isReadable off 没开起来 但文件名有 _write 后缀,{0} ,{1}&quot;</span><span class="p">,</span> <span class="n">path_obj</span><span class="p">,</span> <span class="n">obj_fbx</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
-                        <span class="p">}</span>
-                        <span class="n">vertexCount_sum</span> <span class="p">+=</span> <span class="n">mesh</span><span class="p">.</span><span class="n">vertexCount</span><span class="p">;</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
+            			//检查fbx设置
+            			model_importer = AssetImporter.GetAtPath(path_obj) as ModelImporter;
+            			if(!model_importer.optimizeMesh)
+            			{
+            				str_record = string.Format("Fbx设置中 optimizeMesh off 没开起来 ,{0} ,{1}", path_obj, obj_fbx.name);
+            			}
+            			if(model_importer.importMaterials)
+            			{
+            				str_record = string.Format("Fbx设置中 importMaterials on 被开起来了 ,{0} ,{1}", path_obj, obj_fbx.name);
+            			}
+            			if(!model_importer.weldVertices)
+            			{
+            				str_record = string.Format("Fbx设置中 weldVertices off 没开起来 ,{0} ,{1}", path_obj, obj_fbx.name);
+            			}
+            			if(model_importer.importTangents != ModelImporterTangents.None)
+            			{
+            				str_record = string.Format("Fbx设置中 importTangents on 被开起来了 ,{0} ,{1}", path_obj, obj_fbx.name);
+            			}
+            			if(model_importer.importNormals != ModelImporterNormals.Import)
+            			{
+            				str_record = string.Format("Fbx设置中 importNormals off 没开起来 ,{0} ,{1}", path_obj, obj_fbx.name);
+            			}
+            			if(smr != null
+            				&amp;&amp; model_importer.isReadable)
+            			{
+            				str_record = string.Format("Fbx设置中 isReadable on 开起来了 SkinnedMeshRenderer 即动画不能开write ,{0} ,{1}", path_obj, obj_fbx.name);
+            			}
+            			if(!path_obj.Contains("_write")
+            				&amp;&amp; model_importer.isReadable)
+            			{
+            				str_record = string.Format("Fbx设置中 isReadable on 开起来了 但文件名没有 _write 后缀,{0} ,{1}", path_obj, obj_fbx.name);
+            			}
+            			if(path_obj.Contains("_write")
+            				&amp;&amp; !model_importer.isReadable)
+            			{
+            				str_record = string.Format("Fbx设置中 isReadable off 没开起来 但文件名有 _write 后缀,{0} ,{1}", path_obj, obj_fbx.name);
+            			}
+            			vertexCount_sum += mesh.vertexCount;
+            		}
+            	}
 
-                <span class="k">if</span><span class="p">(</span><span class="n">vertexCount_sum</span> <span class="p">&gt;</span> <span class="n">MESH_VERTEX_MAX</span><span class="p">)</span>
-                <span class="p">{</span>
-                    <span class="n">str_record</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;网格顶点数大于 {0},{1} ,{2}&quot;</span><span class="p">,</span> <span class="n">MESH_VERTEX_MAX</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">vertexCount_sum</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
+            	if(vertexCount_sum &gt; MESH_VERTEX_MAX)
+        		{
+        			str_record = string.Format("网格顶点数大于 {0},{1} ,{2}", MESH_VERTEX_MAX, s, vertexCount_sum);
+        		}
+        	}
 
-            <span class="p">...</span>
+        	...
 
-            <span class="c1">//检测命名是否合法</span>
-            <span class="k">if</span> <span class="p">(!</span><span class="n">UIAssetPost</span><span class="p">.</span><span class="n">IsFileNameLegal</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
-            <span class="p">{</span>
-                <span class="n">str_record</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;文件命名不合法, {0}&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
-            <span class="p">}</span>
+			//检测命名是否合法
+			if (!UIAssetPost.IsFileNameLegal(s))
+			{
+				str_record = string.Format("文件命名不合法, {0}", s);
+			}
 
-            <span class="p">...</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+			...
+    	}
+	}
 
-    <span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div><p>代码有点长我把它们省略了很多，并突出了重要的部分，我们可以举一反三，在检查的过程中，把资源在Unity3D中不符合规则的设置输出到文件中，告知大家有哪些资源文件有问题。把这个程序放在打包机上或者专门用于检测的流水线上，每1-2个小时运行一次，用微信或者企业微信的方式告知大家。这样就能做到检测的实时性和完整性，如果哪条规则疏漏了，就在程序里加上就可以了，检测到的资源问题分派给各个成员去处理，每个人做好自己范围内的资源管理，把资源检测警告清零就等于把项目中的资源完全规范化了。</p><span class="meta"><time datetime="2018-08-03T00:00:00+08:00">August 3, 2018</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2018-08-03T00:00:00+08:00">August 3, 2018</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>
+	...
+}
+</code></pre><p>代码有点长我把它们省略了很多，并突出了重要的部分，我们可以举一反三，在检查的过程中，把资源在Unity3D中不符合规则的设置输出到文件中，告知大家有哪些资源文件有问题。把这个程序放在打包机上或者专门用于检测的流水线上，每1-2个小时运行一次，用微信或者企业微信的方式告知大家。这样就能做到检测的实时性和完整性，如果哪条规则疏漏了，就在程序里加上就可以了，检测到的资源问题分派给各个成员去处理，每个人做好自己范围内的资源管理，把资源检测警告清零就等于把项目中的资源完全规范化了。</p><span class="meta"><time datetime="2018-08-03T00:00:00+08:00">August 3, 2018</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2018-08-03T00:00:00+08:00">August 3, 2018</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>

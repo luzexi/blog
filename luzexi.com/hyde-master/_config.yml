@@ -17,7 +17,7 @@ permalink: pretty
 # baseurl: /
 
 # Dependencies
-markdown:         redcarpet
+# markdown:         redcarpet
 highlighter:      pygments
 
 exclude:

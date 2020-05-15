@@ -1,330 +1,348 @@
-<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 《Unity3D高级编程之进阶主程》第一章，C#要点技术(二) - Dictionary 底层源码剖析 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>《Unity3D高级编程之进阶主程》第一章，C#要点技术(二) - Dictionary 底层源码剖析</h2><p>前文剖析了 List 的源码，我们明白了 List 是用数组构建而成的，增加，减少，插入的操作，都在数组中进行。我们还分析了大部分 List 的接口，包括Add，Remove，Insert，IndexOf，Find，Sort，ToArray，等等。我们得出了一个结论，List 是一个兼容性比较好的组件，但 List 在效率方面并没有做优化，线程也并不安全，需要加锁机制来保证线程的安全性。</p><p>===</p><p>这次我们来对常用的另一个组件 Dictionary 组件进行底层源码的分析，看看我们常用的字典容器是如何构造而成的，它的优缺点如何。</p><h3>Dictionary 底层代码</h3><p>我们知道 Dictionary 字典型数据结构，是以关键字Key 和 值Value 进行一一映射的。Key的类型并没有做任何的限制，可以是整数，也可以是的字符串，甚至可以是实例对象。关键字Key是如何映射到内存的呢？</p><p>其实没有什么神秘的，这种映射关系可以用一个Hash函数来建立，Dictionary 也确实是这样做的。这个Hash函数也并非神秘，我们可以简单的认为它只是做了一个模(Mod余)的操作，Dictionary 将每个Key加入容器的元素都要进行一次Hash哈希的运算操作，从而找到自己的位置。</p><p>Hash函数可以有很多种算法，最简单的可以认为是余操作，比如当Key为整数93时</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>hash_key = Key % 30 = 3
-</code></pre></div><p>对于对象和字符串来说，虽然没有直接点数字做标准，但也能以实例ID为标准来做Hash操作。实际算法可能没有我举例子这么简单，我们将在下面的源码剖析中详细讲解。</p><p>对于不同的关键字可能得到同一哈希地址，即</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>key1 != key2 =&gt; F(key1)=F(fey2)
-</code></pre></div><p>这种现象叫做Hash哈希冲突，在一般情况下，冲突只能尽可能的少，而不能完全避免。因为哈希函数是从关键字范围到索引范围的映射，通常关键字范围要远大于索引范围，它的元素包括多个可能的关键字。既然如此，如何处理冲突则是构造哈希表不可不解决的一个问题。</p><p>在处理Hash哈希冲突的方法中通常有：开放定址法、再哈希法、链地址法、建立一个公共溢出区等。Dictionary使用的解决冲突方法是拉链法，又称链地址法。</p><p>拉链法的原理：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>将所有关键字为同义词的结点链接在同一个单链表中。若选定的散列表长度为n，则可将散列表定义为一个由n个头指针组成的指针数 组T[0..n-1]。凡是散列地址为i的结点，均插入到以T[i]为头指针的单链表中。T中各分量的初值均应为空指针。
-</code></pre></div><p>在哈希表上进行查找的过程，和，在哈希表构建的过程是基本一致的。</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>给定Key值，根据造表时设定的哈希函数求得哈希地址，若表中此位置没有记录，则查找不成功；否则比较关键字，若何给定值相等，则查找成功；否则根据处理冲突的方法寻找“下一地址”，直到哈希表中某个位置为空或者表中所填记录的关键字等于给定值时为止。
-</code></pre></div><p>我们来看看更形象的结构图，如下：</p><p><img src="/assets/book/1/lalianfa.png" alt="拉链法结构图"></p><p>如图所示，拉链法结构中，主要的宿主为数组指针，每个数组元素里存放着指向下一个节点的指针，如果没有元素在单元上，则为空指针。当多个元素都指向同一个单元格时，则以链表的形式依次存放并列的元素。</p><h6>在 Dictionary 中究竟是如何实现的呢，我们来剖析一下源码。</h6><p>首先我们来看看源码中对 Dictionary 的变量定义部分，如下:</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">Dictionary</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">,</span><span class="n">TValue</span><span class="p">&gt;:</span> <span class="n">IDictionary</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">,</span><span class="n">TValue</span><span class="p">&gt;,</span> <span class="n">IDictionary</span><span class="p">,</span> <span class="n">IReadOnlyDictionary</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">,</span> <span class="n">TValue</span><span class="p">&gt;,</span> <span class="n">ISerializable</span><span class="p">,</span> <span class="n">IDeserializationCallback</span> 
-<span class="p">{</span>
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 《Unity3D高级编程之进阶主程》第一章，C#要点技术(二) - Dictionary 底层源码剖析 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:"Arial","Microsoft YaHei","黑体","宋体",sans-serif, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>《Unity3D高级编程之进阶主程》第一章，C#要点技术(二) - Dictionary 底层源码剖析</h2><p>前文剖析了 List 的源码，我们明白了 List 是用数组构建而成的，增加，减少，插入的操作，都在数组中进行。我们还分析了大部分 List 的接口，包括Add，Remove，Insert，IndexOf，Find，Sort，ToArray，等等。我们得出了一个结论，List 是一个兼容性比较好的组件，但 List 在效率方面并没有做优化，线程也并不安全，需要加锁机制来保证线程的安全性。</p><p>===</p><p>这次我们来对常用的另一个组件 Dictionary 组件进行底层源码的分析，看看我们常用的字典容器是如何构造而成的，它的优缺点如何。</p><h3 id="dictionary-底层代码">Dictionary 底层代码</h3><p>我们知道 Dictionary 字典型数据结构，是以关键字Key 和 值Value 进行一一映射的。Key的类型并没有做任何的限制，可以是整数，也可以是的字符串，甚至可以是实例对象。关键字Key是如何映射到内存的呢？</p><p>其实没有什么神秘的，这种映射关系可以用一个Hash函数来建立，Dictionary 也确实是这样做的。这个Hash函数也并非神秘，我们可以简单的认为它只是做了一个模(Mod余)的操作，Dictionary 将每个Key加入容器的元素都要进行一次Hash哈希的运算操作，从而找到自己的位置。</p><p>Hash函数可以有很多种算法，最简单的可以认为是余操作，比如当Key为整数93时</p><pre><code>hash_key = Key % 30 = 3
+</code></pre><p>对于对象和字符串来说，虽然没有直接点数字做标准，但也能以实例ID为标准来做Hash操作。实际算法可能没有我举例子这么简单，我们将在下面的源码剖析中详细讲解。</p><p>对于不同的关键字可能得到同一哈希地址，即</p><pre><code>key1 != key2 =&gt; F(key1)=F(fey2)
+</code></pre><p>这种现象叫做Hash哈希冲突，在一般情况下，冲突只能尽可能的少，而不能完全避免。因为哈希函数是从关键字范围到索引范围的映射，通常关键字范围要远大于索引范围，它的元素包括多个可能的关键字。既然如此，如何处理冲突则是构造哈希表不可不解决的一个问题。</p><p>在处理Hash哈希冲突的方法中通常有：开放定址法、再哈希法、链地址法、建立一个公共溢出区等。Dictionary使用的解决冲突方法是拉链法，又称链地址法。</p><p>拉链法的原理：</p><pre><code>将所有关键字为同义词的结点链接在同一个单链表中。若选定的散列表长度为n，则可将散列表定义为一个由n个头指针组成的指针数 组T[0..n-1]。凡是散列地址为i的结点，均插入到以T[i]为头指针的单链表中。T中各分量的初值均应为空指针。
+</code></pre><p>在哈希表上进行查找的过程，和，在哈希表构建的过程是基本一致的。</p><pre><code>给定Key值，根据造表时设定的哈希函数求得哈希地址，若表中此位置没有记录，则查找不成功；否则比较关键字，若何给定值相等，则查找成功；否则根据处理冲突的方法寻找“下一地址”，直到哈希表中某个位置为空或者表中所填记录的关键字等于给定值时为止。
+</code></pre><p>我们来看看更形象的结构图，如下：</p><p><img src="/assets/book/1/lalianfa.png" alt="拉链法结构图" /></p><p>如图所示，拉链法结构中，主要的宿主为数组指针，每个数组元素里存放着指向下一个节点的指针，如果没有元素在单元上，则为空指针。当多个元素都指向同一个单元格时，则以链表的形式依次存放并列的元素。</p><h6 id="在-dictionary-中究竟是如何实现的呢我们来剖析一下源码">在 Dictionary 中究竟是如何实现的呢，我们来剖析一下源码。</h6><p>首先我们来看看源码中对 Dictionary 的变量定义部分，如下:</p><pre><code class="language-c#">
+public class Dictionary&lt;TKey,TValue&gt;: IDictionary&lt;TKey,TValue&gt;, IDictionary, IReadOnlyDictionary&lt;TKey, TValue&gt;, ISerializable, IDeserializationCallback 
+{
+    
+    private struct Entry {
+        public int hashCode;    // Lower 31 bits of hash code, -1 if unused
+        public int next;        // Index of next entry, -1 if last
+        public TKey key;           // Key of entry
+        public TValue value;         // Value of entry
+    }
 
-    <span class="k">private</span> <span class="k">struct</span> <span class="nc">Entry</span> <span class="p">{</span>
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">hashCode</span><span class="p">;</span>    <span class="c1">// Lower 31 bits of hash code, -1 if unused</span>
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">next</span><span class="p">;</span>        <span class="c1">// Index of next entry, -1 if last</span>
-        <span class="k">public</span> <span class="n">TKey</span> <span class="n">key</span><span class="p">;</span>           <span class="c1">// Key of entry</span>
-        <span class="k">public</span> <span class="n">TValue</span> <span class="k">value</span><span class="p">;</span>         <span class="c1">// Value of entry</span>
-    <span class="p">}</span>
+    private int[] buckets;
+    private Entry[] entries;
+    private int count;
+    private int version;
+    private int freeList;
+    private int freeCount;
+    private IEqualityComparer&lt;TKey&gt; comparer;
+    private KeyCollection keys;
+    private ValueCollection values;
+    private Object _syncRoot;
+}
 
-    <span class="k">private</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">buckets</span><span class="p">;</span>
-    <span class="k">private</span> <span class="n">Entry</span><span class="p">[]</span> <span class="n">entries</span><span class="p">;</span>
-    <span class="k">private</span> <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
-    <span class="k">private</span> <span class="kt">int</span> <span class="n">version</span><span class="p">;</span>
-    <span class="k">private</span> <span class="kt">int</span> <span class="n">freeList</span><span class="p">;</span>
-    <span class="k">private</span> <span class="kt">int</span> <span class="n">freeCount</span><span class="p">;</span>
-    <span class="k">private</span> <span class="n">IEqualityComparer</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">&gt;</span> <span class="n">comparer</span><span class="p">;</span>
-    <span class="k">private</span> <span class="n">KeyCollection</span> <span class="n">keys</span><span class="p">;</span>
-    <span class="k">private</span> <span class="n">ValueCollection</span> <span class="n">values</span><span class="p">;</span>
-    <span class="k">private</span> <span class="n">Object</span> <span class="n">_syncRoot</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div><p>从继承的类和接口看，Dictionary 主要继承了 IDictionary 接口，和 ISerializable 接口。IDictionary 和 ISerializable 在使用过程中，其主要的接口为，Add, Remove, ContainsKey, Clear, TryGetValue, Keys, Values, 以及[]数组符号形式作为返回值的接口。也包括了常用库 Collection 中的接口，Count, Contains等。</p><p>从 Dictionary 的定义变量中可以看出，Dictionary 是以数组为底层数据结构的类。当我们实例化 new Dictionary() 后，内部的数组是0个数组的状态。与 List 组件一样，Dictionary 也是需要扩容的，会随着元素数量的增加而不断扩容。具体我们来看看下面的接口源码剖析。</p><p>下面的我们将围绕上述的接口进行解析 Dictionary 底层运作机制。</p><h6>了解Add是最直接了解底层数据结构如何运作的途径，我们来看下Add接口的实现。</h6><p>源代码如下：</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">void</span> <span class="nf">Add</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">,</span> <span class="n">TValue</span> <span class="k">value</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">Insert</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="k">value</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-<span class="p">}</span>
+</code></pre><p>从继承的类和接口看，Dictionary 主要继承了 IDictionary 接口，和 ISerializable 接口。IDictionary 和 ISerializable 在使用过程中，其主要的接口为，Add, Remove, ContainsKey, Clear, TryGetValue, Keys, Values, 以及[]数组符号形式作为返回值的接口。也包括了常用库 Collection 中的接口，Count, Contains等。</p><p>从 Dictionary 的定义变量中可以看出，Dictionary 是以数组为底层数据结构的类。当我们实例化 new Dictionary() 后，内部的数组是0个数组的状态。与 List 组件一样，Dictionary 也是需要扩容的，会随着元素数量的增加而不断扩容。具体我们来看看下面的接口源码剖析。</p><p>下面的我们将围绕上述的接口进行解析 Dictionary 底层运作机制。</p><h6 id="了解add是最直接了解底层数据结构如何运作的途径我们来看下add接口的实现">了解Add是最直接了解底层数据结构如何运作的途径，我们来看下Add接口的实现。</h6><p>源代码如下：</p><pre><code class="language-c#">
+public void Add(TKey key, TValue value)
+{
+    Insert(key, value, true);
+}
 
-<span class="k">private</span> <span class="k">void</span> <span class="nf">Initialize</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">int</span> <span class="n">size</span> <span class="p">=</span> <span class="n">HashHelpers</span><span class="p">.</span><span class="n">GetPrime</span><span class="p">(</span><span class="n">capacity</span><span class="p">);</span>
-    <span class="n">buckets</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">size</span><span class="p">];</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="n">buckets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
-    <span class="n">entries</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Entry</span><span class="p">[</span><span class="n">size</span><span class="p">];</span>
-    <span class="n">freeList</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
-<span class="p">}</span>
+private void Initialize(int capacity)
+{
+    int size = HashHelpers.GetPrime(capacity);
+    buckets = new int[size];
+    for (int i = 0; i &lt; buckets.Length; i++) buckets[i] = -1;
+    entries = new Entry[size];
+    freeList = -1;
+}
 
-<span class="k">private</span> <span class="k">void</span> <span class="nf">Insert</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">,</span> <span class="n">TValue</span> <span class="k">value</span><span class="p">,</span> <span class="kt">bool</span> <span class="k">add</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span> <span class="n">key</span> <span class="p">==</span> <span class="k">null</span> <span class="p">)</span> <span class="p">{</span>
-        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentNullException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">key</span><span class="p">);</span>
-    <span class="p">}</span>
+private void Insert(TKey key, TValue value, bool add)
+{
+    if( key == null ) {
+        ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
+    }
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">buckets</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="n">Initialize</span><span class="p">(</span><span class="m">0</span><span class="p">);</span>
-    <span class="kt">int</span> <span class="n">hashCode</span> <span class="p">=</span> <span class="n">comparer</span><span class="p">.</span><span class="n">GetHashCode</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="p">&amp;</span> <span class="m">0</span><span class="n">x7FFFFFFF</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">targetBucket</span> <span class="p">=</span> <span class="n">hashCode</span> <span class="p">%</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
-
-<span class="cp">#if FEATURE_RANDOMIZED_STRING_HASHING</span>
-    <span class="kt">int</span> <span class="n">collisionCount</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
-<span class="cp">#endif</span>
-
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">];</span> <span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">==</span> <span class="n">hashCode</span> <span class="p">&amp;&amp;</span> <span class="n">comparer</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="k">add</span><span class="p">)</span> <span class="p">{</span> 
-                <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentException</span><span class="p">(</span><span class="n">ExceptionResource</span><span class="p">.</span><span class="n">Argument_AddingDuplicate</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="k">value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
-            <span class="n">version</span><span class="p">++;</span>
-            <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span> 
-
-<span class="cp">#if FEATURE_RANDOMIZED_STRING_HASHING</span>
-        <span class="n">collisionCount</span><span class="p">++;</span>
-<span class="cp">#endif</span>
-    <span class="p">}</span>
-    <span class="kt">int</span> <span class="n">index</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">freeCount</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">index</span> <span class="p">=</span> <span class="n">freeList</span><span class="p">;</span>
-        <span class="n">freeList</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">next</span><span class="p">;</span>
-        <span class="n">freeCount</span><span class="p">--;</span>
-    <span class="p">}</span>
-    <span class="k">else</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="p">==</span> <span class="n">entries</span><span class="p">.</span><span class="n">Length</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">Resize</span><span class="p">();</span>
-            <span class="n">targetBucket</span> <span class="p">=</span> <span class="n">hashCode</span> <span class="p">%</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="n">index</span> <span class="p">=</span> <span class="n">count</span><span class="p">;</span>
-        <span class="n">count</span><span class="p">++;</span>
-    <span class="p">}</span>
-
-    <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">=</span> <span class="n">hashCode</span><span class="p">;</span>
-    <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">next</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">];</span>
-    <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">key</span> <span class="p">=</span> <span class="n">key</span><span class="p">;</span>
-    <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="k">value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
-    <span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">]</span> <span class="p">=</span> <span class="n">index</span><span class="p">;</span>
-    <span class="n">version</span><span class="p">++;</span>
-
-<span class="cp">#if FEATURE_RANDOMIZED_STRING_HASHING</span>
-
-<span class="cp">#if FEATURE_CORECLR</span>
-    <span class="c1">// In case we hit the collision threshold we&#39;ll need to switch to the comparer which is using randomized string hashing</span>
-    <span class="c1">// in this case will be EqualityComparer&lt;string&gt;.Default.</span>
-    <span class="c1">// Note, randomized string hashing is turned on by default on coreclr so EqualityComparer&lt;string&gt;.Default will </span>
-    <span class="c1">// be using randomized string hashing</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">collisionCount</span> <span class="p">&gt;</span> <span class="n">HashHelpers</span><span class="p">.</span><span class="n">HashCollisionThreshold</span> <span class="p">&amp;&amp;</span> <span class="n">comparer</span> <span class="p">==</span> <span class="n">NonRandomizedStringEqualityComparer</span><span class="p">.</span><span class="n">Default</span><span class="p">)</span> 
-    <span class="p">{</span>
-        <span class="n">comparer</span> <span class="p">=</span> <span class="p">(</span><span class="n">IEqualityComparer</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">&gt;)</span> <span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;.</span><span class="n">Default</span><span class="p">;</span>
-        <span class="n">Resize</span><span class="p">(</span><span class="n">entries</span><span class="p">.</span><span class="n">Length</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="cp">#else</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">collisionCount</span> <span class="p">&gt;</span> <span class="n">HashHelpers</span><span class="p">.</span><span class="n">HashCollisionThreshold</span> <span class="p">&amp;&amp;</span> <span class="n">HashHelpers</span><span class="p">.</span><span class="n">IsWellKnownEqualityComparer</span><span class="p">(</span><span class="n">comparer</span><span class="p">))</span> 
-    <span class="p">{</span>
-        <span class="n">comparer</span> <span class="p">=</span> <span class="p">(</span><span class="n">IEqualityComparer</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">&gt;)</span> <span class="n">HashHelpers</span><span class="p">.</span><span class="n">GetRandomizedEqualityComparer</span><span class="p">(</span><span class="n">comparer</span><span class="p">);</span>
-        <span class="n">Resize</span><span class="p">(</span><span class="n">entries</span><span class="p">.</span><span class="n">Length</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="cp">#endif // FEATURE_CORECLR</span>
-
-<span class="cp">#endif</span>
-
-<span class="p">}</span>
-</code></pre></div><p>展示的代码稍稍多了点，我们摘出其中的要点，通过要点来了解重点，再通过重点了解全局。</p><p>其实 Add 接口就是 Insert 的代理，因为它 Insert 一句话，那么 Inset 里做了什么呢？</p><p>首先在加入数据前需要对数据结构进行构造。</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>if (buckets == null) Initialize(0);
-</code></pre></div><p>其实在 Dictionary 构建时如果没有指定任何数量 buckets 就有可能是空的，所以需要对buckets进行初始化，Initialize(0)，说明构建的数量级最少。</p><p>不过奥妙就在 Initialize 函数里，如果传入的参数不是0，而是5、10、25、或其他更大的数量的话，那么构造多大的数据结构才合适呢？</p><p>在 Initialize 函数中，给了我们答案，看下面这行:</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>int size = HashHelpers.GetPrime(capacity);
-</code></pre></div><p>它们有专门的方法来计算到底该使用多大的数组，我们查出源码 HashHelpers 中，primes数值是这样定义的:</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span> <span class="k">public</span> <span class="k">static</span> <span class="k">readonly</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">primes</span> <span class="p">=</span> <span class="p">{</span>
-        <span class="m">3</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">17</span><span class="p">,</span> <span class="m">23</span><span class="p">,</span> <span class="m">29</span><span class="p">,</span> <span class="m">37</span><span class="p">,</span> <span class="m">47</span><span class="p">,</span> <span class="m">59</span><span class="p">,</span> <span class="m">71</span><span class="p">,</span> <span class="m">89</span><span class="p">,</span> <span class="m">107</span><span class="p">,</span> <span class="m">131</span><span class="p">,</span> <span class="m">163</span><span class="p">,</span> <span class="m">197</span><span class="p">,</span> <span class="m">239</span><span class="p">,</span> <span class="m">293</span><span class="p">,</span> <span class="m">353</span><span class="p">,</span> <span class="m">431</span><span class="p">,</span> <span class="m">521</span><span class="p">,</span> <span class="m">631</span><span class="p">,</span> <span class="m">761</span><span class="p">,</span> <span class="m">919</span><span class="p">,</span>
-        <span class="m">1103</span><span class="p">,</span> <span class="m">1327</span><span class="p">,</span> <span class="m">1597</span><span class="p">,</span> <span class="m">1931</span><span class="p">,</span> <span class="m">2333</span><span class="p">,</span> <span class="m">2801</span><span class="p">,</span> <span class="m">3371</span><span class="p">,</span> <span class="m">4049</span><span class="p">,</span> <span class="m">4861</span><span class="p">,</span> <span class="m">5839</span><span class="p">,</span> <span class="m">7013</span><span class="p">,</span> <span class="m">8419</span><span class="p">,</span> <span class="m">10103</span><span class="p">,</span> <span class="m">12143</span><span class="p">,</span> <span class="m">14591</span><span class="p">,</span>
-        <span class="m">17519</span><span class="p">,</span> <span class="m">21023</span><span class="p">,</span> <span class="m">25229</span><span class="p">,</span> <span class="m">30293</span><span class="p">,</span> <span class="m">36353</span><span class="p">,</span> <span class="m">43627</span><span class="p">,</span> <span class="m">52361</span><span class="p">,</span> <span class="m">62851</span><span class="p">,</span> <span class="m">75431</span><span class="p">,</span> <span class="m">90523</span><span class="p">,</span> <span class="m">108631</span><span class="p">,</span> <span class="m">130363</span><span class="p">,</span> <span class="m">156437</span><span class="p">,</span>
-        <span class="m">187751</span><span class="p">,</span> <span class="m">225307</span><span class="p">,</span> <span class="m">270371</span><span class="p">,</span> <span class="m">324449</span><span class="p">,</span> <span class="m">389357</span><span class="p">,</span> <span class="m">467237</span><span class="p">,</span> <span class="m">560689</span><span class="p">,</span> <span class="m">672827</span><span class="p">,</span> <span class="m">807403</span><span class="p">,</span> <span class="m">968897</span><span class="p">,</span> <span class="m">1162687</span><span class="p">,</span> <span class="m">1395263</span><span class="p">,</span>
-        <span class="m">1674319</span><span class="p">,</span> <span class="m">2009191</span><span class="p">,</span> <span class="m">2411033</span><span class="p">,</span> <span class="m">2893249</span><span class="p">,</span> <span class="m">3471899</span><span class="p">,</span> <span class="m">4166287</span><span class="p">,</span> <span class="m">4999559</span><span class="p">,</span> <span class="m">5999471</span><span class="p">,</span> <span class="m">7199369</span><span class="p">};</span>
-
-<span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">GetPrime</span><span class="p">(</span><span class="kt">int</span> <span class="n">min</span><span class="p">)</span> 
-<span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">min</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentException</span><span class="p">(</span><span class="n">Environment</span><span class="p">.</span><span class="n">GetResourceString</span><span class="p">(</span><span class="s">&quot;Arg_HTCapacityOverflow&quot;</span><span class="p">));</span>
-    <span class="n">Contract</span><span class="p">.</span><span class="n">EndContractBlock</span><span class="p">();</span>
-
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">primes</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> 
-    <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">prime</span> <span class="p">=</span> <span class="n">primes</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">prime</span> <span class="p">&gt;=</span> <span class="n">min</span><span class="p">)</span> <span class="k">return</span> <span class="n">prime</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="c1">//outside of our predefined table. </span>
-    <span class="c1">//compute the hard way. </span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="p">(</span><span class="n">min</span> <span class="p">|</span> <span class="m">1</span><span class="p">);</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">Int32</span><span class="p">.</span><span class="n">MaxValue</span><span class="p">;</span><span class="n">i</span><span class="p">+=</span><span class="m">2</span><span class="p">)</span> 
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">IsPrime</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="p">((</span><span class="n">i</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span> <span class="p">%</span> <span class="n">Hashtable</span><span class="p">.</span><span class="n">HashPrime</span> <span class="p">!=</span> <span class="m">0</span><span class="p">))</span>
-            <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">min</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// Returns size of hashtable to grow to.</span>
-<span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">ExpandPrime</span><span class="p">(</span><span class="kt">int</span> <span class="n">oldSize</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">int</span> <span class="n">newSize</span> <span class="p">=</span> <span class="m">2</span> <span class="p">*</span> <span class="n">oldSize</span><span class="p">;</span>
-
-    <span class="c1">// Allow the hashtables to grow to maximum possible size (~2G elements) before encoutering capacity overflow.</span>
-    <span class="c1">// Note that this check works even when _items.Length overflowed thanks to the (uint) cast</span>
-    <span class="k">if</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span><span class="n">newSize</span> <span class="p">&gt;</span> <span class="n">MaxPrimeArrayLength</span> <span class="p">&amp;&amp;</span> <span class="n">MaxPrimeArrayLength</span> <span class="p">&gt;</span> <span class="n">oldSize</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Contract</span><span class="p">.</span><span class="n">Assert</span><span class="p">(</span> <span class="n">MaxPrimeArrayLength</span> <span class="p">==</span> <span class="n">GetPrime</span><span class="p">(</span><span class="n">MaxPrimeArrayLength</span><span class="p">),</span> <span class="s">&quot;Invalid MaxPrimeArrayLength&quot;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">MaxPrimeArrayLength</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="k">return</span> <span class="nf">GetPrime</span><span class="p">(</span><span class="n">newSize</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div><p>上述代码为 HashHelpers 部分的源码，其中 GetPrime 会返回一个需要的 size 最小的数值，从 GetPrime 函数的代码中，我们可以知道这个 size 是由数组 primes 里的值与当前需要的数量大小有关，当需要的数量小于 primes 某个单元格的数字时返回该数字，而 ExpandPrime 则更加简单粗暴，直接返回原来size的2倍作为扩展数量。</p><p>从Prime的定义看的出，首次定义size为3，每次扩大2倍，也就是，3-&gt;7-&gt;17-&gt;37-&gt;.... 底层数据结构的大小是按照这个数值顺序来扩展的，除非你在创建 Dictionary 时，先定义了他的初始大小，指定的初始大小也会先被 GetPrime 计算该分配的数量最终得到应该分配的数组大小。这和 List 组件的分配方式一模一样。</p><p>我们继续看初始化后的内容，对关键字 Key 做Hash哈希操作从而获得地址索引:</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    int hashCode = comparer.GetHashCode(key) &amp; 0x7FFFFFFF;
+    if (buckets == null) Initialize(0);
+    int hashCode = comparer.GetHashCode(key) &amp; 0x7FFFFFFF;
     int targetBucket = hashCode % buckets.Length;
-</code></pre></div><p>当调用函数获得Hash哈希值后，还需要对哈希地址做余操作，以确定地址落在 Dictionary 数组长度范围内不会溢出。</p><p>紧接着对指定数组单元格内的链表元素做遍历操作，找出空出来的位置将值填入。</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">];</span> <span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">==</span> <span class="n">hashCode</span> <span class="p">&amp;&amp;</span> <span class="n">comparer</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">add</span><span class="p">)</span> <span class="p">{</span> 
-            <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentException</span><span class="p">(</span><span class="n">ExceptionResource</span><span class="p">.</span><span class="n">Argument_AddingDuplicate</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="k">value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
-        <span class="n">version</span><span class="p">++;</span>
-        <span class="k">return</span><span class="p">;</span>
-    <span class="p">}</span> 
 
-<span class="cp">#if FEATURE_RANDOMIZED_STRING_HASHING</span>
-    <span class="n">collisionCount</span><span class="p">++;</span>
-<span class="cp">#endif</span>
-<span class="p">}</span>
-</code></pre></div><p>这一步就是前面我们所说的拉链法的链表推入动作。当获得Hash值的数组索引后，我们知道了该将数据存放在哪个数组位置上，如果该位置已经有元素被推入，则需要将其推入到链表的尾部。从for循环开始，检查是否到达链表的末尾，最后将数据放入尾部，并结束函数。</p><p>如果数组的空间不够了怎么办？源码中体现了这一点:</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="kt">int</span> <span class="n">index</span><span class="p">;</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">freeCount</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">index</span> <span class="p">=</span> <span class="n">freeList</span><span class="p">;</span>
-    <span class="n">freeList</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">next</span><span class="p">;</span>
-    <span class="n">freeCount</span><span class="p">--;</span>
-<span class="p">}</span>
-<span class="k">else</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="p">==</span> <span class="n">entries</span><span class="p">.</span><span class="n">Length</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Resize</span><span class="p">();</span>
-        <span class="n">targetBucket</span> <span class="p">=</span> <span class="n">hashCode</span> <span class="p">%</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="n">index</span> <span class="p">=</span> <span class="n">count</span><span class="p">;</span>
-    <span class="n">count</span><span class="p">++;</span>
-<span class="p">}</span>
+#if FEATURE_RANDOMIZED_STRING_HASHING
+    int collisionCount = 0;
+#endif
 
-<span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">=</span> <span class="n">hashCode</span><span class="p">;</span>
-<span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">next</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">];</span>
-<span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">key</span> <span class="p">=</span> <span class="n">key</span><span class="p">;</span>
-<span class="n">entries</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="k">value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
-<span class="n">buckets</span><span class="p">[</span><span class="n">targetBucket</span><span class="p">]</span> <span class="p">=</span> <span class="n">index</span><span class="p">;</span>
-</code></pre></div><p>当被用来记录剩余单元格数量的变量 freeCount 等于0时，则进行扩容，扩容后的大小就是我们前面提到的 调用 ExpandPrime 后的数量，即通常情况下为原来的2倍，再根据这个空间大小数字调用 GetPrime 来得到真正的新数组的大小。</p><h6>了解了Add接口，我们来看看Remove部分。</h6><p>删除的过程和插入的过程比较相似，因为要查找到Key元素所在位置，所以再次将Key值做哈希操作也是难免的，然后类似沿着拉链法的模式寻找与关键字匹配的元素。</p><h6>Remove 用关键字删除元素的接口源码：</h6><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="kt">bool</span> <span class="nf">Remove</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">key</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentNullException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">key</span><span class="p">);</span>
-    <span class="p">}</span>
+    for (int i = buckets[targetBucket]; i &gt;= 0; i = entries[i].next) {
+        if (entries[i].hashCode == hashCode &amp;&amp; comparer.Equals(entries[i].key, key)) {
+            if (add) { 
+                ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_AddingDuplicate);
+            }
+            entries[i].value = value;
+            version++;
+            return;
+        } 
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">buckets</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">hashCode</span> <span class="p">=</span> <span class="n">comparer</span><span class="p">.</span><span class="n">GetHashCode</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="p">&amp;</span> <span class="m">0</span><span class="n">x7FFFFFFF</span><span class="p">;</span>
-        <span class="kt">int</span> <span class="n">bucket</span> <span class="p">=</span> <span class="n">hashCode</span> <span class="p">%</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
-        <span class="kt">int</span> <span class="n">last</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">bucket</span><span class="p">];</span> <span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span> <span class="n">last</span> <span class="p">=</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">==</span> <span class="n">hashCode</span> <span class="p">&amp;&amp;</span> <span class="n">comparer</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">last</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">buckets</span><span class="p">[</span><span class="n">bucket</span><span class="p">]</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="k">else</span> <span class="p">{</span>
-                    <span class="n">entries</span><span class="p">[</span><span class="n">last</span><span class="p">].</span><span class="n">next</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
-                <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span> <span class="p">=</span> <span class="n">freeList</span><span class="p">;</span>
-                <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">TKey</span><span class="p">);</span>
-                <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="k">value</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">TValue</span><span class="p">);</span>
-                <span class="n">freeList</span> <span class="p">=</span> <span class="n">i</span><span class="p">;</span>
-                <span class="n">freeCount</span><span class="p">++;</span>
-                <span class="n">version</span><span class="p">++;</span>
-                <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div><p>我们注意到 Remove 接口相对 Add 接口简单的多，同样用哈希函数 comparer.GetHashCode 再除余后得到范围内的地址索引，再做余操作确定地址落在数组范围内，从哈希索引地址开始，查找冲突的元素的Key是否与需要移除的Key值相同，相同则进行移除操作并退出。</p><p>注意源码中，Remove 的移除操作并没有对内存进行删减，而只是将其单元格置空，这是位了减少了内存的频繁操作。</p><h6>我们继续剖析另一个重要的接口 ContainsKey 检测是否包含关键字的接口。源码如下：</h6><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="kt">bool</span> <span class="nf">ContainsKey</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="nf">FindEntry</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span>
-<span class="p">}</span>
+#if FEATURE_RANDOMIZED_STRING_HASHING
+        collisionCount++;
+#endif
+    }
+    int index;
+    if (freeCount &gt; 0) {
+        index = freeList;
+        freeList = entries[index].next;
+        freeCount--;
+    }
+    else {
+        if (count == entries.Length)
+        {
+            Resize();
+            targetBucket = hashCode % buckets.Length;
+        }
+        index = count;
+        count++;
+    }
 
-<span class="k">private</span> <span class="kt">int</span> <span class="nf">FindEntry</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span> <span class="n">key</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowArgumentNullException</span><span class="p">(</span><span class="n">ExceptionArgument</span><span class="p">.</span><span class="n">key</span><span class="p">);</span>
-    <span class="p">}</span>
+    entries[index].hashCode = hashCode;
+    entries[index].next = buckets[targetBucket];
+    entries[index].key = key;
+    entries[index].value = value;
+    buckets[targetBucket] = index;
+    version++;
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">buckets</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">hashCode</span> <span class="p">=</span> <span class="n">comparer</span><span class="p">.</span><span class="n">GetHashCode</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="p">&amp;</span> <span class="m">0</span><span class="n">x7FFFFFFF</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">buckets</span><span class="p">[</span><span class="n">hashCode</span> <span class="p">%</span> <span class="n">buckets</span><span class="p">.</span><span class="n">Length</span><span class="p">];</span> <span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">hashCode</span> <span class="p">==</span> <span class="n">hashCode</span> <span class="p">&amp;&amp;</span> <span class="n">comparer</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div><p>从源码中看到 ContainsKey 是一个查找Key位置的过程。它调用了 FindEntry 函数，FindEntry 查找Key值位置的方法跟我们前面提到的相同。从用Key值得到的哈希值地址开始查找，查看所有冲突链表中，是否有与Key值相同的值，找到即刻返回该索引地址。</p><h6>有了前面对几个核心接口理解的基础，其他接口相对比较就简单多了，我们快速的看过去。</h6><h6>TryGetValue 尝试获取值的接口:</h6><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="kt">bool</span> <span class="nf">TryGetValue</span><span class="p">(</span><span class="n">TKey</span> <span class="n">key</span><span class="p">,</span> <span class="k">out</span> <span class="n">TValue</span> <span class="k">value</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">FindEntry</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">value</span> <span class="p">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="k">value</span><span class="p">;</span>
-        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">value</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">TValue</span><span class="p">);</span>
-    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div><p>与 ContainsKey 同样，他调用的也是FindEntry的接口，来获取Key对应的Value值。</p><h6>对[]操作符的重定义，源码:</h6><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="n">TValue</span> <span class="k">this</span><span class="p">[</span><span class="n">TKey</span> <span class="n">key</span><span class="p">]</span> <span class="p">{</span>
-    <span class="k">get</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">FindEntry</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">entries</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="k">value</span><span class="p">;</span>
-        <span class="n">ThrowHelper</span><span class="p">.</span><span class="n">ThrowKeyNotFoundException</span><span class="p">();</span>
-        <span class="k">return</span> <span class="nf">default</span><span class="p">(</span><span class="n">TValue</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="k">set</span> <span class="p">{</span>
-        <span class="n">Insert</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="k">value</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>在重新定义[]符号的代码中，获取元素时也同样使用 FindEntry 函数，而 Set 设置元素时则使用与 Add 调用相同的 Insert函数，它们都是同一套方法，即哈希拉链冲突解决方案。</p><h6>从源码剖析来看，哈希冲突的拉链法贯穿了整个底层数据结构。因此哈希函数是关键了，哈希函数的好坏直接决定了效率高低。</h6><p>既然这么重要，我们来看看哈希函数的创建过程，比较函数的创建的源码：</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">private</span> <span class="k">static</span> <span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">CreateComparer</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Contract</span><span class="p">.</span><span class="n">Ensures</span><span class="p">(</span><span class="n">Contract</span><span class="p">.</span><span class="n">Result</span><span class="p">&lt;</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;&gt;()</span> <span class="p">!=</span> <span class="k">null</span><span class="p">);</span>
+#if FEATURE_RANDOMIZED_STRING_HASHING
 
-    <span class="n">RuntimeType</span> <span class="n">t</span> <span class="p">=</span> <span class="p">(</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
-    <span class="c1">// Specialize type byte for performance reasons</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="p">==</span> <span class="k">typeof</span><span class="p">(</span><span class="kt">byte</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)(</span><span class="kt">object</span><span class="p">)(</span><span class="k">new</span> <span class="n">ByteEqualityComparer</span><span class="p">());</span>
-    <span class="p">}</span>
-    <span class="c1">// If T implements IEquatable&lt;T&gt; return a GenericEqualityComparer&lt;T&gt;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">IEquatable</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;).</span><span class="n">IsAssignableFrom</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">GenericEqualityComparer</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;),</span> <span class="n">t</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="c1">// If T is a Nullable&lt;U&gt; where U implements IEquatable&lt;U&gt; return a NullableEqualityComparer&lt;U&gt;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">IsGenericType</span> <span class="p">&amp;&amp;</span> <span class="n">t</span><span class="p">.</span><span class="n">GetGenericTypeDefinition</span><span class="p">()</span> <span class="p">==</span> <span class="k">typeof</span><span class="p">(</span><span class="n">Nullable</span><span class="p">&lt;&gt;))</span> <span class="p">{</span>
-        <span class="n">RuntimeType</span> <span class="n">u</span> <span class="p">=</span> <span class="p">(</span><span class="n">RuntimeType</span><span class="p">)</span><span class="n">t</span><span class="p">.</span><span class="n">GetGenericArguments</span><span class="p">()[</span><span class="m">0</span><span class="p">];</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">IEquatable</span><span class="p">&lt;&gt;).</span><span class="n">MakeGenericType</span><span class="p">(</span><span class="n">u</span><span class="p">).</span><span class="n">IsAssignableFrom</span><span class="p">(</span><span class="n">u</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">NullableEqualityComparer</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;),</span> <span class="n">u</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+#if FEATURE_CORECLR
+    // In case we hit the collision threshold we'll need to switch to the comparer which is using randomized string hashing
+    // in this case will be EqualityComparer&lt;string&gt;.Default.
+    // Note, randomized string hashing is turned on by default on coreclr so EqualityComparer&lt;string&gt;.Default will 
+    // be using randomized string hashing
 
-    <span class="c1">// See the METHOD__JIT_HELPERS__UNSAFE_ENUM_CAST and METHOD__JIT_HELPERS__UNSAFE_ENUM_CAST_LONG cases in getILIntrinsicImplementation</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">IsEnum</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">TypeCode</span> <span class="n">underlyingTypeCode</span> <span class="p">=</span> <span class="n">Type</span><span class="p">.</span><span class="n">GetTypeCode</span><span class="p">(</span><span class="n">Enum</span><span class="p">.</span><span class="n">GetUnderlyingType</span><span class="p">(</span><span class="n">t</span><span class="p">));</span>
+    if (collisionCount &gt; HashHelpers.HashCollisionThreshold &amp;&amp; comparer == NonRandomizedStringEqualityComparer.Default) 
+    {
+        comparer = (IEqualityComparer&lt;TKey&gt;) EqualityComparer&lt;string&gt;.Default;
+        Resize(entries.Length, true);
+    }
+#else
+    if(collisionCount &gt; HashHelpers.HashCollisionThreshold &amp;&amp; HashHelpers.IsWellKnownEqualityComparer(comparer)) 
+    {
+        comparer = (IEqualityComparer&lt;TKey&gt;) HashHelpers.GetRandomizedEqualityComparer(comparer);
+        Resize(entries.Length, true);
+    }
+#endif // FEATURE_CORECLR
 
-        <span class="c1">// Depending on the enum type, we need to special case the comparers so that we avoid boxing</span>
-        <span class="c1">// Note: We have different comparers for Short and SByte because for those types we need to make sure we call GetHashCode on the actual underlying type as the </span>
-        <span class="c1">// implementation of GetHashCode is more complex than for the other types.</span>
-        <span class="k">switch</span> <span class="p">(</span><span class="n">underlyingTypeCode</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">Int16</span><span class="p">:</span> <span class="c1">// short</span>
-                <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">ShortEnumEqualityComparer</span><span class="p">&lt;</span><span class="kt">short</span><span class="p">&gt;),</span> <span class="n">t</span><span class="p">);</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">SByte</span><span class="p">:</span>
-                <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">SByteEnumEqualityComparer</span><span class="p">&lt;</span><span class="kt">sbyte</span><span class="p">&gt;),</span> <span class="n">t</span><span class="p">);</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">Int32</span><span class="p">:</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">UInt32</span><span class="p">:</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">Byte</span><span class="p">:</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">UInt16</span><span class="p">:</span> <span class="c1">//ushort</span>
-                <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">EnumEqualityComparer</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;),</span> <span class="n">t</span><span class="p">);</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">Int64</span><span class="p">:</span>
-            <span class="k">case</span> <span class="n">TypeCode</span><span class="p">.</span><span class="n">UInt64</span><span class="p">:</span>
-                <span class="k">return</span> <span class="p">(</span><span class="n">EqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;)</span><span class="n">RuntimeTypeHandle</span><span class="p">.</span><span class="n">CreateInstanceForAnotherGenericParameter</span><span class="p">((</span><span class="n">RuntimeType</span><span class="p">)</span><span class="k">typeof</span><span class="p">(</span><span class="n">LongEnumEqualityComparer</span><span class="p">&lt;</span><span class="kt">long</span><span class="p">&gt;),</span> <span class="n">t</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="c1">// Otherwise return an ObjectEqualityComparer&lt;T&gt;</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="n">ObjectEqualityComparer</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;();</span>
-<span class="p">}</span>
-</code></pre></div><p>我们看到源码中，对数字，byte，有‘比较’接口(IEquatable&lt;T&gt;)，和没有‘比较’接口，四种方式进行了区分对待。</p><p>对于像数字和byte类的，比较容易比较，所以它们都是一类，且是有相应固定的比较函数的。而有‘比较’接口(IEquatable&lt;T&gt;)的实体，则直接使用GenericEqualityComparer&lt;T&gt;来获得哈希函数。最后那些没有‘比较’接口(IEquatable<T>)的实体，如果继承了 Nullable&lt;U&gt; 接口，则使用一个叫 NullableEqualityComparer 的比较函数来代替。如果什么都不是，就只能使用 ObjectEqualityComparer&lt;T&gt; 默认的对象比较方式来做比较了。</p><p>在C#里所有类都继承了 Object 类，所以即使没有特别的重写 Equals 函数，都会使用 Object 类的 Equals 函数:</p><div class="highlight"><pre><code class="language-c#" data-lang="c#"><span></span><span class="k">public</span> <span class="k">virtual</span> <span class="kt">bool</span> <span class="nf">Equals</span><span class="p">(</span><span class="n">Object</span> <span class="n">obj</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">RuntimeHelpers</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">obj</span><span class="p">);</span>
-<span class="p">}</span>
+#endif
 
-<span class="na">[System.Security.SecuritySafeCritical]</span>  <span class="c1">// auto-generated</span>
-<span class="na">[ResourceExposure(ResourceScope.None)]</span>
-<span class="na">[MethodImplAttribute(MethodImplOptions.InternalCall)]</span>
-<span class="k">public</span> <span class="k">new</span> <span class="k">static</span> <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">Equals</span><span class="p">(</span><span class="n">Object</span> <span class="n">o1</span><span class="p">,</span> <span class="n">Object</span> <span class="n">o2</span><span class="p">);</span>
-</code></pre></div><p>而这个 Equals 两个对象的比较，是以内存地址为基准的。</p><h6>Dictionary 同List一样并不是线程安全的组件，官方源码中进行了这样的解释。</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    ** Hashtable has multiple reader/single writer (MR/SW) thread safety built into 
-    ** certain methods and properties, whereas Dictionary doesn&#39;t. If you&#39;re 
-    ** converting framework code that formerly used Hashtable to Dictionary, it&#39;s
+}
+
+</code></pre><p>展示的代码稍稍多了点，我们摘出其中的要点，通过要点来了解重点，再通过重点了解全局。</p><p>其实 Add 接口就是 Insert 的代理，因为它 Insert 一句话，那么 Inset 里做了什么呢？</p><p>首先在加入数据前需要对数据结构进行构造。</p><pre><code>if (buckets == null) Initialize(0);
+</code></pre><p>其实在 Dictionary 构建时如果没有指定任何数量 buckets 就有可能是空的，所以需要对buckets进行初始化，Initialize(0)，说明构建的数量级最少。</p><p>不过奥妙就在 Initialize 函数里，如果传入的参数不是0，而是5、10、25、或其他更大的数量的话，那么构造多大的数据结构才合适呢？</p><p>在 Initialize 函数中，给了我们答案，看下面这行:</p><pre><code>int size = HashHelpers.GetPrime(capacity);
+</code></pre><p>它们有专门的方法来计算到底该使用多大的数组，我们查出源码 HashHelpers 中，primes数值是这样定义的:</p><pre><code class="language-c#">
+ public static readonly int[] primes = {
+        3, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919,
+        1103, 1327, 1597, 1931, 2333, 2801, 3371, 4049, 4861, 5839, 7013, 8419, 10103, 12143, 14591,
+        17519, 21023, 25229, 30293, 36353, 43627, 52361, 62851, 75431, 90523, 108631, 130363, 156437,
+        187751, 225307, 270371, 324449, 389357, 467237, 560689, 672827, 807403, 968897, 1162687, 1395263,
+        1674319, 2009191, 2411033, 2893249, 3471899, 4166287, 4999559, 5999471, 7199369};
+
+public static int GetPrime(int min) 
+{
+    if (min &lt; 0)
+        throw new ArgumentException(Environment.GetResourceString("Arg_HTCapacityOverflow"));
+    Contract.EndContractBlock();
+
+    for (int i = 0; i &lt; primes.Length; i++) 
+    {
+        int prime = primes[i];
+        if (prime &gt;= min) return prime;
+    }
+
+    //outside of our predefined table. 
+    //compute the hard way. 
+    for (int i = (min | 1); i &lt; Int32.MaxValue;i+=2) 
+    {
+        if (IsPrime(i) &amp;&amp; ((i - 1) % Hashtable.HashPrime != 0))
+            return i;
+    }
+    return min;
+}
+
+// Returns size of hashtable to grow to.
+public static int ExpandPrime(int oldSize)
+{
+    int newSize = 2 * oldSize;
+
+    // Allow the hashtables to grow to maximum possible size (~2G elements) before encoutering capacity overflow.
+    // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
+    if ((uint)newSize &gt; MaxPrimeArrayLength &amp;&amp; MaxPrimeArrayLength &gt; oldSize)
+    {
+        Contract.Assert( MaxPrimeArrayLength == GetPrime(MaxPrimeArrayLength), "Invalid MaxPrimeArrayLength");
+        return MaxPrimeArrayLength;
+    }
+
+    return GetPrime(newSize);
+}
+
+</code></pre><p>上述代码为 HashHelpers 部分的源码，其中 GetPrime 会返回一个需要的 size 最小的数值，从 GetPrime 函数的代码中，我们可以知道这个 size 是由数组 primes 里的值与当前需要的数量大小有关，当需要的数量小于 primes 某个单元格的数字时返回该数字，而 ExpandPrime 则更加简单粗暴，直接返回原来size的2倍作为扩展数量。</p><p>从Prime的定义看的出，首次定义size为3，每次扩大2倍，也就是，3-&gt;7-&gt;17-&gt;37-&gt;…. 底层数据结构的大小是按照这个数值顺序来扩展的，除非你在创建 Dictionary 时，先定义了他的初始大小，指定的初始大小也会先被 GetPrime 计算该分配的数量最终得到应该分配的数组大小。这和 List 组件的分配方式一模一样。</p><p>我们继续看初始化后的内容，对关键字 Key 做Hash哈希操作从而获得地址索引:</p><pre><code>    int hashCode = comparer.GetHashCode(key) &amp; 0x7FFFFFFF;
+    int targetBucket = hashCode % buckets.Length;
+</code></pre><p>当调用函数获得Hash哈希值后，还需要对哈希地址做余操作，以确定地址落在 Dictionary 数组长度范围内不会溢出。</p><p>紧接着对指定数组单元格内的链表元素做遍历操作，找出空出来的位置将值填入。</p><pre><code class="language-c#">for (int i = buckets[targetBucket]; i &gt;= 0; i = entries[i].next) {
+    if (entries[i].hashCode == hashCode &amp;&amp; comparer.Equals(entries[i].key, key)) {
+        if (add) { 
+            ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_AddingDuplicate);
+        }
+        entries[i].value = value;
+        version++;
+        return;
+    } 
+
+#if FEATURE_RANDOMIZED_STRING_HASHING
+    collisionCount++;
+#endif
+}
+</code></pre><p>这一步就是前面我们所说的拉链法的链表推入动作。当获得Hash值的数组索引后，我们知道了该将数据存放在哪个数组位置上，如果该位置已经有元素被推入，则需要将其推入到链表的尾部。从for循环开始，检查是否到达链表的末尾，最后将数据放入尾部，并结束函数。</p><p>如果数组的空间不够了怎么办？源码中体现了这一点:</p><pre><code class="language-c#">int index;
+if (freeCount &gt; 0) {
+    index = freeList;
+    freeList = entries[index].next;
+    freeCount--;
+}
+else {
+    if (count == entries.Length)
+    {
+        Resize();
+        targetBucket = hashCode % buckets.Length;
+    }
+    index = count;
+    count++;
+}
+
+entries[index].hashCode = hashCode;
+entries[index].next = buckets[targetBucket];
+entries[index].key = key;
+entries[index].value = value;
+buckets[targetBucket] = index;
+</code></pre><p>当被用来记录剩余单元格数量的变量 freeCount 等于0时，则进行扩容，扩容后的大小就是我们前面提到的 调用 ExpandPrime 后的数量，即通常情况下为原来的2倍，再根据这个空间大小数字调用 GetPrime 来得到真正的新数组的大小。</p><h6 id="了解了add接口我们来看看remove部分">了解了Add接口，我们来看看Remove部分。</h6><p>删除的过程和插入的过程比较相似，因为要查找到Key元素所在位置，所以再次将Key值做哈希操作也是难免的，然后类似沿着拉链法的模式寻找与关键字匹配的元素。</p><h6 id="remove-用关键字删除元素的接口源码">Remove 用关键字删除元素的接口源码：</h6><pre><code class="language-c#">
+public bool Remove(TKey key)
+{
+    if(key == null) {
+        ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
+    }
+
+    if (buckets != null) {
+        int hashCode = comparer.GetHashCode(key) &amp; 0x7FFFFFFF;
+        int bucket = hashCode % buckets.Length;
+        int last = -1;
+        for (int i = buckets[bucket]; i &gt;= 0; last = i, i = entries[i].next) {
+            if (entries[i].hashCode == hashCode &amp;&amp; comparer.Equals(entries[i].key, key)) {
+                if (last &lt; 0) {
+                    buckets[bucket] = entries[i].next;
+                }
+                else {
+                    entries[last].next = entries[i].next;
+                }
+                entries[i].hashCode = -1;
+                entries[i].next = freeList;
+                entries[i].key = default(TKey);
+                entries[i].value = default(TValue);
+                freeList = i;
+                freeCount++;
+                version++;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+</code></pre><p>我们注意到 Remove 接口相对 Add 接口简单的多，同样用哈希函数 comparer.GetHashCode 再除余后得到范围内的地址索引，再做余操作确定地址落在数组范围内，从哈希索引地址开始，查找冲突的元素的Key是否与需要移除的Key值相同，相同则进行移除操作并退出。</p><p>注意源码中，Remove 的移除操作并没有对内存进行删减，而只是将其单元格置空，这是位了减少了内存的频繁操作。</p><h6 id="我们继续剖析另一个重要的接口-containskey-检测是否包含关键字的接口源码如下">我们继续剖析另一个重要的接口 ContainsKey 检测是否包含关键字的接口。源码如下：</h6><pre><code class="language-c#">
+public bool ContainsKey(TKey key)
+{
+    return FindEntry(key) &gt;= 0;
+}
+
+private int FindEntry(TKey key)
+{
+    if( key == null) {
+        ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
+    }
+
+    if (buckets != null) {
+        int hashCode = comparer.GetHashCode(key) &amp; 0x7FFFFFFF;
+        for (int i = buckets[hashCode % buckets.Length]; i &gt;= 0; i = entries[i].next) {
+            if (entries[i].hashCode == hashCode &amp;&amp; comparer.Equals(entries[i].key, key)) return i;
+        }
+    }
+    return -1;
+}
+
+</code></pre><p>从源码中看到 ContainsKey 是一个查找Key位置的过程。它调用了 FindEntry 函数，FindEntry 查找Key值位置的方法跟我们前面提到的相同。从用Key值得到的哈希值地址开始查找，查看所有冲突链表中，是否有与Key值相同的值，找到即刻返回该索引地址。</p><h6 id="有了前面对几个核心接口理解的基础其他接口相对比较就简单多了我们快速的看过去">有了前面对几个核心接口理解的基础，其他接口相对比较就简单多了，我们快速的看过去。</h6><h6 id="trygetvalue-尝试获取值的接口">TryGetValue 尝试获取值的接口:</h6><pre><code class="language-c#">
+public bool TryGetValue(TKey key, out TValue value)
+{
+    int i = FindEntry(key);
+    if (i &gt;= 0) {
+        value = entries[i].value;
+        return true;
+    }
+    value = default(TValue);
+    return false;
+}
+
+</code></pre><p>与 ContainsKey 同样，他调用的也是FindEntry的接口，来获取Key对应的Value值。</p><h6 id="对操作符的重定义源码">对[]操作符的重定义，源码:</h6><pre><code class="language-c#">
+public TValue this[TKey key] {
+    get {
+        int i = FindEntry(key);
+        if (i &gt;= 0) return entries[i].value;
+        ThrowHelper.ThrowKeyNotFoundException();
+        return default(TValue);
+    }
+    set {
+        Insert(key, value, false);
+    }
+}
+
+</code></pre><p>在重新定义[]符号的代码中，获取元素时也同样使用 FindEntry 函数，而 Set 设置元素时则使用与 Add 调用相同的 Insert函数，它们都是同一套方法，即哈希拉链冲突解决方案。</p><h6 id="从源码剖析来看哈希冲突的拉链法贯穿了整个底层数据结构因此哈希函数是关键了哈希函数的好坏直接决定了效率高低">从源码剖析来看，哈希冲突的拉链法贯穿了整个底层数据结构。因此哈希函数是关键了，哈希函数的好坏直接决定了效率高低。</h6><p>既然这么重要，我们来看看哈希函数的创建过程，比较函数的创建的源码：</p><pre><code class="language-c#">
+private static EqualityComparer&lt;T&gt; CreateComparer()
+{
+    Contract.Ensures(Contract.Result&lt;EqualityComparer&lt;T&gt;&gt;() != null);
+
+    RuntimeType t = (RuntimeType)typeof(T);
+    // Specialize type byte for performance reasons
+    if (t == typeof(byte)) {
+        return (EqualityComparer&lt;T&gt;)(object)(new ByteEqualityComparer());
+    }
+    // If T implements IEquatable&lt;T&gt; return a GenericEqualityComparer&lt;T&gt;
+    if (typeof(IEquatable&lt;T&gt;).IsAssignableFrom(t)) {
+        return (EqualityComparer&lt;T&gt;)RuntimeTypeHandle.CreateInstanceForAnotherGenericParameter((RuntimeType)typeof(GenericEqualityComparer&lt;int&gt;), t);
+    }
+    // If T is a Nullable&lt;U&gt; where U implements IEquatable&lt;U&gt; return a NullableEqualityComparer&lt;U&gt;
+    if (t.IsGenericType &amp;&amp; t.GetGenericTypeDefinition() == typeof(Nullable&lt;&gt;)) {
+        RuntimeType u = (RuntimeType)t.GetGenericArguments()[0];
+        if (typeof(IEquatable&lt;&gt;).MakeGenericType(u).IsAssignableFrom(u)) {
+            return (EqualityComparer&lt;T&gt;)RuntimeTypeHandle.CreateInstanceForAnotherGenericParameter((RuntimeType)typeof(NullableEqualityComparer&lt;int&gt;), u);
+        }
+    }
+    
+    // See the METHOD__JIT_HELPERS__UNSAFE_ENUM_CAST and METHOD__JIT_HELPERS__UNSAFE_ENUM_CAST_LONG cases in getILIntrinsicImplementation
+    if (t.IsEnum) {
+        TypeCode underlyingTypeCode = Type.GetTypeCode(Enum.GetUnderlyingType(t));
+
+        // Depending on the enum type, we need to special case the comparers so that we avoid boxing
+        // Note: We have different comparers for Short and SByte because for those types we need to make sure we call GetHashCode on the actual underlying type as the 
+        // implementation of GetHashCode is more complex than for the other types.
+        switch (underlyingTypeCode) {
+            case TypeCode.Int16: // short
+                return (EqualityComparer&lt;T&gt;)RuntimeTypeHandle.CreateInstanceForAnotherGenericParameter((RuntimeType)typeof(ShortEnumEqualityComparer&lt;short&gt;), t);
+            case TypeCode.SByte:
+                return (EqualityComparer&lt;T&gt;)RuntimeTypeHandle.CreateInstanceForAnotherGenericParameter((RuntimeType)typeof(SByteEnumEqualityComparer&lt;sbyte&gt;), t);
+            case TypeCode.Int32:
+            case TypeCode.UInt32:
+            case TypeCode.Byte:
+            case TypeCode.UInt16: //ushort
+                return (EqualityComparer&lt;T&gt;)RuntimeTypeHandle.CreateInstanceForAnotherGenericParameter((RuntimeType)typeof(EnumEqualityComparer&lt;int&gt;), t);
+            case TypeCode.Int64:
+            case TypeCode.UInt64:
+                return (EqualityComparer&lt;T&gt;)RuntimeTypeHandle.CreateInstanceForAnotherGenericParameter((RuntimeType)typeof(LongEnumEqualityComparer&lt;long&gt;), t);
+        }
+    }
+    // Otherwise return an ObjectEqualityComparer&lt;T&gt;
+    return new ObjectEqualityComparer&lt;T&gt;();
+}
+
+</code></pre><p>我们看到源码中，对数字，byte，有‘比较’接口(IEquatable&lt;T&gt;)，和没有‘比较’接口，四种方式进行了区分对待。</p><p>对于像数字和byte类的，比较容易比较，所以它们都是一类，且是有相应固定的比较函数的。而有‘比较’接口(IEquatable&lt;T&gt;)的实体，则直接使用GenericEqualityComparer&lt;T&gt;来获得哈希函数。最后那些没有‘比较’接口(IEquatable<T>)的实体，如果继承了 Nullable\&lt;U\&gt; 接口，则使用一个叫 NullableEqualityComparer 的比较函数来代替。如果什么都不是，就只能使用 ObjectEqualityComparer\&lt;T\&gt; 默认的对象比较方式来做比较了。</T></p><p>在C#里所有类都继承了 Object 类，所以即使没有特别的重写 Equals 函数，都会使用 Object 类的 Equals 函数:</p><pre><code class="language-c#">
+public virtual bool Equals(Object obj)
+{
+    return RuntimeHelpers.Equals(this, obj);
+}
+
+[System.Security.SecuritySafeCritical]  // auto-generated
+[ResourceExposure(ResourceScope.None)]
+[MethodImplAttribute(MethodImplOptions.InternalCall)]
+public new static extern bool Equals(Object o1, Object o2);
+
+</code></pre><p>而这个 Equals 两个对象的比较，是以内存地址为基准的。</p><h6 id="dictionary-同list一样并不是线程安全的组件官方源码中进行了这样的解释">Dictionary 同List一样并不是线程安全的组件，官方源码中进行了这样的解释。</h6><pre><code>    ** Hashtable has multiple reader/single writer (MR/SW) thread safety built into 
+    ** certain methods and properties, whereas Dictionary doesn't. If you're 
+    ** converting framework code that formerly used Hashtable to Dictionary, it's
     ** important to consider whether callers may have taken a dependence on MR/SW
     ** thread safety. If a reader writer lock is available, then that may be used
     ** with a Dictionary to get the same thread safety guarantee. 
-</code></pre></div><p>Hashtable在多线程读写中是线程安全的，而 Dictionary 不是。如果要在多个线程中共享Dictionaray的读写操作，就要自己写lock以保证线程安全。</p><h3>到这里我们已经全面了解了 Dictionary 的内部构造和运作机制。他是由数组构成，并且由哈希函数完成地址构建，由拉链法冲突解决方式来解决冲突。</h3><h3>从效率上看，同List一样最好在 实例化对象时，即 new 时尽量确定大致数量会更加高效，另外用数值方式做Key比用类实例方式作为Key值更加高效率。</h3><h3>从内存操作上看，大小以3-&gt;7-&gt;17-&gt;37-&gt;....的速度，每次增加2倍多的顺序进行，删除时，并不缩减内存。</h3><h3>如果想在多线程中，共享 Dictionary 则需要进行我们自己进行lock操作。</h3><p><a href="https://referencesource.microsoft.com/#mscorlib/system/collections/generic/dictionary.cs">Dictionary源码</a></p><span class="meta"><time datetime="2018-07-18T00:00:00+08:00">July 18, 2018</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2018-07-18T00:00:00+08:00">July 18, 2018</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>
+</code></pre><p>Hashtable在多线程读写中是线程安全的，而 Dictionary 不是。如果要在多个线程中共享Dictionaray的读写操作，就要自己写lock以保证线程安全。</p><h3 id="到这里我们已经全面了解了-dictionary-的内部构造和运作机制他是由数组构成并且由哈希函数完成地址构建由拉链法冲突解决方式来解决冲突">到这里我们已经全面了解了 Dictionary 的内部构造和运作机制。他是由数组构成，并且由哈希函数完成地址构建，由拉链法冲突解决方式来解决冲突。</h3><h3 id="从效率上看同list一样最好在-实例化对象时即-new-时尽量确定大致数量会更加高效另外用数值方式做key比用类实例方式作为key值更加高效率">从效率上看，同List一样最好在 实例化对象时，即 new 时尽量确定大致数量会更加高效，另外用数值方式做Key比用类实例方式作为Key值更加高效率。</h3><h3 id="从内存操作上看大小以3-7-17-37-的速度每次增加2倍多的顺序进行删除时并不缩减内存">从内存操作上看，大小以3-&gt;7-&gt;17-&gt;37-&gt;….的速度，每次增加2倍多的顺序进行，删除时，并不缩减内存。</h3><h3 id="如果想在多线程中共享-dictionary-则需要进行我们自己进行lock操作">如果想在多线程中，共享 Dictionary 则需要进行我们自己进行lock操作。</h3><p><a href="https://referencesource.microsoft.com/#mscorlib/system/collections/generic/dictionary.cs">Dictionary源码</a></p><span class="meta"><time datetime="2018-07-18T00:00:00+08:00">July 18, 2018</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2018-07-18T00:00:00+08:00">July 18, 2018</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>

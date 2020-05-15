@@ -1,159 +1,159 @@
-<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> JaveScript的奇葩写法规则 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>JaveScript的奇葩写法规则</h2><h3>① =&gt; 箭头函数</h3><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    两个箭头同时使用 arg1 =&gt; arg2 =&gt;{return xxx;}
-    可以理解为
-    function( arg1 )
-    {
-        return function(arg2)
-        {
-            return xxx;
-        }
-    }
-    也就是可以是 (arg1,arg2)=&gt;{return xxx;}的简写
-    也就是function( arg1, arg2 ){ return xxx; }的意思
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> JaveScript的奇葩写法规则 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:"Arial","Microsoft YaHei","黑体","宋体",sans-serif, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>JaveScript的奇葩写法规则</h2><h3 id="--箭头函数">① =&gt; 箭头函数</h3><pre><code>	两个箭头同时使用 arg1 =&gt; arg2 =&gt;{return xxx;}
+	可以理解为
+	function( arg1 )
+	{
+		return function(arg2)
+		{
+			return xxx;
+		}
+	}
+	也就是可以是 (arg1,arg2)=&gt;{return xxx;}的简写
+	也就是function( arg1, arg2 ){ return xxx; }的意思
 
 ===
-</code></pre></div><h3>② ... 剩余数据</h3><h6>数组中的剩余数据</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    [a, b, ...rest] = [10, 20, 30, 40, 50];
-    console.log(a); // 10
-    console.log(b); // 20
-    console.log(rest); // [30, 40, 50]
-</code></pre></div><h6>对象中的剩余数据</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    ({a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40});
-    console.log(a); // 10
-    console.log(b); // 20
-    console.log(rest); // {c: 30, d: 40}
-</code></pre></div><h3>③ [] 数组分配赋值用法</h3><h6>数组分配1</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var x = [1, 2, 3, 4, 5];
-    var [y, z] = x;
-    console.log(y); // 1
-    console.log(z); // 2
-</code></pre></div><h6>数组分配2</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var foo = [&#39;one&#39;, &#39;two&#39;, &#39;three&#39;];
-    var [one, two, three] = foo;
-    console.log(one); // &quot;one&quot;
-    console.log(two); // &quot;two&quot;
-    console.log(three); // &quot;three&quot;
-</code></pre></div><h6>数组赋值默认值用法</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var a, b;
-    [a=5, b=7] = [1];
-    console.log(a); // 1
-    console.log(b); // 7
-</code></pre></div><h6>用数组做变量置换</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var a = 1;
-    var b = 3;
-    [a, b] = [b, a];
-    console.log(a); // 3
-    console.log(b); // 1
-</code></pre></div><h6>省略赋值用法</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var [a, ...b] = [1, 2, 3];
-    console.log(a); // 1
-    console.log(b); // [2, 3]
-</code></pre></div><h3>④ {} 对象分配用法</h3><h6>对象分配赋值</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var o = {p: 42, q: true};
-    var {p, q} = o;
-    console.log(p); // 42
-    console.log(q); // true
-</code></pre></div><h6>默认值用法</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var {a = 10, b = 5} = {a: 3};
-    console.log(a); // 3
-    console.log(b); // 5
-</code></pre></div><h6>指定key赋值+默认值</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var {a:aa = 10, b:bb = 5} = {a: 3};
-    console.log(aa); // 3
-    console.log(bb); // 5
-</code></pre></div><h6>指定属性key解析赋值</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    let key = &#39;z&#39;;
-    let {[key]: foo} = {z: &#39;bar&#39;};
-    console.log(foo); // &quot;bar&quot;
-</code></pre></div><h6>对象中剩余赋值法</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    let {a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40}
-    a; // 10 
-    b; // 20 
-    rest; // { c: 30, d: 40 }
-</code></pre></div><h6>弱变量定义与赋值</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    const foo = { &#39;fizz-buzz&#39;: true };
-    const { &#39;fizz-buzz&#39;: fizzBuzz } = foo;
-    console.log(fizzBuzz); // &quot;true&quot;
-</code></pre></div><script type="text/javascript"> if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端 /*mobile-20:5*/ var cpro_id = "u3493987"; document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>"); } else { /*700*200信息流*/ var cpro_id = "u3469788"; document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>"); } </script><h3>⑤ Object.assign() 合并对象</h3><h6>将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var target = { a: 1 };
-    var source1 = { b: 2 };
-    var source2 = { c: 3 };
-    Object.assign(target, source1, source2);
-    target // {a:1, b:2, c:3}
-</code></pre></div><h6>如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var target = { a: 1, b: 1 };
-    var source1 = { b: 2, c: 2 };
-    var source2 = { c: 3 };
-    Object.assign(target, source1, source2);
-    target // {a:1, b:2, c:3}
-</code></pre></div><h6>Object.assign方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var obj1 = {a: {b: 1}};
-    var obj2 = Object.assign({}, obj1);
-    obj1.a.b = 2;
-    obj2.a.b // 2
-</code></pre></div><h6>对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    var target = { a: { b: &#39;c&#39;, d: &#39;e&#39; } }
-    var source = { a: { b: &#39;hello&#39; } }
-    Object.assign(target, source)
-    // { a: { b: &#39;hello&#39; } }
-</code></pre></div><h6>Object.assign 常见用途</h6><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    为对象添加属性
-    class Point {
-        constructor(x, y) {
-            Object.assign(this, {x, y});
-        }
-    }
+</code></pre><h3 id="--剩余数据">② … 剩余数据</h3><h6 id="数组中的剩余数据">数组中的剩余数据</h6><pre><code>	[a, b, ...rest] = [10, 20, 30, 40, 50];
+	console.log(a); // 10
+	console.log(b); // 20
+	console.log(rest); // [30, 40, 50]
+</code></pre><h6 id="对象中的剩余数据">对象中的剩余数据</h6><pre><code>	({a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40});
+	console.log(a); // 10
+	console.log(b); // 20
+	console.log(rest); // {c: 30, d: 40}
+</code></pre><h3 id="--数组分配赋值用法">③ [] 数组分配赋值用法</h3><h6 id="数组分配1">数组分配1</h6><pre><code>	var x = [1, 2, 3, 4, 5];
+	var [y, z] = x;
+	console.log(y); // 1
+	console.log(z); // 2
+</code></pre><h6 id="数组分配2">数组分配2</h6><pre><code>	var foo = ['one', 'two', 'three'];
+	var [one, two, three] = foo;
+	console.log(one); // "one"
+	console.log(two); // "two"
+	console.log(three); // "three"
+</code></pre><h6 id="数组赋值默认值用法">数组赋值默认值用法</h6><pre><code>	var a, b;
+	[a=5, b=7] = [1];
+	console.log(a); // 1
+	console.log(b); // 7
+</code></pre><h6 id="用数组做变量置换">用数组做变量置换</h6><pre><code>	var a = 1;
+	var b = 3;
+	[a, b] = [b, a];
+	console.log(a); // 3
+	console.log(b); // 1
+</code></pre><h6 id="省略赋值用法">省略赋值用法</h6><pre><code>	var [a, ...b] = [1, 2, 3];
+	console.log(a); // 1
+	console.log(b); // [2, 3]
+</code></pre><h3 id="--对象分配用法">④ {} 对象分配用法</h3><h6 id="对象分配赋值">对象分配赋值</h6><pre><code>	var o = {p: 42, q: true};
+	var {p, q} = o;
+	console.log(p); // 42
+	console.log(q); // true
+</code></pre><h6 id="默认值用法">默认值用法</h6><pre><code>	var {a = 10, b = 5} = {a: 3};
+	console.log(a); // 3
+	console.log(b); // 5
+</code></pre><h6 id="指定key赋值默认值">指定key赋值+默认值</h6><pre><code>	var {a:aa = 10, b:bb = 5} = {a: 3};
+	console.log(aa); // 3
+	console.log(bb); // 5
+</code></pre><h6 id="指定属性key解析赋值">指定属性key解析赋值</h6><pre><code>	let key = 'z';
+	let {[key]: foo} = {z: 'bar'};
+	console.log(foo); // "bar"
+</code></pre><h6 id="对象中剩余赋值法">对象中剩余赋值法</h6><pre><code>	let {a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40}
+	a; // 10 
+	b; // 20 
+	rest; // { c: 30, d: 40 }
+</code></pre><h6 id="弱变量定义与赋值">弱变量定义与赋值</h6><pre><code>	const foo = { 'fizz-buzz': true };
+	const { 'fizz-buzz': fizzBuzz } = foo;
+	console.log(fizzBuzz); // "true"
+</code></pre><script type="text/javascript"> if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端 /*mobile-20:5*/ var cpro_id = "u3493987"; document.write("\<script type=\"text\/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/cm.js\"\>\<\/script\>"); } else { /*700*200信息流*/ var cpro_id = "u3469788"; document.write("\<script type=\"text/javascript\" src=\"//cpro.baidustatic.com/cpro/ui/c.js\"\>\<\/script\>"); } </script><h3 id="-objectassign-合并对象">⑤ Object.assign() 合并对象</h3><h6 id="将源对象-source-的所有可枚举属性复制到目标对象-target-">将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）</h6><pre><code>	var target = { a: 1 };
+	var source1 = { b: 2 };
+	var source2 = { c: 3 };
+	Object.assign(target, source1, source2);
+	target // {a:1, b:2, c:3}
+</code></pre><h6 id="如果目标对象与源对象有同名属性或多个源对象有同名属性则后面的属性会覆盖前面的属性">如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性</h6><pre><code>	var target = { a: 1, b: 1 };
+	var source1 = { b: 2, c: 2 };
+	var source2 = { c: 3 };
+	Object.assign(target, source1, source2);
+	target // {a:1, b:2, c:3}
+</code></pre><h6 id="objectassign方法实行的是浅拷贝而不是深拷贝也就是说如果源对象某个属性的值是对象那么目标对象拷贝得到的是这个对象的引用">Object.assign方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。</h6><pre><code>	var obj1 = {a: {b: 1}};
+	var obj2 = Object.assign({}, obj1);
+	obj1.a.b = 2;
+	obj2.a.b // 2
+</code></pre><h6 id="对于这种嵌套的对象一旦遇到同名属性objectassign的处理方法是替换而不是添加">对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。</h6><pre><code>	var target = { a: { b: 'c', d: 'e' } }
+	var source = { a: { b: 'hello' } }
+	Object.assign(target, source)
+	// { a: { b: 'hello' } }
+</code></pre><h6 id="objectassign-常见用途">Object.assign 常见用途</h6><pre><code>	为对象添加属性
+	class Point {
+		constructor(x, y) {
+			Object.assign(this, {x, y});
+		}
+	}
 
-    为对象添加方法
-    Object.assign(SomeClass.prototype, {
-        someMethod(arg1, arg2) {
-        ···
-        },
-        anotherMethod() {
-        ···
-        }
-    });
-    //  等同于下面的写法
-    SomeClass.prototype.someMethod = function (arg1, arg2) {
-    ···
-    };
-    SomeClass.prototype.anotherMethod = function () {
-    ···
-    };
+	为对象添加方法
+	Object.assign(SomeClass.prototype, {
+		someMethod(arg1, arg2) {
+		···
+		},
+		anotherMethod() {
+		···
+		}
+	});
+	//  等同于下面的写法
+	SomeClass.prototype.someMethod = function (arg1, arg2) {
+	···
+	};
+	SomeClass.prototype.anotherMethod = function () {
+	···
+	};
 
-    克隆对象
-    function clone(origin) {
-        return Object.assign({}, origin);
-    }
+	克隆对象
+	function clone(origin) {
+		return Object.assign({}, origin);
+	}
 
-    合并多个对象
-    const merge =(target, ...sources) =&gt; Object.assign(target, ...sources);
+	合并多个对象
+	const merge =(target, ...sources) =&gt; Object.assign(target, ...sources);
 
-    为属性指定默认值
-    const DEFAULTS = {
-        logLevel: 0,
-        outputFormat: &#39;html&#39;
-    };
-    function processContent(options) {
-        let options = Object.assign({}, DEFAULTS, options);
-    }
-</code></pre></div><h3>⑥ (function(){})(); 函数function后面跟()括号</h3><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    举个例子:
+	为属性指定默认值
+	const DEFAULTS = {
+		logLevel: 0,
+		outputFormat: 'html'
+	};
+	function processContent(options) {
+		let options = Object.assign({}, DEFAULTS, options);
+	}
+</code></pre><h3 id="-function-函数function后面跟括号">⑥ (function(){})(); 函数function后面跟()括号</h3><pre><code>	举个例子:
 
-    (function(p1,p2){alert(p1+p2);})(1,2);
+	(function(p1,p2){alert(p1+p2);})(1,2);
 
-    实际就相当与
+	实际就相当与
 
-    function test(p1,p2){
-       alert(p1+p2);
-    };
-    test(1,2);
+	function test(p1,p2){
+	   alert(p1+p2);
+	};
+	test(1,2);
 
-    这种写法可以看做是私有的内部类,一般出于加载时就需要立即执行的代码可以这样来些,第2个就是避免与其它的名称相冲突.
+	这种写法可以看做是私有的内部类,一般出于加载时就需要立即执行的代码可以这样来些,第2个就是避免与其它的名称相冲突.
 
-    匿名方法的好处,上面也有提到.
+	匿名方法的好处,上面也有提到.
 
-    1.其它外部调用不到,相对安全.
+	1.其它外部调用不到,相对安全.
 
-    2.可用于onload事件保证不与其冲突.
+	2.可用于onload事件保证不与其冲突.
 
-    3.可看做线程安全.
-</code></pre></div><h3>⑦ !function(){}(); 函数function前面加!感叹号</h3><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    如果我们尝试为一个“定义函数”末尾加上()，解析器是无法理解的。
+	3.可看做线程安全.
+</code></pre><h3 id="-function-函数function前面加感叹号">⑦ !function(){}(); 函数function前面加!感叹号</h3><pre><code>	如果我们尝试为一个“定义函数”末尾加上()，解析器是无法理解的。
 
-    function msg(){
-      alert(&#39;message&#39;);
-    }();//解析器是无法理解的
+	function msg(){
+	  alert('message');
+	}();//解析器是无法理解的
 
-    原来，使用括号包裹定义函数体，解析器将会以函数表达式的方式去调用定义函数。也就是说，任何能将函数变成一个函数表达式的作法，都可以使解析器正确的调用定义函数。而 ! 就是其中一个，而 + - || 都有这样的功能。
+	原来，使用括号包裹定义函数体，解析器将会以函数表达式的方式去调用定义函数。也就是说，任何能将函数变成一个函数表达式的作法，都可以使解析器正确的调用定义函数。而 ! 就是其中一个，而 + - || 都有这样的功能。
 
-    其实就是为了能省略一个字符……
+	其实就是为了能省略一个字符……
 
-    // 这么写会报错，因为这是一个函数定义：
-    function(){}()
+	// 这么写会报错，因为这是一个函数定义：
+	function(){}()
 
-    // 常见的（多了一对括号），调用匿名函数：
-    (function() {})()
+	// 常见的（多了一对括号），调用匿名函数：
+	(function() {})()
 
-    // 但在前面加上一个布尔运算符（只多了一个感叹号），就是表达式了，将执行后面的代码，也就合法实现调用
-    !function() {}()
-</code></pre></div><span class="meta"><time datetime="2018-06-26T00:00:00+08:00">June 26, 2018</time> &middot; <a href="/tag/前端技术">前端技术</a>, <a href="/tag/其他技术">其他技术</a></span> <!--<span class="meta"><time datetime="2018-06-26T00:00:00+08:00">June 26, 2018</time> &middot; <a class="post" href="/tag/前端技术">前端技术</a>, <a class="post" href="/tag/其他技术">其他技术</a></span> --></section></main></body></html>
+	// 但在前面加上一个布尔运算符（只多了一个感叹号），就是表达式了，将执行后面的代码，也就合法实现调用
+	!function() {}()
+</code></pre><span class="meta"><time datetime="2018-06-26T00:00:00+08:00">June 26, 2018</time> &middot; <a href="/tag/前端技术">前端技术</a>, <a href="/tag/其他技术">其他技术</a></span> <!--<span class="meta"><time datetime="2018-06-26T00:00:00+08:00">June 26, 2018</time> &middot; <a class="post" href="/tag/前端技术">前端技术</a>, <a class="post" href="/tag/其他技术">其他技术</a></span> --></section></main></body></html>

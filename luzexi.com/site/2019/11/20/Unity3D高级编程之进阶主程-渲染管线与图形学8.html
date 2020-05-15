@@ -1,136 +1,138 @@
-<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识3 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:STHeiti, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识3</h2><h3>GPU Instancing 的来龙去脉</h3><p>GPU Instancing 初次听到这个名词时还有点疑惑，其实翻译过来应该是GPU多实例化渲染，它本身是GPU的一个功能接口，Unity3D将它变得更简单实用。</p><p>===</p><p>前面讲过一些关于Unity3D的动态合批(Dynamic batching)与静态合批(Static batching)的功能，GPU Instancing 实际上与他们一样都是为了减少Drawcall而存在。</p><p>有了动态合批和静态合批为什么还需要 GPU Instancing 呢，究竟他们之间有什么区别呢，我们不妨来简单回顾一下Unity3D动态合批(Dynamic batching)与静态合批(Static batching)。</p><h6>开启动态合批(Dynamic batching)时，Unity3D引擎检测视野范围内的非动画物体(通过遍历所有渲染模型，计算包围盒在视锥体中的位置，如果完全不在视锥体中则抛弃)，如果在视锥体内并且符合条件的就进行合批操作，将他们的网格合并后与材质球一并传给GPU去绘制。</h6><p>需要符合什么条件呢：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    1，900个顶点以下的模型。
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识3 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:"Arial","Microsoft YaHei","黑体","宋体",sans-serif, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>《Unity3D高级编程之进阶主程》第七章，渲染管线与图形学(三) - 渲染原理与知识3</h2><h3 id="gpu-instancing-的来龙去脉">GPU Instancing 的来龙去脉</h3><p>GPU Instancing 初次听到这个名词时还有点疑惑，其实翻译过来应该是GPU多实例化渲染，它本身是GPU的一个功能接口，Unity3D将它变得更简单实用。</p><p>===</p><p>前面讲过一些关于Unity3D的动态合批(Dynamic batching)与静态合批(Static batching)的功能，GPU Instancing 实际上与他们一样都是为了减少Drawcall而存在。</p><p>有了动态合批和静态合批为什么还需要 GPU Instancing 呢，究竟他们之间有什么区别呢，我们不妨来简单回顾一下Unity3D动态合批(Dynamic batching)与静态合批(Static batching)。</p><h6 id="开启动态合批dynamic-batching时unity3d引擎检测视野范围内的非动画物体通过遍历所有渲染模型计算包围盒在视锥体中的位置如果完全不在视锥体中则抛弃如果在视锥体内并且符合条件的就进行合批操作将他们的网格合并后与材质球一并传给gpu去绘制">开启动态合批(Dynamic batching)时，Unity3D引擎检测视野范围内的非动画物体(通过遍历所有渲染模型，计算包围盒在视锥体中的位置，如果完全不在视锥体中则抛弃)，如果在视锥体内并且符合条件的就进行合批操作，将他们的网格合并后与材质球一并传给GPU去绘制。</h6><p>需要符合什么条件呢：</p><pre><code>	1，900个顶点以下的模型。
 
-    2，如果我们使用了顶点坐标，法线，UV，那么就只能最多300个顶点。
+	2，如果我们使用了顶点坐标，法线，UV，那么就只能最多300个顶点。
 
-    3，如果我们使用了UV0，UV1，和切线，又更少了，只能最多150个顶点。
+	3，如果我们使用了UV0，UV1，和切线，又更少了，只能最多150个顶点。
 
-    4，如果两个模型缩放大小不同，不能被合批的，即模型之间的缩放必须一致。
+	4，如果两个模型缩放大小不同，不能被合批的，即模型之间的缩放必须一致。
 
-    5，如果是不同的材质球实例同样不能被合批，即使他们一模一样。即材质球属性不能被修改，材质球对象实例必须是同一个。
+	5，如果是不同的材质球实例同样不能被合批，即使他们一模一样。即材质球属性不能被修改，材质球对象实例必须是同一个。
 
-    6，如果他们有lightmap的数据，必须是相同的才有机会合批。
+	6，如果他们有lightmap的数据，必须是相同的才有机会合批。
 
-    7，多个pass的Shader是绝对不会被合批。
+	7，多个pass的Shader是绝对不会被合批。
 
-    8，延迟渲染是无法被合批。
-</code></pre></div><p>条件比较苛刻，一不小心就无法达到合并条件。为什么它要使用这么苛刻的条件呢，我们来了解下设计动态合批这个功能的意图。</p><h6>动态合批(Dynamic batching)这个功能的目标是以最小的代价合并小型网格模型，减少Drawcall调用。</h6><p>很多人会想既然合并了为什么不把所有的模型都合并呢，这样不是更减少Drawcall的开销。如果把各种情况的中大型网格都合并进来，就需要消耗巨大的CPU资源，而且在摄像机移动过程中，每帧都要进行合并网格的消耗，CPU算力消耗太大，得不偿失。于是Unity3D就对这种极其消耗CPU算力的功能做了如此多的的限制，就是为了让它在运作时性价比更高。</p><p>与动态合批不同，静态合批(Static batching)并不实时合并网格，而是会在离线状态下生成合并的网格，所有被标记为静态物体的模型，只要拥有相同实例的材质球都会被一并合并成网格。</p><p>静态合批有诸多优点，但也存在不少弊端。被合批的是静态物体，它们是不能被移动旋转和缩放的，也只有这样我们在离线状态下生成的网格才是有效的（离线的网格数据不需要重新计算），生成的离线数据被放在Vertex buffer和Index buffer中。</p><h6>静态合批生成的离线网格将导致存放在内存的网格数据量剧增，因为在静态合批中每个模型都会独立生成一份网格数据，无论他们所使用的网格是否相同，也就是说场景中有多少个静态模型就有多少个网格，与原本只需要一个网格就能渲染所有相同模型的情况不一样了。</h6><p>好处是静态合批后同一材质球实例(材质球实例必须相同，因为材质球的参数要一致)调用Drawcall的数量合并了，另外合批也不会额外消耗CPU算力因为它们是在离线时生成的合批数据(也就是网格数据)，在实时渲染时如果该模型在视锥体范围内，三角形索引被部分提取出来合并后提交，而那些早就被生成的网格将被整体提交(整体网格过大时则会导致CPU和GPU的带宽消耗过大)，最后再一并发送给GPU进行渲染。</p><h6>简而言之，动态合批为了平衡CPU消耗和GPU性能优化，将实时合批条件限制在比较狭窄的范围内。静态合批则牺牲了大量的内存和带宽，以使得合批工作能够快速有效的进行。</h6><p>GPU Instancing 没有动态合批对网格数量的限制，也没有静态网格需要这么大的内存，很好的弥补了这两者的缺陷，但也有存在着比较大的优缺点，我们下面来逐一阐述。</p><p>GPU Instancing 并不像动态和静态合批那样通过对网格的合并操作进行优化，GPU Instancing 的目标是只用一个模型网格绘制很多个地方，这些地方绘制的网格缩放大小，旋转角度和坐标可以不一样，材质球虽然相同但材质球属性可以各自有各自的区别。</p><p>本质上来说 GPU Instancing 调用的是 OpenGL 和 DirectX 里的多实例渲染接口。我们拿 OpenGL 来说:</p><div class="highlight"><pre><code class="language-c" data-lang="c"><span></span><span class="kt">void</span> <span class="nf">glDrawArraysInstanced</span><span class="p">(</span><span class="n">GLenum</span> <span class="n">mode</span><span class="p">,</span> <span class="n">GLint</span> <span class="n">first</span><span class="p">,</span> <span class="n">GLsizei</span> <span class="n">count</span><span class="p">,</span> <span class="n">Glsizei</span> <span class="n">primCount</span><span class="p">);</span>
+	8，延迟渲染是无法被合批。
+</code></pre><p>条件比较苛刻，一不小心就无法达到合并条件。为什么它要使用这么苛刻的条件呢，我们来了解下设计动态合批这个功能的意图。</p><h6 id="动态合批dynamic-batching这个功能的目标是以最小的代价合并小型网格模型减少drawcall调用">动态合批(Dynamic batching)这个功能的目标是以最小的代价合并小型网格模型，减少Drawcall调用。</h6><p>很多人会想既然合并了为什么不把所有的模型都合并呢，这样不是更减少Drawcall的开销。如果把各种情况的中大型网格都合并进来，就需要消耗巨大的CPU资源，而且在摄像机移动过程中，每帧都要进行合并网格的消耗，CPU算力消耗太大，得不偿失。于是Unity3D就对这种极其消耗CPU算力的功能做了如此多的的限制，就是为了让它在运作时性价比更高。</p><p>与动态合批不同，静态合批(Static batching)并不实时合并网格，而是会在离线状态下生成合并的网格，所有被标记为静态物体的模型，只要拥有相同实例的材质球都会被一并合并成网格。</p><p>静态合批有诸多优点，但也存在不少弊端。被合批的是静态物体，它们是不能被移动旋转和缩放的，也只有这样我们在离线状态下生成的网格才是有效的（离线的网格数据不需要重新计算），生成的离线数据被放在Vertex buffer和Index buffer中。</p><h6 id="静态合批生成的离线网格将导致存放在内存的网格数据量剧增因为在静态合批中每个模型都会独立生成一份网格数据无论他们所使用的网格是否相同也就是说场景中有多少个静态模型就有多少个网格与原本只需要一个网格就能渲染所有相同模型的情况不一样了">静态合批生成的离线网格将导致存放在内存的网格数据量剧增，因为在静态合批中每个模型都会独立生成一份网格数据，无论他们所使用的网格是否相同，也就是说场景中有多少个静态模型就有多少个网格，与原本只需要一个网格就能渲染所有相同模型的情况不一样了。</h6><p>好处是静态合批后同一材质球实例(材质球实例必须相同，因为材质球的参数要一致)调用Drawcall的数量合并了，另外合批也不会额外消耗CPU算力因为它们是在离线时生成的合批数据(也就是网格数据)，在实时渲染时如果该模型在视锥体范围内，三角形索引被部分提取出来合并后提交，而那些早就被生成的网格将被整体提交(整体网格过大时则会导致CPU和GPU的带宽消耗过大)，最后再一并发送给GPU进行渲染。</p><h6 id="简而言之动态合批为了平衡cpu消耗和gpu性能优化将实时合批条件限制在比较狭窄的范围内静态合批则牺牲了大量的内存和带宽以使得合批工作能够快速有效的进行">简而言之，动态合批为了平衡CPU消耗和GPU性能优化，将实时合批条件限制在比较狭窄的范围内。静态合批则牺牲了大量的内存和带宽，以使得合批工作能够快速有效的进行。</h6><p>GPU Instancing 没有动态合批对网格数量的限制，也没有静态网格需要这么大的内存，很好的弥补了这两者的缺陷，但也有存在着比较大的优缺点，我们下面来逐一阐述。</p><p>GPU Instancing 并不像动态和静态合批那样通过对网格的合并操作进行优化，GPU Instancing 的目标是只用一个模型网格绘制很多个地方，这些地方绘制的网格缩放大小，旋转角度和坐标可以不一样，材质球虽然相同但材质球属性可以各自有各自的区别。</p><p>本质上来说 GPU Instancing 调用的是 OpenGL 和 DirectX 里的多实例渲染接口。我们拿 OpenGL 来说:</p><pre><code class="language-c">void glDrawArraysInstanced(GLenum mode, GLint first, GLsizei count, Glsizei primCount);
 
-<span class="kt">void</span> <span class="nf">glDrawElementsInstanced</span><span class="p">(</span><span class="n">GLenum</span> <span class="n">mode</span><span class="p">,</span> <span class="n">GLsizei</span> <span class="n">count</span><span class="p">,</span> <span class="n">GLenum</span> <span class="n">type</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">indices</span><span class="p">,</span> <span class="n">GLsizei</span> <span class="n">primCount</span><span class="p">);</span>
+void glDrawElementsInstanced(GLenum mode, GLsizei count, GLenum type, const void* indices, GLsizei primCount);
 
-<span class="kt">void</span> <span class="nf">glDrawElementsInstancedBaseVertex</span><span class="p">(</span><span class="n">GLenum</span> <span class="n">mode</span><span class="p">,</span> <span class="n">GLsizei</span> <span class="n">count</span><span class="p">,</span> <span class="n">GLenum</span> <span class="n">type</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">indices</span><span class="p">,</span> <span class="n">GLsizei</span> <span class="n">instanceCount</span><span class="p">,</span> <span class="n">GLuint</span> <span class="n">baseVertex</span><span class="p">);</span>
-</code></pre></div><p>这三个接口正是 GPU Instancing 调用多实例渲染的接口，第一个是无索引的顶点网格集多实例渲染，第二个是索引网格的多实例渲染，第三个是索引基于偏移的网格多实例渲染。调用这三个接口会向GPU传入渲染数据并开启渲染，与平时渲染多次要多次执行整个渲染管线不同的是，这三个接口会分别将模型渲染多次，并且是在一个渲染管线内。</p><p>如果只是一个坐标上渲染多次模型是没有意义的，我们需要将一个模型渲染到不同的多个地方，并且以不同的缩放大小和旋转角度，以及不同的材质球参数，这才是我们真正需要的。</p><p>GPU Instancing 正我们提供这个功能，上面三个渲染接口告知Shader着色器开启一个叫 InstancingID 的变量，这个变量可以确定在着色计算时使用哪个实例的属性。</p><p>有了这个 InstancingID 就能使得我们在多实例渲染中，辨识到底使用哪个属性参数。Shader的顶点着色器和片元着色器可以通过这个变量来获取模型矩阵、颜色等不同变化的参数。</p><p>我们来看看Unity3D是怎么做的:</p><div class="highlight"><pre><code class="language-c" data-lang="c"><span></span><span class="n">Shader</span> <span class="s">&quot;SimplestInstancedShader&quot;</span>
-<span class="p">{</span>
-    <span class="n">Properties</span>
-    <span class="p">{</span>
-        <span class="n">_Color</span> <span class="p">(</span><span class="s">&quot;Color&quot;</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="p">}</span>
+void glDrawElementsInstancedBaseVertex(GLenum mode, GLsizei count, GLenum type, const void* indices, GLsizei instanceCount, GLuint baseVertex);
+</code></pre><p>这三个接口正是 GPU Instancing 调用多实例渲染的接口，第一个是无索引的顶点网格集多实例渲染，第二个是索引网格的多实例渲染，第三个是索引基于偏移的网格多实例渲染。调用这三个接口会向GPU传入渲染数据并开启渲染，与平时渲染多次要多次执行整个渲染管线不同的是，这三个接口会分别将模型渲染多次，并且是在一个渲染管线内。</p><p>如果只是一个坐标上渲染多次模型是没有意义的，我们需要将一个模型渲染到不同的多个地方，并且以不同的缩放大小和旋转角度，以及不同的材质球参数，这才是我们真正需要的。</p><p>GPU Instancing 正我们提供这个功能，上面三个渲染接口告知Shader着色器开启一个叫 InstancingID 的变量，这个变量可以确定在着色计算时使用哪个实例的属性。</p><p>有了这个 InstancingID 就能使得我们在多实例渲染中，辨识到底使用哪个属性参数。Shader的顶点着色器和片元着色器可以通过这个变量来获取模型矩阵、颜色等不同变化的参数。</p><p>我们来看看Unity3D是怎么做的:</p><pre><code class="language-c">Shader "SimplestInstancedShader"
+{
+    Properties
+    {
+        _Color ("Color", Color) = (1, 1, 1, 1)
+    }
 
-    <span class="n">SubShader</span>
-    <span class="p">{</span>
-        <span class="n">Tags</span> <span class="p">{</span> <span class="s">&quot;RenderType&quot;</span><span class="o">=</span><span class="s">&quot;Opaque&quot;</span> <span class="p">}</span>
-        <span class="n">LOD</span> <span class="mi">100</span>
+    SubShader
+    {
+        Tags { "RenderType"="Opaque" }
+        LOD 100
 
-        <span class="n">Pass</span>
-        <span class="p">{</span>
-            <span class="n">CGPROGRAM</span>
-            <span class="cp">#pragma vertex vert</span>
-            <span class="cp">#pragma fragment frag</span>
-            <span class="cp">#pragma multi_compile_instancing</span>
-            <span class="cp">#include</span> <span class="cpf">&quot;UnityCG.cginc&quot;</span><span class="cp"></span>
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma multi_compile_instancing
+            #include "UnityCG.cginc"
 
-            <span class="k">struct</span> <span class="n">appdata</span>
-            <span class="p">{</span>
-                <span class="n">float4</span> <span class="nl">vertex</span> <span class="p">:</span> <span class="n">POSITION</span><span class="p">;</span>
-                <span class="n">UNITY_VERTEX_INPUT_INSTANCE_ID</span> <span class="c1">//顶点着色器的 InstancingID定义</span>
-            <span class="p">};</span>
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                UNITY_VERTEX_INPUT_INSTANCE_ID //顶点着色器的 InstancingID定义
+            };
 
-            <span class="k">struct</span> <span class="n">v2f</span>
-            <span class="p">{</span>
-                <span class="n">float4</span> <span class="nl">vertex</span> <span class="p">:</span> <span class="n">SV_POSITION</span><span class="p">;</span>
-                <span class="n">UNITY_VERTEX_INPUT_INSTANCE_ID</span> <span class="c1">//片元着色器的 InstancingID定义</span>
-            <span class="p">};</span>
+            struct v2f
+            {
+                float4 vertex : SV_POSITION;
+                UNITY_VERTEX_INPUT_INSTANCE_ID //片元着色器的 InstancingID定义
+            };
 
-            <span class="n">UNITY_INSTANCING_BUFFER_START</span><span class="p">(</span><span class="n">Props</span><span class="p">)</span> <span class="c1">// 定义多实例变量数组</span>
-                <span class="n">UNITY_DEFINE_INSTANCED_PROP</span><span class="p">(</span><span class="n">float4</span><span class="p">,</span> <span class="n">_Color</span><span class="p">)</span>
-            <span class="n">UNITY_INSTANCING_BUFFER_END</span><span class="p">(</span><span class="n">Props</span><span class="p">)</span>
+            UNITY_INSTANCING_BUFFER_START(Props) // 定义多实例变量数组
+                UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
+            UNITY_INSTANCING_BUFFER_END(Props)
+           
+            v2f vert(appdata v)
+            {
+                v2f o;
 
-            <span class="n">v2f</span> <span class="n">vert</span><span class="p">(</span><span class="n">appdata</span> <span class="n">v</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="n">v2f</span> <span class="n">o</span><span class="p">;</span>
+                UNITY_SETUP_INSTANCE_ID(v); //装配 InstancingID
+                UNITY_TRANSFER_INSTANCE_ID(v, o); //输入到结构中传给片元着色器
 
-                <span class="n">UNITY_SETUP_INSTANCE_ID</span><span class="p">(</span><span class="n">v</span><span class="p">);</span> <span class="c1">//装配 InstancingID</span>
-                <span class="n">UNITY_TRANSFER_INSTANCE_ID</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">o</span><span class="p">);</span> <span class="c1">//输入到结构中传给片元着色器</span>
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                return o;
+            }
+           
+            fixed4 frag(v2f i) : SV_Target
+            {
+                UNITY_SETUP_INSTANCE_ID(i); //装配 InstancingID
+                return UNITY_ACCESS_INSTANCED_PROP(Props, _Color); //提取多实例中的当前实例的Color属性变量值
+            }
+            ENDCG
+        }
+    }
+}
+</code></pre><p>上述是一个很普通的调用 Instancing 的Shader，其中_Color 和 unity_ObjectToWorld (模型矩阵)是多实例化的，他们通过 InstancingID 索引来确定取数组中的哪个变量。</p><p>为什么这么说呢？我们来看看Shader中这些包含有 INSTANCE 字样的宏定义。</p><p>首先编译命令 multi_compile_instancing 会告知着色器我们将会使用多实例变量。</p><p>其次在顶点着色器和片元着色的输入输出结构中，加入 UNITY_VERTEX_INPUT_INSTANCE_ID 告知结构中多一个变量即：</p><pre><code>	uint instanceID : SV_InstanceID;
+</code></pre><p>每个顶点和片元数据结构中都定义了 instanceID 这个变量，这个变量将被用于确定使用多实例数据数组中的哪个实例参数，很关键。</p><p>接着Shader中要把需要用到的多实例变量参数定义起来:</p><pre><code class="language-c">		UNITY_INSTANCING_BUFFER_START(Props)
+            UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
+        UNITY_INSTANCING_BUFFER_END(Props)
+</code></pre><p>上述中的宏很容易从字面看出它们为”开始多实例宏定义”，”对多实例宏属性定义参数”，以及”结束多实例宏定义”。</p><p>这三个宏定义我们可以在 UnityInstancing.cginc 中看到，即:</p><pre><code class="language-c">		#define UNITY_INSTANCING_BUFFER_START(buf)      UNITY_INSTANCING_CBUFFER_SCOPE_BEGIN(UnityInstancing_##buf)
+        #define UNITY_INSTANCING_BUFFER_END(arr)        UNITY_INSTANCING_CBUFFER_SCOPE_END
+        #define UNITY_DEFINE_INSTANCED_PROP(type, var)  type var[UNITY_INSTANCED_ARRAY_SIZE];
+</code></pre><p>我们可以上述的宏定义中理解到，这三个宏可以对多实例的多属性数组进行定义。</p><p>于是在顶点着色器与片元着色中，我们对 InstancingID 进行装配，即宏定义：</p><pre><code>	UNITY_SETUP_INSTANCE_ID(v) 和 UNITY_SETUP_INSTANCE_ID(i);
 
-                <span class="n">o</span><span class="p">.</span><span class="n">vertex</span> <span class="o">=</span> <span class="n">UnityObjectToClipPos</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">vertex</span><span class="p">);</span>
-                <span class="k">return</span> <span class="n">o</span><span class="p">;</span>
-            <span class="p">}</span>
+	装配过程其实就是从基数偏移的过程 unity_InstanceID = inputInstanceID + unity_BaseInstanceID;
+</code></pre><p>最终我们通过 UNITY_SETUP_INSTANCE_ID 装配得到了 unity_InstanceID 即当前渲染的多实例索引ID。</p><p>有了多实例的索引ID，我们就可以通过这个变量获取对应的当前实例的属性值，于是就有了以下的宏定义 UNITY_ACCESS_INSTANCED_PROP 以及通过这个宏定义获取变量的代码。</p><pre><code class="language-c">#define UNITY_ACCESS_INSTANCED_PROP(arr, var)   var[unity_InstanceID]
 
-            <span class="n">fixed4</span> <span class="n">frag</span><span class="p">(</span><span class="n">v2f</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_Target</span>
-            <span class="p">{</span>
-                <span class="n">UNITY_SETUP_INSTANCE_ID</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="c1">//装配 InstancingID</span>
-                <span class="k">return</span> <span class="nf">UNITY_ACCESS_INSTANCED_PROP</span><span class="p">(</span><span class="n">Props</span><span class="p">,</span> <span class="n">_Color</span><span class="p">);</span> <span class="c1">//提取多实例中的当前实例的Color属性变量值</span>
-            <span class="p">}</span>
-            <span class="n">ENDCG</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>上述是一个很普通的调用 Instancing 的Shader，其中<em>Color 和 unity</em>ObjectToWorld (模型矩阵)是多实例化的，他们通过 InstancingID 索引来确定取数组中的哪个变量。</p><p>为什么这么说呢？我们来看看Shader中这些包含有 INSTANCE 字样的宏定义。</p><p>首先编译命令 multi<em>compile</em>instancing 会告知着色器我们将会使用多实例变量。</p><p>其次在顶点着色器和片元着色的输入输出结构中，加入 UNITY<em>VERTEX</em>INPUT<em>INSTANCE</em>ID 告知结构中多一个变量即：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    uint instanceID : SV_InstanceID;
-</code></pre></div><p>每个顶点和片元数据结构中都定义了 instanceID 这个变量，这个变量将被用于确定使用多实例数据数组中的哪个实例参数，很关键。</p><p>接着Shader中要把需要用到的多实例变量参数定义起来:</p><div class="highlight"><pre><code class="language-c" data-lang="c"><span></span>        <span class="n">UNITY_INSTANCING_BUFFER_START</span><span class="p">(</span><span class="n">Props</span><span class="p">)</span>
-            <span class="n">UNITY_DEFINE_INSTANCED_PROP</span><span class="p">(</span><span class="n">float4</span><span class="p">,</span> <span class="n">_Color</span><span class="p">)</span>
-        <span class="n">UNITY_INSTANCING_BUFFER_END</span><span class="p">(</span><span class="n">Props</span><span class="p">)</span>
-</code></pre></div><p>上述中的宏很容易从字面看出它们为&quot;开始多实例宏定义&quot;，&quot;对多实例宏属性定义参数&quot;，以及&quot;结束多实例宏定义&quot;。</p><p>这三个宏定义我们可以在 UnityInstancing.cginc 中看到，即:</p><div class="highlight"><pre><code class="language-c" data-lang="c"><span></span>        <span class="cp">#define UNITY_INSTANCING_BUFFER_START(buf)      UNITY_INSTANCING_CBUFFER_SCOPE_BEGIN(UnityInstancing_##buf)</span>
-        <span class="cp">#define UNITY_INSTANCING_BUFFER_END(arr)        UNITY_INSTANCING_CBUFFER_SCOPE_END</span>
-        <span class="cp">#define UNITY_DEFINE_INSTANCED_PROP(type, var)  type var[UNITY_INSTANCED_ARRAY_SIZE];</span>
-</code></pre></div><p>我们可以上述的宏定义中理解到，这三个宏可以对多实例的多属性数组进行定义。</p><p>于是在顶点着色器与片元着色中，我们对 InstancingID 进行装配，即宏定义：</p><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    UNITY_SETUP_INSTANCE_ID(v) 和 UNITY_SETUP_INSTANCE_ID(i);
+UNITY_ACCESS_INSTANCED_PROP(Props, _Color); //提取多实例中的当前实例的Color属性变量值
+</code></pre><h6 id="有了类似_color的多实例属性操作在模型矩阵变化中也需要具备同样的操作我们没看到模型矩阵多实例是因为unity在shader编写时用宏定义把它们隐藏起来了它就是-unityobjecttoclippos">有了类似_Color的多实例属性操作，在模型矩阵变化中也需要具备同样的操作，我们没看到模型矩阵多实例是因为Unity在Shader编写时用宏定义把它们隐藏起来了，它就是 UnityObjectToClipPos。</h6><p>UnityObjectToClipPos 其实是一个宏定义，当多实例渲染开启时，它被定义成了如下:</p><pre><code class="language-c">#define unity_ObjectToWorld     UNITY_ACCESS_INSTANCED_PROP(unity_Builtins0, unity_ObjectToWorldArray)
 
-    装配过程其实就是从基数偏移的过程 unity_InstanceID = inputInstanceID + unity_BaseInstanceID;
-</code></pre></div><p>最终我们通过 UNITY<em>SETUP</em>INSTANCE<em>ID 装配得到了 unity</em>InstanceID 即当前渲染的多实例索引ID。</p><p>有了多实例的索引ID，我们就可以通过这个变量获取对应的当前实例的属性值，于是就有了以下的宏定义 UNITY<em>ACCESS</em>INSTANCED_PROP 以及通过这个宏定义获取变量的代码。</p><div class="highlight"><pre><code class="language-c" data-lang="c"><span></span><span class="cp">#define UNITY_ACCESS_INSTANCED_PROP(arr, var)   var[unity_InstanceID]</span>
+inline float4 UnityObjectToClipPosInstanced(in float3 pos)
+{
+    return mul(UNITY_MATRIX_VP, mul(unity_ObjectToWorld, float4(pos, 1.0)));
+}
+inline float4 UnityObjectToClipPosInstanced(float4 pos)
+{
+    return UnityObjectToClipPosInstanced(pos.xyz);
+}
+#define UnityObjectToClipPos UnityObjectToClipPosInstanced
+</code></pre><p>这个定义也同样可以在 UnityInstancing.cginc 中找到，其中unity_ObjectToWorld是关键，它从多实例数组中取出了当前实例的模型矩阵，再与坐标相乘后计算投影空间的坐标。也就是说当开启 Instancing 多实例渲染时，UnityObjectToClipPos 会从多实例数据数组中取模型矩阵来做模型到投影空间的转换。而当不开启 Instancing 时，UnityObjectToClipPos 则只是用当前独有的模型矩阵来计算顶点坐标投影空间的位置。</p><p>到此我们就从着色器中获取了多实例的属性变量，根据不同实例的不同索引获取不同属性变量包括模型矩阵，从而渲染不同位置，不同的旋转角度，不同的缩放大小，以及更多比如_Color的其他属性，整个过程都是围绕着 InstancingID 来做索引操作。</p><h6 id="知道了-gpu-instancing-是如何渲染还不够我们还要知道数据是怎么传进去的">知道了 GPU Instancing 是如何渲染还不够，我们还要知道数据是怎么传进去的。</h6><p>我们还是拿 OpenGL 接口编程来分析。</p><pre><code class="language-c">
+//获取各属性的索引
+int position_loc = glGetAttribLocation(prog, "position");
+int normal_loc = glGetAttribLocation(prog, "normal");
+int color_loc = glGetAttribLocation(prog, "color");
+int matrix_loc = glGetAttribLocation(prog, "model_matrix");
 
-<span class="n">UNITY_ACCESS_INSTANCED_PROP</span><span class="p">(</span><span class="n">Props</span><span class="p">,</span> <span class="n">_Color</span><span class="p">);</span> <span class="c1">//提取多实例中的当前实例的Color属性变量值</span>
-</code></pre></div><h6>有了类似_Color的多实例属性操作，在模型矩阵变化中也需要具备同样的操作，我们没看到模型矩阵多实例是因为Unity在Shader编写时用宏定义把它们隐藏起来了，它就是 UnityObjectToClipPos。</h6><p>UnityObjectToClipPos 其实是一个宏定义，当多实例渲染开启时，它被定义成了如下:</p><div class="highlight"><pre><code class="language-c" data-lang="c"><span></span><span class="cp">#define unity_ObjectToWorld     UNITY_ACCESS_INSTANCED_PROP(unity_Builtins0, unity_ObjectToWorldArray)</span>
+//按正常流程配置顶点和法线
+glBindBuffer(GL_ARRAY_BUFFER, position_buffer); //绑定顶点数组
+glVertexAttribPointer(position_loc, 4, GL_FLOAT, GL_FALSE, 0, NULL); //定义顶点数据规范
+glEnableVertexAttribArray(position_loc); //按上述规范，将坐标数组应用到顶点属性中去
+glBindBuffer(GL_ARRAY_BUFFER, normal_buffer); //绑定发现数组
+glBertexAttribPointer(normal_loc, 3, GL_FLOAT, GL_FALSE, 0, NULL); //定义发现数据规范
+glEnableVertexAttribArray(normal_loc); //按上述规范，将法线数组应用到顶点属性中去
 
-<span class="kr">inline</span> <span class="n">float4</span> <span class="nf">UnityObjectToClipPosInstanced</span><span class="p">(</span><span class="n">in</span> <span class="n">float3</span> <span class="n">pos</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">mul</span><span class="p">(</span><span class="n">UNITY_MATRIX_VP</span><span class="p">,</span> <span class="n">mul</span><span class="p">(</span><span class="n">unity_ObjectToWorld</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)));</span>
-<span class="p">}</span>
-<span class="kr">inline</span> <span class="n">float4</span> <span class="nf">UnityObjectToClipPosInstanced</span><span class="p">(</span><span class="n">float4</span> <span class="n">pos</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">UnityObjectToClipPosInstanced</span><span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">xyz</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="cp">#define UnityObjectToClipPos UnityObjectToClipPosInstanced</span>
-</code></pre></div><p>这个定义也同样可以在 UnityInstancing.cginc 中找到，其中unity_ObjectToWorld是关键，它从多实例数组中取出了当前实例的模型矩阵，再与坐标相乘后计算投影空间的坐标。也就是说当开启 Instancing 多实例渲染时，UnityObjectToClipPos 会从多实例数据数组中取模型矩阵来做模型到投影空间的转换。而当不开启 Instancing 时，UnityObjectToClipPos 则只是用当前独有的模型矩阵来计算顶点坐标投影空间的位置。</p><p>到此我们就从着色器中获取了多实例的属性变量，根据不同实例的不同索引获取不同属性变量包括模型矩阵，从而渲染不同位置，不同的旋转角度，不同的缩放大小，以及更多比如_Color的其他属性，整个过程都是围绕着 InstancingID 来做索引操作。</p><h6>知道了 GPU Instancing 是如何渲染还不够，我们还要知道数据是怎么传进去的。</h6><p>我们还是拿 OpenGL 接口编程来分析。</p><div class="highlight"><pre><code class="language-c" data-lang="c"><span></span><span class="c1">//获取各属性的索引</span>
-<span class="kt">int</span> <span class="n">position_loc</span> <span class="o">=</span> <span class="n">glGetAttribLocation</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="s">&quot;position&quot;</span><span class="p">);</span>
-<span class="kt">int</span> <span class="n">normal_loc</span> <span class="o">=</span> <span class="n">glGetAttribLocation</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="s">&quot;normal&quot;</span><span class="p">);</span>
-<span class="kt">int</span> <span class="n">color_loc</span> <span class="o">=</span> <span class="n">glGetAttribLocation</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="s">&quot;color&quot;</span><span class="p">);</span>
-<span class="kt">int</span> <span class="n">matrix_loc</span> <span class="o">=</span> <span class="n">glGetAttribLocation</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="s">&quot;model_matrix&quot;</span><span class="p">);</span>
+//开始多实例化配置
+//设置颜色的数组。我们希望几何体的每个实例都有一个不同的颜色，
+//将颜色值置入缓存对象中，然后设置一个实例化的顶点属性
+glBindBuffer(GL_ARRAY_BUFFER, color_buffer); //绑定颜色数组
+glVertexAttribPointer(color_loc, 4, GL_FLOAT, GL_FALSE, 0, NULL); //定义颜色数据在color_loc索引位置的数据规范
+glEnableVertexAttribArray(color_loc); //按照上述的规范，将color_loc数据应用到顶点属性上去
 
-<span class="c1">//按正常流程配置顶点和法线</span>
-<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span> <span class="n">position_buffer</span><span class="p">);</span> <span class="c1">//绑定顶点数组</span>
-<span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="n">position_loc</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">GL_FLOAT</span><span class="p">,</span> <span class="n">GL_FALSE</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span> <span class="c1">//定义顶点数据规范</span>
-<span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="n">position_loc</span><span class="p">);</span> <span class="c1">//按上述规范，将坐标数组应用到顶点属性中去</span>
-<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span> <span class="n">normal_buffer</span><span class="p">);</span> <span class="c1">//绑定发现数组</span>
-<span class="n">glBertexAttribPointer</span><span class="p">(</span><span class="n">normal_loc</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">GL_FLOAT</span><span class="p">,</span> <span class="n">GL_FALSE</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span> <span class="c1">//定义发现数据规范</span>
-<span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="n">normal_loc</span><span class="p">);</span> <span class="c1">//按上述规范，将法线数组应用到顶点属性中去</span>
+glVertexattribDivisor(color_loc, 1); //开启颜色属性的多实例化，1表示每隔1个实例时共用一个数据
 
-<span class="c1">//开始多实例化配置</span>
-<span class="c1">//设置颜色的数组。我们希望几何体的每个实例都有一个不同的颜色，</span>
-<span class="c1">//将颜色值置入缓存对象中，然后设置一个实例化的顶点属性</span>
-<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span> <span class="n">color_buffer</span><span class="p">);</span> <span class="c1">//绑定颜色数组</span>
-<span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="n">color_loc</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">GL_FLOAT</span><span class="p">,</span> <span class="n">GL_FALSE</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span> <span class="c1">//定义颜色数据在color_loc索引位置的数据规范</span>
-<span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="n">color_loc</span><span class="p">);</span> <span class="c1">//按照上述的规范，将color_loc数据应用到顶点属性上去</span>
+glBindBuffer(GL_ARRAY_BUFFER, model_matrix_buffer); //绑定矩阵数组
+for(int i = 0 ; i&lt;4 ; i++)
+{
+	//设置矩阵第一行的数据规范
+	glVertexAttribPointer(matrix_loc + i, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void *)(sizeof(vec4)*i));
 
-<span class="n">glVertexattribDivisor</span><span class="p">(</span><span class="n">color_loc</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">//开启颜色属性的多实例化，1表示每隔1个实例时共用一个数据</span>
+	//将第一行的矩阵数据应用到顶点属性上去
+	glEnableVertexAttribArray(matrix_loc + i);
 
-<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span> <span class="n">model_matrix_buffer</span><span class="p">);</span> <span class="c1">//绑定矩阵数组</span>
-<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">//设置矩阵第一行的数据规范</span>
-    <span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="n">matrix_loc</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">GL_FLOAT</span><span class="p">,</span> <span class="n">GL_FALSE</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">mat4</span><span class="p">),</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">vec4</span><span class="p">)</span><span class="o">*</span><span class="n">i</span><span class="p">));</span>
+	//开启第一行矩阵数据的多实例化，1表示每隔1个实例时共用一个数据
+	glVertexattribDivisor(matrix_loc + i, 1);
+}
 
-    <span class="c1">//将第一行的矩阵数据应用到顶点属性上去</span>
-    <span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="n">matrix_loc</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
-
-    <span class="c1">//开启第一行矩阵数据的多实例化，1表示每隔1个实例时共用一个数据</span>
-    <span class="n">glVertexattribDivisor</span><span class="p">(</span><span class="n">matrix_loc</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div><p>这个示例很精准的表达了数据是如何从CPU应用层传输到GPU上再进行实例化的过程。</p><p>我在代码上做了比较详尽的注释，首先获取需要推入顶点属性的数据的索引，再将数组数据与OpenGL 缓存进行绑定，这样才能注入到OpenGL里去，接着告诉 OpenGL 每个数据对应的格式，然后再根据前一步描述的格式应用到顶点属性中去，最后如果做的是 GPU Instancing 多实例的属性数据则开启多实例化属性接口，让 InstancingID 起效。</p><h6>总结，我们解析了 GPU Instancing 在 Unity3D 中的工作方式，得知了它能用同一个模型同一个材质球渲染不同的位置、角度、缩放大小、以及不同颜色等属性。这种没有对模型网格数量限制，没有占用大量内存的性能优化来说，很好的弥补了动态合批(Dynamic batching)与静态合批(Static batching)的不足。</h6><p>但是它毕竟是只能围绕一个模型来操作，只有相同网格(Mesh)和相同的材质球实例(参数可以不同，但必须使用API来设置不同参数)的情况下才能做到多个实例在同一个渲染管线中一次性渲染的优化操作，而动态合批和静态合批却只需要材质球实例一致，网格是可以有差别的。</p><h6>三者利弊各不同，有互相弥补的地方，各自本身也存在着不同程度的限制和优缺点。从整体上来看，GPU Instancing 更适合同一个模型渲染多次的情况，而动态合批(Dynamic batching)更适合同一个材质球并且模型面数小的情况，静态合批(Static batching)更适合当我们能容忍内存扩大的情况。</h6><span class="meta"><time datetime="2019-11-20T00:00:00+08:00">November 20, 2019</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2019-11-20T00:00:00+08:00">November 20, 2019</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>
+</code></pre><p>这个示例很精准的表达了数据是如何从CPU应用层传输到GPU上再进行实例化的过程。</p><p>我在代码上做了比较详尽的注释，首先获取需要推入顶点属性的数据的索引，再将数组数据与OpenGL 缓存进行绑定，这样才能注入到OpenGL里去，接着告诉 OpenGL 每个数据对应的格式，然后再根据前一步描述的格式应用到顶点属性中去，最后如果做的是 GPU Instancing 多实例的属性数据则开启多实例化属性接口，让 InstancingID 起效。</p><h6 id="总结我们解析了-gpu-instancing-在-unity3d-中的工作方式得知了它能用同一个模型同一个材质球渲染不同的位置角度缩放大小以及不同颜色等属性这种没有对模型网格数量限制没有占用大量内存的性能优化来说很好的弥补了动态合批dynamic-batching与静态合批static-batching的不足">总结，我们解析了 GPU Instancing 在 Unity3D 中的工作方式，得知了它能用同一个模型同一个材质球渲染不同的位置、角度、缩放大小、以及不同颜色等属性。这种没有对模型网格数量限制，没有占用大量内存的性能优化来说，很好的弥补了动态合批(Dynamic batching)与静态合批(Static batching)的不足。</h6><p>但是它毕竟是只能围绕一个模型来操作，只有相同网格(Mesh)和相同的材质球实例(参数可以不同，但必须使用API来设置不同参数)的情况下才能做到多个实例在同一个渲染管线中一次性渲染的优化操作，而动态合批和静态合批却只需要材质球实例一致，网格是可以有差别的。</p><h6 id="三者利弊各不同有互相弥补的地方各自本身也存在着不同程度的限制和优缺点从整体上来看gpu-instancing-更适合同一个模型渲染多次的情况而动态合批dynamic-batching更适合同一个材质球并且模型面数小的情况静态合批static-batching更适合当我们能容忍内存扩大的情况">三者利弊各不同，有互相弥补的地方，各自本身也存在着不同程度的限制和优缺点。从整体上来看，GPU Instancing 更适合同一个模型渲染多次的情况，而动态合批(Dynamic batching)更适合同一个材质球并且模型面数小的情况，静态合批(Static batching)更适合当我们能容忍内存扩大的情况。</h6><span class="meta"><time datetime="2019-11-20T00:00:00+08:00">November 20, 2019</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2019-11-20T00:00:00+08:00">November 20, 2019</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --></section></main></body></html>
