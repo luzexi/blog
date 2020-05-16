@@ -8,6 +8,9 @@ title: 我的简介
 
 曾就职：盛大游戏，动视暴雪Activision，Gumi日本，百游Baiyou
 
+### 最近在努力出版《Unity3D高级编程之进阶主程》这本书
+
+<!-- 
 ### Game Project：
 
 		《保密项目》 3D 电子竞技 2020 - 至今
@@ -30,7 +33,7 @@ title: 我的简介
 
 		《星月精灵》3D MMO RPG游戏  2010
 
-		《汽车使命》3D 赛车竞技游戏  2009
+		《汽车使命》3D 赛车竞技游戏  2009 -->
 
 
 ### Keep moving, Never stop.
