@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 《Unity3D高级编程之进阶主程》第八章 AI(1)-状态机构架机器人行为 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:"Arial","Microsoft YaHei","黑体","宋体",sans-serif, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1.4rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:12rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5,h6{margin-bottom:.5rem;font-weight:bold;line-height:1.25;color:#313131;text-rendering:optimizeLegibility}h1{font-size:3rem}h2{margin-top:1rem;font-size:1.9rem}h3{margin-top:1.5rem;font-size:1.6rem}h4,h5,h6{margin-top:1rem;font-size:1.4rem}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>《Unity3D高级编程之进阶主程》第八章 AI(1)-状态机构架机器人行为</h2><p>AI机器人在游戏中非常普遍，它们常以模仿人类的行为在游戏中活动。游戏中的怪物的自动行为比较普遍，这种简单的人工智能方式可以用几种不同的方式进行编写，这里我们介绍两种方式，一种为容易被人类思维接受的状态机，另一种是为机器人策略型思考方式编写的行为树。其它还有很多方式来编写AI，比如与行为树差不多的决策树，以及相对比较复杂的神经网络，以及现在比较流行的机器学习，由于作者接触的只是皮毛在此不多做介绍，它们的复杂度也超过了项目的周期，研发和维护成本暂时比较高，所以在游戏项目中的AI方面应用还不太多，大家也一直在往这方面靠拢，因为神经网络和机器学习是人工智能的趋势。</p><p>===</p><h3 id="ai-状态机">AI-状态机</h3><p>状态机虽然是个比较简单的概念，但在实际编程中花样也是繁多的，不过最终都是围绕着状态的概念来做的变化。状态机比较符合人类思考的方式，我们喜欢把事物的行为以状态形式进行拆分。以时间状态为基础的可以有，当前状态、前置状态、下一个状态、状态变化条件，其中每个状态都有自己定义，它们可以以行为方式拆分成，比如行走状态，休息状态，躺下状态，攻击状态，防守状态，三连击状态，俯冲状态，平移状态等。</p><p>人们习惯把人或动物的某些连贯的行为定义为状态，所以状态其实不只是一个动作，它可以是好几个动作，或者好几段位移，也就是好几段执行程序。这种好几个动作和好几段位移一起组成的组合，在程序中用状态来表示比较符合人类思考逻辑。每种状态下不只是一个动作或一种位移，而是由很多个动作多段位移组合而成。在游戏里，智能机器人由于都是人设计出来的，行为方式也需要符合人类的逻辑，因此用状态机的方式制作AI比较符合人类思维方式，也最容易被接受。</p><p>从面向程序的角度来看，状态可以从父类构建开始，并且向不同的方向继承并衍生，最后把所有的状态类集中到控制状态的状态控制器中。下面我们就以图文的方式构建一个 AI 状态机：</p><pre><code>	我们新建一个 AIStateBase 为状态基础类，基础类中有一个识别状态类的变量，可以是整数也可以是枚举，和三个必要的接口包括，更新函数 Update() ，进入状态事件引发的事件函数 OnEnter()，退出状态事件引发的事件函数 OnExit()。这三个函数概括了状态的出、入、以及自我循环更新三个动作，状态机定义下这三个动作也是比较重要的接口。
+</code></pre><pre><code class="language-c#">class AIStateBase
+{
+	private int STATE;
+
+	public abstract OnEnter();
+	public abstract OnExit();
+	public abstract Update();
+}
+</code></pre><p>接下来，我们开始扩展状态机的功能，以跑步动作状态为例，在进入跑步动作状态时，表现为，机器人有跑步动画，并且向前移动。</p><p>新建一个跑步状态类，继承父类 AIStateBase 并且把跑步状态类命名为 AIRunState。对 AIRunState 进行编写，实现进入状态函数即 OnEnter 函数中编写机器人播放跑步的动画并让动画不断循环播放，然后在更新函数 Update 中开启不断向前移动的位置变化。当不再需要移动时，也就是退出跑步状态事件中，OnExit 里调用停止播放动画，也可以不停止播放，因为下一个状态肯定会播放其他动画，不如让他们通过插值过度下使得动画看起来会更顺滑。</p><p>下面是 AIRunState 的伪代码</p><pre><code class="language-c#">class AIRunState : AIStateBase
+{
+	public AIRunState()
+	{
+		STATE = STATE.AIRunState;
+	}
+
+	public override OnEnter()
+	{
+		PlayAnimation("run",loop);
+	}
+
+	public override OnExit()
+	{
+		StopAnimation("run");
+	}
+
+	public override Update()
+	{
+		if(target != null)
+		{
+			//如果有目标则向目标移动
+			MoveTo(target);
+		}
+		else
+		{
+			//如果没有目标则向指定方向移动
+			Move(dir);
+		}
+	}
+}
+</code></pre><p>实现了跑步状态，可以扩展其他的和跑步状态相似的状态，它们可以完全按照跑步状态的方式实现，比如后退，侧移，漫步，打坐，跳跃，攻击等，它们都是只用到播放自身动画和持续位移组合的方式完成状态，这些对复杂状态来说，算是比较基本的状态。</p><p>现在我们来实现稍微复杂点的状态‘追击’状态。追击中有两个动作，一个是追，一个是攻击，我们首先锁定目标然后寻找追击的路径。当怪物进入‘追击’状态时，会锁定目标，然后不断向目标跑去，当跑到攻击范围内时再进行攻击。</p><p>我们定义一个‘追击’状态类，AIMoveAttackState 类同样继承 AIStateBase。当‘追击’状态开始时，进入 OnEnter 函数时先锁定目标，把目标保存下来，并且寻找追击目标的路径 Path Find，人物寻路的解决方案我们在地图与寻路章节中详细介绍。接下来就是‘追击状态’的更新函数，每帧都会调用更新函数 Update，在Update中，检查目标是否已在攻击范围内，如果在范围内则立刻播放攻击动画，并且调用目标的攻击接口攻击目标，如果不在范围内则检查锁定目标是否超出检测范围，如果在范围内则重新寻找路径，并且根据路径来进行位移，否则不再追击。整个追击状态，在追击中都是在 Update 函数中不断判断和位移的。</p><p>下面是 AIMoveAttackState 的伪代码</p><pre><code class="language-c#">class AIMoveAttackState : AIStateBase
+{
+	public AIMoveAttackState()
+	{
+		STATE = STATE.AIMoveAttackState;
+	}
+
+	public void SetTarget(Actor target)
+	{
+		currentTarget = target;
+	}
+
+	public override OnEnter()
+	{
+		//寻路后播放动画
+		path = Findpath(target);
+		PlayAnimation("run",loop);
+	}
+
+	public override OnExit()
+	{
+		//nothing can do
+	}
+
+	public override Update()
+	{
+		dis = Vector3.Distance(myself, target);
+
+		if(dis &gt; 2 &amp;&amp; dis &lt; 10)
+		{
+			//在监视范围内的进行追击
+			Move(path);
+		}
+		else if(dis &lt;= 2)
+		{
+			//攻击范围内的进行攻击
+			Attack(target);
+		}
+		else
+		{
+			//监视范围外的停止状态
+			Stop();
+		}
+	}
+}
+</code></pre><p>通常在攻击 Attack 中，可以根据人物数据表的数据做一些动画和攻击时间点的变化，也可以根据技能编辑器的技能数据在某个时间点做某个动作或者释放某个特效，这样更加方便量产更多的角色在游戏里的动作，这将后面的章节中介绍技能编辑器。</p><p>追击状态以追踪和攻击为主要行为。与追击状态类似的，也比较常用的还有‘巡逻状态’，当AI怪物进入这个‘巡逻状态’时，怪物会在一个范围内到处行走以查看敌人是否在周围，如果在视野范围内查看到敌人，则退出巡逻状态，进而进入追击状态。</p><p>我们来看看编写‘巡逻状态’的步骤。当进入‘巡逻状态’时，状态进入 OnEnter 函数，在 OnEnter 里找到最近的一个巡逻点，然后在更新函数 Update 中持续循环走向最近的巡逻点，当走到第一个最近的巡逻点后继续按照巡逻点的布置顺序继续往下一个巡逻点走，如此不断循环往复。同时更新每次移动时，都检查一下敌人是否在范围内，如果有敌人在检查范围内，当前‘巡逻状态’就结束，OnExit 被调用，转而进入‘追击状态’。</p><p>巡逻状态的伪代码如下:</p><pre><code class="language-c#">class AIPatrolState : AIStateBase
+{
+	public AIPatrolState()
+	{
+		STATE = STATE.AIPatrolState;
+	}
+
+	public override OnEnter()
+	{
+		// 获取下个巡视点
+		point = GetNextPatrolPoint();
+		//寻路
+		path = FindPath(point);
+		// 向巡逻点移动
+		MoveByPath(path);
+	}
+
+	public override OnExit()
+	{
+		//nothing can do
+	}
+
+	public override Update()
+	{
+		//检测敌人的范围
+		float distance = 5;
+		//获取距离5以内的敌人
+		target = GetNearestEnemy(distance);
+
+		if(null != target)
+		{
+			//有敌人进行追击
+			ChangeToMoveAttackState();
+		}
+		else
+		{
+			if(MoveFinish())
+			{
+				// 寻找下一个巡逻点
+				point = GetNextPatrolPoint();
+				//寻路
+				path = FindPath(point);
+				// 向巡逻点移动
+				MoveByPath(path);
+			}
+			//更新移动
+			Move();
+		}
+	}
+}
+</code></pre><p>至于‘追击状态’如何返回‘巡逻状态’的条件可以设置为，当追击太远时重新转入’巡逻状态‘，比如在进入’追击状态‘ OnEnter 函数里记录起始追击位置，每次移动时都判断下，与起始位置的距离是否太远，如果太远则退出当前的’追击状态‘转而进入’巡逻状态‘。</p><p>这些状态的设计熟练了以后是会变得相对简单，但状态不能太多，这会导致难以维护。因此通常我们会引入更多通用性比较强的技能系统或者说Action系统，即一系列可编辑可调试的动作集合不需要设计师写代码，通过对时间线和节点的编辑让设计师能够轻松的完成技能或一系列动作的设计，我们将在后面的编辑器章节中详细介绍。</p><p>无论多少复杂的行为都能在一个状态中体现出来，以状态形式的编写好处就在这里。现在有了众多复杂的状态还不够，我们还需要有控制这些状态的状态控制器。</p><pre><code class="language-c#">class StateControl
+{
+	AIStateBase[] mStates;
+	AIStateBase mCurrentState;
+
+	public void Init()
+	{
+		//初始化
+		mStates = new AIStateBase[STATE.Max];
+		mStates[STATE.AIIdleState] = new AIIdleState(StateControl);
+		mStates[STATE.AIRunState] = new AIRunState(StateControl);
+		mStates[STATE.AIMoveAttackState] = new AIMoveAttackState(StateControl);
+		mStates[STATE.AIPatrolState] = new AIPatrolState(StateControl);
+
+		mCurrentState = null;
+	}
+
+	public void ChangeState(STATE state)
+	{
+		// 切换状态
+		if(mCurrentState != null)
+		{
+			mCurrentState.OnExit();
+		}
+		mCurrentState = mStates[state];
+		mCurrentState.OnEnter();
+	}
+
+	void Update()
+	{
+		// 实时更新
+		if(mCurrentState != null)
+		{
+			mCurrentState.Update();
+		}
+	}
+}
+</code></pre><p>状态控制器是存储所有状态的状态管理类，我们可以暂时命名为 StateControl类，所有状态都在 StateControl 里有一份实例，而且状态控制器记录了当前的状态，由于所有状态都是继承与 AIStateBase，因此这个当前状态的变量可以是基类 AIStateBase 以支持所有类型的状态类。又由于所有的状态类的对外接口都是统一，因此只需要基类就能操作所有状态，而且状态的转换也完全可以由各自状态的本身来决定。状态控制器只是起到了对状态实例管理和转换的作用，因此通常状态控制器没有太多了的逻辑，大部分AI逻辑都放在了每个状态类里面，由每个从 AIStateBase 父类继承而来的AI子类来决定如何行动，这样大大降低了逻辑的耦合，让代码逻辑更加清晰、更容易维护、更容易扩展。</p><h6 id="用状态机编写ai有诸多优点诸如可维护性强可扩展性强逻辑耦合清晰符合人类思维逻辑易上手但缺点也很大由于每个状态都必须由设计人亲自制定因此在每个状态时编写时要考虑到所有情况每种情况都要有相应的处理方式这样就导致当需要设计的ai行为过于复杂的时候编写的逻辑复杂度和工期长度也呈现指数级的增长到最后有可能无法承受太复杂的ai行为逻辑比如人类在战场中的随机应变能力对于各种各样的爆炸攻击冲锋防御的应变能力需要表现出各种不一样的行为方式时就会在状态机里出现很多-if-的情况这时仍然用状态机来编写ai就会很容易陷入超出人类逻辑的复杂度">用状态机编写AI有诸多优点，诸如可维护性强，可扩展性强，逻辑耦合清晰，符合人类思维逻辑易上手。但缺点也很大，由于每个状态都必须由设计人亲自制定，因此在每个状态时编写时要考虑到所有情况，每种情况都要有相应的处理方式，这样就导致当需要设计的AI行为过于复杂的时候，编写的逻辑复杂度和工期长度也呈现指数级的增长，到最后有可能无法承受太复杂的AI行为逻辑，比如人类在战场中的随机应变能力，对于各种各样的爆炸，攻击，冲锋，防御的应变能力需要表现出各种不一样的行为方式时就会在状态机里出现很多 if 的情况，这时仍然用状态机来编写AI就会很容易陷入超出人类逻辑的复杂度。</h6><span class="meta"><time datetime="2019-03-10T00:00:00+08:00">March 10, 2019</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2019-03-10T00:00:00+08:00">March 10, 2019</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --><div><p /><p>感谢您的耐心阅读</p><p>Thanks for your reading</p><p /> <script type="text/javascript" src="/assets/js/tctip-1.0.3.min.js"></script> <script> new tctip({ top: '50%', button: { id: 9, type: 'zanzhu' }, list: [ { type: 'alipay', qrImg: '/assets/common/alipay.jpg' }, { type: 'wechat', qrImg: '/assets/common/wechatpay.jpg' }, { type: 'bitcoin', qrContent: '1ErCFmtoQY2KDctjgPALZri3USsMqdSvqh' } ] }).init() </script><li><p><strong><font color="red">版权申明</font></strong></p><p><strong><font color="red">本文为博主原创文章，未经允许不得转载:</font></strong></p><p><a href = "http://www.luzexi.com/2019/03/10/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-AI1">《Unity3D高级编程之进阶主程》第八章 AI(1)-状态机构架机器人行为</a></p><p><strong><font color="red">Copyright attention</font></strong></p><p><strong><font color="red">Please don't reprint without authorize.</font></strong></p></li><li><p></p><p></p><p><image src="/public/qrcode_for_gzh.jpg" /></p><p><strong>微信公众号，文章同步推送，致力于分享一个资深程序员在北上广深拼搏中对世界的理解</strong></p><p></p><p></p><p>QQ交流群: 777859752 (高级程序书友会)</p></li></div><p /><div class="related"><div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script></div><p /><div class="related"><h2>最新发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2020/05/11/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A845"> 思路探讨(四十五) 思考方式的转变 <small>11 May 2020</small> </a></h3></li><li><h3> <a href="/2020/05/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B06"> 读书笔记(六) 《游戏开发者访谈录》 <small>10 May 2020</small> </a></h3></li><li><h3> <a href="/2020/05/02/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B05"> 读书笔记(五) 《态度》 <small>02 May 2020</small> </a></h3></li></ul><h2 color='blue' >之后发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2019/04/13/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A823"> 思路探讨(二十三) 997成就世界 <small>13 Apr 2019</small> </a></h3></li><li><h3> <a href="/2019/04/07/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-AI3"> 《Unity3D高级编程之进阶主程》第八章 AI(3) 非典型性AI <small>07 Apr 2019</small> </a></h3></li><li><h3> <a href="/2019/03/31/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A822"> 思路探讨(二十二) 人为什么做不出最正确的选择 <small>31 Mar 2019</small> </a></h3></li><li><h3> <a href="/2019/03/28/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-AI2"> 《Unity3D高级编程之进阶主程》第八章 AI(2)-用行为树构建AI <small>28 Mar 2019</small> </a></h3></li><li><h3> <a href="/2019/03/17/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A821"> 思路探讨(二十一) 生存之战 <small>17 Mar 2019</small> </a></h3></li><h2>之前发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2019/02/19/you-can-live-your-dream"> YOU CAN LIVE YOUR DREAM! <small>19 Feb 2019</small> </a></h3></li><li><h3> <a href="/2019/02/17/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF6"> 《Unity3D高级编程之进阶主程》第一章，C#要点技术(六) 搜索算法 <small>17 Feb 2019</small> </a></h3></li><li><h3> <a href="/2019/02/04/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A820"> 思路探讨(二十) 如何将你的家庭与普通人拉开差距 <small>04 Feb 2019</small> </a></h3></li><li><h3> <a href="/2019/02/03/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF5"> 《Unity3D高级编程之进阶主程》第一章，C#要点技术(五) 排序算法 <small>03 Feb 2019</small> </a></h3></li><li><h3> <a href="/2019/01/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-CSharp%E8%A6%81%E7%82%B9%E6%8A%80%E6%9C%AF4"> 《Unity3D高级编程之进阶主程》第一章，C#要点技术(四) 委托、事件、装箱、拆箱 <small>26 Jan 2019</small> </a></h3></li></ul></div></section></main><script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })(); </script></body></html>
