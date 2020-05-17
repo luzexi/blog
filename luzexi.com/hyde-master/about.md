@@ -49,7 +49,7 @@ title: 我的简介
 
 开源地址: [https://github.com/luzexi](https://github.com/luzexi)
 
-<!-- EMAIL：jesse_luzexi@163.com -->
+Email: zexilu@tencent.com
 
 QQ:16008977 (请标注为什么要加)
 
