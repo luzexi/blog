@@ -20,10 +20,11 @@
 		[3][4][5][6][7]
 </code></pre><h6 id="1先取s周围的点标记1">1.先取s周围的点标记1</h6><h6 id="2取标记里最近的且没被取过的点即下面这个1点取它周围点标记为2">2.取标记里最近的且没被取过的点，即下面这个1点，取它周围点标记为2</h6><h6 id="3取标记里最近的且没被取过的点即点3也可以是上面的1但我们定个规则一样的距离以下面为标准取它周围的点标记为点4">3.取标记里最近的且没被取过的点，即点3也可以是上面的1，但我们定个规则一样的距离以下面为标准，取它周围的点标记为点4</h6><h6 id="4离e点最近的还是4继续取它周围的标记为5">4.离e点最近的还是4，继续取它周围的标记为5</h6><h6 id="5离e点最近的还是5继续取周围点标记为6">5.离e点最近的还是5，继续取周围点标记为6</h6><h6 id="6离e点最近的还是6取它周围的点标记为7">6.离e点最近的还是6，取它周围的点标记为7</h6><h6 id="7离e点最近的还是7取它最近的点标记为8">7.离e点最近的还是7，取它最近的点标记为8</h6><h6 id="8离e点最近的是8取它周围的点标记为9">8.离e点最近的是8，取它周围的点标记为9</h6><h6 id="9离e点最近的是9取它周围的点标记为10">9.离e点最近的是9，取它周围的点标记为10</h6><h6 id="10离e点最近的为左边的10取它周围的点时发现到达目的地e结束">10.离e点最近的为左边的10，取它周围的点时发现到达目的地e，结束。</h6><p>上述过程明晰的阐述了A星算法贪婪的全过程，即只选择当前的最优选择，因为只关注当前的最优解，就忽视了对全局的最优解，走‘弯路’是常有的事。体现在代码上为如下伪代码：</p><pre><code class="language-c#">		function find_path(s,e)
 		{
-			open = new list(); //没有被取到过的点
-			close = new list(); //已经被取过的点
+			open = new List(); //没有被取到过的点
+			close = new List(); //已经被取过的点
 
 			open.add(s); //从s点开始
+			close.add(s);//将s加入close队列
 
 			for(!open.IsEmpty()) //重复遍历直到没有点可以取
 			{
@@ -40,39 +41,129 @@
 				p3 = p.top(); //取上边的点
 				p4 = p.down(); //取下边的点
 
-				//是否已经被取过
-				if(p1 != null &amp;&amp; p1.IsNotInClose())
-				{
-					//加入到没被取过的列表里
-					open.add(p1);
-				}
+				plist.add(p1);
+				plist.add(p2);
+				plist.add(p3);
+				plist.add(p4);
 
-				//是否已经被取过
-				if(p2 != null &amp;&amp; p2.IsNotInClose())
+				for(int i = 0 ; i&lt;plist.Count ; ++i)
 				{
-					//加入到没被取过的列表里
-					open.add(p2);
-				}
-
-				//是否已经被取过
-				if(p3 != null &amp;&amp; p3.IsNotInClose())
-				{
-					//加入到没被取过的列表里
-					open.add(p3);
-				}
-
-				//是否已经被取过
-				if(p4 != null &amp;&amp; p4.IsNotInClose())
-				{
-					//加入到没被取过的列表里
-					open.add(p4);
+					pp = plist[i];
+					if(null != pp &amp;&amp; pp.IsNotInClose())
+					{
+						pp.f = dis(pp,e);
+						if(pp.IsNotInOpen())
+						{
+							pp.SetOpen();//设置为已经在open中
+							open.Add(pp);//加入队列
+						}
+					}
 				}
 
 				//p点已经被取过了
-				p.setClose(false);
 				close.add(p);
 
 				open.sort(); //排序一下
 			}
 		}
-</code></pre><p>上述伪代码完整的诠释了A星寻路的全过程。我们设置了两个队列，一个是open队列，存储的是被选中过的点周围的点并且这些点没有被取到过，另一个是close队列，它存储的是已经被遍历过的点。最初先把起点放入open队列中然后开始循环，把open中最头上的数据推出来，并判断它周围的4个点是否已经‘踩’过，如果没有被‘踩’过就放入open队列成为可选的节点标志，把当前被推出来的点标记为被踩过的点，最后把整个open排序下继续循环。</p><p>当我们面对场景地图很大的时候，或者使用A星算法的寻路频率很高的时候，普通的A星算法就会消耗大量的CPU，设备的性能就会急剧下降，这样看来普通的A星性能依然无法过关，我们需要改进它让它变得更高效。接下来我们讲讲A星寻路在遇到性能瓶颈时的优化方案。</p><h3 id="一长距离导航">一、长距离导航</h3><p>当我们需要寻路的两点距离很大，中间有很多障碍物时，A星的算法就会遇到瓶颈。我们前面展示了A星算法的伪代码来描述算法的步骤，我们从代码中可知open队列排序瓶颈，它会不断加入的可行走点使得排序速度越来越慢，这是最终导致CPU计算量过大画面无法动弹的主要原因。</p><p>也就是说，当两点的距离很长时，open队列有可能被塞入了太多的节点而导致排序变慢，而open队列不断被塞入节点和排序是不可避免的，那么当寻路距离太大时我们该怎么办？</p><p>我们可以把路径寻路的计算量大部分转化为离线下计算，其实很多时候我们可以把中间很长一段距离的计算过程放到脱机工具中去计算。路径不是非得实时计算出来才好，我们可以把一些常用的路径，在离线下算好放在数据文件中，当游戏开启时将已经计算完毕的常用点对点路径放在内存里，当角色需要寻路到某个节点时，我们可以从已经计算好的点对点数据中寻找起始点和目的地离我们最近的数据，如果我们要寻路的起点和终点这两个节点恰好是在我们计算好的数据附近，就可以将这段路径取出来直接使用，再拼上两点到真正起点和终点的实时寻路计算路径就成了一个完整的从起点到目的地的路径。这样我们节省了中间很长一段路径的计算量不再需要重新计算一遍，留给我们需要计算的仅仅是起点到伪起点和伪终点到终点的实时路径部分。</p><p>我们来举例说明这种情况的过程，假如地图中 A点 到 B点 的路径，我们已经算好并存放在了内存里，当我们在A点附近的C点要寻路到B点附近的D点时，即C到D，中间有A到B的相似路径。我们从内存中得知C点的附近有A，并且D点的附近有B，A和B是的路径已经计算完毕，那么我们就可以先计算从C点寻路到A点的路径，再调出A到B的路径直接拼在后面，再计算B点到目的D点的路径将它们拼在路径在后面就有了C到D的完整了路径。以这种方式来规避一些计算量比较大寻路计算量的消耗，这种方式在大型世界的RPG游戏里特别常用，我们通常称它们为导航点，只要角色到了这个导航点就能直接取出路径直达目的地，而不再需要大量的寻路计算消耗。</p><p>我们说实时计算中的寻路道路不能太长，太长的道路计算就会耗尽CPU让画面阻塞，离线计算的导航点也是一样，即使是离线计算也不能一口气把最南端的地图到最北端的地图的寻路路径计算完毕，这样的计算效率太差，因为路径越长情况越多，加入open列表的节点成指数级增长。</p><p>因此我们也需在长路径上设置众多导航点以便加快离线计算，有了众多导航点就能在长路径寻路前先做导航点寻路，再取出各路径上导航点之间的数据形成长距离路径，比如大地图上有5座城市里，每座城市都有4个出口点，这个4个出口点就可以做成离线的导航点，每座城市之间的导航点都做了离线的寻路计算并存储了路径在数据文件上，我们在寻路时可以先寻找到最近的一个导航点，再从最近的一个导航出发寻找到目的地附近导航点的导航路径，我们可能找到，导航点 a -&gt; c -&gt; e 的导航点路径，直接取出 a -&gt; c 和 c -&gt; e 的路径，再拼凑上实时计算的角色到 a导航点的路径以及 e导航点到目的地的路径，就完成了一条完整的长距离路径链。</p><h3 id="二a星的排序算法优化">二、A星的排序算法优化</h3><p>前面我们多次提到open队列的问题，它在A星寻路中起到关键作用，由于每次插入open队列的点后，open就不再是有序的队列了，所以每次去拿最小值时都需要重新排序。排序的时间消耗随着队列长度的增大而增大，我们的A星大一部分消耗都在open队列排序上，所以对open排序做优化是比较重要的。</p><p>是不是可以不排序，其实可以不排序只查找并插入，先使用查找算法找到应该插入的位置再插入元素，可以让队列在不用排序的状态下做到有序。</p><p>通常我们使用最小堆的数据结构来做插入操作，由于每次只需知道最小预期值的节点，因此最小堆数据结构非常适合A星寻路的open排序。我们前面介绍过堆排序以及最大最小堆的基础知识，这里稍微简单阐述一下，最小堆的数据结构是完美二叉树结构，每个父节点都比子节点小，因此根节点肯定是最小的那个元素，每次插入或删除时都会重新寻找最小预期值的那个节点放在根结点上。它的插入和删除算法的时间复杂度为O(logN)，整体插入操作的复杂度为 O(logN + N)。</p><p>除了最小堆排序外我们也可以用二分查找代替最小堆，因为open队列在插入元素前一定是有序的，因此我们可以先用二分查找算法来找到插入的位置。每次插入时都使用二分查找算法查找插入点，再将元素插入进队列，那么每次的插入复杂度为O(logN + N)。无论最小堆或二分查找都比快排一次的时间复杂度O(NlogN)要好很多。</p><p>888</p><h3 id="三优化排序判断依据的预测值计算方法">三、优化排序判断依据的预测值计算方法</h3><p>前面用图所举的例子中，都是以当前点p与终点e之间的距离来作为预测值，这种方法简单但也不科学，导致A星寻找更好的点位时总是要绕很大的弯路。</p><p>我们可以改变一下这个策略，选用一个更科学的方法， F 预测值= G 当前最近步数 + H 预测当前点到终点的步数 的方法。</p><p>F 为预测值，G为起点s到当前点p的最近步数，H为当前点p到终点e的预测值，它们相加为F预测值。</p><p>其中G应该是已经计算好并放入节点中的值，该值就是计算过程中起点s到当前点的步数。我们可以把每步计算好的步数都放入节点中，以待需要计算时使用。</p><p>这个方法相当于，原来只关注当前点到终点的距离，变为关注起点s经过当前点p路径到终点e的距离，虽然还是贪婪的简单预测算法，但比起原来只关注当前点p与终点e的距离，更加科学化，能更快的找到更好更近的点位。</p><p>为什么要改善这个预测值，改善预测值有什么意义呢？</p><p>其实预测值的计算方法代表了在寻路过程中的走法，如果预测值只关注在于终点距离最近的点上，那么在寻路过程中的选择点位的顺序就会偏向于与终点更近的点。而如果预测值计算公式，关注的是整个距离较近的点位上，那么在寻路过程中在选择点位上也就会偏向整条路径短的方向上去靠。</p><h3 id="四多次频繁a星寻路的优化">四、多次频繁A星寻路的优化</h3><p>多次频繁寻路中，对A星算法中每个运算，每行代码的运算细节都会有比较重大的考验。</p><p>比如我们在查看一个节点是否为被取过的节点，即是否为Close，很多人都会在Close里取寻找该节点是否存在，这个操作明显就没有考虑到性能的消耗，要在Close列表中找节点，就相当于遍历一遍所有已经找过的节点，Close里的节点越多，越浪费CPU，而且是不只一次浪费，每个循环都会浪费一次，性能消耗巨大。</p><p>因此我们通常的做法是把节点作为一个实例，在实例中添加IsClose的变量，来判断是否被取过，或者说是否Close。</p><p>但这种方法还是不够，因为IsClose变量是要初始化的，每次寻路都要将前面寻路过的痕迹抹去才能开始全新的寻路过程。</p><p>这就是又一个被很多人忽视的初始化的性能消耗，每次在A星寻路开始前，需要将IsClose的变量初始化为false，就需要遍历整个数据来初始化。</p><p>每次都要遍历整个数据的话，A星算法无论优化的多快都无济于事了，因为初始化的性能消耗就已经将A星的性能消耗完全盖掉了。如果初始化的性能消耗需要遍历整个数据，那么优化A星算法的意义何在。</p><p>其实可以用一个变量就能判断IsClose的方法，无需初始化。</p><p>我们可以在寻路类中设置一个属性变量FindIndex，或者专门为寻路服务的静态变量也可以，而每个寻路节点中也存有一个变量FindIndex，每次寻路前都对FindIndex++，在判断IsClose时，当节点中的FindIndex与寻路类中FindIndex一致时说明已经被当次寻路算法取出过，否则两者不一样，说明这个节点没有被取出过，当节点被取出时，节点里的FindIndex则设置为当前寻路类中的FindIndex值，以表明该节点已经被这次寻路算法取出过。</p><p>用一个变量和整数的比较就能知道IsClose的结果，省去了巨量的初始化操作。</p><h6 id="在a星算法这种经常用频繁用的算法中一个小小的性能消耗就能放大很多倍特别注意调用的函数的复杂度公式的复杂度以及运算的优化尽量做到能不调用函数的不调用函数能简化公式的尽量简化公式能用位运算符号代替加减乘除的尽量用位运算代替节省a星算法的性能开销">在A星算法这种经常用频繁用的算法中，一个小小的性能消耗就能放大很多倍，特别注意调用的函数的复杂度，公式的复杂度，以及运算的优化，尽量做到能不调用函数的不调用函数，能简化公式的尽量简化公式，能用&amp;|&lt;&gt;位运算符号代替加减乘除的尽量用位运算代替，节省A星算法的性能开销。</h6><h6 id="我也看过所谓的b星算法过程其实世上没有b星所谓的b星其实就是我们a星的优化版本而且互联网中所阐述的b星算法存在一定几率无法寻到路径的问题即它只关注所谓的前方而忽略了其实后方也有路如果只有后方有路时b星就无法找到路径">我也看过所谓的B星算法过程，其实世上没有B星，所谓的B星其实就是我们A星的优化版本，而且互联网中所阐述的B星算法存在一定几率无法寻到路径的问题，即它只关注所谓的‘前方‘，而忽略了其实’后方‘也有路，如果只有后方有路时，B星就无法找到路径。</h6><span class="meta"><time datetime="2019-06-22T00:00:00+08:00">June 22, 2019</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2019-06-22T00:00:00+08:00">June 22, 2019</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --><div><p /><p>感谢您的耐心阅读</p><p>Thanks for your reading</p><p /> <script type="text/javascript" src="/assets/js/tctip-1.0.3.min.js"></script> <script> new tctip({ top: '50%', button: { id: 9, type: 'zanzhu' }, list: [ { type: 'alipay', qrImg: '/assets/common/alipay.jpg' }, { type: 'wechat', qrImg: '/assets/common/wechatpay.jpg' }, { type: 'bitcoin', qrContent: '1ErCFmtoQY2KDctjgPALZri3USsMqdSvqh' } ] }).init() </script><li><p><strong><font color="red">版权申明</font></strong></p><p><strong><font color="red">本文为博主原创文章，未经允许不得转载:</font></strong></p><p><a href = "http://www.luzexi.com/2019/06/22/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF1">《Unity3D高级编程之进阶主程》第十章，地图与寻路(一) A星算法及优化</a></p><p><strong><font color="red">Copyright attention</font></strong></p><p><strong><font color="red">Please don't reprint without authorize.</font></strong></p></li><li><p></p><p></p><p><image src="/public/qrcode_for_gzh.jpg" /></p><p><strong>微信公众号，文章同步推送，致力于分享一个资深程序员在北上广深拼搏中对世界的理解</strong></p><p></p><p></p><p>QQ交流群: 777859752 (高级程序书友会)</p></li></div><p /><div class="related"><div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script></div><p /><div class="related"><h2>最新发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2020/05/18/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A847"> 思路探讨(四十七) 当前经济环境下的投资方向 <small>18 May 2020</small> </a></h3></li><li><h3> <a href="/2020/05/11/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A845"> 思路探讨(四十五) 思考方式的转变 <small>11 May 2020</small> </a></h3></li><li><h3> <a href="/2020/05/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B06"> 读书笔记(六) 《游戏开发者访谈录》 <small>10 May 2020</small> </a></h3></li></ul><h2 color='blue' >之后发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2019/08/05/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF3"> 《Unity3D高级编程之进阶主程》第十章，地图与寻路(三) 地图编辑器 <small>05 Aug 2019</small> </a></h3></li><li><h3> <a href="/2019/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF2"> 《Unity3D高级编程之进阶主程》第十章，地图与寻路(二) 寻路网格的构建 <small>26 Jul 2019</small> </a></h3></li><li><h3> <a href="/2019/07/14/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%826"> 《Unity3D高级编程之进阶主程》第六章，网络层(六) - 网络同步解决方案 <small>14 Jul 2019</small> </a></h3></li><li><h3> <a href="/2019/07/06/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A825"> 思路探讨(二十五) 困境中的中产 <small>06 Jul 2019</small> </a></h3></li><li><h3> <a href="/2019/06/24/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A826"> 思路探讨(二十六) 我们真的聪明吗 <small>24 Jun 2019</small> </a></h3></li><h2>之前发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2019/06/16/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%825"> 《Unity3D高级编程之进阶主程》第六章，网络层(五) - 剖析数据协议原理 <small>16 Jun 2019</small> </a></h3></li><li><h3> <a href="/2019/06/02/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%824"> 《Unity3D高级编程之进阶主程》第六章，网络层(四) - 封装HTTP <small>02 Jun 2019</small> </a></h3></li><li><h3> <a href="/2019/05/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB7"> 《Unity3D高级编程之进阶主程》第五章，3D模型与动画(四) - 3D模型的变与换4 <small>18 May 2019</small> </a></h3></li><li><h3> <a href="/2019/05/12/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB6"> 《Unity3D高级编程之进阶主程》第五章，3D模型与动画(四) - 3D模型的变与换3 <small>12 May 2019</small> </a></h3></li><li><h3> <a href="/2019/05/01/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A824"> 思路探讨(二十四) 要勇敢的相信自己 <small>01 May 2019</small> </a></h3></li></ul></div></section></main><script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })(); </script></body></html>
+</code></pre><p>上述伪代码完整的诠释了A星寻路的全过程。我们设置了两个队列，一个是open队列，存储的是被选中过的点周围的点并且这些点没有被取到过，另一个是close队列，它存储的是已经被遍历过的点。最初先把起点放入open队列中然后开始循环，把open中最头上的数据推出来，并判断它周围的4个点是否已经‘踩’过，如果没有被‘踩’过就放入open队列成为可选的节点标志，把当前被推出来的点标记为被踩过的点，最后把整个open排序下继续循环。</p><p>当我们面对场景地图很大的时候，或者使用A星算法的寻路频率很高的时候，普通的A星算法就会消耗大量的CPU，设备的性能就会急剧下降，这样看来普通的A星性能依然无法过关，我们需要改进它让它变得更高效。接下来我们讲讲A星寻路在遇到性能瓶颈时的优化方案。</p><h3 id="一长距离导航">一、长距离导航</h3><p>当我们需要寻路的两点距离很大，中间有很多障碍物时，A星的算法就会遇到瓶颈。我们前面展示了A星算法的伪代码来描述算法的步骤，我们从代码中可知open队列排序瓶颈，它会不断加入的可行走点使得排序速度越来越慢，这是最终导致CPU计算量过大画面无法动弹的主要原因。</p><p>也就是说，当两点的距离很长时，open队列有可能被塞入了太多的节点而导致排序变慢，而open队列不断被塞入节点和排序是不可避免的，那么当寻路距离太大时我们该怎么办？</p><p>我们可以把路径寻路的计算量大部分转化为离线下计算，其实很多时候我们可以把中间很长一段距离的计算过程放到脱机工具中去计算。路径不是非得实时计算出来才好，我们可以把一些常用的路径，在离线下算好放在数据文件中，当游戏开启时将已经计算完毕的常用点对点路径放在内存里，当角色需要寻路到某个节点时，我们可以从已经计算好的点对点数据中寻找起始点和目的地离我们最近的数据，如果我们要寻路的起点和终点这两个节点恰好是在我们计算好的数据附近，就可以将这段路径取出来直接使用，再拼上两点到真正起点和终点的实时寻路计算路径就成了一个完整的从起点到目的地的路径。这样我们节省了中间很长一段路径的计算量不再需要重新计算一遍，留给我们需要计算的仅仅是起点到伪起点和伪终点到终点的实时路径部分。</p><p>我们来举例说明这种情况的过程，假如地图中 A点 到 B点 的路径，我们已经算好并存放在了内存里，当我们在A点附近的C点要寻路到B点附近的D点时，即C到D，中间有A到B的相似路径。我们从内存中得知C点的附近有A，并且D点的附近有B，A和B是的路径已经计算完毕，那么我们就可以先计算从C点寻路到A点的路径，再调出A到B的路径直接拼在后面，再计算B点到目的D点的路径将它们拼在路径在后面就有了C到D的完整了路径。以这种方式来规避一些计算量比较大寻路计算量的消耗，这种方式在大型世界的RPG游戏里特别常用，我们通常称它们为导航点，只要角色到了这个导航点就能直接取出路径直达目的地，而不再需要大量的寻路计算消耗。</p><p>我们说实时计算中的寻路道路不能太长，太长的道路计算就会耗尽CPU让画面阻塞，离线计算的导航点也是一样，即使是离线计算也不能一口气把最南端的地图到最北端的地图的寻路路径计算完毕，这样的计算效率太差，因为路径越长情况越多，加入open列表的节点成指数级增长。</p><p>因此我们也需在长路径上设置众多导航点以便加快离线计算，有了众多导航点就能在长路径寻路前先做导航点寻路，再取出各路径上导航点之间的数据形成长距离路径，比如大地图上有5座城市里，每座城市都有4个出口点，这个4个出口点就可以做成离线的导航点，每座城市之间的导航点都做了离线的寻路计算并存储了路径在数据文件上，我们在寻路时可以先寻找到最近的一个导航点，再从最近的一个导航出发寻找到目的地附近导航点的导航路径，我们可能找到，导航点 a -&gt; c -&gt; e 的导航点路径，直接取出 a -&gt; c 和 c -&gt; e 的路径，再拼凑上实时计算的角色到 a导航点的路径以及 e导航点到目的地的路径，就完成了一条完整的长距离路径链。</p><h3 id="二a星的排序算法优化">二、A星的排序算法优化</h3><p>前面我们多次提到open队列的问题，它在A星寻路中起到关键作用，由于每次插入open队列的点后，open就不再是有序的队列了，所以每次去拿最小值时都需要重新排序。排序的时间消耗随着队列长度的增大而增大，我们的A星大一部分消耗都在open队列排序上，所以对open排序做优化是比较重要的。</p><p>是不是可以不排序，其实可以不排序只查找并插入，先使用查找算法找到应该插入的位置再插入元素，可以让队列在不用排序的状态下做到有序。</p><p>通常我们使用最小堆的数据结构来做插入操作，由于每次只需知道最小预期值的节点，因此最小堆数据结构非常适合A星寻路的open排序。我们前面介绍过堆排序以及最大最小堆的基础知识，这里稍微简单阐述一下，最小堆的数据结构是完美二叉树结构，每个父节点都比子节点小，因此根节点肯定是最小的那个元素，每次插入或删除时都会重新寻找最小预期值的那个节点放在根结点上。它的插入和删除算法的时间复杂度为O(logN)，整体插入操作的复杂度为 O(logN + N)。</p><pre><code class="language-c#">function find_path(s,e)
+{
+	open = new MinHeap(); //最小堆
+	close = new List(); //已经被取过的点
+	plist = new List();
+
+	open.add(s); //从s点开始
+	close.add(s); //将s加入到close队列
+
+	for(!open.IsEmpty()) //重复遍历直到没有点可以取
+	{
+		p = open.pop(); //把最近的点推出来
+
+		if(p == e)
+		{
+			//找到终点
+			break;
+		}
+
+		p1 = p.left(); //取左边的点
+		p2 = p.right(); //取右边的点
+		p3 = p.top(); //取上边的点
+		p4 = p.down(); //取下边的点
+
+		plist.Clear();
+		plist.add(p1);
+		plist.add(p2);
+		plist.add(p3);
+		plist.add(p4);
+
+		for(int i = 0 ; i&lt;plist.Count ; ++i)
+		{
+			pp = plist[i];
+			if( null != pp &amp;&amp; pp.IsNotInClose())
+			{
+				pp.f = dis(pp,e); // 期望值为到终点的最短距离
+				if(pp.IsNotInOpen())
+				{
+					pp.SetOpen(); //设置已经在open中
+					open.Add(pp); //加入最小堆
+				}
+			}
+		}
+
+		//p点已经被取过了
+		close.add(p);
+	}
+}
+</code></pre><p>上述代码与前面不同的是open队列改为了最小堆，我们不再需要在每次循环结束时重新排序而是在节点插入最小堆时进行做队列的调整。</p><p>除了最小堆排序外我们也可以用二分查找代替最小堆，因为open队列在插入元素前一定是有序的，因此我们可以先用二分查找算法来找到插入的位置。每次插入时都使用二分查找算法查找插入点，再将元素插入进队列，那么每次的插入复杂度为O(logN + N)。无论最小堆或二分查找都比快排一次的时间复杂度O(NlogN)要好很多。</p><h3 id="三优化期望值的计算方法">三、优化期望值的计算方法</h3><p>前面讲解A星算法时所举的例子中节点的期望值都是以当前点与终点e之间的距离来作为期望值，期望值越小越接近终点，这种方法简单但也不科学，这导致A星在障碍物比较多的复杂地图中寻找路径时会要绕比较大的弯路，也导致了在寻路过程中open队列中加入了比预期更多的节点使得open队列的排序变慢。</p><p>我们需要优化一下这个计算期望值的策略，我们选用一个更科学的方法</p><pre><code>	F 期望值= G 当前最近步数 + H 预测当前点到终点的步数
+</code></pre><p>F 为我们需要计算期望值，G为起点s到当前点p的最少步数，H为当前点p到终点e的最短距离，将这两个值加起来就是 F 期望值。其中 G 是已经计算好并放入节点p中的值，因为q是被open队列推出来的，所以它的最少步数肯定是计算完毕的，该值就是我们在前面计算过程中起点s到当前点的最少步数。我们可以把每步计算好的步数都放入节点中，以待需要计算时使用。</p><pre><code class="language-c#">function find_path(s,e)
+{
+	open = new MinHeap(); //最小堆
+	close = new List(); //已经被取过的点
+
+	open.add(s); //从s点开始
+	close.add(s); //将s加入到close队列
+
+	for(!open.IsEmpty()) //重复遍历直到没有点可以取
+	{
+		p = open.pop(); //把最近的点推出来
+
+		if(p == e)
+		{
+			//找到终点
+			break;
+		}
+
+		p1 = p.left(); //取左边的点
+		p2 = p.right(); //取右边的点
+		p3 = p.top(); //取上边的点
+		p4 = p.down(); //取下边的点
+
+		plist.add(p1);
+		plist.add(p2);
+		plist.add(p3);
+		plist.add(p4);
+
+		for(int i = 0 ; i&lt;plist.Count ; ++i)
+		{
+			pp = plist[i];
+			if( pp.IsNotInClose() &amp;&amp; p.g + 1 + dis(pp,e) &lt; pp.f)
+			{
+				pp.g = p.g + 1;
+				pp.f = pp.g + dis(pp,e);
+				if(pp.IsNotInOpen())
+				{
+					pp.SetOpen();//设置为已经在open中
+					open.Add(pp);//加入最小堆
+				}
+				else
+				{
+					open.Update(pp);//更新最小堆中的节点
+				}
+			}
+		}
+
+		//p点已经被取过了
+		close.add(p);
+	}
+}
+</code></pre><p>上述代码与之前的相比我们又加入了新的期望值的计算方式，对于期望值有更新的节点在堆中进行更新。</p><p>888</p><p>这个方法相当于，原来只关注当前点到终点的距离，变为关注起点s经过当前点p路径到终点e的距离，虽然还是贪婪的简单预测算法，但比起原来只关注当前点p与终点e的距离，更加科学化，能更快的找到更好更近的点位。</p><p>为什么要改善这个预测值，改善预测值有什么意义呢？</p><p>其实预测值的计算方法代表了在寻路过程中的走法，如果预测值只关注在于终点距离最近的点上，那么在寻路过程中的选择点位的顺序就会偏向于与终点更近的点。而如果预测值计算公式，关注的是整个距离较近的点位上，那么在寻路过程中在选择点位上也就会偏向整条路径短的方向上去靠。</p><h3 id="四多次频繁a星寻路的优化">四、多次频繁A星寻路的优化</h3><p>多次频繁寻路中，对A星算法中每个运算，每行代码的运算细节都会有比较重大的考验。</p><p>比如我们在查看一个节点是否为被取过的节点，即是否为Close，很多人都会在Close里取寻找该节点是否存在，这个操作明显就没有考虑到性能的消耗，要在Close列表中找节点，就相当于遍历一遍所有已经找过的节点，Close里的节点越多，越浪费CPU，而且是不只一次浪费，每个循环都会浪费一次，性能消耗巨大。</p><p>因此我们通常的做法是把节点作为一个实例，在实例中添加IsClose的变量，来判断是否被取过，或者说是否Close。</p><p>但这种方法还是不够，因为IsClose变量是要初始化的，每次寻路都要将前面寻路过的痕迹抹去才能开始全新的寻路过程。</p><p>这就是又一个被很多人忽视的初始化的性能消耗，每次在A星寻路开始前，需要将IsClose的变量初始化为false，就需要遍历整个数据来初始化。</p><p>每次都要遍历整个数据的话，A星算法无论优化的多快都无济于事了，因为初始化的性能消耗就已经将A星的性能消耗完全盖掉了。如果初始化的性能消耗需要遍历整个数据，那么优化A星算法的意义何在。</p><p>其实可以用一个变量就能判断IsClose的方法，无需初始化。</p><p>我们可以在寻路类中设置一个属性变量FindIndex，或者专门为寻路服务的静态变量也可以，而每个寻路节点中也存有一个变量FindIndex，每次寻路前都对FindIndex++，在判断IsClose时，当节点中的FindIndex与寻路类中FindIndex一致时说明已经被当次寻路算法取出过，否则两者不一样，说明这个节点没有被取出过，当节点被取出时，节点里的FindIndex则设置为当前寻路类中的FindIndex值，以表明该节点已经被这次寻路算法取出过。</p><p>用一个变量和整数的比较就能知道IsClose的结果，省去了巨量的初始化操作。</p><h6 id="在a星算法这种经常用频繁用的算法中一个小小的性能消耗就能放大很多倍特别注意调用的函数的复杂度公式的复杂度以及运算的优化尽量做到能不调用函数的不调用函数能简化公式的尽量简化公式能用位运算符号代替加减乘除的尽量用位运算代替节省a星算法的性能开销">在A星算法这种经常用频繁用的算法中，一个小小的性能消耗就能放大很多倍，特别注意调用的函数的复杂度，公式的复杂度，以及运算的优化，尽量做到能不调用函数的不调用函数，能简化公式的尽量简化公式，能用&amp;|&lt;&gt;位运算符号代替加减乘除的尽量用位运算代替，节省A星算法的性能开销。</h6><h6 id="我也看过所谓的b星算法过程其实世上没有b星所谓的b星其实就是我们a星的优化版本而且互联网中所阐述的b星算法存在一定几率无法寻到路径的问题即它只关注所谓的前方而忽略了其实后方也有路如果只有后方有路时b星就无法找到路径">我也看过所谓的B星算法过程，其实世上没有B星，所谓的B星其实就是我们A星的优化版本，而且互联网中所阐述的B星算法存在一定几率无法寻到路径的问题，即它只关注所谓的‘前方‘，而忽略了其实’后方‘也有路，如果只有后方有路时，B星就无法找到路径。</h6><span class="meta"><time datetime="2019-06-22T00:00:00+08:00">June 22, 2019</time> &middot; <a href="/tag/书籍著作">书籍著作</a>, <a href="/tag/Unity3D">Unity3D</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2019-06-22T00:00:00+08:00">June 22, 2019</time> &middot; <a class="post" href="/tag/书籍著作">书籍著作</a>, <a class="post" href="/tag/Unity3D">Unity3D</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --><div><p /><p>感谢您的耐心阅读</p><p>Thanks for your reading</p><p /> <script type="text/javascript" src="/assets/js/tctip-1.0.3.min.js"></script> <script> new tctip({ top: '50%', button: { id: 9, type: 'zanzhu' }, list: [ { type: 'alipay', qrImg: '/assets/common/alipay.jpg' }, { type: 'wechat', qrImg: '/assets/common/wechatpay.jpg' }, { type: 'bitcoin', qrContent: '1ErCFmtoQY2KDctjgPALZri3USsMqdSvqh' } ] }).init() </script><li><p><strong><font color="red">版权申明</font></strong></p><p><strong><font color="red">本文为博主原创文章，未经允许不得转载:</font></strong></p><p><a href = "http://www.luzexi.com/2019/06/22/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF1">《Unity3D高级编程之进阶主程》第十章，地图与寻路(一) A星算法及优化</a></p><p><strong><font color="red">Copyright attention</font></strong></p><p><strong><font color="red">Please don't reprint without authorize.</font></strong></p></li><li><p></p><p></p><p><image src="/public/qrcode_for_gzh.jpg" /></p><p><strong>微信公众号，文章同步推送，致力于分享一个资深程序员在北上广深拼搏中对世界的理解</strong></p><p></p><p></p><p>QQ交流群: 777859752 (高级程序书友会)</p></li></div><p /><div class="related"><div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script></div><p /><div class="related"><h2>最新发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2020/05/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B07"> 读书笔记(七) 《人性的弱点》 <small>24 May 2020</small> </a></h3></li><li><h3> <a href="/2020/05/18/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A847"> 思路探讨(四十七) 当前经济环境下的投资方向 <small>18 May 2020</small> </a></h3></li><li><h3> <a href="/2020/05/11/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A845"> 思路探讨(四十五) 思考方式的转变 <small>11 May 2020</small> </a></h3></li></ul><h2 color='blue' >之后发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2019/08/05/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF3"> 《Unity3D高级编程之进阶主程》第十章，地图与寻路(三) 地图编辑器 <small>05 Aug 2019</small> </a></h3></li><li><h3> <a href="/2019/07/26/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E5%9C%B0%E5%9B%BE%E4%B8%8E%E5%AF%BB%E8%B7%AF2"> 《Unity3D高级编程之进阶主程》第十章，地图与寻路(二) 寻路网格的构建 <small>26 Jul 2019</small> </a></h3></li><li><h3> <a href="/2019/07/14/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%826"> 《Unity3D高级编程之进阶主程》第六章，网络层(六) - 网络同步解决方案 <small>14 Jul 2019</small> </a></h3></li><li><h3> <a href="/2019/07/06/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A825"> 思路探讨(二十五) 困境中的中产 <small>06 Jul 2019</small> </a></h3></li><li><h3> <a href="/2019/06/24/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A826"> 思路探讨(二十六) 我们真的聪明吗 <small>24 Jun 2019</small> </a></h3></li><h2>之前发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2019/06/16/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%825"> 《Unity3D高级编程之进阶主程》第六章，网络层(五) - 剖析数据协议原理 <small>16 Jun 2019</small> </a></h3></li><li><h3> <a href="/2019/06/02/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-%E7%BD%91%E7%BB%9C%E5%B1%824"> 《Unity3D高级编程之进阶主程》第六章，网络层(四) - 封装HTTP <small>02 Jun 2019</small> </a></h3></li><li><h3> <a href="/2019/05/18/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB7"> 《Unity3D高级编程之进阶主程》第五章，3D模型与动画(四) - 3D模型的变与换4 <small>18 May 2019</small> </a></h3></li><li><h3> <a href="/2019/05/12/Unity3D%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B-3D%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8A%A8%E7%94%BB6"> 《Unity3D高级编程之进阶主程》第五章，3D模型与动画(四) - 3D模型的变与换3 <small>12 May 2019</small> </a></h3></li><li><h3> <a href="/2019/05/01/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A824"> 思路探讨(二十四) 要勇敢的相信自己 <small>01 May 2019</small> </a></h3></li></ul></div></section></main><script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })(); </script></body></html>
