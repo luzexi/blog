@@ -2,11 +2,11 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.luzexi.com/about</loc>
-<lastmod>2020-06-16T23:55:17+08:00</lastmod>
+<lastmod>2020-06-17T23:02:27+08:00</lastmod>
 </url>
 <url>
 <loc>http://www.luzexi.com/search</loc>
-<lastmod>2020-06-16T23:55:17+08:00</lastmod>
+<lastmod>2020-06-17T23:02:27+08:00</lastmod>
 </url>
 <url>
 <loc>http://www.luzexi.com/2013/01/26/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%9E%B6%E6%9E%84</loc>
@@ -659,6 +659,10 @@
 <url>
 <loc>http://www.luzexi.com/2020/06/16/%E6%AF%8F%E6%97%A5%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03</loc>
 <lastmod>2020-06-16T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://www.luzexi.com/2020/06/17/%E6%AF%8F%E6%97%A5%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B04</loc>
+<lastmod>2020-06-17T00:00:00+08:00</lastmod>
 </url>
 <url>
 <loc>http://www.luzexi.com/Util-page/</loc>
