@@ -4,13 +4,35 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2020-06-27T02:08:04+08:00</updated>
+ <updated>2020-06-29T00:32:49+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email>jesse_luzexi@163.com</email>
  </author>
 
+ 
+ <entry>
+   <title>向内看自己(五)</title>
+   <link href="http://www.luzexi.com/2020/06/29/%E5%90%91%E5%86%85%E7%9C%8B%E8%87%AA%E5%B7%B15"/>
+   <updated>2020-06-29T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2020/06/29/向内看自己5</id>
+   <content type="html">&lt;p&gt;我们很容易让生活进入自动驾驶的状态，没有动力，没有活力，麻木不仁的像僵尸一样，不加思考的向前走。大多数情况下都是因为年纪越大越难以改变自己的想法，于是随波逐流都是稀松平常的事。每周都要停下来反思下自己，让自己尽量不要去做无用功，虽然常常做了很长时间的无用功才发现该停一下，每周一反思是个挺好的打破现有习惯和现有常规的事情。&lt;/p&gt;
+
+&lt;p&gt;曾一度认为焦虑是执行力强的代表其实不是，也曾一度认为焦虑越多越能迫使自己推进事情，但事实是完全相反的，这事在心中存在了很久，误区其实挺大的。&lt;/p&gt;
+
+&lt;p&gt;后来想想街上的快递员和外卖员，无时无刻不在奔跑着逼自己赶向下一个目标，何等焦虑，那时我才明白焦虑吞噬了他们的耐心和理智，长久来看这让他们变得更糟糕。焦虑虽说不是低级的，但也不是什么好东西，适度焦虑确实能让人在短时间内保持警惕，但人常常控制不住它，使焦虑反噬了我们的心智。&lt;/p&gt;
+
+&lt;p&gt;我们四周随便看一眼就能看到很多人焦虑的样子，在大城市里，这恐怕是很多人的常态。&lt;/p&gt;
+
+&lt;p&gt;我比较倡导反人性操作，在大城市里挡住焦虑就个很好的反人性操作，类似于出淤泥而不染，当大家都焦虑时我们就要镇定，不要急着去奔跑，想想自己的能力范围，想想自己的兴趣爱好，想想自己能达到的最接近的目标，想想10年后想成为什么样的人。这样近的从能力范围开始做起，脚踏实地，远的想想10年后的事从长计议，积跬步至千里。&lt;/p&gt;
+
+&lt;p&gt;那我自己来说，我开始用更长远的目标来驱动我的努力。这个目标是以可积累，以及可变成成就的目标。我开始做任何事时主动去寻找一个目标，一个可以被人啧啧称赞的目标，并且这个目标是可以永久保留在这个世上的。比如写一本书将自己积累的知识变成可见的东西，健身让身体看起来很强壮，看书让自己随着岁月积累越来越多的知识，学习英语让自己未来融入到全球化热潮中去，定投让自己能跟随着岁月抚平世界带来的波动。&lt;/p&gt;
+
+&lt;p&gt;当我找到这个目标时，我就有非常的大的信心不断走下去，去完成这个目标，因为我知道这个目标是可积累的，是不会消失的，并且是众人所喜欢的。&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>每日读书笔记11 《人性的弱点》</title>
@@ -3648,21 +3670,13 @@ that were not given to us, for the purpose of accomplishing those particular dre
    <id>http://www.luzexi.com/2019/12/10/Unity3D高级编程之进阶主程-渲染管线与图形学10</id>
    <content type="html">&lt;h3 id=&quot;projector-投影的原理与应用&quot;&gt;Projector 投影的原理与应用&lt;/h3&gt;
 
-&lt;p&gt;Unity3D中的 Projector 投影像是一个很神秘的组件，但其实它依然运用的是以着色器为基准的渲染流程，和普通的3D模型渲染从本质上来看并没有实质上的区别，唯一的区别是它从它自己的视体(视锥体或平视体)中检测到的模型，并根据默认或者自定义的材质球与Shader着色器，将这些物体又重新绘制了一遍。&lt;/p&gt;
+&lt;p&gt;Unity3D中的 Projector 组件投影像是一个很神秘的组件，但其实它依然运用的是以着色器为基准的渲染流程，和普通的3D模型渲染从本质上来看并没有实质上的区别，唯一的区别是它从它自己的视体(视锥体或平视体)中检测到的模型，并根据默认或者自定义的材质球与Shader着色器，将这些物体又重新绘制了一遍。&lt;/p&gt;
 
-&lt;p&gt;从Unity3D引擎上来讲，可以这样解释 Projector：&lt;/p&gt;
+&lt;p&gt;从Unity3D引擎上来讲，可以这样解释 Projector组件：&lt;/p&gt;
 
-&lt;p&gt;根据 Projector 自身的视体的范围，平视体或视锥体，遍历并计算出视体范围内与视体占边的所有物体。&lt;/p&gt;
+&lt;p&gt;根据 Projector组件自身的视体的范围，平视体或视锥体，遍历并计算出视体范围内与视体占边的所有物体。接着 Projector组件取得这些物体模型数据，并计算投影矩阵。这个投影矩阵是什么呢，其实就是前面说的 Projector 组件视体空间的投影矩阵。最后将投影矩阵传入Shader中，根据这个投影矩阵，对这些物体再渲染一次。&lt;/p&gt;
 
-&lt;p&gt;接着 Projector 取得这些物体模型数据，并计算投影矩阵。&lt;/p&gt;
-
-&lt;p&gt;这个投影矩阵是什么呢，其实就是前面说的 Projector 视体空间的投影矩阵。&lt;/p&gt;
-
-&lt;p&gt;最后将投影矩阵传入Shader中，根据这个投影矩阵，对这些物体再渲染一次。&lt;/p&gt;
-
-&lt;p&gt;投影中的Shader着色器是投影绘制的主要手段，Projector 的工作只是检测了所有范围内的模型，并传递了投影空间的矩阵而已。&lt;/p&gt;
-
-&lt;p&gt;投影Shader中，通常会结合传入的投影矩阵，将顶点转为 Projector 投影空间中，并以此为投影贴图的UV来渲染模型。&lt;/p&gt;
+&lt;p&gt;投影中的Shader着色器是投影绘制的主要手段，Projector组件的工作只是检测了所有范围内的模型，并传递了投影空间的矩阵而已。投影Shader中，通常会结合传入的投影矩阵，将顶点转为 Projector 组件投影空间中，并以此为投影贴图的UV来渲染模型。&lt;/p&gt;
 
 &lt;p&gt;例如这个简单的投影着色器：&lt;/p&gt;
 
@@ -3690,15 +3704,11 @@ float4 frag(v2f i) : COLOR
 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;其中 unity_Projector 变量就是由 Projector 传入投影矩阵。在顶点着色器中 unity_Projector 矩阵被用来构造投影坐标，和普通的空间投影转换矩阵MVP(Model View Project)不同的是，其中的V是 Projector 空间的相关矩阵，即 Projector 组件所属的 Transform 的 worldToLocalMatrix变量，而P则是和Projector远近裁切相关的矩阵。&lt;/p&gt;
+&lt;p&gt;投影着色器中 unity_Projector 变量就是由 Projector 组件传入到材质球的投影矩阵。在顶点着色器中 unity_Projector 矩阵被用来构造投影坐标，和普通的空间投影转换矩阵MVP(Model View Project)不同的是，其中的V是 Projector 空间的相关矩阵，即 Projector 组件所属的 Transform 的 worldToLocalMatrix变量，而P则是和Projector远近裁切相关的矩阵。用 unity_Projector 矩阵计算出vertex(顶点)在投影空间中的坐标后，我们就可以以此坐标为uv坐标绘制物体了。&lt;/p&gt;
 
-&lt;p&gt;用 unity_Projector 矩阵计算出vertex(顶点)在投影空间中的坐标后，我们就可以以此坐标为uv坐标绘制物体了。&lt;/p&gt;
+&lt;p&gt;投影着色器中为什么可以将顶点坐标视为uv坐标呢？当坐标变换到投影空间后，其坐标空间就变成了投影平面视角，在这个视角中如果我们将平面视为纹理大小，就相当于一一匹配上顶点的uv坐标。&lt;/p&gt;
 
-&lt;p&gt;为什么可以将顶点坐标视为uv坐标呢？当坐标变换到投影空间后，其坐标空间就变成了投影平面视角，在这个视角中如果我们将平面视为纹理大小，就相当于一一匹配上顶点的uv坐标。&lt;/p&gt;
-
-&lt;p&gt;这个转化后的投影空间中的坐标，也就是我们常说的”投影纹理坐标”。&lt;/p&gt;
-
-&lt;p&gt;“投影纹理坐标”不能直接当作uv来作为纹理坐标来使用，需要调用 tex2Dproj 方法来获取纹理坐标:&lt;/p&gt;
+&lt;p&gt;这个转化后的投影空间中的坐标，也就是我们常说的”投影纹理坐标”。”投影纹理坐标”不能直接当作uv来作为纹理坐标来使用，需要调用 tex2Dproj 方法来获取纹理坐标:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;	tex2Dproj(texture,uvproj);
 
@@ -3843,85 +3853,77 @@ float4 frag(v2f i) : COLOR
 
 &lt;p&gt;多重采样(Multisampling)是一种对几何图元的边缘进行平滑处理的技术，也称为反走样技术之一。&lt;/p&gt;
 
-&lt;p&gt;OpenGL支持几种不同的反走样技术，比如线段反走样，多边形反走样，纹理图像压缩的质量以及导数精度设置。事实上这几个反走样技术都是以开关的形式在OpenGL中存在，算法大致是将原本单一的线条或像素块周围填充更多的像素块，具体的填充算法细节比我们想象的要复杂的多，而且不同OpenGL是现在的算法中也有细微的差异，我们在这里不进行深入讨论。&lt;/p&gt;
+&lt;p&gt;OpenGL支持几种不同的反走样技术，比如多重采样、线段反走样、多边形反走样、纹理图像压缩的质量以及导数精度设置等。事实上这几种反走样技术都是以开关的形式在OpenGL中存在，我们无法修改它们只能开启关闭或设置几个简单的参数。其中图形上走样算法大致是将原本单一的线条或像素块周围填充更多的像素块，具体的填充算法细节比我们想象的要复杂的多，而且不同OpenGL的版本算法中也有细微的差异，我们在这里不深入。&lt;/p&gt;
 
-&lt;p&gt;多重采样的工作方式是对每个像素的几何图元进行多次采样。在多次采样后，每个像素点不仅仅只是单个颜色(以及除了颜色外的深度值、模板值等信息)，还记录了许多样本值。&lt;/p&gt;
+&lt;p&gt;多重采样也是反走样技术中的一种，它的工作方式是对每个像素的几何图元进行多次采样。在多次采样后，每个像素点不仅仅只是单个颜色(以及除了颜色外的深度值、模板值等信息)，还记录了许多样本值。&lt;/p&gt;
 
-&lt;p&gt;这些样本值类似于将一个像素分拆成了更小型的像素，每个像素都存储着颜色、深度值、模板值等信息，当我们需要呈现最终图像的内容时，这个像素的所有样本值会被解析为最终像素的颜色。&lt;/p&gt;
+&lt;p&gt;这些样本值类似于将一个像素分拆成了更小型的像素，每个像素都存储着颜色、深度值、模板值等信息，当我们需要呈现最终图像的内容时，这个像素的所有样本值会被综合起来成为最终像素的颜色。也就是说采样的数量越多，线条与周围的像素点的融合越平滑，简单说就是颜色与颜色之间会有平滑过渡的颜色例如红色的线条周围是白色的背景于是红色线条上的像素与白色背景的交接处会有更多的粉色、浅粉色来过渡。&lt;/p&gt;
 
-&lt;p&gt;在Unity3D中对这方面的反走样功能也提供了支持，可以通过Quality Settings中的AntiAliasing来设置，它将启用图形接口(OpenGL或DirectX)中的多边形的反走样算法，并且开启多重采样，根据多重采样信息对多边形边缘进行像素填充。&lt;/p&gt;
+&lt;p&gt;在Unity3D中对这方面的反走样功能也提供了支持，我们可以通过Quality Settings中的AntiAliasing来设置，它将开启图形接口(OpenGL或DirectX)中的多边形的反走样算法，并且开启多重采样，根据多重采样信息对多边形边缘进行像素填充。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;	AntiAliasing 可以设置3档采样质量分别是 2倍, 4倍 and 8倍的多重采样。
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;GPU上的反走样代价是消耗更多的GPU算力和显存，庆幸的它并不消耗CPU算力。&lt;/p&gt;
+&lt;p&gt;GPU上的反走样代价是消耗更多的GPU算力和显存，它并不消耗任何CPU算力。&lt;/p&gt;
 
 &lt;h3 id=&quot;着色器编译过程与变体&quot;&gt;着色器编译过程与变体&lt;/h3&gt;
 
-&lt;p&gt;我们在知道GPU渲染管线如何运作后，对着色器编译过程仍然需要知晓，我们还是以使用OpenGL为例来学习着色器在Unity3D中从编译到执行的全过程。&lt;/p&gt;
+&lt;p&gt;我们在知道GPU渲染管线如何运作后，对着色器编译过程仍然需要深入了解一下，我们还是以使用OpenGL为例来学习着色器在Unity3D中从编译到执行的全过程。&lt;/p&gt;
 
-&lt;p&gt;着色程序的编译过程与C语言等编译语言的编译过程非常类似，只是C语言在编译时是以离线的方式进行，而着色器程序的编译则是当引擎需要时，通过引擎调用图形接口(OpenGL或DirectX)的方式来进行编译，整个应用程序只需要编译一次后面可以重复利用，这和我们通常所说的JIT(Just in time 即时编译)有点相似。&lt;/p&gt;
+&lt;p&gt;着色程序的编译过程与C语言等编译语言的编译过程非常类似，只是C语言在编译时是以离线的方式进行，而着色器程序的编译则是当引擎需要时，通过引擎调用图形接口(OpenGL或DirectX)的方式将代码读进来再编译，着色器程序只需要编译一次后面可以重复利用，这和我们通常所说的JIT(Just in time 即时编译)有点相似。&lt;/p&gt;
 
-&lt;h6 id=&quot;上面所说的这些都是图形引擎控制和执行的也就是当需要某个着色器程序时unity3d引擎通过判断是否存在已经编译好的着色器程序来决定是否编译着色器代码或是重用已经编译好的着色器程序&quot;&gt;上面所说的这些都是图形引擎控制和执行的，也就是当需要某个着色器程序时Unity3D引擎通过判断是否存在已经编译好的着色器程序，来决定是否编译着色器代码或是重用已经编译好的着色器程序。&lt;/h6&gt;
+&lt;h6 id=&quot;着色器编译前的准备工作都是unity3d控制和执行的当需要某个着色器程序时unity3d引擎通过判断是否存在已经编译好的着色器程序来决定是否编译着色器代码或是重用已经编译好的着色器程序&quot;&gt;着色器编译前的准备工作都是Unity3D控制和执行的，当需要某个着色器程序时Unity3D引擎通过判断是否存在已经编译好的着色器程序，来决定是否编译着色器代码或是重用已经编译好的着色器程序。&lt;/h6&gt;
 
-&lt;p&gt;那么着色程序从编译到执行过程到底是怎样的呢？让我们来讲一讲。&lt;/p&gt;
+&lt;p&gt;那么着色程序从编译到执行过程到底是怎样的呢？让我们来了解一下。&lt;/p&gt;
 
-&lt;p&gt;首先当引擎得知渲染需要用到的Shader不曾被编译过时，就会调用图形接口 glCreateShader 为着色器创建一个新的着色器对象。&lt;/p&gt;
+&lt;p&gt;首先当Unity3D引擎得知渲染需要用到的Shader不曾被编译过时，就会调用图形接口OpenGL的 glCreateShader 为着色器创建一个新的着色器对象。&lt;/p&gt;
 
-&lt;p&gt;然后通过程序从Shader文件中获取Shader内容(字符串)并调用 glShaderSource 将源代码(字符串)关联到刚刚创建的着色器对象上。&lt;/p&gt;
+&lt;p&gt;然后通过文件程序从Shader文件中获取Shader内容(字符串)并调用OpenGL的 glShaderSource 将源代码(字符串)交给刚刚创建的着色器对象上。&lt;/p&gt;
 
-&lt;h6 id=&quot;这时着色器对象已经关联了源代码我们可以通过调用图形接口的编译接口-glcompileshader-对这个着色器对象进行编译&quot;&gt;这时着色器对象已经关联了源代码，我们可以通过调用图形接口的编译接口 glCompileShader 对这个着色器对象进行编译。&lt;/h6&gt;
+&lt;h6 id=&quot;这时一个空的着色器对象已经关联了着色器源代码我们可以通过调用编译接口opengl的-glcompileshader-对这个着色器对象进行编译&quot;&gt;这时一个空的着色器对象已经关联了着色器源代码，我们可以通过调用编译接口OpenGL的 glCompileShader 对这个着色器对象进行编译。&lt;/h6&gt;
 
-&lt;p&gt;编译完成后，我们可以通过 glGetShaderInfoLog 来获得编译信息以及是否成功的结果。&lt;/p&gt;
+&lt;p&gt;编译完成后，我们可以通过OpenGL的 glGetShaderInfoLog 来获得编译信息以及是否成功的结果。&lt;/p&gt;
 
-&lt;p&gt;到此仅仅是某个着色器对象编译完成，这个着色器对象可能是顶点着色器，也可能是片元着色器，或也许是细分着色器或几何着色器。&lt;/p&gt;
+&lt;p&gt;到此仅仅是1个着色器对象编译完成，这个着色器对象可能是顶点着色器，也可能是片元着色器，或也许是细分着色器或几何着色器。通常情况下，有好几个着色器需要编译，顶点着色器和片元着色器通常都成对出现，则会创建相应的着色器对象来分别编译它们的源代码。&lt;/p&gt;
 
-&lt;p&gt;通常情况下，有好几个着色器需要编译，顶点着色器和片元着色器通常都成对出现，则会创建相应的着色器对象来分别编译它们的源代码。&lt;/p&gt;
+&lt;p&gt;有了着色器对象还不够，我们需要把这些着色器关联起来。首先Unity3D引擎会使用OpenGL的 glCreateProgram 接口需要创建一个空的着色器程序。然后多次调用 glAttachShader 来一个个地绑定着色器对象。&lt;/p&gt;
 
-&lt;p&gt;有了着色器对象还不够，我们需要把这些着色器关联起来。&lt;/p&gt;
+&lt;h6 id=&quot;当所有必要的着色器对象关联到着色器程序之后就可以链接对象来生成可执行程序了引擎将调用opengl的-gllinkprogram-接口将所有关联的着色器对象生成一个完整的着色器程序&quot;&gt;当所有必要的着色器对象关联到着色器程序之后，就可以链接对象来生成可执行程序了，引擎将调用OpenGL的 glLinkProgram 接口将所有关联的着色器对象生成一个完整的着色器程序。&lt;/h6&gt;
 
-&lt;p&gt;首先引擎会使用 glCreateProgram 需要创建一个空的着色器程序。&lt;/p&gt;
+&lt;p&gt;当然，着色器对象也可能存在某些问题，因此在链接过程中依然可能失败，通常引擎会通过 glGetProgramiv 来查询链接操作的结果，也会通过 glGetProgramInfoLog 接口来获取程序链接的日志信息，由此我们就可以判断错误原因。&lt;/p&gt;
 
-&lt;p&gt;然后多次调用 glAttachShader 来一个个地绑定着色器对象。&lt;/p&gt;
-
-&lt;h6 id=&quot;当所有必要的着色器对象关联到着色器程序之后就可以链接对象来生成可执行程序了调用-gllinkprogram-将所有关联的着色器对象生成一个完整的着色器程序&quot;&gt;当所有必要的着色器对象关联到着色器程序之后，就可以链接对象来生成可执行程序了，调用 glLinkProgram 将所有关联的着色器对象生成一个完整的着色器程序。&lt;/h6&gt;
-
-&lt;p&gt;当然，着色器对象也可能存在某些问题，因此在链接过程中依然可能失败，引擎通过 glGetProgramiv 来查询链接操作的结果，以及通过 glGetProgramInfoLog 接口来获取程序链接的日志信息，由此我们就可以判断错误原因。&lt;/p&gt;
-
-&lt;p&gt;成功完成了着色器程序的链接后，引擎就可以通过调用 glUseProgram 来运行着色器程序。&lt;/p&gt;
+&lt;p&gt;成功完成了着色器程序的链接后，Unity3D引擎就可以通过调用 glUseProgram 来运行着色器程序。&lt;/p&gt;
 
 &lt;p&gt;我们平常在Unity3D中用到的Shader中的Pass，每个Pass中都有着色器需要编译，因此每次在绘制不同的Pass时都会对Pass中的顶点着色器和片元着色器进行编译。也就是说，Unity引擎会为每个Pass标签生成一个着色器程序，生成这些着色器程序后，执行顺序仍然按照Pass的先后次序来。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/book/7/shader_compile.jpg&quot; alt=&quot;着色器编译流程&quot; /&gt;&lt;/p&gt;
 
-&lt;h6 id=&quot;除了着色器的编译流程外unity3d中的shader-varant变体在实际开发中也是比较严重的问题&quot;&gt;除了着色器的编译流程外，Unity3D中的Shader Varant(变体)在实际开发中也是比较严重的问题&lt;/h6&gt;
+&lt;h6 id=&quot;现在我们了解了着色器的编译过程它通过编译和连接的方式将一个shader中的多个着色器制作成一个着色程序当渲染需要时交给gpu去执行渲染只是这样的编译过程都是在以阻塞的方式进行的因此我们在引擎运行的过程中常常会在某针消耗些许cpu来编译shader如果shader的量非常大的话可能就会有卡顿的现象发生&quot;&gt;现在我们了解了着色器的编译过程，它通过编译和连接的方式将一个Shader中的多个着色器制作成一个着色程序，当渲染需要时交给GPU去执行渲染。只是这样的编译过程都是在以阻塞的方式进行的，因此我们在引擎运行的过程中常常会在某针消耗些许CPU来编译Shader，如果Shader的量非常大的话可能就会有卡顿的现象发生。&lt;/h6&gt;
 
-&lt;p&gt;那么什么是“变体”呢。其实它是由Unity3D自身的宏编译指令引起的，它为不同情况而编译生成不同的着色器程序。从引擎端的说法来看，Unity3D把不同的编译版本拆分成了不同的着色器源代码，在运行时再通过图形接口将这些着色器源代码编译成不同的着色器程序。&lt;/p&gt;
+&lt;h3 id=&quot;shader变体常常就会发生这种我们不希望的编译卡顿因为它的量比较大我们在unity3d中使用shader-varant变体时常常有比较严重的编译和内存困扰&quot;&gt;Shader变体常常就会发生这种我们不希望的编译卡顿，因为它的量比较大，我们在Unity3D中使用Shader Varant(变体)时常常有比较严重的编译和内存困扰。&lt;/h3&gt;
 
-&lt;p&gt;为什么要使用宏编译指令导致生成这么多的着色器程序呢？因为要简化Shader，让同一个Shader在不同材质球上的应用不同的效果时更加便捷，修改和完善起来也更加高效。&lt;/p&gt;
+&lt;p&gt;那么什么是“变体”呢。其实它是由Unity3D自身的宏编译指令引发的多种变化实体生成的Shader文件，它为不同情况而编译生成不同的着色器程序。从引擎端的做法来看，Unity3D把不同的编译版本拆分成了不同的着色器源代码文件，在运行时选择对应适合的着色器源文件，再通过图形接口将这些着色器源代码编译成着色器程序关联到渲染中。&lt;/p&gt;
 
-&lt;h6 id=&quot;假如编写很多同一个风格但不同效果的shader在使用和维护过程中会造成诸多的麻烦和不便为了统一风格为了提高效率也为了能更好的打通各部门之间的沟通渠道以及能让美术同学能更好的发挥对画面效果的调整将同一个风格不同效果的shader写在同一个shader文件里是必不可少的这样能更加容易的统一美术风格和制作流程目的就是为了让风格更加统一沟通更加便捷效率更加高&quot;&gt;假如编写很多同一个风格但不同效果的Shader，在使用和维护过程中会造成诸多的麻烦和不便，为了统一风格，为了提高效率，也为了能更好的打通各部门之间的沟通渠道，以及能让美术同学能更好的发挥对画面效果的调整，将同一个风格不同效果的Shader写在同一个Shader文件里是必不可少的，这样能更加容易的统一美术风格和制作流程，目的就是为了让风格更加统一，沟通更加便捷，效率更加高。&lt;/h6&gt;
+&lt;p&gt;为什么要使用宏编译指令导致生成这么多的着色器程序呢？因为要简化Shader，Unity3D要让一个Shader在不同材质球上的应用不同的效果时更加便捷，有了引擎识别变体的功能，我们修改和完善Shader起来会更加方便和高效。&lt;/p&gt;
 
-&lt;p&gt;那么我们来看看Unity3D是怎么通过编译指令来编写宏以及它是怎么生成着色器源代码的。&lt;/p&gt;
+&lt;h6 id=&quot;假如没有变体我们在编写很多同一个风格但不同效果的shader时在使用和维护过程中会有诸多的麻烦和不便为了统一风格为了提高工作效率也为了能更好的打通各部门之间的沟通渠道以及能让美术同学能更好的发挥对画面效果的调整将同一个风格不同效果的shader写在同一个shader文件里是必不可少的这样能更加容易的统一美术风格和制作流程目的就是为了让风格更加统一沟通更加便捷效率更加高&quot;&gt;假如没有变体，我们在编写很多同一个风格但不同效果的Shader时，在使用和维护过程中会有诸多的麻烦和不便。为了统一风格，为了提高工作效率，也为了能更好的打通各部门之间的沟通渠道，以及能让美术同学能更好的发挥对画面效果的调整，将同一个风格不同效果的Shader写在同一个Shader文件里是必不可少的，这样能更加容易的统一美术风格和制作流程，目的就是为了让风格更加统一，沟通更加便捷，效率更加高。&lt;/h6&gt;
 
-&lt;p&gt;Unity3D的Shader中使用&lt;/p&gt;
+&lt;p&gt;我们来看看Unity3D是怎么通过编译指令来编写变体的，编写变体后它是怎么生成着色器源代码的。&lt;/p&gt;
+
+&lt;p&gt;在Unity3D的Shader中我们使用&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;#pragma multi_compile
 #pragma shader_feature
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;两个指令来实现着色器程序的自定义宏，它既适用于顶点片元着色器也适用于表面着色器。&lt;/p&gt;
-
-&lt;p&gt;在运行时，Unity3D会根据材质(Material)的关键字(Material的对象方法EnableKeyword和DisableKeyword)或者全局着色器关键字(Shader的类方法EnableKeyword和DisableKeyword)&lt;/p&gt;
-
-&lt;p&gt;我们通过 multi_compile 指令编写例如：&lt;/p&gt;
+&lt;p&gt;两个指令来实现着色器程序的自定义宏，它既适用于顶点片元着色器也适用于表面着色器。我们通过 multi_compile 指令编写例如：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;#pragma multi_compile A_ON B_ON
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h6 id=&quot;这样会生成并编译两个shader变体一个是a_on的版本一个是b_on的版本&quot;&gt;这样会生成并编译两个Shader(变体)，一个是A_ON的版本，一个是B_ON的版本。&lt;/h6&gt;
 
-&lt;p&gt;运行的时候Unity3D会根据材质(Material)的关键字或者Shader全局关键字判断应该使用哪个Shader，如果两个关键字都为false，那么会使用第一个(A_ON)Shader变体。&lt;/p&gt;
+&lt;p&gt;在运行时，Unity3D会根据材质(Material)的关键字(Material的对象方法EnableKeyword和DisableKeyword)或者全局着色器关键字(Shader的类方法EnableKeyword和DisableKeyword)来选择使用对应的着色器。运行的时候Unity3D会根据材质(Material)的关键字或者Shader全局关键字判断应该使用哪个Shader，如果两个关键字都为false，那么会使用第一个(A_ON)Shader变体。&lt;/p&gt;
 
 &lt;p&gt;我们也可以创建多个组合关键字例如:&lt;/p&gt;
 
@@ -3929,9 +3931,9 @@ float4 frag(v2f i) : COLOR
 #pragma multi_compile D E
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;这样会使得Shader的变体成倍的增加，例如上述的预编译方式，会生成 3x2 = 6 个变体，分别是 A+D、 B+D、 C+D、 A+E、 B+E、 C+E 六种。&lt;/p&gt;
+&lt;p&gt;这种多组合关键字会使得Shader的变体成倍的增加，例如上述的预编译方式，会生成 3x2 = 6 个变体，分别是 A+D、 B+D、 C+D、 A+E、 B+E、 C+E 六种。&lt;/p&gt;
 
-&lt;p&gt;假如multi_compile组合多到10行，每行2个，就是2的10次方个Shader(变体)就是1024个，这样生成这1024个Shader(变体)，在打包时会耗费很长在变体的生成上的打包时间。&lt;/p&gt;
+&lt;p&gt;假如multi_compile组合多到10行，每行2个，就是2的10次方个Shader(变体)就是1024个，这样生成这1024个Shader(变体)，把这1024个变体Shader全部加载到内存的话恐怕互占用非常多的内存，1024个Shader每个50K的话就会占用50MB内存。不仅如此，实时编译Shader是非常耗时的操作，如果没有提前编译Shader而在场景中使用Shader，就会不断有不同的Shader被实时的编译，这常常是导致游戏卡顿的重要原因之一。&lt;/p&gt;
 
 &lt;h6 id=&quot;除了-multi_compile-之外另外一个指令-shader_feature-也可以设置预编译宏与-multi_compile-的区别是-shader_feature-不会将没有被使用到的shader变体打包进包内因此-shader_feature-更适合材质球的关键字指定预编译内容因为unity3d只生成和编译被使用的预编译情况而-multi_compile-更适合全局shader指定关键字因为它会把所有组合都编译一遍无论有没有用到&quot;&gt;除了 multi_compile 之外，另外一个指令 shader_feature 也可以设置预编译宏，与 multi_compile 的区别是 shader_feature 不会将没有被使用到的Shader(变体)打包进包内，因此 shader_feature 更适合材质球的关键字指定预编译内容，因为Unity3D只生成和编译被使用的预编译情况，而 multi_compile 更适合全局Shader指定关键字，因为它会把所有组合都编译一遍，无论有没有用到。&lt;/h6&gt;
 
@@ -3946,7 +3948,7 @@ float4 frag(v2f i) : COLOR
 	multi_compile_fog 为处理不同的雾效类型（off/linear/exp/exp2）扩展了多个变体。
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h6 id=&quot;总的来说无论是-multi_compile-还是-shader_feature-亦或内建预编译指令都会造成-shader变体数量的增多使得打包时间增加运行时编译次数增多当unity3d在运行时检测到需要渲染的材质球里是不曾被编译的shader时则会将与自己匹配的shader变体拎出来编译一下生成一个着色器程序因此为了应对变体在运行时的编译消耗通常会在运行时提前将所有shader变体编译一下使得运行中不再有shader编译的cpu消耗&quot;&gt;总的来说，无论是 multi_compile 还是 shader_feature 亦或内建预编译指令，都会造成 Shader(变体)数量的增多，使得打包时间增加，运行时编译次数增多。当Unity3D在运行时检测到需要渲染的材质球里是不曾被编译的Shader时，则会将与自己匹配的Shader变体拎出来编译一下生成一个着色器程序，因此为了应对变体在运行时的编译消耗，通常会在运行时提前将所有Shader变体编译一下，使得运行中不再有Shader编译的CPU消耗。&lt;/h6&gt;
+&lt;h6 id=&quot;总结无论是-multi_compile-还是-shader_feature-亦或内建预编译指令都会造成-shader变体数量的增多使得内存增加运行时编译次数增多每次编译shader都会消耗cpu当unity3d在运行时检测到需要渲染的材质球里是不曾被编译的shader时则会将与自己匹配的shader变体拎出来编译一下生成一个着色器程序因此为了应对变体在运行时的编译消耗通常会在运行时提前将所有shader变体编译一下使得运行中不再有shader编译的cpu消耗&quot;&gt;总结，无论是 multi_compile 还是 shader_feature 亦或内建预编译指令，都会造成 Shader(变体)数量的增多，使得内存增加，运行时编译次数增多，每次编译Shader都会消耗CPU。当Unity3D在运行时检测到需要渲染的材质球里是不曾被编译的Shader时，则会将与自己匹配的Shader变体拎出来编译一下生成一个着色器程序，因此为了应对变体在运行时的编译消耗，通常会在运行时提前将所有Shader变体编译一下，使得运行中不再有Shader编译的CPU消耗。&lt;/h6&gt;
 
 &lt;p&gt;参考文献:&lt;/p&gt;
 
