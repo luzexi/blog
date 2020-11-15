@@ -1,7 +1,7 @@
 ---
 layout: post
 status: publish
-published: false
+published: true
 title: 安卓性能分析工具Simpleperf详解与应用
 description: "unity3d gameplay 性能优化 总结"
 excerpt_separator: ===
