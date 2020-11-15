@@ -10,7 +10,6 @@ tags:
 - 前端技术
 ---
 
-
 ### 本文关注三个问题：Simpleperf的工作原始里是什么？Simpleperf该如何使用？它如何在Unity项目上使用？
 
 关注Simpleperf的缘由是，虽然一直使用Xcode Intruments 、 Unity profiler 、Perfdog、以及一些自制的工具（自定义打点+内存快照）来做性能分析，但一直缺少专门针对安卓设备的的函数耗时分析。偶尔间搜到Simpleperf这么好的分析工具，于是开始研究 Simpleperf，最后把它用到项目中去并且建立起日常性能监控流水线。
@@ -32,6 +31,10 @@ Simpleperf中整合了命令行的Python脚本：
 
 这里的Python脚本不仅封装了命令行可执行文件的操作，同时提供了生成测试数据报告，线程消耗图，火焰调用图等功能。由于数据报告生成方面，Simpleperf命令行本身只支持文本数据报告的生成，因此要生成可视化的数据报告，还得依靠python。
 
+#### 所以我把数据分析和数据报告生成给拆分开来，直接用可执行文件去执行性能分析的任务，让Simpleperf可以支持更低的安卓系统。性能分析完毕后，再用python脚本对所得的数据文件来生成可视化的数据报告，以及文本数据报告。
+
+#### 其中，数据报告也分成两部分，一部分是文本数据报告，在生成文本数据报告后，对文本数据报告中的数据再加工和筛选，筛选出关键的信息上传到性能数据平台作为每日的性能日常报告，另一部分是火焰图和消耗图的数据报告，用于查看更细致的函数消耗分析。
+
 我用一个demo做实验，demo的程序就是每帧运行1000w次浮点数和随机数计算，作为实验性能分析数据：
 
 ![4](/assets/simpleperf/image3.png)
@@ -43,10 +46,6 @@ Simpleperf中整合了命令行的Python脚本：
 ![6](/assets/simpleperf/image12.png)
 
 ![7](/assets/simpleperf/image9.png)
-
-#### 所以我把数据分析和数据报告生成给拆分开来，直接用可执行文件去执行性能分析的任务，让Simpleperf可以支持更低的安卓系统。性能分析完毕后，再用python脚本对所得的数据文件来生成可视化的数据报告，以及文本数据报告。
-
-#### 其中，数据报告也分成两部分，一部分是文本数据报告，在生成文本数据报告后，对文本数据报告中的数据再加工和筛选，筛选出关键的信息上传到性能数据平台作为每日的性能日常报告，另一部分是火焰图和消耗图的数据报告，用于查看更细致的函数消耗分析。
 
 
 下面就来详细介绍一下，如何使用Simpleperf来做性能分析。
@@ -175,7 +174,7 @@ Simpleperf通过创建一个线程来监控数据并记录数据，它就是Reco
 
 #### 第一个问题中我们说，Simpleperf通过Linux系统接口mmap申请共享内存，再通过Linux系统接口ioctl告诉内核把性能监控的数据放在共享内存中。由于Linux系统在各个层都封装了一套perf性能接口，于是在接下来的程序运行中，Linux内核将这些perf事件 (perf events)数据放入Simpleperf设置的共享内存中。而Simpleperf又开启了一个线程来不断监控是否有数据加入，并将它们放入自己缓存中去，最后再通知主线程适当的时候将这些数据写入本地文件。
 
-### 性能分析执行
+## 执行性能分析
 
 ### record 命令行说明
 
@@ -266,16 +265,25 @@ if os.path.exists(cp_src1):
 
 ![1](/assets/simpleperf/image4.png)
 
-也就是说，有88.31%的消耗在Random.Range这个函数上。Simpleperf就是通过指令调用地址来获取符号表中的函数名的，通过调用地址和符号表上的函数名对齐后得到最终的函数名。
+#### 也就是说，有88.31%的消耗在Random.Range这个函数上。Simpleperf就是通过指令调用地址来获取符号表中的函数名的，通过调用地址和符号表上的函数名对齐后得到最终的函数名。
 
 2.生成普通数据报告
-   python .\ndk21\simpleperf\report.py -i .\perf.data -o .\report.txt -n --full-callgraph --symfs .\binary_cache
+
+``` sh
+python .\ndk21\simpleperf\report.py -i .\perf.data -o .\report.txt -n --full-callgraph --symfs .\binary_cache
+```
 
 3.生成调用者耗时分布数据报告
-   python .\ndk21\simpleperf\report.py -i .\perf.data -o .\report.caller.txt -g caller --full-callgraph --symfs .\binary_cache
+
+``` shs
+python .\ndk21\simpleperf\report.py -i .\perf.data -o .\report.caller.txt -g caller --full-callgraph --symfs .\binary_cache
+```
 
 4.生成被调用者耗时分布数据报告
-   python .\ndk21\simpleperf\report.py -i .\perf.data -o .\report.callee.txt -g callee --full-callgraph --symfs .\binary_cache
+
+``` sh
+python .\ndk21\simpleperf\report.py -i .\perf.data -o .\report.callee.txt -g callee --full-callgraph --symfs .\binary_cache
+```
 
 最后生成的文本数据如下图：
 
@@ -285,11 +293,15 @@ if os.path.exists(cp_src1):
 
 1.用simpleperf提供的report_html.py生成可视图
 
+``` sh
 python .\ndk21\simpleperf\report_html.py -i .\perf.data -o .\report.html --binary_filter .\binary_cache
+```
 
 2.拷贝可视图网页需要用到的js文件
 
+``` sh
 copy  ".\ndk21\simpleperf\report_html.js" ".\report_html.js"
+```
 
 ![1](/assets/simpleperf/image12.png)
 
@@ -306,14 +318,22 @@ copy  ".\ndk21\simpleperf\report_html.js" ".\report_html.js"
 ![1](/assets/simpleperf/image15.png)
 
 
-参考文献：
+### 参考文献：
 
-Simpleperf官方地址：https://android.googlesource.com/platform/system/extras/+/master/simpleperf/doc/README.md#executable-commands-reference
+Simpleperf官方地址：
 
-Simpleperf源码地址：https://android.googlesource.com/platform/system/extras/+/master/simpleperf/
+https://android.googlesource.com/platform/system/extras/+/master/simpleperf/doc/README.md#executable-commands-reference
 
-《SimplePerf 安卓客户端性能剖析及自动化性能测试》http://km.oa.com/articles/show/466087?kmref=search&from_page=1&no=1
+Simpleperf源码地址：
 
-《Simpleperf介绍》https://blog.csdn.net/tq08g2z/article/details/77311712
+https://android.googlesource.com/platform/system/extras/+/master/simpleperf/
+
+《SimplePerf 安卓客户端性能剖析及自动化性能测试》
+
+http://km.oa.com/articles/show/466087?kmref=search&from_page=1&no=1
+
+《Simpleperf介绍》
+
+https://blog.csdn.net/tq08g2z/article/details/77311712
 
 
