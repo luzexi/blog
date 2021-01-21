@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2021-01-22T01:19:08+08:00</updated>
+ <updated>2021-01-22T01:20:33+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -23,7 +23,7 @@
 
 &lt;p&gt;后面会更多的尝试用这样方式来写文章，即，用印象笔记写完后，导出html放在博客上。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;/static-page/Perfetto/Index/Perfetto内存工具分析.html&quot;&gt;点击查看原文&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/static-page/Perfetto/Index/Perfetto内存工具分析.html&quot;&gt;点击查看文章内容&lt;/a&gt;&lt;/p&gt;
 
 </content>
  </entry>
