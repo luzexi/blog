@@ -7,6 +7,16 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>Perfetto内存工具分析</title>
+               <description>&lt;p&gt;&lt;a href=&quot;/static-page/Perfetto/Index/Perfetto内存工具分析.html&quot;&gt;点击查看原文&lt;/a&gt;&lt;/p&gt;
+
+</description>
+               <pubDate>Wed, 20 Jan 2021 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com/2021/01/20/Perfetto%E5%86%85%E5%AD%98%E5%B7%A5%E5%85%B7%E5%88%86%E6%9E%90</link>
+               <guid isPermaLink="true">http://www.luzexi.com/2021/01/20/Perfetto%E5%86%85%E5%AD%98%E5%B7%A5%E5%85%B7%E5%88%86%E6%9E%90</guid>
+            </item>
+        
+            <item>
                <title>读书笔记(十八) 《C++性能优化指南》三</title>
                <description>&lt;p&gt;此篇主要介绍热点代码、I/O、以及并行部分的优化，我们会从原理出发来，再根据原理讲优化，这样即学习了原理，又知道了优化的来龙去脉。&lt;/p&gt;
 
@@ -1610,28 +1620,6 @@ if os.path.exists(cp_src1):
                <pubDate>Wed, 04 Nov 2020 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com/2020/11/04/%E5%90%91%E5%86%85%E7%9C%8B%E8%87%AA%E5%B7%B19</link>
                <guid isPermaLink="true">http://www.luzexi.com/2020/11/04/%E5%90%91%E5%86%85%E7%9C%8B%E8%87%AA%E5%B7%B19</guid>
-            </item>
-        
-            <item>
-               <title>给女儿的信(五)</title>
-               <description>&lt;p&gt;Hi Sharon Anne，又有1个月没见到你们，爸爸好想你们。&lt;/p&gt;
-
-&lt;p&gt;爸爸最近工作很忙，也碰到了一些问题，想跟你们说说。爸爸的这家公司里有很多比爸爸厉害很多的人，每天他们都跟爸爸一起做事情。&lt;/p&gt;
-
-&lt;p&gt;他们很厉害，懂的比爸爸多，爸爸有段时间很难受，因为爸爸觉得比不过他们，所以显得很垂头丧气的。&lt;/p&gt;
-
-&lt;p&gt;一段时间后，慢慢地爸爸想明白了。其实你看，这个世界上比我厉害的人很多，我能遇上他们，并跟他们一起工作是爸爸的荣幸，所以爸爸要乘这个机会多向他们学习一下。&lt;/p&gt;
-
-&lt;p&gt;现在爸爸常常跟他们交流，学习他们身上的优点，并且平时的时候自己也在努力的看书，为了巩固知识，也会写一些文章做一下总结。&lt;/p&gt;
-
-&lt;p&gt;虽然现在爸爸还是没他们厉害，但爸爸相信我会慢慢赶上来的。&lt;/p&gt;
-
-&lt;p&gt;Sharon，Anne，你们也会遇到很多比你们厉害的人，这个时候不要慌张哦，因为这是很正常的，要向爸爸这样，多向他们学习，并且自己也要努力看书学习哦，这样我们就能慢慢赶上他们。&lt;/p&gt;
-
-</description>
-               <pubDate>Mon, 02 Nov 2020 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com/2020/11/02/%E7%BB%99%E5%A5%B3%E5%84%BF%E7%9A%84%E4%BF%A15</link>
-               <guid isPermaLink="true">http://www.luzexi.com/2020/11/02/%E7%BB%99%E5%A5%B3%E5%84%BF%E7%9A%84%E4%BF%A15</guid>
             </item>
         
     </channel>
