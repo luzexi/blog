@@ -4,13 +4,58 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2021-01-24T11:30:35+08:00</updated>
+ <updated>2021-02-10T16:11:00+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email>jesse_luzexi@163.com</email>
  </author>
 
+ 
+ <entry>
+   <title>思路探讨(五十五) 第一性原理</title>
+   <link href="http://www.luzexi.com/2021/02/09/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A855"/>
+   <updated>2021-02-09T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2021/02/09/思路探讨55</id>
+   <content type="html">&lt;p&gt;最近越来越经常写文章但很少发出来（基本都是每周一篇总结 + 每日一篇自我反省的文章），没能分享到博客的原因第一是写的文章有些是属于公司保密级的，不能发布在博客上，甚至有几篇文章完全不能脱敏。第二是自己写的向内看系列的内容，真的越来越向内看越来越私密，由于太私密触及内心的兴奋与失落，起伏过大所以也不好拿出来跟大家分享。&lt;/p&gt;
+
+&lt;p&gt;​在公众号中，我秉持着开放的态度与自己对话，也常与朋友和同事们聊聊自己的想法。
+希望能从不同的角度来看待事物，也希望能从各个方向上来改善自己做人做事的态度。&lt;/p&gt;
+
+&lt;p&gt;由于年底事情特别多，也特别繁杂，因此只能将有限的精力用在照顾自己的工作和学习进度。在此跟大家说声抱歉。
+2021年会继续跟大家分享我的所思所想，以及公开自己的所学所为。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;前面听过第一性原理的概念，但没有了解的很清楚，在放假回老家最后一天突然兴致勃勃的看了，张善友教授讲的第一性原理的视频。&lt;/p&gt;
+
+&lt;p&gt;感觉讲的很不错，也契合我一直以来秉持的理念，在听了他所讲的内容后，对这块理念更加深刻。&lt;/p&gt;
+
+&lt;p&gt;什么是第一性原理？
+第一性原理，事物背后的不变的理念(原理)，根据这个原理可以推出所有的其他东西出来。这个理念就叫第一性原理。&lt;/p&gt;
+
+&lt;p&gt;第一性原理是事物的本质、本性，是事物背后支配性的理念，而不是现象层面流变的物质。一旦在逻辑上导通一个共同的抽象概念，与此相关的所有具象问题，立即全部化解。&lt;/p&gt;
+
+&lt;p&gt;随着我们年龄增大，接触的事情越来越复杂，处理这件复杂的事物需要花费的精力也通常越来越复杂。
+第一性原理告诉我们，越高深的事物，底层理念越简约，其原理通常具有简一性，即简约和单纯。
+找到第一性原理，就像是找到了支配事物运动的发动机。&lt;/p&gt;
+
+&lt;p&gt;计算机程序执行原理、操作系统内核原理，对于每个编程的人来说都是第一性原理。为技术人拓展更扎实的编程思路提供了底层支撑。
+抽象能力是软件架构设计的第一性原理。为技术人拓展更简洁实用的架构能力提供了底层支撑。
+尊严与诚信是人在社会生存是第一性原理。为社会人拓展生活和工作中的方方面面提供了支撑。
+能量守恒是宇宙的第一性原理。为物理、化学的研究工作提供了支撑。等等等&lt;/p&gt;
+
+&lt;p&gt;人们常说，道理说的很好，但听过就忘了。显然大多数人都没有将人生的底层原理铭刻在心中，时刻忘记遵守事物的本质规律，也时常不得不在所谓的现实面前妥协。&lt;/p&gt;
+
+&lt;p&gt;你找到生活中的真正的第一性原理了吗？
+当第一性原理（事物的本质）和现象冲突的时候，你选择了什么？&lt;/p&gt;
+
+&lt;p&gt;每个你的选择都决定了你今后的道路，你是坚持本质还是妥协现象，N个选择积累后，最终成为了今天的你。&lt;/p&gt;
+
+&lt;p&gt;当然我们也需要注意下，第一性原理不是绝对真理，虽然事物的本质和原理适用于每个人，但对于每个人来说都需要有不同方式去执行。​&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>向内看自己(十二) 精力训练</title>
@@ -102,6 +147,12 @@
 &lt;p&gt;后面会更多的尝试用这样方式来写文章，即，用印象笔记写完后，导出html放在博客上。&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;/static-page/Perfetto/Index/Perfetto内存工具分析.html&quot;&gt;点击查看文章内容&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;static_post&quot;&gt;
+&lt;iframe src=&quot;/static-page/Perfetto/Index/Perfetto内存工具分析.html&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt;
+	ddsfsdf
+&lt;/iframe&gt;
+&lt;/div&gt;
 
 </content>
  </entry>
@@ -1596,8 +1647,8 @@ Simpleperf调用mmap创建指定的共享内存大小，设置读写权限，设
 &lt;p&gt;把符号表拷贝过去到./binary_cache/data/app/com.xxx.xxxx/lib/arm(或者arm64)/里去&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;python:
-cp_src1 = 'libil2cpp.so.debug'
-cp_target1 = './binary_cache/data/app/com.xxx.xxxx/lib/arm/libil2cpp.so'
+cp_src1 = &apos;libil2cpp.so.debug&apos;
+cp_target1 = &apos;./binary_cache/data/app/com.xxx.xxxx/lib/arm/libil2cpp.so&apos;
 if os.path.exists(cp_src1):
     shutil.copy(cp_src1, cp_target1)
 &lt;/code&gt;&lt;/pre&gt;
@@ -5594,7 +5645,7 @@ if os.path.exists(cp_src1):
  </entry>
  
  <entry>
-   <title>励志英文(六) In Your 20's These Things Matter More Than You Think</title>
+   <title>励志英文(六) In Your 20&apos;s These Things Matter More Than You Think</title>
    <link href="http://www.luzexi.com/2020/04/26/%E5%8A%B1%E5%BF%97%E8%8B%B1%E6%96%876"/>
    <updated>2020-04-26T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2020/04/26/励志英文6</id>
@@ -6998,17 +7049,17 @@ and I’ll be stronger and better because of you have got to make a declaration.
 
 &lt;p&gt;第一段就引起了我的共鸣：在你成功的道路上最大的障碍不是缺少文凭，不是缺少背景，不是缺少金钱，而是缺少你对自己的信心。&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	The biggest single obstacle standing in your way to success, it's not lack of education, it's not lack of background, it's not lack of money, it's lack of belief in yourself. 
+&lt;pre&gt;&lt;code&gt;	The biggest single obstacle standing in your way to success, it&apos;s not lack of education, it&apos;s not lack of background, it&apos;s not lack of money, it&apos;s lack of belief in yourself. 
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;第三段也能让我感同身受，乐观积极的人与悲观被动的人，在人生的道路上有着巨大差别：在通向成功的道路上最重要的是你的态度。态度决定你的人生。拥有乐观积极思想的人最终赢得了胜利，充满悲观思想的人最终收获了失败。&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	The most important thing to winning is your attitude about you. It's your attitude about life. Positive thinkers win, and negative thinkers lose.
+&lt;pre&gt;&lt;code&gt;	The most important thing to winning is your attitude about you. It&apos;s your attitude about life. Positive thinkers win, and negative thinkers lose.
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;第六段一击即中我心，我们首先应该从精神层面上来赢得世界，才能最终在现实中战胜困难：最重要的是你的激情。你获胜是因为你的心，而不是你的头脑。你获胜是因为你的情感，而不是逻辑。通向胜利的道路上最重要的你有多相信自己。你有多相信自己可以赢得胜利，有多相信许多好事发生在你身上，有多相信你是特别的人。&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	The most important thing is your passion. You win with your heart, hot your head. You win on emotion, not on logic. The most important thing to winning is the power of believing in you. The power of believing that you can win. The power of believing that good things will happend to you. The power of believing that you're special.
+&lt;pre&gt;&lt;code&gt;	The most important thing is your passion. You win with your heart, hot your head. You win on emotion, not on logic. The most important thing to winning is the power of believing in you. The power of believing that you can win. The power of believing that good things will happend to you. The power of believing that you&apos;re special.
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id=&quot;原文如下&quot;&gt;原文如下：&lt;/h3&gt;
@@ -7594,7 +7645,7 @@ for(int i = 0 ; i&amp;lt;100 ; i++)
 {
 	string strB = strA + i.ToString();
 
-	string[] strC = strB.Split('e');
+	string[] strC = strB.Split(&apos;e&apos;);
 
 	strB = strB + strC[0];
 
@@ -7722,7 +7773,7 @@ public unsafe string Concat(string strA, string strB)
 &lt;p&gt;string的Length方法可不是省油的灯，由于string类中只存放了字符串char[]数据，没有其他变量，因此string.Length需要通过遍历字符串来获取长度。类似于如下伪代码：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;int sum = 0;
-for( ; data[sum] != '\0' ; ++sum);
+for( ; data[sum] != &apos;\0&apos; ; ++sum);
 return sum;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -9541,11 +9592,11 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 
 &lt;p&gt;2.灵隐寺（飞来峰）景区—-北高峰索道&lt;/p&gt;
 
-&lt;p&gt;3.宋城景区–宋城千古情演出&lt;/p&gt;
+&lt;p&gt;3.宋城景区 – 宋城千古情演出&lt;/p&gt;
 
-&lt;p&gt;4.杭州动物园&lt;/p&gt;
+&lt;p&gt;4.杭州动物园 – 有点小，需要自带食物，有点旧，便宜。&lt;/p&gt;
 
-&lt;p&gt;5.吴山广场，河坊街&lt;/p&gt;
+&lt;p&gt;5.吴山广场，河坊街 – 小吃很多，有手工艺品，街道晚上夜景好&lt;/p&gt;
 
 &lt;p&gt;6.雷峰塔&lt;/p&gt;
 
@@ -9555,13 +9606,13 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 
 &lt;p&gt;9.西溪国家湿地公园 – 差，管理无章法，太大以至于找不到重点&lt;/p&gt;
 
-&lt;p&gt;10.九溪&lt;/p&gt;
+&lt;p&gt;10.九溪 – 周末人很多，停车很难，最好打的去，自带食物。&lt;/p&gt;
 
-&lt;p&gt;11.南宋御街&lt;/p&gt;
+&lt;p&gt;11.南宋御街 – 晚上好玩，小吃，手工艺品，街景，类似于河坊街。&lt;/p&gt;
 
 &lt;p&gt;12.杭州乐园&lt;/p&gt;
 
-&lt;p&gt;13.太子湾公园&lt;/p&gt;
+&lt;p&gt;13.太子湾公园 – 看花花草草，风景很美，可野餐，最好打车。&lt;/p&gt;
 
 &lt;p&gt;14.千岛湖中心湖区–千岛湖景区–千岛湖森林氧吧–千岛湖东南湖区景区–千岛湖游船&lt;/p&gt;
 
@@ -9569,17 +9620,17 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 
 &lt;p&gt;17.杭州烂苹果乐园 – 游乐园&lt;/p&gt;
 
-&lt;p&gt;18.杭州海底世界&lt;/p&gt;
+&lt;p&gt;18.杭州海底世界 – 挺大的，值得二刷，人多不值得，有点小贵，自带食物。&lt;/p&gt;
 
 &lt;p&gt;19.浙西大峡谷&lt;/p&gt;
 
 &lt;p&gt;20.钱塘江观赏堤坝&lt;/p&gt;
 
-&lt;p&gt;21.浙江省科技馆–西湖文化广场&lt;/p&gt;
+&lt;p&gt;21.浙江省科技馆，西湖文化广场 – 博物馆类型的地方，增长知识，长见识，人太多，有食堂。&lt;/p&gt;
 
 &lt;p&gt;22.杭州浪浪浪水公园&lt;/p&gt;
 
-&lt;p&gt;23.杭州Hello Kitty乐园&lt;/p&gt;
+&lt;p&gt;23.杭州Hello Kitty乐园 – 还不错，小孩子喜欢，打折季去便宜不少。&lt;/p&gt;
 
 &lt;p&gt;24.桐庐县雅鲁激流探险漂流—-临安市龙井峡漂流—-淳安县九龙溪漂流—-桐庐县虎啸峡激流探险漂流—-余杭区双溪漂流景区&lt;/p&gt;
 
@@ -9593,15 +9644,15 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 
 &lt;p&gt;29.良渚，彻天彻地童玩中心，让孩子训练协调能力，培养冒险精神&lt;/p&gt;
 
-&lt;p&gt;30.江干区江和美海洋公园&lt;/p&gt;
+&lt;p&gt;30.江干区江和美海洋公园 – 没啥好玩的，体验差。&lt;/p&gt;
 
 &lt;p&gt;31.临安大明山景区&lt;/p&gt;
 
 &lt;p&gt;32.慈溪杭州湾国家湿地公园&lt;/p&gt;
 
-&lt;p&gt;33.胡雪岩故居&lt;/p&gt;
+&lt;p&gt;33.胡雪岩故居 – 看古代的房子，体验不好&lt;/p&gt;
 
-&lt;p&gt;34.京杭大运河，余杭塘栖&lt;/p&gt;
+&lt;p&gt;34.京杭大运河，余杭塘栖 – 体验不错，有博物馆，也有河，有坐船，有吃的有喝的&lt;/p&gt;
 
 &lt;p&gt;35.杭州国际博览中心，萧山区&lt;/p&gt;
 
@@ -9620,6 +9671,10 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 &lt;p&gt;42.良储遗址 – 大，美，便宜，自带食物，能游览大半天&lt;/p&gt;
 
 &lt;p&gt;43.井山湖农耕文化公园(塘子堰，中小学生实践基地) – 免费，向日葵基地，大片草地，搭帐篷，风景美，自带食物&lt;/p&gt;
+
+&lt;p&gt;44.宁波方特 – 好几个人说很好玩&lt;/p&gt;
+
+&lt;p&gt;45.径山花海 – 余杭区，开车上高速30分钟，花园挺大的，需要自带食物，我们去的时候是过年，没有花，免费进，可以搭帐篷，是当地的公园。&lt;/p&gt;
 
 </content>
  </entry>
@@ -10166,7 +10221,7 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 
 &lt;p&gt;现在我们有了平移矩阵，我们可以通过用3x3矩阵增加一个维度的方式把原来无法表达的操作只用一个矩阵全都表达出来。假设我们先旋转后平移，我们先将向量 v 乘以旋转矩阵，旋转后得到的结果再乘以平移矩阵，平移得到 v‘ ，假设旋转矩阵为R，平移矩阵为T，就可以用向量与矩阵的乘法，以及矩阵的结合律来表达：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	v' = vRT
+&lt;pre&gt;&lt;code&gt;	v&apos; = vRT
 
 	R为：
 	[r11, r12, r13, 0]
@@ -10180,7 +10235,7 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 	[0, 0, 1, 0]
 	[x, y, z, 1]
 
-	通过结合律 v' = vRT = v(RT)
+	通过结合律 v&apos; = vRT = v(RT)
 
 	R与T相乘的结果为
 	[r11, r12, r13, 0]
@@ -10235,7 +10290,7 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 
 	r = cos(β) + sin(β) * i
 
-	v' = vr = (x + y * i)(cos(β) + sin(β) * i)
+	v&apos; = vr = (x + y * i)(cos(β) + sin(β) * i)
 
 	   = (x * cos(β) - y * sin(β)) + (x * sin(β) + y * cos(β)) * i
 &lt;/code&gt;&lt;/pre&gt;
@@ -10274,18 +10329,18 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 
 &lt;p&gt;利用上图的四元组表达方式，假设我们绕的是某个单轴旋转，也就是在x轴上旋转 A 度，或者在y轴上旋转 B 度，或者在z轴上旋转 C 度，根据上述的公式，我们可以得到三个供旋转的四元数，即：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	A' = [cos(-A/2), sin(-A/2) * 1, 0, 0]
+&lt;pre&gt;&lt;code&gt;	A&apos; = [cos(-A/2), sin(-A/2) * 1, 0, 0]
 
-	B' = [cos(-B/2), 0, sin(-B/2) * 1, 0]
+	B&apos; = [cos(-B/2), 0, sin(-B/2) * 1, 0]
 
-	C' = [cos(-C/2), 0, 0, sin(-C/2) * 1]
+	C&apos; = [cos(-C/2), 0, 0, sin(-C/2) * 1]
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;上图中的角度为什么是负的呢，因为我们在旋转点时的角度，和在旋转坐标系时的角度恰恰是相反的，因此操作旋转点的角度其实就是旋转坐标系反方向的角度，即负的角度。&lt;/p&gt;
 
 &lt;p&gt;现在我们要计算绕x轴上旋转A角度，并且绕y轴上旋转B角度，并且绕z轴上旋转C角度的四元组时，可以把 A‘，B’，C‘，这三个四元组乘起来，即：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	A'B'C' = (A'B'C') 最终计算得到
+&lt;pre&gt;&lt;code&gt;	A&apos;B&apos;C&apos; = (A&apos;B&apos;C&apos;) 最终计算得到
 
 	[x,]
 	[y,]
@@ -10686,7 +10741,7 @@ Y = y/w
 
 &lt;p&gt;我们来推导一下绕轴 N 旋转角度 β 的矩阵，先定义旋转矩阵为 F(N, β)，v为需要旋转的向量，于是公式满足:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	v * F(N, β) = v' (v向量绕 N 轴，旋转β度后的结果v‘)
+&lt;pre&gt;&lt;code&gt;	v * F(N, β) = v&apos; (v向量绕 N 轴，旋转β度后的结果v‘)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;这个公式中v向量为已知，N绕轴为已知，β绕轴度数为已知，还需要知道哪些变量，如图所示：&lt;/p&gt;
@@ -12237,7 +12292,7 @@ voi Read_version2(io_stream)
 
 &lt;p&gt;这个数据在MessagePack中是以Map类型数据存在的其格式为：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;82|A7|'c'|'o'|'m'|'p'|'a'|'c'|'t'|C3|A6|'s'|'c'|'h'|'e'|'m'|'a'|00|
+&lt;pre&gt;&lt;code&gt;82|A7|&apos;c&apos;|&apos;o&apos;|&apos;m&apos;|&apos;p&apos;|&apos;a&apos;|&apos;c&apos;|&apos;t&apos;|C3|A6|&apos;s&apos;|&apos;c&apos;|&apos;h&apos;|&apos;e&apos;|&apos;m&apos;|&apos;a&apos;|00|
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;数据中头部的‘82’这个数据，前半个byte的值即8代表是个最多拥有15个元素的map类型数据，后半个byte的值即2，代表总共有2个元素。接着第二个数据‘A7’，‘A’为前半个byte的值代表接下去是个31个字符以内的字符串，后半个byte值为7代表这个字符串拥有7个字符。接着7个元素都是字符元素及Key位置的字符串。接着‘C3’是Key-Value的Value类型数据部分，这个Value是一个bool型的ture值。接着‘A6’开始为第二个Key-Value数据组合，其中A为前半个byte代表是接下去是个31个元素以内的字符串，后半个byte为6代表这个字符串有6个长度大小。接着6个元素都是字符作为Key数据。最后的‘00’，前面0为前半个byte，表示类型为7位以内的整数，接着的0位后半个byte，代表数据为0。这样整个数据分析下来，MessagePack数据与Json的{“compact”:true, “schema”:0}数据对应上。&lt;/p&gt;
@@ -16870,7 +16925,7 @@ class RoleStateController
 
 		git add .
 
-		git commit -m 'sync'
+		git commit -m &apos;sync&apos;
 
 		git push origin master
 
@@ -16899,19 +16954,19 @@ class RoleStateController
 &lt;pre&gt;&lt;code&gt;	cp -r ../* /Users/luzexi/Desktop/work/gitee/blog/
 	cd /Users/luzexi/Desktop/work/gitee/blog/
 	git add .
-	git commit -m 'sync'
+	git commit -m &apos;sync&apos;
 	git push origin master
 
 	cp -r ../* /Users/luzexi/Desktop/work/github/blog/
 	cd /Users/luzexi/Desktop/work/github/blog/
 	git add .
-	git commit -m 'sync'
+	git commit -m &apos;sync&apos;
 	git push origin master
 
 	cp -r ../* /Users/luzexi/Desktop/work/gitlab/blog/
 	cd /Users/luzexi/Desktop/work/gitlab/blog/
 	git add .
-	git commit -m 'sync'
+	git commit -m &apos;sync&apos;
 	git push origin master
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -17863,15 +17918,15 @@ UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来�
 
 &lt;p&gt;优化前&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;OnTriggerEnter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Collider&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;OnTriggerEnter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Collider&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;MeshRenderer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;meshRenderer&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gameObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MeshRenderer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;meshRenderer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;meshRenderer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;优化后&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MeshRenderer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshRenderer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MeshRenderer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mMeshRenderer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
  
 &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -17880,7 +17935,7 @@ UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来�
  
 &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;OnTriggerEnter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Collider&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mMeshRenderer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mMeshRenderer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;2， 减少逻辑调用。&lt;/p&gt;
@@ -17893,21 +17948,21 @@ UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来�
 
 &lt;p&gt;优化前，每一帧都在调用逻辑。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;优化后，调用逻辑的间隔延迟到1秒。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timeSinceLastCalled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timeSinceLastCalled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;timSinceLastCalled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deltaTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timeSinceLastCalled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-         &lt;span class=&quot;n&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+         &lt;span class=&quot;nf&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
          &lt;span class=&quot;n&quot;&gt;timeSinceLastCalled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -17916,20 +17971,20 @@ UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来�
 
 &lt;p&gt;优化前，每帧都在调用逻辑。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;优化后，只在坐标X改变的情况下才调用逻辑。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;previousTransformPositionX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;previousTransformPositionX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;previousTransformPositionX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ExampleFunction&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;    
+        &lt;span class=&quot;nf&quot;&gt;ExampleFunction&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;    
         &lt;span class=&quot;n&quot;&gt;previousTransformPositionX&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -17942,19 +17997,19 @@ UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来�
 
 &lt;p&gt;优化前，每帧都会分配一个链表的内存进行调用。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myList&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;       
+    &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myList&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;       
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;优化后，不再重复分配链表内存，而是将他清理后再使用。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myList&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myList&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;myList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Clear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;myList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Clear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;ExampleFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;4， 对象池。&lt;/p&gt;
@@ -17991,27 +18046,27 @@ UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来�
 
 &lt;p&gt;优化前，每帧都会重新创建一个字符串来设置时间文字。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timerText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timerText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deltaTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;timerText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Time:&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;timerText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Time:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ToString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;优化后，不再操作字符串，而是赋值给文字组件显示，从而减少了内存垃圾。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timerHeaderText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timerHeaderText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timerValueText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;timerHeaderText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;TIME:&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;timerHeaderText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;TIME:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
  
 &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;n&quot;&gt;timerValueText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;timerValueText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ToString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;3）如果我们需要实时的操作字符串，我们可以采用StringBuilderClass来代替，StringBuilder专为不需要进行内存分配而设计，从而减少字符串产生的内存垃圾。&lt;/p&gt;
@@ -18042,14 +18097,14 @@ UGUI稍微复杂一点，但原理差不多，虽然不能实时改变图集来�
 
 &lt;p&gt;另外一种对协程的错误使用是每次返回的时候都new同一个变量，例如：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isComplete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isComplete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;WaitForSeconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;我们可以采用缓存来避免这样的内存垃圾产生：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WaitForSeconds&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WaiForSeconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;WaitForSeconds&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;WaiForSeconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isComplete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -18850,7 +18905,7 @@ public virtual void SetClipRect(Rect clipRect, bool validRect)
 
 &lt;p&gt;只有从宏观的角度看问题，才能看的更明白。我们项目中拥有众多UI界面，我们要统一管理所有UI，这样才能使得每个UI界面都能得到有效的调配。不仅如此，如果每个UI界面都是可扩充的那就太棒了。UI有一个很关键的系统是输入事件系统，UI内的每个按钮都需要有一个处理输入的句柄。所以我们需要写一个统计的管理类，以及每个UI都要有统一的基类，并且每个UI按钮元素都对应一个处理输入的句柄。另外对于UI来说，有通用UI，也有非通用UI，有常用UI和非常用UI之分。接下来我们把细节规划一下。&lt;/p&gt;
 
-&lt;h3 id=&quot;Ⅰ管理类&quot;&gt;Ⅰ.管理类。&lt;/h3&gt;
+&lt;h3 id=&quot;ⅰ管理类&quot;&gt;Ⅰ.管理类。&lt;/h3&gt;
 
 &lt;p&gt;整个UI是由N个界面构成的。这些UI界面有基本的功能，生成，展示，销毁，查找。如果说，我们分别对N个UI界面的这些功能进行编程，就会有大量的工作产生，而且维护起来的工作量也是巨大的。&lt;/p&gt;
 
@@ -18901,7 +18956,7 @@ public class ScreenManager : CSingleton&amp;lt;ScreenManager&amp;gt;
 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&quot;Ⅱ基类&quot;&gt;Ⅱ.基类。&lt;/h3&gt;
+&lt;h3 id=&quot;ⅱ基类&quot;&gt;Ⅱ.基类。&lt;/h3&gt;
 
 &lt;p&gt;项目中有很多界面，这N个界面他们有自己的共性，比如最基本的，他们都需要进行初始化，他们都需要有展示接口，他们都可以关闭，共性产生统一特征的接口，Init，Open和Close。继承基类又使得管理起来比较方便，在上面提到的 UIManager 里存储的UI实例时，可以统一使用基类的方式存储。我们可以把基类的名字称为 UIScreenBase，每个UI界面都继承自它，Screen一词很形象贴切的描述了屏幕上显示的界面。&lt;/p&gt;
 
@@ -18934,7 +18989,7 @@ public abstract class UIScreenBase : MonoBehaviour
 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&quot;Ⅲ输入事件响应机制&quot;&gt;Ⅲ.输入事件响应机制。&lt;/h3&gt;
+&lt;h3 id=&quot;ⅲ输入事件响应机制&quot;&gt;Ⅲ.输入事件响应机制。&lt;/h3&gt;
 
 &lt;p&gt;UI中输入事件的响应机制比较重要，好的输入事件响应机制能提高更多的效率，让程序员编写逻辑的时候更加舒服。&lt;/p&gt;
 
@@ -19041,7 +19096,7 @@ public class UI_Event : UnityEngine.EventSystems.EventTrigger
 
 &lt;p&gt;到这里我们有了统一管理UI的管理类，有了界面的基类，有了处理输入事件句柄的事件类，就能开始拓展UI了，大部分UI界面我们都能够处理，但很多原生的组件用起来不是很好，效率也特别的差，所以我们需要构建自己的高效的UI自定义组件。&lt;/p&gt;
 
-&lt;h3 id=&quot;Ⅳ自定义组件&quot;&gt;Ⅳ.自定义组件。&lt;/h3&gt;
+&lt;h3 id=&quot;ⅳ自定义组件&quot;&gt;Ⅳ.自定义组件。&lt;/h3&gt;
 
 &lt;p&gt;除了NGUI和UGUI本身的组件外，我们自己的自定义组件是必不可少的，特别是游戏项目，无论大小，都需要有自己的自定义组件，自定义组件不仅能让程序员在写逻辑时快速上手，满足项目的设计需求，而且也能起到对UI优化的作用，尤其在元素多的组件内。&lt;/p&gt;
 
@@ -19516,7 +19571,7 @@ private static void Raycast(Canvas canvas, Camera eventCamera, Vector2 pointerPo
     {
         Graphic graphic = foundGraphics[i];
 
-        // -1 means it hasn't been processed by the canvas, which means it isn't actually drawn
+        // -1 means it hasn&apos;t been processed by the canvas, which means it isn&apos;t actually drawn
         if (graphic.depth == -1 || !graphic.raycastTarget)
             continue;
 
@@ -20299,7 +20354,7 @@ private void Insert(TKey key, TValue value, bool add)
 #if FEATURE_RANDOMIZED_STRING_HASHING
 
 #if FEATURE_CORECLR
-    // In case we hit the collision threshold we'll need to switch to the comparer which is using randomized string hashing
+    // In case we hit the collision threshold we&apos;ll need to switch to the comparer which is using randomized string hashing
     // in this case will be EqualityComparer&amp;lt;string&amp;gt;.Default.
     // Note, randomized string hashing is turned on by default on coreclr so EqualityComparer&amp;lt;string&amp;gt;.Default will 
     // be using randomized string hashing
@@ -20639,8 +20694,8 @@ public new static extern bool Equals(Object o1, Object o2);
 &lt;h6 id=&quot;dictionary-同list一样并不是线程安全的组件官方源码中进行了这样的解释&quot;&gt;Dictionary 同List一样并不是线程安全的组件，官方源码中进行了这样的解释。&lt;/h6&gt;
 
 &lt;pre&gt;&lt;code&gt;    ** Hashtable has multiple reader/single writer (MR/SW) thread safety built into 
-    ** certain methods and properties, whereas Dictionary doesn't. If you're 
-    ** converting framework code that formerly used Hashtable to Dictionary, it's
+    ** certain methods and properties, whereas Dictionary doesn&apos;t. If you&apos;re 
+    ** converting framework code that formerly used Hashtable to Dictionary, it&apos;s
     ** important to consider whether callers may have taken a dependence on MR/SW
     ** thread safety. If a reader writer lock is available, then that may be used
     ** with a Dictionary to get the same thread safety guarantee. 
@@ -20702,7 +20757,7 @@ public new static extern bool Equals(Object o1, Object o2);
 
 &lt;p&gt;我们策略是生成一个类，用变量的形式去记录文字的ID，在文字表生成数据表，同时生成数据定义类，使用变量去代表数字。我们依然在表里填字符串对应字符串，比如上面提到的”BattleSceneFightAllianceWin” 对应”联盟战胜利了”，在导出xls数据文件时，生成一个类文件，专门把Key值按次序写进类中当变量。如下&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TextKey&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TextKey&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 	&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceWin&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 	&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceLose&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -20722,7 +20777,7 @@ public new static extern bool Equals(Object o1, Object o2);
 
 &lt;p&gt;而程序变量生成后为如下：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TextKey&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TextKey&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 	&lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceWin&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 	&lt;span class=&quot;n&quot;&gt;BattleSceneFightAllianceLose&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -21258,7 +21313,7 @@ public T this[int index] {
 public void Clear() {
     if (_size &amp;gt; 0)
     {
-        Array.Clear(_items, 0, _size); // Don't need to doc this but we clear the elements so that the gc can reclaim the references.
+        Array.Clear(_items, 0, _size); // Don&apos;t need to doc this but we clear the elements so that the gc can reclaim the references.
         _size = 0;
     }
     _version++;
@@ -21968,10 +22023,10 @@ internal static void DepthLimitedQuickSort(T[] keys, int left, int right, ICompa
     &lt;h5 id=&quot;做标记只在一个文件内有效&quot;&gt;做标记(只在一个文件内有效)&lt;/h5&gt;
 
     &lt;pre&gt;&lt;code&gt; 将当前位置标记成x字符		mx
- 将光标移动到第一个标记x		'x(单引号)
+ 将光标移动到第一个标记x		&apos;x(单引号)
  将光标移动到以x标记的字符	`x(反引号)
  回到上一个标记位置			``(两个反引号)
- 回到上一个标记开头			''(两个单引号)
+ 回到上一个标记开头			&apos;&apos;(两个单引号)
 &lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
@@ -22577,7 +22632,7 @@ test3&lt;/p&gt;
 
 &lt;h6 id=&quot;数组分配2&quot;&gt;数组分配2&lt;/h6&gt;
 
-&lt;pre&gt;&lt;code&gt;	var foo = ['one', 'two', 'three'];
+&lt;pre&gt;&lt;code&gt;	var foo = [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;];
 	var [one, two, three] = foo;
 	console.log(one); // &quot;one&quot;
 	console.log(two); // &quot;two&quot;
@@ -22634,8 +22689,8 @@ test3&lt;/p&gt;
 
 &lt;h6 id=&quot;指定属性key解析赋值&quot;&gt;指定属性key解析赋值&lt;/h6&gt;
 
-&lt;pre&gt;&lt;code&gt;	let key = 'z';
-	let {[key]: foo} = {z: 'bar'};
+&lt;pre&gt;&lt;code&gt;	let key = &apos;z&apos;;
+	let {[key]: foo} = {z: &apos;bar&apos;};
 	console.log(foo); // &quot;bar&quot;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -22649,8 +22704,8 @@ test3&lt;/p&gt;
 
 &lt;h6 id=&quot;弱变量定义与赋值&quot;&gt;弱变量定义与赋值&lt;/h6&gt;
 
-&lt;pre&gt;&lt;code&gt;	const foo = { 'fizz-buzz': true };
-	const { 'fizz-buzz': fizzBuzz } = foo;
+&lt;pre&gt;&lt;code&gt;	const foo = { &apos;fizz-buzz&apos;: true };
+	const { &apos;fizz-buzz&apos;: fizzBuzz } = foo;
 	console.log(fizzBuzz); // &quot;true&quot;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -22699,10 +22754,10 @@ test3&lt;/p&gt;
 
 &lt;h6 id=&quot;对于这种嵌套的对象一旦遇到同名属性objectassign的处理方法是替换而不是添加&quot;&gt;对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。&lt;/h6&gt;
 
-&lt;pre&gt;&lt;code&gt;	var target = { a: { b: 'c', d: 'e' } }
-	var source = { a: { b: 'hello' } }
+&lt;pre&gt;&lt;code&gt;	var target = { a: { b: &apos;c&apos;, d: &apos;e&apos; } }
+	var source = { a: { b: &apos;hello&apos; } }
 	Object.assign(target, source)
-	// { a: { b: 'hello' } }
+	// { a: { b: &apos;hello&apos; } }
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h6 id=&quot;objectassign-常见用途&quot;&gt;Object.assign 常见用途&lt;/h6&gt;
@@ -22742,7 +22797,7 @@ test3&lt;/p&gt;
 	为属性指定默认值
 	const DEFAULTS = {
 		logLevel: 0,
-		outputFormat: 'html'
+		outputFormat: &apos;html&apos;
 	};
 	function processContent(options) {
 		let options = Object.assign({}, DEFAULTS, options);
@@ -22778,7 +22833,7 @@ test3&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;	如果我们尝试为一个“定义函数”末尾加上()，解析器是无法理解的。
 
 	function msg(){
-	  alert('message');
+	  alert(&apos;message&apos;);
 	}();//解析器是无法理解的
 
 	原来，使用括号包裹定义函数体，解析器将会以函数表达式的方式去调用定义函数。也就是说，任何能将函数变成一个函数表达式的作法，都可以使解析器正确的调用定义函数。而 ! 就是其中一个，而 + - || 都有这样的功能。
@@ -23570,7 +23625,7 @@ The **second row** must be **type**
 The **type must be i , f , s , b , ai , af , as , ab.
 i mean int , f mean float , s mean string , b mean bool , ai mean array int , af mean array float , as mean array string , ab mean array bool.
 The **first column** must be int , so the type in first column must be i.
-The string type with char **&quot;** or **'** will be replace by \&quot; or \' 
+The string type with char **&quot;** or **&apos;** will be replace by \&quot; or \&apos; 
 The empty col will be a default value like 0 or &quot;&quot; or false or {} 
 (sheet名以&quot;output_&quot;开头的才会被识别转换，否则将被忽略) 
 (第1行必须是关键字名) 
@@ -23578,7 +23633,7 @@ The empty col will be a default value like 0 or &quot;&quot; or false or {}
 (类型有：i,f,s,b,ai,af,as,ab这几种) 
 (i表示int，f表示float,s表示string,b表示bool,ai表示int数组,af表示float数组,as表示string数组,ab表示bool数组) 
 (第1列必须为int类型的唯一关键字) 
-(string类型中&quot;和'会自动用\&quot;和\'替代)
+(string类型中&quot;和&apos;会自动用\&quot;和\&apos;替代)
 (空列将会被默认值代替，例如:0,&quot;&quot;,false,{})
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -23600,7 +23655,7 @@ The empty col will be a default value like 0 or &quot;&quot; or false or {}
 &lt;h3 id=&quot;lua-script-生成后的lua文件示例&quot;&gt;Lua script (生成后的Lua文件示例)&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-lua&quot;&gt;-- this file is generated by program!
--- don't change it manaully.
+-- don&apos;t change it manaully.
 -- source file: example_building.xls
 -- created at: Thu Mar 26 02:53:52 2015
 
@@ -24120,7 +24175,7 @@ Debug.Log(string.Format(&quot;CallFromJS[{0}]&quot;, msg));
 
 	git rm . 告诉git当前目录下所有文件和文件夹都需要被删除
 
-	git rm `git status | grep delete | awk '{print $2}'` 删除所有被删除的文件
+	git rm `git status | grep delete | awk &apos;{print $2}&apos;` 删除所有被删除的文件
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h4 id=&quot;commit&quot;&gt;commit:&lt;/h4&gt;
@@ -25249,7 +25304,7 @@ Quaternion mDiffRot;//旋转差异
 Vector3 mDiffScale;//缩放差异
 int mVisibleFlag = -1;//可见标志
 
-// Widget's generated geometry
+// Widget&apos;s generated geometry
 UIGeometry mGeom = new UIGeometry();//多变形实例
 &lt;/code&gt;&lt;/pre&gt;
 
