@@ -7,6 +7,19 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>改造jekyll 为iframe框架的博客内容</title>
+               <description>
+&lt;div class=&quot;static_post&quot;&gt;
+&lt;iframe src=&quot;/static-page/post-2021-02-10/改造jekyll 为iframe框架的博客内容.html&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt; &lt;/iframe&gt;
+&lt;/div&gt;
+
+</description>
+               <pubDate>Wed, 10 Feb 2021 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com/2021/02/10/%E6%94%B9%E9%80%A0jekyll%E4%B8%BAiframe%E6%A1%86%E6%9E%B6%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9</link>
+               <guid isPermaLink="true">http://www.luzexi.com/2021/02/10/%E6%94%B9%E9%80%A0jekyll%E4%B8%BAiframe%E6%A1%86%E6%9E%B6%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9</guid>
+            </item>
+        
+            <item>
                <title>思路探讨(五十五) 第一性原理</title>
                <description>&lt;p&gt;最近越来越经常写文章但很少发出来（基本都是每周一篇总结 + 每日一篇自我反省的文章），没能分享到博客的原因第一是写的文章有些是属于公司保密级的，不能发布在博客上，甚至有几篇文章完全不能脱敏。第二是自己写的向内看系列的内容，真的越来越向内看越来越私密，由于太私密触及内心的兴奋与失落，起伏过大所以也不好拿出来跟大家分享。&lt;/p&gt;
 
@@ -140,9 +153,7 @@
 &lt;p&gt;&lt;a href=&quot;/static-page/Perfetto/Index/Perfetto内存工具分析.html&quot;&gt;点击查看文章内容&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;static_post&quot;&gt;
-&lt;iframe src=&quot;/static-page/Perfetto/Index/Perfetto内存工具分析.html&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt;
-	ddsfsdf
-&lt;/iframe&gt;
+&lt;iframe src=&quot;/static-page/Perfetto/Index/Perfetto内存工具分析.html&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt; &lt;/iframe&gt;
 &lt;/div&gt;
 
 </description>
@@ -1061,60 +1072,6 @@ struct mm_struct {
                <pubDate>Wed, 02 Dec 2020 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com/2020/12/02/%E7%BB%99%E5%A5%B3%E5%84%BF%E7%9A%84%E4%BF%A16</link>
                <guid isPermaLink="true">http://www.luzexi.com/2020/12/02/%E7%BB%99%E5%A5%B3%E5%84%BF%E7%9A%84%E4%BF%A16</guid>
-            </item>
-        
-            <item>
-               <title>向内看自己(十) 反思自己的行为带给人的感觉</title>
-               <description>&lt;p&gt;最近发现自己的行为和话语给别人的感觉很不好，这源于我自身的性格问题。&lt;/p&gt;
-
-&lt;p&gt;我有很多性格问题，导致生活中、工作中在与人交往过程中就会遇到障碍或瓶颈。&lt;/p&gt;
-
-&lt;p&gt;我很想弄清楚我到底出了什么问题，但一直没弄明白，于是我想好好剖析一下自己。&lt;/p&gt;
-
-&lt;p&gt;也因为最近在学习冥想，这个看起来有点玄乎的词语，是我最近研究的内容，我会专门写一篇文章来详细说明我对它的理解与感受。&lt;/p&gt;
-
-&lt;p&gt;我发现冥想最大的益处就是让我忽略杂念专注于当前所做的事，在专注过程中不断发现当前事物中以前没有被我发现的细节，这些细节很多时候都是关键中的关键。&lt;/p&gt;
-
-&lt;p&gt;当然最重要的也是最大的问题是我自己本身，于是我边练习冥想技巧边来发现自己的问题。&lt;/p&gt;
-
-&lt;p&gt;自身问题一，我常常会去要求别人却没有用心体会对方的感受，慢慢会引起别人的反感。&lt;/p&gt;
-
-&lt;p&gt;自身问题二，我常常会以炫耀的口吻讲述自己的经历和想法，让对方感觉不愉快。&lt;/p&gt;
-
-&lt;p&gt;自身问题三，我常常会想妥协而装做一副顺从的样子，让别人有了更多负担，也让事情进展有些尴尬。&lt;/p&gt;
-
-&lt;p&gt;自身问题四，我常常心急如焚想立刻搞定某事而选择比较激进的做法，让人会觉得我不靠谱，或者不尊重他们。&lt;/p&gt;
-
-&lt;p&gt;自身问题五，与人交流成为我了的负担，我宁愿自己辛苦点去搞定也不愿意或者说恐惧与人打交道。&lt;/p&gt;
-
-&lt;p&gt;即使我知道这些问题的存在，我仍然不知道该如何去改进，因为我没有找到解决问题的方向。&lt;/p&gt;
-
-&lt;p&gt;就像上学时一直喜欢玩耍没有好好学习一样，我知道好好学习的重要性，但就是坐不下来安静学习。&lt;/p&gt;
-
-&lt;p&gt;我觉得是因为我没有get到某个点。这和我现在所面临的问题有点相似，明知道有问题，明知道该如何如何去做，但就是做不到。&lt;/p&gt;
-
-&lt;p&gt;很多时候我们都是撞的很痛了才下定决心去改，但这时通常已经很迟了，我不想每次都等到我痛到骨子里了才去改。&lt;/p&gt;
-
-&lt;p&gt;于是我问自己，我需要get什么点？&lt;/p&gt;
-
-&lt;h4 id=&quot;我回忆了下长大成人后喜欢上了自律和学习的过程我为什么会有转变我是怎么转变过来的&quot;&gt;我回忆了下，长大成人后喜欢上了自律和学习的过程，我为什么会有转变，我是怎么转变过来的。&lt;/h4&gt;
-
-&lt;h4 id=&quot;我依稀记得长大成人后逐渐喜欢上学习的起点是因为我第一次获得学习上的成就感开始的可能这个成就感是非常微不足道的一点点但足以敲开了我对此感兴趣的大门随着我不断深入研究慢慢的我被一次次的成就感所激励着不断前进许多正向的反馈在我的生活中不断冒出中间也有些许负向的反馈但由于相对正向反馈来说量少我还能克服它们&quot;&gt;我依稀记得，长大成人后，逐渐喜欢上学习的起点，是因为我第一次获得学习上的成就感开始的，可能这个成就感是非常微不足道的一点点，但足以敲开了我对此感兴趣的大门。随着我不断深入研究，慢慢的我被一次次的成就感所激励着不断前进，许多正向的反馈在我的生活中不断冒出，中间也有些许负向的反馈，但由于相对正向反馈来说量少我还能克服它们。&lt;/h4&gt;
-
-&lt;h4 id=&quot;这个过程中最重要的是第一次正向反馈当我感觉到自己的努力有了回报我就更感兴趣去深入研究它们如果在开始的时候一次次又一次的正向反馈不断袭来我就能感觉到我自己找对了方法就像找到了金钥匙那样不断向这个方向前进直到遇到更大的瓶颈当遇到更大的瓶颈时我则需要更换思路和方法如果没有找对思路和方法则会继续原地踏步常常会因为原地踏步时间太久而感到沮丧和气馁因此而懈怠并且开始退步&quot;&gt;这个过程中最重要的是第一次正向反馈，当我感觉到自己的努力有了回报，我就更感兴趣去深入研究它们。如果在开始的时候，一次次又一次的正向反馈不断袭来，我就能感觉到我自己找对了方法，就像找到了金钥匙那样，不断向这个方向前进，直到遇到更大的瓶颈。当遇到更大的瓶颈时，我则需要更换思路和方法，如果没有找对思路和方法，则会继续原地踏步，常常会因为原地踏步时间太久而感到沮丧和气馁，因此而懈怠并且开始退步。&lt;/h4&gt;
-
-&lt;h4 id=&quot;想到这里我想着能不能根据这个途径先去找些改善的行动项做起来从而获得正向反馈再根据这个正向反馈来一步步改善我的行为&quot;&gt;想到这里，我想着能不能根据这个途径，先去找些改善的行动项做起来，从而获得正向反馈，再根据这个正向反馈来一步步改善我的行为。&lt;/h4&gt;
-
-&lt;h4 id=&quot;这当然是很难的起步的时候更是艰难特别是第一次的正向反馈可能需要一段比较长时间的积累我需要保持耐心维持改善行为好一阵&quot;&gt;这当然是很难的，起步的时候更是艰难，特别是第一次的正向反馈可能需要一段比较长时间的积累，我需要保持耐心维持改善行为好一阵。&lt;/h4&gt;
-
-&lt;h4 id=&quot;路漫漫其修远兮吾将上下而求索&quot;&gt;路漫漫其修远兮，吾将上下而求索。&lt;/h4&gt;
-
-&lt;h3 id=&quot;希望大家一起加油同我一样来改善自己&quot;&gt;希望大家一起加油同我一样来改善自己​&lt;/h3&gt;
-
-</description>
-               <pubDate>Sat, 21 Nov 2020 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com/2020/11/21/%E5%90%91%E5%86%85%E7%9C%8B%E8%87%AA%E5%B7%B110</link>
-               <guid isPermaLink="true">http://www.luzexi.com/2020/11/21/%E5%90%91%E5%86%85%E7%9C%8B%E8%87%AA%E5%B7%B110</guid>
             </item>
         
     </channel>

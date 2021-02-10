@@ -2,6 +2,17 @@
   
     {
 
+      "title"    : "改造jekyll 为iframe框架的博客内容",
+      "url"      : "/2021/02/10/%E6%94%B9%E9%80%A0jekyll%E4%B8%BAiframe%E6%A1%86%E6%9E%B6%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9",
+      "category" : "",
+      "tags"     : "前端技术, 其他技术",
+      "date"     : "2021-02-10 00:00:00 +0800",
+      "discription" : "jekyll liquid ruby related"
+
+    } ,
+  
+    {
+
       "title"    : "思路探讨(五十五) 第一性原理",
       "url"      : "/2021/02/09/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A855",
       "category" : "",

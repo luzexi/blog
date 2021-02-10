@@ -4,13 +4,26 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2021-02-10T16:11:00+08:00</updated>
+ <updated>2021-02-10T17:00:53+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email>jesse_luzexi@163.com</email>
  </author>
 
+ 
+ <entry>
+   <title>改造jekyll 为iframe框架的博客内容</title>
+   <link href="http://www.luzexi.com/2021/02/10/%E6%94%B9%E9%80%A0jekyll%E4%B8%BAiframe%E6%A1%86%E6%9E%B6%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9"/>
+   <updated>2021-02-10T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2021/02/10/改造jekyll为iframe框架的博客内容</id>
+   <content type="html">
+&lt;div class=&quot;static_post&quot;&gt;
+&lt;iframe src=&quot;/static-page/post-2021-02-10/改造jekyll 为iframe框架的博客内容.html&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt; &lt;/iframe&gt;
+&lt;/div&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>思路探讨(五十五) 第一性原理</title>
@@ -149,9 +162,7 @@
 &lt;p&gt;&lt;a href=&quot;/static-page/Perfetto/Index/Perfetto内存工具分析.html&quot;&gt;点击查看文章内容&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;static_post&quot;&gt;
-&lt;iframe src=&quot;/static-page/Perfetto/Index/Perfetto内存工具分析.html&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt;
-	ddsfsdf
-&lt;/iframe&gt;
+&lt;iframe src=&quot;/static-page/Perfetto/Index/Perfetto内存工具分析.html&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt; &lt;/iframe&gt;
 &lt;/div&gt;
 
 </content>
