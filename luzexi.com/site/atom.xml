@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2021-03-22T00:02:35+08:00</updated>
+ <updated>2021-03-25T00:27:49+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -1643,6 +1643,8 @@ class Point2D: public Point {...};
 - x
 - y
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当类中不存在虚函数时，typeid是编译时期的事情，也就是静态类型，当类中存在虚函数时，typeid是运行时期的事情，也就是动态类型，关于这一点，我们在实际编程中，经常会出错，一定要谨记。&lt;/p&gt;
 
 &lt;p&gt;Point2D和Point的​虚表头，都是type_info的信息地址，它们的type信息地址分别指向两个不同的type_info静态数据内存地址。这样看来，每次我们使用指针取得class object类型描述器时，其实就是通过虚表指针去取得类信息地址，即如下：&lt;/p&gt;
 
