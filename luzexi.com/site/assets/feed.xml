@@ -7,6 +7,28 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>思路探讨(六十二) 思路探讨</title>
+               <description>&lt;p&gt;知识的深度和广度都是非常重要的，没有一定说，只做某个方向一定能成，或者说只要涉猎足够广一定能成事。&lt;/p&gt;
+
+&lt;p&gt;很多有知识深度的人，特别是某个专业领域特别强的人，会去鄙视那些专业程度不深但知道很多个领域知识的人。
+例如学者就常看不上商人，学者有足够深的专业，而商人则有足够广的领域涉猎。
+其实这种思维是非常错误的，也是狭隘的，其本身的做法也是不够明智的。&lt;/p&gt;
+
+&lt;p&gt;实际上深度和广度是兼并的，知识的深度支撑了广度，广度又回馈了深度，这样深度和广度相辅相成的才是比较好的模式，这也是人们口中常说的“一专多精”的意义所在。&lt;/p&gt;
+
+&lt;p&gt;就像你懂的事情越多，越能对事物提出不同的观点那样。不同领域间的知识常以惊人的方式互相取长补短。毕竟，创造的核心是将从未有过交集的东西融合在一起。&lt;/p&gt;
+
+&lt;p&gt;如果你接受了人需要博识的观点后，学会了微精通，那么你就能从多种微精通实践中获得了思维流畅性，自然而然就从封闭转换到了开放。&lt;/p&gt;
+
+&lt;p&gt;这是种普遍的生活观，开放地拥抱生活中的各种奇迹机遇，你就会变得乐于学习了，因为你知道了获取专业知识的微精通的奥秘，不再有被其他领域拒之门外的挫败感。那时你就会变得信心十足、无所畏惧，这是任何境遇下都需要的优秀品质。&lt;/p&gt;
+
+</description>
+               <pubDate>Sun, 18 Apr 2021 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com/2021/04/18/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A862</link>
+               <guid isPermaLink="true">http://www.luzexi.com/2021/04/18/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A862</guid>
+            </item>
+        
+            <item>
                <title>读书笔记(二十一) 《金字塔原理》上</title>
                <description>&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484575&amp;amp;idx=1&amp;amp;sn=2d34a8dbcfb9c1210fa3e0ae5b0c13fb&amp;amp;chksm=fc226198cb55e88e892b31fa217da8e11e8eb6bfbcbd74805e610b706f69c4e776cb7da9b40f&amp;amp;token=673219380&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
 
@@ -776,19 +798,6 @@ E计划在新看法下激发新行动
                <pubDate>Wed, 17 Feb 2021 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com/2021/02/17/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A856</link>
                <guid isPermaLink="true">http://www.luzexi.com/2021/02/17/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A856</guid>
-            </item>
-        
-            <item>
-               <title>改造jekyll 为iframe框架的博客内容</title>
-               <description>
-&lt;div class=&quot;static_post&quot;&gt;
-&lt;iframe src=&quot;/static-page/post-2021-02-10/改造jekyll 为iframe框架的博客内容.html&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt; &lt;/iframe&gt;
-&lt;/div&gt;
-
-</description>
-               <pubDate>Wed, 10 Feb 2021 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com/2021/02/10/%E6%94%B9%E9%80%A0jekyll%E4%B8%BAiframe%E6%A1%86%E6%9E%B6%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9</link>
-               <guid isPermaLink="true">http://www.luzexi.com/2021/02/10/%E6%94%B9%E9%80%A0jekyll%E4%B8%BAiframe%E6%A1%86%E6%9E%B6%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9</guid>
             </item>
         
     </channel>
