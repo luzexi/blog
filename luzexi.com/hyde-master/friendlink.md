@@ -11,7 +11,7 @@ title: 友情链接
 
 [赵青青的博客](http://www.cnblogs.com/zhaoqingqing)
 
-[李少将的博客](https://www.rayhunterli.com)
+[李少将的博客](http://www.rayhunterli.com)
 
 ### 加友情链接的请留言或发Emial
 
