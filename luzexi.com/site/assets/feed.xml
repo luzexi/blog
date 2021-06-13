@@ -7,6 +7,159 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>读书笔记(二十六) 《C++ Primer》#2</title>
+               <description>&lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
+
+&lt;p&gt;我为什么要重学C++？第一是巩固核心，软件编程有三大核心，语言、操作系统、框架设计，语言首当其冲，核心能力大都看不见摸不着只有你自己知道的东西。第二是将分散的知识串联起来，这样就能产生新的知识和新的创意。第三是当我们在巩固时创造出了新的知识，那么这些新的知识和旧的知识将同时变成智慧融合到身体中。&lt;/p&gt;
+
+&lt;p&gt;本系列基于《C++ Primer》学习，由于重点放在“重学”，我略过了滚瓜烂熟的部分挑出以前常忽略的部分，以及记忆没有那么深刻的部分，特别是那些重要的但没有上心的部分。&lt;/p&gt;
+
+&lt;h2 id=&quot;开始&quot;&gt;开始&lt;/h2&gt;
+
+&lt;h2 id=&quot;1const限定&quot;&gt;1.const限定&lt;/h2&gt;
+
+&lt;p&gt;关键字const对变量的类型加以限定，因此它的值在初始化后不能被改变。&lt;/p&gt;
+
+&lt;p&gt;const默认情况下只在文件内生效，当需要支持多个文件共享时，则使用extern关键字，不管定义和声明都添加extern关键字，并且只需要定义一次。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//a.cpp&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_constVar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fcn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//b.cpp&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_constVar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;通过添加extern共享const变量。&lt;/p&gt;
+
+&lt;h2 id=&quot;const引用常量引用&quot;&gt;const引用（常量引用）&lt;/h2&gt;
+
+&lt;p&gt;与普通引用不同的是，常量引用不能被用作它修改它所绑定的对象。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;r1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//错误，常量引用不能修改绑定对象&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//错误，普通引用无法赋值常量&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;严格来说，并不存在常量引用。因为引用不是一个对象，所以我们没法让引用本身恒定不变。
+事实上，由于c++语言并不允许随意改变引用所绑定的对象，所以从这层意义上理解所有的引用又都算是常量。
+引用的对象是常量还是非常量可以决定其所能参与的操作，却无论如何都不会影响到引用和对象的绑定关系。
+简单来说，由于绑定对象无法改变，所以要求引用对象也不能改变。&lt;/p&gt;
+
+&lt;p&gt;但const引用可以绑定一个非const对象，其意义为，绑定后const引用无法改变，只能由所绑定的对象来决定内容。&lt;/p&gt;
+
+&lt;h2 id=&quot;const指针常量指针&quot;&gt;const指针（常量指针）&lt;/h2&gt;
+
+&lt;p&gt;const指针与const引用有同样的规则。
+const指针在初始化后无法改变，const指针不能改变所指对象的值，但可以指向非常量变量。
+当指向非常量时，const指针所指向的对象的值，只能由对象本身来决定。&lt;/p&gt;
+
+&lt;p&gt;C++11中，用constexpr来表示常量表达式，声明为constexpr的变量是一个常量，编译器会验证变量的值是否为常量表达式并离线计算该值。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;k&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//离线计算&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;limit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//离线计算&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// size()必须是constexpr函数&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;2类型别名&quot;&gt;2.类型别名&lt;/h2&gt;
+
+&lt;p&gt;类型别名是某种类型的同义词。&lt;/p&gt;
+
+&lt;p&gt;使用类型别名是为了让复杂的类型名字变得简单明了、易于理解和使用。&lt;/p&gt;
+
+&lt;p&gt;C++11新标准中，使用using来定义类型的别名&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//wages是double的同义词&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wages&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//base是double的同义词，并且p是double*的同义词&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pstring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//pstring 是char*的同义词&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;It&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Item_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// It 是Item_test的同义词&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//定义&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;wages&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//定义double 变量&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;It&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//定义Item_test 变量&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pstring&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cstr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//定义一个char *&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;3其他&quot;&gt;3.其他&lt;/h2&gt;
+
+&lt;p&gt;auto和decltype都是用来让编译器在离线下自动识别类型的关键字。
+其中decltype着重识别结果类型与表达式的关系。&lt;/p&gt;
+
+&lt;p&gt;预处理器能确保头文件多次包含仍能安全工作，它在编译之前被执行。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt; &lt;span class=&quot;cp&quot;&gt;#include、#define、#ifdef、#ifndef都是预处理关键字。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;第3章&quot;&gt;第3章&lt;/h2&gt;
+
+&lt;h2 id=&quot;1string字符串类&quot;&gt;1.string字符串类&lt;/h2&gt;
+
+&lt;p&gt;前面说using可以用于类型别名，using也可以用于声明命名空间。
+using namespace::name
+不过头文件中不应包含using声明，因为这会导致头文件在被拷贝时多次重复声明using。&lt;/p&gt;
+
+&lt;p&gt;string是标准库中的类对象。
+string在使用中最容易发生的问题就是拷贝。
+特别是等号(=、+)引起的合并和拷贝需要注意。
+string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比较算法但每个字符都会比较。&lt;/p&gt;
+
+&lt;p&gt;严格来说string对象不属于容器类型，但string支持很多与容器类似的操作，比如下标、迭代器等。&lt;/p&gt;
+
+&lt;h2 id=&quot;2vector动态数组&quot;&gt;2.vector动态数组&lt;/h2&gt;
+
+&lt;p&gt;vector是标准中的动态数组模版库。
+模版本身不是类或函数，可以把模版看成编译器生成的类或函数。编译器根据模版创建类或函数的过程称为实例化。因此使用模版时，我们要指出编译器应把类或函数实例化成何种类型。
+因此vector是模版而非类型，由vector生成的类才叫类型。&lt;/p&gt;
+
+&lt;p&gt;vector容器本身就是对象，因此也能通过拷贝初始化。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 初始化3个元素，1、2、3&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 初始化10个元素，都是-1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 用拷贝来初始化，将v1中的数据拷贝到v3，完成后v3拥有独立的数据&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 提前预备20个值，每个值都是0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;由于vector是动态数组，因此如果能在初始化时提前告知vector的话，vector就不用扩容了，运行时性能会更好。&lt;/p&gt;
+
+&lt;h2 id=&quot;3迭代器&quot;&gt;3.迭代器&lt;/h2&gt;
+
+&lt;p&gt;迭代器有三种不同含意，一是迭代器概念本身，二是容器定义的迭代器类型，三是指某个迭代器对象。&lt;/p&gt;
+
+&lt;p&gt;有时她跟指针很像，但又完全不一样。&lt;/p&gt;
+
+&lt;p&gt;其实迭代器是个由模版封装过的类，根据不同的类型的容器，编译器生成功能相似但命名不同的类。&lt;/p&gt;
+
+&lt;p&gt;迭代器又重写了==、&amp;gt;、&amp;lt;、!=、&amp;lt;=、&amp;gt;=、+=、-=运算符，使得我们在编写代码时更加方便。&lt;/p&gt;
+
+&lt;p&gt;共识：当使用迭代器时如果对容器做了增删操作，则会使得迭代器失效，甚至报错和崩溃。&lt;/p&gt;
+
+&lt;p&gt;迭代器对象是实时生成的，当我们获取迭代器对象时，容器会实时生成一个迭代器对象，我们再通过操作这个迭代器对象达成我们的目的。&lt;/p&gt;
+
+&lt;h2 id=&quot;4数组&quot;&gt;4.数组&lt;/h2&gt;
+
+&lt;p&gt;一些复杂的数组声明难以理解，因此如果能从数组的名字开始按照由内向外的顺序阅读会更加容易些。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 普通数组含有10个整数&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptrs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// ptrs是含有10个整数指针的数组&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Parray指向一个含有10个整数的数组&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrRef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// arrRef引用一个含有10个整数的数组&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptrs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//arry是数组的引用，该数组含有10个整数指针&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;数组真正使用的时候编译器会把它转成指针。
+因此指向数组的指针可以使用+、-、==、!=运算符号来操作数组。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// e指向arr元素的下一位置&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;至于多维数组，严格来说C++中没有多维数组，通常所说的多维数组其实是数组的数组，也就是用数组类型组成的数组。&lt;/p&gt;
+
+&lt;p&gt;其中要注意的是在多维数组遍历时，其遍历顺序应该按照数组的整块内存来遍历，否则命中效率比较低。&lt;/p&gt;
+</description>
+               <pubDate>Sat, 12 Jun 2021 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com/2021/06/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B026</link>
+               <guid isPermaLink="true">http://www.luzexi.com/2021/06/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B026</guid>
+            </item>
+        
+            <item>
                <title>读书笔记(二十五) 《C++ Primer》#1</title>
                <description>&lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
 
@@ -436,62 +589,6 @@
                <pubDate>Sun, 11 Apr 2021 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com/2021/04/11/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B021</link>
                <guid isPermaLink="true">http://www.luzexi.com/2021/04/11/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B021</guid>
-            </item>
-        
-            <item>
-               <title>思路探讨(六十一) 《原则》摘录</title>
-               <description>&lt;p&gt;最近看了《原则》一书的前半部分，讲述的是桥水创始人瑞.达利欧的个人经历。&lt;/p&gt;
-
-&lt;p&gt;这本书2019年6月份就买了，一直没空看，但我知道它是一本好书，直到2021年过年时才从箱底里翻出来看。（我时常翻箱底，因为我知道很多东西被我遗忘在箱底了，我时常要去翻它们，这会让我有很多惊喜）&lt;/p&gt;
-
-&lt;p&gt;本来这周想用自己的小脑袋思考弄清楚点事情，可惜在电脑前发呆了1个小时也没写出一个字，个人思考的力量毕竟有限，所以还是看书吧，站在巨人的肩膀上，让巨人带你领略风景。&lt;/p&gt;
-
-&lt;p&gt;最近现在每次看书都会画线并记录自己的感受，就讲讲我记录的笔记吧。&lt;/p&gt;
-
-&lt;p&gt;原文：我一直记不住没有内在逻辑的东西（如电话号码），而且我不喜欢听从别人的指示。同时，我的好奇心很强，喜欢自己把事情弄清楚，不过当时我并不像现在这么清楚地知道这一点。&lt;/p&gt;
-
-&lt;h3 id=&quot;笔记我也一样记不住没有逻辑的东西喜欢自主的想法不喜欢被动&quot;&gt;笔记：我也一样，记不住没有逻辑的东西，喜欢自主的想法，不喜欢被动。&lt;/h3&gt;
-
-&lt;p&gt;原文：我一直不明白，除了能得到母亲的认可之外，上学上得好还能给给我什么。&lt;/p&gt;
-
-&lt;h3 id=&quot;笔记这让我更加慎重的考虑我的孩子的成长和教育如何才能让她们更有自主的学习动力&quot;&gt;笔记：这让我更加慎重的考虑我的孩子的成长和教育，如何才能让她们更有自主的学习动力。&lt;/h3&gt;
-
-&lt;p&gt;原文：与失败比起来，我对乏味和平庸的恐惧要严重得多。对我而言，很好的事要比糟糕的事好，糟糕的事要比平庸的事好，因为糟糕的事至少给生活增加了滋味。&lt;/p&gt;
-
-&lt;h3 id=&quot;笔记我不想要乏味和平庸即使失败也比平庸和乏味来的好失败还意味着拼搏过平庸和乏味基本上都是由于躺在舒适区不想动的缘故&quot;&gt;笔记：我不想要乏味和平庸，即使失败也比平庸和乏味来的好。失败还意味着拼搏过，平庸和乏味基本上都是由于躺在舒适区不想动的缘故。&lt;/h3&gt;
-
-&lt;p&gt;原文：经历这些让我认识到，尽管几乎所有人都会估计未来和当下大同小异，但未来通常和当下大相径庭。&lt;/p&gt;
-
-&lt;h3 id=&quot;笔记未来和当下总是出乎人们的意料相差比较大&quot;&gt;笔记：未来和当下总是出乎人们的意料，相差比较大。&lt;/h3&gt;
-
-&lt;p&gt;原文：这个现实传递给我的信息时：你最好弄明白其他时间，其他地点，其他人身上发生的事，因为如果你不这么做，你就不知道这些事情会不会发生在你身上，而且一旦发生在你身上，你将不知道如何应对。&lt;/p&gt;
-
-&lt;h3 id=&quot;笔记弄明白历史能更清晰的看清当下自己身上正在发生的事情&quot;&gt;笔记：弄明白历史能更清晰的看清当下自己身上正在发生的事情。&lt;/h3&gt;
-
-&lt;p&gt;原文：哈佛教学：没有教师在黑板前告诉我们什么东西要记住，也没有考试测试我们有没有记住。相反，教师给我们的都是真实的案例研究，让我们进行阅读与分析。然后我们分成小组自由讨论，加入我们处在和案例中的人相同的情况下，我们会怎么做。这正是我喜欢的教学方式。&lt;/p&gt;
-
-&lt;h3 id=&quot;笔记开放式教育自主阅读案例分析讨论实践&quot;&gt;笔记：开放式教育，自主阅读，案例分析，讨论，实践。&lt;/h3&gt;
-
-&lt;p&gt;原文：你必须既有防御心又有进攻心。如果没有进攻心，你就赚不到钱，而如果没有防御心，你的钱就保不住。&lt;/p&gt;
-
-&lt;h3 id=&quot;笔记进攻和防御最好兼备&quot;&gt;笔记：进攻和防御最好兼备&lt;/h3&gt;
-
-&lt;p&gt;原文：把赚钱作为你的目标是没有意义的，因为金钱并没有固有的价值，金钱的价值来自它能买到的东西，但金钱并不能买到一切。更聪明的做法是，先确定你真正想要什么，你真正的目标是什么，然后想想你为了得到这些目标需要做什么。&lt;/p&gt;
-
-&lt;h3 id=&quot;笔记真正想要什么制定目标目标不是钱而是自己的想法用自己的视野去实现并拓展自己的视野&quot;&gt;笔记：真正想要什么，制定目标，目标不是钱，而是自己的想法，用自己的视野去实现，并拓展自己的视野。&lt;/h3&gt;
-
-&lt;p&gt;原文：在考虑有意义的人际关系与金钱相比的重要性时，很明显，人际关系更重要，因为一种有意义的人际关系时无价的，我用再多的金钱也买不到比这更有价值的东西。有意义的工作和有意义人际关系都是我的主要目标，我做的一切事情都是为了实现这两个目标。赚钱只是其附带结果。&lt;/p&gt;
-
-&lt;h3 id=&quot;笔记有意义的工作和有意义的人际关系是核心围绕着这个两个有意义人生才真正有意义有意义的工作指自己想做的工作有意义人人际关系指与周围同事家人朋友建立良好的关系&quot;&gt;笔记：有意义的工作和有意义的人际关系，是核心。围绕着这个两个有意义，人生才真正有意义。有意义的工作指自己想做的工作，有意义人人际关系，指与周围同事、家人、朋友建立良好的关系。&lt;/h3&gt;
-
-&lt;p&gt;…&lt;/p&gt;
-
-&lt;h3 id=&quot;还有很多摘录的只是百分之一这本书不错摘录部分内容希望能给大家带来一点启示&quot;&gt;还有很多，摘录的只是百分之一，这本书不错，摘录部分内容希望能给大家带来一点启示。&lt;/h3&gt;
-
-</description>
-               <pubDate>Sat, 03 Apr 2021 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com/2021/04/03/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A861</link>
-               <guid isPermaLink="true">http://www.luzexi.com/2021/04/03/%E6%80%9D%E8%B7%AF%E6%8E%A2%E8%AE%A861</guid>
             </item>
         
     </channel>

@@ -4,13 +4,166 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2021-06-07T00:50:06+08:00</updated>
+ <updated>2021-06-13T21:30:26+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email>jesse_luzexi@163.com</email>
  </author>
 
+ 
+ <entry>
+   <title>读书笔记(二十六) 《C++ Primer》#2</title>
+   <link href="http://www.luzexi.com/2021/06/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B026"/>
+   <updated>2021-06-12T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2021/06/12/读书笔记26</id>
+   <content type="html">&lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
+
+&lt;p&gt;我为什么要重学C++？第一是巩固核心，软件编程有三大核心，语言、操作系统、框架设计，语言首当其冲，核心能力大都看不见摸不着只有你自己知道的东西。第二是将分散的知识串联起来，这样就能产生新的知识和新的创意。第三是当我们在巩固时创造出了新的知识，那么这些新的知识和旧的知识将同时变成智慧融合到身体中。&lt;/p&gt;
+
+&lt;p&gt;本系列基于《C++ Primer》学习，由于重点放在“重学”，我略过了滚瓜烂熟的部分挑出以前常忽略的部分，以及记忆没有那么深刻的部分，特别是那些重要的但没有上心的部分。&lt;/p&gt;
+
+&lt;h2 id=&quot;开始&quot;&gt;开始&lt;/h2&gt;
+
+&lt;h2 id=&quot;1const限定&quot;&gt;1.const限定&lt;/h2&gt;
+
+&lt;p&gt;关键字const对变量的类型加以限定，因此它的值在初始化后不能被改变。&lt;/p&gt;
+
+&lt;p&gt;const默认情况下只在文件内生效，当需要支持多个文件共享时，则使用extern关键字，不管定义和声明都添加extern关键字，并且只需要定义一次。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//a.cpp&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_constVar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fcn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//b.cpp&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_constVar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;通过添加extern共享const变量。&lt;/p&gt;
+
+&lt;h2 id=&quot;const引用常量引用&quot;&gt;const引用（常量引用）&lt;/h2&gt;
+
+&lt;p&gt;与普通引用不同的是，常量引用不能被用作它修改它所绑定的对象。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;r1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//错误，常量引用不能修改绑定对象&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//错误，普通引用无法赋值常量&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;严格来说，并不存在常量引用。因为引用不是一个对象，所以我们没法让引用本身恒定不变。
+事实上，由于c++语言并不允许随意改变引用所绑定的对象，所以从这层意义上理解所有的引用又都算是常量。
+引用的对象是常量还是非常量可以决定其所能参与的操作，却无论如何都不会影响到引用和对象的绑定关系。
+简单来说，由于绑定对象无法改变，所以要求引用对象也不能改变。&lt;/p&gt;
+
+&lt;p&gt;但const引用可以绑定一个非const对象，其意义为，绑定后const引用无法改变，只能由所绑定的对象来决定内容。&lt;/p&gt;
+
+&lt;h2 id=&quot;const指针常量指针&quot;&gt;const指针（常量指针）&lt;/h2&gt;
+
+&lt;p&gt;const指针与const引用有同样的规则。
+const指针在初始化后无法改变，const指针不能改变所指对象的值，但可以指向非常量变量。
+当指向非常量时，const指针所指向的对象的值，只能由对象本身来决定。&lt;/p&gt;
+
+&lt;p&gt;C++11中，用constexpr来表示常量表达式，声明为constexpr的变量是一个常量，编译器会验证变量的值是否为常量表达式并离线计算该值。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;k&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//离线计算&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;limit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//离线计算&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// size()必须是constexpr函数&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;2类型别名&quot;&gt;2.类型别名&lt;/h2&gt;
+
+&lt;p&gt;类型别名是某种类型的同义词。&lt;/p&gt;
+
+&lt;p&gt;使用类型别名是为了让复杂的类型名字变得简单明了、易于理解和使用。&lt;/p&gt;
+
+&lt;p&gt;C++11新标准中，使用using来定义类型的别名&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//wages是double的同义词&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wages&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//base是double的同义词，并且p是double*的同义词&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pstring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//pstring 是char*的同义词&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;It&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Item_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// It 是Item_test的同义词&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//定义&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;wages&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//定义double 变量&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;It&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//定义Item_test 变量&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pstring&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cstr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//定义一个char *&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;3其他&quot;&gt;3.其他&lt;/h2&gt;
+
+&lt;p&gt;auto和decltype都是用来让编译器在离线下自动识别类型的关键字。
+其中decltype着重识别结果类型与表达式的关系。&lt;/p&gt;
+
+&lt;p&gt;预处理器能确保头文件多次包含仍能安全工作，它在编译之前被执行。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt; &lt;span class=&quot;cp&quot;&gt;#include、#define、#ifdef、#ifndef都是预处理关键字。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;第3章&quot;&gt;第3章&lt;/h2&gt;
+
+&lt;h2 id=&quot;1string字符串类&quot;&gt;1.string字符串类&lt;/h2&gt;
+
+&lt;p&gt;前面说using可以用于类型别名，using也可以用于声明命名空间。
+using namespace::name
+不过头文件中不应包含using声明，因为这会导致头文件在被拷贝时多次重复声明using。&lt;/p&gt;
+
+&lt;p&gt;string是标准库中的类对象。
+string在使用中最容易发生的问题就是拷贝。
+特别是等号(=、+)引起的合并和拷贝需要注意。
+string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比较算法但每个字符都会比较。&lt;/p&gt;
+
+&lt;p&gt;严格来说string对象不属于容器类型，但string支持很多与容器类似的操作，比如下标、迭代器等。&lt;/p&gt;
+
+&lt;h2 id=&quot;2vector动态数组&quot;&gt;2.vector动态数组&lt;/h2&gt;
+
+&lt;p&gt;vector是标准中的动态数组模版库。
+模版本身不是类或函数，可以把模版看成编译器生成的类或函数。编译器根据模版创建类或函数的过程称为实例化。因此使用模版时，我们要指出编译器应把类或函数实例化成何种类型。
+因此vector是模版而非类型，由vector生成的类才叫类型。&lt;/p&gt;
+
+&lt;p&gt;vector容器本身就是对象，因此也能通过拷贝初始化。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 初始化3个元素，1、2、3&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 初始化10个元素，都是-1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 用拷贝来初始化，将v1中的数据拷贝到v3，完成后v3拥有独立的数据&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 提前预备20个值，每个值都是0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;由于vector是动态数组，因此如果能在初始化时提前告知vector的话，vector就不用扩容了，运行时性能会更好。&lt;/p&gt;
+
+&lt;h2 id=&quot;3迭代器&quot;&gt;3.迭代器&lt;/h2&gt;
+
+&lt;p&gt;迭代器有三种不同含意，一是迭代器概念本身，二是容器定义的迭代器类型，三是指某个迭代器对象。&lt;/p&gt;
+
+&lt;p&gt;有时她跟指针很像，但又完全不一样。&lt;/p&gt;
+
+&lt;p&gt;其实迭代器是个由模版封装过的类，根据不同的类型的容器，编译器生成功能相似但命名不同的类。&lt;/p&gt;
+
+&lt;p&gt;迭代器又重写了==、&amp;gt;、&amp;lt;、!=、&amp;lt;=、&amp;gt;=、+=、-=运算符，使得我们在编写代码时更加方便。&lt;/p&gt;
+
+&lt;p&gt;共识：当使用迭代器时如果对容器做了增删操作，则会使得迭代器失效，甚至报错和崩溃。&lt;/p&gt;
+
+&lt;p&gt;迭代器对象是实时生成的，当我们获取迭代器对象时，容器会实时生成一个迭代器对象，我们再通过操作这个迭代器对象达成我们的目的。&lt;/p&gt;
+
+&lt;h2 id=&quot;4数组&quot;&gt;4.数组&lt;/h2&gt;
+
+&lt;p&gt;一些复杂的数组声明难以理解，因此如果能从数组的名字开始按照由内向外的顺序阅读会更加容易些。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 普通数组含有10个整数&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptrs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// ptrs是含有10个整数指针的数组&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Parray指向一个含有10个整数的数组&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrRef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// arrRef引用一个含有10个整数的数组&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptrs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//arry是数组的引用，该数组含有10个整数指针&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;数组真正使用的时候编译器会把它转成指针。
+因此指向数组的指针可以使用+、-、==、!=运算符号来操作数组。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// e指向arr元素的下一位置&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;至于多维数组，严格来说C++中没有多维数组，通常所说的多维数组其实是数组的数组，也就是用数组类型组成的数组。&lt;/p&gt;
+
+&lt;p&gt;其中要注意的是在多维数组遍历时，其遍历顺序应该按照数组的整块内存来遍历，否则命中效率比较低。&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>读书笔记(二十五) 《C++ Primer》#1</title>
@@ -2826,8 +2979,8 @@ Simpleperf调用mmap创建指定的共享内存大小，设置读写权限，设
 &lt;p&gt;把符号表拷贝过去到./binary_cache/data/app/com.xxx.xxxx/lib/arm(或者arm64)/里去&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;python:
-cp_src1 = 'libil2cpp.so.debug'
-cp_target1 = './binary_cache/data/app/com.xxx.xxxx/lib/arm/libil2cpp.so'
+cp_src1 = &apos;libil2cpp.so.debug&apos;
+cp_target1 = &apos;./binary_cache/data/app/com.xxx.xxxx/lib/arm/libil2cpp.so&apos;
 if os.path.exists(cp_src1):
     shutil.copy(cp_src1, cp_target1)
 &lt;/code&gt;&lt;/pre&gt;
@@ -6824,7 +6977,7 @@ if os.path.exists(cp_src1):
  </entry>
  
  <entry>
-   <title>励志英文(六) In Your 20's These Things Matter More Than You Think</title>
+   <title>励志英文(六) In Your 20&apos;s These Things Matter More Than You Think</title>
    <link href="http://www.luzexi.com/2020/04/26/%E5%8A%B1%E5%BF%97%E8%8B%B1%E6%96%876"/>
    <updated>2020-04-26T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2020/04/26/励志英文6</id>
@@ -8228,17 +8381,17 @@ and I’ll be stronger and better because of you have got to make a declaration.
 
 &lt;p&gt;第一段就引起了我的共鸣：在你成功的道路上最大的障碍不是缺少文凭，不是缺少背景，不是缺少金钱，而是缺少你对自己的信心。&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	The biggest single obstacle standing in your way to success, it's not lack of education, it's not lack of background, it's not lack of money, it's lack of belief in yourself. 
+&lt;pre&gt;&lt;code&gt;	The biggest single obstacle standing in your way to success, it&apos;s not lack of education, it&apos;s not lack of background, it&apos;s not lack of money, it&apos;s lack of belief in yourself. 
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;第三段也能让我感同身受，乐观积极的人与悲观被动的人，在人生的道路上有着巨大差别：在通向成功的道路上最重要的是你的态度。态度决定你的人生。拥有乐观积极思想的人最终赢得了胜利，充满悲观思想的人最终收获了失败。&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	The most important thing to winning is your attitude about you. It's your attitude about life. Positive thinkers win, and negative thinkers lose.
+&lt;pre&gt;&lt;code&gt;	The most important thing to winning is your attitude about you. It&apos;s your attitude about life. Positive thinkers win, and negative thinkers lose.
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;第六段一击即中我心，我们首先应该从精神层面上来赢得世界，才能最终在现实中战胜困难：最重要的是你的激情。你获胜是因为你的心，而不是你的头脑。你获胜是因为你的情感，而不是逻辑。通向胜利的道路上最重要的你有多相信自己。你有多相信自己可以赢得胜利，有多相信许多好事发生在你身上，有多相信你是特别的人。&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	The most important thing is your passion. You win with your heart, hot your head. You win on emotion, not on logic. The most important thing to winning is the power of believing in you. The power of believing that you can win. The power of believing that good things will happend to you. The power of believing that you're special.
+&lt;pre&gt;&lt;code&gt;	The most important thing is your passion. You win with your heart, hot your head. You win on emotion, not on logic. The most important thing to winning is the power of believing in you. The power of believing that you can win. The power of believing that good things will happend to you. The power of believing that you&apos;re special.
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id=&quot;原文如下&quot;&gt;原文如下：&lt;/h3&gt;
@@ -8824,7 +8977,7 @@ for(int i = 0 ; i&amp;lt;100 ; i++)
 {
 	string strB = strA + i.ToString();
 
-	string[] strC = strB.Split('e');
+	string[] strC = strB.Split(&apos;e&apos;);
 
 	strB = strB + strC[0];
 
@@ -8952,7 +9105,7 @@ public unsafe string Concat(string strA, string strB)
 &lt;p&gt;string的Length方法可不是省油的灯，由于string类中只存放了字符串char[]数据，没有其他变量，因此string.Length需要通过遍历字符串来获取长度。类似于如下伪代码：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;int sum = 0;
-for( ; data[sum] != '\0' ; ++sum);
+for( ; data[sum] != &apos;\0&apos; ; ++sum);
 return sum;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -11400,7 +11553,7 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 
 &lt;p&gt;现在我们有了平移矩阵，我们可以通过用3x3矩阵增加一个维度的方式把原来无法表达的操作只用一个矩阵全都表达出来。假设我们先旋转后平移，我们先将向量 v 乘以旋转矩阵，旋转后得到的结果再乘以平移矩阵，平移得到 v‘ ，假设旋转矩阵为R，平移矩阵为T，就可以用向量与矩阵的乘法，以及矩阵的结合律来表达：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	v' = vRT
+&lt;pre&gt;&lt;code&gt;	v&apos; = vRT
 
 	R为：
 	[r11, r12, r13, 0]
@@ -11414,7 +11567,7 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 	[0, 0, 1, 0]
 	[x, y, z, 1]
 
-	通过结合律 v' = vRT = v(RT)
+	通过结合律 v&apos; = vRT = v(RT)
 
 	R与T相乘的结果为
 	[r11, r12, r13, 0]
@@ -11469,7 +11622,7 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 
 	r = cos(β) + sin(β) * i
 
-	v' = vr = (x + y * i)(cos(β) + sin(β) * i)
+	v&apos; = vr = (x + y * i)(cos(β) + sin(β) * i)
 
 	   = (x * cos(β) - y * sin(β)) + (x * sin(β) + y * cos(β)) * i
 &lt;/code&gt;&lt;/pre&gt;
@@ -11508,18 +11661,18 @@ for(int i = 0 ; i&amp;lt;4 ; i++)
 
 &lt;p&gt;利用上图的四元组表达方式，假设我们绕的是某个单轴旋转，也就是在x轴上旋转 A 度，或者在y轴上旋转 B 度，或者在z轴上旋转 C 度，根据上述的公式，我们可以得到三个供旋转的四元数，即：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	A' = [cos(-A/2), sin(-A/2) * 1, 0, 0]
+&lt;pre&gt;&lt;code&gt;	A&apos; = [cos(-A/2), sin(-A/2) * 1, 0, 0]
 
-	B' = [cos(-B/2), 0, sin(-B/2) * 1, 0]
+	B&apos; = [cos(-B/2), 0, sin(-B/2) * 1, 0]
 
-	C' = [cos(-C/2), 0, 0, sin(-C/2) * 1]
+	C&apos; = [cos(-C/2), 0, 0, sin(-C/2) * 1]
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;上图中的角度为什么是负的呢，因为我们在旋转点时的角度，和在旋转坐标系时的角度恰恰是相反的，因此操作旋转点的角度其实就是旋转坐标系反方向的角度，即负的角度。&lt;/p&gt;
 
 &lt;p&gt;现在我们要计算绕x轴上旋转A角度，并且绕y轴上旋转B角度，并且绕z轴上旋转C角度的四元组时，可以把 A‘，B’，C‘，这三个四元组乘起来，即：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	A'B'C' = (A'B'C') 最终计算得到
+&lt;pre&gt;&lt;code&gt;	A&apos;B&apos;C&apos; = (A&apos;B&apos;C&apos;) 最终计算得到
 
 	[x,]
 	[y,]
@@ -11920,7 +12073,7 @@ Y = y/w
 
 &lt;p&gt;我们来推导一下绕轴 N 旋转角度 β 的矩阵，先定义旋转矩阵为 F(N, β)，v为需要旋转的向量，于是公式满足:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;	v * F(N, β) = v' (v向量绕 N 轴，旋转β度后的结果v‘)
+&lt;pre&gt;&lt;code&gt;	v * F(N, β) = v&apos; (v向量绕 N 轴，旋转β度后的结果v‘)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;这个公式中v向量为已知，N绕轴为已知，β绕轴度数为已知，还需要知道哪些变量，如图所示：&lt;/p&gt;
@@ -13471,7 +13624,7 @@ voi Read_version2(io_stream)
 
 &lt;p&gt;这个数据在MessagePack中是以Map类型数据存在的其格式为：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;82|A7|'c'|'o'|'m'|'p'|'a'|'c'|'t'|C3|A6|'s'|'c'|'h'|'e'|'m'|'a'|00|
+&lt;pre&gt;&lt;code&gt;82|A7|&apos;c&apos;|&apos;o&apos;|&apos;m&apos;|&apos;p&apos;|&apos;a&apos;|&apos;c&apos;|&apos;t&apos;|C3|A6|&apos;s&apos;|&apos;c&apos;|&apos;h&apos;|&apos;e&apos;|&apos;m&apos;|&apos;a&apos;|00|
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;数据中头部的‘82’这个数据，前半个byte的值即8代表是个最多拥有15个元素的map类型数据，后半个byte的值即2，代表总共有2个元素。接着第二个数据‘A7’，‘A’为前半个byte的值代表接下去是个31个字符以内的字符串，后半个byte值为7代表这个字符串拥有7个字符。接着7个元素都是字符元素及Key位置的字符串。接着‘C3’是Key-Value的Value类型数据部分，这个Value是一个bool型的ture值。接着‘A6’开始为第二个Key-Value数据组合，其中A为前半个byte代表是接下去是个31个元素以内的字符串，后半个byte为6代表这个字符串有6个长度大小。接着6个元素都是字符作为Key数据。最后的‘00’，前面0为前半个byte，表示类型为7位以内的整数，接着的0位后半个byte，代表数据为0。这样整个数据分析下来，MessagePack数据与Json的{“compact”:true, “schema”:0}数据对应上。&lt;/p&gt;
@@ -18104,7 +18257,7 @@ class RoleStateController
 
 		git add .
 
-		git commit -m 'sync'
+		git commit -m &apos;sync&apos;
 
 		git push origin master
 
@@ -18133,19 +18286,19 @@ class RoleStateController
 &lt;pre&gt;&lt;code&gt;	cp -r ../* /Users/luzexi/Desktop/work/gitee/blog/
 	cd /Users/luzexi/Desktop/work/gitee/blog/
 	git add .
-	git commit -m 'sync'
+	git commit -m &apos;sync&apos;
 	git push origin master
 
 	cp -r ../* /Users/luzexi/Desktop/work/github/blog/
 	cd /Users/luzexi/Desktop/work/github/blog/
 	git add .
-	git commit -m 'sync'
+	git commit -m &apos;sync&apos;
 	git push origin master
 
 	cp -r ../* /Users/luzexi/Desktop/work/gitlab/blog/
 	cd /Users/luzexi/Desktop/work/gitlab/blog/
 	git add .
-	git commit -m 'sync'
+	git commit -m &apos;sync&apos;
 	git push origin master
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -20750,7 +20903,7 @@ private static void Raycast(Canvas canvas, Camera eventCamera, Vector2 pointerPo
     {
         Graphic graphic = foundGraphics[i];
 
-        // -1 means it hasn't been processed by the canvas, which means it isn't actually drawn
+        // -1 means it hasn&apos;t been processed by the canvas, which means it isn&apos;t actually drawn
         if (graphic.depth == -1 || !graphic.raycastTarget)
             continue;
 
@@ -21533,7 +21686,7 @@ private void Insert(TKey key, TValue value, bool add)
 #if FEATURE_RANDOMIZED_STRING_HASHING
 
 #if FEATURE_CORECLR
-    // In case we hit the collision threshold we'll need to switch to the comparer which is using randomized string hashing
+    // In case we hit the collision threshold we&apos;ll need to switch to the comparer which is using randomized string hashing
     // in this case will be EqualityComparer&amp;lt;string&amp;gt;.Default.
     // Note, randomized string hashing is turned on by default on coreclr so EqualityComparer&amp;lt;string&amp;gt;.Default will 
     // be using randomized string hashing
@@ -21873,8 +22026,8 @@ public new static extern bool Equals(Object o1, Object o2);
 &lt;h6 id=&quot;dictionary-同list一样并不是线程安全的组件官方源码中进行了这样的解释&quot;&gt;Dictionary 同List一样并不是线程安全的组件，官方源码中进行了这样的解释。&lt;/h6&gt;
 
 &lt;pre&gt;&lt;code&gt;    ** Hashtable has multiple reader/single writer (MR/SW) thread safety built into 
-    ** certain methods and properties, whereas Dictionary doesn't. If you're 
-    ** converting framework code that formerly used Hashtable to Dictionary, it's
+    ** certain methods and properties, whereas Dictionary doesn&apos;t. If you&apos;re 
+    ** converting framework code that formerly used Hashtable to Dictionary, it&apos;s
     ** important to consider whether callers may have taken a dependence on MR/SW
     ** thread safety. If a reader writer lock is available, then that may be used
     ** with a Dictionary to get the same thread safety guarantee. 
@@ -22492,7 +22645,7 @@ public T this[int index] {
 public void Clear() {
     if (_size &amp;gt; 0)
     {
-        Array.Clear(_items, 0, _size); // Don't need to doc this but we clear the elements so that the gc can reclaim the references.
+        Array.Clear(_items, 0, _size); // Don&apos;t need to doc this but we clear the elements so that the gc can reclaim the references.
         _size = 0;
     }
     _version++;
@@ -23202,10 +23355,10 @@ internal static void DepthLimitedQuickSort(T[] keys, int left, int right, ICompa
     &lt;h5 id=&quot;做标记只在一个文件内有效&quot;&gt;做标记(只在一个文件内有效)&lt;/h5&gt;
 
     &lt;pre&gt;&lt;code&gt; 将当前位置标记成x字符		mx
- 将光标移动到第一个标记x		'x(单引号)
+ 将光标移动到第一个标记x		&apos;x(单引号)
  将光标移动到以x标记的字符	`x(反引号)
  回到上一个标记位置			``(两个反引号)
- 回到上一个标记开头			''(两个单引号)
+ 回到上一个标记开头			&apos;&apos;(两个单引号)
 &lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
@@ -23811,7 +23964,7 @@ test3&lt;/p&gt;
 
 &lt;h6 id=&quot;数组分配2&quot;&gt;数组分配2&lt;/h6&gt;
 
-&lt;pre&gt;&lt;code&gt;	var foo = ['one', 'two', 'three'];
+&lt;pre&gt;&lt;code&gt;	var foo = [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;];
 	var [one, two, three] = foo;
 	console.log(one); // &quot;one&quot;
 	console.log(two); // &quot;two&quot;
@@ -23868,8 +24021,8 @@ test3&lt;/p&gt;
 
 &lt;h6 id=&quot;指定属性key解析赋值&quot;&gt;指定属性key解析赋值&lt;/h6&gt;
 
-&lt;pre&gt;&lt;code&gt;	let key = 'z';
-	let {[key]: foo} = {z: 'bar'};
+&lt;pre&gt;&lt;code&gt;	let key = &apos;z&apos;;
+	let {[key]: foo} = {z: &apos;bar&apos;};
 	console.log(foo); // &quot;bar&quot;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -23883,8 +24036,8 @@ test3&lt;/p&gt;
 
 &lt;h6 id=&quot;弱变量定义与赋值&quot;&gt;弱变量定义与赋值&lt;/h6&gt;
 
-&lt;pre&gt;&lt;code&gt;	const foo = { 'fizz-buzz': true };
-	const { 'fizz-buzz': fizzBuzz } = foo;
+&lt;pre&gt;&lt;code&gt;	const foo = { &apos;fizz-buzz&apos;: true };
+	const { &apos;fizz-buzz&apos;: fizzBuzz } = foo;
 	console.log(fizzBuzz); // &quot;true&quot;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -23933,10 +24086,10 @@ test3&lt;/p&gt;
 
 &lt;h6 id=&quot;对于这种嵌套的对象一旦遇到同名属性objectassign的处理方法是替换而不是添加&quot;&gt;对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。&lt;/h6&gt;
 
-&lt;pre&gt;&lt;code&gt;	var target = { a: { b: 'c', d: 'e' } }
-	var source = { a: { b: 'hello' } }
+&lt;pre&gt;&lt;code&gt;	var target = { a: { b: &apos;c&apos;, d: &apos;e&apos; } }
+	var source = { a: { b: &apos;hello&apos; } }
 	Object.assign(target, source)
-	// { a: { b: 'hello' } }
+	// { a: { b: &apos;hello&apos; } }
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h6 id=&quot;objectassign-常见用途&quot;&gt;Object.assign 常见用途&lt;/h6&gt;
@@ -23976,7 +24129,7 @@ test3&lt;/p&gt;
 	为属性指定默认值
 	const DEFAULTS = {
 		logLevel: 0,
-		outputFormat: 'html'
+		outputFormat: &apos;html&apos;
 	};
 	function processContent(options) {
 		let options = Object.assign({}, DEFAULTS, options);
@@ -24012,7 +24165,7 @@ test3&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;	如果我们尝试为一个“定义函数”末尾加上()，解析器是无法理解的。
 
 	function msg(){
-	  alert('message');
+	  alert(&apos;message&apos;);
 	}();//解析器是无法理解的
 
 	原来，使用括号包裹定义函数体，解析器将会以函数表达式的方式去调用定义函数。也就是说，任何能将函数变成一个函数表达式的作法，都可以使解析器正确的调用定义函数。而 ! 就是其中一个，而 + - || 都有这样的功能。
@@ -24804,7 +24957,7 @@ The **second row** must be **type**
 The **type must be i , f , s , b , ai , af , as , ab.
 i mean int , f mean float , s mean string , b mean bool , ai mean array int , af mean array float , as mean array string , ab mean array bool.
 The **first column** must be int , so the type in first column must be i.
-The string type with char **&quot;** or **'** will be replace by \&quot; or \' 
+The string type with char **&quot;** or **&apos;** will be replace by \&quot; or \&apos; 
 The empty col will be a default value like 0 or &quot;&quot; or false or {} 
 (sheet名以&quot;output_&quot;开头的才会被识别转换，否则将被忽略) 
 (第1行必须是关键字名) 
@@ -24812,7 +24965,7 @@ The empty col will be a default value like 0 or &quot;&quot; or false or {}
 (类型有：i,f,s,b,ai,af,as,ab这几种) 
 (i表示int，f表示float,s表示string,b表示bool,ai表示int数组,af表示float数组,as表示string数组,ab表示bool数组) 
 (第1列必须为int类型的唯一关键字) 
-(string类型中&quot;和'会自动用\&quot;和\'替代)
+(string类型中&quot;和&apos;会自动用\&quot;和\&apos;替代)
 (空列将会被默认值代替，例如:0,&quot;&quot;,false,{})
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -24834,7 +24987,7 @@ The empty col will be a default value like 0 or &quot;&quot; or false or {}
 &lt;h3 id=&quot;lua-script-生成后的lua文件示例&quot;&gt;Lua script (生成后的Lua文件示例)&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-lua&quot;&gt;-- this file is generated by program!
--- don't change it manaully.
+-- don&apos;t change it manaully.
 -- source file: example_building.xls
 -- created at: Thu Mar 26 02:53:52 2015
 
@@ -25354,7 +25507,7 @@ Debug.Log(string.Format(&quot;CallFromJS[{0}]&quot;, msg));
 
 	git rm . 告诉git当前目录下所有文件和文件夹都需要被删除
 
-	git rm `git status | grep delete | awk '{print $2}'` 删除所有被删除的文件
+	git rm `git status | grep delete | awk &apos;{print $2}&apos;` 删除所有被删除的文件
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h4 id=&quot;commit&quot;&gt;commit:&lt;/h4&gt;
@@ -26483,7 +26636,7 @@ Quaternion mDiffRot;//旋转差异
 Vector3 mDiffScale;//缩放差异
 int mVisibleFlag = -1;//可见标志
 
-// Widget's generated geometry
+// Widget&apos;s generated geometry
 UIGeometry mGeom = new UIGeometry();//多变形实例
 &lt;/code&gt;&lt;/pre&gt;
 
