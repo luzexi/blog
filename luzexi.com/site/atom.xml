@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2021-06-13T21:30:26+08:00</updated>
+ <updated>2021-06-14T20:31:19+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -13,11 +13,57 @@
 
  
  <entry>
+   <title>读书笔记(二十七) 《装载、链接与库》#1</title>
+   <link href="http://www.luzexi.com/2021/06/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B027"/>
+   <updated>2021-06-14T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2021/06/14/读书笔记27</id>
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=1&amp;amp;sn=e53f438b8815df3840208d7caa36f4f7&amp;amp;chksm=fc22603bcb55e92debcabe242e42139c805b56addbc5993c1f521e967806f5bb76d62b0bb612&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
+
+&lt;p&gt;看此书的起源是我在了解Linux注入技术的时候翻阅到的，由于注入技术需要用到很多ELF格式的内容，很多网络上的技术文章都指向了同一本书。也刚好周围的同事有此书，便翻阅了一下，这一番翻阅打开了我对程序世界的又一扇大门。&lt;/p&gt;
+
+&lt;p&gt;很快我就自己买了此书并阅读完成，整本书给我很大的震撼，让我对程序从编译到链接到装载有了更深刻的认识。&lt;/p&gt;
+
+&lt;p&gt;为了能更好的巩固知识，我把我的整个学习过程以及对书本的理解，用自己的语言和自己画的图表达出来，让读者能够很好的接受到我所学的知识。&lt;/p&gt;
+
+&lt;h2 id=&quot;目标&quot;&gt;目标：&lt;/h2&gt;
+
+&lt;p&gt;了解编译过程&lt;/p&gt;
+
+&lt;p&gt;了解动态库和静态库的装载细节&lt;/p&gt;
+
+&lt;p&gt;了解可执行程序装载和执行过程&lt;/p&gt;
+
+&lt;p&gt;了解可执行文件和动态库的数据格式&lt;/p&gt;
+
+&lt;h2 id=&quot;疑问&quot;&gt;疑问：&lt;/h2&gt;
+
+&lt;p&gt;c/c++编译器是如何将cpp编译为可执行文件的？&lt;/p&gt;
+
+&lt;p&gt;多个c/c++文件是如何编译成一个可执行文件的？&lt;/p&gt;
+
+&lt;p&gt;操作系统内存是如何初始化和管理的？&lt;/p&gt;
+
+&lt;p&gt;动态库和静态库的链接和装载过程是怎样的？&lt;/p&gt;
+
+&lt;p&gt;操作系统的用户态和内核态是如何运作的？&lt;/p&gt;
+
+&lt;h2 id=&quot;正文&quot;&gt;正文：&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=1&amp;amp;sn=e53f438b8815df3840208d7caa36f4f7&amp;amp;chksm=fc22603bcb55e92debcabe242e42139c805b56addbc5993c1f521e967806f5bb76d62b0bb612&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
    <title>读书笔记(二十六) 《C++ Primer》#2</title>
    <link href="http://www.luzexi.com/2021/06/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B026"/>
    <updated>2021-06-12T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2021/06/12/读书笔记26</id>
-   <content type="html">&lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=3&amp;amp;sn=13204e3fd9171849653497a8c788c649&amp;amp;chksm=fc22603bcb55e92dfe641a5066c21000b70a3a03a61d2c691324b23a20ae3fffeef40a70facd&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
 
 &lt;p&gt;我为什么要重学C++？第一是巩固核心，软件编程有三大核心，语言、操作系统、框架设计，语言首当其冲，核心能力大都看不见摸不着只有你自己知道的东西。第二是将分散的知识串联起来，这样就能产生新的知识和新的创意。第三是当我们在巩固时创造出了新的知识，那么这些新的知识和旧的知识将同时变成智慧融合到身体中。&lt;/p&gt;
 
@@ -162,6 +208,9 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
 &lt;p&gt;至于多维数组，严格来说C++中没有多维数组，通常所说的多维数组其实是数组的数组，也就是用数组类型组成的数组。&lt;/p&gt;
 
 &lt;p&gt;其中要注意的是在多维数组遍历时，其遍历顺序应该按照数组的整块内存来遍历，否则命中效率比较低。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=3&amp;amp;sn=13204e3fd9171849653497a8c788c649&amp;amp;chksm=fc22603bcb55e92dfe641a5066c21000b70a3a03a61d2c691324b23a20ae3fffeef40a70facd&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+
 </content>
  </entry>
  
@@ -170,7 +219,9 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
    <link href="http://www.luzexi.com/2021/06/07/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B025"/>
    <updated>2021-06-07T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2021/06/07/读书笔记25</id>
-   <content type="html">&lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=2&amp;amp;sn=cbf9e354ddf1157c9913d7e4fc3ad41f&amp;amp;chksm=fc22603bcb55e92dd8e5fdd6210f007c072f1208ecf85a081f0273f26e54ff95ad9d219d2094&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
 
 &lt;p&gt;我为什么要重学C++？第一是巩固核心，软件编程有三大核心，语言、操作系统、框架设计，语言首当其冲，核心能力大都看不见摸不着只有你自己知道的东西。第二是将分散的知识串联起来，这样就能产生新的知识和新的创意，将这些知识变成智慧融合到身体中。&lt;/p&gt;
 
@@ -280,6 +331,8 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
 	
 	2.void*也是特殊指针，可用于存放任意对象地址。但不能操作void*指针所指的对象，因为我们并不知道这个对象到底是什么类型，它仅仅是内存空间。
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=2&amp;amp;sn=cbf9e354ddf1157c9913d7e4fc3ad41f&amp;amp;chksm=fc22603bcb55e92dd8e5fdd6210f007c072f1208ecf85a081f0273f26e54ff95ad9d219d2094&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
 
 </content>
  </entry>
