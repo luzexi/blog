@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2021-06-22T22:35:08+08:00</updated>
+ <updated>2021-06-23T23:09:50+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -17,7 +17,7 @@
    <link href="http://www.luzexi.com/2021/06/20/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B029"/>
    <updated>2021-06-20T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2021/06/20/读书笔记29</id>
-   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484763&amp;amp;idx=1&amp;amp;sn=f1b3d678c1309a66d44b64b7ff22a002&amp;amp;chksm=fc22605ccb55e94a53558e85fdbe196fc58612fe20c88f35f8c0f4098e240ef48bcd2da099b0&amp;amp;token=535520395&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484763&amp;amp;idx=1&amp;amp;sn=f1b3d678c1309a66d44b64b7ff22a002&amp;amp;chksm=fc22605ccb55e94a53558e85fdbe196fc58612fe20c88f35f8c0f4098e240ef48bcd2da099b0&amp;amp;token=535520395&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;背景&quot;&gt;背景：&lt;/h3&gt;
 
@@ -339,7 +339,7 @@ BFD库（Binary File Dexcriptor library）就是为了这个目的存在的，�
 &lt;p&gt;现在GCC编译器、链接器ld、调试器gdb、binutils等工具都是通过BFD库来处理文件，而不直接操作目标文件。
 这样做的好处是将编译器和链接器与具体的目标文件格式隔离开来，一旦我们需要支持一种新的目标文件格式，只需要在BFD库里添加一种格式就可以了，而不需要再去修改编译器和链接器。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484763&amp;amp;idx=1&amp;amp;sn=f1b3d678c1309a66d44b64b7ff22a002&amp;amp;chksm=fc22605ccb55e94a53558e85fdbe196fc58612fe20c88f35f8c0f4098e240ef48bcd2da099b0&amp;amp;token=535520395&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484763&amp;amp;idx=1&amp;amp;sn=f1b3d678c1309a66d44b64b7ff22a002&amp;amp;chksm=fc22605ccb55e94a53558e85fdbe196fc58612fe20c88f35f8c0f4098e240ef48bcd2da099b0&amp;amp;token=535520395&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 </content>
  </entry>
  
@@ -348,7 +348,7 @@ BFD库（Binary File Dexcriptor library）就是为了这个目的存在的，�
    <link href="http://www.luzexi.com/2021/06/19/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B028"/>
    <updated>2021-06-19T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2021/06/19/读书笔记28</id>
-   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484764&amp;amp;idx=1&amp;amp;sn=edc0beab7722d092571c8f88a9a38bd6&amp;amp;chksm=fc22605bcb55e94d95e3445b7449c42f87450a2fcc8dd16d63f44a242b17e63b6f5051e91dcd&amp;amp;token=535520395&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484764&amp;amp;idx=1&amp;amp;sn=edc0beab7722d092571c8f88a9a38bd6&amp;amp;chksm=fc22605bcb55e94d95e3445b7449c42f87450a2fcc8dd16d63f44a242b17e63b6f5051e91dcd&amp;amp;token=535520395&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;背景&quot;&gt;背景：&lt;/h3&gt;
 
@@ -565,7 +565,7 @@ point_func = &amp;amp;lenCompare; //等价于赋值
 
 &lt;p&gt;在将函数指针用于形参、返回值、重载函数时，都必须遵循函数类型与函数指针一致性的原则，编译器不会自动将函数类型转换成我们想要的类型，因为转换是不允许的。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484764&amp;amp;idx=1&amp;amp;sn=edc0beab7722d092571c8f88a9a38bd6&amp;amp;chksm=fc22605bcb55e94d95e3445b7449c42f87450a2fcc8dd16d63f44a242b17e63b6f5051e91dcd&amp;amp;token=535520395&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484764&amp;amp;idx=1&amp;amp;sn=edc0beab7722d092571c8f88a9a38bd6&amp;amp;chksm=fc22605bcb55e94d95e3445b7449c42f87450a2fcc8dd16d63f44a242b17e63b6f5051e91dcd&amp;amp;token=535520395&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 </content>
  </entry>
@@ -613,7 +613,7 @@ point_func = &amp;amp;lenCompare; //等价于赋值
    <link href="http://www.luzexi.com/2021/06/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B027"/>
    <updated>2021-06-14T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2021/06/14/读书笔记27</id>
-   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=1&amp;amp;sn=e53f438b8815df3840208d7caa36f4f7&amp;amp;chksm=fc22603bcb55e92debcabe242e42139c805b56addbc5993c1f521e967806f5bb76d62b0bb612&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=1&amp;amp;sn=e53f438b8815df3840208d7caa36f4f7&amp;amp;chksm=fc22603bcb55e92debcabe242e42139c805b56addbc5993c1f521e967806f5bb76d62b0bb612&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
 
@@ -647,7 +647,7 @@ point_func = &amp;amp;lenCompare; //等价于赋值
 
 &lt;h2 id=&quot;正文&quot;&gt;正文：&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=1&amp;amp;sn=e53f438b8815df3840208d7caa36f4f7&amp;amp;chksm=fc22603bcb55e92debcabe242e42139c805b56addbc5993c1f521e967806f5bb76d62b0bb612&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=1&amp;amp;sn=e53f438b8815df3840208d7caa36f4f7&amp;amp;chksm=fc22603bcb55e92debcabe242e42139c805b56addbc5993c1f521e967806f5bb76d62b0bb612&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 </content>
  </entry>
@@ -657,7 +657,7 @@ point_func = &amp;amp;lenCompare; //等价于赋值
    <link href="http://www.luzexi.com/2021/06/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B026"/>
    <updated>2021-06-12T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2021/06/12/读书笔记26</id>
-   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=3&amp;amp;sn=13204e3fd9171849653497a8c788c649&amp;amp;chksm=fc22603bcb55e92dfe641a5066c21000b70a3a03a61d2c691324b23a20ae3fffeef40a70facd&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=3&amp;amp;sn=13204e3fd9171849653497a8c788c649&amp;amp;chksm=fc22603bcb55e92dfe641a5066c21000b70a3a03a61d2c691324b23a20ae3fffeef40a70facd&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
 
@@ -805,7 +805,7 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
 
 &lt;p&gt;其中要注意的是在多维数组遍历时，其遍历顺序应该按照数组的整块内存来遍历，否则命中效率比较低。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=3&amp;amp;sn=13204e3fd9171849653497a8c788c649&amp;amp;chksm=fc22603bcb55e92dfe641a5066c21000b70a3a03a61d2c691324b23a20ae3fffeef40a70facd&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=3&amp;amp;sn=13204e3fd9171849653497a8c788c649&amp;amp;chksm=fc22603bcb55e92dfe641a5066c21000b70a3a03a61d2c691324b23a20ae3fffeef40a70facd&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 </content>
  </entry>
@@ -815,7 +815,7 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
    <link href="http://www.luzexi.com/2021/06/07/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B025"/>
    <updated>2021-06-07T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2021/06/07/读书笔记25</id>
-   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=2&amp;amp;sn=cbf9e354ddf1157c9913d7e4fc3ad41f&amp;amp;chksm=fc22603bcb55e92dd8e5fdd6210f007c072f1208ecf85a081f0273f26e54ff95ad9d219d2094&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=2&amp;amp;sn=cbf9e354ddf1157c9913d7e4fc3ad41f&amp;amp;chksm=fc22603bcb55e92dd8e5fdd6210f007c072f1208ecf85a081f0273f26e54ff95ad9d219d2094&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
 
@@ -928,7 +928,7 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
 	2.void*也是特殊指针，可用于存放任意对象地址。但不能操作void*指针所指的对象，因为我们并不知道这个对象到底是什么类型，它仅仅是内存空间。
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=2&amp;amp;sn=cbf9e354ddf1157c9913d7e4fc3ad41f&amp;amp;chksm=fc22603bcb55e92dd8e5fdd6210f007c072f1208ecf85a081f0273f26e54ff95ad9d219d2094&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484732&amp;amp;idx=2&amp;amp;sn=cbf9e354ddf1157c9913d7e4fc3ad41f&amp;amp;chksm=fc22603bcb55e92dd8e5fdd6210f007c072f1208ecf85a081f0273f26e54ff95ad9d219d2094&amp;amp;token=890029854&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 </content>
  </entry>
@@ -938,7 +938,7 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
    <link href="http://www.luzexi.com/2021/05/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B024"/>
    <updated>2021-05-29T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2021/05/29/读书笔记24</id>
-   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484709&amp;amp;idx=1&amp;amp;sn=4c609d7afb6e41db78948f7797e31de6&amp;amp;chksm=fc226022cb55e934935d6df6b188978331f28a6854abd70eec313fc71d225a709bdcbd291af0&amp;amp;token=679775473&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484709&amp;amp;idx=1&amp;amp;sn=4c609d7afb6e41db78948f7797e31de6&amp;amp;chksm=fc226022cb55e934935d6df6b188978331f28a6854abd70eec313fc71d225a709bdcbd291af0&amp;amp;token=679775473&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
 
@@ -977,7 +977,7 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
 
 &lt;h2 id=&quot;正文&quot;&gt;正文：&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484709&amp;amp;idx=1&amp;amp;sn=4c609d7afb6e41db78948f7797e31de6&amp;amp;chksm=fc226022cb55e934935d6df6b188978331f28a6854abd70eec313fc71d225a709bdcbd291af0&amp;amp;token=679775473&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484709&amp;amp;idx=1&amp;amp;sn=4c609d7afb6e41db78948f7797e31de6&amp;amp;chksm=fc226022cb55e934935d6df6b188978331f28a6854abd70eec313fc71d225a709bdcbd291af0&amp;amp;token=679775473&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 </content>
  </entry>
@@ -987,7 +987,7 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
    <link href="http://www.luzexi.com/2021/05/23/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B023"/>
    <updated>2021-05-23T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2021/05/23/读书笔记23</id>
-   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484653&amp;amp;idx=1&amp;amp;sn=f16e52ea17560947ace74b8a7ecfaefb&amp;amp;chksm=fc2261eacb55e8fc2d96d43bcf8dc1978cfa67e678d5003b793d33a7adb7bdf7b4859e28c740&amp;amp;token=2074622695&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484653&amp;amp;idx=1&amp;amp;sn=f16e52ea17560947ace74b8a7ecfaefb&amp;amp;chksm=fc2261eacb55e8fc2d96d43bcf8dc1978cfa67e678d5003b793d33a7adb7bdf7b4859e28c740&amp;amp;token=2074622695&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
 
@@ -1020,7 +1020,7 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
 
 &lt;h2 id=&quot;正文&quot;&gt;正文：&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484653&amp;amp;idx=1&amp;amp;sn=f16e52ea17560947ace74b8a7ecfaefb&amp;amp;chksm=fc2261eacb55e8fc2d96d43bcf8dc1978cfa67e678d5003b793d33a7adb7bdf7b4859e28c740&amp;amp;token=2074622695&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484653&amp;amp;idx=1&amp;amp;sn=f16e52ea17560947ace74b8a7ecfaefb&amp;amp;chksm=fc2261eacb55e8fc2d96d43bcf8dc1978cfa67e678d5003b793d33a7adb7bdf7b4859e28c740&amp;amp;token=2074622695&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 </content>
  </entry>
@@ -1116,7 +1116,7 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
    <link href="http://www.luzexi.com/2021/05/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B022"/>
    <updated>2021-05-09T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2021/05/09/读书笔记22</id>
-   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484626&amp;amp;idx=1&amp;amp;sn=cdbe54838b9b0207441663acb49bec6f&amp;amp;chksm=fc2261d5cb55e8c3185818b45f69941cffe1cfe7466b901b907c08d16576a04a3eb11890b6e0&amp;amp;token=1892444225&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484626&amp;amp;idx=1&amp;amp;sn=cdbe54838b9b0207441663acb49bec6f&amp;amp;chksm=fc2261d5cb55e8c3185818b45f69941cffe1cfe7466b901b907c08d16576a04a3eb11890b6e0&amp;amp;token=1892444225&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
 
@@ -1161,7 +1161,7 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
 
 &lt;h2 id=&quot;正文&quot;&gt;正文：&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484626&amp;amp;idx=1&amp;amp;sn=cdbe54838b9b0207441663acb49bec6f&amp;amp;chksm=fc2261d5cb55e8c3185818b45f69941cffe1cfe7466b901b907c08d16576a04a3eb11890b6e0&amp;amp;token=1892444225&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484626&amp;amp;idx=1&amp;amp;sn=cdbe54838b9b0207441663acb49bec6f&amp;amp;chksm=fc2261d5cb55e8c3185818b45f69941cffe1cfe7466b901b907c08d16576a04a3eb11890b6e0&amp;amp;token=1892444225&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 </content>
  </entry>
@@ -1281,7 +1281,7 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
    <link href="http://www.luzexi.com/2021/04/11/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B021"/>
    <updated>2021-04-11T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2021/04/11/读书笔记21</id>
-   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484575&amp;amp;idx=1&amp;amp;sn=2d34a8dbcfb9c1210fa3e0ae5b0c13fb&amp;amp;chksm=fc226198cb55e88e892b31fa217da8e11e8eb6bfbcbd74805e610b706f69c4e776cb7da9b40f&amp;amp;token=673219380&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484575&amp;amp;idx=1&amp;amp;sn=2d34a8dbcfb9c1210fa3e0ae5b0c13fb&amp;amp;chksm=fc226198cb55e88e892b31fa217da8e11e8eb6bfbcbd74805e610b706f69c4e776cb7da9b40f&amp;amp;token=673219380&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;背景&quot;&gt;背景：&lt;/h3&gt;
 
@@ -1309,7 +1309,7 @@ string在比较时(==、!=、&amp;lt;、&amp;lt;=、&amp;gt;、&amp;gt;=)有比�
 也能让我们在沟通时达到，观点鲜明、重点突出、思路清晰、层次分明、简单易懂，让对方有兴趣、能理解、记得住。
 其具体做法是，自上而下的表达，自上而下的思考，纵向总结概括，横向归类分组，序言讲故事，标题提炼思想精华。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484575&amp;amp;idx=1&amp;amp;sn=2d34a8dbcfb9c1210fa3e0ae5b0c13fb&amp;amp;chksm=fc226198cb55e88e892b31fa217da8e11e8eb6bfbcbd74805e610b706f69c4e776cb7da9b40f&amp;amp;token=673219380&amp;amp;lang=zh_CN#rd&quot;&gt;原文发布在微信公众号上，点击跳转到网页地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484575&amp;amp;idx=1&amp;amp;sn=2d34a8dbcfb9c1210fa3e0ae5b0c13fb&amp;amp;chksm=fc226198cb55e88e892b31fa217da8e11e8eb6bfbcbd74805e610b706f69c4e776cb7da9b40f&amp;amp;token=673219380&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 </content>
  </entry>
