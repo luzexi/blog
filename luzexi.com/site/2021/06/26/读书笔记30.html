@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 读书笔记(三十) 《C++ Primer》#4 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:"Arial","Microsoft YaHei","黑体","宋体",sans-serif, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1.4rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:13rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5,h6{margin-bottom:.5rem;font-weight:bold;line-height:1.25;color:#313131;text-rendering:optimizeLegibility}h1{font-size:3rem}h2{margin-top:1rem;font-size:1.9rem}h3{margin-top:1.5rem;font-size:1.6rem}h4,h5,h6{margin-top:1rem;font-size:1.4rem}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:100rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}.static_post{position:relative;padding-bottom:56.25%;padding-top:35px;height:0;overflow:hidden}.static_post iframe{position:absolute;top:0;left:0;width:100%;height:100%}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记汇总</a></li><li><a href="/tag/每日读书笔记/" >每日读书笔记</a></li><li><a href="/tag/给女儿写信/" >给女儿写信</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>读书笔记(三十) 《C++ Primer》#4</h2><p><a href="https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;mid=2247484770&amp;idx=1&amp;sn=417618b18d6a0bf34b5fa720031f6312&amp;chksm=fc226065cb55e973587b7a3e372b71acf1def7cb7b04ce3ba2d43a5e4871582f72459bcb962d&amp;token=283688006&amp;lang=zh_CN#rd">已发布在微信公众号上，点击跳转</a></p><h3 id="背景">背景：</h3><p>我为什么要重学C++？第一是巩固核心，软件编程有三大核心，语言、操作系统、框架设计，语言首当其冲，核心能力大都看不见摸不着只有你自己知道的东西。第二是将分散的知识串联起来，这样就能产生新的知识和新的创意。第三是当我们在巩固时创造出了新的知识，那么这些新的知识和旧的知识将同时变成智慧融合到身体中。</p><p>本系列基于《C++ Primer》学习，由于重点放在“重学”，我略过了滚瓜烂熟的部分，挑出以前常忽略的部分，以及记忆没有那么深刻的部分，特别是那些重要的但没有上心的部分。</p><h3 id="正文">正文</h3><h3 id="类相关定义">类相关定义</h3><p>注意，this指针是常量指针，因为我们不允许改变this指针中保存的地址。</p><p>当我们定义类相关的非成员函数时，即如果函数在概念上属于类但不定义在类中，则它一般应与类声明在同一个头文件中。 这种方式下，当用户使用接口的任何部分都只需要引用一个文件，举例：</p><pre><code class="language-c">//testClass.h
+
+//类声明
+class testClass {
+  //test class
+  public:
+    int testVar;
+}
+
+//类相关的非成员函数
+int readFrom_testClass(const testClass &amp; item);
+</code></pre><p>默认合成的构造函数</p><p>编译器创建的默认构造函数称为，合成的默认构造函数（synthesized default constructor），它的规则如下：</p><ol><li>如果存在类内的初始值，用它来初始化成员。</li><li>否则，默认初始化该成员。</li></ol><p>合成的默认构造函数只适合非常简单的类，其他某些类不能依赖于合成默认构造函数，原因有三：</p><ol><li>编译器只有在发现类不包含任何构造函数的情况下才替我们生成一个默认的构造函数。</li><li>类中含有内置类型或者复合类型成员的类应该在类的内部初始化这些成员，否则使用默认构造函数可能得到未定义值。</li><li>类中含有其他类型成员且成员类型没有默认构造函数，则默认构造函数无法初始化这个成员。</li></ol><p>当然最好是我们自己定义每个类的构造函数而不是让编译器使用默认构造函数，如果你不能使用类内初始化值，则所有构造函数都应该显式地初始化每个内置类型的成员。</p><h3 id="class和struct的区别">Class和Struct的区别</h3><p>与C#、Java不同，C++中Class和Struct几乎一样，只是关键字不同和使用习惯不同而已。 唯一的微小区别就是，使用Class的默认访问模式为private，而struct的默认访问模式是public。</p><h3 id="友元">友元</h3><p>友元允许其他类或函数访问自己的非公有成员，这个大家都知道就不多说了。 需要注意的是友元关系不存在传递性，也就是说子类的友元并不能理所当然的访问父类。 而且想要所有重载函数成为友元关系，必须为每个重载函数做一次友元声明。</p><p>不过在编译时，友元的声明仅仅指定了访问的权限，它只是标记编译的语法规则好让编译器在语法检查时能知道友元标记的存在，实际上编译器并没有做任何内存上和寄存器上的修改。</p><h3 id="构造函数初始值列表">构造函数初始值列表</h3><pre><code class="language-c">class testClass
+{
+  public:
+      testClass(int ii);
+  private:
+      int i;
+      const int ci;
+      int &amp;ri;
+}
+
+testClass::testClass(intii):
+    i(ii),ci(ii),ri(i)
+{
+  //do something
+}
+</code></pre><p>我们在类中常使用以上这种构造函数来初始化成员，其实这就相当于成员的初始化顺序，即先初始化i，然后ci，然后ri。</p><h3 id="隐式的类构造转换">隐式的类构造转换</h3><p>在对象构造时，也会出现隐式的构造情况，例如：</p><pre><code class="language-c">class Test_data
+{
+   Test_data(const string str);
+}
+
+string test_str = "test";
+Vector&lt;Test_data&gt; item;
+item.push(test_str);
+</code></pre><p>如果构造函数只接受一个实参，则实际上它同时也定义了转换为此类类型的隐式转换机制，我们把这种构造函数称为，转换构造函数（converting constructor）。</p><p>上面例子中传入的string对象从而引发了Test_data的转换构造函数，构造出对象后再传入，其实这些隐式转换和构造都是在编译时离线计算的，根本不会放到运行时去发生。</p><p>如果你不想让隐式构造发生，可以通过在构造函数前加 explicit 声明来阻止隐式转换，如下：</p><pre><code class="language-c">class Test_data
+{
+   explicit Test_data(const string str);
+}
+
+string test_str = "test";
+Vector&lt;Test_data&gt; item;
+item.push_back(test_str); // 编译错误
+
+item.push_back(Test_data(test_str)); // 编译正确
+</code></pre><p>声明了explicit的构造函数，只能以直接初始化的形式使用，编译器将不会再进行隐式的自动转换这些构造函数。</p><h3 id="io库">IO库</h3><p>这里有些零散的知识需要注意下。</p><p>IO库定义了很多标记，这些标记可以帮助我们访问和操作流，例如由于流可能处于错误状态，我们在操作之前先去检查它是否处于良好状态。 其中badbit标记相对用的比较多，它表示系统级错误，例如不可恢复的读写错误。通常情况下，一旦badbit被置位，流就无法再使用了。</p><p>IO流有缓冲机制，这可以提升IO的性能，当刷新时才将数据写入到文件中。</p><p>导致缓冲刷新的几种情况为：</p><ol><li>程序正常结束，main函数return操作。</li><li>缓冲区满时，需要刷新缓冲。</li><li>使用操作符endl来显式刷新缓冲区。</li><li>使用操作符unitbuf设置流的内部状态，清空缓冲区。</li><li>一个输出流被关联到另一个流时，输出流会被刷新。</li></ol><p>注意，如果程序崩溃了，输出流的缓冲区是不会被刷新的，这也是为什么崩溃时部分数据没有被写入文件的原因。</p><h3 id="顺序容器">顺序容器</h3><p>顺序容器指，vector，deque，list，array，string，它们都可以用迭代器访问元素。 如果我们不需要写访问元素，则应该使用cbegin和cend来获取常量迭代指针。</p><p>顺序容器中有一个方法比较有趣assign（array除外），它可以用参数所指定的元素（拷贝形式）替换容器中的所有元素。 seq.assign(b,e); // 将seq替换为迭代器b到e范围内的元素 seq.assign(il); // 将seq替换为容器列表il中的元素 seq.assign(il); // 将seq替换为n个t值的元素</p><p>注意，当我们用一个对象来初始化容器，或者将一个对象插入到容器中时，实际上放入到容器中的是对象的拷贝，而不是对象本身。就像我们将一个对象传递给非引用参数一样，容器中的元素与提供值的对象之间没有任何关联。</p><p>另外我们也要注意向容器中添加元素或删除元素的操作，可能会使得指向容器的指针、引用、迭代器失效，进而导致运行时错误。</p><h3 id="泛型算法">泛型算法</h3><p>标准库并没有给每个容器添加大量功能，而是提供了一组算法，这些算法大多是通用算法，可以独立于任何特定的容器。</p><p>归纳总结下来，泛型算法有4个特点：</p><ol><li>大多是通用算法，可以独立于任何特定的容器</li><li>虽然独立于任何容器，但有些算法依赖于元素类型（例如累加算法依赖于带有加法运算的对象类型）。</li><li>不会直接操作容器，而是运行于迭代器之上，执行的是迭代器的操作。</li><li>算法可能改变容器中保存的值，或移动容器中的元素，但永远不会直接添加或者删除元素。</li></ol><h3 id="lambda函数">lambda函数</h3><p>当定义一个lambda函数时，编译器生成一个与lambda对应的新（未命名的）类类型。</p><p>也就是说当向一个函数传递一个lambda函数时，编译器同时定义了一个新类型和该类型的一个对象，传递的参数就是此编译器生成的类类型的未命名对象，而不是传入的对象。</p><pre><code class="language-c">void func1()
+{
+  int v1 = 41;
+  auto f = [v1] {return v1;}; // 值捕获
+  v1 = 0;
+  auto j = f(); // j 为 41
+
+  auto f2 = [&amp;v1] {return v1;} // 引用捕获
+  v1 = 2;
+  auto j = f2(); // j 为 2
+}
+
+
+transform(v1.begin(), vi.end(), vi.begin(), [](int i) -&gt; int { if (i &lt; 0) return -i; else return i; }); // lambda函数指定了int返回值和int形参
+</code></pre><p>注意，如上代码中，如果lambda形参为引用则需要我们注意实参的生命周期，因为在lambda执行时，如果该对象已经被销毁则可能引起运行时错误。</p><p>除了使用lambda创建快速创建函数外，也可以使用标准库里bind函数来生成函数，例如：</p><pre><code class="language-c">// 格式： auto newCallable = bind(callable, arg_list);
+
+void func1(int a, int b)
+{
+  return a + b;
+}
+
+int aa = 1;
+int bb = 2;
+auto newFunc1 = bind(func1, aa, bb); // 生成一个新的可调用对象来适配算法
+auto wc = find_if(words.begin(), words.end(), newFunc1); // bind生成了一个适配泛型算法的函数
+</code></pre><p>bind可以看做是一个通用的函数适配器，它接受一个可调用对象，生成一个新的可调用对象来“适应”原对象的参数列表。</p><p><a href="https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;mid=2247484770&amp;idx=1&amp;sn=417618b18d6a0bf34b5fa720031f6312&amp;chksm=fc226065cb55e973587b7a3e372b71acf1def7cb7b04ce3ba2d43a5e4871582f72459bcb962d&amp;token=283688006&amp;lang=zh_CN#rd">已发布在微信公众号上，点击跳转</a></p><span class="meta"><time datetime="2021-06-26T00:00:00+08:00">June 26, 2021</time> &middot; <a href="/tag/读书笔记">读书笔记</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2021-06-26T00:00:00+08:00">June 26, 2021</time> &middot; <a class="post" href="/tag/读书笔记">读书笔记</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --><div><p /><p>感谢您的耐心阅读</p><p>Thanks for your reading</p><p /> <script type="text/javascript" src="/assets/js/tctip-1.0.3.min.js"></script> <script> new tctip({ top: '50%', button: { id: 9, type: 'zanzhu' }, list: [ { type: 'alipay', qrImg: '/assets/common/alipay.jpg' }, { type: 'wechat', qrImg: '/assets/common/wechatpay.jpg' }, { type: 'bitcoin', qrContent: '1ErCFmtoQY2KDctjgPALZri3USsMqdSvqh' } ] }).init() </script><li><p><strong><font color="red">版权申明</font></strong></p><p><strong><font color="red">本文为博主原创文章，未经允许不得转载:</font></strong></p><p><a href = "http://www.luzexi.com/2021/06/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B030">读书笔记(三十) 《C++ Primer》#4</a></p><p><strong><font color="red">Copyright attention</font></strong></p><p><strong><font color="red">Please don't reprint without authorize.</font></strong></p></li><li><p></p><p></p><p><image src="/public/qrcode_for_gzh.jpg" /></p><p><strong>微信公众号，文章同步推送，致力于分享一个资深程序员在北上广深拼搏中对世界的理解</strong></p><p></p><p></p><p>QQ交流群: 777859752 (高级程序书友会)</p></li></div><p /><div class="related"><div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script></div><p /><div class="related"><h2>最新发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2021/06/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B031"> 读书笔记(三十一) 《装载、链接与库》#3 动态链接与装载 <small>27 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B030"> 读书笔记(三十) 《C++ Primer》#4 <small>26 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/20/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B029"> 读书笔记(二十九) 《装载、链接与库》#2 静态链接过程 <small>20 Jun 2021</small> </a></h3></li></ul><h2 color='blue' >之后发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2021/06/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B030"> 读书笔记(三十) 《C++ Primer》#4 <small>26 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/20/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B029"> 读书笔记(二十九) 《装载、链接与库》#2 静态链接过程 <small>20 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/19/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B028"> 读书笔记(二十八) 《C++ Primer》#3 <small>19 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/16/%E7%BB%99%E5%A5%B3%E5%84%BF%E7%9A%84%E4%BF%A113"> 给女儿的信(十三) 要赢的是自己 <small>16 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B027"> 读书笔记(二十七) 《装载、链接与库》#1 <small>14 Jun 2021</small> </a></h3></li><h2>之前发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2021/06/20/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B029"> 读书笔记(二十九) 《装载、链接与库》#2 静态链接过程 <small>20 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/19/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B028"> 读书笔记(二十八) 《C++ Primer》#3 <small>19 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/16/%E7%BB%99%E5%A5%B3%E5%84%BF%E7%9A%84%E4%BF%A113"> 给女儿的信(十三) 要赢的是自己 <small>16 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B027"> 读书笔记(二十七) 《装载、链接与库》#1 <small>14 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B026"> 读书笔记(二十六) 《C++ Primer》#2 <small>12 Jun 2021</small> </a></h3></li></ul></div></section></main><script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })(); </script></body></html>
