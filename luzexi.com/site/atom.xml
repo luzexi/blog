@@ -4,13 +4,473 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2021-06-28T00:13:45+08:00</updated>
+ <updated>2021-07-04T21:48:28+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email>jesse_luzexi@163.com</email>
  </author>
 
+ 
+ <entry>
+   <title>读书笔记(三十一) 《装载、链接与库》#4 内核运行库</title>
+   <link href="http://www.luzexi.com/2021/07/04/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B033"/>
+   <updated>2021-07-04T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2021/07/04/读书笔记33</id>
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484809&amp;amp;idx=1&amp;amp;sn=89091ecce47229ebf10e4855c0ccceca&amp;amp;chksm=fc22608ecb55e998cdff3952057e6d1c6f099463797d57458ec1f4d37a432d46dc3c5bfcfbb5&amp;amp;token=557108361&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
+
+&lt;p&gt;看此书的起源是我在了解Linux注入技术的时候翻阅到的，由于注入技术需要用到很多ELF格式的内容，很多网络上的技术文章都指向了同一本书。也刚好周围的同事有此书，便翻阅了一下，这一番翻阅打开了我对程序世界的又一扇大门。&lt;/p&gt;
+
+&lt;p&gt;很快我就自己买了此书并阅读完成，整本书给我很大的震撼，让我对程序从编译到链接到装载有了更深刻的认识。&lt;/p&gt;
+
+&lt;p&gt;我把我的整个学习过程以及对书本的理解，用自己的语言和自己画的图表达出来，让读者能够更容易接受到我所学的知识。&lt;/p&gt;
+
+&lt;h2 id=&quot;目标&quot;&gt;目标：&lt;/h2&gt;
+
+&lt;p&gt;了解编译过程&lt;/p&gt;
+
+&lt;p&gt;了解动态库和静态库的装载细节&lt;/p&gt;
+
+&lt;p&gt;了解可执行程序装载和执行过程&lt;/p&gt;
+
+&lt;p&gt;了解可执行文件和动态库的数据格式&lt;/p&gt;
+
+&lt;h2 id=&quot;疑问&quot;&gt;疑问：&lt;/h2&gt;
+
+&lt;p&gt;c/c++编译器是如何将cpp编译为可执行文件的？&lt;/p&gt;
+
+&lt;p&gt;多个c/c++文件是如何编译成一个可执行文件的？&lt;/p&gt;
+
+&lt;p&gt;操作系统内存是如何初始化和管理的？&lt;/p&gt;
+
+&lt;p&gt;动态库和静态库的链接和装载过程是怎样的？&lt;/p&gt;
+
+&lt;p&gt;操作系统的用户态和内核态是如何运作的？&lt;/p&gt;
+
+&lt;h2 id=&quot;正文&quot;&gt;正文：&lt;/h2&gt;
+
+&lt;p&gt;前面我们介绍了Linux的动态库在装载时的动态链接过程，以及可执行文件的装载过程。这里简单介绍下Windows的动态库的装载过程。&lt;/p&gt;
+
+&lt;p&gt;Windows下的动态链接与Linux下的相比有很多相似之处，但也有很多不同的地方。Windows下的动态库称为DLL（Dynamic-Link Library），它和EXE文件实际上是一个概念，即都是PE格式的文件，区别在于PE文件头的符号位标识位不同，而且DLL文件的扩展名不一定是.dll，也可能是.ocx或.CPL。&lt;/p&gt;
+
+&lt;p&gt;与Linux不同的是Windows有符号导入表和导出表概念，即必须使用“__declspec(dllimport)”和“__declspec(dllexport)”来显式的声明符号的导入与导出。
+Window编译器通过收集这些显式声明的导入符号，将它们放在一个导出表（Exprot Table）的符号集中，类似于Linux下的.dynsym段。
+动态链接器根据需要导入的符号从导出表上查找到真实的函数地址，这期间导入表则起到了存储符号和记录地址的作用，类似于Linux下的GOT。&lt;/p&gt;
+
+&lt;p&gt;其实DLL中的代码段并不是地址无关的，Windows加载DLL时采用了重定基地址（Rebasing）的方法重定位每个绝对地址引用。
+由于DLL内部的地址都是基于基地址或相对于基地址的RVA，因此在重定位时只需要加上一个固定差值就能完成重定位工作。
+由于是绝对地址重定位，所以重定基地址比ELF的延迟定位机制要快很多，因为它不需要通过类似的GOT机制，对外部数据和函数的访问不需要每次都计算GOT位置。&lt;/p&gt;
+
+&lt;h3 id=&quot;内存堆与栈&quot;&gt;内存堆与栈&lt;/h3&gt;
+
+&lt;p&gt;前面我们说了很多关于系统内存的，包括虚拟内存、页表、缺页、置换等，而这节主要对堆内存和栈内存进行讲解。&lt;/p&gt;
+
+&lt;p&gt;当我们调用函数时，需要将当前函数的信息保存到栈上以便调用结束回到原来位置时所有数据都能恢复到原样。
+我们把这些保存到栈上的数据称为栈帧（Stack Frame），这些数据主要包含：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;调用需要的参数，以及调用结束时函数的返回地址&lt;/li&gt;
+  &lt;li&gt;临时变量：包括函数的非静态局部变量以及编译器自动生成的临时变量&lt;/li&gt;
+  &lt;li&gt;上下文：当前函数调用的寄存器数据&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;注意，每种编译器都有自己的调用惯例，比如参数的传递顺序和方式、栈维护的方式、函数的签名规则、返回的寄存器等，在各个编译器之间可能有细微的差别。&lt;/p&gt;
+
+&lt;p&gt;其中几乎所有的编译器调用惯例都将返回值存储在eax寄存器中，对于大于4字节的数据则存储在eax和edx中联合返回。&lt;/p&gt;
+
+&lt;h3 id=&quot;堆内存&quot;&gt;堆内存&lt;/h3&gt;
+
+&lt;p&gt;我们在写内存分配时通常使用内存分配接口malloc或new，这两个接口分配的内存通常都放在.heap堆内存区域中，而动态库文件在加载的时候，则通过mmap将动态库映射到.libraries文件映射区域中。&lt;/p&gt;
+
+&lt;p&gt;注意，malloc分配的内存到.heap段，mmap分配内存到.libraries段，而当malloc请求的内存大于MMAP_THRESHOLD时，则会转而调用mmap，申请的内存则在.libraries区域，这个阈值可以通过mallopt调整。&lt;/p&gt;
+
+&lt;p&gt;这里作者介绍了下堆内存管理的几种方式不是非常详细，简单介绍下（后面会写一个操作系统内存专题）：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;空闲链表法，把空闲的内存块加入到一个链表上，这个链表里全是空闲的内存块地址，当需要使用时就从这里找合适的。&lt;/li&gt;
+  &lt;li&gt;分页分块法，把整个内存分成128K大小的XX页，然后再把每页分成32字节大小的内存块，用数组记录每个内存页和内存块的占用情况，这样在分配和释放时查找速度会比较快。&lt;/li&gt;
+  &lt;li&gt;固定大小内存池，把整个分为固定大小的内存块，然后用空闲链表记录所有空闲的内存地址，每次分配都从空闲链表里推出一个内存使用。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;运行库&quot;&gt;运行库&lt;/h3&gt;
+
+&lt;p&gt;作者专研的比较细，把进程启动到结束的整个过程都扒了出来，我们也跟着扒一下。&lt;/p&gt;
+
+&lt;p&gt;程序从开始运行到结束的步骤如下：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;操作系统fork（创建）进程，把控制权交到程序入口，这个入口通常都是公共库的某个函数（libc或MSVC）&lt;/li&gt;
+  &lt;li&gt;入口函数对运行库和程序运行环境进行初始化，包括堆、I/O、线程、全局变量的构造等等&lt;/li&gt;
+  &lt;li&gt;入口函数在完成初始化之后，调用main函数，正式开始执行程序主体部分&lt;/li&gt;
+  &lt;li&gt;main函数执行完毕，返回入口函数，入口函数进行清理工作，包括全局变量析构、堆栈销毁、关闭I/O等，然后进程调用系统调用结束进程。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;下面我们来说说在整个系统调用里各部分是如何运作的。&lt;/p&gt;
+
+&lt;h3 id=&quot;文件句柄原理&quot;&gt;文件句柄原理&lt;/h3&gt;
+
+&lt;p&gt;这里不得不提一下文件句柄的原理，因为我们常常使用文件句柄，却不知道文件句柄究竟是什么，以及是什么产生了文件句柄。&lt;/p&gt;
+
+&lt;p&gt;文件句柄总是和内核的文件对象相关联，内核可以通过句柄来计算出内核里文件对象的地址。
+在内核中，每个进程都有一个私有的“打开文件表”，这个表是一个指针数组，每一个元素都指向一个内核的打开文件对象，文件句柄就是数组的下标。
+当用户打开一个文件时，内核就会在内部生成一个文件对象，并在这个表里找到一个空项，让这一项指向生成的打开文件对象，并返回这一项的下标作为句柄值。
+由于这个“打开文件表”处于内核，并且用户无法访问到，因此用户即使拥有句柄值，也无法直接打开文件对象的地址，只能通过系统提供的函数来操作。
+Windows的句柄稍有不同，虽然类似于文件表的下标但它并不是下标而是经过某种线性变换的结果。&lt;/p&gt;
+
+&lt;p&gt;注意，文件表数组前三个元素填充的是stdin、stdout、stderr这三个内核对象。&lt;/p&gt;
+
+&lt;h3 id=&quot;读取文件实现原理&quot;&gt;读取文件实现原理&lt;/h3&gt;
+
+&lt;p&gt;我们知道标准库中，文件在写入时会有缓冲区，因此在写入完毕后可以手动调用刷新接口来将缓冲取的内容清空到文件。&lt;/p&gt;
+
+&lt;p&gt;其实读取文件也是同样的道理，如果读取文件时总是对文件操作，那么每次都需要进入内核模式，完成后再回到用户模式。
+很明显这样的读取方式消耗的比较大，因此读取文件也需要自己的缓冲，以提高文件读取效率。&lt;/p&gt;
+
+&lt;p&gt;那么标准库是如何实现文件读取的呢？&lt;/p&gt;
+
+&lt;p&gt;标准库中文件读取时的执行步骤：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;每个文件读取时都会有一个缓冲区，缓冲区存储了已经读取的文件数据和还未读取的文件数据，&lt;/li&gt;
+  &lt;li&gt;当读取文件时，先判断缓冲区中是否有此数据，&lt;/li&gt;
+  &lt;li&gt;如果缓冲区中有我们需要的数据，则直接取得后返回即可，&lt;/li&gt;
+  &lt;li&gt;如果没有我们需要的数据或者数据不够，则读取文件并将其后的数据一并读取放入到缓冲区中后再返回&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;变长参数的实现方式&quot;&gt;变长参数的实现方式&lt;/h3&gt;
+
+&lt;p&gt;这里作者说明了printf这种函数可变参数的实现方式：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;编译时将多个实参打包成byte数组传入函数&lt;/li&gt;
+  &lt;li&gt;在函数中根据下标和大小从byte数组指针中提取形参数据&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;glibc的组成&quot;&gt;glibc的组成&lt;/h3&gt;
+
+&lt;p&gt;glibc中的内容由两部分组成，一部分是头文件，比如stdio.h、stdlib.h等，它们位于/usr/include，另一部分则是库的二进制文件，/lib/libc.so，或者/usr/lib/libc.a。&lt;/p&gt;
+
+&lt;p&gt;事实上glibc还有3个重要的运行库，&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;/usr/lib/crt1.o，包含了入口程序，负责调用__libc_start_main初始化libc，并调用main函数进入真正的程序主体。&lt;/li&gt;
+  &lt;li&gt;/usr/lib/crti.o，包含了_init()部分的程序初始化指令， 所有的.init都会被收集起来在这里调用&lt;/li&gt;
+  &lt;li&gt;/usr/lib/crtn.o，包含了_finit()部分的程序销毁指令，所有的.finit都会被收集起来在这里调用&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;注意，收集全局构造函数和析构函数的过程是，在链接时，将各个目标文件中.ctors段中的构造函数和析构函数合并为一个数组，在初始化和销毁时依次调用&lt;/p&gt;
+
+&lt;p&gt;由于crti.o必须保证在用户目标文件和系统库之前，crtn.o必须在用户目标文件和系统库之后，因此链接器输入文件顺序必须是：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c++&quot;&gt;ld crt1.o crti.o [user_objects] [system_libraries] crtn.o
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注意，前面说的都是C语言，在C++中则提供了crtbeginT.o和crtend.o来配合glibc实现C++的全局构造和析构。&lt;/p&gt;
+
+&lt;h3 id=&quot;线程局部存储tlsthread-local-storage&quot;&gt;线程局部存储(TLS，Thread Local Storage)&lt;/h3&gt;
+
+&lt;p&gt;线程也可以拥有私有数据，这就是线程局部存储机制(TLS，Thread Local Storage)。
+TLS的用法很简单，只需要在它定义的时候加上关键字__thread就可以，在MSVC里为__declspec(thread)。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c++&quot;&gt;// Linux
+__thread in number;
+
+// MSVC
+__declspec(thread) int number;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;一旦一个全局变量被定义为TLS类型，那么每个线程都会拥有这个变量的副本，任何线程对该变量的修改都不会影响其他线程中该变量的副本。&lt;/p&gt;
+
+&lt;p&gt;在Windows中TLS的实现方式为：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;编译器把__declspec(thread)定义的线程私有变量放到.tls段中&lt;/li&gt;
+  &lt;li&gt;当进程启动一个线程时，在进程堆中分配一块足够大小的空间&lt;/li&gt;
+  &lt;li&gt;把.tls段中的内容复制到这块空间中&lt;/li&gt;
+  &lt;li&gt;于是每个线程都有自己独立的一个.tls数据副本&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;注意，在.rdata表中有一个TLS表，它保存了所有的TLS变量的构造和析构函数地址，在线程启动和退出时都会对TLS变量进行构造和析构。除了使用添加关键字定义TLS变量外，还可以通过系统接口的方式，实时申请TLS类型变量。&lt;/p&gt;
+
+&lt;h3 id=&quot;系统内核调用原理&quot;&gt;系统内核调用原理&lt;/h3&gt;
+
+&lt;p&gt;为了安全操作系统将操作分为两种模式，一种用户模式，一种是内核模式，用户模式操作范围被限制在用户空间上，而内核模式的程序涉及的范围会更广一些，但也主要集中内核空间中。由于内核模式操作的权限更大，因此内核程序编写时需要更加谨慎并严格测试，通常我们都接触不到内核程序，除非自己编写或修改操作系统。&lt;/p&gt;
+
+&lt;p&gt;当用户模式要调用内核模式中的程序，要先通过EAX寄存器设置调用号，再调用中断指令，内核通过中断向量表找到系统调用程序，系统调用程序根据系统调用表查找到系统函数，最后执行系统调用。
+x86下中断指令为0x80，通过寄存器EAX指定系统调用的调用号，内核程序根据EAX中的值找到系统函数最后执行。&lt;/p&gt;
+
+&lt;p&gt;举例创建进程时的系统调用过程：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;用户调用创建进程函数，&lt;/li&gt;
+  &lt;li&gt;创建进程函数设置eax寄存器并调用中断指令进入内核态，&lt;/li&gt;
+  &lt;li&gt;中断指令根据0x80和中断向量表找到系统调用程序，&lt;/li&gt;
+  &lt;li&gt;系统调用程序根据eax寄存器和系统调用表找到需要调用的函数，&lt;/li&gt;
+  &lt;li&gt;系统调用完毕返回用户态函数返回地址。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;当用户态和内核态切换时，首先SS要指向内核栈，ESP指向内核栈顶，这样才能让程序当前的栈从用户栈切换到内核栈。&lt;/p&gt;
+
+&lt;p&gt;其实每个进程都有两个栈，用户栈和内核栈，在切换到内核栈时要保存当前上下文，因此要向内核栈中推入ESP、SS、EFLASHS、CS、EIP的值，以便切回用户态时再弹出恢复。
+除了这几个特殊的寄存器，向内核栈中推入的还有EBX、ECX、EDX、ESI、EDI和EBP这6个寄存器，而这6个寄存器刚好可以被系统调用函数用于实参。&lt;/p&gt;
+
+&lt;h3 id=&quot;实现自定义crtc-runtime&quot;&gt;实现自定义CRT（C Runtime）&lt;/h3&gt;
+
+&lt;p&gt;作者根据前面的理论知识，实现了一个自己的CRT（C Runtime），在不使用标准库的情况下，支持自定义自己的函数入口、进程初始化与销毁、堆内存分配与释放、文件读取与写入、格式化输出。&lt;/p&gt;
+
+&lt;p&gt;我们这里讲解下实现CRT的几个关键点。&lt;/p&gt;
+
+&lt;h3 id=&quot;关键点一&quot;&gt;关键点一：&lt;/h3&gt;
+
+&lt;p&gt;入口函数可以使用编译命令来指定，例如：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;gcc -nostartfiles -e myentry source.c -o source
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;-e：设置程序的入口函数&lt;/p&gt;
+
+&lt;h3 id=&quot;关键点二&quot;&gt;关键点二：&lt;/h3&gt;
+
+&lt;p&gt;进入main函数前要初始化堆内存，堆内存的管理分配与释放要自己来实现，比如实现一个FreeList空闲链表来存储销毁的堆内存以便下次使用。&lt;/p&gt;
+
+&lt;p&gt;例如：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-c++&quot;&gt;//自定义堆内存块结构
+typedef struct _heap_header
+{
+    unsigned size;
+    struct _heap_header * next;
+    struct _heap_header * prev;
+} heap_header;
+
+//空闲内存链表
+static heap_header * freelist_head = NULL;
+
+//自定义内存释放函数
+void free(void * ptr)
+{
+    ....
+}
+
+//自定义堆内存申请函数
+void * malloc(unsigned size)
+{
+    ....
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;关键点三&quot;&gt;关键点三：&lt;/h3&gt;
+
+&lt;p&gt;堆内存的扩容可以通过brk系统调用设置进程的数据段边界，而sbrk可以移动进程的数据段边界，其实将数据段边界后移就相当于分配了一个定量的内存。&lt;/p&gt;
+
+&lt;p&gt;由brk/sbrk分配的内存仅仅分配了虚拟空间，这些空间是不会提交的（即不分配物理内存页），当进程访问某个地址时才会与物理页关联。&lt;/p&gt;
+
+&lt;h3 id=&quot;关键点四&quot;&gt;关键点四：&lt;/h3&gt;
+
+&lt;p&gt;由于不使用标准库，因此文件系统也必须自己重写，重写文件读写底层时，我们可以用汇编写系统调用来实现。&lt;/p&gt;
+
+&lt;p&gt;其中系统调用中，打开文件的系统调用号是5、读取文件的系统调用号是3、写入文件的系统调用号是4、关闭文件的系统调用号是6。
+因此在调用int 0x80前，设置eax为各调用号就可以，同时用ebx、ecx、edx将参数传入系统调用。&lt;/p&gt;
+
+&lt;p&gt;举例打开文件的系统调用：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c++&quot;&gt;asm(&quot;movl $5, %%eax \n\t&quot; // 设置eax的调用号
+    &quot;movl %1, %%ebx \n\t&quot; // 设置参数1
+    &quot;movl %2, %%ecx \n\t&quot; // 设置参数2
+    &quot;movl %3, %%edx \n\t&quot; // 设置参数3
+    &quot;int $0x80 \n\t&quot; // 调用0x80系统中断
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;前面我们说标准输入输出是文件表的前3个句柄，因此句柄0，1，2为标准输入、标准输出、标准错误的句柄。&lt;/p&gt;
+
+&lt;h3 id=&quot;关键点五&quot;&gt;关键点五：&lt;/h3&gt;
+
+&lt;p&gt;实现全局构造和析构时，从.ctors段中读取构造和析构函数数据，将构造和析构函数都合并到指针数组中，依次调用函数指针数组中的方法。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c++&quot;&gt;typedef void (*ctor_func)(void);
+
+ctor_func ctors_begin[1] __attribute__ ((section(&quot;.ctors&quot;))) = 
+{
+    (ctor_func) -1;
+};
+
+void run_ctors()
+{
+    const ctor_func * list = ctors_begin;
+    while( (int)*++list != -1 )
+    {
+        (**list)();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>读书笔记(三十二) 《C++ Primer》#5</title>
+   <link href="http://www.luzexi.com/2021/07/03/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B032"/>
+   <updated>2021-07-03T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2021/07/03/读书笔记32</id>
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484794&amp;amp;idx=1&amp;amp;sn=03be5eab5f7014e7d612ffee2a193cb9&amp;amp;chksm=fc22607dcb55e96bd6f1dd010815d3e382cbcacca18bb1a4c69ff96ca3c4644c3d2f6240f7ef&amp;amp;token=557108361&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;背景&quot;&gt;背景：&lt;/h2&gt;
+
+&lt;p&gt;我为什么要重学C++？第一是巩固核心，软件编程有三大核心，语言、操作系统、框架设计，语言首当其冲，核心能力大都看不见摸不着只有你自己知道的东西。第二是将分散的知识串联起来，这样就能产生新的知识和新的创意。第三是当我们在巩固时创造出了新的知识，那么这些新的知识和旧的知识将同时变成智慧融合到身体中。&lt;/p&gt;
+
+&lt;p&gt;本系列基于《C++ Primer》学习，由于重点放在“重学”，我略过了滚瓜烂熟的部分，挑出以前常忽略的部分，以及记忆没有那么深刻的部分，特别是那些重要的但没有上心的部分。&lt;/p&gt;
+
+&lt;h2 id=&quot;正文&quot;&gt;正文：&lt;/h2&gt;
+
+&lt;h3 id=&quot;关联容器&quot;&gt;关联容器&lt;/h3&gt;
+
+&lt;p&gt;关联容器包括map、set以及相应的扩展容器，包括可容纳重复关键字的multimap和multiset容器，以及用unordered为前缀的无序容器。&lt;/p&gt;
+
+&lt;p&gt;注意，对map使用下标操作时，如果关键字在容器中不存在，则会添加一个关键字在容器中。&lt;/p&gt;
+
+&lt;p&gt;无序容器大都使用哈希方式来做查找工作，它在存储上组织为一个数组，我们可以比喻为桶管理，每个数组中的元素为桶，它保存0个或多个元素，用哈希函数将元素映射到桶中，当一个桶保存多个元素时，需要顺序搜索这些元素来查找正确的那个。因此无序容器的性能通常依赖于哈希函数的质量和数组的大小。&lt;/p&gt;
+
+&lt;h3 id=&quot;智能指针&quot;&gt;智能指针&lt;/h3&gt;
+
+&lt;p&gt;新的标准库中有两种智能指针，一种允许多个指针指向同一个对象shared_ptr，另一种则“独占”所指向的对象unique_ptr，标准库还提供了一个名为weak_ptr的弱引用方式，来指向shared_ptr所管理的对象。&lt;/p&gt;
+
+&lt;p&gt;其实智能指针也是模版，它通过模版并重载=、+/-、==运算符来实现智能指针的逻辑。
+智能指针的逻辑很简单，通过计数器来记录现在有多少个shared_ptr指向相同的对象，当计数为0时它就会自动释放对象。&lt;/p&gt;
+
+&lt;p&gt;智能指针可以帮助我们管理内存对象的销毁时机，但智能指针不是万能的，如果你忘记销毁了智能指针，则同样会造成内存泄漏。
+因此我们应该明白内存管理方式有很多种，用来防止内存泄漏的方法也不只智能指针这一种。&lt;/p&gt;
+
+&lt;h3 id=&quot;动态内存管理&quot;&gt;动态内存管理&lt;/h3&gt;
+
+&lt;p&gt;我们常常自己来管理内存，内存泄漏也是常用的事，分配了内存但没有释放，或者没有及时释放堆积的太多等问题都是比较普遍的。&lt;/p&gt;
+
+&lt;p&gt;常用的new和delete运算符，在分配内存的同时，也负责调用构造函数和析构函数。&lt;/p&gt;
+
+&lt;p&gt;如果我们想更好的管理内存，提高内存使用效率，让内存泄漏更容易分析，那么我们就得设计内存分配器来管理内存，例如固定大小内存分配器、环形内存分配器、双端内存分配器等等，这里不详细介绍。&lt;/p&gt;
+
+&lt;p&gt;阻止对象拷贝&lt;/p&gt;
+
+&lt;p&gt;用“=delete”定义删除函数来阻止拷贝和赋值：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-c++&quot;&gt;struct NoCopy
+{
+  NoCopy() = default; // 默认构造函数
+  NoCopy(const NoCopy&amp;amp;) = delete; // 阻止拷贝
+  NoCopy &amp;amp;operator = (const NoCopy&amp;amp;) = delete; // 阻止赋值
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;关键字“= delete”通知了编译器，告知它我们不希望定义这些成员。
+注意，析构函数不能被删除，因此不能被定义删除函数。
+另外父类和子类对删除函数具有一致性，即父类定义了删除函数时子类也同样具备。&lt;/p&gt;
+
+&lt;p&gt;我们也常通过private来控制拷贝，即将构造函数和赋值运算符声明为private来阻止拷贝。&lt;/p&gt;
+
+&lt;h3 id=&quot;对象移动&quot;&gt;对象移动&lt;/h3&gt;
+
+&lt;p&gt;在内置对象中常发生对象拷贝的情况，如果想避免拷贝又想移动对象，则可以考虑右值引用。
+所谓右值引用，就是必须绑定到右值的引用，我们可以通过&amp;amp;&amp;amp;（而不是&amp;amp;）来获得右值引用。
+右值引用有一个重要性质，即只能绑定到一个将要销毁的对象。&lt;/p&gt;
+
+&lt;p&gt;使用新标准库中move函数移动对象：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-c++&quot;&gt;int &amp;amp;&amp;amp;rr1 = 42; 
+int &amp;amp;&amp;amp;rr3 = std::move(rr1);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;std::move函数除了获取rr1右值引用外，还负责销毁，因此std::move后我们将不能再使用它了。
+由于一个移后源对象具有不确定的状态，对其调用std::move是危险的，所以当我们使用move时，必须绝对确认移动后源对象没有其他用户。&lt;/p&gt;
+
+&lt;p&gt;为了让自定义类支持移动操作，我们可以为其定义移动构造函数和移动赋值运算符。例如：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-c++&quot;&gt;// 移动构造函数
+testClass::testClass(testClass &amp;amp;&amp;amp;s) noexcept
+{
+  var1 = s.var1; // 移动var1
+  var2 = s.var2; // 移动var2
+  s.var1 = s.var2 = nullptr; // 移动后置空
+}
+
+// 移动赋值运算符
+testClass &amp;amp; testClass::operator = (testClass &amp;amp;&amp;amp;s) noexcept
+{
+  var1 = s.var1; // 移动var1
+  var2 = s.var2; // 移动var2
+  s.var1 = s.var2 = nullptr; // 移动后置空
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;与构造函数不同的是，移动构造函数不分配任何新内存，它会接管给定对象中的内存。
+在接管内存后，它将给定对象中的指针都置为 nullptr 以便在后续在销毁源对象时不会销毁这部分内存。
+编译器也会帮助我们合成默认的移动构造函数和移动赋值运算符，当然必须是编译器发现移动操作被用到的时候，而且只有当一个类没有定义任何自己版本的拷贝控制成员且它的所有数据成员都能移动构造或移动赋值时，编译器才会为它合成默认的移动构造函数或移动赋值运算符。&lt;/p&gt;
+
+&lt;h3 id=&quot;可调用对象&quot;&gt;可调用对象&lt;/h3&gt;
+
+&lt;p&gt;可调用对象包括，函数、函数指针、lambda表达式、bind创建的对象、以及重载了的运算符。
+从机器指令角度上来理解，函数实质是没有类型之分的，但实际调用时，仍然会需要对齐参数和返回值，因此区别在于参数数量、参数类型、返回值类型。
+编译器在识别两个可调用对象是否一致时，其实并不关注它是函数指针或者其他，而关心它们的形参和返回值是否相同。&lt;/p&gt;
+
+&lt;p&gt;这样说来，任意两个可调用对象可以共享同一种调用形式，这使得建立函数表成为了可能，前提是它们的参数和返回类型相同。&lt;/p&gt;
+
+&lt;p&gt;标准库提供了这样一个模版封装，function&lt;T&gt;，让相同的可调用对象能够转换成同一类型指针，其中T为函数类型可以用lambda表达式。&lt;/T&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c++&quot;&gt;function&amp;lt;int(int, int)&amp;gt; f1 = add; // 加法函数指针
+function&amp;lt;int(int, int)&amp;gt; f2 = divide(); // 除法函数
+function&amp;lt;int(int, int)&amp;gt; f3 = [](int i, int j){ return i*j;}; // lambda表达式
+
+count &amp;lt;&amp;lt; f1(4,2) &amp;lt;&amp;lt; endl; // 打印6
+count &amp;lt;&amp;lt; f2(4,2) &amp;lt;&amp;lt; endl; // 打印2
+count &amp;lt;&amp;lt; f3(4,2) &amp;lt;&amp;lt; endl; // 打印8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;虚函数&quot;&gt;虚函数&lt;/h3&gt;
+
+&lt;p&gt;OOP的核心是多态，多态的核心就是虚函数，我们知道通过虚函数可以在运行时动态确定要调用的函数，派生类的虚函数会直接覆盖基类。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c++&quot;&gt;class testClass1
+{
+   public:
+       int var1;
+       virtual int testFunc();
+}
+
+class testClass2
+{
+    public:
+        virtual int testFunc();
+}
+
+testClass1 * point = new testClass2();
+
+point-&amp;gt;testFunc(); // 调用派生类函数
+point-&amp;gt;testClass1::testFunc(); // 调用父类函数
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;虚函数原理是在虚函数调用时根据虚表来的确定，虚表中存放了当前类的虚函数，每次调用虚函数都会按固定偏移在虚表中提取函数，所以派生类覆盖了父类后，在虚表中固定偏移的函数就成了派生类的函数了。&lt;/p&gt;
+
+&lt;p&gt;既然派生类覆盖了父类的虚函数，派生类又怎么去调用父类的虚函数呢？其实是由于代码显式的指明了调用方向，所以在编译时编译器就已经知道要调用的哪个函数，也就不需要动态借助虚表来定位了，编译时直接静态绑定父类中函数便可。&lt;/p&gt;
+
+&lt;p&gt;小知识，我们还可以通过final关键字，阻止虚函数派生类覆盖。&lt;/p&gt;
+
+&lt;p&gt;虚函数在构造函数和析构函数中调用要特别小心，因为此时部分成员没有被初始化，例如在父类中调用虚函数，由于此时调用的是子类虚函数，而子类成员还未被初始化，调用虚函数有可能导致不可预测的错误，因此通常在构造和析构函数内执行虚函数时用显式的方式调用当前类的虚函数。&lt;/p&gt;
+
+&lt;h3 id=&quot;改变类成员的访问规则&quot;&gt;改变类成员的访问规则&lt;/h3&gt;
+
+&lt;p&gt;用using声明可以改变基类的成员访问级别&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c++&quot;&gt;class Base
+{
+  private:
+    void testFunc();
+  public:
+    void testFunc2();
+}
+
+class Derived : private Base
+{
+  public:
+    using Base::testFunc;
+  protected:
+    using Base::testFunc2;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;上述例子中，基类中的testFunc和testFunc2在派生类中的访问级别都被改变了，testFunc从private改为了public，而testFunc2从public改为了protected。&lt;/p&gt;
+
+&lt;p&gt;其实成员变量的访问规则只是编译器的规则，在进程的内存和指令中没有做任何限制，在汇编里你完全可以随意访问所谓的私有变量，限制你的只是编译器。&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>读书笔记(三十一) 《装载、链接与库》#3 动态链接与装载</title>
