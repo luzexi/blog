@@ -7,9 +7,9 @@ title: 程序员必需品
 
 ## 必需品①
 
-![Cambly-speek-with-nativer](/assets/engineer-shopping/cambly/cambly1.png)
+<!-- ![Cambly-speek-with-nativer](/assets/engineer-shopping/cambly/cambly1.png)
 
-![Cambly-2018](/assets/engineer-shopping/cambly/cambly2.png)
+![Cambly-2018](/assets/engineer-shopping/cambly/cambly2.png) -->
 
 ###### Cambly是我见过的所有英语口语练习方式中最棒的在线交流中心了，它可以让我随时随地能和外国人练习英语，关键是便宜啊，又能学好英文又不多掏钱。
 
@@ -18,6 +18,8 @@ title: 程序员必需品
 Cambly中的教师都是纯正的英语母语口音的本地人，而且几乎所有人都有教师资格证，男老师女老师都有，可以在线随你挑选，评分，聊天，发信息等。
 
 倘若不想以上课的形式练习英语，完全可以不用上课，您可以单纯就用英语聊天，聊天时不知道该怎么说，老师还会帮你纠正，聊旅游，聊学习，聊娱乐，聊电影，聊生活等等等，老师们准备了N多个话题等你来。
+
+我在这里上完了1整年的课，很棒哟。
 
 从这里可以获取免费对话时间，方式如下：
 
@@ -35,7 +37,7 @@ Cambly中的教师都是纯正的英语母语口音的本地人，而且几乎�
 
 ### 这款是看外面世界的利器。我们应该更多的拓展自己的认知边界，最好能让自己接触到更加多元化人和事，如果能出国最好了，不行则看看外面的世界是如何想的，他们的新闻，他们的生活习惯，他们的书，他们的娱乐方式等等，学习一下与你完全不同习惯人的生活方式。
 
-推荐链接：[便宜又好用的利器](https://geekv2ray.ml/auth/register?code=skmw)
+推荐链接：[便宜又好用的利器](https://gkv2.cf/auth/register?code=skmw)
 
 - - -
 
