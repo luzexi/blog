@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> 读书笔记(三十四) 《C++ Primer》#6 - 技术人生</title><link rel="shortcut icon" href="/public/favicon.ico"><link rel="alternate" type="application/atom+xml" title="技术人生" href="/atom.xml"><link rel="alternate" type="application/json" title="技术人生" href="http://www.luzexi.com/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:"Arial","Microsoft YaHei","黑体","宋体",sans-serif, system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1.4rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:13rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5,h6{margin-bottom:.5rem;font-weight:bold;line-height:1.25;color:#313131;text-rendering:optimizeLegibility}h1{font-size:3rem}h2{margin-top:1rem;font-size:1.9rem}h3{margin-top:1.5rem;font-size:1.6rem}h4,h5,h6{margin-top:1rem;font-size:1.4rem}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:100rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}.static_post{position:relative;padding-bottom:56.25%;padding-top:35px;height:0;overflow:hidden}.static_post iframe{position:absolute;top:0;left:0;width:100%;height:100%}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">技术人生</h1>--><nav role="navigation"><ul><li><a href="/" >主页</a></li><li><a href="/about" >关于我</a></li><li><a href="/search" >文章搜索</a></li><li><a href="/tag/书籍著作/" >书籍著作</a></li><li><a href="/tag/Unity3D/" >Unity3D</a></li><li><a href="/tag/游戏通用模块/" >游戏通用模块</a></li><li><a href="/tag/前端技术/" >前端技术</a></li><li><a href="/tag/后端技术/" >后端技术</a></li><li><a href="/tag/其他技术/" >其他技术</a></li><li><a href="/tag/金融投资/" >金融投资</a></li><li><a href="/tag/life/" >思路探讨</a></li><li><a href="/tag/英文文章/" >英文文章</a></li><li><a href="/tag/读书笔记/" >读书笔记汇总</a></li><li><a href="/tag/每日读书笔记/" >每日读书笔记</a></li><li><a href="/tag/给女儿写信/" >给女儿写信</a></li><li><a href="/engineer-shopping" >成长必需品</a></li><li><a href="/friendlink" >友情链接</a></li><li><a href="/atom.xml" >Rss</a></li><li><a href="https://github.com/luzexi" >GitHub</a></li></ul></nav></header><section class="post"><h2>读书笔记(三十四) 《C++ Primer》#6</h2><p><a href="https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;mid=2247484819&amp;idx=1&amp;sn=229a9bb2eb6ca5fd7322c8b85bae6d8f&amp;chksm=fc226094cb55e98229f537079c784bcf16f42579928fd034b46a69a953f6ddab28f1b4cf3c1c&amp;token=1401123908&amp;lang=zh_CN#rd">已发布在微信公众号上，点击跳转</a></p><h1 id="背景">背景：</h1><p>我为什么要重学C++？第一是巩固核心，软件编程有三大核心，语言、操作系统、框架设计，语言首当其冲，核心能力大都看不见摸不着只有你自己知道的东西。第二是将分散的知识串联起来，这样就能产生新的知识和新的创意。第三是当我们在巩固时创造出了新的知识，那么这些新的知识和旧的知识将同时变成智慧融合到身体中。</p><p>本系列基于《C++ Primer》学习，由于重点放在“重学”，我略过了滚瓜烂熟的部分，挑出以前常忽略的部分，以及记忆没有那么深刻的部分，特别是那些重要的但没有上心的部分。</p><h1 id="正文">正文：</h1><p>本文是全书总结的最后部分，在总结的同时我又重读了一遍整本书，对各个知识点的理解又加深了许多，希望这些回顾对各位都有所帮助。</p><h3 id="模版编程">模版编程</h3><p>模版有两种，一种是类型模版参数，另一种是非类型模版参数。</p><p>两种类型模版都是由编译器生成的代码，当两个不同的数据类型使用同一个模版时，会在模版实例化时生成的两份不同的代码。例如：</p><pre><code class="language-c">template&lt;typename T&gt;
+T compare(const T v1, const T v2)
+{
+    return v1 - v2;
+}
+
+count &lt;&lt; compare(1, 0) &lt;&lt; endl; // 编译器会生成 int compare(const int , const int)
+count &lt;&lt; compare(1.3F, 2.3F) &lt;&lt;endl; // 编译器会生成 int compare(const float, const float)
+</code></pre><p>编译器发现有两种数据类型分别调用了模版函数compare，此时编译器会生成两个版本的compare，应用在Class模版也是同样的道理。</p><p>另一种是非类型模版，意思是参数为指定常量，例如：</p><pre><code class="language-c">template&lt;unsigned N, unsigned M&gt;
+int compare(const char (&amp;p1)[N], const char (&amp;p2)[M])
+{
+    return strcmp(p1, p2);
+}
+
+compare("hi","mon"); // 编译器会生成 int compare(const char (&amp;p1)[3], const char (&amp;p2)[4]);
+compare("hello", "world"); // 编译器会生成 int compare(const char(&amp;p1)[6], const char (&amp;p2)[6]);
+</code></pre><p>非类型参数是一个常量，而且必须是常量或者常量表达式，编译器会根据不同的常量生成不同类型的代码，应用在Class模版上也是同样的道理。</p><p>编译器生成模版代码，当且仅当编译器检测到模版被使用时才发生，即如果一个成员函数没有被使用，则它不会被编译器实例化。</p><p>另外编译器生成模版代码会分三个阶段，第一个阶段是检查语法，第二个阶段是检查模版调用的参数匹配，第三个阶段才是模版实例化，因此链接时发生错误在模版编程时是常有的事。</p><p>在新标准中C++可以通过显示实例化来明确指定某个类或函数实例化。例如：</p><pre><code class="language-c">extern template declaration; // 显式实例化申明
+template declaration; // 显式实例化定义
+</code></pre><p>当编译器遇到extern模版显式实例化声明时，表明程序会在其他地方有该程序的实例化。 和普通模版实例化不同的是，如果一个类定义了模版显式实例化，则该模版的所有成员包括内联成员函数都会被实例化。</p><p>此外在调用中如果有需要，我们也可以显式指定模版参数类型。例如：</p><pre><code class="language-c">template&lt;tyepname T1, typename T2, typename T3&gt;
+T1 sum(T2, T3);
+
+long long var1 = sum(11,22L); // 编译错误
+long long var2 = sum&lt;long long&gt;(22, 33L); // 显式指定返回值为long long
+long long var3 = sum&lt;long long, int, float&gt;(23, 34F); // 显式指定返回值和参数分别为 long long, int, float
+</code></pre><p>上述示例告诉我们，如果返回值使用了模版类型，则最好通过显式指定的方式来指定形参类型。</p><h3 id="理解右值引用stdmove和stdforward">理解右值引用、std::move和std::forward</h3><p>可以简单理解为，一个&amp;为左值引用，两个&amp;为右值引用，右值引用有些特殊，它转为转移数据而存在，即当右值引用赋值后，原值的内存数据将失效。</p><p>通过右值引用可以做到数据转移的功能，例如：</p><pre><code class="language-c">void f(int v1, int &amp;v2)
+{
+    count &lt;&lt; v1 &lt;&lt; " " &lt;&lt; ++v2 &lt;&lt; endl;
+}
+
+template&lt;typename F, typename T1, typename T2&gt;
+void flip1(F f, T1 t1, T2 t2)
+{
+    f(t2, t1);
+}
+
+template&lt;typename F, typename T1, typename T2&gt;
+void flip2(F f, T1 &amp;&amp;t1, T2 &amp;&amp;t2)
+{
+    f(t2, t1);
+}
+
+int i = 0;
+f(42, i); // i变量被改变
+flip1(f, i, 42); // i变量没有被改变
+flip2(f, i, 42); // i变量被改变
+</code></pre><p>上述中filp1与flip2的差别是，filp2使用了右值引用，将实参转移到了形参上，进而在f中可以改变i本身的变量。</p><p>模版可以接受右值引用参数，std::move的定义就是模版右值引用定义：</p><pre><code class="language-c">template&lt;typename T&gt;
+typename remove_reference&lt;T&gt;::type&amp;&amp; move(T&amp;&amp; t)
+{
+    return static_cast&lt;typename remove_reference&lt;T&gt;::type&amp;&amp;&gt;(t);
+}
+
+move函数参数T&amp;&amp;是一个指向模版类型的右值引用。通过引用折叠，参数可以与任何类型的实参匹配。
+string s1("hi"), s2;
+
+s2 = std::move(string("bye")); // 实例化为 string&amp;&amp; move(string &amp;&amp;t)
+s2 = std::move(s1); // 实例化为 string&amp;&amp; move(string &amp;t)
+</code></pre><p>其实这两个模版实例化成了不同的函数，根本原因是右值引用可折叠，导致的结果是：</p><ol><li>如果一个函数参数是一个指向模版类型参数的右值引用（如，T&amp;&amp;）则它可以被绑定到一个左值。</li><li>如果实参是一个左值，则推断出的模版实参类型将是一个左值引用，且函数参数将被实例化为一个（普通）左值引用参数（T&amp;）。</li></ol><p>标准库中std::forward可以帮助我们返回实参类型的右值引用，即std::forward<T>的返回类型是T&amp;&amp;。例如：</T></p><pre><code class="language-c">template&lt;type F, typename T1, typename T2&gt;
+void flip(F f, T1 &amp;&amp;t1, T2 &amp;&amp;t2)
+{
+    f(std::forward&lt;T2&gt;(t2), std::forward&lt;T1&gt;(t1));
+}
+</code></pre><h3 id="模版重载函数与可变参数模版">模版重载函数与可变参数模版</h3><p>模版重载函数在匹配规则上有些小规则，当有多个重载模版对一个调用提供同样好的匹配时，应选择最特例化的版本。</p><p>对于一个调用，如果一个非函数模版与一个函数模版提供同样好的匹配，则选择非模版版本。</p><p>可变参数模版中，编译器会根据识别到的函数参数类型生成多个不同类型形参的函数。</p><p>可变参数模版可以与sizeof…运算符一起使用，sizeof…运算符也是通过预编译生成的模版函数，返回的是类型数目或者参数数目。</p><p>例如：</p><pre><code class="language-c">template&lt;typename T, typename... Args&gt;
+ostream &amp;print(ostream &amp;os, const T &amp;t, const Args&amp;... rest)
+{
+    os &lt;&lt; t &lt;&lt; ",";
+    return print(os, rest...); // 预编译会将函数展开成类似print(os, i, s, 42)
+}
+
+string debug_rep(char *p)
+{
+    return string(p);
+}
+
+template&lt;typename... Args&gt;
+ostream &amp;errorMsg(ostream &amp;os, const Args&amp;... rest)
+{
+    return print(os, debug_rep(rest)...); // 预编译会将函数展开成类似print(os, debug_rep(i), debug_rep(s), debug_rep(42));
+}
+</code></pre><p>编译器会在预编译时对可变参数展开，因此上述函数在调用展开后类似于 print(os, i, s, 42) 和 print(os, debug_rep(i), debug_rep(s), debug_rep(42))。</p><h3 id="模版特例化">模版特例化</h3><p>有时候我们不希望使用模版但又想跟模版的使用方式一样，此时就可以用一个特例化模版来独立定义模版中的一个或者多个参数指定为特定类型。</p><pre><code class="language-c">template&lt;typename T, typename U&gt; int compare(const T&amp;, const U&amp;);  // 原模版
+
+template&lt;&gt; int compare(const char* const &amp;p1, const char* const &amp;p2); // 全特例化
+
+template&lt;typename T&gt; int compare(const T&amp;, const char* const &amp;p2); // 部分特例化
+
+int compare(const int const &amp;var1, const int const &amp;var2);   //  普通函数
+
+compare(3F,5F); // 调用源模版
+compare("HI", "HELLO"); // 调用全特例化
+compare(3F,"HELLO"); // 调用部分特例化
+compare(3,5); // 调用普通函数
+</code></pre><p>当定义函数模版的特例化版本时，我们本质上接管了编译器的工作。即我们为原模版的一个特殊实例提供了定义。</p><p>重要的是要弄清楚：一个特例化版本本质上是一个实例，而非函数名的一个重载版本，因此特例化不影响函数匹配。</p><p>注意，当一个非模版函数提供与函数模版同样好的匹配时，编译器会选择非模版版本。</p><p>另外特例化也可以应用到类定义上，类上的特例化也同样支持全特例化和部分特例化，例如：</p><pre><code class="language-c">template&lt;class T, class U&gt; class testClass { // 原类
+    public：
+    T var1;
+    U var2;
+    void Func();
+}
+
+template&lt;&gt; class testClass&lt;int, double&gt; { // 全特例化
+    public：
+    int var1;
+    double var2;
+    void Func();
+}
+
+template&lt;T&gt; class testClass&lt;T, double&gt; { // 部分特例化
+    public：
+    T var1;
+    double var2;
+    void Func();
+}
+
+template&lt;class T, class U&gt; struct testClass { // 对函数成员特例化
+    public：
+    T var1;
+    U var2;
+    template&lt;&gt;
+    void Func&lt;int, double&gt;(); // 成员函数特例化
+}
+</code></pre><p>类也可以全特例化和部分特例化，其中成员函数特例化时必须全特例化，不支持部分特例化。</p><h3 id="标准库中的特殊类型">标准库中的特殊类型</h3><p>tuple类似pair的模版，不过tuple可以有任意数量的成员，例如：</p><pre><code class="language-c">tuple&lt;T1, T2, T3...Tn&gt; t; // 一个tuple变量可以有n个成员
+T2 item = get&lt;i&gt;(t); // 用索引值获取成员
+</code></pre><p>tuple的一个常见用途是从函数返回多值，当使用tuple作为多值返回值时，它相当于是一个可以方便临时构造的数据结构。</p><p>bitset能使得二进制运算的使用更为容易，能处理超过整数大小的位集合。</p><pre><code class="language-c">bitset&lt;n&gt; b; // b有n位，每一位均为0。
+bool item = b[i]; // 访问b中pos处位置的值
+b.set(27); // 第27个位置设置为1
+</code></pre><p>正则表达式regex类，这里不多说了，正则表达式网上说明太多。</p><p>标准库中的rand随机数主要解决两类问题，第一是范围内随机，第二是非均匀分布。因此标准库提供了随机数引擎Engine，通过种子来锚定伪随机数。</p><h3 id="常用程序工具">常用程序工具</h3><p>异常处理流程通常是从一处抛出异常，不断沿着函数调用链寻找异常匹配，如果没有找到则调用标准库函数terminate终止程序执行。</p><p>其中一条catch语句可以通过重新抛出操作将异常传递给另外一个catch语句，函数也可以通过声明noexcept或throw来承诺不会抛出异常。</p><p>新标准中引入了内联命名空间，内联命名空间中的名字可以被外层命名空间直接使用。</p><p>多重继承，指从多个直接基类中派生类的能力。多重继承的派生类继承了所有父类的属性。</p><p>多重继承的派生类的内存模型其实就是类属性的叠加，不同父类之间通过内存叠加来实现多重继承。</p><p>在构造时按继承顺序调用构造函数，析构时的调用顺序则刚好相反。</p><h3 id="运行时类型识别rttirun-time-type-identification">运行时类型识别（RTTI，run-time type identification）</h3><p>RTTI功能由两个运算符实现：</p><ol><li>typeid 运算符，用于返回表达式的类型</li><li>dynamic_cast 运算符，用于将指针或引用安全地转换为派生类指针或引用</li></ol><p>我们知道不包含任何虚函数的类在内存模型中是没有虚表的，而虚表是运行时识别的重要关键。</p><p>其实两个运算符都是针对虚函数实现的，其原理就是派生类中有虚表，虚表中有指向type_info的指针和虚函数指针。</p><p>typeid通过虚表取得type_info返回给程序，dynamic_cast则通过比较目标类中的type_info和执行对象虚表中的type_info确定是否可以安全转换。</p><p>有趣的一点是，typeid也可以用于静态类（即没有任何虚函数的类），此时获取的type_info则是通过编译器生成的，因为在编译阶段就能识别该对象类型。</p><h3 id="类成员指针">类成员指针</h3><p>与普通指针不同的是类成员指针指向的是成员而非对象。</p><p>类成员指针分为数据成员指针和成员函数指针。</p><p>数据成员指针指向的是数据成员，成员函数指针则指向成员函数，例如：</p><pre><code class="language-c">class testClass
+{
+    public:
+    string content;
+    char * getChar();
+}
+
+const string testClass::*pdata = &amp;testClass::content; // pdata为成员指针
+const string testClass::*pfunc = &amp;testClass::getChar; //pfunc为成员函数指针
+
+testClass myObj; // 实例对象
+testClass *pObj = &amp;myObj; // 指针
+
+string s = myObj.*pdata; // 用成员指针获取实例成员数据
+string ss = myObj-&gt;*pdata; //  用成员指针获取指针成员数据
+
+char *c = (myObj.*pfunc)();
+char *cc = (myObj-&gt;*pfunc)();
+</code></pre><p>上述例子中我们可以清楚的看到pdata，pfunc是testClass成员指针，通过声明testClass + 类型来指定成员指针，用成员指针可以调用或者取得成员数据。</p><p>通过这种成员指针的方式，我们可以将类成员的函数放入一个函数表中以方便逻辑使用，例如：</p><pre><code class="language-c">class testClass
+{
+    public:
+    using Action = char* (testClass::*)();
+    char* getChar1();
+    char* getChar2();
+    char* getChar3();
+}
+
+testClass::Action funcMenu[] = { &amp;testClass::getChar1, &amp;testClass::getChar2, &amp;testClass::getChar3 };
+testClass obj;
+for(int i = 0; i&lt;3 ; i++)
+{
+    char * c = (obj.*(funcMenu[i]))();
+}
+</code></pre><p>类成员指针与普通函数指针不同之处在于成员指针并不是一个可调用对象，因此它不支持函数调用运算符。</p><p>这时我们可以用funciton和bind将类成员函数指针封装成可调用对象，这样可以让成员函数指针运用的更加灵活。例如：</p><pre><code class="language-c">function&lt;bool (const string&amp;)&gt; fcn = &amp;string::empty;
+find_if(svec.begin(), svec.end(), fcn);
+auto it = find_if(svec.begin(), svec.end(), bind(&amp;string::empty, _1));
+</code></pre><h3 id="联合union">联合union</h3><p>一个union可以有多数据成员，其空间大小为最大的那个数据成员，因为在任意时刻只有一个数据成员有效，当我们给某个成员赋值后，其他成员就变成了未定义状态。</p><p>union可以有自己的构造函数和析构函数，但不能有虚函数不能作为基类更不能派生。</p><p>有时我们需要最终union中存储了什么类型的值，因此通常会自己定义个独立的类对象，通过这个对象来判别union当前类型。</p><h3 id="其他特性">其他特性</h3><p>位域，明确了变量的二进制位数，它必须是整数，当一个程序需要向其他程序或者硬件设备传递二进制数据时通常会使用位域，因为设备之间的编译环境不同。</p><p>取地址运算符（&amp;）不能作用于位域，因此任何指针都无法指向类的位域。</p><p>它声明的方式为成名名字之后紧跟冒号和常量，例如：</p><pre><code class="language-c">class testClass
+{
+    public:
+    int mode: 2; // mode 占2位
+    int var1: 4: // var1 占4位
+}
+</code></pre><p>volatile，会告诉编译器阻止这个对象优化。</p><p>由于不同设备之间存在差异，因此在移植或不同环境时会有所改变，因此我们需要使用volatile阻止编译器在当前环境下做编译优化，例如：</p><pre><code class="language-c">volatile int var; // 阻止优化变量
+</code></pre><p>volatile用在如下的几个地方：</p><ol><li>中断服务程序中修改的供其它程序检测的变量需要加volatile；</li><li>多任务环境下各任务间共享的标志应该加volatile；</li><li>存储器映射的硬件寄存器通常也要加volatile说明，因为每次对它的读写都可能由不同意义；</li></ol><p>链接指示extern “C”，意味着我们声明了另一个语言的编译器，从而使得我们在编译时让编译器遵守另一个语言的规则（其他兼容例如extern “Ada”，extern “FORTRAN”等）</p><p>所有在链接指示里的内容都被指向该语言编写的链接，例如：</p><pre><code class="language-c">extern "C"
+{
+    #include &lt;string.h&gt; // 操作c风格字符串的c函数
+}
+
+extern "C" void (*pf)(int); // 当pf被调用时，编译器认定pf为C函数
+(*pf)(2);
+
+extern "C" typedef void FC(int); // 定义一个C函数
+void f2(FC *); // 将C函数指针作为C++函数的形参
+</code></pre><p>我们可以通过宏来判断当前编译器是C++编译器还是C编译器，即__cplusplus，例如：</p><pre><code class="language-c">#ifdef __cplusplus
+extern "C"
+#endif
+int strcmp(const char*, const char*);
+</code></pre><p>上述代码通过预处理定义在代码中兼容C和C++。</p><p><a href="https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;mid=2247484819&amp;idx=1&amp;sn=229a9bb2eb6ca5fd7322c8b85bae6d8f&amp;chksm=fc226094cb55e98229f537079c784bcf16f42579928fd034b46a69a953f6ddab28f1b4cf3c1c&amp;token=1401123908&amp;lang=zh_CN#rd">已发布在微信公众号上，点击跳转</a></p><span class="meta"><time datetime="2021-07-11T00:00:00+08:00">July 11, 2021</time> &middot; <a href="/tag/读书笔记">读书笔记</a>, <a href="/tag/前端技术">前端技术</a></span> <!--<span class="meta"><time datetime="2021-07-11T00:00:00+08:00">July 11, 2021</time> &middot; <a class="post" href="/tag/读书笔记">读书笔记</a>, <a class="post" href="/tag/前端技术">前端技术</a></span> --><div><p /><p>感谢您的耐心阅读</p><p>Thanks for your reading</p><p /> <script type="text/javascript" src="/assets/js/tctip-1.0.3.min.js"></script> <script> new tctip({ top: '50%', button: { id: 9, type: 'zanzhu' }, list: [ { type: 'alipay', qrImg: '/assets/common/alipay.jpg' }, { type: 'wechat', qrImg: '/assets/common/wechatpay.jpg' }, { type: 'bitcoin', qrContent: '1ErCFmtoQY2KDctjgPALZri3USsMqdSvqh' } ] }).init() </script><li><p><strong><font color="red">版权申明</font></strong></p><p><strong><font color="red">本文为博主原创文章，未经允许不得转载:</font></strong></p><p><a href = "http://www.luzexi.com/2021/07/11/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B034">读书笔记(三十四) 《C++ Primer》#6</a></p><p><strong><font color="red">Copyright attention</font></strong></p><p><strong><font color="red">Please don't reprint without authorize.</font></strong></p></li><li><p></p><p></p><p><image src="/public/qrcode_for_gzh.jpg" /></p><p><strong>微信公众号，文章同步推送，致力于分享一个资深程序员在北上广深拼搏中对世界的理解</strong></p><p></p><p></p><p>QQ交流群: 777859752 (高级程序书友会)</p></li></div><p /><div class="related"><div class="bshare-custom icon-medium-plus"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到Twitter" class="bshare-twitter" href="javascript:void(0);"></a><a title="分享到Facebook" class="bshare-facebook" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=36b4f383-d948-41a3-acd5-31ae604e3ad8&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script></div><p /><div class="related"><h2>最新发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2021/07/17/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B036"> 读书笔记(三十六) 《张爱玲传记》成就富家才女的落魄家族 <small>17 Jul 2021</small> </a></h3></li><li><h3> <a href="/2021/07/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B035"> 读书笔记(三十五) 《如何高效阅读 - 下》 <small>12 Jul 2021</small> </a></h3></li><li><h3> <a href="/2021/07/11/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B034"> 读书笔记(三十四) 《C++ Primer》#6 <small>11 Jul 2021</small> </a></h3></li></ul><h2 color='blue' >之后发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2021/07/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B035"> 读书笔记(三十五) 《如何高效阅读 - 下》 <small>12 Jul 2021</small> </a></h3></li><li><h3> <a href="/2021/07/11/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B034"> 读书笔记(三十四) 《C++ Primer》#6 <small>11 Jul 2021</small> </a></h3></li><li><h3> <a href="/2021/07/04/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B033"> 读书笔记(三十一) 《装载、链接与库》#4 内核运行库 <small>04 Jul 2021</small> </a></h3></li><li><h3> <a href="/2021/07/03/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B032"> 读书笔记(三十二) 《C++ Primer》#5 <small>03 Jul 2021</small> </a></h3></li><li><h3> <a href="/2021/06/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B031"> 读书笔记(三十一) 《装载、链接与库》#3 动态链接与装载 <small>27 Jun 2021</small> </a></h3></li><h2>之前发表的文章</h2><ul class="related-posts"><li><h3> <a href="/2021/07/04/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B033"> 读书笔记(三十一) 《装载、链接与库》#4 内核运行库 <small>04 Jul 2021</small> </a></h3></li><li><h3> <a href="/2021/07/03/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B032"> 读书笔记(三十二) 《C++ Primer》#5 <small>03 Jul 2021</small> </a></h3></li><li><h3> <a href="/2021/06/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B031"> 读书笔记(三十一) 《装载、链接与库》#3 动态链接与装载 <small>27 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/26/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B030"> 读书笔记(三十) 《C++ Primer》#4 <small>26 Jun 2021</small> </a></h3></li><li><h3> <a href="/2021/06/20/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B029"> 读书笔记(二十九) 《装载、链接与库》#2 静态链接过程 <small>20 Jun 2021</small> </a></h3></li></ul></div></section></main><script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "//hm.baidu.com/hm.js?f3d58556a7396e715b3602ef6754cd91"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })(); </script></body></html>
