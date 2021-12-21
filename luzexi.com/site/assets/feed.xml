@@ -7,6 +7,304 @@
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+               <title>读书笔记(五十一) 《游戏引擎架构》#4 低阶渲染器（4）</title>
+               <description>&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247485096&amp;amp;idx=1&amp;amp;sn=c027b6af4677515ba1e5950aac8ba68d&amp;amp;chksm=fc2263afcb55eab9204898b39fb77ee04f5767ac450507b6192a5c6d5612a45b6d29b1bcee16&amp;amp;token=853743270&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;背景&quot;&gt;背景：&lt;/h1&gt;
+
+&lt;p&gt;作为游戏开发从业者，从业务到语言到框架到引擎，积累了一些知识和经验，特别是在看了几遍《游戏引擎架构》后对引擎架构的理解又深入了些。&lt;/p&gt;
+
+&lt;p&gt;近段时间有对引擎剖析的想法，正好借这书本对游戏引擎架构做一个完整分析。&lt;/p&gt;
+
+&lt;p&gt;此书用简明、清楚的方式覆盖了游戏引擎架构的庞大领域，巧妙地平衡了广度与深度，并且提供了足够的细节。&lt;/p&gt;
+
+&lt;p&gt;借助《游戏引擎架构》这本书、结合引擎源码和自己的经验，深入分析游戏引擎的历史、架构、模块，最后通过实践简单引擎开发来完成对引擎知识的掌握。&lt;/p&gt;
+
+&lt;p&gt;游戏引擎知识面深而广，所以对这系列的文章书编写范围做个保护，即不对细节进行过多的阐述，重点剖析的是架构、流程以及模块的运作原理。&lt;/p&gt;
+
+&lt;p&gt;同时《游戏引擎架构》中部分知识太过陈旧的部分，会重新深挖后总结出自己的观点。&lt;/p&gt;
+
+&lt;h1 id=&quot;概述&quot;&gt;概述：&lt;/h1&gt;
+
+&lt;p&gt;本系列文章对引擎中的重要的模块和库进行详细的分析，我挑选了十五个库和模块来分析：&lt;/p&gt;
+
+&lt;p&gt;1.时间库
+2.自定义容器库
+3.字符串散列库
+4.内存管理框架
+5.RTTI与反射模块
+6.图形计算库
+7.资产管理模块
+8.低阶渲染器
+9.剔除与合批模块
+10.动画模块
+11.物理模块
+12.UI底层框架
+13.性能剖析器的核心部分
+14.脚本系统
+15.视觉效果模块&lt;/p&gt;
+
+&lt;p&gt;本篇内容为列表中的第8个部分的第1节。&lt;/p&gt;
+
+&lt;h1 id=&quot;正文&quot;&gt;正文：&lt;/h1&gt;
+
+&lt;p&gt;简单回顾下前文&lt;/p&gt;
+
+&lt;p&gt;前文我们聊了下显卡在计算机硬件主板中的位置与结构，知道了CPU、GPU的通信介质，并简单介绍了手机上的主板结构。本篇开头对上一篇做一些内容补充，PC和手机的不同硬件组织，以及CPU与其他芯片的通信过程。&lt;/p&gt;
+
+&lt;p&gt;下面我们开始这篇内容&lt;/p&gt;
+
+&lt;p&gt;本次内容会围绕GPU来写，从硬件架构到软件驱动再到引擎架构，目标是帮大家理解GPU硬件的运作原理，理解图形接口的架构，理解引擎低阶渲染器的架构。&lt;/p&gt;
+
+&lt;p&gt;目录：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;主板结构中的显卡&lt;/li&gt;
+  &lt;li&gt;GPU功能发展史&lt;/li&gt;
+  &lt;li&gt;GPU与CPU的差异&lt;/li&gt;
+  &lt;li&gt;GPU硬件特点&lt;/li&gt;
+  &lt;li&gt;图形驱动程序架构&lt;/li&gt;
+  &lt;li&gt;引擎低阶渲染架构&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;内容结构：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;CPU硬件结构&lt;/li&gt;
+  &lt;li&gt;GPU硬件结构&lt;/li&gt;
+  &lt;li&gt;GPU手机管线与PC管线的差异&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;接着上篇的内容。前面说了CPU、GPU的硬件结构，CPU的构造和GPU的构造，下面我们来聊聊GPU是如何工作的，以及GPU的管线在手机端和PC端的差异。&lt;/p&gt;
+
+&lt;h2 id=&quot;nvidia基于fermi管线的架构&quot;&gt;NVIDIA基于Fermi管线的架构&lt;/h2&gt;
+
+&lt;p&gt;关于GPU的逻辑管线，这篇Nvidia这篇文章《Life of a triangle - NVIDIA’s logical pipeline》说的很清楚。&lt;/p&gt;
+
+&lt;p&gt;（NVIDIA的整体架构图）&lt;/p&gt;
+
+&lt;p&gt;下面我以此为标准进行翻译并重新剖析。&lt;/p&gt;
+
+&lt;p&gt;为了简单起见，省略了几个细节，假设 drawcall 引用了一些已经充满数据并存在于 GPU DRAM 中的索引和顶点缓冲区，并且仅使用顶点和像素着色器（GL：片段着色器）。&lt;/p&gt;
+
+&lt;p&gt;（从图形API调用到图元处理过程图）&lt;/p&gt;
+
+&lt;p&gt;1.引擎或业务程序调用图形 API（DX 或 GL）中的绘图函数，接着驱动程序会被调用，驱动程序会进行一些验证以检查参数是否“合法”，再将指令写入到GPU可读写的缓冲队列中。在这个地方 CPU 方面可能会出现很多瓶颈，这也是为什么程序员要好好使用 API 以利用当今 GPU 的强大功能的技术很重要的原因。&lt;/p&gt;
+
+&lt;p&gt;（绘制接口调用图）&lt;/p&gt;
+
+&lt;p&gt;2.经过一段时间渲染，画面“刷新”被调用，驱动程序在缓冲区中已经缓冲了足够多的工作命令，接着将其发送给 GPU 进行处理（操作系统会参与）。最后 GPU 的主机接口接收命令并交给GPU前端的处理。&lt;/p&gt;
+
+&lt;p&gt;（绘制队列与刷新图）&lt;/p&gt;
+
+&lt;p&gt;3.接着图元分配器（Primitive Distributor）开始分配工作。为了批量处理索引和三角形，将数据发送给多个图形处理集群（GPC）并行处理。&lt;/p&gt;
+
+&lt;p&gt;（SM整体结构图）&lt;/p&gt;
+
+&lt;p&gt;4.在 GPC 中，每个 SM 的 Poly Morph 引擎负责从三角形索引中获取顶点数据(Vertex Fetch)。&lt;/p&gt;
+
+&lt;p&gt;5.在获取数据后，SM中每32个线程为一捆线程束（Warp），它们被调度去处理这些顶点工作。 线程束（Warp）是典型的单指令多线程（SIMT，SIMD单指令多数据的升级）的实现，也就是32个线程同时执行的指令是一模一样的，只是线程数据不一样，这样的好处就是一个Warp只需要一套逻辑对指令进行解码和执行就可以了，芯片可以做的更小更快。&lt;/p&gt;
+
+&lt;p&gt;（线程束与线程束调度器图）&lt;/p&gt;
+
+&lt;p&gt;6.SM的线程束（Warp）调度器会按照顺序分发指令给整个线程束（Warp），单个线程束（Warp）中的线程会锁步(lock-step)执行各自的指令。线程束（Warp）会使用SIMT的方式来做分支预测，每个线程执行的分支会不同，当线程遇到到错误判断的执行情况会被遮蔽(be masked out)。&lt;/p&gt;
+
+&lt;p&gt;（单个GPU线程与存储设备的关系图）&lt;/p&gt;
+
+&lt;p&gt;被遮蔽的原因是SIMT执行中错误预测，例如当前的指令是if(true)的分支，但是当前线程的数据的条件是false，或者循环的次数不一样（比如for循环次数n不是常量，或被break提前终止了但是别的还在走），因此在Shader中的分支会显著增加时间消耗，在一个线程束（Warp）中的分支除非32个线程都走到同一个里面，否则相当于所有的分支都走了一遍，线程不能独立执行指令而是以线程束（Warp）为单位，而这些线程束中的线程之间才是相互独立的。&lt;/p&gt;
+
+&lt;p&gt;（SIMT线程束做分支预测图）&lt;/p&gt;
+
+&lt;p&gt;7、线程束（Warp）中的指令可以被一次完成，也可能经过多次调度，例如通常SM中的LD/ST(加载存取)单元数量明显少于基础数学操作单元。&lt;/p&gt;
+
+&lt;p&gt;8、由于某些指令比其他指令需要更长的时间才能完成，特别是内存加载，线程束（Warp）调度器可能会简单地切换到另一个没有内存等待的线程束（Warp），这是GPU如何克服内存读取延迟的关键，其操作为简单地切换活动线程组。为了使这种切换更快，调度器管理的所有线程束（Warp）在寄存器列阵（Register File）中都有自己的寄存器。这里就会有个矛盾产生，Shader需要的寄存器越多，给线程束（Warp）留下的空间就越少，于是就会导致能用的线程束（Warp）就越少。此时如果碰到指令在内存获取数据等待就只会等待，而没有其他可以运行的线程束（Warp）可以切换。&lt;/p&gt;
+
+&lt;p&gt;（线程与寄存器列阵关系图）&lt;/p&gt;
+
+&lt;p&gt;（线程束调度器调度线程图）&lt;/p&gt;
+
+&lt;p&gt;9、一旦线程束（Warp）完成了顶点着色器（vertex-shader）的所有指令，运算结果会被Viewport Transform模块处理，三角形会被裁剪然后准备光栅化，此时GPU会使用L1和L2缓存来进行顶点着色起（vertex-shader）和片元着色起（pixel-shader）的数据通信。&lt;/p&gt;
+
+&lt;p&gt;（管线中节点、数据、存储器的关系图）&lt;/p&gt;
+
+&lt;p&gt;10、接下来这些三角形将被分割，通过 Work Distribution Crossbar 将三角形再分配给多个GPC，三角形的范围决定着它将被分配到哪个光栅引擎(raster engines)，每个光栅引擎（raster engines）覆盖了多个屏幕上的图块（tile），这等于把三角形的渲染分配到多个图块（tile）上面。也就是说在像素阶段前就把三角形划分成了方块格式范围，三角形处理分成许多较小的工作。&lt;/p&gt;
+
+&lt;p&gt;（三角形被拆分成多个块派发到多个光栅引擎图）&lt;/p&gt;
+
+&lt;p&gt;（图块拆分任务派发图）&lt;/p&gt;
+
+&lt;p&gt;11、SM上的属性安装器（Attribute Setup）保证了从顶点着色器（vertex-shader）生成的数据，经过插值后，在片元着色器（pixel-shade）上是可读的。&lt;/p&gt;
+
+&lt;p&gt;12、GPC上的光栅引擎(raster engines)处理它接收到的三角形，并为它负责的那些部分生成像素信息（同时会处理裁剪Clipping、背面剔除和Early-Z剔除）。&lt;/p&gt;
+
+&lt;p&gt;13、再次做批量处理，32个像素线程被分成一组（或者说8个2x2的像素块），这是在像素着色器上面的最小工作单元（2x2 四边形允许我们计算诸如纹理 mip 贴图过滤之类的导数–四边形内纹理坐标的大变化会导致更高的 mip）。在这个像素线程内，如果没有被任何三角形覆盖就会被剔除。SM中的线程束（Warp）调度器会管理像素着色器的任务。&lt;/p&gt;
+
+&lt;p&gt;（2x2像素组传入到线程束处理像素着色器的图）&lt;/p&gt;
+
+&lt;p&gt;14、接下来是同样的线程束调度策略，和顶点着色器（vertex-shader）中的逻辑步骤完全一样，但是变成了在像素着色器线程中执行。 由于不耗费任何性能从2x2四边形中获取一个像素，这使得锁步执行非常便利，于是所有的线程可以保证指令可以在同一点同步执行。&lt;/p&gt;
+
+&lt;p&gt;（线程束锁步执行图）&lt;/p&gt;
+
+&lt;p&gt;15、最后一步，现在像素着色器已经完成了颜色的计算和深度值的计算。在这个点上，我们必须考虑三角形的调用API顺序，然后才将数据移交给ROP(render output unit，渲染输出单元)，一个ROP内部有很多ROP单元，在ROP单元中处理深度测试和帧缓冲（framebuffer）的混合等，深度和颜色的设置必须是原子操作，否则两个不同的三角形在同一个像素点就会有冲突和错误。NVIDIA 通常应用内存压缩，以减少内存带宽要求，从而增加“有效”带宽。&lt;/p&gt;
+
+&lt;p&gt;（像素着色器后的像素处理过程图）&lt;/p&gt;
+
+&lt;p&gt;以上这些信息有助于我们理解 GPU 中的一些工作和数据流，还可以帮助我们理解CPU与GPU之间的交互。&lt;/p&gt;
+
+&lt;h2 id=&quot;总结cpu和gpu的交互&quot;&gt;总结CPU和GPU的交互&lt;/h2&gt;
+
+&lt;p&gt;GPU是设备，设备都有驱动，CPU可以直接执行二进制指令集，对于GPU设备，图形接口有opengl，directx标准及库封装，计算有cuda和opencl封装。程序代码调用这些图形或计算库，这些库调用驱动，驱动再来对接操作GPU设备，CPU与GPU直接的通信是遵循总线和内存的规则。&lt;/p&gt;
+
+&lt;p&gt;原则上CPU、内存外的设备都属于IO设备，通过总线连上来，它们必须遵守IO总线规范，如显卡就走pcie总线，这里还有ionmu，统一内存等，来共享资源，缩短路径，提升效率等。&lt;/p&gt;
+
+&lt;p&gt;这里专门说下驱动，计算机有专门的程序接口指定一个计算任务到GPU上，这个接口程序就是驱动程序。CPU给GPU下发任务时通过调用驱动程序，不同GPU厂商实现自己的驱动，并且提供了各种的编程接口。图形计算上实现了OpenGL标准接口规范的图形库，它会调用各厂商的驱动，用户可以通过GLSL编写计算任务进行通用计算。后来的CUDA编程模型专门推出用于编写通用计算任务的接口，于是OpenGL就专门用于图形渲染了。而CUDA则是通过kenel函数来编写计算任务，通过cudaLaunch接口来下发任务。&lt;/p&gt;
+
+&lt;p&gt;（从图形库到驱动到GPU指令队列的图）&lt;/p&gt;
+
+&lt;p&gt;从硬件角度看：&lt;/p&gt;
+
+&lt;p&gt;（从硬件角度看指令和数据处理流程图）&lt;/p&gt;
+
+&lt;p&gt;1.GPU设备的配置空间物理地址映射到虚拟地址，可以被程序直接访问；同时建立任务队列缓冲，声明中断等等；&lt;/p&gt;
+
+&lt;p&gt;2.CPU在进程内准备数据和缓冲，基于虚拟地址VA、VM将其转换为显存的物理地址IPA。驱动程序获取任务，再将任务信息填充至任务队列内。&lt;/p&gt;
+
+&lt;p&gt;3.根据虚拟内存绑定的地址信息，将任务队列的指针更新至GPU设备侧，这个端口称为doorbell寄存器；&lt;/p&gt;
+
+&lt;p&gt;4.设备接收到doorbell操作，会触发中断，再读取主存中的任务队列，包括队列内的信息和其指向的任务数据，GPU设备侧读取该数据。&lt;/p&gt;
+
+&lt;p&gt;5.完成后，再将数据发送给CPU侧。一般来说，GPU设备侧发送至CPU的读写请求使用的是虚拟地址，由CPU的IOMMU或SMMU转换为物理地址。&lt;/p&gt;
+
+&lt;h2 id=&quot;gpu手机管线与pc管线的差异&quot;&gt;GPU手机管线与PC管线的差异&lt;/h2&gt;
+
+&lt;p&gt;为什么要了解手机与PC管线的差异？
+PC的能耗和发热比手机端可以更大一些，因此PC与手机在硬件架构上有天然的不同，进而使得它们在GPU管线上也有很大的差异，这使得我们在优化手机端时必须了解这种差异再做针对性的做优化。&lt;/p&gt;
+
+&lt;h2 id=&quot;tbdrtile-base-deffered-rendering是现代移动端gpu的设计架构它同传统pc上irimmediate-rendering架构的gpu在硬件设计上有很大的差别&quot;&gt;TBDR(Tile-Base-Deffered-Rendering)是现代移动端GPU的设计架构，它同传统PC上IR（Immediate-Rendering）架构的GPU在硬件设计上有很大的差别。&lt;/h2&gt;
+
+&lt;p&gt;为什么呢？因为功耗是Mobile设备设计的第一考虑因素，而带宽是功耗的第一杀手。&lt;/p&gt;
+
+&lt;p&gt;我们来看PC的GPU管线，即传统的IR（Immediate-Rendering）模式：&lt;/p&gt;
+
+&lt;p&gt;（IMR管线图：源自网络）&lt;/p&gt;
+
+&lt;p&gt;IMR（Immediate Mode Rendering）模式中，GPU直接在主存或显存上读写深度缓存（Depth Buffer）和帧缓存（Frame Buffer），这导致带宽消耗很大，如果在手机上耗电和发热都无法承受。&lt;/p&gt;
+
+&lt;p&gt;手机使用统一内存架构，CPU和GPU都通过总线来访问主存。GPU需要获取三角形数据（Geometry Data）、贴图数据（Texture Data）以及帧缓存（Frame Buffer），它们都在主存中。如果GPU直接从主存频繁地访问这些数据，就会导致带宽消耗大，成为性能瓶颈。&lt;/p&gt;
+
+&lt;h2 id=&quot;tbrtile-based-rendering管线&quot;&gt;TBR（Tile-Based-Rendering）管线&lt;/h2&gt;
+
+&lt;p&gt;基于以上所述原因，手机GPU使用自己的缓存区（SRAM），例如On-Chip深度缓存（On-Chip Depth Buffer）和On-Chip颜色缓存（On-Chip Color Buffer），它们与存取主存相比，速度更快，功耗更低。但它们的存储空间很小。（SRAM不需要充电来保持存储记忆，因此SRAM的读写基本不耗电，缺点是价格昂贵）&lt;/p&gt;
+
+&lt;p&gt;如果手机直接读写帧缓存（Frame Buffer）就相当于让一辆火车在你家和公司之间来回奔跑，非常耗电。于是手机端想要拆分绘制内容，每次只绘制一小部分，再把所有绘制完成的部分拼起来。&lt;/p&gt;
+
+&lt;p&gt;把帧缓存（Frame Buffer）拆分成很多个小块，使得每个小块可以被GPU附近的SRAM容纳，块的多少取决于GPU硬件的SRAM大小。这样GPU就可以分批的一块块的在SRAM上读写帧缓存（Frame Buffer），一整块都读写完毕后，再整体转移回主存上。&lt;/p&gt;
+
+&lt;p&gt;这种模式就叫做TBR（Tile-Based-Rendering），整体管线如下图：&lt;/p&gt;
+
+&lt;p&gt;（TBR管线图：源自网络）&lt;/p&gt;
+
+&lt;p&gt;屏幕分块后的大小一般为16x16或32x32像素 ，在几何阶段之后再执行分块(Tiling)，接着将各个块（Tile）逐个光栅化，最后写入帧缓存中（Frame Buffer）中 。&lt;/p&gt;
+
+&lt;p&gt;这里有一些细节要注意，TBR在接受每个指令（CommandBuffer）时并不立即绘制，而是先对这些数据做顶点处理，把顶点处理的结果暂时保存在主存上，等到非得刷新整个帧缓存时，才真正的用这批数据做光栅化。&lt;/p&gt;
+
+&lt;p&gt;因此，TBR的管线实际可以认为被切分成两部分，前半部分为顶点数据部分，后半部分为片元数据部分：&lt;/p&gt;
+
+&lt;p&gt;（TBR把管线切分为光栅化前和光栅化后）&lt;/p&gt;
+
+&lt;h3 id=&quot;顶点数据先被处理并存储在frame-data中等到必须刷新时例如帧缓存置换调用glflush调用glfinish调用glreadpixels读取帧缓存像素时调用glcopytexiamge拷贝贴图时调用glbitframebuffer获取帧缓存时调用queryingocclusion解绑帧缓存时等等才被集中的拿去处理光栅化&quot;&gt;顶点数据先被处理并存储在Frame Data中，等到必须刷新时（例如帧缓存置换，调用glflush，调用glfinish，调用glreadpixels读取帧缓存像素时，调用glcopytexiamge拷贝贴图时，调用glbitframebuffer获取帧缓存时，调用queryingocclusion，解绑帧缓存时等等）才被集中的拿去处理光栅化。&lt;/h3&gt;
+
+&lt;h3 id=&quot;那么为什么pc不使用tbr呢&quot;&gt;那么为什么PC不使用TBR呢？&lt;/h3&gt;
+
+&lt;p&gt;实际上直接对主存或显存（这里也有多级缓存）进行整块数据的读写速度是最快的，而TBR需要一块块的绘制，然后再回拷给主存。可以简单的认为TBR牺牲了执行效率，换来了相对更难解决的带宽功耗。如果哪一天手机上解决了带宽的功耗问题，或者说SRAM足够大了，可能就没有TBR了。&lt;/p&gt;
+
+&lt;h2 id=&quot;tbdrtile-based-deferred-rendering管线&quot;&gt;TBDR（Tile-based deferred rendering）管线&lt;/h2&gt;
+
+&lt;p&gt;TBR会把顶点数据处理完毕后存储在Frame Data中，那么就会有很多厂商针对Frame Data做优化。&lt;/p&gt;
+
+&lt;p&gt;TBDR整体的管线图如下：&lt;/p&gt;
+
+&lt;p&gt;（TBDR管线图：源自网络）&lt;/p&gt;
+
+&lt;p&gt;我们看到相比TBR，TBDR在光栅化（Raster）后多了一个HSR（Hidden Surface Removal）处理，这部分处理主要剔除无需绘制的元素，减少重绘（Overdraw）数量（高通通过优化划分块（Tile）之后执行顶点着色器（Vertex Shader）之前的节点来达到此目的，称为LRZ）。例如提前对不透明像素做深度测试并剔除，剔除被模板裁剪掉的像素等等，总之它们不会进入到像素着色器阶段（Pixel Shader）。&lt;/p&gt;
+
+&lt;p&gt;因此在TBDR上，不透明物体的排序没有太大意义，Early-Z这种策略也不存在IOS上。这些GPU硬件巧妙的利用TBR的Frame Data队列实现了一种延迟渲染，尽可能只渲染那些会最终影响帧缓存（Frame Buffer）的像素。&lt;/p&gt;
+
+&lt;h3 id=&quot;tbdr和软件上的延迟渲染相比有什么区别呢&quot;&gt;TBDR和软件上的延迟渲染相比有什么区别呢？&lt;/h3&gt;
+
+&lt;p&gt;软件层面的延迟渲染与TBDR不同。软件层面的延迟渲染是针对一个Drawcall，对于从后到前的不透明物体绘制是每次都要绘制的，而硬件层面的延迟渲染，处理的是一整批Drawcall，剔除这一整批Drawcall中不会绘制的像素最后再渲染。可以说现在大部分的移动端的GPU都使用TBDR架构。&lt;/p&gt;
+
+&lt;h3 id=&quot;参考资料&quot;&gt;参考资料：&lt;/h3&gt;
+
+&lt;p&gt;《How Shader Cores Work》
+https://engineering.purdue.edu/~smidkiff/KKU/files/GPUIntro.pdf&lt;/p&gt;
+
+&lt;p&gt;《CPU体系结构》
+https://my.oschina.net/fileoptions/blog/1633021&lt;/p&gt;
+
+&lt;p&gt;《深入理解CPU的分支预测(Branch Prediction)模型》
+https://zhuanlan.zhihu.com/p/22469702&lt;/p&gt;
+
+&lt;p&gt;《分析Unity在移动设备的GPU内存机制（iOS篇）》
+https://www.jianshu.com/p/68b41a8d0b37&lt;/p&gt;
+
+&lt;p&gt;《PC与Mobile硬件架构对比》
+https://www.cnblogs.com/kekec/p/14487050.html&lt;/p&gt;
+
+&lt;p&gt;《针对移动端TBDR架构GPU特性的渲染优化》
+https://gameinstitute.qq.com/community/detail/123220&lt;/p&gt;
+
+&lt;p&gt;《A look at the PowerVR graphics architecture: Tile-based rendering》
+https://www.imaginationtech.com/blog/a-look-at-the-powervr-graphics-architecture-tile-based-rendering/&lt;/p&gt;
+
+&lt;p&gt;《A look at the PowerVR graphics architecture: Deferred rendering》
+https://www.imaginationtech.com/blog/the-dr-in-tbdr-deferred-rendering-in-rogue/&lt;/p&gt;
+
+&lt;p&gt;《深入GPU硬件架构及运行机制》
+https://www.cnblogs.com/timlly/p/11471507.html&lt;/p&gt;
+
+&lt;p&gt;《深入浅出计算机组成原理》
+https://time.geekbang.org/column/article/105401?code=7VZ-Md9oM7vSBSE6JyOgcoQhDWTOd-bz5CY8xqGx234%3D&lt;/p&gt;
+
+&lt;p&gt;《Nvidia Geforce RTX-series is born》
+https://www.fudzilla.com/reviews/47224-nvidia-geforce-rtx-series-is-born?start=2&lt;/p&gt;
+
+&lt;p&gt;《渲染管线与GPU（Shading前置知识）》
+https://zhuanlan.zhihu.com/p/336999443&lt;/p&gt;
+
+&lt;p&gt;《剖析虚幻渲染体系（12）- 移动端专题Part 1（UE移动端渲染分析）》
+https://www.cnblogs.com/timlly/p/15511402.html&lt;/p&gt;
+
+&lt;p&gt;《tpc-texture-processing-cluster》
+https://gputoaster.wordpress.com/2010/12/11/tpc-texture-processing-cluster/&lt;/p&gt;
+
+&lt;p&gt;《Life of a triangle - NVIDIA’s logical pipeline》
+https://developer.nvidia.com/content/life-triangle-nvidias-logical-pipeline&lt;/p&gt;
+
+&lt;p&gt;《Rasterisation wiki》
+https://en.wikipedia.org/wiki/Rasterisation&lt;/p&gt;
+
+&lt;p&gt;《PolyMorph engine and Data Caches by Hilbert Hagedoorn》
+https://www.guru3d.com/articles-pages/nvidia-gf100-(fermi)-technology-preview,3.html&lt;/p&gt;
+
+&lt;p&gt;《NVIDIA GPU的一些解析》
+https://zhuanlan.zhihu.com/p/258196004&lt;/p&gt;
+
+&lt;p&gt;《tensor-core-performance-the-ultimate-guide》
+https://developer.download.nvidia.cn/video/gputechconf/gtc/2019/presentation/s9926-tensor-core-performance-the-ultimate-guide.pdf&lt;/p&gt;
+
+&lt;p&gt;《Understanding the Understanding the graphics pipeline》
+https://www.seas.upenn.edu/~cis565/LECTURES/Lecture2%20New.pdf&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247485096&amp;amp;idx=1&amp;amp;sn=c027b6af4677515ba1e5950aac8ba68d&amp;amp;chksm=fc2263afcb55eab9204898b39fb77ee04f5767ac450507b6192a5c6d5612a45b6d29b1bcee16&amp;amp;token=853743270&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
+
+</description>
+               <pubDate>Sun, 12 Dec 2021 00:00:00 +0800</pubDate>
+               <link>http://www.luzexi.com/2021/12/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B051</link>
+               <guid isPermaLink="true">http://www.luzexi.com/2021/12/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B051</guid>
+            </item>
+        
+            <item>
                <title>读书笔记(五十) 《如何精彩演讲》#2 克服演讲时的恐惧</title>
                <description>&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247485068&amp;amp;idx=1&amp;amp;sn=464d36573e97c69aeab4ab996885ccee&amp;amp;chksm=fc22638bcb55ea9d3e4472e92a760b147dc2a816268e9d3a435842995723d3a02e9a26b0f4b5&amp;amp;token=1416441933&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
@@ -2327,391 +2625,6 @@ class MYGAME_API UMyClass : public UObject
                <pubDate>Fri, 17 Sep 2021 00:00:00 +0800</pubDate>
                <link>http://www.luzexi.com/2021/09/17/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B043</link>
                <guid isPermaLink="true">http://www.luzexi.com/2021/09/17/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B043</guid>
-            </item>
-        
-            <item>
-               <title>读书笔记(四十二) 《游戏引擎架构》#1 历史、现状、架构、团队</title>
-               <description>&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484890&amp;amp;idx=1&amp;amp;sn=1d319050c82fed232d22f1f3dfce0cd3&amp;amp;chksm=fc2260ddcb55e9cbbda832e90def1e8e7440b7ffc85c60264be83d9c6bc62162c5b05839839b&amp;amp;token=834275592&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;背景&quot;&gt;背景：&lt;/h1&gt;
-
-&lt;p&gt;作为游戏开发从业者，从业务到算法到语言到框架到引擎，积累了一些知识和经验，特别是在看了好几遍《游戏引擎架构》后对引擎的架构感触颇深。&lt;/p&gt;
-
-&lt;p&gt;近段时间对引擎剖析的想法也较多，正好借着书本对游戏引擎架构做一个完整分析。此书用简明、清楚的方式覆盖了游戏引擎架构的庞大领域，巧妙地平衡了广度与深度，并且提供了足够的细节，使得初学者也能很容易地理解其中的各种概念。&lt;/p&gt;
-
-&lt;p&gt;目标是掌握游戏引擎架构知识，方法是跟随《游戏引擎架构》这本书、结合引擎源码、自己的经验，分析游戏引擎的历史、架构、模块。最后通过实践自主引擎的开发来完成对引擎知识的掌握。&lt;/p&gt;
-
-&lt;p&gt;游戏引擎知识面深而广，所以对这系列的文章书编写范围做个保护，即不对细节进行过多的阐述，重点剖析的是架构、流程以及模块的运作原理。&lt;/p&gt;
-
-&lt;h1 id=&quot;概述&quot;&gt;概述：&lt;/h1&gt;
-
-&lt;p&gt;文章分为五个部分：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;游戏引擎历史&lt;/li&gt;
-  &lt;li&gt;现代引擎概览&lt;/li&gt;
-  &lt;li&gt;计算机图形技术发展史&lt;/li&gt;
-  &lt;li&gt;游戏制作团队&lt;/li&gt;
-  &lt;li&gt;运行时引擎架构概述&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h1 id=&quot;正文&quot;&gt;正文：&lt;/h1&gt;
-
-&lt;p&gt;此篇分四个主题来概述一下游戏引擎的基础知识，我会分别从历史、现状、架构、团队，这四个方面来阐述。&lt;/p&gt;
-
-&lt;h2 id=&quot;游戏引擎历史&quot;&gt;游戏引擎历史&lt;/h2&gt;
-
-&lt;p&gt;有些同学会问，为什么要讲历史？为什么要讲现状？那是因为了解历史和现状能帮助我们更好的理解引擎的每个部分。&lt;/p&gt;
-
-&lt;p&gt;实际上，每每当你回顾历史，就会发现它是由很多巧合构成的，当知道它的来龙去脉时，我们也就能更好的理解“今天为什么它成为这个样子”。&lt;/p&gt;
-
-&lt;p&gt;我认为游戏引擎这个词语用的非常好，它很好的概括它在游戏开发中的地位。&lt;/p&gt;
-
-&lt;p&gt;我们说所有的程序都可以用工具两个字来描述，那么游戏引擎到底带给了我们什么，才让它成为今天人们普遍关注的焦点呢。&lt;/p&gt;
-
-&lt;p&gt;十几年前的游戏都很简单，容量大小都是以兆计的，通常一款游戏的开发周期在8到10个月左右，最主要的是每款游戏开发都需要重头编写代码，期间存在着大量的重复劳动，耗时耗力。&lt;/p&gt;
-
-&lt;p&gt;慢慢地开发人员总结出些规律，某些游戏逻辑总是有些相似的代码，可以做成模块重复使用，这样就可以大大减少游戏开发周期和开发费用。&lt;/p&gt;
-
-&lt;p&gt;一开始，只是做些低耦合的通用方法，然后逐渐形成了模块，接着演变成了复合型框架，最后形成了大型软件工程，即现在的游戏引擎。&lt;/p&gt;
-
-&lt;h3 id=&quot;id-tech-引擎发展史&quot;&gt;Id Tech 引擎发展史&lt;/h3&gt;
-
-&lt;p&gt;说到引擎发展史不得不说ID software这家游戏公司，很早就开始开发起游戏，从一个小游戏到游戏移植再到《Wolfenstein 3D》，游戏技术让这家公司从无到有，不断创造出一个又一个技术巅峰。&lt;/p&gt;
-
-&lt;p&gt;最后《Wolfenstein 3D》成了游戏引擎的始祖，它不但开创了3D 射击游戏世界，而且程序也被其他游戏所使用。&lt;/p&gt;
-
-&lt;p&gt;对ID公司来说《Wolfenstein 3D》只是小试身手，DOOM（毁灭战士）游戏引擎才是引擎技术的代表，DOOM使用的引擎正是Id Tech 1。&lt;/p&gt;
-
-&lt;p&gt;在DOOM发布后，获得了350万的销量，为ID公司带来了滚滚财源。&lt;/p&gt;
-
-&lt;p&gt;更重要的是DOOM成了ID公司第一款用于商业授权的引擎，这为ID公司增加了一条创收之路，即商业引擎之路从此开始。&lt;/p&gt;
-
-&lt;p&gt;引擎从Id Tech 1到Id Tech 5，每一代升级都是质的飞越。游戏Id Tech引擎也制作出了很多优秀的游戏，包括《Quake》、《半条命》、《反恐精英》等。&lt;/p&gt;
-
-&lt;h3 id=&quot;unreal-引擎发展史&quot;&gt;Unreal 引擎发展史&lt;/h3&gt;
-
-&lt;p&gt;EPIC公司在1998年发布了Unreal引擎，同时《虚幻》这款FPS游戏也发布出来，画面精致绚丽得到大众的认可。&lt;/p&gt;
-
-&lt;p&gt;不仅如此，重要的是Unreal引擎得益于画面精美和DX规范的通用性，很快就得到了许多游戏公司的支持。而且，由于Unreal引擎的通用性，除了游戏，它还广泛使用在3D建模、建筑设计、动作捕捉、电影特效等等领域。&lt;/p&gt;
-
-&lt;p&gt;Unreal引擎一战成名后，便开启了升级之路，引擎从Unreal 1到 Unreal 5，凭借着优秀的画质表现、适中的显卡要求、强大的自定义工具和一站式配套开发使得Unreal具备了各个平台各种游戏的适应性，因此越来越多的游戏采用Unreal引擎。目前已成为全球最流行的游戏引擎之一。&lt;/p&gt;
-
-&lt;h3 id=&quot;unity-引擎发展史&quot;&gt;Unity 引擎发展史&lt;/h3&gt;
-
-&lt;p&gt;Unity在2005年6月时发布了1.0版本的引擎。&lt;/p&gt;
-
-&lt;p&gt;最初，是在2005年苹果公司的全球开发者大会上对外公布并开放使用，当时只是一款面向Mac OS X平台的游戏引擎。&lt;/p&gt;
-
-&lt;p&gt;由于其引擎的易用性，受到广大开发者的喜爱，之后Unity公司便开启了快速升级之路，用了10年时间从1.0一路升级到5.0。&lt;/p&gt;
-
-&lt;p&gt;鉴于引擎的更新速度逐渐加快，Unity官方决定不再在其版本号中标注纯数字，而改用年份与版本号的复合形式，如Unity 2018.2，发布时间为2018年7月10日。&lt;/p&gt;
-
-&lt;p&gt;截止目前使用Unity引擎开发出了的手机游戏，无论是在数量上还是在流行度上，都是所有引擎中最多也是最受欢迎的。&lt;/p&gt;
-
-&lt;p&gt;随着显卡性能越来越强，游戏的画质越来越高，游戏开发周期也越来越长，通常都会达到3到5年，自行开发游戏引擎的话时间还会更长，所以大多数游戏公司还是选择购买现成的游戏引擎，简化游戏的开发过程。&lt;/p&gt;
-
-&lt;h2 id=&quot;现代引擎概览&quot;&gt;现代引擎概览&lt;/h2&gt;
-
-&lt;p&gt;雷神之锤引擎，与游戏业务密切融合，它的第一款游戏是《德军总部》，后相继开发了《毁灭战士》、《雷神之锤》等游戏。Source引擎中的技术也能追溯到雷神之锤的技术。原始雷神之锤引擎的架构相当优秀并且整洁。这些代码都是非常好的例子，能说明工业级游戏引擎是怎样炼成的。&lt;/p&gt;
-
-&lt;p&gt;虚幻引擎，从《虚幻》游戏开始进化，进化到虚幻4代引擎时，号称是业界最好的工具和最丰富的引擎功能。它有方便且强大的着色器制作工具，还提供一个方便快捷的图形用户界面编辑器，虚幻引擎以其全面的功能及内聚易用的工具著称。但虚幻引擎并非完美，大部分开发者都需要用不同方式优化它，才能在具体的目标硬件上运行。可贵的是虚幻引擎拥有极为强大的原型制作工具和商业游戏平台，可用来制作几乎任何3D游戏。&lt;/p&gt;
-
-&lt;p&gt;Source引擎，《半条命2》起家的游戏引擎，其图形能力和工具套件可与虚幻引擎4娉美。&lt;/p&gt;
-
-&lt;p&gt;寒霜引擎，是从《战地：叛逆连队》开发开始的，之后成为艺电应用最广泛的引擎。寒霜引擎拥有强大的统一资产创作工具FrostEd，以及强大的Backend Services工具管道。&lt;/p&gt;
-
-&lt;p&gt;CryEngine，原本是为NVIDIA开发的技术演示程序。确立这个技术具有潜力后，就把演示程序改为了完整的游戏《孤岛惊魂》，最后演化成了游戏引擎。经过多年迭代，CryEngine3已经是一个强大的资产创作工具，具有丰富的功能并拥有高品质的图形渲染引擎。&lt;/p&gt;
-
-&lt;p&gt;索尼的PhyreEngine，专为支持索尼的PS2，PS3，PS4等平台提供技术服务。PhyreEngine3.5让开发者能使用PS3 Cell架构的高度并行能力、PS4的高级演算能力，以及包括其他世界编辑器和开发工具。&lt;/p&gt;
-
-&lt;p&gt;微软的XNA Game Studio，XNA基于微软的C#语言并使用Visual Studio管理游戏项目资产。&lt;/p&gt;
-
-&lt;p&gt;Unity，支持广泛的平台，它的主要设计目标是容易开发及跨平台游戏开发。因此它提供了容易使用的整合编辑环境，我们可以在此环境中创建及处理游戏世界中的资产及实体，并能快速地在编辑器中浏览游戏运行的样子，同时也提供了直接在目标硬件上运行的功能。不仅如此它还提供了全面的资产调节管道，可以为每个平台独立调节性能与品质以达到两者的平衡。&lt;/p&gt;
-
-&lt;h2 id=&quot;计算机图形技术发展史&quot;&gt;计算机图形技术发展史&lt;/h2&gt;
-
-&lt;p&gt;我把计算机图形技术发展史分为了四个部分，它们分别是，硬件发展史、图形API发展史、图形软件发展史、以及图形技术发展史。&lt;/p&gt;
-
-&lt;h3 id=&quot;图形硬件发展史&quot;&gt;图形硬件发展史&lt;/h3&gt;
-
-&lt;p&gt;图形硬件，最初由SGI公司（Silicon Graphics Inc）开发的IRIS（综合光栅成像系统）受到市场热捧，它使用2MB内存的8 MHz M68000处理器，定制1024x1024帧缓冲器和几何引擎。其最初的市场定位为3D图形显示终端。随着市场策略的推进，SGI公司在电影、电视等领域的发展迅速并且它们的产品受到欢迎。&lt;/p&gt;
-
-&lt;p&gt;接着是Sun微系统公司，它于1982年由安迪·贝托尔斯海姆与其他同门研究生在斯坦福大学成立。贝托尔斯海姆最初将SUN计算机设计为斯坦福大学网络（因此缩写为“SUN”）的个人CAD工作站。它是围绕Motorola 68000处理器设计的，具有Unix操作系统和虚拟内存，并且与SGI一样，具有嵌入式帧缓冲区。后来的发展包括计算机服务器和基于RISC处理器架构和一系列软件产品（如Solaris操作系统和Java平台）构建的工作站。&lt;/p&gt;
-
-&lt;p&gt;GPU英文全称Graphic Processing Unit，20世纪70年代末GPU概念被提出，它的优点是具有高并行结构，所以GPU在处理图形数据和复杂算法方面由比CPU更高的效率。CPU大部分面积为控制器和寄存器，与之相比，GPU拥有更多的ALU（Arithmetic Logic Unit,逻辑运算单元）用于数据处理，这样的结构适合对密集型数据进行并行处理。GPU采用流式并行计算模式，可对每个数据进行独立的并行计算，所谓“对数据进行独立计算”即：流内任意元素的计算不依赖于其他同类型数据，例如，计算一个顶点的世界位置坐标，不依赖于其他顶点的位置，所谓“并行计算”是指“多个数据可以同时被使用，多个数据并行运算的时间和1个数据单独执行的时间是一样的”。所以，在顶点处理程序中，可以同时处理N个顶点数据。目前，线性代数，物理仿真和光线跟踪算法都已经成功的一直到GPU上。&lt;/p&gt;
-
-&lt;p&gt;第一代GPU，NVIDIA于1998年宣布Modern GPU研发成功，这标志着第一代Mondern GPU的诞生，第一代GPU包括NVIDIA TNT2,ATI的Rage和3Dfx的Voodoo。这些GPU可以独立CPU进行像素缓存区的更新，并可以光栅化三角面片以及进行纹理操作，但是缺乏三维顶点的空间坐标变换能力，这意味着“必须依赖与CPU执行顶点坐标变换的计算”。这一时期的GPU功能非常有限，只能用于纹理组合的数学计算或者像素颜色值得计算。&lt;/p&gt;
-
-&lt;p&gt;第二代GPU，NVIDIA于1999年推出一款显示核心代号NV10的geforce 256，率先将硬体T&amp;amp;L整合到显示核中。T&amp;amp;L原先由CPU负责，或者由另一个独立处理机处理。这次整合T&amp;amp;L是一大进步，原因是显视核心从CPU接管了大量工作。硬件T&amp;amp;L引擎带来的效果是3D 模型可以用更多的多边形来描绘，这样就拥有了更加细腻的效果。而对光照来说，CPU不必在计算大量的光照数据，直接通过显卡就能获得更好的效能。同时，这一阶段的GPU对于纹理的操作也扩展到了立方体纹理（Cube Map）。NVIDIA的GeForce MAX,ATI的Radeon 7500等都是在这一阶段研发的。&lt;/p&gt;
-
-&lt;p&gt;第三代GPU，2001年是第三代Modern GPU的发展时期，这一时期研发的GPU提供Vertex Programmability (顶点编程能力)，如GeForce 3，GeForce 4Ti，ATI 的8500等。这些GPU允许应用程序指定一个序列的指令进行顶点操作控制，这是一个具有开创意义的时期，这一时期确立的GPU编程思想一直延续到今天，不但深入到工程领域帮助改善人类日常生活（医疗、地质勘探、游戏、电影），而且开创或延伸了计算机科学的诸多研究领域（人体绘制、光照模拟、人群动画、通用计算等）。同时Direct8和OpenGL都本着与时俱进的精神，提供了支持Vertex Programmability的发展。不过，这一时期的GPU还不支持像素级的编程能力，即Fragment Programmability(片段编程能力)。&lt;/p&gt;
-
-&lt;p&gt;第四代GPU，发展时期从2002年末到2003年。NVIDIA的GeForceFX和ATI Radeon 9700同时在市场的舞台上闪亮登场，这两种GPU都支持顶点编程和片段编程。同时DriectX和OpenGL也扩展了自身的API，用以支持顶点编程和片段编程。自2003年起，可编程图形处理器正式诞生，并且由于DirectX和OpenGL契而不舍的追赶潮流，导致基于图形硬件的编程技术，简称GPU编程，也宣告诞生。&lt;/p&gt;
-
-&lt;h3 id=&quot;图形api发展史&quot;&gt;图形API发展史&lt;/h3&gt;
-
-&lt;p&gt;在 1980 年代，开发可与各种图形硬件配合使用的软件是一项真正的挑战。软件开发人员为每个硬件编写自定义接口和驱动程序。这个代价是昂贵的，将导致工作量成倍增加。到 1990 年代初，Silicon Graphics (SGI) 是工作站 3D 图形领域的领导者。他们的 IRIS GL API成为行业标准，比基于开放标准的 PHIGS 使用更广泛。&lt;/p&gt;
-
-&lt;p&gt;OpenGL、DirectX、Vulkan、Metal等都属于图形API，它的本质是封装好的显卡接口，用来将应用程序与显卡驱动联系起来。有了图形API我们可以仅仅调用它的函数来更改渲染状态、缓存顶点数据、开始绘制等等，而如果没有它，我们就需要直接调用显卡驱动的接口来进行渲染，这会涉及到非常多的硬件接口，例如对寄存器的操作，相当繁琐。一般来说我们都不会希望在渲染的同时还要去关注对硬件的控制。&lt;/p&gt;
-
-&lt;p&gt;目前比较常用的图形API：&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;OpenGL&lt;/li&gt;
-  &lt;li&gt;OpenGL ES&lt;/li&gt;
-  &lt;li&gt;OpenCV&lt;/li&gt;
-  &lt;li&gt;DirectX&lt;/li&gt;
-  &lt;li&gt;Metal&lt;/li&gt;
-  &lt;li&gt;Vunkan&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;OpenGL（Open Graphics Library），是一个跨平台、跨语言的编程图形框架，主要用于windows、mac等PC端。它将计算机资源抽象成一个个OpenGL对象，对这些资源的操作抽象为一个个OpenGL指令。&lt;/p&gt;
-
-&lt;p&gt;OpenGL ES（OpenGL for Embedded Systems），OpenGL三维图像API的子集，主要是针对嵌入式设备的图形处理，比如安卓、iOS等。它在OpenGL之上去除了许多不必要的接口，以及性能较低的接口，并且兼容了GLSL着色器语法。&lt;/p&gt;
-
-&lt;p&gt;OpenCV（Open Source Computer Vision Library），它与 OpenGL是图形API中两个大的分支，类似于iOS中的OC和swift，是两个不同的方向。OpenCV主要用于识别技术，例如人脸识别、身份识别、物体识别等，该API的使用需要与人工智能相结合。目前市面上用的最多的识别三方是 face++，且是收费的，支付宝等大厂的识别功能也是集成的face++。&lt;/p&gt;
-
-&lt;p&gt;DirectX，仅支持Windows平台，由很多API组成，是一个多媒体处理框架，并不是单一的图形API。该框架可以大致分为4类，显示、声音、输入、网络。&lt;/p&gt;
-
-&lt;p&gt;Metal，是苹果为了解决3D渲染问题而推出的框架，是为游戏开发者提供的新的平台技术，并且它将3D渲染图像的性能提高了原来的10倍。苹果系统中的CoreGraphics、CoreAnimation、CoreImage框架在2018年以前是基于OpenGL ES封装的，在2018年以后是基于Metal封装的。&lt;/p&gt;
-
-&lt;p&gt;Vunkan，Vulkan API 最初被 Khronos 称为“下一代 OpenGL 计划”，与 OpenGL、Direct3D 11 和 Metal 相比，Vulkan 旨在提供更高的性能和更平衡的 CPU 和 GPU 使用，并为应用程序提供相当低级别的 API 和并行任务。&lt;/p&gt;
-
-&lt;h3 id=&quot;opengl历史&quot;&gt;OpenGL历史&lt;/h3&gt;
-
-&lt;p&gt;SGI 的竞争对手（包括 Sun Microsystems、Hewlett-Packard 和 IBM）也能够将 PHIGS 标准扩展支持的 3D 硬件推向市场，这迫使 SGI 将 IrisGL 版本作为公共标准开源，称为 OpenGL。&lt;/p&gt;
-
-&lt;p&gt;然而，SGI的许多客户从 IrisGL 到 OpenGL 的转变需要大量投资。此外，IrisGL 具有与 3D 图形无关的 API 函数。例如，它包括一个窗口、键盘和鼠标 API等。其原因是，它是在 X Window System 和 Sun 的 NeWS 之前开发的。而且，由于许可和专利问题，IrisGL的库不适合开放。因此这个转变难度相当大，SGI公司付出了艰辛的努力，得到了市场的认可。&lt;/p&gt;
-
-&lt;p&gt;IrisGL 的限制之一是它只提供对底层硬件支持的功能的访问。如果图形硬件本身不支持某个功能，则应用程序将无法使用它。OpenGL 通过提供硬件不支持的功能的软件实现来克服这个问题，允许应用程序在相对低功耗的系统上使用高级图形。&lt;/p&gt;
-
-&lt;p&gt;OpenGL标准化了对硬件的访问，将硬件接口程序（设备驱动程序）的开发责任推给了硬件制造商，并将窗口功能委托给了底层操作系统。有了这么多不同种类的图形硬件，通过为软件开发人员提供一个用于 3D 软件开发的更高级别的平台，让它们以这种方式使用同一种语言产生了显着的影响。&lt;/p&gt;
-
-&lt;p&gt;OpenGL在1992年由SGI（Silicon Graphics Inc）发布。起初它是作为Iris GL的一个替代品而出现的。Iris GL是SGI的专用图形API，由于它有一些与3D图形无关的API以及一些专利等原因，不适合作为行业的广泛标准，于是SGI编写了OpenGL 1.0规范。在之后，每隔一段时间OpenGL便会出现新的增量更新。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;1992年，SGI发布了OpenGL 1.0。&lt;/li&gt;
-  &lt;li&gt;2003年7月，OpenGL ES 1.0发布，它是专为手机、平板电脑、游戏主机等嵌入式系统设计的一个OpenGL API子集。&lt;/li&gt;
-  &lt;li&gt;2004年9月，SGI发布了OpenGL 2.0，这其中就有GLSL 1.0（OpenGL Shading Language）的面世，这是一种类C语言，可以用它对固定管线的顶点/片段着色器进行编程。与之相伴的还支持了MRT（Multiple render targets）和NPOT（Non-power-of-two textures）。&lt;/li&gt;
-  &lt;li&gt;2006年7月，OpenGL API规范的控制权转交给非盈利组织Khronos团队。&lt;/li&gt;
-  &lt;li&gt;2008年8月，OpenGL 3.0发布，支持FBO（Framebuffer Objects）以及VAO（Vertex Array Objects）等多个功能，同时支持了非常多的特性，并且从这版开始OpenGL支持了向后兼容。&lt;/li&gt;
-  &lt;li&gt;2009年8月，OpenGL 3.2发布，废弃了固定渲染管线，发布了核心模式（Core Profile），这种模式的灵活性与效率更高，之后的迭代也都是基于这个核心架构，同时版本中增加了新的着色器阶段：几何着色器。&lt;/li&gt;
-  &lt;li&gt;2010年3月，OpenGL 3.3和OpenGL 4.0一起发布，带来了新的标准规范，自此之后GLSL的版本号与OpenGL版本号保持一致，即GLSL 3.3/4.0，同时新增了曲面细分着色器。&lt;/li&gt;
-  &lt;li&gt;2017年7月，OpenGL 4.6发布，增加了SPIR-V 着色器，SPIR-V 使高级语言前端能够以标准化的中间形式发出程序，供 Vulkan、OpenGL 或 OpenCL 驱动程序摄取。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;vulkan历史&quot;&gt;Vulkan历史&lt;/h3&gt;
-
-&lt;p&gt;Vulkan于Khronos在GDC 2015上首次公开，它也曾被叫做是“Next Generation OpenGL Initiative”(glNext)，旨在对OpenGL和OpenGL ES的一次重新设计，将两者统一到一个API中。&lt;/p&gt;
-
-&lt;p&gt;与OpenGL相同它也是一个跨平台的2D、3D图形API，不同的是它是一个Low Level图形API，即会开放出更多与内存控制相关的接口。&lt;/p&gt;
-
-&lt;p&gt;Vulkan能较好的支持多线程并行（OpenGL4.0+是为单线程设计的），这使得它的操作和维护比OpenGL复杂得多。另外OpenGL使用GLSL来编写着色器，每个显卡商需要为GLSL单独编写编译器来转换为在显卡上运行的机器码。在这点上Vulkan不同，它会先由操作系统把GLSL预编译为一种名为SPIR-V（Standard Portable Intermediate Representation）的中间码，再由显卡商编写Vulkan驱动程序对GPU进行一些特定的优化，加载速度变快了还节省了显卡商的开发及维护成本。这和Direct3D的HLSL预编译很像。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;2016年2月，Vulkan 1.0发布。&lt;/li&gt;
-  &lt;li&gt;2018年2月，Khronos发布MoltenVK，可以理解为MoltenVK是用Metal实现了Vulkan的API，这使得macOS和iOS也能支持Vulkan了。虽然绕了趟远路，但从Dota2的表现上来看，依旧比OpenGL高出了50%的帧率。&lt;/li&gt;
-  &lt;li&gt;2018年3月，Khronos和GPUOpen公开V-EZ项目，它是“Easy Mode”的缩写，是一个基于Vulkan的中间层，相比于Vulkan它保留了Vulkan的大部分API，提供了更简单的内存管理API，封装了诸多底层细节。旨在开发者更容易上手Vulkan。&lt;/li&gt;
-  &lt;li&gt;2018年3月，Vulkan 1.1发布。支持了HLSL语法以及光线追踪。可以更好的模拟DirectX 12。spirv更新至1.3。&lt;/li&gt;
-  &lt;li&gt;2020年1月，Vulkan 1.2发布。新增了23项扩展以及更好的支持HLSL。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;direct3d历史&quot;&gt;Direct3D历史&lt;/h3&gt;
-
-&lt;p&gt;Direct3D 是 Microsoft Windows 的图形应用程序编程接口 (API)。作为 DirectX 的一部分，Direct3D 用于在性能很重要的应用程序（例如游戏）中渲染 3D 图形。Direct3D 使用硬件加速（如果它在显卡上可用），允许对整个 3D 渲染管道进行硬件加速，也支持仅部分加速。&lt;/p&gt;
-
-&lt;p&gt;Direct3D 公开了 3D 图形硬件的高级图形功能，包括 Z 缓冲、W 缓冲、模板缓冲、空间抗锯齿、alpha 混合、颜色混合、Mipmapping、纹理混合，剪裁、剔除、大气效果、透视校正纹理映射、可编程 HLSL 着色器等其他图形效果。与其他 DirectX 技术的集成使 Direct3D 能够提供视频映射、2D 覆盖平面中的硬件 3D 渲染甚至精灵等功能，从而在交互式媒体关系中提供 2D 和 3D 图形的使用。&lt;/p&gt;
-
-&lt;p&gt;Direct3D 是一种立即模式图形 API。它为每个显卡的 3D 功能（转换、剪辑、照明、材质、纹理、深度缓冲等）提供了一个低级接口。立即模式呈现三个主要抽象：设备、资源和交换链。&lt;/p&gt;
-
-&lt;p&gt;设备有四种类型，HAL（硬件抽象层）设备（支持硬件加速）、参考设备（模拟不可用的新功能）、软件设备（执行软件渲染）、空设备。&lt;/p&gt;
-
-&lt;p&gt;每个设备都有一个交换链，交换链由一个或多个后台缓冲区组成，渲染发生在后台缓冲区中。&lt;/p&gt;
-
-&lt;p&gt;资源有四个属性，资源类型（表面网格、立方体纹理、索引缓冲、顶点缓冲等）、池（内存管理与存储位置）、格式（资源在内存中的布局）、用法（用标志位方式确定如何使用资源）。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;1996年6月，第一版Direct3D 2.0跟随DirectX 2.0发布，有”Retained mode”和”Immediate mode”。&lt;/li&gt;
-  &lt;li&gt;1998年8月，Direct3D 6.0发布，增加了许多新特性，如Multitexture、模板缓冲区等。&lt;/li&gt;
-  &lt;li&gt;1999年9月，Direct3D 7.0支持了T&amp;amp;L硬件加速。&lt;/li&gt;
-  &lt;li&gt;2000年11月，Direct3D 8.0发布，引进了可编程管道概念，新增了顶点/片段着色器，这个时候Direct3D完全超越了OpenGL。&lt;/li&gt;
-  &lt;li&gt;2002年12月，Direct3D 9.0发布，发布了Shader Model 2.0。支持浮点纹理格式、MRT（Multiple render targets），9.0是最后一个支持WindowsXP的版本。&lt;/li&gt;
-  &lt;li&gt;2006年11月，Direct3D 10.0发布，仅支持Windows Vista以上操作系统。固定功能管线被淘汰，取而代之的是可编程渲染管线。新增了几何着色器阶段，发布了Shader Model 4.0。&lt;/li&gt;
-  &lt;li&gt;2009年7月，Direct3D 11.0与Windows7一块被发布，Direct3D 11.0新增了曲面细分着色器和Computer Shader，支持了多线程处理技术，发布了Shader Model 5.0。&lt;/li&gt;
-  &lt;li&gt;2015年1月，Direct3D 12.0包含在Windows10一块被发布，更好支持多核心、多线程的优化，降低GPU处理瓶颈，并提升硬件功耗表现。简化了Direct3D 11中的管道状态对象（Pipeline state objects）。&lt;/li&gt;
-  &lt;li&gt;2018年10月，发布了Direct3D 12光线追踪DirectX Raytracing (DXR)的扩展包。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;metal历史&quot;&gt;Metal历史&lt;/h3&gt;
-
-&lt;p&gt;Metal是一款Low Level、Low Overhead的3D图形API，由苹果公司开发，并在2014年6月随iOS8公开。相比于OpenGL，Metal对底层拥有更大的操控性，同时又有着多线程上大量的优化。Metal Shader使用的是Metal Shader Language（MSL），是一种基于C++ 14的语言。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;2014 年 6 月，Metal发布。在由 Apple A7 或更高版本驱动的 iOS 设备上可用，并自 2015 年 6 月 8 日起在运行 OS X El Capitan 的 Mac（2012 型号或更高版本）上可用。&lt;/li&gt;
-  &lt;li&gt;2017 年 6 月，Metal第二个版本发布，Metal 2 可以在 Xcode 中实现更高效的分析和调试、加速机器学习、降低 CPU 工作负载、支持 macOS 上的虚拟现实，以及 Apple A11 GPU 的特性。&lt;/li&gt;
-  &lt;li&gt;2020 年，Apple 宣布将 Mac 迁移到 Apple 芯片，使用 Apple 芯片的 Mac 将配备 Apple GPU，其功能集结合了以前在 macOS 和 iOS 上可用的功能，并将能够利用为 Apple GPU 的基于图块的延迟渲染 (TBDR) 架构量身定制的功能。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;图形软件发展史&quot;&gt;图形软件发展史&lt;/h3&gt;
-
-&lt;p&gt;20世纪80年代，出现了许多著名的新型商业软件产品，例如Autodesk公司的AutoCAD专注于平面设计，以及它的另一个作品3D Studio专注于3D模型设计，Alias Research公司开发的Alias专注于3D模型设计。Softimage公司开发的Softimage 3D专注于集成建模、动画、渲染并成为业内标准的动画解决方案，副作用软件公司开发的Side Effects软件将程序化建模和运动产品开发成高度紧密集成的2D / 3D动画软件，并融合了多项技术突破。&lt;/p&gt;
-
-&lt;p&gt;到了20世纪90年代，随着硬件技术的提升，图形软件技术也开始蓬勃发展，产生一批顶级的3D图形软件，例如CAD、3MAX、MAYA、SOFTIMAGE、HOUDINI等。借助这些软件，可以大大降低制作模型和动画的成本。&lt;/p&gt;
-
-&lt;p&gt;因此90年开始，图形技术发展进入了重大的改革，不仅在技术上大举突破了各类瓶颈，在图形软件上有了大的进化，而且计算机图形技术开始渗透影视、动画、游戏等各行各业。&lt;/p&gt;
-
-&lt;h2 id=&quot;图形技术发展史&quot;&gt;图形技术发展史&lt;/h2&gt;
-
-&lt;p&gt;群体动物移动行为，群体行为的数学模型首先由Craig Reynolds于1986年在计算机上模拟，并很快在3D动画开始大规模使用。&lt;/p&gt;
-
-&lt;p&gt;动作捕捉，80年代就开始基于计算机的动作捕作为摄影测量分析工具，表演者佩戴标记每个关节附近的标记之间的位置或角度来识别运动。&lt;/p&gt;
-
-&lt;p&gt;运动跟踪，90年代中期，匹配移动（也称为运动跟踪或摄像头跟踪）虽然与动作捕捉有关，但却是一种完全不同的技术。除了使用特殊的相机和传感器来记录主体的运动外，还会将移动作品与预先存在的实时镜头相匹配，并单独使用计算机软件通过多个框架跟踪场景中的特定点，从而允许插入CGI元素以相对于现有材料的正确位置、比例、方向和运动进入镜头。&lt;/p&gt;
-
-&lt;p&gt;虚拟演播室，虚拟演播室是一个工作室，这种虚拟场景在90年代电视节目中很普遍，它可以以无缝方式，实时组合人或其他真实物体，包括计算机生成的环境和物体。它要求3D CGI环境自动锁定，进而精确跟踪角色在实时相机和镜头前的任何移动。这种系统的精髓在于它使用某种形式的相机来跟踪创建一个实时的数据流，同时会使用CGI渲染软件，软件使用相机跟踪数据并生成完美拼接的虚拟合成图像。&lt;/p&gt;
-
-&lt;p&gt;法线贴图，1996年，Krishnamurty和Levoy发明了法线贴图，这是对Jim Blinn 凹凸贴图的改进。&lt;/p&gt;
-
-&lt;p&gt;PBR&amp;amp;卡通材质，这两个技术都是围绕画风的，PBR 指的是”Physically Based Rendering”， 简化了物理材质的计算流程，用接近物理正确的效果来渲染材质表面，材质包括绝缘体和金属材质两种。卡通渲染（英语：Toon Shading）是一种非真实感绘制（NPR），卡通渲染又称赛璐珞渲染（Cel-shading），旨在使电脑生成的图像呈现出手绘般的效果。为了使图像可以与漫画或者卡通达到形似的效果，专业人员通常使用卡通渲染着色器进行处理。&lt;/p&gt;
-
-&lt;p&gt;高动态光照（HDRR，High-Dynamic Range rendering），人在黑暗的地方，为了看清楚对象，瞳孔会放大，以吸收更多光线；当突然走到光亮的地方，瞳孔来不及收缩，所以眯起眼睛，保护视网膜上的视神经。而电脑无法判断光线明暗，唯有靠HDRR技术模拟这效果——人眼自动适应光线变化的能力。方法是快速将光线渲染得非常光亮，然后将亮度逐渐降低。HDRR的最终效果是亮处的效果是鲜亮，而黑暗处的效果是能分辨物体的轮廓和深度，而不是以往的一团黑。&lt;/p&gt;
-
-&lt;p&gt;体积光，可以让用户看到光束效果，例如在一个画面中用户能看到太阳光束射入敞开的窗户，这就是典型的体体积光技术体现。&lt;/p&gt;
-
-&lt;p&gt;early-z-test，发生在顶点着色器后像素着色器之前的深度测试，原本深度测试在填充率、光照、纹理或像素着色器成为主要瓶颈的情况下已经成为了一个很好的优化，early-z-test这种技术将深度测试更进一步，提前到顶点着色器之后去完成，它节省了片元着色器的计算，但前提是片元着色器中不会有alpha混合和discard操作。&lt;/p&gt;
-
-&lt;p&gt;光线追踪（Ray Tracing），是三维计算机图形学中的特殊渲染算法，追踪光线从来源开始照射到物体上，再由物体反射的光线“路径”，由于完整运算所有路径十分消耗运算资源，因此现有光线追踪技术仅运算“目所能及”的光线路径，由于是从玩家视角开始进行运算，有时被误解为光线追踪是追踪“从眼睛发出的光线”。通过这样一项技术生成编排好的场景的数学模型显现出来。这样得到的结果类似于光线投射与扫描线渲染方法的结果，但是这种方法有更好的光学效果，例如对于反射与折射有更准确的模拟效果，并且效率非常高，所以当追求高质量的效果时经常使用这种方法。 在物理学中，光线追迹可以用来计算光束在介质中传播的情况。在介质中传播时，光束可能会被介质吸收，改变传播方向或者射出介质表面等。我们通过计算理想化的窄光束（光线）通过介质中的情形来解决这种复杂的情况。 在实际应用中，可以将各种电磁波或者微小粒子看成理想化的窄波束（即光线），基于这种假设，人们利用光线追迹来计算光线在介质中传播的情况。光线追迹方法首先计算一条光线在被介质吸收，或者改变方向前，光线在介质中传播的距离，方向以及到达的新位置，然后从这个新的位置产生出一条新的光线，使用同样的处理方法，最终计算出一个完整的光线在介质中传播的路径。&lt;/p&gt;
-
-&lt;p&gt;其他等等渲染技术非常多，这里点到为止不再延伸开来。&lt;/p&gt;
-
-&lt;h2 id=&quot;游戏制作团队&quot;&gt;游戏制作团队&lt;/h2&gt;
-
-&lt;p&gt;这里简单介绍下游戏制作团队，虽然大多数人都知道这些知识，但不妨碍我们回顾与总结。&lt;/p&gt;
-
-&lt;p&gt;艺术家：
-概念艺术家、三维建模师、纹理艺术家、灯光师、动画师、动捕演员、音效师、配音演员、作曲家等&lt;/p&gt;
-
-&lt;p&gt;产品设计：
-游戏设计师、数值设计师、关卡设计师、系统设计师、AI设计师、剧情设计师、操作设计师、技能设计师、制作人等&lt;/p&gt;
-
-&lt;p&gt;软件工程师：
-引擎工程师、渲染工程师、游戏系统工程师、AI工程师、网络工程师、构建工程师、工具开发工程师、架构工程师、效能工程师、中间件工程师、安全工程师、测试工程师等&lt;/p&gt;
-
-&lt;h2 id=&quot;运行时引擎架构概述&quot;&gt;运行时引擎架构概述&lt;/h2&gt;
-
-&lt;p&gt;游戏引擎通常由工具套件和运行时组件两部分构成。这里我们主要来说说运行时组件部分。&lt;/p&gt;
-
-&lt;p&gt;与所有软件系统一样，游戏引擎也是由软件层构建的，即我们通常说的，上层依赖下层，下层不依赖上层，每层中各模块之间不相互依赖，这样的低耦合、高重用度架构在大型软件系统架构中是非常关键的设计。&lt;/p&gt;
-
-&lt;p&gt;《游戏引擎架构》一书中对整体架构做了介绍，但我认为内容过于粗浅，也有点过时了，于是我自己重新画了架构图。&lt;/p&gt;
-
-&lt;p&gt;我把整个运行时引擎架构分为十三个层级，每个层级都是只依赖下层，这十三个层级分别为：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;目标硬件层&lt;/li&gt;
-  &lt;li&gt;设备驱动层&lt;/li&gt;
-  &lt;li&gt;操作系统层&lt;/li&gt;
-  &lt;li&gt;平台独立层&lt;/li&gt;
-  &lt;li&gt;第三方中间件&lt;/li&gt;
-  &lt;li&gt;核心库&lt;/li&gt;
-  &lt;li&gt;资产管理层&lt;/li&gt;
-  &lt;li&gt;底层渲染器&lt;/li&gt;
-  &lt;li&gt;引擎核心层&lt;/li&gt;
-  &lt;li&gt;引擎应用层&lt;/li&gt;
-  &lt;li&gt;业务基础层&lt;/li&gt;
-  &lt;li&gt;游戏框架层&lt;/li&gt;
-  &lt;li&gt;游戏业务层&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;下面来简单解释一下每个层级的拆解理念：&lt;/p&gt;
-
-&lt;p&gt;目标硬件层，代表用来执行游戏的主机硬件。&lt;/p&gt;
-
-&lt;p&gt;设备驱动层，是操作系统或硬件商提供的最低阶软件组件。负责管理硬件资源、也隔离了操作系统及上层引擎。&lt;/p&gt;
-
-&lt;p&gt;操作系统层，管理协调整台计算机上多个程序的执行工作，进程通过调用操作系统的接口来访问操作系统。&lt;/p&gt;
-
-&lt;p&gt;平台独立层，包装了常用的库和操作系统接口，供所有平台使用。&lt;/p&gt;
-
-&lt;p&gt;第三方中间件，提供了独立的解决方案，简化开发流程，缩短开发时间。包括标准库、图形接口等。&lt;/p&gt;
-
-&lt;p&gt;核心库，是由许许多多独立的软件工具库组成。这些库常常被引擎上层频繁使用，同时也是非常实用的软件工具。&lt;/p&gt;
-
-&lt;p&gt;资产管理层，提供资源增删改查的完整解决方案，通常会提供一组统一的接口，供引擎和业务去访问任意的游戏资源。&lt;/p&gt;
-
-&lt;p&gt;底层渲染器，提供最原始的渲染功能，根据应用层的数据调用图形API进行渲染。它通常会经过封装，从业务渲染提交的过程中拆解出来。&lt;/p&gt;
-
-&lt;p&gt;引擎核心层，为应用层提供了最核心的功能，包括音频、动画、物理、剔除与合批、手柄设备接口等。&lt;/p&gt;
-
-&lt;p&gt;引擎应用层，在核心层之上建立起来的引擎业务，包括性能剖析工具、UI核心框架、粒子系统、后处理系统等。&lt;/p&gt;
-
-&lt;p&gt;业务基础层，引擎为游戏框架搭建而做的基础功能，是提供给实现游戏逻辑的重要功能与接口。&lt;/p&gt;
-
-&lt;p&gt;游戏框架层，通过调用业务基础层来搭建的游戏框架，是游戏实现自身逻辑的框架，也是游戏逻辑的核心。&lt;/p&gt;
-
-&lt;p&gt;游戏业务层，是实现具体游戏业务的逻辑，通过调用游戏框架来实现具体的业务逻辑。&lt;/p&gt;
-
-&lt;h3 id=&quot;游戏引擎架构图&quot;&gt;游戏引擎架构图&lt;/h3&gt;
-
-&lt;p&gt;在拆解了整个引擎的架构时，由于模块太多，因此只列了一些主要的模块，保持了基本架构的完整性：&lt;/p&gt;
-
-&lt;p&gt;架构图中的重要模块，将在后面的文章中做详细的分析和解剖。&lt;/p&gt;
-
-&lt;h3 id=&quot;参考资料&quot;&gt;参考资料：&lt;/h3&gt;
-
-&lt;p&gt;《游戏引擎架构》 译者：叶劲峰&lt;/p&gt;
-
-&lt;p&gt;《3D游戏引擎发展史》&lt;/p&gt;
-
-&lt;p&gt;https://www.bilibili.com/read/cv6499569/&lt;/p&gt;
-
-&lt;p&gt;《游戏引擎wiki》&lt;/p&gt;
-
-&lt;p&gt;https://zh.wikipedia.org/wiki/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E&lt;/p&gt;
-
-&lt;p&gt;《你不能不知道的计算机图形技术发展史》1、2&lt;/p&gt;
-
-&lt;p&gt;https://www.bilibili.com/read/cv196689&lt;/p&gt;
-
-&lt;p&gt;https://www.bilibili.com/read/cv221830&lt;/p&gt;
-
-&lt;p&gt;《了解图形接口》&lt;/p&gt;
-
-&lt;p&gt;https://www.jianshu.com/p/9dea5f163837&lt;/p&gt;
-
-&lt;p&gt;《图形API发展历史》&lt;/p&gt;
-
-&lt;p&gt;https://blog.csdn.net/ce1061183126/article/details/106159169&lt;/p&gt;
-
-&lt;p&gt;《卡通渲染 Wiki》&lt;/p&gt;
-
-&lt;p&gt;https://zh.wikipedia.org/wiki/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93&lt;/p&gt;
-
-&lt;p&gt;《高动态光照渲染》&lt;/p&gt;
-
-&lt;p&gt;https://zh.wikipedia.org/wiki/%E9%AB%98%E5%8A%A8%E6%80%81%E5%85%89%E7%85%A7%E6%B8%B2%E6%9F%93&lt;/p&gt;
-
-&lt;p&gt;《Metal Wiki》&lt;/p&gt;
-
-&lt;p&gt;https://en.wikipedia.org/wiki/Metal_(API)#History&lt;/p&gt;
-
-&lt;p&gt;《Direct3D Wiki》&lt;/p&gt;
-
-&lt;p&gt;https://en.wikipedia.org/wiki/Direct3D#Direct3D_12&lt;/p&gt;
-
-&lt;p&gt;《OpenGL Wiki》&lt;/p&gt;
-
-&lt;p&gt;https://en.wikipedia.org/wiki/OpenGL&lt;/p&gt;
-
-&lt;p&gt;《Vulkan Wiki》&lt;/p&gt;
-
-&lt;p&gt;https://en.wikipedia.org/wiki/Vulkan_(API)&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247484890&amp;amp;idx=1&amp;amp;sn=1d319050c82fed232d22f1f3dfce0cd3&amp;amp;chksm=fc2260ddcb55e9cbbda832e90def1e8e7440b7ffc85c60264be83d9c6bc62162c5b05839839b&amp;amp;token=834275592&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
-</description>
-               <pubDate>Sun, 29 Aug 2021 00:00:00 +0800</pubDate>
-               <link>http://www.luzexi.com/2021/08/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B042</link>
-               <guid isPermaLink="true">http://www.luzexi.com/2021/08/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B042</guid>
             </item>
         
     </channel>
