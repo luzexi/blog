@@ -4,13 +4,71 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2021-12-21T20:06:22+08:00</updated>
+ <updated>2021-12-29T11:17:43+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email>jesse_luzexi@163.com</email>
  </author>
 
+ 
+ <entry>
+   <title>新书发售《Unity3D高级编程-主程手记》</title>
+   <link href="http://www.luzexi.com/2021/12/29/%E6%96%B0%E4%B9%A6%E5%8F%91%E5%94%AE"/>
+   <updated>2021-12-29T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2021/12/29/新书发售</id>
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247485108&amp;amp;idx=1&amp;amp;sn=b949ce0d6f031a2108586940aa0eadfa&amp;amp;chksm=fc2263b3cb55eaa5b5c3fe41399d47d7f1e0f66ce5b130c0e31648be035e9535f5c6c3d5ed39&amp;amp;token=330432434&amp;amp;lang=zh_CN#rd&quot;&gt;已发布微信公众号&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/fengmian.jpg&quot; alt=&quot;封面&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;新书发售了感恩朋友们的厚爱&quot;&gt;新书发售了，感恩朋友们的厚爱。&lt;/h3&gt;
+
+&lt;p&gt;这么多年读书与写作给我最大的体会是，&lt;/p&gt;
+
+&lt;p&gt;静下心来保持专注，是最有效率的。&lt;/p&gt;
+
+&lt;p&gt;希望自己继续保持这份专注，并用最真诚的方式对待朋友们。&lt;/p&gt;
+
+&lt;h3 id=&quot;本书共10章每章都是一个独立的知识领域读者可以按照章节顺序阅读本书也可以根据喜好挑选自己感兴趣的章节学习&quot;&gt;本书共10章，每章都是一个独立的知识领域，读者可以按照章节顺序阅读本书，也可以根据喜好挑选自己感兴趣的章节学习。&lt;/h3&gt;
+
+&lt;p&gt;第1章讲了架构的意义、架构的原理以及如何实现架构。&lt;/p&gt;
+
+&lt;p&gt;第2章对C#技术的基础知识做了讲解。&lt;/p&gt;
+
+&lt;p&gt;第3章针对客户端中的表格数据、程序的协作与应用进行讲解。&lt;/p&gt;
+
+&lt;p&gt;第4章讲解了用户界面（UI）的工作原理与优化方法。&lt;/p&gt;
+
+&lt;p&gt;第5章针对3D模型的原理、动画的原理以及两者的优化做了详细的讲解。&lt;/p&gt;
+
+&lt;p&gt;第6章讲解的是网络层的业务架构与底层原理。&lt;/p&gt;
+
+&lt;p&gt;第7章针对各类AI做了详细的讲解。&lt;/p&gt;
+
+&lt;p&gt;第8章主要讲解场景构建与优化、地图构建以及寻路算法优化的相关知识。&lt;/p&gt;
+
+&lt;p&gt;第9章讲解了图形数学、图形学常用算法、渲染管线的相关知识。&lt;/p&gt;
+
+&lt;p&gt;第10章针对客户端各类渲染技术的渲染原理做了详细的解剖。&lt;/p&gt;
+
+&lt;h3 id=&quot;此书非常适合那些上进积极热爱技术的伙伴们&quot;&gt;此书非常适合那些上进、积极、热爱技术的伙伴们。&lt;/h3&gt;
+
+&lt;p&gt;如果你想更上一层楼，想了解主程需要做什么，主程需要哪方面的技术深度，就来看看这本书。&lt;/p&gt;
+
+&lt;p&gt;整本书字里行间都透露着对游戏开发的深度理解，以及对主程工作的感悟。&lt;/p&gt;
+
+&lt;h3 id=&quot;20211228预售开始了后面的日子里会陆续上架各大平台包括新华书店机械工业出版社平台以及当当网&quot;&gt;2021.12.28，预售开始了，后面的日子里会陆续上架各大平台，包括新华书店、机械工业出版社平台、以及当当网。&lt;/h3&gt;
+
+&lt;h2 id=&quot;感恩遇见&quot;&gt;感恩遇见&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/shudian1.jpg&quot; alt=&quot;淘宝预售&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/shudian3.jpg&quot; alt=&quot;京东预售&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/book/shudian2.jpg&quot; alt=&quot;淘宝搜索&quot; /&gt;&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>读书笔记(五十一) 《游戏引擎架构》#4 低阶渲染器（4）</title>
