@@ -8,7 +8,11 @@ title: 我的简介
 
 曾就职：盛大游戏，动视暴雪Activision，Gumi日本，百游Baiyou
 
-### 最近在努力出版《Unity3D高级编程之进阶主程》这本书
+### 出版了《Unity3D高级编程-主程手记》
+
+[《Unity3D高级编程-主程手记》](https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&mid=2247485108&idx=1&sn=b949ce0d6f031a2108586940aa0eadfa&chksm=fc2263b3cb55eaa5b5c3fe41399d47d7f1e0f66ce5b130c0e31648be035e9535f5c6c3d5ed39&token=330432434&lang=zh_CN#rd)
+
+### 正在规划新书：《Unity3D高级编程-主程手记2》
 
 <!-- 
 ### Game Project：
