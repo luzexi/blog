@@ -4,13 +4,774 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2022-01-21T16:14:32+08:00</updated>
+ <updated>2022-03-10T21:09:06+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email>jesse_luzexi@163.com</email>
  </author>
 
+ 
+ <entry>
+   <title>读书笔记(五十五) 如何做好PPT - PPT内容策略</title>
+   <link href="http://www.luzexi.com/2022/03/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B055"/>
+   <updated>2022-03-09T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2022/03/09/读书笔记55</id>
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247485214&amp;amp;idx=1&amp;amp;sn=26d7841d6ddbb23925b2be5c7d914256&amp;amp;chksm=fc226219cb55eb0f168abb24ffeeaa1f7d899ff43fd2a308de29a67bb20925644d244c07d174&amp;amp;token=537319754&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;背景&quot;&gt;背景：&lt;/h1&gt;
+
+&lt;p&gt;近段时间在练习演讲，一开始只是想练习下自己的口头表达能力和沟通能力，但渐渐的我发现我喜欢上了演讲，它不仅可以锻炼我的表达能力，还能锻炼我对知识的理解和总结能力。&lt;/p&gt;
+
+&lt;p&gt;这段时间里，我发现演讲的其中关键用途是汇报和分享，这让我欣喜若狂。
+同时苦于自己不太会写PPT，屡次上台屡次搞砸，这激起了我对PPT学习的渴望。&lt;/p&gt;
+
+&lt;p&gt;实际上观众除了听到还要看到，这种视觉呈现分为两种，一种是身体和语音演绎出来，另一种就是PPT呈现出来的，PPT如同台上的演绎，它让演讲内容呈现的更优雅更人性化，在听觉和视觉双重冲击之下发挥演讲的最大效果。&lt;/p&gt;
+
+&lt;p&gt;我找了四本同类书籍，《PPT设计的艺术》、《你就是干不过做PPT的》、《精进PPT》、《PPT设计思维、技术与实践》进行主题阅读，看完后根据自己的实践经验和对书本知识的理解做回顾和总结。&lt;/p&gt;
+
+&lt;h1 id=&quot;概述&quot;&gt;概述：&lt;/h1&gt;
+
+&lt;p&gt;本篇基于《你就是干不过做PPT的》、《精进PPT》《PPT设计思维、技术与实现》三本书，结合我的经验总结。&lt;/p&gt;
+
+&lt;p&gt;前者对于PPT的策略性会更多一些，后者两者更多是制图上的技巧，&lt;/p&gt;
+
+&lt;p&gt;说实话我对制图技巧不太感兴趣，其方法在前一篇总结过一些，这里不再重复。&lt;/p&gt;
+
+&lt;p&gt;看书前给自己提了几个问题以便在文中解答：&lt;/p&gt;
+
+&lt;p&gt;1.优秀的PPT的核心是什么？&lt;/p&gt;
+
+&lt;p&gt;2.它有哪几个特点？&lt;/p&gt;
+
+&lt;p&gt;3.我在制作过程中需要注意哪些要点？&lt;/p&gt;
+
+&lt;p&gt;4.有哪些技巧我可以使用？&lt;/p&gt;
+
+&lt;h1 id=&quot;目录&quot;&gt;目录：&lt;/h1&gt;
+
+&lt;p&gt;1.如何让观众容易理解&lt;/p&gt;
+
+&lt;p&gt;2.如何抓住观众的注意力&lt;/p&gt;
+
+&lt;p&gt;3.如何增强说服力&lt;/p&gt;
+
+&lt;h1 id=&quot;内容&quot;&gt;内容：&lt;/h1&gt;
+
+&lt;p&gt;前文主要讲了PPT设计，它主要有两个关键&lt;/p&gt;
+
+&lt;p&gt;1.传递一个核心观念&lt;/p&gt;
+
+&lt;p&gt;2.围绕核心观念打造呈现效果&lt;/p&gt;
+
+&lt;p&gt;本文与前文相同点都是，传递一个核心观念。不同的是，前文讲了很多如何用视觉冲击去打造呈现效果，而本文主要讲的如何用策略去打造呈现效果。&lt;/p&gt;
+
+&lt;p&gt;书中多次提到一个词，‘一次成功’，这个词语很吸引我，&lt;/p&gt;
+
+&lt;p&gt;因为我每次做PPT都在想一个问题：我如何才能让这个PPT‘成功’&lt;/p&gt;
+
+&lt;p&gt;具体的技巧文章中会一一介绍，我将这些技巧融入到生活中去，让自己在生活中练习，在练习中生活。&lt;/p&gt;
+
+&lt;p&gt;其实整本书本身的排序和制作就很好的诠释了如何做资料这件事，&lt;/p&gt;
+
+&lt;h3 id=&quot;开头就有一句话让我恍然大悟一般看一个人制作的资料就能大体知道他的工作能力是优秀还是平庸&quot;&gt;开头就有一句话让我恍然大悟：一般看一个人制作的资料就能大体知道他的工作能力是优秀还是平庸。&lt;/h3&gt;
+
+&lt;p&gt;这句话打开了我对整本书的浓厚的兴趣。&lt;/p&gt;
+
+&lt;p&gt;原来一个人的工作能力，可以如实地反映在他所制作的资料当中。&lt;/p&gt;
+
+&lt;p&gt;经过这几年的历练，我觉得这句话说的毫不夸张。&lt;/p&gt;
+
+&lt;p&gt;下面文章中提到的‘PPT’字样实际上完全可以替换为‘资料’二字同样适用。&lt;/p&gt;
+
+&lt;p&gt;先搬出PPT制作流程和打磨流程，以便大家明白这篇文章能帮助你到什么程度：
+1.确定主题
+2.明确核心观点，观点需用简洁的语句表达
+3.为内容写大致的结构，初步思考下表达顺序
+4.为每页PPT制作具体的内容，首版内容可以不用太精细
+5.整理表达顺序，排序下把重要的提上来先说
+6.优化每页内容，包括例子、数据、图片、图表、图标等
+7.优化视觉效果，调整排版，精简内容，更多留白，调整颜色数量和饱和度，适当加入动画
+8.尝试自己对着PPT阐述一次，并记录下自己阐述的内容成为备稿
+9.将备稿内容文字优化并持续练习
+10.练习时将稿件内容映射到PPT的图像中
+11.持续打磨，练习，调整，直到上台&lt;/p&gt;
+
+&lt;h1 id=&quot;特点&quot;&gt;特点&lt;/h1&gt;
+
+&lt;p&gt;书中说优秀的‘资料’有6个共同的特点：
+1.容易理解的表达顺序
+2.第一页抓住读者的心，最后一页促成决策
+3.用细节增强说服力
+4.短小精悍一目了然
+5.图表图解引起重视
+6.突出重点化繁为简&lt;/p&gt;
+
+&lt;p&gt;（三个核心图）&lt;/p&gt;
+
+&lt;p&gt;我觉得这6点说的不错，同时仍然觉得有点多，人们很难记得住并运用，&lt;/p&gt;
+
+&lt;p&gt;因此我结合四本书对PPT内容策略提出了3个核心：&lt;/p&gt;
+
+&lt;h3 id=&quot;1观众容易理解包括顺序和结构&quot;&gt;1.观众容易理解，包括顺序和结构&lt;/h3&gt;
+&lt;h3 id=&quot;2抓住观众的注意力尤其是每一部分的开头和收尾&quot;&gt;2.抓住观众的注意力，尤其是每一部分的开头和收尾&lt;/h3&gt;
+&lt;h3 id=&quot;3增强说服力用数字和细节去增强说服力&quot;&gt;3.增强说服力，用数字和细节去增强说服力&lt;/h3&gt;
+
+&lt;p&gt;下面我就围绕这3个核心，结合个人实战和经验，将这四本书合起来做一个综合性的陈述。&lt;/p&gt;
+
+&lt;h1 id=&quot;怎么才能让观众容易理解&quot;&gt;怎么才能让观众容易理解？&lt;/h1&gt;
+
+&lt;p&gt;很多人都按自己喜欢的顺序表达，自己喜欢讲到哪里就是哪里，自己是爽了，别人完全听不懂。&lt;/p&gt;
+
+&lt;p&gt;实际上对于一份听不懂的PPT报告，没人会想做出行动或给予好的决策。&lt;/p&gt;
+
+&lt;p&gt;曾经的我就是这样一个人，喜欢按自己的方式去表达，去做PPT，结果，谁都听不懂，没有任何的结果。&lt;/p&gt;
+
+&lt;p&gt;因此在做PPT时，我们首先要考虑的事情是，如何让对方能够容易理解我们所要表达的内容。&lt;/p&gt;
+
+&lt;p&gt;原理是一些有关倾听和讲述的知识挺多的可以在《如何讲好一个故事里》学到，简单来说，我们一般在听别人讲话时，通常都不愿意听一大堆解释和判断，反过来也是一样，我们在制作PPT的时候，&lt;/p&gt;
+
+&lt;h3 id=&quot;如果能先给结论或要点对方听和看起来就会舒服很多&quot;&gt;如果能先给结论或要点，对方听和看起来就会舒服很多。&lt;/h3&gt;
+
+&lt;p&gt;实际上，想让对方听懂我们所表达的内容，技巧有很多，其中最关键的是表达结构。&lt;/p&gt;
+
+&lt;h2 id=&quot;1表达结构&quot;&gt;1.表达结构&lt;/h2&gt;
+
+&lt;p&gt;金字塔结构常用于降低听众的理解难度，结论先行，归类分组，层层递进，最后强化结论。&lt;/p&gt;
+
+&lt;p&gt;（结论先行图）&lt;/p&gt;
+
+&lt;p&gt;另外表达内容的分类方法有5种，包括二分法（A、B分类）、过程法（时间分类、流程分类）、要素法（上下分类、内外分类、整体到局部分类）、公式法（成功 = 思维方式 x 热情 x 能力）、矩阵法（四象限分类，重要的、不重要的、紧急的、不紧急的）。这些分类方法具体不细说了，大家也略有所闻。&lt;/p&gt;
+
+&lt;p&gt;还有些分析方法，PDCA、SWOT等，不再列举，&lt;/p&gt;
+
+&lt;h3 id=&quot;他们核心都是结构表达即有次序有分类有总结&quot;&gt;他们核心都是：结构表达，即有次序、有分类、有总结。&lt;/h3&gt;
+
+&lt;p&gt;同时也可以使用‘问题与方案’的方式，先描述问题再提出方案的方式来制作PPT。
+在描述问题需要些技巧，否则很容易变得单调乏味，将在后面的抓住注意力内容里说明。&lt;/p&gt;
+
+&lt;h2 id=&quot;2需要注意的细节技巧&quot;&gt;2.需要注意的细节技巧：&lt;/h2&gt;
+
+&lt;p&gt;结构表达时，观点不能超过3个&lt;/p&gt;
+
+&lt;p&gt;对比方案，能让方案本身更清晰&lt;/p&gt;
+
+&lt;p&gt;尽量不使用晦涩难懂的说法，因为只有能力不足的人才直接使用专业术语&lt;/p&gt;
+
+&lt;p&gt;最大限度的精简词汇，删除重复内容、修饰词、介词&lt;/p&gt;
+
+&lt;p&gt;留白，一页内容尽量少，只表达重要内容&lt;/p&gt;
+
+&lt;p&gt;用突出（上色和圈线），排序，连接（箭头和连线）的方式引导观众目光轨迹&lt;/p&gt;
+
+&lt;p&gt;用树状图，能将复杂的结构拆解的更容易理解&lt;/p&gt;
+
+&lt;p&gt;当需要在多个选项中选一个时，矩阵图可以将其优点和缺点表现出来&lt;/p&gt;
+
+&lt;p&gt;明确目的，让大家都知道当前展示的目的，然后以此为前提，聆听你的讲解&lt;/p&gt;
+
+&lt;p&gt;鲜明的标题，让大家知道该页要讲的内容&lt;/p&gt;
+
+&lt;p&gt;其实以上所有的结构和技巧都是为了：突出重点，化繁为简。&lt;/p&gt;
+
+&lt;p&gt;让观众的注意力从纷繁复杂的内容中解脱出来，更聚焦于我们想要表达的核心观点上。&lt;/p&gt;
+
+&lt;h2 id=&quot;3用总结页帮助观众理清内容&quot;&gt;3.用总结页帮助观众理清内容&lt;/h2&gt;
+
+&lt;p&gt;很多长文PPT都需要总结页，因为总结页可以强调结论，同时也帮助观众梳理内容。&lt;/p&gt;
+
+&lt;p&gt;总结页在制作时也同样可以帮助自己梳理结构、理清思路。&lt;/p&gt;
+
+&lt;p&gt;注意：先把PPT（资料）的结构确定好之后，再集中精力去思考内容。&lt;/p&gt;
+
+&lt;h1 id=&quot;如何抓住对方的注意力&quot;&gt;如何抓住对方的注意力?&lt;/h1&gt;
+
+&lt;p&gt;一份优秀的PPT，开头一定会有吸引人的内容。&lt;/p&gt;
+
+&lt;p&gt;首先换位思考下，通常我们对于自己感兴趣的话题，以及与自己相关的语言会比较感兴趣。&lt;/p&gt;
+
+&lt;p&gt;反过来也是一样，当我们成为讲述者时，要考虑对方感兴趣的事情，以及与对方有关的话题，才能引起对方的注意。有时候需要我们在对方和我之间找到一个共同点或共同利益点，让彼此能够链接起来，比如我们的目标和对方的想法相结合就能碰撞出精彩的火花。&lt;/p&gt;
+
+&lt;p&gt;我们可以用三个角度去审视我们的PPT：&lt;/p&gt;
+
+&lt;p&gt;1.对方视角，对方做决策时重视什么？
+2.自身视角，有没有充分体现自己的见解？
+3.数字视角，有没有具体的数字和方案？&lt;/p&gt;
+
+&lt;h2 id=&quot;一从决策者的角度想问题&quot;&gt;一，从决策者的角度想问题&lt;/h2&gt;
+
+&lt;p&gt;由于最终是由决策者来决定是否使用我们的方案，因此我们必须以终为始，思考决策者想要什么?&lt;/p&gt;
+
+&lt;p&gt;这需要我们观察对方重视的是什么，这样可以站在对方的角度来思考我们制作的资料。&lt;/p&gt;
+
+&lt;p&gt;例如，他在阅读汇报资料时，想知道的是‘结果’还是‘解决方案’，还是其他的比如某类知识。&lt;/p&gt;
+
+&lt;h3 id=&quot;实际上善于制作优秀ppt的人在日常工作中就会仔细观察其他人究竟重视什么&quot;&gt;实际上，善于制作优秀PPT的人，在日常工作中就会仔细观察其他人究竟重视什么？&lt;/h3&gt;
+
+&lt;p&gt;只有站在决策者的角度想问题，我们才能提出更好的抓住决策者注意力的资料。&lt;/p&gt;
+
+&lt;p&gt;我们可以从决策者重视的东西，反推出我应该如何与我们的情况相结合。&lt;/p&gt;
+
+&lt;p&gt;例如，我们制定的目标是否与决策者想要的一致，我们遇到的问题是否与决策者的想要的有相关性，我们的计划是否与决策者重视的有密切联系。&lt;/p&gt;
+
+&lt;h2 id=&quot;二自己独特的见解&quot;&gt;二、自己独特的见解&lt;/h2&gt;
+
+&lt;p&gt;除了考虑对方重视什么，还要考虑自己的独特见解。&lt;/p&gt;
+
+&lt;h3 id=&quot;很多时候决策者不单单要选出好方案更要选出能胜任的人&quot;&gt;很多时候，决策者不单单要选出好方案，更要选出能胜任的人。&lt;/h3&gt;
+
+&lt;p&gt;因此要展现出自己的独特见解以及热情，让决策者的决策方向偏向于我们。&lt;/p&gt;
+
+&lt;p&gt;（独特的见解示例图）&lt;/p&gt;
+
+&lt;p&gt;在PPT中加入自己的思考并讲述独特之处：&lt;/p&gt;
+
+&lt;p&gt;1.我的方案与别人相比有哪些独特之处，
+2.遇到问题时我有怎样的独特方式，
+3.计划中是如何根据自己独特理解来调整的&lt;/p&gt;
+
+&lt;p&gt;总之，论述自己独特的见解，可以让人眼前一亮的感觉，这会让决策者相信我们深入思考了这些问题，并拥有自己的理解。&lt;/p&gt;
+
+&lt;h2 id=&quot;三放大问题&quot;&gt;三、放大问题&lt;/h2&gt;
+
+&lt;p&gt;通过放大问题，可以让决策者产生危机感，从而吸引对方的注意力。&lt;/p&gt;
+
+&lt;p&gt;当决策者认识到该问题的重要性，并且产生危机意识时，就表明他已经准备好继续聆听下一步的‘提出解决方案’了。&lt;/p&gt;
+
+&lt;p&gt;虽然放大问题是抓住决策者注意力的好方法，但也要注意我们找出的问题必须是真正需要解决的，而不是凭空捏造的或者虚假的。&lt;/p&gt;
+
+&lt;p&gt;（放大问题的核心图）&lt;/p&gt;
+
+&lt;h3 id=&quot;放大问题的核心是找出真正需要解决的问题&quot;&gt;放大问题的核心是，找出真正需要解决的问题。&lt;/h3&gt;
+
+&lt;p&gt;为了能找出，真正需要解决的问题，就需要我们提出一个好问题&lt;/p&gt;
+
+&lt;p&gt;好的问题提出具备3个要素&lt;/p&gt;
+
+&lt;p&gt;目的，问题点，根本原因&lt;/p&gt;
+
+&lt;p&gt;问题的目标是什么？问题点在哪？根本原因是什么？&lt;/p&gt;
+
+&lt;p&gt;目标要符合决策者想要的，问题点要尽可能找到要害点，根本原因要深入挖掘。&lt;/p&gt;
+
+&lt;p&gt;放大问题的三个要素：&lt;/p&gt;
+
+&lt;h3 id=&quot;1通过目标里的内容让决策者产生兴趣&quot;&gt;1.通过目标里的内容让决策者产生兴趣&lt;/h3&gt;
+&lt;h3 id=&quot;2通过问题点指出问题的要害&quot;&gt;2.通过问题点指出问题的要害&lt;/h3&gt;
+&lt;h3 id=&quot;3通过根本原因找出问题背后的真正原因&quot;&gt;3.通过根本原因找出问题背后的真正原因&lt;/h3&gt;
+
+&lt;p&gt;目标很重要，这能让决策者知道，最终的结果会如何，会产生怎样的效果。&lt;/p&gt;
+
+&lt;p&gt;如果首先在资料开头目的中阐述一点提案背景，再通过达成目标来说明方案被采纳后会带来什么样的效果，这样的效果更佳，观众的注意力会一点点的被吸引直到全部被吸住。&lt;/p&gt;
+
+&lt;p&gt;一旦观众们知道结果和最终效果，他们就会对我们的PPT产生浓厚的兴趣。&lt;/p&gt;
+
+&lt;p&gt;接着通过问题点指出要害，方法可以对比应有（或理想）状态和当前的现状来形成差距，从而指出要害。&lt;/p&gt;
+
+&lt;p&gt;接着找出根本原因，可以从这8个方面来思考：规则、效率、技术、人和时间、资金、检查、交流、职责。&lt;/p&gt;
+
+&lt;p&gt;同时，我们要多次深入思考，最好先列出已知原因，再逐个思考，接着根据原因继续深入问自己‘为什么’。通过问自己三层‘为什么’来深入挖掘出问题背后的真正的原因。&lt;/p&gt;
+
+&lt;h1 id=&quot;如何增强说服力&quot;&gt;如何增强说服力&lt;/h1&gt;
+
+&lt;p&gt;增强说服力很重要，它是我们说服观众的有效手段。&lt;/p&gt;
+
+&lt;p&gt;这里介绍几种方式，大家在平时使用制作PPT时可以混合使用。&lt;/p&gt;
+
+&lt;h3 id=&quot;增强说服力的主要核心是细节&quot;&gt;增强说服力的主要核心是，细节。&lt;/h3&gt;
+
+&lt;p&gt;如何用细节？下面介绍有几种方法。&lt;/p&gt;
+
+&lt;p&gt;（用细节增强说服力的几种方式图）&lt;/p&gt;
+
+&lt;h2 id=&quot;1用具体数字增加说服力&quot;&gt;1.用具体数字，增加说服力&lt;/h2&gt;
+
+&lt;p&gt;以数字切入，会让人感觉，你把握了整体情况，确实仔细进行过调查。&lt;/p&gt;
+
+&lt;p&gt;数字可以大大增加说服力，同时要注意展示的数字必须能让对方感觉到自己是经过仔细确认的。&lt;/p&gt;
+
+&lt;p&gt;如何让观众感觉数字是经过仔细确认的呢？&lt;/p&gt;
+
+&lt;p&gt;1.数字经过严格的筛选，能够作为具体的理论和依据来支持你观点的信息。
+2.对数据的理解有自己的思考和表达。
+3.有多个数字进行关联。&lt;/p&gt;
+
+&lt;p&gt;有说服力的数据包括：现状数据，方案比较数据，关键数据，目标成果数据，因果关系数据&lt;/p&gt;
+
+&lt;p&gt;我们在列举数字时，要先找到关键点，即对事实关系进行慎密的调查&lt;/p&gt;
+
+&lt;p&gt;接着，用定量数字去描述它，让人感觉你仔细调查过，&lt;/p&gt;
+
+&lt;p&gt;再用，定性数据让数据更加立体化。&lt;/p&gt;
+
+&lt;h2 id=&quot;2用对比增强说服力&quot;&gt;2.用对比，增强说服力&lt;/h2&gt;
+
+&lt;p&gt;通过对比，能够让观众更容易理解，我们想要表达的内容。同时帮助我们找出最佳方案，并向决策者们传递，我们的方案是最佳的。&lt;/p&gt;
+
+&lt;p&gt;对比方式：&lt;/p&gt;
+
+&lt;p&gt;可以通过列举应有状态和现有状态的对比差异。&lt;/p&gt;
+
+&lt;p&gt;也可以先全列出方案，再进行方案混合，再做出差异比较。&lt;/p&gt;
+
+&lt;p&gt;通过对比，不但可以抓住观众的注意力，同时让观众更容易理解我们所要表达的内容。&lt;/p&gt;
+
+&lt;h2 id=&quot;3举成功的例子增强说服力&quot;&gt;3.举成功的例子，增强说服力&lt;/h2&gt;
+
+&lt;p&gt;特别是当成功的例子是一个事实时，会大大增强说服力。&lt;/p&gt;
+
+&lt;h3 id=&quot;实际上对于一个提案来说在决策者中尝鲜的人是极少的大多数人是跟进者而且他们只有看到成功的例子才会愿意跟进通过举成功的例子来说服跟进者就能说服大部分人&quot;&gt;实际上，对于一个提案来说，在决策者中尝鲜的人是极少的，大多数人是跟进者，而且他们只有看到成功的例子才会愿意跟进。通过举成功的例子来说服跟进者，就能说服大部分人。&lt;/h3&gt;
+
+&lt;p&gt;这里有3个关键点：
+1.符合常理的内容
+2.具体的事实
+3.成功的例子&lt;/p&gt;
+
+&lt;p&gt;所谓说服力，指的就是道理+具体的事例。符合常理的内容，再加上具体的事例，能够极大提高资料的说服力。&lt;/p&gt;
+
+&lt;h2 id=&quot;4列举问题与方案增强说服力&quot;&gt;4.列举问题与方案，增强说服力&lt;/h2&gt;
+
+&lt;p&gt;这种方式比较常用，其关键是要抛出能吸引决策者的问题，也就是前面说的放大问题。&lt;/p&gt;
+
+&lt;p&gt;用抛出问题和陈述方案的方式会引起决策者对问题和答案的兴趣，&lt;/p&gt;
+
+&lt;p&gt;在讲述时可以用1、2、3按步讲解，先展现结构和顺序，再展现内容，让表达更容易接受。&lt;/p&gt;
+
+&lt;h2 id=&quot;5明确目标拆解目标制定计划增强说服力&quot;&gt;5.明确目标拆解目标制定计划，增强说服力&lt;/h2&gt;
+
+&lt;p&gt;所谓目标，就是用一个具体的数值表现出最终的效果。&lt;/p&gt;
+
+&lt;p&gt;我们在制定目标时，目标要是一个可量化的具体数字。&lt;/p&gt;
+
+&lt;p&gt;接着，拆解目标，把大目标拆解成小目标，因为这样更容易实现，也更容易制定计划。&lt;/p&gt;
+
+&lt;p&gt;通过将目标拆解，决策者也能做出更加具体的判断。如果决策者对每个拆解后的小目标都认可，那么方案通过的可能性将极大提升。&lt;/p&gt;
+
+&lt;h3 id=&quot;最后制定计划通过制定详细的计划能让决策者了解方案的可行性和可靠性最终说服对方行动&quot;&gt;最后制定计划，通过制定详细的计划，能让决策者了解方案的可行性和可靠性，最终说服对方行动。&lt;/h3&gt;
+
+&lt;h2 id=&quot;6其他增强说服力&quot;&gt;6.其他，增强说服力&lt;/h2&gt;
+
+&lt;p&gt;用真实图片增强说服力：可以用真实的照片，加大说服力效果，特别是当现场照片，当两张照片进行差异比较时，能提升真实感，加大反差效果。&lt;/p&gt;
+
+&lt;p&gt;用图表增强说服力：&lt;/p&gt;
+
+&lt;p&gt;当具体数字放入图表中更有立体感，包括：&lt;/p&gt;
+
+&lt;p&gt;饼状图，适合表示明细，&lt;/p&gt;
+
+&lt;p&gt;柱状图，适合表示比较差异（项目较多时可以选择横向），&lt;/p&gt;
+
+&lt;p&gt;折线图，适合表示变化。&lt;/p&gt;
+
+&lt;p&gt;制作图表时应当尽量简化内容，突出重点&lt;/p&gt;
+
+&lt;p&gt;（饼状图，柱状图，折线图示例图）&lt;/p&gt;
+
+&lt;p&gt;除了图，还有表。好的表格，最大的特点是，只表达重点信息，这需要我们先理清思路，思考表达的重点。&lt;/p&gt;
+
+&lt;p&gt;用说服策略，增强说服力：&lt;/p&gt;
+
+&lt;p&gt;先说服部分方案，再逐步说服对方&lt;/p&gt;
+
+&lt;p&gt;先提出部分提案，再提出整体方案，或先提出预案，再提出详细方案&lt;/p&gt;
+
+&lt;h3 id=&quot;注意ppt上切记不要太细只要大致流程便可&quot;&gt;注意：PPT上切记不要太细，只要大致流程便可&lt;/h3&gt;
+
+&lt;h2 id=&quot;其他制作小细节&quot;&gt;其他制作小细节：&lt;/h2&gt;
+
+&lt;p&gt;1.通过图的并、连来表达各信息之间的关系
+2.流程图适合表达工作流程，关键是不要过于详细，可以划分模块和步骤
+3.各种图形代表意义，方形-&amp;gt;具体事实，圆形-&amp;gt;概念和关键词，圆角形-&amp;gt;抽象概念，三角形-&amp;gt;上下关系通过简单的图形可以增加美观，统一风格，增加冲击感
+4.字体的选择要舒适，易于阅读，市面上更有几种常用的字体组合。&lt;/p&gt;
+
+&lt;h2 id=&quot;参考资料&quot;&gt;参考资料：&lt;/h2&gt;
+
+&lt;p&gt;《PPT设计的艺术》  作者：林屹&lt;/p&gt;
+
+&lt;p&gt;《你就是干不过做PPT的》 译者：朱悦玮&lt;/p&gt;
+
+&lt;p&gt;《PPT设计思维、技术与实践》 作者：周庆麟等&lt;/p&gt;
+
+&lt;p&gt;《精进PPT-成为PPT高手》 作者：周庆麟、胡子平&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>读书笔记(五十四) 《游戏引擎架构》#4 低阶渲染器（5）</title>
+   <link href="http://www.luzexi.com/2022/02/20/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B054"/>
+   <updated>2022-02-20T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2022/02/20/读书笔记54</id>
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247485174&amp;amp;idx=1&amp;amp;sn=b8321c77f937537ce74fed145268f6c2&amp;amp;chksm=fc2263f1cb55eae7d64f1343f6a8298e520cad81b574283dbd543970d59d60fb29716817d9aa&amp;amp;token=537319754&amp;amp;lang=zh_CN#rd&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;背景&quot;&gt;背景：&lt;/h1&gt;
+
+&lt;p&gt;作为游戏开发从业者，从业务到语言到框架到引擎，积累了一些知识和经验，特别是在看了几遍《游戏引擎架构》后对引擎架构的理解又深入了些。&lt;/p&gt;
+
+&lt;p&gt;近段时间有对引擎剖析的想法，正好借这书本对游戏引擎架构做一个完整分析。&lt;/p&gt;
+
+&lt;p&gt;此书用简明、清楚的方式覆盖了游戏引擎架构的庞大领域，巧妙地平衡了广度与深度，并且提供了足够的细节。&lt;/p&gt;
+
+&lt;p&gt;借助《游戏引擎架构》这本书、结合引擎源码和自己的经验，深入分析游戏引擎的历史、架构、模块，最后通过实践简单引擎开发来完成对引擎知识的掌握。&lt;/p&gt;
+
+&lt;p&gt;游戏引擎知识面深而广，所以对这系列的文章书编写范围做个保护，即不对细节进行过多的阐述，重点剖析的是架构、流程以及模块的运作原理。&lt;/p&gt;
+
+&lt;p&gt;同时《游戏引擎架构》中部分知识太过陈旧的部分，会重新深挖后总结出自己的观点。&lt;/p&gt;
+
+&lt;h1 id=&quot;概述&quot;&gt;概述：&lt;/h1&gt;
+
+&lt;p&gt;本系列文章对引擎中的重要的模块和库进行详细的分析，我挑选了十五个库和模块来分析：&lt;/p&gt;
+
+&lt;p&gt;1.时间库
+2.自定义容器库
+3.字符串散列库
+4.内存管理框架
+5.RTTI与反射模块
+6.图形计算库
+7.资产管理模块
+8.低阶渲染器
+9.剔除与合批模块
+10.动画模块
+11.物理模块
+12.UI底层框架
+13.性能剖析器的核心部分
+14.脚本系统
+15.视觉效果模块&lt;/p&gt;
+
+&lt;p&gt;本篇内容为列表中的第8个部分的第5、6节。&lt;/p&gt;
+
+&lt;h1 id=&quot;正文&quot;&gt;正文：&lt;/h1&gt;
+
+&lt;p&gt;简单回顾下前文&lt;/p&gt;
+
+&lt;p&gt;前文我们聊了下显卡在计算机硬件主板中的位置与结构，知道了CPU、GPU的通信介质，并简单介绍了手机上的主板结构。本篇开头对上一篇做一些内容补充，PC和手机的不同硬件组织，以及CPU与其他芯片的通信过程。&lt;/p&gt;
+
+&lt;p&gt;下面我们开始这篇内容&lt;/p&gt;
+
+&lt;p&gt;本次内容会围绕GPU来写，从硬件架构到软件驱动再到引擎架构，目标是帮大家理解GPU硬件的运作原理，理解图形接口的架构，理解引擎低阶渲染器的架构。&lt;/p&gt;
+
+&lt;p&gt;目录：&lt;/p&gt;
+
+&lt;p&gt;主板结构中的显卡&lt;/p&gt;
+
+&lt;p&gt;GPU功能发展史&lt;/p&gt;
+
+&lt;p&gt;GPU与CPU的差异&lt;/p&gt;
+
+&lt;p&gt;GPU硬件特点&lt;/p&gt;
+
+&lt;p&gt;图形驱动程序架构&lt;/p&gt;
+
+&lt;p&gt;引擎低阶渲染架构&lt;/p&gt;
+
+&lt;p&gt;前面我们说了关于GPU硬件上的原理和运作机制，下面我们来讲一讲软件上的架构，尤其是渲染架构。&lt;/p&gt;
+
+&lt;p&gt;指令和数据从CPU到GPU最终到帧缓冲的这个过程中，有三种类型的架构，第一种是图形驱动程序的架构，第二种是引擎上的低阶渲染器架构，第三种是GPU上的软件架构。&lt;/p&gt;
+
+&lt;p&gt;这三种架构在互相配合，同时也是三个模块互相调用的过程。这也是为什么前面要提到这么多CPU与GPU硬件交互过程的原因。&lt;/p&gt;
+
+&lt;p&gt;为了更好的了解这三者，我又研读了一遍《OpenGL ES3.0 编程指南》，通过对OpenGL接口的解读和分析，逐步剖析图形驱动程序架构、引擎低阶渲染器架构、以及GPU软件架构，我认为这种方式是最合适的。&lt;/p&gt;
+
+&lt;h2 id=&quot;一图形驱动程序架构&quot;&gt;一、图形驱动程序架构&lt;/h2&gt;
+
+&lt;p&gt;我们使用的图形接口如OpenGL、Metal、DX的原理是基于驱动程序接口做的封装。因此，图形驱动调用接口有三步骤：
+检查调用参数、检查硬件是否支持
+接着调用硬件驱动程序接口
+将数据推入缓冲Buffer&lt;/p&gt;
+
+&lt;p&gt;数据被推入缓冲，后续的详细路线如下图：&lt;/p&gt;
+
+&lt;p&gt;（GPU中的数据流向图）&lt;/p&gt;
+
+&lt;p&gt;GPU有线程来执行程序，线程通过Core来执行指令，每个线程的程序都是一样的，只是数据不同。
+因此很好理解，GPU中有许多线程，每个线程执行的指令是一样的，从三角形处理到光栅化以及片元处理，都是顺序执行的指令。因此数据流也跟着顺序的指令走。最后到达帧缓存。&lt;/p&gt;
+
+&lt;p&gt;图形API适配了许多GPU驱动程序的接口，驱动程序先检查参数，再将指令推入队列，再刷新时将队列地址发送给GPU，GPU开始处理队列，由线程处理队列中的每个指令，每个线程拥有同样的程序，数据不断被处理，最后到达帧缓存。&lt;/p&gt;
+
+&lt;p&gt;在最上层的图形接口之上，引擎低阶渲染器会调用很多不同类型的图形接口，将数据塞入到缓冲中。下面就来详细描述下，引擎低阶渲染器的架构是怎样的。&lt;/p&gt;
+
+&lt;h2 id=&quot;二引擎低阶渲染器架构&quot;&gt;二、引擎低阶渲染器架构&lt;/h2&gt;
+
+&lt;p&gt;前面我们说，图形API封装了硬件驱动程序，会先检查再调用。&lt;/p&gt;
+
+&lt;p&gt;实际上，低阶渲染器也是一个封装图形API接口的程序，不同的是它封装的更适合渲染对象。&lt;/p&gt;
+
+&lt;p&gt;其封装的目的是让散乱的图形API变得更方便使用，同时还能够优化掉重复的计算。&lt;/p&gt;
+
+&lt;p&gt;这里首先我们来看下OpenGL ES图形API中的接口类型，通过了解图形API接口，能够想象出如果是我们自己来做低阶渲染器架构我们应该如何封装。所以，了解熟悉图形API对于低阶渲染器的架构非常重要。&lt;/p&gt;
+
+&lt;p&gt;下面是一些OpenGL的接口描述和统计，有些枯燥，如已熟悉可以直接跳到描述架构部分。&lt;/p&gt;
+
+&lt;p&gt;OpengGL接口描述与统计：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;状态开启和关闭，包括开启三角绘制、开启混合、开启模板等
+glEnableXXX、glDisableXXX
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;获取或查询某数据，包括获取数据，获取日志，获取结果等
+glGetXXX
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;绑定数据，包括绑定数据到着色器等
+glBindXXX
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;开始和结束某处理，包括开始变换反馈，查询数据等
+glBeginXXX
+glEndXXX
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;清除缓冲
+glClearXXX
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;创建某对象，包括缓冲，数组，纹理，采样器对象等等
+glGenXXX，glCreateXXX
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;删除某对象，包括着色器对象，数组，纹理对象，采样器对象等等
+glDeleteXXX
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;还有其他的如:
+glDrawXXX，绘制相关
+glCopyXXX，拷贝复制相关
+glCheckXXX，检查相关
+glIsXXX，判断是否有效
+......
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;下面按相关性划分为：&lt;/p&gt;
+
+&lt;p&gt;（着色器相关接口图）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;着色器相关：
+创建着色器：glCreateShader
+加载着色器代码：glShaderSource
+编译着色器：glCompileShader
+创建着色器程序：glCreateProgram
+绑定着色器：glAttachShader
+解绑着色器：glDetachShader
+链接着色器程序：glLinkProgram
+使用着色器程序：glUseProgram
+删除着色器程序：glDeleteProgram
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（视口相关接口图）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;视口相关：
+设置视口：glViewport
+设置视口裁剪深度：glDepthRangef
+清除颜色缓冲：glClear
+置换缓冲区：eglSwapBuffers
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（顶点相关接口图）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;顶点相关：
+通过创建缓冲区，可以把顶点数据加载到缓冲区，从而绘制顶点。
+
+加载顶点属性：glVertexAttribXXX
+绘制三角形：glDrawArrays，glDrawElements
+启用/禁用顶点属性数组：glEnable/DisableVertexAttribArray
+申请缓冲：glGenBuffers
+指定缓冲：glBindBuffer
+向缓冲填入数据：glBufferData，glBufferSubData
+删除缓冲：glDeleteBuffers
+创建顶点数组对象：glGenVertexArrays
+绑定顶点数组：glBindVertexArray
+删除顶点数组：glDeleteVertexArrays
+映射并返回缓冲区数据：glMapBufferRange
+取消映射缓冲区：glUnmapBuffer
+刷新映射缓冲区：glFlushMappeBufferRange
+复制缓冲区数据：glCopyBufferSubData
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（图元绘制相关接口图）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;图元绘制相关：
+绘制几何形状对象：glDrawArrays, glDrawElements, glDrawRangeElements,
+绘制几何Instance：glDrawArraysInstanced, glDrawElementsInstanced
+绘制线段：glLineWidth
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（光栅化相关接口图）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;光栅化相关：
+指定正面顺序：glFrontFace
+剔除反面：glCullFace
+多边形偏移：glPolygonOffset
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;遮挡查询：glBeginQuery, glEndQuery, glGenQueries, glDeleteQueries, glGetQueryObjectuiv
+遮挡查询用查询对象来跟踪通过深度测试的片段或样本。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;顶点着色器相关：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;内建特殊变量：
+gl_VertexID，当前顶点整数索引
+gl_InstanceID，当前图元实例编号
+gl_Position，输出顶点
+gl_PointSize，点精灵尺寸
+gl_FrontFacing，是否正面的布尔值
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;内建常量：
+gl_MaxVertexAttribs，顶点属性最大数量
+gl_MaxVertexUniformVectors，使用vec4统一变量的最大数量
+gl_MaxVertexOutputVectors，输出向量的最大数量
+gl_MaxVertexTextureImageUnits，可用纹理单元的最大数量
+gl_MaxCombinedTextureImageUnits，顶点和片元着色器中可用纹理单元的最大数量总和
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（变换反馈相关接口图）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;变换反馈TransformFeedback相关：
+glTransformFeedbackVaryings，指定变换反馈时捕捉的顶点属性
+glBeginTransformFeedback，开始变换反馈（需先创建变换反馈缓冲区，再绑定到顶点索引）
+glEndTransformFeedback，结束变换反馈
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（纹理相关接口图）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;纹理相关：
+4种纹理类型：2D纹理、2D纹理数组、3D纹理、立方图纹理
+其中2D纹理数组和3D纹理有点相似，2D纹理数组常用于帧动画。两者区别为过滤和mipmap不同。
+
+glGenTextures，创建纹理对象
+glDeleteTextures，删除纹理对象
+glBindTexture，绑定到一个特定的纹理目标
+glTexImage2D，加载2D和立方图的纹理数据
+glTexSubImageXXX，加载部分纹理图像数据
+glTexImage3D，加载3D纹理数据
+glPixelStorei，设置解包对齐
+glTexParameteri，设置贴图的过滤模式
+glGenerateMipmap，自动生成mip贴图
+glActiveTexture，设置当前的纹理单元，以便后续将纹理绑定该单元
+glCompressedTexImageXXX，加载2D、立方图、3D等纹理的压缩图像数据（ETC、ASTC等压缩格式）
+glCompressedTexSubImageXXX，加载部分压缩纹理图像
+
+glReadBuffer，设置拷贝图像数据来源的颜色缓冲区
+glCopyTexImageXXX，从颜色缓冲区拷贝数据到纹理
+glCopyTexSubImageXXX，拷贝部分颜色缓冲区的数据到纹理
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（采样器相关接口图）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;采样器相关：
+glGenSamplers，生成采样器对象
+glDeleteSamplers，删除采样器对象
+glBindSampler，绑定纹理到采样器对象
+glSamplerParameterXXX，设置采样器对象参数
+glTexStorageXXX，分配纹理内存
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;片段着色器相关：&lt;/p&gt;
+
+&lt;p&gt;很久以前在固定功能管线中，使用3种输入：顶点颜色插值、纹理颜色、常量颜色，再使用一些公式的组合实现有趣的特效，包括：A&lt;em&gt;B、A+B、A+B-0.5、A&lt;/em&gt;C+B*(1-C)、A-B等等。&lt;/p&gt;
+
+&lt;p&gt;支持可编程管线后，我们可以通过可编程管线来实现固定功能管线的效果。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;现在的可编程管线的输入由四部分构成：
+顶点属性插值（顶点上的颜色、uv、法线等）
+统一变量（全局常量）
+采样纹理
+代码常量
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;内建特殊变量：
+gl_FragCoord，片段的窗口相对坐标（可用于噪声贴图计算）
+gl_FrontFacing，是否正面朝向
+gl_PointCoord，点精灵的纹理坐标
+gl_FragDepth，输出变量，覆盖片段的固定功能深度值（会导致深度测试优化失效）
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;内建常量：
+gl_MaxFragmentInputVectors，输入的最大数量
+gl_MaxTextureImageUnits，可用纹理图像单元的最大数量
+gl_MaxFragmentUniformVectors，使用vec4统一变量项目的最大数量
+gl_MaxDrawBuffers，多重渲染目标（MRT）的最大支持数量
+gl_(Min/Max)ProgramTexelOffset，通过内建ESSL函数texture*Offset()偏移参数支持的最大和最小偏移量
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（缓冲区相关接口图）&lt;/p&gt;
+
+&lt;p&gt;缓冲区相关：&lt;/p&gt;
+
+&lt;p&gt;缓冲区有三种，颜色缓冲区，深度缓冲区，模板缓冲区。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;缓冲清除相关：
+glClear，清除指定缓冲区
+glClearColor，清除颜色缓冲区中的指定颜色
+glClearDepth，清除深度缓冲区中的指定深度
+glClearStencil，清除模板缓冲区中的指定掩码
+glClearBufferXXX，清除指定缓冲区中的部分区域
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;缓冲写入相关：
+glColorMask，像素写入颜色缓冲区时，哪些分量会被更新
+glDepthMask，深度写入深度缓冲区时，哪些深度可以修改
+glStencilMask，掩码写入模板缓冲区时，哪些掩码可以被修改
+glStencilMaskSeparate，根据正面和背面的图元使用不同的掩码
+glDrawBuffers，渲染指定颜色数组到多重渲染目标中
+（多重渲染目标允许一次渲染多个颜色缓冲区，从而实现高级渲染算法，如延迟渲染）
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（裁剪与测试相关图）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;模板缓冲裁剪与测试：
+glScissor，指定裁剪矩形区域
+glStencilFuncXXX，用指定公式指定值指定掩码测试比较模板缓冲
+glStencilOpXXX，将测试结果用于深度缓冲区的操作
+
+深度缓冲测试：glDepthFunc，设置深度测试的运算公式
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（混合相关接口图）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;混合相关：
+glBlendFuncXXX，设置混合系数
+glBlendColor，设置常量颜色
+glBlendEquationXXX，设置运算公式
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;颜色缓冲区中读写像素：
+glReadPixels，从颜色缓冲区中取出数据返回到指定数组中，
+数据传输时会启动DMA传输，此时CPU会空出来。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（帧缓冲区对象相关接口图）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;帧缓冲区对象（FBO）相关：
+可用于颜色、深度、模板纹理或渲染目标。
+glGenRenderbuffers，分配n个渲染缓冲区对象，返回到指针中。
+glBindRenderbuffer，绑定渲染缓冲区对象
+glRenderbufferStorageXXX，指定渲染缓冲区对象大小和格式
+glBindFramebuffer，设置当前帧缓冲区对象（渲染目标）
+glFramebufferRenderbuffer，将一个渲染缓冲区对象连接到帧缓冲区附着点
+glFramebufferTextureXXX，将纹理的某个mip级别连接到帧缓冲附着点
+glCheckFramebufferStatus，验证帧缓冲区对象是否完整
+
+glBlitFramebuffer，高效的将矩形区域的像素从一个帧缓冲区复制到另一个
+glInvalidate(Sub)Framebuffer，让整个帧缓冲区或子区域失效
+glDeleteRenderbuffers，删除指定渲染缓冲区对象，先断开缓冲区对象才能删除
+glDeleteFramebuffers，删除指定帧缓冲对象
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;未完，最近忙新书和工作以及演讲训练，后续继续写……&lt;/p&gt;
+
+&lt;h2 id=&quot;参考资料&quot;&gt;参考资料：&lt;/h2&gt;
+
+&lt;p&gt;《OpenGL ES3.0 编程指南》DanGinsburg等著&lt;/p&gt;
+
+&lt;p&gt;《GPU 引擎》
+https://docs.microsoft.com/zh-tw/windows/win32/direct3d12/user-mode-heap-synchronization
+《CPU体系结构》
+https://my.oschina.net/fileoptions/blog/1633021&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>读书笔记(五十三) 《如何做好PPT》- PPT设计的艺术</title>
