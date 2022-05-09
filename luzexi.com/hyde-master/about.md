@@ -10,7 +10,7 @@ title: 我的简介
 
 ### 出版书籍《Unity3D高级编程-主程手记》
 
-[书籍《Unity3D高级编程-主程手记》链接](https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&mid=2247485108&idx=1&sn=b949ce0d6f031a2108586940aa0eadfa&chksm=fc2263b3cb55eaa5b5c3fe41399d47d7f1e0f66ce5b130c0e31648be035e9535f5c6c3d5ed39&token=330432434&lang=zh_CN#rd)
+[书籍《Unity3D高级编程-主程手记》链接](https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&mid=2247485214&idx=2&sn=fabff638510724c7a3ebe8ab4abaadae&chksm=fc226219cb55eb0fde3570bdfb9531caa6c62db28c51e72a0e2e1fd187ee8bcfbabf226d19dd&token=220406334&lang=zh_CN#rd)
 
 ### 最近正在练习演讲，解剖游戏引擎
 
