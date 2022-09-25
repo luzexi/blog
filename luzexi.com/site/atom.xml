@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2022-09-25T16:42:07+08:00</updated>
+ <updated>2022-09-25T16:44:46+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -877,7 +877,7 @@
  </entry>
  
  <entry>
-   <title>读书笔记(六十) 如何做软件分析1-建模</title>
+   <title>读书笔记(六十) 如何做软件分析1 - 建模</title>
    <link href="http://www.luzexi.com/2022/05/18/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B060"/>
    <updated>2022-05-18T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2022/05/18/读书笔记60</id>
