@@ -6,18 +6,28 @@ title: 我的简介
 
 公司 ：腾讯
 
-曾就职：盛大游戏，动视暴雪Activision，Gumi日本，百游Baiyou
+曾就职：盛大游戏、动视暴雪Activision、Gumi日本、百游Baiyou
+
+<!-- 经历：《王者荣耀》、《英雄联盟手游》、《使命召唤:英雄》、《白猫计划》... -->
 
 ### 出版书籍《Unity3D高级编程-主程手记》
 
 [书籍《Unity3D高级编程-主程手记》链接](https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&mid=2247485214&idx=2&sn=fabff638510724c7a3ebe8ab4abaadae&chksm=fc226219cb55eb0fde3570bdfb9531caa6c62db28c51e72a0e2e1fd187ee8bcfbabf226d19dd&token=220406334&lang=zh_CN#rd)
 
-### 最近正在练习演讲，解剖游戏引擎
+### 公开分享内容：
+
+《如何快速进阶主程》：录播地址同步中
+
+
+### 最近正在：练习演讲、解剖游戏引擎
+
 
 <!-- 
 ### Game Project：
 
-		《保密项目》 3D 电子竞技 2020 - 至今
+		《王者荣耀》 电子竞技 2022 - 至今
+
+		《英雄联盟手游》 3D 电子竞技 2020 - 2022
 
 		《代号:南海》 3D 战略+模拟经营 2018 - 2020
 

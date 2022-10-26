@@ -4,13 +4,29 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2022-09-25T17:01:06+08:00</updated>
+ <updated>2022-10-26T12:53:10+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
    <email>jesse_luzexi@163.com</email>
  </author>
 
+ 
+ <entry>
+   <title>UWA Day 《如何快速进阶主程》</title>
+   <link href="http://www.luzexi.com/2022/10/26/%E6%BC%94%E8%AE%B2-%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B"/>
+   <updated>2022-10-26T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2022/10/26/演讲-如何快速进阶主程</id>
+   <content type="html">&lt;h3 id=&quot;内容概要&quot;&gt;内容概要：&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&amp;amp;mid=2247485608&amp;amp;idx=1&amp;amp;sn=e9e297668d8b9bd592080ea871e47aba&amp;amp;chksm=fc226dafcb55e4b9718ff8fd3c10991f02dabff15e9a3bc8a162fdffdd03bde18dfe54f704fc&amp;amp;token=925049509&amp;amp;lang=zh_CN#rd&quot;&gt;公众号发布地址&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;录播&quot;&gt;录播：&lt;/h3&gt;
+
+&lt;p&gt;地址同步中&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>读书笔记(六十六) 如何做软件分析4 - 策略、用例、接口</title>
