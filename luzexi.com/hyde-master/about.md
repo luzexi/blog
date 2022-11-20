@@ -10,18 +10,20 @@ title: 我的简介
 
 项目经历：《王者荣耀》、《英雄联盟手游》、《使命召唤:英雄》、《白猫计划》...
 
-### 出版书籍《Unity3D高级编程-主程手记》
+### 出版书籍：
 
 [书籍《Unity3D高级编程-主程手记》链接](https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&mid=2247485214&idx=2&sn=fabff638510724c7a3ebe8ab4abaadae&chksm=fc226219cb55eb0fde3570bdfb9531caa6c62db28c51e72a0e2e1fd187ee8bcfbabf226d19dd&token=220406334&lang=zh_CN#rd)
 
-### 公开分享内容：
+### 公开演讲：
 
 [《UWA技术日演讲 - 如何快速进阶主程》](http://luzexi.com/2022/10/26/%E6%BC%94%E8%AE%B2-%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E8%BF%9B%E9%98%B6%E4%B8%BB%E7%A8%8B)
 
 [《腾讯技术工程分享 - 游戏技术框架剖析》](http://luzexi.com/2022/11/17/%E8%85%BE%E8%AE%AF%E7%9B%B4%E6%92%AD%E5%88%86%E4%BA%AB-%E6%B8%B8%E6%88%8F%E6%8A%80%E6%9C%AF%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90)
 
 
-### 最近正在：练习演讲、解剖游戏引擎
+### 最近正在：
+
+解剖游戏引擎、练习演讲
 
 
 <!-- 
