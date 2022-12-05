@@ -4,7 +4,7 @@
  <title>技术人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2022-11-20T16:54:32+08:00</updated>
+ <updated>2022-12-06T00:50:32+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -32,6 +32,20 @@
 &lt;p&gt;打开微信应用程序，点击回放&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.zhihu.com/zvideo/1576695970477084672&quot;&gt;知乎录播地址&lt;/a&gt;&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>读书笔记(六十七) 游戏引擎架构#6 - 渲染管线</title>
+   <link href="http://www.luzexi.com/2022/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B067"/>
+   <updated>2022-11-09T00:00:00+08:00</updated>
+   <id>http://www.luzexi.com/2022/11/09/读书笔记67</id>
+   <content type="html">&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s/vfsOhmuZLA6KHZWNoSBGcQ&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s/vfsOhmuZLA6KHZWNoSBGcQ&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s/vfsOhmuZLA6KHZWNoSBGcQ&quot;&gt;已发布在微信公众号上，点击跳转&lt;/a&gt;&lt;/p&gt;
 
 </content>
  </entry>
