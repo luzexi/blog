@@ -12,7 +12,9 @@ title: 我的简介
 
 ### 出版书籍：
 
-[书籍《Unity3D高级编程-主程手记》链接](https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&mid=2247485214&idx=2&sn=fabff638510724c7a3ebe8ab4abaadae&chksm=fc226219cb55eb0fde3570bdfb9531caa6c62db28c51e72a0e2e1fd187ee8bcfbabf226d19dd&token=220406334&lang=zh_CN#rd)
+[书籍《Unity3D高级编程-主程手记》](https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&mid=2247485214&idx=2&sn=fabff638510724c7a3ebe8ab4abaadae&chksm=fc226219cb55eb0fde3570bdfb9531caa6c62db28c51e72a0e2e1fd187ee8bcfbabf226d19dd&token=220406334&lang=zh_CN#rd)
+
+[出书经历《当一个程序员决定出书》](https://mp.weixin.qq.com/s/gPFed8fQJnjPSE_dSDRuiA)
 
 ### 公开演讲：
 
@@ -33,7 +35,7 @@ title: 我的简介
 
 		《英雄联盟手游》 3D 电子竞技 2020 - 2022
 
-		《代号:南海》 3D 战略+模拟经营 2018 - 2020
+		《代号:海》 3D 战略+模拟经营 2018 - 2020
 
 		《使命召唤:围攻》 3D 阵地攻防战 2017 - 2018
 
