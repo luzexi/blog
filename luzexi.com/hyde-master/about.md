@@ -6,15 +6,17 @@ title: 我的简介
 
 就职 ：腾讯 - 王者荣耀技术中心
 
+出版书籍 ：《Unity3D高级编程：主程手记》
+
 曾就职：盛大游戏、动视暴雪Activision、Gumi日本、百游Baiyou
 
-项目经历：《王者荣耀》、《英雄联盟手游》、《使命召唤:英雄》、《白猫计划》...
+项目经历：《王者荣耀》、《英雄联盟手游》、《使命召唤：英雄(Call Of Duty : Hero)》、《白猫计划(White Cat)》...
 
 比赛经历:  浙江省ACM(Association for Computing Machinery)算法竞赛二等、Tostmaster俱乐部演讲比赛亚军，Tostmaster年度演讲比赛小区赛亚军
 
 ### 出版书籍：
 
-[书籍《Unity3D高级编程-主程手记》](https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&mid=2247485214&idx=2&sn=fabff638510724c7a3ebe8ab4abaadae&chksm=fc226219cb55eb0fde3570bdfb9531caa6c62db28c51e72a0e2e1fd187ee8bcfbabf226d19dd&token=220406334&lang=zh_CN#rd)
+[书籍《Unity3D高级编程：主程手记》](https://mp.weixin.qq.com/s?__biz=MzU1ODY1ODY2NA==&mid=2247485214&idx=2&sn=fabff638510724c7a3ebe8ab4abaadae&chksm=fc226219cb55eb0fde3570bdfb9531caa6c62db28c51e72a0e2e1fd187ee8bcfbabf226d19dd&token=220406334&lang=zh_CN#rd)
 
 [出书经历《当一个程序员决定出书》](https://mp.weixin.qq.com/s/gPFed8fQJnjPSE_dSDRuiA)
 
