@@ -12,7 +12,7 @@ title: 我的简介
 
 项目经历：《王者荣耀》、《英雄联盟手游》、《使命召唤：英雄(Call Of Duty : Hero)》、《白猫计划(White Cat)》...
 
-比赛经历:  浙江省ACM(Association for Computing Machinery)算法竞赛二等、Tostmaster俱乐部演讲比赛亚军，Tostmaster年度演讲比赛小区赛亚军
+比赛经历:  浙江省ACM(Association for Computing Machinery)算法竞赛二等、Tostmaster俱乐部演讲比赛亚军，Tostmaster年度演讲比赛复赛亚军
 
 ### 出版书籍：
 
