@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title></title>
-        <description>技术，哲学，金融</description>
+        <description>编程技术与人生</description>
         <link>http://www.luzexi.com</link>
         <atom:link href="http://www.luzexi.com/assets/feed.xml" rel="self" type="application/rss+xml" />
         

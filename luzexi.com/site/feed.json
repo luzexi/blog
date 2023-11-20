@@ -1,9 +1,9 @@
 {
     "version": "https://jsonfeed.org/version/1",
-    "title": "技术人生",
+    "title": "技术人生 - 编程技术 - JESSE人生",
     "home_page_url": "http://www.luzexi.com/",
     "feed_url": "http://www.luzexi.com/feed.json",
-    "description": "技术，哲学，金融",
+    "description": "编程技术与人生",
     "icon": "http://www.luzexi.com/apple-touch-icon.png",
     "favicon": "http://www.luzexi.com/favicon.ico",
     "expired": false,
