@@ -4,15 +4,25 @@ title: 我的简介
 ---
 姓名：陆泽西 (Jesse Lu)
 
-就职 ：腾讯 - 天美工作室 - 王者荣耀核心组
+公司 ：腾讯 - 天美工作室 - 王者荣耀核心组
+
+职级 ： T11 - 专家工程师
 
 出版书籍 ：《Unity3D高级编程：主程手记》
 
-曾就职：盛大游戏、动视暴雪Activision、Gumi日本、百游Baiyou
+新书即将出版： 《图解游戏引擎》
+
+曾就职：盛大游戏（主程）、动视暴雪Activision（主程）、Gumi日本（主程）、百游Baiyou
 
 项目经历：《王者荣耀》、《英雄联盟手游》、《使命召唤：英雄(Call Of Duty : Hero)》、《白猫计划(White Cat)》...
 
-比赛经历:  浙江省ACM(Association for Computing Machinery)算法竞赛银奖、Tostmaster俱乐部演讲比赛亚军，Tostmaster年度演讲比赛复赛亚军
+比赛经历:  
+
+浙江省ACM(Association for Computing Machinery)算法竞赛银奖
+
+Tostmaster俱乐部演讲比赛冠军
+
+Tostmaster年度演讲比赛复赛亚军
 
 ### 出版书籍：
 
