@@ -2,7 +2,7 @@
   
     {
 
-      "title"    : "图解游戏引擎 - Unity渲染管线（4）渲染线程与Shader编译",
+      "title"    : "图解游戏引擎 - Unity引擎渲染管线（4）渲染线程与Shader编译",
       "url"      : "/2024/06/12/%E5%9B%BE%E8%A7%A3%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E-Unity%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF4",
       "category" : "",
       "tags"     : "图解游戏引擎, 前端技术",

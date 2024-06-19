@@ -4,7 +4,7 @@
  <title>技术人生 - 编程技术 - JESSE人生</title>
  <link href="http://www.luzexi.com/atom.xml" rel="self"/>
  <link href="http://www.luzexi.com/"/>
- <updated>2024-06-19T20:29:45+08:00</updated>
+ <updated>2024-06-19T20:31:43+08:00</updated>
  <id>http://www.luzexi.com</id>
  <author>
    <name>Jesse Lu</name>
@@ -13,7 +13,7 @@
 
  
  <entry>
-   <title>图解游戏引擎 - Unity渲染管线（4）渲染线程与Shader编译</title>
+   <title>图解游戏引擎 - Unity引擎渲染管线（4）渲染线程与Shader编译</title>
    <link href="http://www.luzexi.com/2024/06/12/%E5%9B%BE%E8%A7%A3%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E-Unity%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF4"/>
    <updated>2024-06-12T00:00:00+08:00</updated>
    <id>http://www.luzexi.com/2024/06/12/图解游戏引擎-Unity引擎渲染管线4</id>
