@@ -36,7 +36,7 @@ Tostmaster年度演讲比赛复赛亚军
 
 [《腾讯技术工程分享 - 游戏技术框架剖析》](http://luzexi.com/2022/11/17/%E8%85%BE%E8%AE%AF%E7%9B%B4%E6%92%AD%E5%88%86%E4%BA%AB-%E6%B8%B8%E6%88%8F%E6%8A%80%E6%9C%AF%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90)
 
-[《2024 UWADay 游戏行业开发者大会公开演讲 - 游戏性能分析与挖掘》](https://mp.weixin.qq.com/s/uahLUd2leerGB4CkN_tHwg)
+[《2024 UWADay 游戏行业开发者大会公开演讲 - 游戏性能分析与挖掘》](http://luzexi.com/2024/09/11/WUADay%E6%B8%B8%E6%88%8F%E8%A1%8C%E4%B8%9A%E5%BC%80%E5%8F%91%E8%80%85%E5%A4%A7%E4%BC%9A%E5%85%AC%E5%BC%80%E6%BC%94%E8%AE%B2)
 
 ### 最近正在：
 
